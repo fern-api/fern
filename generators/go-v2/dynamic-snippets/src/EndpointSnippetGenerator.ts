@@ -1,4 +1,5 @@
 import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { go } from "@fern-api/go-ast";
 
@@ -167,6 +168,8 @@ export class EndpointSnippetGenerator {
                     return go.TypeInstantiation.nop();
                 }
                 return this.getConstructorHeaderAuthArg({ auth, values });
+            default:
+                assertNever(auth);
         }
     }
 
@@ -360,6 +363,8 @@ export class EndpointSnippetGenerator {
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
             case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+            default:
+                assertNever(endpoint.request);
         }
     }
 
@@ -401,6 +406,8 @@ export class EndpointSnippetGenerator {
             }
             case "typeReference":
                 return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
         }
     }
 
@@ -424,6 +431,11 @@ export class EndpointSnippetGenerator {
     }): go.TypeInstantiation[] {
         const args: go.TypeInstantiation[] = [];
 
+        const { inlinePathParameters, inlineFileProperties } = {
+            inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? false,
+            inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? false
+        };
+
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: go.StructField[] = [];
         if (request.pathParameters != null) {
@@ -435,20 +447,23 @@ export class EndpointSnippetGenerator {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (!this.context.includePathParametersInWrappedRequest({ request })) {
+        if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
 
-        if (!this.context.customConfig?.inlineFileProperties) {
+        if (!inlineFileProperties) {
             args.push(...filePropertyInfo.fileFields.map((field) => field.value));
         }
 
-        if (this.context.needsRequestParameter({ request })) {
+        if (this.context.needsRequestParameter({ request, inlinePathParameters, inlineFileProperties })) {
             args.push(
                 this.getInlinedRequestArg({
                     request,
                     snippet,
-                    pathParameterFields: this.context.includePathParametersInWrappedRequest({ request })
+                    pathParameterFields: this.context.includePathParametersInWrappedRequest({
+                        request,
+                        inlinePathParameters
+                    })
                         ? pathParameterFields
                         : [],
                     filePropertyInfo
@@ -546,6 +561,8 @@ export class EndpointSnippetGenerator {
                 return [this.getReferencedRequestBodyPropertyStructField({ body, value })];
             case "fileUpload":
                 return this.getFileUploadRequestBodyStructFields({ filePropertyInfo });
+            default:
+                assertNever(body);
         }
     }
 
@@ -585,6 +602,8 @@ export class EndpointSnippetGenerator {
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
                 return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
         }
     }
 

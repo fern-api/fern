@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { go } from "@fern-api/go-ast";
+import { ts } from "@fern-api/typescript-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 export interface FilePropertyInfo {
-    fileFields: go.StructField[];
-    bodyPropertyFields: go.StructField[];
+    fileFields: ts.ObjectField[];
+    bodyPropertyFields: ts.ObjectField[];
 }
 
 export class FilePropertyMapper {
@@ -32,19 +32,19 @@ export class FilePropertyMapper {
             switch (property.type) {
                 case "file":
                     result.fileFields.push({
-                        name: this.context.getTypeName(property.name),
+                        name: this.context.getPropertyName(property.name),
                         value: this.getSingleFileProperty({ property, record })
                     });
                     break;
                 case "fileArray":
                     result.fileFields.push({
-                        name: this.context.getTypeName(property.name),
+                        name: this.context.getPropertyName(property.name),
                         value: this.getArrayFileProperty({ property, record })
                     });
                     break;
                 case "bodyProperty":
                     result.bodyPropertyFields.push({
-                        name: this.context.getTypeName(property.name.name),
+                        name: this.context.getPropertyName(property.name.name),
                         value: this.getBodyProperty({ property, record })
                     });
                     break;
@@ -61,12 +61,12 @@ export class FilePropertyMapper {
     }: {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
-    }): go.TypeInstantiation {
+    }): ts.TypeLiteral {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return go.TypeInstantiation.nop();
+            return ts.TypeLiteral.nop();
         }
-        return go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(fileValue));
+        return ts.TypeLiteral.blob(fileValue);
     }
 
     private getArrayFileProperty({
@@ -75,17 +75,12 @@ export class FilePropertyMapper {
     }: {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.FileArray;
         record: Record<string, unknown>;
-    }): go.TypeInstantiation {
+    }): ts.TypeLiteral {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return go.TypeInstantiation.nop();
+            return ts.TypeLiteral.nop();
         }
-        return go.TypeInstantiation.slice({
-            valueType: go.Type.reference(this.context.getIoReaderTypeReference()),
-            values: fileValues.map((value) =>
-                go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(value))
-            )
-        });
+        return ts.TypeLiteral.array({ values: fileValues.map((value) => ts.TypeLiteral.blob(value)) });
     }
 
     private getBodyProperty({
@@ -94,12 +89,12 @@ export class FilePropertyMapper {
     }: {
         property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
-    }): go.TypeInstantiation {
+    }): ts.TypeLiteral {
         const bodyPropertyValue = record[property.name.wireValue];
         if (bodyPropertyValue == null) {
-            return go.TypeInstantiation.nop();
+            return ts.TypeLiteral.nop();
         }
-        return this.context.dynamicTypeInstantiationMapper.convert({
+        return this.context.dynamicTypeLiteralMapper.convert({
             typeReference: property.typeReference,
             value: bodyPropertyValue
         });
