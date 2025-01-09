@@ -2,8 +2,17 @@
   "search.exclude": {
     "**/.pnp.*": true,
     "**/.yarn": true,
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/.next": true,
+    ".turbo": true,
+    ".husky/_": true,
   },
-  "eslint.nodePath": ".yarn/sdks",
+  "files.readonlyInclude": {
+    ".husky/_": true,
+    ".turbo": true,
+    "pnpm-lock.yaml": true,
+  },
   "eslint.execArgv": [
     "--max_old_space_size=16384"
   ],

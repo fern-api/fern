@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
+import { isNonNullish } from "@fern-api/core-utils";
 import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
@@ -15,9 +16,12 @@ import {
 } from "@fern-api/fdr-sdk";
 import { convertToFernHostAbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
+
+import { parseDocsConfiguration } from "../../configuration-loader/src/docs-yml/parseDocsConfiguration";
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -44,13 +48,33 @@ export async function getPreviewDocsDefinition({
         )
     );
 
+    const ossWorkspaces = (
+        await Promise.all(
+            apiWorkspaces.map(async (workspace) => {
+                if (workspace instanceof OSSWorkspace) {
+                    return workspace as OSSWorkspace;
+                }
+                return null;
+            })
+        )
+    ).filter(isNonNullish);
+
     const apiCollector = new ReferencedAPICollector(context);
+    const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
+
+    const parsedDocsConfig = await parseDocsConfiguration({
+        rawDocsConfiguration: docsWorkspace.config,
+        context,
+        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
+    });
 
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
+        ossWorkspaces,
         fernWorkspaces,
         context,
         undefined,
@@ -67,7 +91,8 @@ export async function getPreviewDocsDefinition({
                     fileId
                 };
             }),
-        async (opts) => apiCollector.addReferencedAPI(opts)
+        async (opts) => apiCollector.addReferencedAPI(opts),
+        async (opts) => apiCollectorV2.addReferencedAPI(opts)
     );
 
     const writeDocsDefinition = await resolver.resolve();
@@ -80,7 +105,8 @@ export async function getPreviewDocsDefinition({
     });
 
     return {
-        apis: apiCollector.getAPIsForDefinition(),
+        apis: parsedDocsConfig.experimental?.openapiParserV2 ? {} : apiCollector.getAPIsForDefinition(),
+        apisV2: parsedDocsConfig.experimental?.openapiParserV2 ? apiCollectorV2.getAPIsForDefinition() : {},
         config: readDocsConfig,
         files: {},
         filesV2,
@@ -130,7 +156,10 @@ class ReferencedAPICollector {
         } catch (e) {
             // Print Error
             const err = e as Error;
-            this.context.logger.error(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
+            this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
+            this.context.logger.error(
+                "An error occured while trying to read an API definition. Please reach out to support."
+            );
             if (err.stack != null) {
                 this.context.logger.error(err?.stack);
             }
@@ -139,6 +168,34 @@ class ReferencedAPICollector {
     }
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
+        return this.apis;
+    }
+}
+
+class ReferencedAPICollectorV2 {
+    private readonly apis: Record<APIDefinitionID, FdrAPI.api.latest.ApiDefinition> = {};
+
+    constructor(private readonly context: TaskContext) {}
+
+    public addReferencedAPI({ api }: { api: FdrAPI.api.latest.ApiDefinition }): APIDefinitionID {
+        try {
+            this.apis[api.id] = api;
+            return api.id;
+        } catch (e) {
+            // Print Error
+            const err = e as Error;
+            this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
+            this.context.logger.error(
+                "An error occured while trying to read an API definition. Please reach out to support."
+            );
+            if (err.stack != null) {
+                this.context.logger.error(err?.stack);
+            }
+            throw e;
+        }
+    }
+
+    public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, FdrAPI.api.latest.ApiDefinition> {
         return this.apis;
     }
 }

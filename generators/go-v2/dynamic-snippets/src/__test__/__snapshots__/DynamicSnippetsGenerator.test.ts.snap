@@ -1,0 +1,1143 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Service.GetMetadata(
+		context.TODO(),
+		&acme.GetMetadataRequest{
+			Shallow: acme.Bool(
+				false,
+			),
+			Tag: []*string{
+				acme.String(
+					"development",
+				),
+				acme.String(
+					"public",
+				),
+			},
+			XAPIVersion: "0.0.1",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Service.GetMetadata(
+		context.TODO(),
+		&acme.GetMetadataRequest{
+			Shallow: acme.Bool(
+				false,
+			),
+			Tag: []*string{
+				acme.String(
+					"development",
+				),
+			},
+			XAPIVersion: "0.0.1",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Service.CreateBigEntity(
+		context.TODO(),
+		&acme.BigEntity{
+			CastMember: &acme.CastMember{
+				Actor: &acme.Actor{
+					ID:   "john.doe",
+					Name: "John Doe",
+				},
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "title"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Service.CreateMovie(
+		context.TODO(),
+		&acme.Movie{
+			ID: "movie-c06a4ad7",
+			Prequel: acme.String(
+				"movie-cv9b914f",
+			),
+			Title:  "The Boy and the Heron",
+			From:   "Hayao Miyazaki",
+			Rating: 8,
+			Tag:    "development",
+			Metadata: map[string]interface{}{
+				"actors": []interface{}{
+					"Christian Bale",
+					"Florence Pugh",
+					"Willem Dafoe",
+				},
+				"releaseDate": "2023-12-08",
+				"ratings": map[string]interface{}{
+					"rottenTomatoes": 97,
+					"imdb":           7.6,
+				},
+			},
+			Revenue: 1000000,
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.Container.GetAndReturnListOfObjects(
+		context.TODO(),
+		[]*types.ObjectWithRequiredField{
+			&types.ObjectWithRequiredField{
+				String: "one",
+			},
+			&types.ObjectWithRequiredField{
+				String: "two",
+			},
+			&types.ObjectWithRequiredField{
+				String: "three",
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.Container.GetAndReturnListOfPrimitives(
+		context.TODO(),
+		[]string{
+			"one",
+			"two",
+			"three",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	io "io"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Service.Post(
+		context.TODO(),
+		&acme.MyRequest{
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+			FileList: []io.Reader{
+				strings.NewReader(
+					"First",
+				),
+				strings.NewReader(
+					"Second",
+				),
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Service.JustFile(
+		context.TODO(),
+		&acme.JustFileRequet{
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Service.JustFileWithQueryParams(
+		context.TODO(),
+		&acme.JustFileWithQueryParamsRequet{
+			Integer: 42,
+			MaybeString: acme.String(
+				"exists",
+			),
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Imdb.GetMovie(
+		context.TODO(),
+		"movie_xyz",
+	)
+}
+"
+`;
+
+exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Imdb.CreateMovie(
+		context.TODO(),
+		&acme.CreateMovieRequest{
+			Title:  "The Matrix",
+			Rating: 8.2,
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "The Go SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+  }
+]"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "The Go SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+  }
+]"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Production,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		&acme.GetPresignedURLRequest{
+			S3Key: "xyz",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		&acme.GetPresignedURLRequest{
+			S3Key: "xyz",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Production,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			"http://localhost:8080",
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
+
+exports[`snippets (exportedClientName) > examples > 'GET /metadata (allow-multiple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Service.GetMetadata(
+		context.TODO(),
+		&acme.GetMetadataRequest{
+			Shallow: acme.Bool(
+				false,
+			),
+			Tag: []*string{
+				acme.String(
+					"development",
+				),
+				acme.String(
+					"public",
+				),
+			},
+			XAPIVersion: "0.0.1",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > examples > 'GET /metadata (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Service.GetMetadata(
+		context.TODO(),
+		&acme.GetMetadataRequest{
+			Shallow: acme.Bool(
+				false,
+			),
+			Tag: []*string{
+				acme.String(
+					"development",
+				),
+			},
+			XAPIVersion: "0.0.1",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > examples > 'POST /big-entity (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Service.CreateBigEntity(
+		context.TODO(),
+		&acme.BigEntity{
+			CastMember: &acme.CastMember{
+				Actor: &acme.Actor{
+					ID:   "john.doe",
+					Name: "John Doe",
+				},
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > examples > 'POST /movie (invalid request body)' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "title"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets (exportedClientName) > examples > 'POST /movie (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Service.CreateMovie(
+		context.TODO(),
+		&acme.Movie{
+			ID: "movie-c06a4ad7",
+			Prequel: acme.String(
+				"movie-cv9b914f",
+			),
+			Title:  "The Boy and the Heron",
+			From:   "Hayao Miyazaki",
+			Rating: 8,
+			Tag:    "development",
+			Metadata: map[string]interface{}{
+				"actors": []interface{}{
+					"Christian Bale",
+					"Florence Pugh",
+					"Willem Dafoe",
+				},
+				"releaseDate": "2023-12-08",
+				"ratings": map[string]interface{}{
+					"rottenTomatoes": 97,
+					"imdb":           7.6,
+				},
+			},
+			Revenue: 1000000,
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets (exportedClientName) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.Container.GetAndReturnListOfObjects(
+		context.TODO(),
+		[]*types.ObjectWithRequiredField{
+			&types.ObjectWithRequiredField{
+				String: "one",
+			},
+			&types.ObjectWithRequiredField{
+				String: "two",
+			},
+			&types.ObjectWithRequiredField{
+				String: "three",
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.Container.GetAndReturnListOfPrimitives(
+		context.TODO(),
+		[]string{
+			"one",
+			"two",
+			"three",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > file-upload > 'POST /' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	io "io"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewFernClient()
+	client.Service.Post(
+		context.TODO(),
+		&acme.MyRequest{
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+			FileList: []io.Reader{
+				strings.NewReader(
+					"First",
+				),
+				strings.NewReader(
+					"Second",
+				),
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > file-upload > 'POST /just-file' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewFernClient()
+	client.Service.JustFile(
+		context.TODO(),
+		&acme.JustFileRequet{
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewFernClient()
+	client.Service.JustFileWithQueryParams(
+		context.TODO(),
+		&acme.JustFileWithQueryParamsRequet{
+			Integer: 42,
+			MaybeString: acme.String(
+				"exists",
+			),
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Imdb.GetMovie(
+		context.TODO(),
+		"movie_xyz",
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Imdb.CreateMovie(
+		context.TODO(),
+		&acme.CreateMovieRequest{
+			Title:  "The Matrix",
+			Rating: 8.2,
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > multi-url-environment > 'Custom environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "The Go SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+  }
+]"
+`;
+
+exports[`snippets (exportedClientName) > multi-url-environment > 'Invalid multi url environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "The Go SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+  }
+]"
+`;
+
+exports[`snippets (exportedClientName) > multi-url-environment > 'Production environment' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			acme.Environments.Production,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		&acme.GetPresignedURLRequest{
+			S3Key: "xyz",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > multi-url-environment > 'Staging environment' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		&acme.GetPresignedURLRequest{
+			S3Key: "xyz",
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > multi-url-environment > 'Unrecognized environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
+
+exports[`snippets (exportedClientName) > single-url-environment-default > 'Production environment' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			acme.Environments.Production,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > single-url-environment-default > 'Staging environment' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > single-url-environment-default > 'custom baseURL' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			"http://localhost:8080",
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
+`;
+
+exports[`snippets (exportedClientName) > single-url-environment-default > 'invalid environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
