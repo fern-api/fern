@@ -50,7 +50,13 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertLiteral({ literalType, value }: { literalType: FernIr.dynamic.LiteralType; value: unknown }): ts.TypeLiteral {
+    private convertLiteral({
+        literalType,
+        value
+    }: {
+        literalType: FernIr.dynamic.LiteralType;
+        value: unknown;
+    }): ts.TypeLiteral {
         switch (literalType.type) {
             case "boolean": {
                 const bool = this.context.getValueAsBoolean({ value });

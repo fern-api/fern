@@ -96,6 +96,28 @@ func do() {
 					Name: "John Doe",
 				},
 			},
+			ExtendedMovie: &acme.ExtendedMovie{
+				Cast: []string{
+					"John Travolta",
+					"Samuel L. Jackson",
+					"Uma Thurman",
+					"Bruce Willis",
+				},
+				ID:     "movie-sda231x",
+				Title:  "Pulp Fiction",
+				From:   "Quentin Tarantino",
+				Rating: 8.5,
+				Tag:    "tag-12efs9dv",
+				Metadata: map[string]interface{}{
+					"academyAward": true,
+					"releaseDate":  "2023-12-08",
+					"ratings": map[string]interface{}{
+						"rottenTomatoes": 97,
+						"imdb":           7.6,
+					},
+				},
+				Revenue: 1000000,
+			},
 		},
 	)
 }
@@ -666,6 +688,28 @@ func do() {
 					ID:   "john.doe",
 					Name: "John Doe",
 				},
+			},
+			ExtendedMovie: &acme.ExtendedMovie{
+				Cast: []string{
+					"John Travolta",
+					"Samuel L. Jackson",
+					"Uma Thurman",
+					"Bruce Willis",
+				},
+				ID:     "movie-sda231x",
+				Title:  "Pulp Fiction",
+				From:   "Quentin Tarantino",
+				Rating: 8.5,
+				Tag:    "tag-12efs9dv",
+				Metadata: map[string]interface{}{
+					"academyAward": true,
+					"releaseDate":  "2023-12-08",
+					"ratings": map[string]interface{}{
+						"rottenTomatoes": 97,
+						"imdb":           7.6,
+					},
+				},
+				Revenue: 1000000,
 			},
 		},
 	)
