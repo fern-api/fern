@@ -4,22 +4,7 @@
     type: feat
   irVersion: 54
   version: 0.47.2
-
-- changelogEntry:
-  - summary: |
-      Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more 
-      idiomatic discriminated unions. 
-      ```yml
-      api:
-        specs:
-          - openapi: ./path/to/openapi.yml
-            settings:
-              unions: v1
-      ```
-    type: feat
-  irVersion: 53
-  version: 0.47.1
-
+  
 - changelogEntry:
   - summary: |
       Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more 
