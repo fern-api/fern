@@ -162,8 +162,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
-    addDocsPreviewCommand(cli, cliContext);
-    addDocsBrokenLinksCommand(cli, cliContext);
+    addDocsCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -1001,9 +1000,18 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
     );
 }
 
+function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("docs", "Commands for managing your docs", (yargs) => {
+        // Add subcommands directly
+        addDocsPreviewCommand(yargs, cliContext);
+        addDocsBrokenLinksCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "docs dev",
+        "dev",
         "Run a local development server to preview your docs",
         (yargs) =>
             yargs
@@ -1040,7 +1048,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
 
 function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "docs broken-links",
+        "broken-links",
         "Check for broken links in your docs",
         (yargs) =>
             yargs.option("strict", { boolean: true, default: false, description: "Fail with non-zero exit status" }),
