@@ -27,7 +27,6 @@ export function logViolations({
         logViolationsSummary({ context, stats, logWarnings });
     }
 
-    // Group all violations by nodePath
     const violationsByNodePath = groupViolationsByNodePath(violations);
 
     for (const [nodePath, violations] of violationsByNodePath) {

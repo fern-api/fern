@@ -17,7 +17,7 @@ export async function validateDocsBrokenLinks({
     const docsWorkspace = project.docsWorkspaces;
 
     if (docsWorkspace == null) {
-        // Should this fail and throw?
+        cliContext.failAndThrow("No docs workspace found");
         return;
     }
 

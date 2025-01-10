@@ -14,33 +14,32 @@ import { addLeadingSlash, removeLeadingSlash } from "./url-utils";
  * Crucially, the current file may referenced by two slugs, so if the target pathname contains a relativized path,
  * we will need to check that if the relativized paths can be found on all of the slugs for the current file.
  */
-export async function checkIfPathnameExists(
-    pathname: string,
-    {
-        markdown,
-        absoluteFilepath,
-        workspaceAbsoluteFilePath,
-        pageSlugs,
-        absoluteFilePathsToSlugs,
-        redirects = [],
-        baseUrl
-    }: {
-        markdown: boolean;
-        absoluteFilepath?: AbsoluteFilePath;
-        workspaceAbsoluteFilePath: AbsoluteFilePath;
-        pageSlugs: Set<string>;
-        absoluteFilePathsToSlugs: Map<AbsoluteFilePath, string[]>;
-        redirects?: {
-            source: string;
-            destination: string;
-            permanent?: boolean;
-        }[];
-        baseUrl: {
-            domain: string;
-            basePath?: string;
-        };
-    }
-): Promise<true | string[]> {
+export async function checkIfPathnameExists({
+    pathname,
+    markdown,
+    absoluteFilepath,
+    workspaceAbsoluteFilePath,
+    pageSlugs,
+    absoluteFilePathsToSlugs,
+    redirects = [],
+    baseUrl
+}: {
+    pathname: string;
+    markdown: boolean;
+    absoluteFilepath?: AbsoluteFilePath;
+    workspaceAbsoluteFilePath: AbsoluteFilePath;
+    pageSlugs: Set<string>;
+    absoluteFilePathsToSlugs: Map<AbsoluteFilePath, string[]>;
+    redirects?: {
+        source: string;
+        destination: string;
+        permanent?: boolean;
+    }[];
+    baseUrl: {
+        domain: string;
+        basePath?: string;
+    };
+}): Promise<true | string[]> {
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
 
     // base case: empty pathname is valid

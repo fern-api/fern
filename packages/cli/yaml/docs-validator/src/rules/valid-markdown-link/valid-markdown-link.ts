@@ -101,7 +101,8 @@ export const ValidMarkdownLinks: Rule = {
 
                 const pathToCheckViolations = await Promise.all(
                     pathnamesToCheck.map(async (pathnameToCheck) => {
-                        const exists = await checkIfPathnameExists(pathnameToCheck.pathname, {
+                        const exists = await checkIfPathnameExists({
+                            pathname: pathnameToCheck.pathname,
                             markdown: pathnameToCheck.markdown,
                             absoluteFilepath,
                             workspaceAbsoluteFilePath: workspace.absoluteFilePath,
@@ -129,7 +130,6 @@ export const ValidMarkdownLinks: Rule = {
                 return [...violations, ...pathToCheckViolations.flat()];
             },
             apiSection: async ({ workspace: apiWorkspace, config }) => {
-                // TODO: this is duplicating work from above, but there's no clean way to associate this visitor with the docs resolver
                 const fernWorkspace = await apiWorkspace.toFernWorkspace(
                     { context: NOOP_CONTEXT },
                     { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
@@ -165,7 +165,8 @@ export const ValidMarkdownLinks: Rule = {
                         const pathToCheckViolations = await Promise.all(
                             pathnamesToCheck.map(async (pathnameToCheck) => {
                                 // TODO: we don't know where the endpoint is defined (which file it's in) so this doesn't always work
-                                const exists = await checkIfPathnameExists(pathnameToCheck.pathname, {
+                                const exists = await checkIfPathnameExists({
+                                    pathname: pathnameToCheck.pathname,
                                     markdown: pathnameToCheck.markdown,
                                     workspaceAbsoluteFilePath: workspace.absoluteFilePath,
                                     pageSlugs: visitableSlugs,
