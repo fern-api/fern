@@ -1,6 +1,7 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.EnumValue;
 import com.fern.java.AbstractGeneratorContext;
@@ -244,5 +245,10 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 .addType(getNestedValueEnum())
                 .addType(generatedVisitor.typeSpec())
                 .build();
+    }
+
+    @Override
+    public Map<String, TypeId> getTypeIdsByPropertyName() {
+        return Map.of();
     }
 }

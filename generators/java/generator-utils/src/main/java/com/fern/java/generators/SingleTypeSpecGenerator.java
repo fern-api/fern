@@ -4,17 +4,22 @@ import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaInterface;
+import com.fern.java.utils.NamedTypeId;
+import com.fern.java.utils.TypeIdResolver;
+import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeSpec;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -72,7 +77,24 @@ public final class SingleTypeSpecGenerator implements Type.Visitor<Optional<Type
                 generatorContext,
                 allGeneratedInterfaces,
                 className);
-        return Optional.of(objectGenerator.getTypeSpec());
+
+        TypeSpec typeSpec = objectGenerator.getTypeSpec();
+
+        Map<String, TypeId> typeIdsByName = new HashMap<>();
+        for (Map.Entry<ObjectProperty, EnrichedObjectProperty> entry :
+                objectGenerator.objectPropertyGetters().entrySet()) {
+            ObjectProperty objectProperty = entry.getKey();
+            EnrichedObjectProperty enriched = entry.getValue();
+            List<NamedTypeId> ids = objectProperty.getValueType().visit(new TypeIdResolver(enriched.camelCaseKey()));
+            typeIdsByName.putAll(KeyedStream.of(ids.stream())
+                    .mapKeys(NamedTypeId::name)
+                    .map(NamedTypeId::typeId)
+                    .collectToMap());
+        }
+        List<TypeSpec> inlineTypeSpecs = getInlineTypeSpecs(typeIdsByName);
+
+        typeSpec = typeSpec.toBuilder().addTypes(inlineTypeSpecs).build();
+        return Optional.of(typeSpec);
     }
 
     @Override
@@ -100,7 +122,8 @@ public final class SingleTypeSpecGenerator implements Type.Visitor<Optional<Type
             String name = entry.getKey();
             TypeId id = entry.getValue();
 
-            Optional<TypeDeclaration> maybeDeclaration = Optional.ofNullable(generatorContext.getTypeDeclarations().get(id));
+            Optional<TypeDeclaration> maybeDeclaration =
+                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(id));
 
             if (maybeDeclaration.isEmpty()) {
                 continue;
@@ -116,14 +139,18 @@ public final class SingleTypeSpecGenerator implements Type.Visitor<Optional<Type
                 continue;
             }
 
-            declaration.getShape().visit(new SingleTypeSpecGenerator(
-                    generatorContext,
-                    declaration.getName(),
-                    className.nestedClass(name),
-                    allGeneratedInterfaces,
-                    false,
-                    declaration
-            )).ifPresent(specs::add);
+            declaration
+                    .getShape()
+                    .visit(new SingleTypeSpecGenerator(
+                            generatorContext,
+                            // This is used to get the TypeId for SelfInterface in ObjectGenerator
+                            declaration.getName(),
+                            // This is the actual name used for the generation
+                            className.nestedClass(name),
+                            allGeneratedInterfaces,
+                            false,
+                            declaration))
+                    .ifPresent(specs::add);
         }
 
         return specs;

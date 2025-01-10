@@ -304,4 +304,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .addType(getDeserializer());
         return unionTypeSpec.build();
     }
+
+    @Override
+    public Map<String, TypeId> getTypeIdsByPropertyName() {
+        return Map.of();
+    }
 }

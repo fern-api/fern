@@ -1,6 +1,7 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.PrimitiveTypeV1;
@@ -13,6 +14,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.Map;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
@@ -175,6 +177,11 @@ public final class AliasGenerator extends AbstractTypeGenerator {
                     .build());
         }
         return aliasTypeSpecBuilder.build();
+    }
+
+    @Override
+    public Map<String, TypeId> getTypeIdsByPropertyName() {
+        return Map.of();
     }
 
     private static final class ToStringMethodSpecVisitor implements PrimitiveTypeV1.Visitor<CodeBlock> {

@@ -77,10 +77,6 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    public Map<String, TypeId> getTypeIdsByPropertyName() {
-
-    }
-
     public TypeSpec getTypeSpec() {
         objectPropertyGetters = new HashMap<>();
         extendedPropertyGetters = new ArrayList<>();
@@ -152,5 +148,9 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                     return enrichedObjectProperty;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters() {
+        return objectPropertyGetters;
     }
 }

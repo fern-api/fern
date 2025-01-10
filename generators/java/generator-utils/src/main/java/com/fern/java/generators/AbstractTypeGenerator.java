@@ -6,7 +6,6 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
-
 import java.util.Map;
 
 public abstract class AbstractTypeGenerator extends AbstractFileGenerator {

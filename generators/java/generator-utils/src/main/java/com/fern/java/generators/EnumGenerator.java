@@ -17,12 +17,14 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
+import java.util.Map;
 import javax.lang.model.element.Modifier;
 
 public final class EnumGenerator extends AbstractTypeGenerator {
@@ -71,5 +73,10 @@ public final class EnumGenerator extends AbstractTypeGenerator {
                     .build();
             return enumTypeSpecBuilder.build();
         }
+    }
+
+    @Override
+    public Map<String, TypeId> getTypeIdsByPropertyName() {
+        return Map.of();
     }
 }

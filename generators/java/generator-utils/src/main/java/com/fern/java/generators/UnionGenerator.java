@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.constants.Constants;
 import com.fern.ir.model.types.*;
 import com.fern.java.AbstractGeneratorContext;
@@ -20,6 +21,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -48,6 +50,11 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                 unknownSubType,
                 generatorContext.getIr().getConstants());
         return unionTypeSpecGenerator.generateUnionTypeSpec();
+    }
+
+    @Override
+    public Map<String, TypeId> getTypeIdsByPropertyName() {
+        return Map.of();
     }
 
     private final class ModelUnionTypeSpecGenerator extends UnionTypeSpecGenerator {
