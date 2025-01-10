@@ -1,10 +1,13 @@
 package com.fern.java.generators;
 
+import com.fern.ir.model.commons.TypeId;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
+
+import java.util.Map;
 
 public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     public AbstractTypeGenerator(ClassName className, AbstractGeneratorContext<?, ?> generatorContext) {
@@ -12,6 +15,8 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     }
 
     public abstract TypeSpec getTypeSpec();
+
+    public abstract Map<String, TypeId> getTypeIdsByPropertyName();
 
     @Override
     public GeneratedJavaFile generateFile() {

@@ -64,7 +64,8 @@ public final class TypesGenerator {
                                     typeDeclaration.getName(),
                                     className,
                                     generatedInterfaces,
-                                    false));
+                                    false,
+                                    typeDeclaration));
 
                     return maybeTypeSpec.map(typeSpec -> typeDeclaration
                             .getShape()

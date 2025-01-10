@@ -6,12 +6,15 @@ import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeSpec;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,18 +27,21 @@ public final class SingleTypeSpecGenerator implements Type.Visitor<Optional<Type
     private final ClassName className;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean fromErrorDeclaration;
+    private final TypeDeclaration typeDeclaration;
 
     public SingleTypeSpecGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
             DeclaredTypeName declaredTypeName,
             ClassName className,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
-            boolean fromErrorDeclaration) {
+            boolean fromErrorDeclaration,
+            TypeDeclaration typeDeclaration) {
         this.generatorContext = generatorContext;
         this.className = className;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.declaredTypeName = declaredTypeName;
         this.fromErrorDeclaration = fromErrorDeclaration;
+        this.typeDeclaration = typeDeclaration;
     }
 
     @Override
@@ -83,7 +89,43 @@ public final class SingleTypeSpecGenerator implements Type.Visitor<Optional<Type
     }
 
     @Override
-    public Optional<TypeSpec> _visitUnknown(Object o) {
-        return Optional.empty();
+    public Optional<TypeSpec> _visitUnknown(Object unknown) {
+        throw new RuntimeException("Encountered unknown type: " + unknown);
+    }
+
+    private List<TypeSpec> getInlineTypeSpecs(Map<String, TypeId> typeIdsByName) {
+        List<TypeSpec> specs = new ArrayList<>();
+
+        for (Map.Entry<String, TypeId> entry : typeIdsByName.entrySet()) {
+            String name = entry.getKey();
+            TypeId id = entry.getValue();
+
+            Optional<TypeDeclaration> maybeDeclaration = Optional.ofNullable(generatorContext.getTypeDeclarations().get(id));
+
+            if (maybeDeclaration.isEmpty()) {
+                continue;
+            }
+
+            TypeDeclaration declaration = maybeDeclaration.get();
+
+            if (!declaration.getInline().orElse(false)) {
+                continue;
+            }
+
+            if (declaration.getShape().isEnum() && typeDeclaration.getInline().orElse(false)) {
+                continue;
+            }
+
+            declaration.getShape().visit(new SingleTypeSpecGenerator(
+                    generatorContext,
+                    declaration.getName(),
+                    className.nestedClass(name),
+                    allGeneratedInterfaces,
+                    false,
+                    declaration
+            )).ifPresent(specs::add);
+        }
+
+        return specs;
     }
 }
