@@ -18,7 +18,7 @@ describe("no-missing-error-discriminant", () => {
                 message: "error-discrimination is required because this API has declared errors.",
                 nodePath: ["error-discrimination"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

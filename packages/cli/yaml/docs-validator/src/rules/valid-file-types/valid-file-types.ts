@@ -104,7 +104,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         } else {
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `The file type of ${fileType.mime} is not allowed: ${absoluteFilepath}`
                 }
             ];
@@ -121,7 +121,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         if (encoding == null) {
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `The encoding of the file could not be detected: ${absoluteFilepath}`
                 }
             ];
@@ -129,7 +129,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         if (!ALLOWED_ENCODINGS.has(encoding.toUpperCase())) {
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `The encoding of ${encoding} is not allowed: ${absoluteFilepath}`
                 }
             ];
@@ -141,7 +141,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
     // in all other cases, return false
     return [
         {
-            severity: "error",
+            severity: "fatal",
             message: `File is not allowed to be uploaded: ${absoluteFilepath}`
         }
     ];

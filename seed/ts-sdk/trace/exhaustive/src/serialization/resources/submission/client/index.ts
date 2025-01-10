@@ -1,1 +1,1 @@
-export * as getExecutionSession from "./getExecutionSession.js";
+export * as getExecutionSession from "./getExecutionSession";

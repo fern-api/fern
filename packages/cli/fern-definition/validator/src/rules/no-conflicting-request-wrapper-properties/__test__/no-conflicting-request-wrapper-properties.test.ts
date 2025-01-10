@@ -21,7 +21,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Query Parameter "foo"`,
                 nodePath: ["service", "endpoints", "c"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property to deconflict.
@@ -29,7 +29,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Body property: <Request Body> -> (extends) ObjectWithFoo -> foo`,
                 nodePath: ["service", "endpoints", "d"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property to deconflict.
@@ -37,7 +37,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Body property: <Request Body> -> bar`,
                 nodePath: ["service", "endpoints", "d"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: `Multiple request properties have the name baz. This is not suitable for code generation. Use the "name" property to deconflict.
@@ -45,7 +45,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Endpoint header "baz"`,
                 nodePath: ["service", "endpoints", "d"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: `Multiple request properties have the name body. This is not suitable for code generation. Use the "name" property to deconflict.
@@ -53,7 +53,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Query Parameter "body"`,
                 nodePath: ["service", "endpoints", "c"],
                 relativeFilepath: RelativeFilePath.of("body-property-key.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

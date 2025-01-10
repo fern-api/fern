@@ -1,1 +1,1 @@
-export * from "./EchoRequest.js";
+export * from "./EchoRequest";

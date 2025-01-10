@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.46.6] - 2025-01-09
+
+- Fix: Update `@types/node` to `18+`, required for the generated `Node18UniversalStreamWrapper` test.
+
+## [0.46.5] - 2025-01-09
+
+- Fix: Fix the webpack test to work with .js/.jsx extensions in TypeScript
+- Fix: Only map .js modules in Jest, not .json files.
+
+## [0.46.4] - 2025-01-09
+
+- Fix: Fix packageJson custom configuration & package.json types field.
+
+## [0.46.3] - 2025-01-09
+
+- Fix: Revert to using legacy exports by default.
+
+## [0.46.2] - 2025-01-09
+
+- Fix: Fix Jest to work with files imported using `.js` extension.
+- Fix: Make sure Jest loads Jest configuration regardless of package.json type.
+
 ## [0.46.1] - 2025-01-08
 
 - Fix: ESModule output is fixed to be compatible with Node.js ESM loading.

@@ -1,45 +1,14 @@
 {
-    "name": "test-package",
-    "type": "commonjs",
-    "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.mjs",
-    "types": "./dist/cjs/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/cjs/index.d.ts",
-            "import": {
-                "types": "./dist/esm/index.d.mts",
-                "default": "./dist/esm/index.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/index.d.ts",
-                "default": "./dist/cjs/index.js"
-            },
-            "default": "./dist/cjs/index.js"
-        },
-        "./serialization": {
-            "types": "./dist/cjs/serialization/index.d.ts",
-            "import": {
-                "types": "./dist/esm/serialization/index.d.mts",
-                "default": "./dist/esm/serialization/index.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/serialization/index.d.ts",
-                "default": "./dist/cjs/serialization/index.js"
-            },
-            "default": "./dist/cjs/serialization/index.js"
-        },
-        "./package.json": "./package.json"
-    },
-    "files": [
-        "dist",
-        "reference.md"
-    ],
+    "name": "@fern/enum",
+    "version": "0.0.1",
+    "private": false,
+    "repository": "https://github.com/enum/fern",
+    "main": "./index.js",
+    "types": "./index.d.ts",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
-        "build": "yarn build:cjs && yarn build:esm",
-        "build:cjs": "tsc --project ./tsconfig.cjs.json",
-        "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+        "build": "tsc",
+        "prepack": "cp -rv dist/. .",
         "test": "jest"
     },
     "dependencies": {
@@ -61,7 +30,7 @@
         "@types/jest": "^29.5.14",
         "ts-jest": "^29.1.1",
         "jest-environment-jsdom": "^29.7.0",
-        "@types/node": "^17.0.41",
+        "@types/node": "^18.19.70",
         "prettier": "^3.4.2",
         "typescript": "~5.7.2"
     },

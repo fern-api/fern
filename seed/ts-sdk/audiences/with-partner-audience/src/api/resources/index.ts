@@ -1,1 +1,1 @@
-export * as folderD from "./folderD/index.js";
+export * as folderD from "./folderD";

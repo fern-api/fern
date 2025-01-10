@@ -1,2 +1,2 @@
-export * from "./Package.js";
-export * from "./Record_.js";
+export * from "./Package";
+export * from "./Record_";

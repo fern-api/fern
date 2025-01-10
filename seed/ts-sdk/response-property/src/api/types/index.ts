@@ -1,3 +1,3 @@
-export * from "./StringResponse.js";
-export * from "./OptionalStringResponse.js";
-export * from "./WithMetadata.js";
+export * from "./StringResponse";
+export * from "./OptionalStringResponse";
+export * from "./WithMetadata";

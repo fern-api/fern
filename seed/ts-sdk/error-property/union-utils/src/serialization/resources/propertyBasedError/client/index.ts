@@ -1,1 +1,1 @@
-export * as throwError from "./throwError.js";
+export * as throwError from "./throwError";

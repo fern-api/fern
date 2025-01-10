@@ -1,2 +1,2 @@
-export * as unknown from "./unknown/index.js";
-export * from "./unknown/types/index.js";
+export * as unknown from "./unknown";
+export * from "./unknown/types";

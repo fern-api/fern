@@ -42,12 +42,15 @@ export class JestTestGenerator {
 
     private addJestConfig(): void {
         const jestConfig = this.rootDirectory.createSourceFile(
-            "jest.config.js",
+            "jest.config.mjs",
             code`
             /** @type {import('jest').Config} */
-            module.exports = {
+            export default {
                 preset: "ts-jest",
                 testEnvironment: "node",
+                moduleNameMapper: {
+                    '(.+)\\.js$': '$1'
+                }
             };
             `.toString({ dprintOptions: { indentWidth: 4 } })
             // globalSetup: "<rootDir>/tests/setup.js",

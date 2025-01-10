@@ -1,1 +1,1 @@
-export * as ping from "./ping.js";
+export * as ping from "./ping";

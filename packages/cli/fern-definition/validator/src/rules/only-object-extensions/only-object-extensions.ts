@@ -32,7 +32,7 @@ export const OnlyObjectExtensionsRule: Rule = {
 
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message: `Objects can only extend other objects, and ${extension} is not an object.`
                         }
                     ];

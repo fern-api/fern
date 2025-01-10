@@ -1,6 +1,6 @@
-import { BaseSchema, Schema, SchemaOptions, SchemaType } from "../../Schema.js";
-import { JsonError } from "./JsonError.js";
-import { ParseError } from "./ParseError.js";
+import { BaseSchema, Schema, SchemaOptions, SchemaType } from "../../Schema";
+import { JsonError } from "./JsonError";
+import { ParseError } from "./ParseError";
 
 export interface SchemaUtils<Raw, Parsed> {
     optional: () => Schema<Raw | null | undefined, Parsed | undefined>;

@@ -1,1 +1,1 @@
-export { setObjectProperty } from "./setObjectProperty.js";
+export { setObjectProperty } from "./setObjectProperty";

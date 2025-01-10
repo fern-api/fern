@@ -269,7 +269,7 @@ export class ExpressGenerator {
             extraConfigs: undefined,
             outputJsr: false,
             exportSerde: false,
-            legacyExports: true
+            useLegacyExports: true
         });
     }
 

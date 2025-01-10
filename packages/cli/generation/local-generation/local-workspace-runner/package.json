@@ -27,6 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
@@ -37,32 +38,32 @@
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
+    "@fern-api/sdk": "0.12.3",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/typescript-ast": "workspace:*",
     "@fern-api/typescript-dynamic-snippets": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
-    "@fern-api/sdk": "0.12.3",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
+    "prettier2": "npm:prettier@^2.7.1",
     "tmp-promise": "^3.0.3",
-    "url-join": "^5.0.0",
-    "prettier2": "npm:prettier@^2.7.1"
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.56.0",
+    "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "typescript": "5.7.2",
     "@types/decompress": "^4.2.7",
     "@types/jest": "^29.5.14",
-    "@types/node": "18.15.3",
+    "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "@types/tmp": "^0.2.4",
     "@types/url-join": "4.0.1",
-    "@types/prettier2": "npm:@types/prettier@^2.7.3",
-    "depcheck": "^1.4.7",
-    "eslint": "^9.16.0",
-    "vitest": "^2.1.8",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "prettier": "^3.4.2",
-    "typescript": "5.7.2"
+    "vitest": "^2.1.8"
   }
 }

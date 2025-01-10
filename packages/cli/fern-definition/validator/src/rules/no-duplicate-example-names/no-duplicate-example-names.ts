@@ -14,7 +14,7 @@ export const NoDuplicateExampleNamesRule: Rule = {
                     }
                     const allNames = declaration.examples.map((example) => example.name).filter(isNonNullish);
                     return getDuplicates(allNames).map((duplicate) => ({
-                        severity: "error",
+                        severity: "fatal",
                         message: `Duplicate example name: ${duplicate}`
                     }));
                 },
@@ -24,7 +24,7 @@ export const NoDuplicateExampleNamesRule: Rule = {
                     }
                     const allNames = endpoint.examples.map((example) => example.name).filter(isNonNullish);
                     return getDuplicates(allNames).map((duplicate) => ({
-                        severity: "error",
+                        severity: "fatal",
                         message: `Duplicate example name: ${duplicate}`
                     }));
                 }

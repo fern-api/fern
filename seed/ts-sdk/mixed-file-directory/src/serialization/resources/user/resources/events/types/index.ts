@@ -1,1 +1,1 @@
-export * from "./Event.js";
+export * from "./Event";

@@ -1,1 +1,1 @@
-export * as sendOptionalBody from "./sendOptionalBody.js";
+export * as sendOptionalBody from "./sendOptionalBody";

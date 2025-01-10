@@ -1,4 +1,4 @@
-export * as SeedCustomAuth from "./api/index.js";
-export { SeedCustomAuthClient } from "./Client.js";
-export { SeedCustomAuthError, SeedCustomAuthTimeoutError } from "./errors/index.js";
-export * as serialization from "./serialization/index.js";
+export * as SeedCustomAuth from "./api";
+export { SeedCustomAuthClient } from "./Client";
+export { SeedCustomAuthError, SeedCustomAuthTimeoutError } from "./errors";
+export * as serialization from "./serialization";

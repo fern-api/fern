@@ -1,1 +1,1 @@
-export * as getWithCustomHeader from "./getWithCustomHeader.js";
+export * as getWithCustomHeader from "./getWithCustomHeader";

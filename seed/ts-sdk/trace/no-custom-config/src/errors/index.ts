@@ -1,2 +1,2 @@
-export { SeedTraceError } from "./SeedTraceError.js";
-export { SeedTraceTimeoutError } from "./SeedTraceTimeoutError.js";
+export { SeedTraceError } from "./SeedTraceError";
+export { SeedTraceTimeoutError } from "./SeedTraceTimeoutError";

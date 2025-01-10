@@ -84,6 +84,7 @@ export abstract class TypescriptProject {
     private runScripts: boolean;
 
     constructor({
+        npmPackage,
         runScripts,
         tsMorphProject,
         extraDependencies,
@@ -94,8 +95,10 @@ export abstract class TypescriptProject {
         extraPeerDependenciesMeta,
         dependencies,
         outputJsr,
-        exportSerde
+        exportSerde,
+        extraConfigs
     }: TypescriptProject.Init) {
+        this.npmPackage = npmPackage;
         this.runScripts = runScripts;
         this.tsMorphProject = tsMorphProject;
         this.extraDependencies = extraDependencies;
@@ -107,6 +110,7 @@ export abstract class TypescriptProject {
         this.dependencies = dependencies;
         this.outputJsr = outputJsr ?? false;
         this.exportSerde = exportSerde;
+        this.extraConfigs = extraConfigs;
     }
 
     public getFoldersForExports(): string[] {

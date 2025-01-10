@@ -31,7 +31,7 @@ export const ValidOauthRule: Rule = {
                     });
                     if (resolvedTokenEndpoint == null) {
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             message: `Failed to resolve endpoint ${tokenEndpointReference}`
                         });
                     } else {
@@ -54,7 +54,7 @@ export const ValidOauthRule: Rule = {
                         });
                         if (resolvedRefreshEndpoint == null) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Failed to resolve endpoint ${tokenEndpointReference}`
                             });
                         } else {

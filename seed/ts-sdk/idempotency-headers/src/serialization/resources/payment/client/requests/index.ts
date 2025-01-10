@@ -1,1 +1,1 @@
-export { CreatePaymentRequest } from "./CreatePaymentRequest.js";
+export { CreatePaymentRequest } from "./CreatePaymentRequest";

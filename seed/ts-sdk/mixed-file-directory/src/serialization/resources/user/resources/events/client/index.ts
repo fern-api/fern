@@ -1,1 +1,1 @@
-export * as listEvents from "./listEvents.js";
+export * as listEvents from "./listEvents";

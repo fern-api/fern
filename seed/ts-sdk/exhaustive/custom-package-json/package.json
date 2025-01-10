@@ -1,5 +1,8 @@
 {
-    "name": "test-package",
+    "name": "@fern/exhaustive",
+    "version": "0.0.2",
+    "private": false,
+    "repository": "https://github.com/exhaustive/fern",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "compile": "tsc",
@@ -7,6 +10,7 @@
         "build": "yarn compile && yarn bundle"
     },
     "files": [
+        "exampleFile",
         "dist",
         "types",
         "serialization.d.ts"
@@ -34,10 +38,11 @@
         "form-data": "^4.0.0",
         "formdata-node": "^6.0.3",
         "node-fetch": "^2.7.0",
-        "qs": "^6.13.1",
+        "qs": "^6.11.2",
         "readable-stream": "^4.5.2",
         "js-base64": "3.7.7",
-        "lodash-es": "^4.17.21"
+        "lodash-es": "^4.17.21",
+        "stream": "^0.0.2"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",
@@ -50,7 +55,7 @@
         "@types/jest": "^29.5.14",
         "ts-jest": "^29.1.1",
         "jest-environment-jsdom": "^29.7.0",
-        "@types/node": "^17.0.41",
+        "@types/node": "^18.19.70",
         "esbuild": "~0.24.2",
         "prettier": "^3.4.2",
         "typescript": "~5.7.2"
@@ -58,6 +63,8 @@
     "browser": {
         "fs": false,
         "os": false,
-        "path": false
+        "path": false,
+        "command-exists": false,
+        "execa": false
     }
 }

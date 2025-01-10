@@ -1,1 +1,1 @@
-export * from "./StreamedCompletion.js";
+export * from "./StreamedCompletion";

@@ -70,7 +70,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             omitUndefined: parsed?.omitUndefined ?? false,
             generateWireTests: parsed?.generateWireTests ?? false,
             noScripts: parsed?.noScripts ?? false,
-            useBigInt: parsed?.useBigInt ?? false
+            useBigInt: parsed?.useBigInt ?? false,
+            useLegacyExports: parsed?.useLegacyExports ?? true
         };
     }
 
@@ -87,6 +88,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         generatorContext: GeneratorContext;
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
+        const useLegacyExports = customConfig.useLegacyExports ?? true;
         const namespaceExport = getNamespaceExport({
             organization: config.organization,
             workspaceName: config.workspaceName,
@@ -149,7 +151,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 outputJsr: customConfig.publishToJsr ?? false,
                 omitUndefined: customConfig.omitUndefined ?? false,
                 useBigInt: customConfig.useBigInt ?? false,
-                enableInlineTypes: customConfig.enableInlineTypes ?? false
+                enableInlineTypes: customConfig.enableInlineTypes ?? false,
+                useLegacyExports
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -158,17 +161,24 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
+
+        await this.postProcess(persistedTypescriptProject, customConfig);
+
         const scriptsManager = new ScriptsManager();
         await scriptsManager.copyScripts({
             pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
-        await this.postProcess(persistedTypescriptProject);
 
         return persistedTypescriptProject;
     }
 
-    private async postProcess(persistedTypescriptProject: PersistedTypescriptProject): Promise<void> {
-        await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
+    private async postProcess(
+        persistedTypescriptProject: PersistedTypescriptProject,
+        config: SdkCustomConfig
+    ): Promise<void> {
+        if (config.useLegacyExports === false) {
+            await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
+        }
     }
 
     protected isPackagePrivate(customConfig: SdkCustomConfig): boolean {

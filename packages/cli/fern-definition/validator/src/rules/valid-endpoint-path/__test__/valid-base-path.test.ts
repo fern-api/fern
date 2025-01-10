@@ -20,7 +20,7 @@ describe("valid-endpoint-path", () => {
                 message: "Path must start with a slash.",
                 nodePath: ["service", "endpoints", "noLeadingSlash"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 

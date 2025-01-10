@@ -1,2 +1,2 @@
-export * as create from "./create.js";
-export * from "./requests/index.js";
+export * as create from "./create";
+export * from "./requests";

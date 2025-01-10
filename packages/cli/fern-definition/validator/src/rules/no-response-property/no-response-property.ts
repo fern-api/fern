@@ -63,14 +63,14 @@ function resultToRuleViolations(result: Result, responseProperty: string): RuleV
         case Result.DoesNotContainProperty:
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `Response does not have a property named ${responseProperty}.`
                 }
             ];
         case Result.IsNotObject:
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: "Response must be an object in order to return a property as a response."
                 }
             ];

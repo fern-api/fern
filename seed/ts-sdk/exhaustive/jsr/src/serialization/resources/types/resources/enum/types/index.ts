@@ -1,1 +1,1 @@
-export * from "./WeatherReport.js";
+export * from "./WeatherReport";

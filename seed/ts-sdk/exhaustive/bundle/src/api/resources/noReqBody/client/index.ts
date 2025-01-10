@@ -1,2 +1,2 @@
-export * as getWithNoRequestBody from "./getWithNoRequestBody.js";
-export * as postWithNoRequestBody from "./postWithNoRequestBody.js";
+export * as getWithNoRequestBody from "./getWithNoRequestBody";
+export * as postWithNoRequestBody from "./postWithNoRequestBody";

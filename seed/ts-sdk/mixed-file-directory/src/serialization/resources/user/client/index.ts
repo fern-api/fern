@@ -1,1 +1,1 @@
-export * as list from "./list.js";
+export * as list from "./list";

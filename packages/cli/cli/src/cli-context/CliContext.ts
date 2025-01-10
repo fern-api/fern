@@ -1,8 +1,8 @@
-import { confirm } from "@inquirer/prompts";
+import { confirm, input } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 
-import { LOG_LEVELS, LogLevel, Logger, createLogger } from "@fern-api/logger";
+import { LOG_LEVELS, LogLevel, createLogger } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
@@ -321,6 +321,16 @@ export class CliContext {
             message,
             default: defaultValue
         });
+    }
+
+    /**
+     * Prompts the user for text input
+     * @param message The message to display to the user
+     * @param default Optional default value (defaults to undefined)
+     * @returns Promise<string> representing the user's input
+     */
+    public async getInput(config: { message: string; default?: string }): Promise<string> {
+        return await input({ message: config.message, default: config.default });
     }
 }
 

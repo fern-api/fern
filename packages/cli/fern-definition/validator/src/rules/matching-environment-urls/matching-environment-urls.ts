@@ -20,7 +20,7 @@ export const MatchingEnvironmentUrlsRule: Rule = {
 
                     const addViolationForUrlId = (urlId: string) => {
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             message: `Environment ${environmentId} is missing URL for ${chalk.bold(urlId)}`
                         });
                     };

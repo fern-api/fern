@@ -1,2 +1,2 @@
-export { record } from "./record.js";
-export type { BaseRecordSchema, RecordSchema } from "./types.js";
+export { record } from "./record";
+export type { BaseRecordSchema, RecordSchema } from "./types";

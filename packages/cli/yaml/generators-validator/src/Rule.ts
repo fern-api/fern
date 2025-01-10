@@ -30,6 +30,6 @@ export interface RuleRunnerArgs<FileSchema> {
 }
 
 export interface RuleViolation {
-    severity: "warning" | "error";
+    severity: "fatal" | "error" | "warning";
     message: string;
 }

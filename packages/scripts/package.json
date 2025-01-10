@@ -32,19 +32,20 @@
     "dist:cli": "tsup src/cli.ts --format cjs --platform node --clean"
   },
   "devDependencies": {
-    "yargs": "^17.7.2",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
-    "@types/jest": "^29.5.12",
-    "@types/node": "18.7.18",
-    "depcheck": "^1.4.6",
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
-    "vitest": "^2.1.4",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "prettier": "^3.4.2",
-    "typescript": "4.6.4",
-    "tsup": "^8.0.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "typescript": "5.7.2",
+    "@types/jest": "^29.5.12",
     "@types/yargs": "^17.0.32",
-    "yaml": "^2.4.5"
+    "tsup": "^8.0.2",
+    "yaml": "^2.4.5",
+    "yargs": "^17.7.2",
+    "vitest": "^2.1.8"
   }
 }

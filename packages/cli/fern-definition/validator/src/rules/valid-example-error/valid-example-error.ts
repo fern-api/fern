@@ -37,7 +37,7 @@ export const ValidExampleErrorRule: Rule = {
                     });
                     return violations.map((violation) => {
                         return {
-                            severity: "error",
+                            severity: "fatal",
                             message: violation.message
                         };
                     });
