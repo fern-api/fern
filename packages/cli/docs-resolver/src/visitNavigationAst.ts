@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { noop, visitObject } from "@fern-api/core-utils";
+import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
@@ -75,7 +75,7 @@ async function visitNavigationItem({
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
 }): Promise<void> {
-    await visitObject(navigationItem, {
+    await visitObjectAsync(navigationItem, {
         alphabetized: noop,
         api: noop,
         apiName: noop,
@@ -98,14 +98,16 @@ async function visitNavigationItem({
             if (items == null) {
                 return;
             }
-            items.map(async (item) => {
-                await visitNavigationItem({
-                    navigationItem: item,
-                    visitor,
-                    fernWorkspaces,
-                    context
-                });
-            });
+            await Promise.all(
+                items.map(async (item) => {
+                    await visitNavigationItem({
+                        navigationItem: item,
+                        visitor,
+                        fernWorkspaces,
+                        context
+                    });
+                })
+            );
         },
         viewers: noop,
         orphaned: noop

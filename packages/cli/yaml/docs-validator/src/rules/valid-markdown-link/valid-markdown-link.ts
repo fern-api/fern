@@ -134,7 +134,7 @@ export const ValidMarkdownLinks: Rule = {
                     { context: NOOP_CONTEXT },
                     { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
                 );
-                const ir = await generateIntermediateRepresentation({
+                const ir = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: config.audiences ? { type: "select", audiences: config.audiences } : { type: "all" },
                     generationLanguage: undefined,
