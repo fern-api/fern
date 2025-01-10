@@ -26,6 +26,16 @@ function getFrontmatterOffset(content: string): number {
     return (match[0].match(/\n/g) || []).length + 1;
 }
 
+function adjustedPosition(position: Position | undefined, frontmatterOffset: number): Position | undefined {
+    return (
+        position && {
+            ...position,
+            start: { ...position.start, line: position.start.line + frontmatterOffset },
+            end: { ...position.end, line: position.end.line + frontmatterOffset }
+        }
+    );
+}
+
 export function collectPathnamesToCheck(
     content: string,
     {
@@ -65,11 +75,7 @@ export function collectPathnamesToCheck(
                 pathnamesToCheck.push({
                     pathname: url.pathname,
                     sourceFilepath: link.sourceFilepath,
-                    position: link.position && {
-                        ...link.position,
-                        start: { ...link.position.start, line: link.position.start.line + frontmatterOffset },
-                        end: { ...link.position.end, line: link.position.end.line + frontmatterOffset }
-                    },
+                    position: adjustedPosition(link.position, frontmatterOffset),
                     markdown: true
                 });
             } catch (error) {
@@ -91,11 +97,7 @@ export function collectPathnamesToCheck(
         pathnamesToCheck.push({
             pathname,
             sourceFilepath: link.sourceFilepath,
-            position: link.position && {
-                ...link.position,
-                start: { ...link.position.start, line: link.position.start.line + frontmatterOffset },
-                end: { ...link.position.end, line: link.position.end.line + frontmatterOffset }
-            },
+            position: adjustedPosition(link.position, frontmatterOffset),
             markdown: true
         });
     });
@@ -116,11 +118,7 @@ export function collectPathnamesToCheck(
             pathnamesToCheck.push({
                 pathname: source.src,
                 sourceFilepath: source.sourceFilepath,
-                position: source.position && {
-                    ...source.position,
-                    start: { ...source.position.start, line: source.position.start.line + frontmatterOffset },
-                    end: { ...source.position.end, line: source.position.end.line + frontmatterOffset }
-                },
+                position: adjustedPosition(source.position, frontmatterOffset),
                 markdown: false
             });
         }
