@@ -17,9 +17,7 @@ Commands:
   fern-dev format                       Formats your Fern Definition
   fern-dev write-definition             Write underlying Fern Definition for
                                         OpenAPI specs and API Dependencies.
-  fern-dev docs dev                     Run a local development server to
-                                        preview your docs
-  fern-dev docs broken-links            Check for broken links in your docs
+  fern-dev docs                         Commands for managing your docs
   fern-dev mock                         Starts a mock server for an API.
   fern-dev write-overrides              Generate a basic openapi overrides file.
   fern-dev test                         Runs tests specified in --command, this
