@@ -12,6 +12,7 @@ async function main(): Promise<void> {
         title: "title",
         from: "from",
         rating: 1.1,
+        type: "movie",
         tag: "tag",
         book: "book",
         metadata: {

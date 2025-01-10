@@ -27,7 +27,7 @@ export class DynamicTypeLiteralMapper {
             case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
             case "literal":
-                return ts.TypeLiteral.nop();
+                return this.convertLiteral({ literalType: args.typeReference.value, value: args.value });
             case "map":
                 return this.convertMap({ map: args.typeReference, value: args.value });
             case "named": {
@@ -47,6 +47,27 @@ export class DynamicTypeLiteralMapper {
                 return this.convertUnknown({ value: args.value });
             default:
                 assertNever(args.typeReference);
+        }
+    }
+
+    private convertLiteral({ literalType, value }: { literalType: FernIr.dynamic.LiteralType; value: unknown }): ts.TypeLiteral {
+        switch (literalType.type) {
+            case "boolean": {
+                const bool = this.context.getValueAsBoolean({ value });
+                if (bool == null) {
+                    return ts.TypeLiteral.nop();
+                }
+                return ts.TypeLiteral.boolean(bool);
+            }
+            case "string": {
+                const str = this.context.getValueAsString({ value });
+                if (str == null) {
+                    return ts.TypeLiteral.nop();
+                }
+                return ts.TypeLiteral.string(str);
+            }
+            default:
+                assertNever(literalType);
         }
     }
 
