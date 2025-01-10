@@ -5,7 +5,7 @@ RUN yarn add \
   @types/jest@^29.5.14 \
   node-fetch@^2.7.0 \
   @types/node-fetch@^2.6.12 \
-  @types/node@^17.0.41 \
+  @types/node@^18.19.70 \
   qs@^6.13.1 \
   @types/qs@^6.9.17 \
   url-join@4.0.1 \

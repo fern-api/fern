@@ -12,7 +12,7 @@ yarn init --yes
 yarn add \
   @types/jest@^29.5.14 \
   @types/node-fetch@^2.6.12 \
-  @types/node@^17.0.41 \
+  @types/node@^18.19.70 \
   @types/qs@^6.9.17 \
   @types/url-join@4.0.1 \
   form-data@^4.0.0 \
