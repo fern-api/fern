@@ -17,7 +17,7 @@ export const ValidMarkdownLinks: Rule = {
                 for (const link of links) {
                     if (!(await doesPathExist(link.absolutePath))) {
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             message: `Link to non-existent file: ${link.path}`
                         });
                     }

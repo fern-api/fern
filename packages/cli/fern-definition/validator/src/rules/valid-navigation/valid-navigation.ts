@@ -43,7 +43,7 @@ export const ValidNavigationRule: Rule = {
                         } else {
                             return [
                                 {
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: `${navigation} does not exist.`
                                 }
                             ];
@@ -61,17 +61,17 @@ export const ValidNavigationRule: Rule = {
                     for (const actualItem of navigation) {
                         if (actualItem === FERN_PACKAGE_MARKER_FILENAME) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `${FERN_PACKAGE_MARKER_FILENAME} cannot be specified in navigation.`
                             });
                         } else if (!expectedItems.has(actualItem)) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Unexpected item: ${actualItem}`
                             });
                         } else if (seen.has(actualItem)) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `${actualItem} is specified more than once.`
                             });
                         }
@@ -81,7 +81,7 @@ export const ValidNavigationRule: Rule = {
                     for (const expectedItem of expectedItems) {
                         if (!seen.has(expectedItem)) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Missing ${expectedItem}`
                             });
                         }

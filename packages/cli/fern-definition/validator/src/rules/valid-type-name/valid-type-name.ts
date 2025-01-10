@@ -11,7 +11,7 @@ export const ValidTypeNameRule: Rule = {
                     if (!typeName.isInlined && !ALPHA_REGEX.test(typeName.name)) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: "Type name must begin with a letter"
                             }
                         ];

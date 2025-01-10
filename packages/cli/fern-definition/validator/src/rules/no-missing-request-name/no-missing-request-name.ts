@@ -18,7 +18,7 @@ export const NoMissingRequestNameRule: Rule = {
                         if (endpoint.request.body != null && isInlineRequestBody(endpoint.request.body)) {
                             return [
                                 {
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: "Request name is required because request body is defined inline"
                                 }
                             ];
@@ -30,7 +30,7 @@ export const NoMissingRequestNameRule: Rule = {
                         ) {
                             return [
                                 {
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: "Request name is required because request has query parameters"
                                 }
                             ];
@@ -39,7 +39,7 @@ export const NoMissingRequestNameRule: Rule = {
                         if (size(endpoint.request.headers) > 0) {
                             return [
                                 {
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: "Request name is required because request has headers"
                                 }
                             ];
@@ -49,7 +49,7 @@ export const NoMissingRequestNameRule: Rule = {
                     if (size(service.headers) > 0) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: "Request name is required because service has headers"
                             }
                         ];

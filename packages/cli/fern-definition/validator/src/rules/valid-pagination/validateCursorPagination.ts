@@ -40,7 +40,7 @@ export function validateCursorPagination({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         });
         return violations;

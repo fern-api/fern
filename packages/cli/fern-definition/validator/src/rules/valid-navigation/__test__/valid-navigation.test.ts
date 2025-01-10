@@ -20,43 +20,43 @@ describe("valid-navigation", () => {
                 message: "Unexpected item: ./b.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Unexpected item: d.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "__package__.yml cannot be specified in navigation.",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "a.yml is specified more than once.",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Missing b.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Missing c.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "./foo does not exist.",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-string/__package__.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 

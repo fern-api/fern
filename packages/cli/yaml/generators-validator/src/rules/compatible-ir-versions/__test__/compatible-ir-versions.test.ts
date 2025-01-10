@@ -19,7 +19,7 @@ describe("compatible-ir-versions", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("generators.yml"),
                 nodePath: ["groups", "python-sdk", "generators", "0", "fernapi/fern-python-sdk"],
                 message:

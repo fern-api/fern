@@ -39,7 +39,7 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
                             continue;
                         }
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             message:
                                 `Multiple request properties have the name ${chalk.bold(
                                     name

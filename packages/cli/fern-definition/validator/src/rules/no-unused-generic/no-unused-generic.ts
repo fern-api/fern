@@ -47,7 +47,7 @@ export const NoUnusedGenericRule: Rule = {
                         ? []
                         : [
                               {
-                                  severity: "error",
+                                  severity: "fatal",
                                   message: `Generic "${name}" is declared but never used.`
                               }
                           ];
