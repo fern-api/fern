@@ -13,6 +13,9 @@
       "path": "../../../../../generators/go-v2/dynamic-snippets"
     },
     {
+      "path": "../../../../../generators/typescript-v2/dynamic-snippets"
+    },
+    {
       "path": "../../../../commons/core-utils"
     },
     {

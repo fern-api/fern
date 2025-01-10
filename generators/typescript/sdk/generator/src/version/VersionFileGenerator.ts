@@ -19,7 +19,7 @@ export class VersionFileGenerator {
     }
 
     public generate(): void {
-        const writer = new Writer();
+        const writer = new Writer({ customConfig: {} });
         writer.writeNodeStatement(
             ts.variable({
                 const: true,

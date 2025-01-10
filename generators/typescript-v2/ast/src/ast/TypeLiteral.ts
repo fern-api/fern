@@ -7,9 +7,11 @@ type InternalTypeLiteral =
     | Blob_
     | Boolean_
     | BigInt_
+    | Datetime_
     | Number_
     | Object_
     | Reference
+    | Set_
     | String_
     | Tuple
     | Unkonwn_
@@ -40,6 +42,11 @@ interface BigInt_ {
     value: bigint;
 }
 
+interface Datetime_ {
+    type: "datetime";
+    value: string;
+}
+
 interface Object_ {
     type: "object";
     fields: ObjectField[];
@@ -53,6 +60,11 @@ export interface ObjectField {
 interface Reference {
     type: "reference";
     value: AstNode;
+}
+
+interface Set_ {
+    type: "set";
+    values: TypeLiteral[];
 }
 
 interface String_ {
@@ -86,6 +98,10 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "blob": {
+                if (writer.customConfig?.noSerdeLayer) {
+                    writer.writeNode(TypeLiteral.string(this.internalType.value));
+                    return;
+                }
                 writer.write("new Blob([");
                 writer.writeNode(TypeLiteral.string(this.internalType.value));
                 writer.write("])");
@@ -95,12 +111,26 @@ export class TypeLiteral extends AstNode {
                 writer.write(this.internalType.value.toString());
                 break;
             }
-            case "number": {
-                writer.write(this.internalType.value.toString());
+            case "bigint": {
+                if (writer.customConfig?.noSerdeLayer) {
+                    writer.writeNode(TypeLiteral.string(this.internalType.value.toString()));
+                    return;
+                }
+                writer.write(`BigInt(${this.internalType.value.toString()})`);
                 break;
             }
-            case "bigint": {
-                writer.write(`BigInt(${this.internalType.value.toString()})`);
+            case "datetime": {
+                if (writer.customConfig?.noSerdeLayer) {
+                    writer.writeNode(TypeLiteral.string(this.internalType.value));
+                    return;
+                }
+                writer.write("new Date(");
+                writer.writeNode(TypeLiteral.string(this.internalType.value));
+                writer.write(")");
+                break;
+            }
+            case "number": {
+                writer.write(this.internalType.value.toString());
                 break;
             }
             case "object": {
@@ -109,6 +139,16 @@ export class TypeLiteral extends AstNode {
             }
             case "reference": {
                 writer.writeNode(this.internalType.value);
+                break;
+            }
+            case "set": {
+                if (writer.customConfig?.noSerdeLayer || this.isSetOfObjects()) {
+                    writer.writeNode(TypeLiteral.array({ values: this.internalType.values }));
+                    return;
+                }
+                writer.write("new Set(");
+                this.writeIterable({ writer, iterable: this.internalType });
+                writer.write(")");
                 break;
             }
             case "string": {
@@ -134,6 +174,32 @@ export class TypeLiteral extends AstNode {
         }
     }
 
+    public isObject(): this is Object_ {
+        return (this.internalType as Object_).type === "object";
+    }
+
+    public asObjectOrThrow(): Object_ {
+        if (this.isObject()) {
+            return this.internalType as Object_;
+        }
+        throw new Error("Internal error; ts.TypeLiteral is not an object");
+    }
+
+    private isSet(): this is Set_ {
+        return (this.internalType as Set_).type === "set";
+    }
+
+    private asSetOrThrow(): Set_ {
+        if (this.isSet()) {
+            return this.internalType as Set_;
+        }
+        throw new Error("Internal error; ts.TypeLiteral is not a set");
+    }
+    
+    private isSetOfObjects(): boolean {
+        return this.isSet() && this.asSetOrThrow().values.every((value) => value.isObject());
+    }
+
     private writeStringWithBackticks({ writer, value }: { writer: Writer; value: string }): void {
         writer.write("`");
         const parts = value.split("\n");
@@ -144,7 +210,7 @@ export class TypeLiteral extends AstNode {
         writer.write("`");
     }
 
-    private writeIterable({ writer, iterable }: { writer: Writer; iterable: Array_ | Tuple }): void {
+    private writeIterable({ writer, iterable }: { writer: Writer; iterable: Array_ | Tuple | Set_ }): void {
         const values = filterNopValues({ values: iterable.values });
         if (values.length === 0) {
             writer.write("[]");
@@ -199,6 +265,10 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "boolean", value });
     }
 
+    public static datetime(value: string): TypeLiteral {
+        return new this({ type: "datetime", value });
+    }
+
     public static number(value: number): TypeLiteral {
         return new this({ type: "number", value });
     }
@@ -214,6 +284,13 @@ export class TypeLiteral extends AstNode {
         return new this({
             type: "reference",
             value
+        });
+    }
+
+    public static set({ values }: { values: TypeLiteral[] }): TypeLiteral {
+        return new this({
+            type: "set",
+            values
         });
     }
 

@@ -270,3 +270,5 @@ allowedFailures:
   - oauth-client-credentials-nested-root:never-throw-errors
   - trace:no-zurg-no-throwing
   - trace:exhaustive
+  # Dynamic snippets
+  - unions # Required base properties need to be included in the example generator.

@@ -7,6 +7,7 @@ import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGenera
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const CLIENT_VAR_NAME = "client";
+const MAIN_FUNCTION_NAME = "main";
 const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     type: "primitive",
     value: "STRING"
@@ -27,7 +28,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return await code.toString();
+        return await code.toString({ customConfig: this.context.customConfig });
     }
 
     public generateSnippetSync({
@@ -38,7 +39,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return code.toStringSync();
+        return code.toStringSync({ customConfig: this.context.customConfig });
     }
 
     private buildCodeBlock({
@@ -49,9 +50,27 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ts.AstNode {
         return ts.codeblock((writer) => {
-            writer.writeNode(this.constructClient({ endpoint, snippet }));
-            writer.writeLine();
-            writer.writeNode(this.callMethod({ endpoint, snippet }));
+            writer.writeNode(
+                ts.function_({
+                    name: MAIN_FUNCTION_NAME,
+                    async: true,
+                    parameters: [],
+                    return_: ts.Type.void(),
+                    body: ts.codeblock((writer) => {
+                        writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
+                        writer.writeLine();
+                        writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
+                    })
+                })
+            );
+            writer.writeNodeStatement(
+                ts.invokeFunction({
+                    function_: ts.reference({
+                        name: MAIN_FUNCTION_NAME
+                    }),
+                    arguments_: []
+                })
+            );
         });
     }
 
@@ -378,8 +397,9 @@ export class EndpointSnippetGenerator {
             case "bytes": {
                 return this.getBytesBodyRequestArg({ value });
             }
-            case "typeReference":
+            case "typeReference": {
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+            }
             default:
                 assertNever(body);
         }

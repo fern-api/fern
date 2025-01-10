@@ -42,7 +42,7 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value });
             case "set":
-                return this.convertList({ list: args.typeReference.value, value: args.value });
+                return this.convertSet({ set: args.typeReference.value, value: args.value });
             case "unknown":
                 return this.convertUnknown({ value: args.value });
             default:
@@ -63,6 +63,26 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope({ index });
                 try {
                     return this.convert({ typeReference: list, value: v });
+                } finally {
+                    this.context.errors.unscope();
+                }
+            })
+        });
+    }
+
+    private convertSet({ set, value }: { set: FernIr.dynamic.TypeReference; value: unknown }): ts.TypeLiteral {
+        if (!Array.isArray(value)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected array but got: ${typeof value}`
+            });
+            return ts.TypeLiteral.nop();
+        }
+        return ts.TypeLiteral.set({
+            values: value.map((v, index) => {
+                this.context.errors.scope({ index });
+                try {
+                    return this.convert({ typeReference: set, value: v });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -128,6 +148,47 @@ export class DynamicTypeLiteralMapper {
             return ts.TypeLiteral.nop();
         }
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const unionProperties = this.convertDiscriminatedUnionProperties({
+            discriminatedUnionTypeInstance,
+            unionVariant,
+        });
+        if (unionProperties == null) {
+            return ts.TypeLiteral.nop();
+        }
+        if (this.context.customConfig?.includeUtilsOnUnionMembers) {
+            // TODO: Fix this import path.
+            const name = this.context.getFullyQualifiedReference({
+                declaration: discriminatedUnion.declaration
+            });
+            return ts.TypeLiteral.reference(
+                ts.codeblock((writer) => {
+                    writer.writeNode(ts.invokeMethod({
+                        on: ts.reference({
+                            name,
+                            importFrom: this.context.getModuleImport()
+                        }),
+                        method: this.context.getMethodName(unionVariant.discriminantValue.name),
+                        arguments_: [ts.TypeLiteral.object({ fields: unionProperties })]
+                    }))
+                }),
+            );
+        }
+        const discriminantProperty = {
+            name: this.context.getPropertyName(discriminatedUnion.discriminant.name),
+            value: ts.TypeLiteral.string(unionVariant.discriminantValue.wireValue)
+        };
+        return ts.TypeLiteral.object({
+            fields: [discriminantProperty, ...unionProperties]
+        });
+    }
+
+    private convertDiscriminatedUnionProperties({
+        discriminatedUnionTypeInstance,
+        unionVariant,
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): ts.ObjectField[] | undefined {
         const baseFields = this.getBaseFields({
             discriminatedUnionTypeInstance,
             singleDiscriminatedUnionType: unionVariant
@@ -138,45 +199,45 @@ export class DynamicTypeLiteralMapper {
                     typeId: unionVariant.typeId
                 });
                 if (named == null) {
-                    return ts.TypeLiteral.nop();
+                    return undefined;
                 }
-                return ts.TypeLiteral.object({
-                    fields: [
-                        ...baseFields,
-                        {
-                            name: this.context.getPropertyName(unionVariant.discriminantValue.name),
-                            value: this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })
-                        }
-                    ]
-                });
+                const converted = this.convertNamed({ named, value: discriminatedUnionTypeInstance.value });
+                if (!converted.isObject()) {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: `Internal error; expected union value to be an object`
+                    });
+                    return undefined;
+                }
+                const object_ = converted.asObjectOrThrow();
+                return [
+                    ...baseFields,
+                    ...object_.fields,
+                ];
             }
             case "singleProperty": {
                 const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
                 if (record == null) {
-                    return ts.TypeLiteral.nop();
+                    return undefined;
                 }
                 try {
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
-                    return ts.TypeLiteral.object({
-                        fields: [
-                            ...baseFields,
-                            {
-                                name: this.context.getPropertyName(unionVariant.discriminantValue.name),
-                                value: this.convert({
-                                    typeReference: unionVariant.typeReference,
-                                    value: record[unionVariant.discriminantValue.wireValue]
-                                })
-                            }
-                        ]
-                    });
+                    return [
+                        ...baseFields,
+                        {
+                            name: this.context.getPropertyName(unionVariant.discriminantValue.name),
+                            value: this.convert({
+                                typeReference: unionVariant.typeReference,
+                                value: record[unionVariant.discriminantValue.wireValue]
+                            })
+                        }
+                    ];
                 } finally {
                     this.context.errors.unscope();
                 }
             }
             case "noProperties":
-                return ts.TypeLiteral.object({
-                    fields: [...baseFields]
-                });
+                return baseFields;
             default:
                 assertNever(unionVariant);
         }
@@ -189,10 +250,6 @@ export class DynamicTypeLiteralMapper {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
     }): ts.ObjectField[] {
-        const discriminantProperty = {
-            name: this.context.getPropertyName(discriminatedUnionTypeInstance.discriminantValue.name),
-            value: ts.TypeLiteral.string(singleDiscriminatedUnionType.discriminantValue.wireValue)
-        };
         const properties = this.context.associateByWireValue({
             parameters: singleDiscriminatedUnionType.properties ?? [],
             values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
@@ -201,20 +258,17 @@ export class DynamicTypeLiteralMapper {
             // are handled by the union variant.
             ignoreMissingParameters: true
         });
-        return [
-            discriminantProperty,
-            ...properties.map((property) => {
-                this.context.errors.scope(property.name.wireValue);
-                try {
-                    return {
-                        name: this.context.getPropertyName(property.name.name),
-                        value: this.convert(property)
-                    };
-                } finally {
-                    this.context.errors.unscope();
-                }
-            })
-        ];
+        return properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return {
+                    name: this.context.getPropertyName(property.name.name),
+                    value: this.convert(property)
+                };
+            } finally {
+            this.context.errors.unscope();
+            }
+        });
     }
 
     private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): ts.TypeLiteral {
@@ -350,7 +404,6 @@ export class DynamicTypeLiteralMapper {
             }
             case "BASE_64":
             case "DATE":
-            case "DATE_TIME":
             case "UUID":
             case "STRING": {
                 const str = this.context.getValueAsString({ value });
@@ -359,12 +412,22 @@ export class DynamicTypeLiteralMapper {
                 }
                 return ts.TypeLiteral.string(str);
             }
+            case "DATE_TIME": {
+                const str = this.context.getValueAsString({ value });
+                if (str == null) {
+                    return ts.TypeLiteral.nop();
+                }
+                return ts.TypeLiteral.datetime(str);
+            }
             case "BIG_INTEGER": {
                 const bigInt = this.context.getValueAsString({ value });
                 if (bigInt == null) {
                     return ts.TypeLiteral.nop();
                 }
-                return ts.TypeLiteral.bigint(BigInt(bigInt));
+                if (this.context.customConfig?.useBigInt) {
+                    return ts.TypeLiteral.bigint(BigInt(bigInt));
+                }
+                return ts.TypeLiteral.string(bigInt);
             }
             default:
                 assertNever(primitive);
