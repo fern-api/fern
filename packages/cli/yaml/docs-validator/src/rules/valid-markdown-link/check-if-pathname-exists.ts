@@ -1,7 +1,8 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, dirname } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils";
+
 import { getRedirectForPath } from "./redirect-for-path";
-import { removeLeadingSlash, addLeadingSlash } from "./url-utils";
+import { addLeadingSlash, removeLeadingSlash } from "./url-utils";
 
 /**
  * Checks if the given path exists in the docs.
@@ -40,7 +41,7 @@ export async function checkIfPathnameExists(
         };
     }
 ): Promise<true | string[]> {
-    const slugs = absoluteFilepath != null ? absoluteFilePathsToSlugs.get(absoluteFilepath) ?? [] : [];
+    const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
 
     // base case: empty pathname is valid
     if (pathname.trim() === "") {

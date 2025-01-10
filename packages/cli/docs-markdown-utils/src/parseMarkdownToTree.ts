@@ -1,13 +1,13 @@
+import grayMatter from "gray-matter";
 import type { Root as MdastRoot } from "mdast";
 import { fromMarkdown } from "mdast-util-from-markdown";
+import { gfmFromMarkdown } from "mdast-util-gfm";
 import { mathFromMarkdown } from "mdast-util-math";
 import { mdxFromMarkdown } from "mdast-util-mdx";
-import { gfmFromMarkdown } from "mdast-util-gfm";
+import { gfm } from "micromark-extension-gfm";
 import { math } from "micromark-extension-math";
 import { mdxjs } from "micromark-extension-mdxjs";
-import { gfm } from "micromark-extension-gfm";
 import { UnreachableCaseError } from "ts-essentials";
-import grayMatter from "gray-matter";
 
 export function parseMarkdownToTree(markdown: string, format: "mdx" | "md" = "mdx"): MdastRoot {
     const { content } = grayMatter(markdown);

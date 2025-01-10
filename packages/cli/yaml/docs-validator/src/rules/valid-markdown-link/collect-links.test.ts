@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { collectLinksAndSources } from "./collect-links";
 
 describe("collectLinksAndSources", () => {
@@ -47,7 +48,7 @@ describe("collectLinksAndSources", () => {
     });
 
     it("should trace imports to other markdown files", () => {
-        const content = "import Component from \"./file1.mdx\";";
+        const content = 'import Component from "./file1.mdx";';
 
         const { links } = collectLinksAndSources({
             content,
@@ -65,7 +66,7 @@ describe("collectLinksAndSources", () => {
     });
 
     it("should throw if there is a circular import", () => {
-        const content = "import Component from \"./file1.mdx\";";
+        const content = 'import Component from "./file1.mdx";';
 
         expect(() => {
             collectLinksAndSources({
@@ -77,16 +78,16 @@ describe("collectLinksAndSources", () => {
     });
 
     it("should trace relative paths correctly", () => {
-        const content = "import Component from \"file1.mdx\";";
+        const content = 'import Component from "file1.mdx";';
 
         const { links } = collectLinksAndSources({
             content,
             absoluteFilepath: AbsoluteFilePath.of("/path/to/fern/file0.mdx"),
             readFile: (path) => {
                 if (path === AbsoluteFilePath.of("/path/to/fern/file1.mdx")) {
-                    return "import Component from \"../file2.mdx\";\n\n[Link to a markdown file](./page-2)";
+                    return 'import Component from "../file2.mdx";\n\n[Link to a markdown file](./page-2)';
                 } else if (path === AbsoluteFilePath.of("/path/to/file2.mdx")) {
-                    return "import Component from \"./../other/file3.mdx\";\n\n[Link to a markdown file](./page-3)";
+                    return 'import Component from "./../other/file3.mdx";\n\n[Link to a markdown file](./page-3)';
                 } else if (path === AbsoluteFilePath.of("/path/other/file3.mdx")) {
                     return "[Link to a markdown file](./page-4)";
                 }
