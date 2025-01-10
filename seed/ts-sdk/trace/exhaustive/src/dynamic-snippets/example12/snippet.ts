@@ -1,4 +1,4 @@
-import { SeedTraceClient } from "../..";
+import { SeedTraceClient, SeedTrace } from "../..";
 
 async function main() {
     const client = new SeedTraceClient({
@@ -11,8 +11,8 @@ async function main() {
         body: {
             name: "name",
             problems: [
-                "problems",
-                "problems",
+                SeedTrace.commons.ProblemId("problems"),
+                SeedTrace.commons.ProblemId("problems"),
             ],
         },
     });

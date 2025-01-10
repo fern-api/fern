@@ -1,11 +1,10 @@
 import { FiddleClient } from "../..";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new FiddleClient({
         environment: "https://api.fern.com",
         token: "<token>",
     });
-    
     await client.endpoints.httpMethods.testDelete("id");
 }
 main();

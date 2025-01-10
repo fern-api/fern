@@ -1,4 +1,4 @@
-import { SeedTraceClient } from "../..";
+import { SeedTraceClient, SeedTrace } from "../..";
 
 async function main() {
     const client = new SeedTraceClient({
@@ -6,8 +6,8 @@ async function main() {
         token: "<token>",
     });
     await client.homepage.setHomepageProblems([
-        "string",
-        "string",
+        SeedTrace.commons.ProblemId("string"),
+        SeedTrace.commons.ProblemId("string"),
     ]);
 }
 main();

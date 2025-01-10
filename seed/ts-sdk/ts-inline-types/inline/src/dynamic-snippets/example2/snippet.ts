@@ -1,10 +1,9 @@
 import { SeedObjectClient } from "../..";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new SeedObjectClient({
         environment: "https://api.fern.com",
     });
-    
     await client.getUndiscriminatedUnion({
         bar: {
             foo: "foo",

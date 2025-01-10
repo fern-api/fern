@@ -1,11 +1,11 @@
 import { SeedStreamingClient } from "../..";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new SeedStreamingClient({
         environment: "https://api.fern.com",
     });
-    
     await client.dummy.generateStream({
+        stream: true,
         numEvents: 1,
     });
 }

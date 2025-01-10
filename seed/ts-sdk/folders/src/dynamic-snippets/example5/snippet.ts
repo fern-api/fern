@@ -1,10 +1,9 @@
 import { SeedApiClient } from "../..";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new SeedApiClient({
         environment: "https://api.fern.com",
     });
-    
     await client.folder.service.unknownRequest({
         key: "value",
     });

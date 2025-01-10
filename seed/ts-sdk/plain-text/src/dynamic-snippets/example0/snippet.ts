@@ -1,10 +1,9 @@
 import { SeedPlainTextClient } from "../..";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new SeedPlainTextClient({
         environment: "https://api.fern.com",
     });
-    
     await client.service.getText();
 }
 main();

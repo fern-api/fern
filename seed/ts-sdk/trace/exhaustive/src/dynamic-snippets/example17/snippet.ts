@@ -30,38 +30,6 @@ async function main() {
                     },
                 ],
             },
-            PYTHON: {
-                solutionFile: {
-                    filename: "filename",
-                    contents: "contents",
-                },
-                readOnlyFiles: [
-                    {
-                        filename: "filename",
-                        contents: "contents",
-                    },
-                    {
-                        filename: "filename",
-                        contents: "contents",
-                    },
-                ],
-            },
-            JAVASCRIPT: {
-                solutionFile: {
-                    filename: "filename",
-                    contents: "contents",
-                },
-                readOnlyFiles: [
-                    {
-                        filename: "filename",
-                        contents: "contents",
-                    },
-                    {
-                        filename: "filename",
-                        contents: "contents",
-                    },
-                ],
-            }
         },
         inputParams: [
             {

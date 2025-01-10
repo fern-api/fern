@@ -5,7 +5,7 @@ async function main() {
         environment: "https://api.fern.com",
         token: "<token>",
     });
-    await client.problem.updateProblem("problemId", {
+    await client.problem.updateProblem(SeedTrace.commons.ProblemId("problemId"), {
         problemName: "problemName",
         problemDescription: {
             boards: [

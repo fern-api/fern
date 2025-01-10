@@ -5,9 +5,9 @@ async function main() {
         environment: "https://api.fern.com",
         token: "<token>",
     });
-    await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", [
+    await client.admin.storeTracedTestCaseV2(SeedTrace.submission.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.v2.problem.TestCaseId("testCaseId"), [
         {
-            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            submissionId: SeedTrace.submission.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
             file: {
                 filename: "filename",
@@ -40,7 +40,7 @@ async function main() {
             stdout: "stdout",
         },
         {
-            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            submissionId: SeedTrace.submission.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
             file: {
                 filename: "filename",
