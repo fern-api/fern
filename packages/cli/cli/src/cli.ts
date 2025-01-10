@@ -42,6 +42,7 @@ import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
 import { upgrade } from "./commands/upgrade/upgrade";
+import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
@@ -162,6 +163,7 @@ async function tryRunCli(cliContext: CliContext) {
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addDocsPreviewCommand(cli, cliContext);
+    addDocsBrokenLinksCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -1031,6 +1033,26 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 cliContext,
                 port,
                 bundlePath
+            });
+        }
+    );
+}
+
+function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "docs broken-links",
+        "Check for broken links in your docs",
+        (yargs) =>
+            yargs.option("strict", { boolean: true, default: false, description: "Fail with non-zero exit status" }),
+        async (argv) => {
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+            await validateDocsBrokenLinks({
+                project,
+                cliContext,
+                errorOnBrokenLinks: argv.strict
             });
         }
     );

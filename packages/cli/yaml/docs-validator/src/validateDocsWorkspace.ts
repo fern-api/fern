@@ -9,13 +9,18 @@ import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAs
 import { APIWorkspaceLoader } from "./docsAst/APIWorkspaceLoader";
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst";
 import { getAllRules } from "./getAllRules";
+import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
 
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,
     context: TaskContext,
-    fernWorkspaces: FernWorkspace[]
+    fernWorkspaces: FernWorkspace[],
+    onlyCheckBrokenLinks?: boolean
 ): Promise<ValidationViolation[]> {
-    return runRulesOnDocsWorkspace({ workspace, rules: getAllRules(), context, fernWorkspaces });
+    // In the future we'll do something more sophisticated that lets you pick and choose which rules to run.
+    // For right now, the only use case is to check for broken links, so only expose a choise to run that rule.
+    const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks] : getAllRules();
+    return runRulesOnDocsWorkspace({ workspace, rules, context, fernWorkspaces });
 }
 
 // exported for testing
