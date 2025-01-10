@@ -394,12 +394,10 @@ export class EndpointSnippetGenerator {
         value: unknown;
     }): ts.TypeLiteral {
         switch (body.type) {
-            case "bytes": {
+            case "bytes":
                 return this.getBytesBodyRequestArg({ value });
-            }
-            case "typeReference": {
+            case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
-            }
             default:
                 assertNever(body);
         }

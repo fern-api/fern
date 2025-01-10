@@ -7,7 +7,7 @@ type InternalTypeLiteral =
     | Blob_
     | Boolean_
     | BigInt_
-    | Datetime_
+    | DateTime
     | Number_
     | Object_
     | Reference
@@ -42,7 +42,7 @@ interface BigInt_ {
     value: bigint;
 }
 
-interface Datetime_ {
+interface DateTime {
     type: "datetime";
     value: string;
 }

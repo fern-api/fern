@@ -102,8 +102,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             // For example, header names like the following:
             //
             // {
-            //   "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
-            //   "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+            //   "X-API-Version": "X-API-Version",
             //   body: "string"
             // }
             return `"${value}"`;
