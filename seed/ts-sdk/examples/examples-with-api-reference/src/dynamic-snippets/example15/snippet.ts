@@ -15,7 +15,7 @@ async function main() {
         tag: "tag",
         book: "book",
         metadata: {
-            metadata: {
+            "metadata": {
                 key: "value",
             },
         },

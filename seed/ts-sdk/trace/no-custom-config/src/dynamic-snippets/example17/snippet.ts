@@ -18,7 +18,7 @@ async function main() {
             ],
         },
         files: {
-            JAVA: {
+            "JAVA": {
                 solutionFile: {
                     filename: "filename",
                     contents: "contents",

@@ -28,14 +28,14 @@ async function main() {
                     scopes: [
                         {
                             variables: {
-                                variables: {
+                                "variables": {
                                     type: "integerValue",
                                 },
                             },
                         },
                         {
                             variables: {
-                                variables: {
+                                "variables": {
                                     type: "integerValue",
                                 },
                             },
@@ -67,14 +67,14 @@ async function main() {
                     scopes: [
                         {
                             variables: {
-                                variables: {
+                                "variables": {
                                     type: "integerValue",
                                 },
                             },
                         },
                         {
                             variables: {
-                                variables: {
+                                "variables": {
                                     type: "integerValue",
                                 },
                             },

@@ -14,13 +14,13 @@ async function main() {
         type: "movie",
         tag: "tag-wf9as23d",
         metadata: {
-            actors: [
+            "actors": [
                 "Christian Bale",
                 "Florence Pugh",
                 "Willem Dafoe",
             ],
-            releaseDate: "2023-12-08",
-            ratings: {
+            "releaseDate": "2023-12-08",
+            "ratings": {
                 rottenTomatoes: 97,
                 imdb: 7.6,
             },

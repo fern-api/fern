@@ -6,7 +6,7 @@ async function main() {
         token: "<token>",
     });
     await client.endpoints.container.getAndReturnMapOfPrimToObject({
-        string: {
+        "string": {
             string: "string",
         },
     });

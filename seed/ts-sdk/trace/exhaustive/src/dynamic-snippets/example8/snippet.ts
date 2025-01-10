@@ -26,12 +26,12 @@ async function main() {
                     scopes: [
                         {
                             variables: {
-                                variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
+                                "variables": SeedTrace.commons.DebugVariableValue.integerValue({}),
                             },
                         },
                         {
                             variables: {
-                                variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
+                                "variables": SeedTrace.commons.DebugVariableValue.integerValue({}),
                             },
                         },
                     ],
@@ -59,12 +59,12 @@ async function main() {
                     scopes: [
                         {
                             variables: {
-                                variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
+                                "variables": SeedTrace.commons.DebugVariableValue.integerValue({}),
                             },
                         },
                         {
                             variables: {
-                                variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
+                                "variables": SeedTrace.commons.DebugVariableValue.integerValue({}),
                             },
                         },
                     ],

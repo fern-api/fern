@@ -5,7 +5,7 @@ async function main() {
         environment: "https://api.fern.com",
     });
     await client.optional.sendOptionalBody({
-        string: {
+        "string": {
             key: "value",
         },
     });

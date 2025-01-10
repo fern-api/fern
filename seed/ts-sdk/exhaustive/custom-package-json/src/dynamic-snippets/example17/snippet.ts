@@ -7,8 +7,8 @@ async function main() {
     });
     await client.endpoints.object.getAndReturnWithMapOfMap({
         map: {
-            map: {
-                map: "map",
+            "map": {
+                "map": "map",
             },
         },
     });

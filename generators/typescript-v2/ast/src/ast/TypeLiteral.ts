@@ -10,6 +10,7 @@ type InternalTypeLiteral =
     | DateTime
     | Number_
     | Object_
+    | Record_
     | Reference
     | Set_
     | String_
@@ -54,6 +55,16 @@ interface Object_ {
 
 export interface ObjectField {
     name: string;
+    value: TypeLiteral;
+}
+
+interface Record_ {
+    type: "record";
+    entries: RecordEntry[];
+}
+
+interface RecordEntry {
+    key: TypeLiteral;
     value: TypeLiteral;
 }
 
@@ -135,6 +146,10 @@ export class TypeLiteral extends AstNode {
             }
             case "object": {
                 this.writeObject({ writer, object: this.internalType });
+                break;
+            }
+            case "record": {
+                this.writeRecord({ writer, record: this.internalType });
                 break;
             }
             case "reference": {
@@ -227,6 +242,25 @@ export class TypeLiteral extends AstNode {
         writer.write("]");
     }
 
+    private writeRecord({ writer, record }: { writer: Writer; record: Record_ }): void {
+        const entries = filterNopRecordEntries({ entries: record.entries });
+        if (entries.length === 0) {
+            writer.write("{}");
+            return;
+        }
+
+        writer.writeLine("{");
+        writer.indent();
+        for (const entry of entries) {
+            entry.key.write(writer);
+            writer.write(": ");
+            entry.value.write(writer);
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write("}");
+    }
+
     private writeObject({ writer, object }: { writer: Writer; object: Object_ }): void {
         const fields = filterNopObjectFields({ fields: object.fields });
         if (fields.length === 0) {
@@ -277,6 +311,13 @@ export class TypeLiteral extends AstNode {
         return new this({
             type: "object",
             fields
+        });
+    }
+
+    public static record({ entries }: { entries: RecordEntry[] }): TypeLiteral {
+        return new this({
+            type: "record",
+            entries
         });
     }
 
@@ -388,6 +429,10 @@ export class TypeLiteral extends AstNode {
 
 function filterNopObjectFields({ fields }: { fields: ObjectField[] }): ObjectField[] {
     return fields.filter((field) => !TypeLiteral.isNop(field.value));
+}
+
+function filterNopRecordEntries({ entries }: { entries: RecordEntry[] }): RecordEntry[] {
+    return entries.filter((entry) => !TypeLiteral.isNop(entry.key) && !TypeLiteral.isNop(entry.value));
 }
 
 function filterNopValues({ values }: { values: TypeLiteral[] }): TypeLiteral[] {

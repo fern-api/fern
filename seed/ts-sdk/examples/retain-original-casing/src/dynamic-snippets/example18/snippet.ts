@@ -26,7 +26,7 @@ async function main() {
         commonMetadata: {
             id: "id",
             data: {
-                data: "data",
+                "data": "data",
             },
             jsonString: "jsonString",
         },
@@ -34,7 +34,7 @@ async function main() {
             type: "metadata",
             id: "id",
             data: {
-                data: "data",
+                "data": "data",
             },
             jsonString: "jsonString",
         },

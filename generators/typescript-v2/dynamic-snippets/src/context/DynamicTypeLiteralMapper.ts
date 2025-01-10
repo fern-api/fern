@@ -11,7 +11,12 @@ export declare namespace DynamicTypeLiteralMapper {
     interface Args {
         typeReference: FernIr.dynamic.TypeReference;
         value: unknown;
+        as?: ConvertedAs;
     }
+
+    // Identifies what the type is being converted as, which sometimes influences how
+    // the type is instantiated.
+    type ConvertedAs = "key";
 }
 
 export class DynamicTypeLiteralMapper {
@@ -37,12 +42,12 @@ export class DynamicTypeLiteralMapper {
                 if (named == null) {
                     return ts.TypeLiteral.nop();
                 }
-                return this.convertNamed({ named, value: args.value });
+                return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "optional":
-                return this.convert({ typeReference: args.typeReference.value, value: args.value });
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "primitive":
-                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value });
+                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
                 return this.convertSet({ set: args.typeReference.value, value: args.value });
             case "unknown":
@@ -127,12 +132,12 @@ export class DynamicTypeLiteralMapper {
             });
             return ts.TypeLiteral.nop();
         }
-        return ts.TypeLiteral.object({
-            fields: Object.entries(value).map(([key, value]) => {
+        return ts.TypeLiteral.record({
+            entries: Object.entries(value).map(([key, value]) => {
                 this.context.errors.scope(key);
                 try {
                     return {
-                        name: key,
+                        key: this.convert({ typeReference: map.key, value: key, as: "key" }),
                         value: this.convert({ typeReference: map.value, value })
                     };
                 } finally {
@@ -142,7 +147,15 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private convertNamed({ named, value }: { named: FernIr.dynamic.NamedType; value: unknown }): ts.TypeLiteral {
+    private convertNamed({
+        named,
+        value,
+        as
+    }: {
+        named: FernIr.dynamic.NamedType;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): ts.TypeLiteral {
         switch (named.type) {
             case "alias": {
                 if (this.context.customConfig?.useBrandedStringAliases) {
@@ -158,12 +171,12 @@ export class DynamicTypeLiteralMapper {
                                 })
                             );
                             writer.write("(");
-                            writer.writeNode(this.convert({ typeReference: named.typeReference, value }));
+                            writer.writeNode(this.convert({ typeReference: named.typeReference, value, as }));
                             writer.write(")");
                         })
                     );
                 }
-                return this.convert({ typeReference: named.typeReference, value });
+                return this.convert({ typeReference: named.typeReference, value, as });
             }
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
@@ -445,15 +458,17 @@ export class DynamicTypeLiteralMapper {
 
     private convertPrimitive({
         primitive,
-        value
+        value,
+        as
     }: {
         primitive: FernIr.PrimitiveTypeV1;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): ts.TypeLiteral {
         switch (primitive) {
             case "INTEGER":
             case "UINT": {
-                const num = this.context.getValueAsNumber({ value });
+                const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return ts.TypeLiteral.nop();
                 }
@@ -461,7 +476,7 @@ export class DynamicTypeLiteralMapper {
             }
             case "LONG":
             case "UINT_64": {
-                const num = this.context.getValueAsNumber({ value });
+                const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return ts.TypeLiteral.nop();
                 }
@@ -472,14 +487,14 @@ export class DynamicTypeLiteralMapper {
             }
             case "FLOAT":
             case "DOUBLE": {
-                const num = this.context.getValueAsNumber({ value });
+                const num = this.getValueAsNumber({ value });
                 if (num == null) {
                     return ts.TypeLiteral.nop();
                 }
                 return ts.TypeLiteral.number(num);
             }
             case "BOOLEAN": {
-                const bool = this.context.getValueAsBoolean({ value });
+                const bool = this.getValueAsBoolean({ value, as });
                 if (bool == null) {
                     return ts.TypeLiteral.nop();
                 }
@@ -515,5 +530,28 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(primitive);
         }
+    }
+
+    private getValueAsNumber({
+        value,
+        as
+    }: {
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): number | undefined {
+        const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value;
+        return this.context.getValueAsNumber({ value: num });
+    }
+
+    private getValueAsBoolean({
+        value,
+        as
+    }: {
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): boolean | undefined {
+        const bool =
+            as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
+        return this.context.getValueAsBoolean({ value: bool });
     }
 }
