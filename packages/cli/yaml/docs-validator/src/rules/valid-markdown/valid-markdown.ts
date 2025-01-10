@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { z } from "zod";
 
-import { parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 
 import { Rule } from "../../Rule";
 
@@ -12,8 +12,19 @@ export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
     create: () => {
         return {
-            markdownPage: async ({ content }) => {
-                const markdownParseResult = await parseMarkdown({ markdown: content });
+            markdownPage: async ({ content, absoluteFilepath }) => {
+                let format: "mdx" | "md";
+                try {
+                    format = getMarkdownFormat(absoluteFilepath);
+                } catch (err) {
+                    return [
+                        {
+                            severity: "error",
+                            message: `Markdown file does not have a valid extension: ${String(err)}`
+                        }
+                    ];
+                }
+                const markdownParseResult = await parseMarkdown({ markdown: content, format });
                 if (markdownParseResult.type === "failure") {
                     const message =
                         markdownParseResult.message != null
@@ -65,9 +76,15 @@ export const FrontmatterSchema = z.object({
     excerpt: z.optional(z.string(), { description: "Deprecated. Use `subtitle` instead." })
 });
 
-async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
+async function parseMarkdown({
+    markdown,
+    format
+}: {
+    markdown: string;
+    format: "mdx" | "md";
+}): Promise<MarkdownParseResult> {
     try {
-        parseMarkdownToTree(markdown);
+        parseMarkdownToTree(markdown, format);
 
         const parsed = await serialize(markdown, {
             scope: {},
