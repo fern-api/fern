@@ -119,7 +119,7 @@ export const ValidMarkdownLinks: Rule = {
                             const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
                             return {
                                 name: ValidMarkdownLinks.name,
-                                severity: "warning" as const,
+                                severity: "error" as const,
                                 message
                             };
                         });
@@ -185,7 +185,7 @@ export const ValidMarkdownLinks: Rule = {
                                     const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
                                     return {
                                         name: ValidMarkdownLinks.name,
-                                        severity: "warning" as const,
+                                        severity: "error" as const,
                                         message
                                     };
                                 });

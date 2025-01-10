@@ -31,51 +31,13 @@ export function logViolations({
     const violationsByNodePath = groupViolationsByNodePath(violations);
 
     for (const [nodePath, violations] of violationsByNodePath) {
-        const severity = violations.some((violation) => violation.severity === "error") ? "error" : "warning";
-        context.logger.log(getLogLevelForSeverity(severity), nodePathToBreadcrumbs(nodePath));
-        for (const violation of violations) {
-            if (violation.severity === "error") {
-                logViolation({ violation, context });
-            }
-            if (logWarnings && violation.severity === "warning") {
-                logViolation({ violation, context });
-            }
-        }
+        const relativeFilepath = violations[0]?.relativeFilepath ?? "";
+        logViolationsGroup({ logWarnings, relativeFilepath, nodePath, violations, context });
     }
 
     return {
         hasErrors: stats.numErrors > 0
     };
-}
-
-function nodePathToBreadcrumbs(nodePath: NodePath): string {
-    const breadcrumbs = nodePath.map((nodePathItem) => {
-        let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
-        if (typeof nodePathItem !== "string" && nodePathItem.arrayIndex != null) {
-            itemStr += `[${nodePathItem.arrayIndex}]`;
-        }
-        return itemStr;
-    });
-    return chalk.blue(breadcrumbs.join(" -> "));
-}
-
-function logViolation({ violation, context }: { violation: ValidationViolation; context: TaskContext }): void {
-    context.logger.log(
-        getLogLevelForSeverity(violation.severity),
-        formatLog({
-            // breadcrumbs: [
-            //     violation.relativeFilepath,
-            //     ...violation.nodePath.map((nodePathItem) => {
-            //         let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
-            //         if (typeof nodePathItem !== "string" && nodePathItem.arrayIndex != null) {
-            //             itemStr += `[${nodePathItem.arrayIndex}]`;
-            //         }
-            //         return itemStr;
-            //     })
-            // ],
-            title: violation.message
-        })
-    );
 }
 
 function groupViolationsByNodePath(violations: ValidationViolation[]): Map<NodePath, ValidationViolation[]> {
@@ -84,6 +46,58 @@ function groupViolationsByNodePath(violations: ValidationViolation[]): Map<NodeP
         map.set(violation.nodePath, [...(map.get(violation.nodePath) ?? []), violation]);
     }
     return map;
+}
+
+function logViolationsGroup({
+    logWarnings,
+    relativeFilepath,
+    nodePath,
+    violations,
+    context
+}: {
+    logWarnings: boolean;
+    relativeFilepath: string;
+    nodePath: NodePath;
+    violations: ValidationViolation[];
+    context: TaskContext;
+}): void {
+    const severity = getSeverityForViolations(violations);
+    if (severity === "warning" && !logWarnings) {
+        return;
+    }
+    const violationMessages = violations
+        .map((violation) => {
+            if (violation.severity === "warning" && !logWarnings) {
+                return null;
+            }
+            return violation.message;
+        })
+        .filter((message): message is string => message != null)
+        .join("\n");
+    context.logger.log(
+        getLogLevelForSeverity(severity),
+        formatLog({
+            breadcrumbs: [
+                relativeFilepath,
+                ...nodePath.map((nodePathItem) => {
+                    let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
+                    if (typeof nodePathItem !== "string" && nodePathItem.arrayIndex != null) {
+                        itemStr += `[${nodePathItem.arrayIndex}]`;
+                    }
+                    return itemStr;
+                })
+            ],
+            title: violationMessages
+        })
+    );
+}
+
+function getSeverityForViolations(violations: ValidationViolation[]): ValidationViolation["severity"] {
+    return violations.some((violation) => violation.severity === "fatal")
+        ? "fatal"
+        : violations.some((violation) => violation.severity === "error")
+          ? "error"
+          : "warning";
 }
 
 function getLogLevelForSeverity(severity: ValidationViolation["severity"]) {
