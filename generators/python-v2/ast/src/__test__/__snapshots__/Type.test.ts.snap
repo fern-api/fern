@@ -40,11 +40,6 @@ exports[`Type > writes none type 1`] = `
 "
 `;
 
-exports[`Type > writes optional type 1`] = `
-"Optional[str]
-"
-`;
-
 exports[`Type > writes reference type 1`] = `
 "MyClass
 "
@@ -71,6 +66,11 @@ exports[`Type > writes tuple type 1`] = `
 `;
 
 exports[`Type > writes union type 1`] = `
+"Optional[str]
+"
+`;
+
+exports[`Type > writes union type 2`] = `
 "Union[int, str]
 "
 `;
