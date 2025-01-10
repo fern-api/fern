@@ -19,13 +19,13 @@ describe("no-get-request-body", () => {
                 message: "Endpoint is a GET, so it cannot have a request body.",
                 nodePath: ["service", "endpoints", "baz"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Endpoint is a GET, so it cannot have a request body.",
                 nodePath: ["service", "endpoints", "bing"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

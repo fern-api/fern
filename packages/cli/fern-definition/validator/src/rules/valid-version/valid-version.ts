@@ -36,7 +36,7 @@ function validateApiVersionSchema({
     );
     if (!enumValues.has(root.version.default)) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `Default version "${root.version.default}" not found in version values`
         });
     }

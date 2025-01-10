@@ -50,7 +50,7 @@ export function validateRefreshTokenEndpoint({
         });
         if (refreshTokenViolations.length > 0) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid refresh-token, such as '${DEFAULT_REFRESH_TOKEN}'.`
@@ -61,7 +61,7 @@ export function validateRefreshTokenEndpoint({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         });
         return violations;
@@ -88,7 +88,7 @@ export function validateRefreshTokenEndpoint({
         });
         if (accessTokenViolations.length > 0) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid access-token, such as '${DEFAULT_ACCESS_TOKEN}'.`

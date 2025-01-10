@@ -47,7 +47,7 @@ export function validateOffsetPagination({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         });
         return violations;
@@ -165,7 +165,7 @@ function validateHasNextPageProperty({
                 return [
                     {
                         message: `"has-next-page" selector, ${offsetPagination["has-next-page"]}, does not point to a boolean property`,
-                        severity: "error"
+                        severity: "fatal"
                     }
                 ];
             }

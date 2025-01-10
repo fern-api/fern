@@ -17,42 +17,42 @@ describe("valid-field-names", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("enum.yml"),
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
                     'Enum value 523_Invalid is not suitable for code generation. Add a "name" property that starts with a letter and contains only letters, numbers, and underscores.'
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("enum.yml"),
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
                     'Enum value bla.bla is not suitable for code generation. Add a "name" property that starts with a letter and contains only letters, numbers, and underscores.'
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("enum.yml"),
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
                     'Enum value 23-Invalid is not suitable for code generation. Add a "name" property that starts with a letter and contains only letters, numbers, and underscores.'
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("enum.yml"),
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
                     "Enum name _invalidName is not suitable for code generation. It must start with a letter and only contain letters, numbers, and underscores."
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("union.yml"),
                 nodePath: ["types", "UnionWithInvalidDiscriminant"],
                 message:
                     'Discriminant value _type is not suitable for code generation. Add a "name" property that starts with a letter and contains only letters, numbers, and underscores.'
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("union.yml"),
                 nodePath: ["types", "UnionWithInvalidName"],
                 message:

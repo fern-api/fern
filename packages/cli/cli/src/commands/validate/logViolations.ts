@@ -27,7 +27,7 @@ export function logViolations({
     }
 
     violations.forEach((violation) => {
-        if (violation.severity === "error") {
+        if (violation.severity === "fatal" || violation.severity === "error") {
             logViolation({ violation, context });
         }
     });
@@ -64,12 +64,16 @@ function logViolation({ violation, context }: { violation: ValidationViolation; 
     );
 }
 
-function getLogLevelForSeverity(severity: "error" | "warning") {
+function getLogLevelForSeverity(severity: ValidationViolation["severity"]) {
     switch (severity) {
-        case "error":
+        case "fatal":
             return LogLevel.Error;
+        case "error":
+            return LogLevel.Warn;
         case "warning":
             return LogLevel.Warn;
+        default:
+            assertNever(severity);
     }
 }
 
@@ -108,8 +112,11 @@ function getViolationStats(violations: ValidationViolation[]): ViolationStats {
     let numWarnings = 0;
     for (const violation of violations) {
         switch (violation.severity) {
-            case "error":
+            case "fatal":
                 numErrors += 1;
+                continue;
+            case "error":
+                numWarnings += 1;
                 continue;
             case "warning":
                 numWarnings += 1;

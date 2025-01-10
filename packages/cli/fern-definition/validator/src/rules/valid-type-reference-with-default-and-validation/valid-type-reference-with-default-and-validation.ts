@@ -23,7 +23,7 @@ export const ValidTypeReferenceWithDefaultAndValidationRule: Rule = {
                         return [
                             {
                                 message: `Default value '${declaration.default}' is not a valid enum value`,
-                                severity: "error"
+                                severity: "fatal"
                             }
                         ];
                     }
@@ -124,14 +124,14 @@ function validateResolvedType({
     if (_default != null) {
         violations.push({
             message: `Default values are not supported for the ${typeName} type`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
     if (validation != null) {
         violations.push({
             message: `Validation rules are not supported for the ${typeName} type`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
@@ -157,7 +157,7 @@ function validateEnumDefault({
     if (!enumValues.has(_default as string)) {
         violations.push({
             message: `Default value '${_default as string}' is not a valid enum value`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
@@ -176,14 +176,14 @@ function validateStringDefaultAndValidation({
     if (_default != null && typeof _default !== "string") {
         violations.push({
             message: `Default value '${_default as string}' is not a valid string`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
     if (validation != null && !isRawStringValidation(validation)) {
         violations.push({
             message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the string type`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
@@ -202,14 +202,14 @@ function validateDoubleDefaultAndValidation({
     if (_default != null && typeof _default !== "number") {
         violations.push({
             message: `Default value '${_default as string}' is not a valid double`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
     if (validation != null && !isRawNumberValidation(validation)) {
         violations.push({
             message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the double type`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
@@ -228,7 +228,7 @@ function validateIntegerDefaultAndValidation({
     if (_default != null && !Number.isInteger(_default)) {
         violations.push({
             message: `Default value '${_default as string}' is not a valid integer`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
@@ -236,7 +236,7 @@ function validateIntegerDefaultAndValidation({
         if (!isRawNumberValidation(validation)) {
             violations.push({
                 message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the integer type`,
-                severity: "error"
+                severity: "fatal"
             });
         } else {
             violations.push(
@@ -262,14 +262,14 @@ function validateBooleanDefaultAndValidation({
     if (_default != null && typeof _default !== "boolean") {
         violations.push({
             message: `Default value '${_default as string}' is not a valid boolean`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
     if (validation != null) {
         violations.push({
             message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the boolean type`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
@@ -288,14 +288,14 @@ function validateLongDefaultAndValidation({
     if (_default != null && typeof _default !== "number") {
         violations.push({
             message: `Default value '${_default as string}' is not a valid long`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
     if (validation != null) {
         violations.push({
             message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the long type`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
@@ -315,7 +315,7 @@ function validateBigIntegerDefaultAndValidation({
         if (typeof _default !== "string") {
             violations.push({
                 message: `Default value '${_default as string}' is not a valid bigint`,
-                severity: "error"
+                severity: "fatal"
             });
         } else {
             try {
@@ -323,7 +323,7 @@ function validateBigIntegerDefaultAndValidation({
             } catch (error) {
                 violations.push({
                     message: `Default value '${_default as string}' is not a valid bigint`,
-                    severity: "error"
+                    severity: "fatal"
                 });
             }
         }
@@ -332,7 +332,7 @@ function validateBigIntegerDefaultAndValidation({
     if (validation != null) {
         violations.push({
             message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the bigint type`,
-            severity: "error"
+            severity: "fatal"
         });
     }
 
@@ -344,7 +344,7 @@ function validateIntegerValidation({ name, value }: { name: string; value: numbe
         return [
             {
                 message: `Validation for '${name}' must be an integer, but found '${value}'`,
-                severity: "error"
+                severity: "fatal"
             }
         ];
     }

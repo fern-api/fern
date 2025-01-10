@@ -36,7 +36,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             );
                             for (const duplicateName of duplicateNames) {
                                 violations.push({
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: `Name "${duplicateName}" is used by multiple values.`
                                 });
                             }
@@ -67,7 +67,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         )
                                     ].join("\n");
                                     violations.push({
-                                        severity: "error",
+                                        severity: "fatal",
                                         message
                                     });
                                 }
@@ -84,7 +84,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             );
                             for (const duplicateName of duplicateNames) {
                                 violations.push({
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: `Name ${duplicateName} is used by multiple subtypes of this union.`
                                 });
                             }
@@ -156,7 +156,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                                 )
                                             ].join("\n");
                                             violations.push({
-                                                severity: "error",
+                                                severity: "fatal",
                                                 message
                                             });
                                         }
