@@ -1,4 +1,3 @@
-import { RUNTIME } from "../../runtime";
 import { requestWithRetries } from "../requestWithRetries";
 
 describe("requestWithRetries", () => {
