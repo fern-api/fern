@@ -32,7 +32,11 @@ export function convertOAuthTokenEndpoint({
             : {};
 
     const customPropertyNames = Object.keys(requestBodyProperties).filter(
-        (propertyName) => propertyName !== "client_id" && propertyName !== "client_secret" && propertyName !== "scopes"
+        (propertyName) =>
+            !tokenEndpoint.requestProperties.client_id.includes(propertyName) &&
+            !tokenEndpoint.requestProperties.client_secret.includes(propertyName) &&
+            (tokenEndpoint.requestProperties.scopes == null ||
+                !tokenEndpoint.requestProperties.scopes.includes(propertyName))
     );
 
     return {
