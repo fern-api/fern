@@ -22,6 +22,19 @@ export function convertOAuthTokenEndpoint({
         endpoint: tokenEndpoint.endpoint,
         file
     });
+
+    const requestBodyProperties =
+        typeof resolvedEndpoint.endpoint.request === "object" &&
+        resolvedEndpoint.endpoint.request.body != null &&
+        typeof resolvedEndpoint.endpoint.request.body === "object" &&
+        "properties" in resolvedEndpoint.endpoint.request.body
+            ? (resolvedEndpoint.endpoint.request.body.properties ?? {})
+            : {};
+
+    const customPropertyNames = Object.keys(requestBodyProperties).filter(
+        (propertyName) => propertyName !== "client_id" && propertyName !== "client_secret" && propertyName !== "scopes"
+    );
+
     return {
         endpointReference: {
             endpointId: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
@@ -48,6 +61,16 @@ export function convertOAuthTokenEndpoint({
                           endpoint: tokenEndpoint.endpoint,
                           propertyComponents: tokenEndpoint.requestProperties.scopes
                       })
+                    : undefined,
+            customProperties:
+                customPropertyNames.length > 0
+                    ? customPropertyNames.map((propertyName) =>
+                          propertyResolver.resolveRequestPropertyOrThrow({
+                              file,
+                              endpoint: tokenEndpoint.endpoint,
+                              propertyComponents: [propertyName]
+                          })
+                      )
                     : undefined
         },
         responseProperties: {
