@@ -86,11 +86,12 @@ export const ValidMarkdownLinks: Rule = {
                     return [];
                 }
 
-                // if this file cannot be indexed (noindex=true, or hidden=true), then we don't need to check for links
-                // since it will not hurt SEO.
-                // TODO: we should at least report this somehow, since it's a bad UX.
+                let violationSeverity: "fatal" | "error" | "warning" = "error";
+
+                // If this file cannot be indexed (noindex=true, or hidden=true), then we report violations as less serious warnings
+                // since the broken links will not hurt SEO.
                 if (slugs.every((slug) => !collector.indexablePageSlugs.includes(slug))) {
-                    return [];
+                    violationSeverity = "warning";
                 }
 
                 // Find all matches in the Markdown text
@@ -120,7 +121,7 @@ export const ValidMarkdownLinks: Rule = {
                             const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
                             return {
                                 name: ValidMarkdownLinks.name,
-                                severity: "error" as const,
+                                severity: violationSeverity,
                                 message
                             };
                         });
