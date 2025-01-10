@@ -205,8 +205,8 @@ export class DynamicTypeLiteralMapper {
         }
         if (this.context.customConfig?.includeUtilsOnUnionMembers) {
             return ts.TypeLiteral.reference(
-                    ts.codeblock((writer) => {
-                        writer.writeNode(
+                ts.codeblock((writer) => {
+                    writer.writeNode(
                         ts.invokeMethod({
                             on: ts.reference({
                                 name: this.context.namespaceExport,
@@ -279,7 +279,7 @@ export class DynamicTypeLiteralMapper {
                                     value: discriminatedUnionTypeInstance.value
                                 })
                             }
-                        ]
+                        ];
                     }
                     return [
                         ...baseFields,
@@ -320,7 +320,7 @@ export class DynamicTypeLiteralMapper {
                         typeReference: unionVariant.typeReference,
                         value: discriminatedUnionTypeInstance.value
                     })
-                ]
+                ];
             }
         }
         return unionProperties.length > 0 ? [ts.TypeLiteral.object({ fields: unionProperties })] : [];
