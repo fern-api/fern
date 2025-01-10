@@ -20,7 +20,7 @@ export interface RuleContext {
 
 export interface RuleViolation {
     name?: string;
-    severity: "warning" | "error";
+    severity: "fatal" | "error" | "warning";
     message: string;
 }
 

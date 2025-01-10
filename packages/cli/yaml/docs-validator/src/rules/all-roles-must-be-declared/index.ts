@@ -12,7 +12,7 @@ export const AllRolesMustBeDeclaredRule: Rule = {
                 for (const usedRole of usedRoles) {
                     if (declaredRoles == null || !declaredRoles.includes(usedRole)) {
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             // TODO: add a link to the docs
                             message: `Role "${usedRole}" is used but not declared at the top level of the docs.yml file.`
                         });

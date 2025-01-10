@@ -16,8 +16,8 @@ yarn add \
   axios@0.27.2 \
   esbuild@0.16.15 \
   express@4.18.2 \
-  prettier@2.7.1 \
-  typescript@4.6.4 \
+  prettier@3.4.2 \
+  typescript@5.7.2 \
   url-join@4.0.1
 
 cd ..

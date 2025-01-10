@@ -39,16 +39,17 @@
     "qs": "6.12.1"
   },
   "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.56.0",
+    "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "typescript": "5.7.2",
     "@types/boxen": "^3.0.1",
     "@types/inquirer": "^9.0.7",
     "@types/jest": "^29.5.14",
-    "@types/node": "18.15.3",
     "@types/qs": "6.9.15",
-    "depcheck": "^1.4.7",
-    "eslint": "^9.16.0",
-    "vitest": "^2.1.8",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "prettier": "^3.4.2",
-    "typescript": "5.7.2"
+    "vitest": "^2.1.8"
   }
 }

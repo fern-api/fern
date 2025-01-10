@@ -18,7 +18,7 @@ describe("valid-default-environment", () => {
                 message: "The default-environment dev is not listed as an environment",
                 nodePath: ["default-environment"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

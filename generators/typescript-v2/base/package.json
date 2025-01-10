@@ -29,6 +29,7 @@
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../.."
   },
   "devDependencies": {
+    "@fern-api/configs": "workspace:*",
     "@fern-api/typescript-browser-compatible-base": "workspace:*",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",

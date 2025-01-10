@@ -14,18 +14,21 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Read, APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, RelativeFilePath, listFiles, relative, relativize, resolve } from "@fern-api/fs-utils";
+import { APIV1Read, APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, RelativeFilePath, listFiles, relative, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
+import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
+import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
@@ -54,6 +57,8 @@ type RegisterApiFn = (opts: {
     apiName?: string;
 }) => AsyncOrSync<string>;
 
+type RegisterApiV2Fn = (opts: { api: FdrAPI.api.latest.ApiDefinition; apiName?: string }) => AsyncOrSync<string>;
+
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
 };
@@ -64,16 +69,23 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
+const defaultRegisterApiV2: RegisterApiV2Fn = async ({ api }) => {
+    apiCounter++;
+    return `${api.id}-${apiCounter}`;
+};
+
 export class DocsDefinitionResolver {
     constructor(
         private domain: string,
         private docsWorkspace: DocsWorkspace,
+        private ossWorkspaces: OSSWorkspace[],
         private fernWorkspaces: FernWorkspace[],
         private taskContext: TaskContext,
         // Optional
         private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
         private uploadFiles: UploadFilesFn = defaultUploadFiles,
-        private registerApi: RegisterApiFn = defaultRegisterApi
+        private registerApi: RegisterApiFn = defaultRegisterApi,
+        private registerApiV2: RegisterApiV2Fn = defaultRegisterApiV2
     ) {}
 
     #idgen = NodeIdGenerator.init();
@@ -394,9 +406,16 @@ export class DocsDefinitionResolver {
         throw new Error("Failed to load API Definition referenced in docs");
     }
 
-    private _apiDefinitions: Record<string, APIV1Read.ApiDefinition> = {};
-    public get apiDefinitions(): Record<string, APIV1Read.ApiDefinition> {
-        return this._apiDefinitions;
+    private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
+        if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
+            return this.ossWorkspaces[0];
+        } else if (apiSection.apiName != null) {
+            const ossWorkspace = this.ossWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
+            if (ossWorkspace != null) {
+                return ossWorkspace;
+            }
+        }
+        throw new Error("Failed to load API Definition referenced in docs");
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
@@ -595,7 +614,29 @@ export class DocsDefinitionResolver {
         item: docsYml.DocsNavigationItem.ApiSection,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
-        const workspace = await this.getFernWorkspaceForApiSection(item);
+        if (this.parsedDocsConfig.experimental?.openapiParserV2) {
+            const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
+            if (api == null) {
+                throw new Error("Failed to generate API Definition from OpenAPI workspace");
+            }
+            await this.registerApiV2({
+                api,
+                apiName: item.apiName
+            });
+            const node = new ApiReferenceNodeConverterLatest(
+                item,
+                api,
+                parentSlug,
+                workspace,
+                this.docsWorkspace,
+                this.taskContext,
+                this.markdownFilesToFullSlugs,
+                this.#idgen
+            );
+            return node.get();
+        }
+        const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
         const ir = generateIntermediateRepresentation({
             workspace,

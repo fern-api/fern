@@ -16,13 +16,13 @@ describe("no-missing-auth", () => {
 
         expect(violations).toEqual([
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 nodePath: ["service", "endpoints", "foo"],
                 message: "Endpoint requires auth, but no auth is defined."
             },
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("b.yml"),
                 nodePath: ["service"],
                 message: "Service requires auth, but no auth is defined."

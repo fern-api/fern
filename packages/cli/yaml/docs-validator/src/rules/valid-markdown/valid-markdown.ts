@@ -32,7 +32,7 @@ export const ValidMarkdownRule: Rule = {
                             : "Markdown failed to parse";
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message
                         }
                     ];

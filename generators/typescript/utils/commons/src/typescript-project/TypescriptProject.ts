@@ -33,9 +33,12 @@ export abstract class TypescriptProject {
     protected static SRC_DIRECTORY = "src" as const;
     protected static TEST_DIRECTORY = "tests" as const;
     protected static DIST_DIRECTORY = "dist" as const;
+    protected static SCRIPTS_DIRECTORY_NAME = "scripts" as const;
+
     protected static CJS_DIRECTORY = "cjs" as const;
     protected static ESM_DIRECTORY = "esm" as const;
     protected static TYPES_DIRECTORY = "types" as const;
+
     protected static BUILD_SCRIPT_FILENAME = "build.js" as const;
     protected static NODE_DIST_DIRECTORY = "node" as const;
     protected static BROWSER_DIST_DIRECTORY = "browser" as const;
@@ -81,6 +84,7 @@ export abstract class TypescriptProject {
     private runScripts: boolean;
 
     constructor({
+        npmPackage,
         runScripts,
         tsMorphProject,
         extraDependencies,
@@ -91,8 +95,10 @@ export abstract class TypescriptProject {
         extraPeerDependenciesMeta,
         dependencies,
         outputJsr,
-        exportSerde
+        exportSerde,
+        extraConfigs
     }: TypescriptProject.Init) {
+        this.npmPackage = npmPackage;
         this.runScripts = runScripts;
         this.tsMorphProject = tsMorphProject;
         this.extraDependencies = extraDependencies;
@@ -104,6 +110,7 @@ export abstract class TypescriptProject {
         this.dependencies = dependencies;
         this.outputJsr = outputJsr ?? false;
         this.exportSerde = exportSerde;
+        this.extraConfigs = extraConfigs;
     }
 
     public getFoldersForExports(): string[] {

@@ -53,7 +53,7 @@ export function validateExampleEndpointCallParameters<T>({
     for (const requiredKey of requiredParameters) {
         if (examples?.[requiredKey] == null) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `Example is missing required ${parameterDisplayName} "${requiredKey}"`
             });
         }
@@ -64,7 +64,7 @@ export function validateExampleEndpointCallParameters<T>({
             const expectedType = allDeclarations[key];
             if (expectedType == null) {
                 violations.push({
-                    severity: "error",
+                    severity: "fatal",
                     message: `Unexpected ${parameterDisplayName} "${key}"`
                 });
             } else {
@@ -84,7 +84,7 @@ export function validateExampleEndpointCallParameters<T>({
                             breadcrumbs,
                             depth: 0
                         }).map((val): RuleViolation => {
-                            return { severity: "error", message: val.message };
+                            return { severity: "fatal", message: val.message };
                         })
                     );
                 }

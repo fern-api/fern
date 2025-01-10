@@ -32,7 +32,7 @@ export const ContentTypeOnlyForMultipartRule: Rule = {
                             }
                             if (propertyDeclaration["content-type"] != null) {
                                 violations.push({
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: `${propertyName} has content-type, but the request is not multipart`
                                 });
                             }

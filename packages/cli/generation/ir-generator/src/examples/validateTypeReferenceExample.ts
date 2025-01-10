@@ -178,7 +178,7 @@ export function validateTypeReferenceExample({
                 if (duplicates.length > 0) {
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message:
                                 "Set has duplicate elements:\n" +
                                 duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n")

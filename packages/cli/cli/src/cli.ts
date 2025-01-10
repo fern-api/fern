@@ -233,6 +233,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Migrate docs from Mintlify"
                 }),
         async (argv) => {
+            if (argv.organization == null) {
+                argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+            }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
             } else if (argv.docs != null) {

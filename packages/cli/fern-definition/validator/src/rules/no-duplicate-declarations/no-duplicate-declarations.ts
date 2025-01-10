@@ -45,7 +45,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
             const indexOfThisDeclarations = declarationsForName.indexOf(relativeFilepath);
             const duplicates = declarationsForName.filter((_declaration, index) => index !== indexOfThisDeclarations);
             return duplicates.map((duplicate) => ({
-                severity: "error",
+                severity: "fatal",
                 message: `${declaredName} is already declared in ${
                     duplicate === relativeFilepath ? "this file" : duplicate
                 }`

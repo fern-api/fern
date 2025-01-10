@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 
 export interface ValidationViolation {
     name?: string;
-    severity: "error" | "warning";
+    severity: "fatal" | "error" | "warning";
     relativeFilepath: RelativeFilePath;
     nodePath: NodePath;
     message: string;

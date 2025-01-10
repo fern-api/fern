@@ -29,7 +29,7 @@
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.126.1-444264056",
+    "@fern-fern/fdr-cjs-sdk": "0.127.4-331678a74",
     "gray-matter": "^4.0.3",
     "mdast-util-from-markdown": "^2.0.2",
     "mdast-util-gfm": "^3.0.0",
@@ -43,16 +43,17 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@types/diff": "^5.2.1",
+    "@fern-api/configs": "workspace:*",
     "@types/mdast": "^4.0.4",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "diff": "^5.2.0",
-    "eslint": "^9.16.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "eslint": "^8.56.0",
     "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.0.5",
-    "zod": "^3.22.3"
+    "@types/diff": "^5.2.1",
+    "diff": "^5.2.0",
+    "zod": "^3.22.3",
+    "vitest": "^2.1.8"
   }
 }

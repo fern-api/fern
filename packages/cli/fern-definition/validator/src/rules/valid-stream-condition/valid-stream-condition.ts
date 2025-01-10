@@ -40,7 +40,7 @@ export const ValidStreamConditionRule: Rule = {
                         }
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message:
                                     "stream-condition can only be used if both response and response-stream are specified."
                             }
@@ -50,7 +50,7 @@ export const ValidStreamConditionRule: Rule = {
                     if (rawStreamCondition == null) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message:
                                     "stream-condition must be specified when both response and response-stream are specified."
                             }
@@ -101,7 +101,7 @@ export function validateRequestProperty({
     if (requestPropertyComponents == null) {
         return [
             {
-                severity: "error",
+                severity: "fatal",
                 message: "Please specify path to a valid property (e.g. $request.stream)"
             }
         ];
@@ -118,7 +118,7 @@ export function validateRequestProperty({
     ) {
         return [
             {
-                severity: "error",
+                severity: "fatal",
                 message: `Property "${requestProperty}" does not exist on the request.`
             }
         ];
