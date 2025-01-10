@@ -98,13 +98,7 @@ export class DocsDefinitionResolver {
         return this._parsedDocsConfig;
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
-    private markdownFilesToFrontmatter: Map<
-        AbsoluteFilePath,
-        {
-            slug?: string;
-            noindex?: boolean;
-        }
-    > = new Map();
+    private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -136,7 +130,7 @@ export class DocsDefinitionResolver {
 
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
-        this.markdownFilesToFrontmatter = this.getMarkdownFilesToFrontmatter(this.parsedDocsConfig.pages);
+        this.markdownFilesToFullSlugs = this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -194,11 +188,9 @@ export class DocsDefinitionResolver {
         const basePath = this.getDocsBasePath();
 
         // TODO: include more (canonical) slugs from the navigation tree
-        const markdownFilesToPathName: Map<AbsoluteFilePath, string> = new Map();
-        this.markdownFilesToFrontmatter.forEach((value, key) => {
-            if (value.slug != null) {
-                markdownFilesToPathName.set(key, urlJoin(basePath, value.slug));
-            }
+        const markdownFilesToPathName: Record<AbsoluteFilePath, string> = {};
+        this.markdownFilesToFullSlugs.forEach((value, key) => {
+            markdownFilesToPathName[key] = urlJoin(basePath, value);
         });
 
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
@@ -283,28 +275,15 @@ export class DocsDefinitionResolver {
     }
 
     // currently this only supports slugs that are included in frontmatter
-    private getMarkdownFilesToFrontmatter(pages: Record<RelativeFilePath, string>): Map<
-        AbsoluteFilePath,
-        {
-            slug?: string;
-            noindex?: boolean;
-        }
-    > {
-        const mdxFilePathToSlug = new Map<
-            AbsoluteFilePath,
-            {
-                slug?: string;
-                noindex?: boolean;
-            }
-        >();
+    // TODO: import @fern-ui/fdr-utils to resolve all slugs
+    private getMarkdownFilesToFullSlugs(pages: Record<RelativeFilePath, string>): Map<AbsoluteFilePath, string> {
+        const mdxFilePathToSlug = new Map<AbsoluteFilePath, string>();
         for (const [relativePath, markdown] of Object.entries(pages)) {
-            const { data: frontmatter } = matter(markdown);
-            const slug = frontmatter.slug;
-            const noindex = frontmatter.noindex;
-            mdxFilePathToSlug.set(this.resolveFilepath(relativePath), {
-                slug: typeof slug === "string" ? slug.trim() : undefined,
-                noindex: typeof noindex === "boolean" ? noindex : undefined
-            });
+            const frontmatter = matter(markdown);
+            const slug = frontmatter.data.slug;
+            if (typeof slug === "string" && slug.trim().length > 0) {
+                mdxFilePathToSlug.set(this.resolveFilepath(relativePath), slug.trim());
+            }
         }
         return mdxFilePathToSlug;
     }
@@ -467,7 +446,7 @@ export class DocsDefinitionResolver {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(landingPageConfig.absolutePath));
         const slug = parentSlug.apply({
             urlSlug: landingPageConfig.slug ?? kebabCase(landingPageConfig.title),
-            fullSlug: this.markdownFilesToFrontmatter.get(landingPageConfig.absolutePath)?.slug?.split("/")
+            fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/")
         });
         return {
             type: "landingPage",
@@ -480,7 +459,7 @@ export class DocsDefinitionResolver {
             orphaned: landingPageConfig.orphaned,
             pageId,
             authed: undefined,
-            noindex: this.markdownFilesToFrontmatter.get(landingPageConfig.absolutePath)?.noindex
+            noindex: undefined
         };
     }
 
@@ -665,7 +644,7 @@ export class DocsDefinitionResolver {
             workspace,
             this.docsWorkspace,
             this.taskContext,
-            this.markdownFilesToFrontmatter,
+            this.markdownFilesToFullSlugs,
             this.#idgen
         );
         return node.get();
@@ -676,7 +655,7 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
-            this.markdownFilesToFrontmatter,
+            this.markdownFilesToFullSlugs,
             item.changelog,
             this.docsWorkspace,
             this.#idgen
@@ -709,7 +688,7 @@ export class DocsDefinitionResolver {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath));
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
-            fullSlug: this.markdownFilesToFrontmatter.get(item.absolutePath)?.slug?.split("/")
+            fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/")
         });
         const id = this.#idgen.get(pageId);
         return {
@@ -723,7 +702,7 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pageId,
             authed: undefined,
-            noindex: this.markdownFilesToFrontmatter.get(item.absolutePath)?.noindex
+            noindex: undefined
         };
     }
 
@@ -738,7 +717,7 @@ export class DocsDefinitionResolver {
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
             fullSlug: item.overviewAbsolutePath
-                ? this.markdownFilesToFrontmatter.get(item.overviewAbsolutePath)?.slug?.split("/")
+                ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
                 : undefined,
             skipUrlSlug: item.skipUrlSlug
         });
@@ -756,10 +735,7 @@ export class DocsDefinitionResolver {
             children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
             authed: undefined,
             pointsTo: undefined,
-            noindex:
-                item.overviewAbsolutePath != null
-                    ? this.markdownFilesToFrontmatter.get(item.overviewAbsolutePath)?.noindex
-                    : undefined
+            noindex: undefined
         };
     }
 
@@ -794,7 +770,7 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
-            this.markdownFilesToFrontmatter,
+            this.markdownFilesToFullSlugs,
             changelog,
             this.docsWorkspace,
             this.#idgen

@@ -3,10 +3,12 @@ import { randomUUID } from "crypto";
 import type { Position } from "unist";
 
 import { noop } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
+import { convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 
@@ -25,7 +27,15 @@ export const ValidMarkdownLinks: Rule = {
 
         const url = instanceUrls[0] ?? "http://localhost";
 
-        const docsDefinitionResolver = new DocsDefinitionResolver(url, workspace, fernWorkspaces, NOOP_CONTEXT);
+        const ossWorkspaces: OSSWorkspace[] = [];
+
+        const docsDefinitionResolver = new DocsDefinitionResolver(
+            url,
+            workspace,
+            ossWorkspaces,
+            fernWorkspaces,
+            NOOP_CONTEXT
+        );
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 

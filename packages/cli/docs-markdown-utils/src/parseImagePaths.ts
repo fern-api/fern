@@ -182,7 +182,7 @@ function isDataUrl(url: string): boolean {
 export function replaceImagePathsAndUrls(
     markdown: string,
     fileIdsMap: ReadonlyMap<AbsoluteFilePath, string>,
-    markdownFilesToPathName: ReadonlyMap<AbsoluteFilePath, string>,
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>,
     metadata: AbsolutePathMetadata,
     context: TaskContext
 ): string {
@@ -236,7 +236,7 @@ export function replaceImagePathsAndUrls(
             if (href.endsWith(".md") || href.endsWith(".mdx")) {
                 const absoluteFilePath = resolvePath(href, metadata);
                 if (absoluteFilePath != null) {
-                    const pathName = markdownFilesToPathName.get(absoluteFilePath);
+                    const pathName = markdownFilesToPathName[absoluteFilePath];
                     if (pathName != null) {
                         replaced = replaced.replace(href, pathName);
                     } else {

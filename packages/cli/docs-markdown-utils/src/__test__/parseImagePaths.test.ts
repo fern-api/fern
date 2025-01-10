@@ -574,7 +574,7 @@ describe("replaceImagePaths", () => {
     it("should replace image paths with fileIDs", () => {
         const page = "This is a test page with an image ![image](/Volume/git/fern/path/to/image.png)";
         const fileIds = new Map([[AbsoluteFilePath.of("/Volume/git/fern/path/to/image.png"), "fileID"]]);
-        const result = replaceImagePathsAndUrls(page, fileIds, new Map(), PATHS, CONTEXT);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
         expect(result).toMatchInlineSnapshot(`
             "This is a test page with an image ![image](file:fileID)
             "
@@ -584,7 +584,7 @@ describe("replaceImagePaths", () => {
     it("should ignore anchors when replacing image paths", () => {
         const page = "This is a test page with an image ![image](/Volume/git/fern/path/to/image.png#anchor)";
         const fileIds = new Map([[AbsoluteFilePath.of("/Volume/git/fern/path/to/image.png"), "fileID"]]);
-        const result = replaceImagePathsAndUrls(page, fileIds, new Map(), PATHS, CONTEXT);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
         expect(result).toMatchInlineSnapshot(`
             "This is a test page with an image ![image](file:fileID#anchor)
             "
@@ -594,7 +594,7 @@ describe("replaceImagePaths", () => {
     it("should ignore anchors when replacing image paths in img tag", () => {
         const page = "This is a test page with an image <img src='/Volume/git/fern/path/to/image.png#anchor' />";
         const fileIds = new Map([[AbsoluteFilePath.of("/Volume/git/fern/path/to/image.png"), "fileID"]]);
-        const result = replaceImagePathsAndUrls(page, fileIds, new Map(), PATHS, CONTEXT);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
         expect(result).toMatchInlineSnapshot(`
             "This is a test page with an image <img src='file:fileID#anchor' />
             "
@@ -611,7 +611,7 @@ function testMdxFixture(filename: string) {
     const replaced = replaceImagePathsAndUrls(
         result.markdown,
         new Map(result.filepaths.map((path) => [AbsoluteFilePath.of(path), "123e4567-e89b-12d3-a456-426655440000"])),
-        new Map(),
+        {},
         PATHS,
         CONTEXT
     );
