@@ -31,14 +31,6 @@ export function convertOAuthTokenEndpoint({
             ? (resolvedEndpoint.endpoint.request.body.properties ?? {})
             : {};
 
-    const customPropertyNames = Object.keys(requestBodyProperties).filter(
-        (propertyName) =>
-            !tokenEndpoint.requestProperties.client_id.includes(propertyName) &&
-            !tokenEndpoint.requestProperties.client_secret.includes(propertyName) &&
-            (tokenEndpoint.requestProperties.scopes == null ||
-                !tokenEndpoint.requestProperties.scopes.includes(propertyName))
-    );
-
     return {
         endpointReference: {
             endpointId: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
@@ -66,16 +58,12 @@ export function convertOAuthTokenEndpoint({
                           propertyComponents: tokenEndpoint.requestProperties.scopes
                       })
                     : undefined,
-            customProperties:
-                customPropertyNames.length > 0
-                    ? customPropertyNames.map((propertyName) =>
-                          propertyResolver.resolveRequestPropertyOrThrow({
-                              file,
-                              endpoint: tokenEndpoint.endpoint,
-                              propertyComponents: [propertyName]
-                          })
-                      )
-                    : undefined
+            customProperties: resolveCustomRequestProperties({
+                requestBodyProperties,
+                tokenEndpoint,
+                file,
+                propertyResolver
+            })
         },
         responseProperties: {
             accessToken: propertyResolver.resolveResponsePropertyOrThrow({
@@ -102,3 +90,33 @@ export function convertOAuthTokenEndpoint({
         }
     };
 }
+
+const resolveCustomRequestProperties = ({
+    requestBodyProperties,
+    tokenEndpoint,
+    file,
+    propertyResolver
+}: {
+    requestBodyProperties: Record<string, unknown>;
+    tokenEndpoint: TokenEndpoint;
+    file: FernFileContext;
+    propertyResolver: PropertyResolver;
+}) => {
+    const customPropertyNames = Object.keys(requestBodyProperties).filter(
+        (propertyName) =>
+            !tokenEndpoint.requestProperties.client_id.includes(propertyName) &&
+            !tokenEndpoint.requestProperties.client_secret.includes(propertyName) &&
+            (tokenEndpoint.requestProperties.scopes == null ||
+                !tokenEndpoint.requestProperties.scopes.includes(propertyName))
+    );
+
+    return customPropertyNames.length > 0
+        ? customPropertyNames.map((propertyName) =>
+              propertyResolver.resolveRequestPropertyOrThrow({
+                  file,
+                  endpoint: tokenEndpoint.endpoint,
+                  propertyComponents: [propertyName]
+              })
+          )
+        : undefined;
+};
