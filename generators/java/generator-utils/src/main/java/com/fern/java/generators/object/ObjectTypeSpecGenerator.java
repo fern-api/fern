@@ -63,6 +63,7 @@ public final class ObjectTypeSpecGenerator {
     public TypeSpec generate() {
         EqualsMethod equalsMethod = generateEqualsMethod();
         Optional<ObjectBuilder> maybeObjectBuilder = generateBuilder();
+
         TypeSpec.Builder typeSpecBuilder = TypeSpec.classBuilder(objectClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addFields(allEnrichedProperties.stream()

@@ -14,11 +14,14 @@ public class TypeIdResolver
 
     private static final String KEY = "Key";
     private static final String VALUE = "Value";
+    private static final String ITEM = "Item";
 
     private final String name;
+    private final TypeReference visitedReference;
 
-    public TypeIdResolver(String name) {
+    public TypeIdResolver(String name, TypeReference visitedReference) {
         this.name = name;
+        this.visitedReference = visitedReference;
     }
 
     // Handle top-level types
@@ -35,8 +38,11 @@ public class TypeIdResolver
 
     @Override
     public List<NamedTypeId> visitNamed(NamedType namedType) {
-        return List.of(
-                NamedTypeId.builder().name(name).typeId(namedType.getTypeId()).build());
+        return List.of(NamedTypeId.builder()
+                .name(name)
+                .typeId(namedType.getTypeId())
+                .sourceReference(visitedReference)
+                .build());
     }
 
     @Override
@@ -58,14 +64,14 @@ public class TypeIdResolver
 
     @Override
     public List<NamedTypeId> visitList(TypeReference typeReference) {
-        return typeReference.visit(this);
+        return typeReference.visit(new TypeIdResolver(name + ITEM, typeReference));
     }
 
     @Override
     public List<NamedTypeId> visitMap(MapType mapType) {
         List<NamedTypeId> result = new ArrayList<>();
-        result.addAll(mapType.getKeyType().visit(new TypeIdResolver(name + KEY)));
-        result.addAll(mapType.getValueType().visit(new TypeIdResolver(name + VALUE)));
+        result.addAll(mapType.getKeyType().visit(new TypeIdResolver(name + KEY, mapType.getKeyType())));
+        result.addAll(mapType.getValueType().visit(new TypeIdResolver(name + VALUE, mapType.getValueType())));
         return result;
     }
 
@@ -76,6 +82,6 @@ public class TypeIdResolver
 
     @Override
     public List<NamedTypeId> visitSet(TypeReference typeReference) {
-        return typeReference.visit(this);
+        return typeReference.visit(new TypeIdResolver(name + ITEM, typeReference));
     }
 }

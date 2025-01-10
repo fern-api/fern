@@ -85,7 +85,9 @@ public final class SingleTypeSpecGenerator implements Type.Visitor<Optional<Type
                 objectGenerator.objectPropertyGetters().entrySet()) {
             ObjectProperty objectProperty = entry.getKey();
             EnrichedObjectProperty enriched = entry.getValue();
-            List<NamedTypeId> ids = objectProperty.getValueType().visit(new TypeIdResolver(enriched.camelCaseKey()));
+            List<NamedTypeId> ids = objectProperty
+                    .getValueType()
+                    .visit(new TypeIdResolver(enriched.pascalCaseKey(), objectProperty.getValueType()));
             typeIdsByName.putAll(KeyedStream.of(ids.stream())
                     .mapKeys(NamedTypeId::name)
                     .map(NamedTypeId::typeId)

@@ -27,13 +27,13 @@ import org.jetbrains.annotations.NotNull;
 public final class RootType1 {
     private final String foo;
 
-    private final RootType1InlineType1 bar;
+    private final Bar bar;
 
-    private final Map<String, RootType1FooMapValue> fooMap;
+    private final Map<String, FooMapValue> fooMap;
 
-    private final List<RootType1FooListItem> fooList;
+    private final List<FooListItem> fooList;
 
-    private final Set<RootType1FooSetItem> fooSet;
+    private final Set<FooSetItem> fooSet;
 
     private final ReferenceType ref;
 
@@ -41,10 +41,10 @@ public final class RootType1 {
 
     private RootType1(
             String foo,
-            RootType1InlineType1 bar,
-            Map<String, RootType1FooMapValue> fooMap,
-            List<RootType1FooListItem> fooList,
-            Set<RootType1FooSetItem> fooSet,
+            Bar bar,
+            Map<String, FooMapValue> fooMap,
+            List<FooListItem> fooList,
+            Set<FooSetItem> fooSet,
             ReferenceType ref,
             Map<String, Object> additionalProperties) {
         this.foo = foo;
@@ -68,7 +68,7 @@ public final class RootType1 {
      * @return lorem ipsum
      */
     @JsonProperty("bar")
-    public RootType1InlineType1 getBar() {
+    public Bar getBar() {
         return bar;
     }
 
@@ -76,7 +76,7 @@ public final class RootType1 {
      * @return lorem ipsum
      */
     @JsonProperty("fooMap")
-    public Map<String, RootType1FooMapValue> getFooMap() {
+    public Map<String, FooMapValue> getFooMap() {
         return fooMap;
     }
 
@@ -84,7 +84,7 @@ public final class RootType1 {
      * @return lorem ipsum
      */
     @JsonProperty("fooList")
-    public List<RootType1FooListItem> getFooList() {
+    public List<FooListItem> getFooList() {
         return fooList;
     }
 
@@ -92,7 +92,7 @@ public final class RootType1 {
      * @return lorem ipsum
      */
     @JsonProperty("fooSet")
-    public Set<RootType1FooSetItem> getFooSet() {
+    public Set<FooSetItem> getFooSet() {
         return fooSet;
     }
 
@@ -145,7 +145,7 @@ public final class RootType1 {
     }
 
     public interface BarStage {
-        RefStage bar(@NotNull RootType1InlineType1 bar);
+        RefStage bar(@NotNull Bar bar);
     }
 
     public interface RefStage {
@@ -155,38 +155,38 @@ public final class RootType1 {
     public interface _FinalStage {
         RootType1 build();
 
-        _FinalStage fooMap(Map<String, RootType1FooMapValue> fooMap);
+        _FinalStage fooMap(Map<String, FooMapValue> fooMap);
 
-        _FinalStage putAllFooMap(Map<String, RootType1FooMapValue> fooMap);
+        _FinalStage putAllFooMap(Map<String, FooMapValue> fooMap);
 
-        _FinalStage fooMap(String key, RootType1FooMapValue value);
+        _FinalStage fooMap(String key, FooMapValue value);
 
-        _FinalStage fooList(List<RootType1FooListItem> fooList);
+        _FinalStage fooList(List<FooListItem> fooList);
 
-        _FinalStage addFooList(RootType1FooListItem fooList);
+        _FinalStage addFooList(FooListItem fooList);
 
-        _FinalStage addAllFooList(List<RootType1FooListItem> fooList);
+        _FinalStage addAllFooList(List<FooListItem> fooList);
 
-        _FinalStage fooSet(Set<RootType1FooSetItem> fooSet);
+        _FinalStage fooSet(Set<FooSetItem> fooSet);
 
-        _FinalStage addFooSet(RootType1FooSetItem fooSet);
+        _FinalStage addFooSet(FooSetItem fooSet);
 
-        _FinalStage addAllFooSet(Set<RootType1FooSetItem> fooSet);
+        _FinalStage addAllFooSet(Set<FooSetItem> fooSet);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements FooStage, BarStage, RefStage, _FinalStage {
         private String foo;
 
-        private RootType1InlineType1 bar;
+        private Bar bar;
 
         private ReferenceType ref;
 
-        private Set<RootType1FooSetItem> fooSet = new LinkedHashSet<>();
+        private Set<FooSetItem> fooSet = new LinkedHashSet<>();
 
-        private List<RootType1FooListItem> fooList = new ArrayList<>();
+        private List<FooListItem> fooList = new ArrayList<>();
 
-        private Map<String, RootType1FooMapValue> fooMap = new LinkedHashMap<>();
+        private Map<String, FooMapValue> fooMap = new LinkedHashMap<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -221,7 +221,7 @@ public final class RootType1 {
          */
         @java.lang.Override
         @JsonSetter("bar")
-        public RefStage bar(@NotNull RootType1InlineType1 bar) {
+        public RefStage bar(@NotNull Bar bar) {
             this.bar = Objects.requireNonNull(bar, "bar must not be null");
             return this;
         }
@@ -242,7 +242,7 @@ public final class RootType1 {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage addAllFooSet(Set<RootType1FooSetItem> fooSet) {
+        public _FinalStage addAllFooSet(Set<FooSetItem> fooSet) {
             this.fooSet.addAll(fooSet);
             return this;
         }
@@ -252,14 +252,14 @@ public final class RootType1 {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage addFooSet(RootType1FooSetItem fooSet) {
+        public _FinalStage addFooSet(FooSetItem fooSet) {
             this.fooSet.add(fooSet);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "fooSet", nulls = Nulls.SKIP)
-        public _FinalStage fooSet(Set<RootType1FooSetItem> fooSet) {
+        public _FinalStage fooSet(Set<FooSetItem> fooSet) {
             this.fooSet.clear();
             this.fooSet.addAll(fooSet);
             return this;
@@ -270,7 +270,7 @@ public final class RootType1 {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage addAllFooList(List<RootType1FooListItem> fooList) {
+        public _FinalStage addAllFooList(List<FooListItem> fooList) {
             this.fooList.addAll(fooList);
             return this;
         }
@@ -280,14 +280,14 @@ public final class RootType1 {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage addFooList(RootType1FooListItem fooList) {
+        public _FinalStage addFooList(FooListItem fooList) {
             this.fooList.add(fooList);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "fooList", nulls = Nulls.SKIP)
-        public _FinalStage fooList(List<RootType1FooListItem> fooList) {
+        public _FinalStage fooList(List<FooListItem> fooList) {
             this.fooList.clear();
             this.fooList.addAll(fooList);
             return this;
@@ -298,7 +298,7 @@ public final class RootType1 {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage fooMap(String key, RootType1FooMapValue value) {
+        public _FinalStage fooMap(String key, FooMapValue value) {
             this.fooMap.put(key, value);
             return this;
         }
@@ -308,14 +308,14 @@ public final class RootType1 {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage putAllFooMap(Map<String, RootType1FooMapValue> fooMap) {
+        public _FinalStage putAllFooMap(Map<String, FooMapValue> fooMap) {
             this.fooMap.putAll(fooMap);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "fooMap", nulls = Nulls.SKIP)
-        public _FinalStage fooMap(Map<String, RootType1FooMapValue> fooMap) {
+        public _FinalStage fooMap(Map<String, FooMapValue> fooMap) {
             this.fooMap.clear();
             this.fooMap.putAll(fooMap);
             return this;
@@ -324,6 +324,669 @@ public final class RootType1 {
         @java.lang.Override
         public RootType1 build() {
             return new RootType1(foo, bar, fooMap, fooList, fooSet, ref, additionalProperties);
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_ABSENT)
+    @JsonDeserialize(builder = FooListItem.Builder.class)
+    public static final class FooListItem {
+        private final String foo;
+
+        private final ReferenceType ref;
+
+        private final Map<String, Object> additionalProperties;
+
+        private FooListItem(String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
+            this.foo = foo;
+            this.ref = ref;
+            this.additionalProperties = additionalProperties;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("foo")
+        public String getFoo() {
+            return foo;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("ref")
+        public ReferenceType getRef() {
+            return ref;
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FooListItem && equalTo((FooListItem) other);
+        }
+
+        @JsonAnyGetter
+        public Map<String, Object> getAdditionalProperties() {
+            return this.additionalProperties;
+        }
+
+        private boolean equalTo(FooListItem other) {
+            return foo.equals(other.foo) && ref.equals(other.ref);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.foo, this.ref);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return ObjectMappers.stringify(this);
+        }
+
+        public static FooStage builder() {
+            return new Builder();
+        }
+
+        public interface FooStage {
+            RefStage foo(@NotNull String foo);
+
+            Builder from(FooListItem other);
+        }
+
+        public interface RefStage {
+            _FinalStage ref(@NotNull ReferenceType ref);
+        }
+
+        public interface _FinalStage {
+            FooListItem build();
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static final class Builder implements FooStage, RefStage, _FinalStage {
+            private String foo;
+
+            private ReferenceType ref;
+
+            @JsonAnySetter
+            private Map<String, Object> additionalProperties = new HashMap<>();
+
+            private Builder() {}
+
+            @java.lang.Override
+            public Builder from(FooListItem other) {
+                foo(other.getFoo());
+                ref(other.getRef());
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("foo")
+            public RefStage foo(@NotNull String foo) {
+                this.foo = Objects.requireNonNull(foo, "foo must not be null");
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("ref")
+            public _FinalStage ref(@NotNull ReferenceType ref) {
+                this.ref = Objects.requireNonNull(ref, "ref must not be null");
+                return this;
+            }
+
+            @java.lang.Override
+            public FooListItem build() {
+                return new FooListItem(foo, ref, additionalProperties);
+            }
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_ABSENT)
+    @JsonDeserialize(builder = FooSetItem.Builder.class)
+    public static final class FooSetItem {
+        private final String foo;
+
+        private final ReferenceType ref;
+
+        private final Map<String, Object> additionalProperties;
+
+        private FooSetItem(String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
+            this.foo = foo;
+            this.ref = ref;
+            this.additionalProperties = additionalProperties;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("foo")
+        public String getFoo() {
+            return foo;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("ref")
+        public ReferenceType getRef() {
+            return ref;
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FooSetItem && equalTo((FooSetItem) other);
+        }
+
+        @JsonAnyGetter
+        public Map<String, Object> getAdditionalProperties() {
+            return this.additionalProperties;
+        }
+
+        private boolean equalTo(FooSetItem other) {
+            return foo.equals(other.foo) && ref.equals(other.ref);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.foo, this.ref);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return ObjectMappers.stringify(this);
+        }
+
+        public static FooStage builder() {
+            return new Builder();
+        }
+
+        public interface FooStage {
+            RefStage foo(@NotNull String foo);
+
+            Builder from(FooSetItem other);
+        }
+
+        public interface RefStage {
+            _FinalStage ref(@NotNull ReferenceType ref);
+        }
+
+        public interface _FinalStage {
+            FooSetItem build();
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static final class Builder implements FooStage, RefStage, _FinalStage {
+            private String foo;
+
+            private ReferenceType ref;
+
+            @JsonAnySetter
+            private Map<String, Object> additionalProperties = new HashMap<>();
+
+            private Builder() {}
+
+            @java.lang.Override
+            public Builder from(FooSetItem other) {
+                foo(other.getFoo());
+                ref(other.getRef());
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("foo")
+            public RefStage foo(@NotNull String foo) {
+                this.foo = Objects.requireNonNull(foo, "foo must not be null");
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("ref")
+            public _FinalStage ref(@NotNull ReferenceType ref) {
+                this.ref = Objects.requireNonNull(ref, "ref must not be null");
+                return this;
+            }
+
+            @java.lang.Override
+            public FooSetItem build() {
+                return new FooSetItem(foo, ref, additionalProperties);
+            }
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_ABSENT)
+    @JsonDeserialize(builder = Bar.Builder.class)
+    public static final class Bar {
+        private final String foo;
+
+        private final Bar bar;
+
+        private final ReferenceType ref;
+
+        private final Map<String, Object> additionalProperties;
+
+        private Bar(String foo, Bar bar, ReferenceType ref, Map<String, Object> additionalProperties) {
+            this.foo = foo;
+            this.bar = bar;
+            this.ref = ref;
+            this.additionalProperties = additionalProperties;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("foo")
+        public String getFoo() {
+            return foo;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("bar")
+        public Bar getBar() {
+            return bar;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("ref")
+        public ReferenceType getRef() {
+            return ref;
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof RootType1.Bar && equalTo((RootType1.Bar) other);
+        }
+
+        @JsonAnyGetter
+        public Map<String, Object> getAdditionalProperties() {
+            return this.additionalProperties;
+        }
+
+        private boolean equalTo(RootType1.Bar other) {
+            return foo.equals(other.foo) && bar.equals(other.bar) && ref.equals(other.ref);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.foo, this.bar, this.ref);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return ObjectMappers.stringify(this);
+        }
+
+        public static FooStage builder() {
+            return new Builder();
+        }
+
+        public interface FooStage {
+            BarStage foo(@NotNull String foo);
+
+            Builder from(RootType1.Bar other);
+        }
+
+        public interface BarStage {
+            RefStage bar(@NotNull Bar bar);
+        }
+
+        public interface RefStage {
+            _FinalStage ref(@NotNull ReferenceType ref);
+        }
+
+        public interface _FinalStage {
+            RootType1.Bar build();
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static final class Builder implements FooStage, BarStage, RefStage, _FinalStage {
+            private String foo;
+
+            private Bar bar;
+
+            private ReferenceType ref;
+
+            @JsonAnySetter
+            private Map<String, Object> additionalProperties = new HashMap<>();
+
+            private Builder() {}
+
+            @java.lang.Override
+            public Builder from(RootType1.Bar other) {
+                foo(other.getFoo());
+                bar(other.getBar());
+                ref(other.getRef());
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("foo")
+            public BarStage foo(@NotNull String foo) {
+                this.foo = Objects.requireNonNull(foo, "foo must not be null");
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("bar")
+            public RefStage bar(@NotNull Bar bar) {
+                this.bar = Objects.requireNonNull(bar, "bar must not be null");
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("ref")
+            public _FinalStage ref(@NotNull ReferenceType ref) {
+                this.ref = Objects.requireNonNull(ref, "ref must not be null");
+                return this;
+            }
+
+            @java.lang.Override
+            public RootType1.Bar build() {
+                return new RootType1.Bar(foo, bar, ref, additionalProperties);
+            }
+        }
+
+        @JsonInclude(JsonInclude.Include.NON_ABSENT)
+        @JsonDeserialize(builder = Bar.Builder.class)
+        public static final class Bar {
+            private final String foo;
+
+            private final String bar;
+
+            private final ReferenceType ref;
+
+            private final Map<String, Object> additionalProperties;
+
+            private Bar(String foo, String bar, ReferenceType ref, Map<String, Object> additionalProperties) {
+                this.foo = foo;
+                this.bar = bar;
+                this.ref = ref;
+                this.additionalProperties = additionalProperties;
+            }
+
+            /**
+             * @return lorem ipsum
+             */
+            @JsonProperty("foo")
+            public String getFoo() {
+                return foo;
+            }
+
+            /**
+             * @return lorem ipsum
+             */
+            @JsonProperty("bar")
+            public String getBar() {
+                return bar;
+            }
+
+            /**
+             * @return lorem ipsum
+             */
+            @JsonProperty("ref")
+            public ReferenceType getRef() {
+                return ref;
+            }
+
+            @java.lang.Override
+            public boolean equals(Object other) {
+                if (this == other) return true;
+                return other instanceof Bar && equalTo((Bar) other);
+            }
+
+            @JsonAnyGetter
+            public Map<String, Object> getAdditionalProperties() {
+                return this.additionalProperties;
+            }
+
+            private boolean equalTo(Bar other) {
+                return foo.equals(other.foo) && bar.equals(other.bar) && ref.equals(other.ref);
+            }
+
+            @java.lang.Override
+            public int hashCode() {
+                return Objects.hash(this.foo, this.bar, this.ref);
+            }
+
+            @java.lang.Override
+            public String toString() {
+                return ObjectMappers.stringify(this);
+            }
+
+            public static FooStage builder() {
+                return new Builder();
+            }
+
+            public interface FooStage {
+                BarStage foo(@NotNull String foo);
+
+                Builder from(Bar other);
+            }
+
+            public interface BarStage {
+                RefStage bar(@NotNull String bar);
+            }
+
+            public interface RefStage {
+                _FinalStage ref(@NotNull ReferenceType ref);
+            }
+
+            public interface _FinalStage {
+                Bar build();
+            }
+
+            @JsonIgnoreProperties(ignoreUnknown = true)
+            public static final class Builder implements FooStage, BarStage, RefStage, _FinalStage {
+                private String foo;
+
+                private String bar;
+
+                private ReferenceType ref;
+
+                @JsonAnySetter
+                private Map<String, Object> additionalProperties = new HashMap<>();
+
+                private Builder() {}
+
+                @java.lang.Override
+                public Builder from(Bar other) {
+                    foo(other.getFoo());
+                    bar(other.getBar());
+                    ref(other.getRef());
+                    return this;
+                }
+
+                /**
+                 * <p>lorem ipsum</p>
+                 * @return Reference to {@code this} so that method calls can be chained together.
+                 */
+                @java.lang.Override
+                @JsonSetter("foo")
+                public BarStage foo(@NotNull String foo) {
+                    this.foo = Objects.requireNonNull(foo, "foo must not be null");
+                    return this;
+                }
+
+                /**
+                 * <p>lorem ipsum</p>
+                 * @return Reference to {@code this} so that method calls can be chained together.
+                 */
+                @java.lang.Override
+                @JsonSetter("bar")
+                public RefStage bar(@NotNull String bar) {
+                    this.bar = Objects.requireNonNull(bar, "bar must not be null");
+                    return this;
+                }
+
+                /**
+                 * <p>lorem ipsum</p>
+                 * @return Reference to {@code this} so that method calls can be chained together.
+                 */
+                @java.lang.Override
+                @JsonSetter("ref")
+                public _FinalStage ref(@NotNull ReferenceType ref) {
+                    this.ref = Objects.requireNonNull(ref, "ref must not be null");
+                    return this;
+                }
+
+                @java.lang.Override
+                public Bar build() {
+                    return new Bar(foo, bar, ref, additionalProperties);
+                }
+            }
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_ABSENT)
+    @JsonDeserialize(builder = FooMapValue.Builder.class)
+    public static final class FooMapValue {
+        private final String foo;
+
+        private final ReferenceType ref;
+
+        private final Map<String, Object> additionalProperties;
+
+        private FooMapValue(String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
+            this.foo = foo;
+            this.ref = ref;
+            this.additionalProperties = additionalProperties;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("foo")
+        public String getFoo() {
+            return foo;
+        }
+
+        /**
+         * @return lorem ipsum
+         */
+        @JsonProperty("ref")
+        public ReferenceType getRef() {
+            return ref;
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FooMapValue && equalTo((FooMapValue) other);
+        }
+
+        @JsonAnyGetter
+        public Map<String, Object> getAdditionalProperties() {
+            return this.additionalProperties;
+        }
+
+        private boolean equalTo(FooMapValue other) {
+            return foo.equals(other.foo) && ref.equals(other.ref);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.foo, this.ref);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return ObjectMappers.stringify(this);
+        }
+
+        public static FooStage builder() {
+            return new Builder();
+        }
+
+        public interface FooStage {
+            RefStage foo(@NotNull String foo);
+
+            Builder from(FooMapValue other);
+        }
+
+        public interface RefStage {
+            _FinalStage ref(@NotNull ReferenceType ref);
+        }
+
+        public interface _FinalStage {
+            FooMapValue build();
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static final class Builder implements FooStage, RefStage, _FinalStage {
+            private String foo;
+
+            private ReferenceType ref;
+
+            @JsonAnySetter
+            private Map<String, Object> additionalProperties = new HashMap<>();
+
+            private Builder() {}
+
+            @java.lang.Override
+            public Builder from(FooMapValue other) {
+                foo(other.getFoo());
+                ref(other.getRef());
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("foo")
+            public RefStage foo(@NotNull String foo) {
+                this.foo = Objects.requireNonNull(foo, "foo must not be null");
+                return this;
+            }
+
+            /**
+             * <p>lorem ipsum</p>
+             * @return Reference to {@code this} so that method calls can be chained together.
+             */
+            @java.lang.Override
+            @JsonSetter("ref")
+            public _FinalStage ref(@NotNull ReferenceType ref) {
+                this.ref = Objects.requireNonNull(ref, "ref must not be null");
+                return this;
+            }
+
+            @java.lang.Override
+            public FooMapValue build() {
+                return new FooMapValue(foo, ref, additionalProperties);
+            }
         }
     }
 }

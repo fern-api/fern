@@ -15,10 +15,13 @@
  */
 package com.fern.java.generators;
 
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
@@ -26,8 +29,11 @@ import com.fern.java.generators.object.ImplementsInterface;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
+import com.fern.java.utils.NamedTypeId;
+import com.fern.java.utils.TypeIdResolver;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,8 +132,8 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         ObjectTypeSpecGenerator genericObjectGenerator = new ObjectTypeSpecGenerator(
                 className,
                 generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
-                enrichedObjectProperties,
-                implementsInterfaces,
+                enrichedObjectProperties.stream().map(this::withPropertyName).collect(Collectors.toList()),
+                implementsInterfaces.stream().map(this::overridePropertyNames).collect(Collectors.toList()),
                 true,
                 generatorContext.getCustomConfig().enablePublicConstructors(),
                 generatorContext.deserializeWithAdditionalProperties(),
@@ -152,5 +158,111 @@ public final class ObjectGenerator extends AbstractFileGenerator {
 
     public Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters() {
         return objectPropertyGetters;
+    }
+
+    private ImplementsInterface overridePropertyNames(ImplementsInterface implementsInterface) {
+        return ImplementsInterface.builder()
+                .interfaceClassName(implementsInterface.interfaceClassName())
+                .addAllInterfaceProperties(implementsInterface.interfaceProperties().stream()
+                        .map(this::withPropertyName)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    /**
+     * If the incoming enriched property is inlined, override the property type name to be the enriched property name.
+     */
+    private EnrichedObjectProperty withPropertyName(EnrichedObjectProperty enrichedObjectProperty) {
+        Optional<ObjectProperty> maybeObjectProperty = asObjectProperty(enrichedObjectProperty);
+
+        if (maybeObjectProperty.isEmpty()) {
+            // We don't have this enriched property in our getters; nothing to do.
+            return enrichedObjectProperty;
+        }
+
+        ObjectProperty objectProperty = maybeObjectProperty.get();
+
+        List<NamedTypeId> namedTypeIds = objectProperty
+                .getValueType()
+                .visit(new TypeIdResolver(enrichedObjectProperty.pascalCaseKey(), objectProperty.getValueType()));
+
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>(generatorContext.getTypeDeclarations());
+        Map<DeclaredTypeName, ClassName> enclosingClassMapping = new HashMap<>();
+
+        for (NamedTypeId namedId : namedTypeIds) {
+            Optional<TypeDeclaration> maybeOriginalTypeDeclaration =
+                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(namedId.typeId()));
+
+            if (maybeOriginalTypeDeclaration.isEmpty()) {
+                // If even one of the corresponding type declarations is not present, there's nothing we can do.
+                return enrichedObjectProperty;
+            }
+
+            TypeDeclaration originalTypeDeclaration = maybeOriginalTypeDeclaration.get();
+
+            if (!originalTypeDeclaration.getInline().orElse(false)) {
+                // Don't do anything do non-inline declarations.
+                continue;
+            }
+
+            TypeDeclaration overriddenTypeDeclaration = TypeDeclaration.builder()
+                    .name(DeclaredTypeName.builder()
+                            .typeId(namedId.typeId())
+                            // This doesn't matter because all the ones we're going to use from here are inlined.
+                            .fernFilepath(originalTypeDeclaration.getName().getFernFilepath())
+                            .name(Name.builder()
+                                    .originalName(namedId.name())
+                                    .camelCase(SafeAndUnsafeString.builder()
+                                            .unsafeName(namedId.name())
+                                            .safeName(namedId.name())
+                                            .build())
+                                    .pascalCase(SafeAndUnsafeString.builder()
+                                            .unsafeName(namedId.name())
+                                            .safeName(namedId.name())
+                                            .build())
+                                    .snakeCase(SafeAndUnsafeString.builder()
+                                            .unsafeName(namedId.name())
+                                            .safeName(namedId.name())
+                                            .build())
+                                    .screamingSnakeCase(SafeAndUnsafeString.builder()
+                                            .unsafeName(namedId.name())
+                                            .safeName(namedId.name())
+                                            .build())
+                                    .build())
+                            .build())
+                    .shape(originalTypeDeclaration.getShape())
+                    .build();
+            enclosingClassMapping.put(overriddenTypeDeclaration.getName(), className);
+
+            overriddenTypeDeclarations.put(namedId.typeId(), overriddenTypeDeclaration);
+        }
+
+        PoetTypeNameMapper overriddenTypeNameMapper = new PoetTypeNameMapper(
+                generatorContext.getPoetClassNameFactory(),
+                generatorContext.getCustomConfig(),
+                overriddenTypeDeclarations,
+                enclosingClassMapping);
+
+        TypeName poetTypeName = overriddenTypeNameMapper.convertToTypeName(false, objectProperty.getValueType());
+
+        return EnrichedObjectProperty.builder()
+                .camelCaseKey(enrichedObjectProperty.camelCaseKey())
+                .pascalCaseKey(enrichedObjectProperty.pascalCaseKey())
+                .poetTypeName(poetTypeName)
+                .fromInterface(enrichedObjectProperty.fromInterface())
+                .wireKey(enrichedObjectProperty.wireKey())
+                .docs(enrichedObjectProperty.docs())
+                .literal(enrichedObjectProperty.literal())
+                .build();
+    }
+
+    /** Attempt to get the ObjectProperty that the given EnrichedObjectProperty was generated from. */
+    private Optional<ObjectProperty> asObjectProperty(EnrichedObjectProperty enrichedObjectProperty) {
+        for (Map.Entry<ObjectProperty, EnrichedObjectProperty> entry : objectPropertyGetters.entrySet()) {
+            if (entry.getValue().equals(enrichedObjectProperty)) {
+                return Optional.of(entry.getKey());
+            }
+        }
+        return Optional.empty();
     }
 }

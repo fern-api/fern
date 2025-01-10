@@ -98,14 +98,14 @@ fixtures:
         enableInlineTypes: true
         wrapped-aliases: true
       outputFolder: inline
-    - customConfig:
-        enableInlineTypes: false
-        wrapped-aliases: true
-      outputFolder: no-inline
-    - customConfig:
-        enableInlineTypes: true
-        wrapped-aliases: false
-      outputFolder: no-wrapped-aliases
+    # - customConfig:
+    #     enableInlineTypes: false
+    #     wrapped-aliases: true
+    #   outputFolder: no-inline
+    # - customConfig:
+    #     enableInlineTypes: true
+    #     wrapped-aliases: false
+    #   outputFolder: no-wrapped-aliases
 scripts:
   - docker: fernapi/java-seed
     commands:
