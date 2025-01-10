@@ -5840,9 +5840,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
-      '@fern-api/typescript-ast':
-        specifier: workspace:*
-        version: link:../../../../../generators/typescript-v2/ast
       '@fern-api/typescript-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/typescript-v2/dynamic-snippets

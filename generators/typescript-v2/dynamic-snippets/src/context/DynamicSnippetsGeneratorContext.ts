@@ -2,7 +2,6 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { constructNpmPackage, getNamespaceExport } from "@fern-api/typescript-browser-compatible-base";
