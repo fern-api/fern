@@ -3,8 +3,18 @@
       The IR now pulls in additional request properties from the OAuth getToken endpoint to support custom OAuth schemas.
     type: feat
   irVersion: 54
-  version: 0.47.2
+  version: 0.47.3
   
+- changelogEntry:
+  - summary: |
+      The CLI now supports checking for broken links in your docs. You will see warnings in `fern check` if your docs link to any 
+      page that can't be resolved, and the `--strict-broken-links` option will cause the command to fail (exit with a non-zero exit code) if 
+      any broken links are found. You can also run the new command `fern docs broken-links` to only check for broken links (ignoring 
+      other possible errors), with the `--strict` option to cause the command to fail if any broken links are found.
+    type: feat
+  irVersion: 53
+  version: 0.47.2
+
 - changelogEntry:
   - summary: |
       Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more 

@@ -11,8 +11,8 @@ type InternalType =
     | Array_
     | Object_
     | Map_
-    | Tuple
     | Enum
+    | Promise_
     | Any
     | Unknown
     | Void
@@ -53,11 +53,6 @@ interface Map_ {
     valueType: Type;
 }
 
-interface Tuple {
-    type: "tuple";
-    types: Type[];
-}
-
 interface Enum {
     type: "enum";
     values: string[];
@@ -91,9 +86,9 @@ interface Nop {
     type: "nop";
 }
 
-interface ObjectField {
-    name: string;
-    valueType: Type;
+interface Promise_ {
+    type: "promise";
+    value: Type;
 }
 
 export class Type extends AstNode {
@@ -116,28 +111,37 @@ export class Type extends AstNode {
                 writer.write("boolean");
                 break;
             case "array":
-                writer.write(`Array<${this.internalType.valueType.write(writer)}>`);
+                this.internalType.valueType.write(writer);
+                writer.write("[]");
                 break;
             case "map":
-                writer.write(
-                    `Map<${this.internalType.keyType.write(writer)}, ${this.internalType.valueType.write(writer)}>`
-                );
+                writer.write("Record<");
+                this.internalType.keyType.write(writer);
+                writer.write(", ");
+                this.internalType.valueType.write(writer);
+                writer.write(">");
                 break;
             case "object":
-                writer.write(
-                    `{ ${Object.entries(this.internalType.fields)
-                        .map(([k, v]) => `${k}: ${v.write(writer)}`)
-                        .join(", ")} }`
-                );
-                break;
-            case "tuple":
-                writer.write(`[${this.internalType.types.map((type) => type.write(writer)).join(", ")}]`);
+                writer.write("{");
+                writer.indent();
+                for (const [key, value] of Object.entries(this.internalType.fields)) {
+                    writer.write(`${key}: `);
+                    value.write(writer);
+                    writer.writeLine(",");
+                }
+                writer.dedent();
+                writer.write("}");
                 break;
             case "enum":
                 writer.write("enum");
                 break;
             case "any":
                 writer.write("any");
+                break;
+            case "promise":
+                writer.write("Promise<");
+                this.internalType.value.write(writer);
+                writer.write(">");
                 break;
             case "unknown":
                 writer.write("unknown");
@@ -200,13 +204,6 @@ export class Type extends AstNode {
         });
     }
 
-    public static tuple(types: Type[]): Type {
-        return new this({
-            type: "tuple",
-            types
-        });
-    }
-
     public static enum(values: string[]): Type {
         return new this({
             type: "enum",
@@ -217,6 +214,17 @@ export class Type extends AstNode {
     public static any(): Type {
         return new this({
             type: "any"
+        });
+    }
+
+    public static promise(value: Type): Type {
+        if (value.internalType.type === "promise") {
+            // Avoids double promise.
+            return value;
+        }
+        return new this({
+            type: "promise",
+            value
         });
     }
 

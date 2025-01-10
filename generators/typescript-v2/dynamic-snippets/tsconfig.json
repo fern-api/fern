@@ -26,6 +26,9 @@
     },
     {
       "path": "../ast"
-    }
+    },
+    {
+      "path": "../browser-compatible-base"
+    },
   ]
 }

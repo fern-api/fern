@@ -2,6 +2,7 @@ import chalk from "chalk";
 
 import { formatLog } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
+import { NodePath } from "@fern-api/fern-definition-schema";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
@@ -26,32 +27,58 @@ export function logViolations({
         logViolationsSummary({ context, stats, logWarnings });
     }
 
-    violations.forEach((violation) => {
-        if (violation.severity === "fatal" || violation.severity === "error") {
-            logViolation({ violation, context });
-        }
-    });
+    const violationsByNodePath = groupViolationsByNodePath(violations);
 
-    if (logWarnings) {
-        violations.forEach((violation) => {
-            if (violation.severity === "warning") {
-                logViolation({ violation, context });
-            }
-        });
+    for (const [nodePath, violations] of violationsByNodePath) {
+        const relativeFilepath = violations[0]?.relativeFilepath ?? "";
+        logViolationsGroup({ logWarnings, relativeFilepath, nodePath, violations, context });
     }
 
     return {
-        hasErrors: stats.numErrors > 0
+        hasErrors: stats.numFatal > 0
     };
 }
 
-function logViolation({ violation, context }: { violation: ValidationViolation; context: TaskContext }): void {
+function groupViolationsByNodePath(violations: ValidationViolation[]): Map<NodePath, ValidationViolation[]> {
+    const map = new Map<NodePath, ValidationViolation[]>();
+    for (const violation of violations) {
+        map.set(violation.nodePath, [...(map.get(violation.nodePath) ?? []), violation]);
+    }
+    return map;
+}
+
+function logViolationsGroup({
+    logWarnings,
+    relativeFilepath,
+    nodePath,
+    violations,
+    context
+}: {
+    logWarnings: boolean;
+    relativeFilepath: string;
+    nodePath: NodePath;
+    violations: ValidationViolation[];
+    context: TaskContext;
+}): void {
+    const severity = getSeverityForViolations(violations);
+    if (severity === "warning" && !logWarnings) {
+        return;
+    }
+    const violationMessages = violations
+        .map((violation) => {
+            if (violation.severity === "warning" && !logWarnings) {
+                return null;
+            }
+            return violation.message;
+        })
+        .filter((message): message is string => message != null)
+        .join("\n");
     context.logger.log(
-        getLogLevelForSeverity(violation.severity),
+        getLogLevelForSeverity(severity),
         formatLog({
             breadcrumbs: [
-                violation.relativeFilepath,
-                ...violation.nodePath.map((nodePathItem) => {
+                relativeFilepath,
+                ...nodePath.map((nodePathItem) => {
                     let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
                     if (typeof nodePathItem !== "string" && nodePathItem.arrayIndex != null) {
                         itemStr += `[${nodePathItem.arrayIndex}]`;
@@ -59,9 +86,17 @@ function logViolation({ violation, context }: { violation: ValidationViolation; 
                     return itemStr;
                 })
             ],
-            title: violation.message
+            title: violationMessages
         })
     );
+}
+
+function getSeverityForViolations(violations: ValidationViolation[]): ValidationViolation["severity"] {
+    return violations.some((violation) => violation.severity === "fatal")
+        ? "fatal"
+        : violations.some((violation) => violation.severity === "error")
+          ? "error"
+          : "warning";
 }
 
 function getLogLevelForSeverity(severity: ValidationViolation["severity"]) {
@@ -86,16 +121,16 @@ function logViolationsSummary({
     context: TaskContext;
     logWarnings: boolean;
 }): void {
-    const { numErrors, numWarnings } = stats;
+    const { numFatal, numErrors, numWarnings } = stats;
 
-    let message = `Found ${numErrors} errors and ${numWarnings} warnings.`;
-    if (!logWarnings) {
-        message += " Run fern check --warnings to print out the warnings.";
+    let message = `Found ${numFatal} errors and ${numErrors + numWarnings} warnings.`;
+    if (!logWarnings && numWarnings > 0) {
+        message += " Run fern check --warnings to print out the warnings not shown.";
     }
 
-    if (numErrors > 0) {
+    if (numFatal > 0) {
         context.logger.error(message);
-    } else if (numWarnings > 0) {
+    } else if (numErrors + numWarnings > 0) {
         context.logger.warn(message);
     } else {
         context.logger.info(chalk.green("✓ All checks passed"));
@@ -103,20 +138,22 @@ function logViolationsSummary({
 }
 
 interface ViolationStats {
+    numFatal: number;
     numErrors: number;
     numWarnings: number;
 }
 
 function getViolationStats(violations: ValidationViolation[]): ViolationStats {
+    let numFatal = 0;
     let numErrors = 0;
     let numWarnings = 0;
     for (const violation of violations) {
         switch (violation.severity) {
             case "fatal":
-                numErrors += 1;
+                numFatal += 1;
                 continue;
             case "error":
-                numWarnings += 1;
+                numErrors += 1;
                 continue;
             case "warning":
                 numWarnings += 1;
@@ -126,6 +163,7 @@ function getViolationStats(violations: ValidationViolation[]): ViolationStats {
         }
     }
     return {
+        numFatal,
         numErrors,
         numWarnings
     };

@@ -3,17 +3,19 @@ import path from "path";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-import { dynamic as DynamicSnippets, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { dynamic } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertDynamicEndpointSnippetRequest";
 
 export class DynamicSnippetsGoTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
     constructor(
         private readonly context: TaskContext,
-        private readonly ir: DynamicSnippets.DynamicIntermediateRepresentation,
+        private readonly ir: dynamic.DynamicIntermediateRepresentation,
         private readonly generatorConfig: FernGeneratorExec.GeneratorConfig
     ) {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -27,13 +29,13 @@ export class DynamicSnippetsGoTestGenerator {
         requests
     }: {
         outputDir: AbsoluteFilePath;
-        requests: DynamicSnippets.EndpointSnippetRequest[];
+        requests: dynamic.EndpointSnippetRequest[];
     }): Promise<void> {
         this.context.logger.debug("Generating dynamic snippet tests...");
         for (const [idx, request] of requests.entries()) {
             try {
                 const response = await this.dynamicSnippetsGenerator.generate(
-                    this.convertDynamicEndpointSnippetRequest(request)
+                    convertDynamicEndpointSnippetRequest(request)
                 );
                 const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
@@ -49,21 +51,5 @@ export class DynamicSnippetsGoTestGenerator {
 
     private getTestFilePath({ outputDir, idx }: { outputDir: AbsoluteFilePath; idx: number }): AbsoluteFilePath {
         return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet.go`));
-    }
-
-    /**
-     * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
-     * convention doesn't match.
-     */
-    private convertDynamicEndpointSnippetRequest(request: DynamicSnippets.EndpointSnippetRequest): Omit<
-        DynamicSnippets.EndpointSnippetRequest,
-        "baseUrl"
-    > & {
-        baseURL: string | undefined;
-    } {
-        return {
-            ...request,
-            baseURL: request.baseUrl
-        };
     }
 }

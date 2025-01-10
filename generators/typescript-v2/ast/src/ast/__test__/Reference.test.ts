@@ -10,7 +10,7 @@ describe("Reference", () => {
                     type: "default"
                 }
             });
-            expect(reference.toStringFormatted()).toMatchSnapshot();
+            expect(reference.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -64,7 +64,7 @@ describe("Reference", () => {
                     })
                 );
             });
-            expect(references.toStringFormatted()).toMatchSnapshot();
+            expect(references.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -77,7 +77,7 @@ describe("Reference", () => {
                     moduleName: "module"
                 }
             });
-            expect(reference.toStringFormatted()).toMatchSnapshot();
+            expect(reference.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -112,7 +112,7 @@ describe("Reference", () => {
                     })
                 );
             });
-            expect(references.toStringFormatted()).toMatchSnapshot();
+            expect(references.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -165,7 +165,7 @@ describe("Reference", () => {
                     })
                 );
             });
-            expect(references.toStringFormatted()).toMatchSnapshot();
+            expect(references.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -231,7 +231,7 @@ describe("Reference", () => {
                     })
                 );
             });
-            expect(references.toStringFormatted()).toMatchSnapshot();
+            expect(references.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
         });
     });
 });

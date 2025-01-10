@@ -6,8 +6,8 @@ import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 
-import { APIWorkspaceLoader } from "./APIWorkspaceLoader";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 import { visitFilepath } from "./visitFilepath";
@@ -20,7 +20,7 @@ export declare namespace visitDocsConfigFileYamlAst {
         absoluteFilepathToConfiguration: AbsoluteFilePath;
         absolutePathToFernFolder: AbsoluteFilePath;
         context: TaskContext;
-        loadAPIWorkspace: APIWorkspaceLoader;
+        fernWorkspaces: FernWorkspace[];
     }
 }
 
@@ -29,7 +29,7 @@ export async function visitDocsConfigFileYamlAst({
     visitor,
     absoluteFilepathToConfiguration,
     context,
-    loadAPIWorkspace,
+    fernWorkspaces,
     absolutePathToFernFolder
 }: visitDocsConfigFileYamlAst.Args): Promise<void> {
     await visitor.file?.(
@@ -172,7 +172,7 @@ export async function visitDocsConfigFileYamlAst({
                 visitor,
                 nodePath: ["navigation"],
                 absoluteFilepathToConfiguration,
-                loadAPIWorkspace,
+                fernWorkspaces,
                 context
             });
         },
@@ -252,7 +252,7 @@ export async function visitDocsConfigFileYamlAst({
                             visitor,
                             nodePath: ["navigation"],
                             absoluteFilepathToConfiguration: absoluteFilepath,
-                            loadAPIWorkspace,
+                            fernWorkspaces,
                             context
                         });
                     }

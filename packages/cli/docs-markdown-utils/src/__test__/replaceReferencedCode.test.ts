@@ -4,7 +4,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { replaceReferencedCode } from "../replaceReferencedCode";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
-const absolutePathToMdx = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
+const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
 const context = createMockTaskContext();
 
 describe("replaceReferencedCode", () => {
@@ -17,7 +17,7 @@ describe("replaceReferencedCode", () => {
         const result = await replaceReferencedCode({
             markdown,
             absolutePathToFernFolder,
-            absolutePathToMdx,
+            absolutePathToMarkdownFile,
             context,
             fileLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {

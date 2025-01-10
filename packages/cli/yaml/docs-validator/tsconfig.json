@@ -35,6 +35,7 @@
     },
     {
       "path": "../../fern-definition/schema"
-    }
+    },
+    { "path": "../../docs-resolver" }
   ]
 }
