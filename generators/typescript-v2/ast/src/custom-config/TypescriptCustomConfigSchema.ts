@@ -2,7 +2,6 @@ import { z } from "zod";
 
 // The full set of configuration options supported by the TypeScript SDK generator.
 export const TypescriptCustomConfigSchema = z.strictObject({
-    useBrandedStringAliases: z.optional(z.boolean()),
     neverThrowErrors: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
     outputSourceFiles: z.optional(z.boolean()),
@@ -34,6 +33,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     requireDefaultEnvironment: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
     useBigInt: z.optional(z.boolean()),
+    useBrandedStringAliases: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

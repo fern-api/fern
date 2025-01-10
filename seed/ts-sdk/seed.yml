@@ -42,6 +42,9 @@ fixtures:
         extraDependencies:
           dummmy: "dummy"
       outputFolder: noScripts
+    - customConfig:
+        useBrandedStringAliases: true
+      outputFolder: branded-string-aliases
   streaming:
     - customConfig: null
       outputFolder: no-custom-config

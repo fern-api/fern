@@ -10,7 +10,7 @@ export declare namespace Function {
         name: string;
         parameters: Parameter[];
         body: CodeBlock;
-        return_: Type;
+        return_?: Type;
         async?: boolean;
         docs?: string;
     }
@@ -20,17 +20,17 @@ export class Function extends AstNode {
     readonly name: string;
     readonly parameters: Parameter[];
     readonly async: boolean;
-    readonly return_: Type;
     readonly body: CodeBlock;
+    readonly return_: Type | undefined;
     readonly docs: string | undefined;
 
-    constructor({ name, parameters, async, return_, body, docs }: Function.Args) {
+    constructor({ name, parameters, async, body, return_, docs }: Function.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
         this.async = async ?? false;
-        this.return_ = return_;
         this.body = body;
+        this.return_ = return_;
         this.docs = docs;
     }
 

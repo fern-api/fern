@@ -1,11 +1,10 @@
 import { SeedTraceClient, SeedTrace } from "../..";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new SeedTraceClient({
         environment: "https://api.fern.com",
         token: "<token>",
     });
-    
     await client.problem.createProblem({
         problemName: "problemName",
         problemDescription: {
@@ -31,18 +30,50 @@ async function main(): Promise<void> {
                     },
                 ],
             },
+            PYTHON: {
+                solutionFile: {
+                    filename: "filename",
+                    contents: "contents",
+                },
+                readOnlyFiles: [
+                    {
+                        filename: "filename",
+                        contents: "contents",
+                    },
+                    {
+                        filename: "filename",
+                        contents: "contents",
+                    },
+                ],
+            },
+            JAVASCRIPT: {
+                solutionFile: {
+                    filename: "filename",
+                    contents: "contents",
+                },
+                readOnlyFiles: [
+                    {
+                        filename: "filename",
+                        contents: "contents",
+                    },
+                    {
+                        filename: "filename",
+                        contents: "contents",
+                    },
+                ],
+            }
         },
         inputParams: [
             {
-                variableType: SeedTrace.commons.VariableType.integerType({}),
+                variableType: SeedTrace.commons.VariableType.integerType(),
                 name: "name",
             },
             {
-                variableType: SeedTrace.commons.VariableType.integerType({}),
+                variableType: SeedTrace.commons.VariableType.integerType(),
                 name: "name",
             },
         ],
-        outputType: SeedTrace.commons.VariableType.integerType({}),
+        outputType: SeedTrace.commons.VariableType.integerType(),
         testcases: [
             {
                 testCase: {

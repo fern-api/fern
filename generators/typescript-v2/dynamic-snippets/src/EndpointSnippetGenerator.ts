@@ -55,10 +55,8 @@ export class EndpointSnippetGenerator {
                     name: MAIN_FUNCTION_NAME,
                     async: true,
                     parameters: [],
-                    return_: ts.Type.void(),
                     body: ts.codeblock((writer) => {
                         writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
-                        writer.writeLine();
                         writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
                     })
                 })

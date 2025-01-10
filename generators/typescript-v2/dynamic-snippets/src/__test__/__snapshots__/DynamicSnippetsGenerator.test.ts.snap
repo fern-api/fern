@@ -3,11 +3,10 @@
 exports[`snippets > examples > 'GET /metadata (allow-multiple)' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    
     await client.service.getMetadata({
         shallow: false,
         tag: [
@@ -24,11 +23,10 @@ main();
 exports[`snippets > examples > 'GET /metadata (simple)' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    
     await client.service.getMetadata({
         shallow: false,
         tag: [
@@ -44,11 +42,10 @@ main();
 exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    
     await client.service.createBigEntity({
         castMember: {
             id: "john.doe",
@@ -99,11 +96,10 @@ exports[`snippets > examples > 'POST /movie (invalid request body)' 1`] = `
 exports[`snippets > examples > 'POST /movie (simple)' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    
     await client.service.createMovie({
         id: "movie-c06a4ad7",
         prequel: "movie-cv9b914f",
@@ -163,11 +159,10 @@ exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] 
 exports[`snippets > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    
     await client.endpoints.container.getAndReturnListOfObjects([
         {
             string: "one",
@@ -187,11 +182,10 @@ main();
 exports[`snippets > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    
     await client.endpoints.container.getAndReturnListOfPrimitives([
         "one",
         "two",
@@ -205,9 +199,8 @@ main();
 exports[`snippets > file-upload > 'POST /' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient();
-    
     await client.service.post({
         file: new Blob(["Hello, world!"]),
         fileList: [
@@ -223,9 +216,8 @@ main();
 exports[`snippets > file-upload > 'POST /just-file' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient();
-    
     await client.service.justFile({
         file: new Blob(["Hello, world!"]),
     });
@@ -237,9 +229,8 @@ main();
 exports[`snippets > file-upload > 'POST /just-file-with-query-params' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient();
-    
     await client.service.justFileWithQueryParams({
         integer: 42,
         maybeString: "exists",
@@ -253,11 +244,10 @@ main();
 exports[`snippets > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    
     await client.imdb.getMovie("movie_xyz");
 }
 main();
@@ -267,11 +257,10 @@ main();
 exports[`snippets > imdb > 'POST /movies/create-movie (simple)' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    
     await client.imdb.createMovie({
         title: "The Matrix",
         rating: 8.2,
@@ -284,7 +273,7 @@ main();
 exports[`snippets > multi-url-environment > 'Custom environment' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         environment: {
             ec2: "https://custom.ec2.aws.com",
@@ -292,7 +281,6 @@ async function main(): Promise<void> {
         },
         token: "<YOUR_API_KEY>",
     });
-    
     await client.s3.getPresignedURL({
         s3Key: "xyz",
     });
@@ -314,12 +302,11 @@ exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] 
 exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
 "import { AcmeClient, AcmeEnvironments } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         environment: AcmeEnvironments.Production,
         token: "<YOUR_API_KEY>",
     });
-    
     await client.s3.getPresignedURL({
         s3Key: "xyz",
     });
@@ -331,12 +318,11 @@ main();
 exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
 "import { AcmeClient, AcmeEnvironments } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         environment: AcmeEnvironments.Staging,
         token: "<YOUR_API_KEY>",
     });
-    
     await client.s3.getPresignedURL({
         s3Key: "xyz",
     });
@@ -358,12 +344,11 @@ exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
 exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
 "import { AcmeClient, AcmeEnvironments } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         environment: AcmeEnvironments.Production,
         token: "<YOUR_API_KEY>",
     });
-    
     await client.dummy.getDummy();
 }
 main();
@@ -373,12 +358,11 @@ main();
 exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
 "import { AcmeClient, AcmeEnvironments } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         environment: AcmeEnvironments.Staging,
         token: "<YOUR_API_KEY>",
     });
-    
     await client.dummy.getDummy();
 }
 main();
@@ -388,12 +372,11 @@ main();
 exports[`snippets > single-url-environment-default > 'custom baseURL' 1`] = `
 "import { AcmeClient } from "acme";
 
-async function main(): Promise<void> {
+async function main() {
     const client = new AcmeClient({
         environment: "http://localhost:8080",
         token: "<YOUR_API_KEY>",
     });
-    
     await client.dummy.getDummy();
 }
 main();

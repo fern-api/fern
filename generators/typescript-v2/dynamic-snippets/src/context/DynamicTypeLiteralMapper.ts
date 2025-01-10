@@ -5,6 +5,8 @@ import { ts } from "@fern-api/typescript-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
+const UNION_VALUE_KEY = "value";
+
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
         typeReference: FernIr.dynamic.TypeReference;
@@ -142,8 +144,27 @@ export class DynamicTypeLiteralMapper {
 
     private convertNamed({ named, value }: { named: FernIr.dynamic.NamedType; value: unknown }): ts.TypeLiteral {
         switch (named.type) {
-            case "alias":
+            case "alias": {
+                if (this.context.customConfig?.useBrandedStringAliases) {
+                    return ts.TypeLiteral.reference(
+                        ts.codeblock((writer) => {
+                            writer.writeNode(
+                                ts.reference({
+                                    name: this.context.namespaceExport,
+                                    importFrom: this.context.getModuleImport(),
+                                    memberName: this.context.getFullyQualifiedReference({
+                                        declaration: named.declaration
+                                    })
+                                })
+                            );
+                            writer.write("(");
+                            writer.writeNode(this.convert({ typeReference: named.typeReference, value }));
+                            writer.write(")");
+                        })
+                    );
+                }
                 return this.convert({ typeReference: named.typeReference, value });
+            }
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
@@ -184,8 +205,8 @@ export class DynamicTypeLiteralMapper {
         }
         if (this.context.customConfig?.includeUtilsOnUnionMembers) {
             return ts.TypeLiteral.reference(
-                ts.codeblock((writer) => {
-                    writer.writeNode(
+                    ts.codeblock((writer) => {
+                        writer.writeNode(
                         ts.invokeMethod({
                             on: ts.reference({
                                 name: this.context.namespaceExport,
@@ -195,7 +216,11 @@ export class DynamicTypeLiteralMapper {
                                 })
                             }),
                             method: this.context.getMethodName(unionVariant.discriminantValue.name),
-                            arguments_: [ts.TypeLiteral.object({ fields: unionProperties })]
+                            arguments_: this.convertDiscriminatedUnionUtilsArgs({
+                                discriminatedUnionTypeInstance,
+                                unionVariant,
+                                unionProperties
+                            })
                         })
                     );
                 })
@@ -241,12 +266,21 @@ export class DynamicTypeLiteralMapper {
                 return [...baseFields, ...object_.fields];
             }
             case "singleProperty": {
-                const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
-                if (record == null) {
-                    return undefined;
-                }
                 try {
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+                    if (record == null) {
+                        return [
+                            ...baseFields,
+                            {
+                                name: UNION_VALUE_KEY,
+                                value: this.convert({
+                                    typeReference: unionVariant.typeReference,
+                                    value: discriminatedUnionTypeInstance.value
+                                })
+                            }
+                        ]
+                    }
                     return [
                         ...baseFields,
                         {
@@ -266,6 +300,30 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(unionVariant);
         }
+    }
+
+    private convertDiscriminatedUnionUtilsArgs({
+        discriminatedUnionTypeInstance,
+        unionVariant,
+        unionProperties
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
+        unionProperties: ts.ObjectField[];
+    }): ts.AstNode[] {
+        if (unionVariant.type === "singleProperty") {
+            const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+            if (record == null && unionProperties.length === 1) {
+                // The union is a single value without any base properties, e.g.
+                return [
+                    this.convert({
+                        typeReference: unionVariant.typeReference,
+                        value: discriminatedUnionTypeInstance.value
+                    })
+                ]
+            }
+        }
+        return unionProperties.length > 0 ? [ts.TypeLiteral.object({ fields: unionProperties })] : [];
     }
 
     private getBaseFields({
