@@ -7,8 +7,8 @@ async function main(): Promise<void> {
     });
     
     await client.playlist.createPlaylist(1, {
-        datetime: "2024-01-15T09:30:00Z",
-        optionalDatetime: "2024-01-15T09:30:00Z",
+        datetime: new Date("2024-01-15T09:30:00Z"),
+        optionalDatetime: new Date("2024-01-15T09:30:00Z"),
         body: {
             name: "name",
             problems: [

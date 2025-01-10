@@ -11,10 +11,10 @@ async function main(): Promise<void> {
         problemDescription: {
             boards: [
                 {
-                    html: "html",
+                    type: "html",
                 },
                 {
-                    html: "html",
+                    type: "html",
                 },
             ],
         },
@@ -39,19 +39,19 @@ async function main(): Promise<void> {
         inputParams: [
             {
                 variableType: {
-                    integerType: "integerType",
+                    type: "integerType",
                 },
                 name: "name",
             },
             {
                 variableType: {
-                    integerType: "integerType",
+                    type: "integerType",
                 },
                 name: "name",
             },
         ],
         outputType: {
-            integerType: "integerType",
+            type: "integerType",
         },
         testcases: [
             {
@@ -59,15 +59,15 @@ async function main(): Promise<void> {
                     id: "id",
                     params: [
                         {
-                            integerValue: "integerValue",
+                            type: "integerValue",
                         },
                         {
-                            integerValue: "integerValue",
+                            type: "integerValue",
                         },
                     ],
                 },
                 expectedResult: {
-                    integerValue: "integerValue",
+                    type: "integerValue",
                 },
             },
             {
@@ -75,15 +75,15 @@ async function main(): Promise<void> {
                     id: "id",
                     params: [
                         {
-                            integerValue: "integerValue",
+                            type: "integerValue",
                         },
                         {
-                            integerValue: "integerValue",
+                            type: "integerValue",
                         },
                     ],
                 },
                 expectedResult: {
-                    integerValue: "integerValue",
+                    type: "integerValue",
                 },
             },
         ],

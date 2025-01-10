@@ -7,7 +7,7 @@ async function main(): Promise<void> {
     });
     
     await client.migration.getAttemptedMigrations({
-        admin-key-header: "admin-key-header",
+        "admin-key-header": "admin-key-header",
     });
 }
 main();

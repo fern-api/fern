@@ -150,7 +150,7 @@ export class DynamicTypeLiteralMapper {
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const unionProperties = this.convertDiscriminatedUnionProperties({
             discriminatedUnionTypeInstance,
-            unionVariant,
+            unionVariant
         });
         if (unionProperties == null) {
             return ts.TypeLiteral.nop();
@@ -158,18 +158,20 @@ export class DynamicTypeLiteralMapper {
         if (this.context.customConfig?.includeUtilsOnUnionMembers) {
             return ts.TypeLiteral.reference(
                 ts.codeblock((writer) => {
-                    writer.writeNode(ts.invokeMethod({
-                        on: ts.reference({
-                            name: this.context.namespaceExport,
-                            importFrom: this.context.getModuleImport(),
-                            memberName: this.context.getFullyQualifiedReference({
-                                declaration: discriminatedUnion.declaration
-                            })
-                        }),
-                        method: this.context.getMethodName(unionVariant.discriminantValue.name),
-                        arguments_: [ts.TypeLiteral.object({ fields: unionProperties })]
-                    }))
-                }),
+                    writer.writeNode(
+                        ts.invokeMethod({
+                            on: ts.reference({
+                                name: this.context.namespaceExport,
+                                importFrom: this.context.getModuleImport(),
+                                memberName: this.context.getFullyQualifiedReference({
+                                    declaration: discriminatedUnion.declaration
+                                })
+                            }),
+                            method: this.context.getMethodName(unionVariant.discriminantValue.name),
+                            arguments_: [ts.TypeLiteral.object({ fields: unionProperties })]
+                        })
+                    );
+                })
             );
         }
         const discriminantProperty = {
@@ -183,7 +185,7 @@ export class DynamicTypeLiteralMapper {
 
     private convertDiscriminatedUnionProperties({
         discriminatedUnionTypeInstance,
-        unionVariant,
+        unionVariant
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
@@ -204,15 +206,12 @@ export class DynamicTypeLiteralMapper {
                 if (!converted.isObject()) {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: `Internal error; expected union value to be an object`
+                        message: "Internal error; expected union value to be an object"
                     });
                     return undefined;
                 }
                 const object_ = converted.asObjectOrThrow();
-                return [
-                    ...baseFields,
-                    ...object_.fields,
-                ];
+                return [...baseFields, ...object_.fields];
             }
             case "singleProperty": {
                 const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
@@ -265,7 +264,7 @@ export class DynamicTypeLiteralMapper {
                     value: this.convert(property)
                 };
             } finally {
-            this.context.errors.unscope();
+                this.context.errors.unscope();
             }
         });
     }

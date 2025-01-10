@@ -15,7 +15,7 @@ async function main(): Promise<void> {
                 directory: "directory",
             },
             returnValue: {
-                integerValue: "integerValue",
+                type: "integerValue",
             },
             expressionLocation: {
                 start: 1,
@@ -30,14 +30,14 @@ async function main(): Promise<void> {
                         {
                             variables: {
                                 variables: {
-                                    integerValue: "integerValue",
+                                    type: "integerValue",
                                 },
                             },
                         },
                         {
                             variables: {
                                 variables: {
-                                    integerValue: "integerValue",
+                                    type: "integerValue",
                                 },
                             },
                         },
@@ -54,7 +54,7 @@ async function main(): Promise<void> {
                 directory: "directory",
             },
             returnValue: {
-                integerValue: "integerValue",
+                type: "integerValue",
             },
             expressionLocation: {
                 start: 1,
@@ -69,14 +69,14 @@ async function main(): Promise<void> {
                         {
                             variables: {
                                 variables: {
-                                    integerValue: "integerValue",
+                                    type: "integerValue",
                                 },
                             },
                         },
                         {
                             variables: {
                                 variables: {
-                                    integerValue: "integerValue",
+                                    type: "integerValue",
                                 },
                             },
                         },

@@ -5,9 +5,10 @@ import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import { dynamic } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertDynamicEndpointSnippetRequest";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertDynamicEndpointSnippetRequest";
 
 export class DynamicSnippetsGoTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;

@@ -10,7 +10,7 @@ async function main(): Promise<void> {
         id: "id",
         prequel: "prequel",
         title: "title",
-        from_: "from",
+        from: "from",
         rating: 1.1,
         tag: "tag",
         book: "book",

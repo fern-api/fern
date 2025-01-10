@@ -7,7 +7,7 @@ async function main(): Promise<void> {
     });
     
     await client.file.service.getFile("file.txt", {
-        X-File-API-Version: "0.0.2",
+        "X-File-API-Version": "0.0.2",
     });
 }
 main();

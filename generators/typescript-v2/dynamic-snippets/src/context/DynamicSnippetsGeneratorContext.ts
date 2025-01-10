@@ -80,11 +80,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.getEnvironmentsTypeReference(environmentName);
     }
 
-    public getFullyQualifiedReference({
-        declaration,
-    }: {
-        declaration: FernIr.dynamic.Declaration;
-    }): string {
+    public getFullyQualifiedReference({ declaration }: { declaration: FernIr.dynamic.Declaration }): string {
         if (declaration.fernFilepath.allParts.length > 0) {
             return `${declaration.fernFilepath.allParts
                 .map((val) => val.camelCase.unsafeName)

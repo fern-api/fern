@@ -1,4 +1,4 @@
-import { SeedTraceClient } from "../..";
+import { SeedTraceClient, SeedTrace } from "../..";
 
 async function main(): Promise<void> {
     const client = new SeedTraceClient({
@@ -9,21 +9,15 @@ async function main(): Promise<void> {
     await client.problem.getDefaultStarterFiles({
         inputParams: [
             {
-                variableType: {
-                    integerType: "integerType",
-                },
+                variableType: SeedTrace.commons.VariableType.integerType({}),
                 name: "name",
             },
             {
-                variableType: {
-                    integerType: "integerType",
-                },
+                variableType: SeedTrace.commons.VariableType.integerType({}),
                 name: "name",
             },
         ],
-        outputType: {
-            integerType: "integerType",
-        },
+        outputType: SeedTrace.commons.VariableType.integerType({}),
         methodName: "methodName",
     });
 }

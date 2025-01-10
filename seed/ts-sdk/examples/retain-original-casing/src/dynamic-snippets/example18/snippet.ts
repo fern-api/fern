@@ -22,7 +22,7 @@ async function main(): Promise<void> {
             name: "name",
         },
         metadata: {
-            html: "html",
+            type: "html",
         },
         commonMetadata: {
             id: "id",
@@ -32,32 +32,28 @@ async function main(): Promise<void> {
             jsonString: "jsonString",
         },
         eventInfo: {
-            metadata: "metadata",
-            metadata: {
-                id: "id",
-                data: {
-                    data: "data",
-                },
-                jsonString: "jsonString",
+            type: "metadata",
+            id: "id",
+            data: {
+                data: "data",
             },
+            jsonString: "jsonString",
         },
         data: {
-            string: "string",
+            type: "string",
         },
         migration: {
             name: "name",
             status: "RUNNING",
         },
         exception: {
-            generic: "generic",
-            generic: {
-                exceptionType: "exceptionType",
-                exceptionMessage: "exceptionMessage",
-                exceptionStacktrace: "exceptionStacktrace",
-            },
+            type: "generic",
+            exceptionType: "exceptionType",
+            exceptionMessage: "exceptionMessage",
+            exceptionStacktrace: "exceptionStacktrace",
         },
         test: {
-            and: "and",
+            type: "and",
         },
         node: {
             name: "name",
@@ -208,7 +204,7 @@ async function main(): Promise<void> {
         moment: {
             id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             date: "2023-01-15",
-            datetime: "2024-01-15T09:30:00Z",
+            datetime: new Date("2024-01-15T09:30:00Z"),
         },
     });
 }

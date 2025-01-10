@@ -10,7 +10,7 @@ async function main(): Promise<void> {
         id: "movie-c06a4ad7",
         prequel: "movie-cv9b914f",
         title: "The Boy and the Heron",
-        from_: "Hayao Miyazaki",
+        from: "Hayao Miyazaki",
         rating: 8,
         tag: "tag-wf9as23d",
         metadata: {

@@ -1,7 +1,8 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { dynamic } from "@fern-api/ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
@@ -22,16 +23,17 @@ interface DynamicSnippetsGenerator {
 }
 
 export class DynamicSnippetsTestGenerator {
-    private static readonly GENERATORS: Record<generatorsYml.GenerationLanguage, DynamicSnippetsGenerator | undefined> = {
-        go: DynamicSnippetsGoTestGenerator,
-        typescript: DynamicSnippetsTypeScriptTestGenerator,
-        java: undefined,
-        python: undefined,
-        ruby: undefined,
-        csharp: undefined,
-        swift: undefined,
-        php: undefined
-    };
+    private static readonly GENERATORS: Record<generatorsYml.GenerationLanguage, DynamicSnippetsGenerator | undefined> =
+        {
+            go: DynamicSnippetsGoTestGenerator,
+            typescript: DynamicSnippetsTypeScriptTestGenerator,
+            java: undefined,
+            python: undefined,
+            ruby: undefined,
+            csharp: undefined,
+            swift: undefined,
+            php: undefined
+        };
 
     constructor(
         private readonly context: TaskContext,
@@ -50,11 +52,7 @@ export class DynamicSnippetsTestGenerator {
             this.context.logger.debug(`Skipping dynamic snippets test generation for language "${language}"`);
             return;
         }
-        return new generator(
-            this.context,
-            this.testSuite.ir,
-            this.testSuite.config
-        ).generateTests({
+        return new generator(this.context, this.testSuite.ir, this.testSuite.config).generateTests({
             outputDir,
             requests: this.testSuite.requests
         });

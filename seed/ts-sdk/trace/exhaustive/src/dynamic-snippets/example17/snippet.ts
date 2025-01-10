@@ -1,4 +1,4 @@
-import { SeedTraceClient } from "../..";
+import { SeedTraceClient, SeedTrace } from "../..";
 
 async function main(): Promise<void> {
     const client = new SeedTraceClient({
@@ -10,12 +10,8 @@ async function main(): Promise<void> {
         problemName: "problemName",
         problemDescription: {
             boards: [
-                {
-                    html: "html",
-                },
-                {
-                    html: "html",
-                },
+                SeedTrace.problem.ProblemDescriptionBoard.html({}),
+                SeedTrace.problem.ProblemDescriptionBoard.html({}),
             ],
         },
         files: {
@@ -38,53 +34,35 @@ async function main(): Promise<void> {
         },
         inputParams: [
             {
-                variableType: {
-                    integerType: "integerType",
-                },
+                variableType: SeedTrace.commons.VariableType.integerType({}),
                 name: "name",
             },
             {
-                variableType: {
-                    integerType: "integerType",
-                },
+                variableType: SeedTrace.commons.VariableType.integerType({}),
                 name: "name",
             },
         ],
-        outputType: {
-            integerType: "integerType",
-        },
+        outputType: SeedTrace.commons.VariableType.integerType({}),
         testcases: [
             {
                 testCase: {
                     id: "id",
                     params: [
-                        {
-                            integerValue: "integerValue",
-                        },
-                        {
-                            integerValue: "integerValue",
-                        },
+                        SeedTrace.commons.VariableValue.integerValue({}),
+                        SeedTrace.commons.VariableValue.integerValue({}),
                     ],
                 },
-                expectedResult: {
-                    integerValue: "integerValue",
-                },
+                expectedResult: SeedTrace.commons.VariableValue.integerValue({}),
             },
             {
                 testCase: {
                     id: "id",
                     params: [
-                        {
-                            integerValue: "integerValue",
-                        },
-                        {
-                            integerValue: "integerValue",
-                        },
+                        SeedTrace.commons.VariableValue.integerValue({}),
+                        SeedTrace.commons.VariableValue.integerValue({}),
                     ],
                 },
-                expectedResult: {
-                    integerValue: "integerValue",
-                },
+                expectedResult: SeedTrace.commons.VariableValue.integerValue({}),
             },
         ],
         methodName: "methodName",

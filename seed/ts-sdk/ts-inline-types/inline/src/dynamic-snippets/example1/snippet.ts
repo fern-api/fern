@@ -7,18 +7,16 @@ async function main(): Promise<void> {
     
     await client.getDiscriminatedUnion({
         bar: {
-            type1: "type1",
-            type1: {
+            type: "type1",
+            foo: "foo",
+            bar: {
                 foo: "foo",
-                bar: {
-                    foo: "foo",
-                    ref: {
-                        foo: "foo",
-                    },
-                },
                 ref: {
                     foo: "foo",
                 },
+            },
+            ref: {
+                foo: "foo",
             },
         },
         foo: "foo",

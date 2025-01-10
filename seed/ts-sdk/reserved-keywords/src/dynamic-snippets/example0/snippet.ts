@@ -6,7 +6,7 @@ async function main(): Promise<void> {
     });
     
     await client.package.test({
-        for_: "for",
+        for: "for",
     });
 }
 main();

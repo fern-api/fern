@@ -127,7 +127,7 @@ export class Type extends AstNode {
                 for (const [key, value] of Object.entries(this.internalType.fields)) {
                     writer.write(`${key}: `);
                     value.write(writer);
-                    writer.writeLine(",")
+                    writer.writeLine(",");
                 }
                 writer.dedent();
                 writer.write("}");

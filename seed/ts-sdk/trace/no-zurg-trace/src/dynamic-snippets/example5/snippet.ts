@@ -10,12 +10,12 @@ async function main(): Promise<void> {
         result: {
             result: {
                 expectedResult: {
-                    integerValue: "integerValue",
+                    type: "integerValue",
                 },
                 actualResult: {
-                    value: "value",
+                    type: "value",
                     value: {
-                        integerValue: "integerValue",
+                        type: "integerValue",
                     },
                 },
                 passed: true,
@@ -27,7 +27,7 @@ async function main(): Promise<void> {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 lineNumber: 1,
                 returnValue: {
-                    integerValue: "integerValue",
+                    type: "integerValue",
                 },
                 expressionLocation: {
                     start: 1,
@@ -42,14 +42,14 @@ async function main(): Promise<void> {
                             {
                                 variables: {
                                     variables: {
-                                        integerValue: "integerValue",
+                                        type: "integerValue",
                                     },
                                 },
                             },
                             {
                                 variables: {
                                     variables: {
-                                        integerValue: "integerValue",
+                                        type: "integerValue",
                                     },
                                 },
                             },
@@ -62,7 +62,7 @@ async function main(): Promise<void> {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 lineNumber: 1,
                 returnValue: {
-                    integerValue: "integerValue",
+                    type: "integerValue",
                 },
                 expressionLocation: {
                     start: 1,
@@ -77,14 +77,14 @@ async function main(): Promise<void> {
                             {
                                 variables: {
                                     variables: {
-                                        integerValue: "integerValue",
+                                        type: "integerValue",
                                     },
                                 },
                             },
                             {
                                 variables: {
                                     variables: {
-                                        integerValue: "integerValue",
+                                        type: "integerValue",
                                     },
                                 },
                             },

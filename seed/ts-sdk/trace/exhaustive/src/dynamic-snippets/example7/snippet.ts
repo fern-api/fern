@@ -1,4 +1,4 @@
-import { SeedTraceClient } from "../..";
+import { SeedTraceClient, SeedTrace } from "../..";
 
 async function main(): Promise<void> {
     const client = new SeedTraceClient({
@@ -8,14 +8,11 @@ async function main(): Promise<void> {
     
     await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
         workspaceRunDetails: {
-            exceptionV2: {
-                generic: "generic",
-                generic: {
-                    exceptionType: "exceptionType",
-                    exceptionMessage: "exceptionMessage",
-                    exceptionStacktrace: "exceptionStacktrace",
-                },
-            },
+            exceptionV2: SeedTrace.submission.ExceptionV2.generic({
+                exceptionType: "exceptionType",
+                exceptionMessage: "exceptionMessage",
+                exceptionStacktrace: "exceptionStacktrace",
+            }),
             exception: {
                 exceptionType: "exceptionType",
                 exceptionMessage: "exceptionMessage",
@@ -27,9 +24,7 @@ async function main(): Promise<void> {
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 lineNumber: 1,
-                returnValue: {
-                    integerValue: "integerValue",
-                },
+                returnValue: SeedTrace.commons.DebugVariableValue.integerValue({}),
                 expressionLocation: {
                     start: 1,
                     offset: 1,
@@ -42,16 +37,12 @@ async function main(): Promise<void> {
                         scopes: [
                             {
                                 variables: {
-                                    variables: {
-                                        integerValue: "integerValue",
-                                    },
+                                    variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
                                 },
                             },
                             {
                                 variables: {
-                                    variables: {
-                                        integerValue: "integerValue",
-                                    },
+                                    variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
                                 },
                             },
                         ],
@@ -62,9 +53,7 @@ async function main(): Promise<void> {
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 lineNumber: 1,
-                returnValue: {
-                    integerValue: "integerValue",
-                },
+                returnValue: SeedTrace.commons.DebugVariableValue.integerValue({}),
                 expressionLocation: {
                     start: 1,
                     offset: 1,
@@ -77,16 +66,12 @@ async function main(): Promise<void> {
                         scopes: [
                             {
                                 variables: {
-                                    variables: {
-                                        integerValue: "integerValue",
-                                    },
+                                    variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
                                 },
                             },
                             {
                                 variables: {
-                                    variables: {
-                                        integerValue: "integerValue",
-                                    },
+                                    variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
                                 },
                             },
                         ],

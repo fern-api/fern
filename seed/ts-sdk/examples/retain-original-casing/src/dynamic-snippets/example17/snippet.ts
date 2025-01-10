@@ -11,7 +11,7 @@ async function main(): Promise<void> {
         tag: [
             "tag",
         ],
-        X-API-Version: "X-API-Version",
+        "X-API-Version": "X-API-Version",
     });
 }
 main();

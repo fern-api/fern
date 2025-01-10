@@ -10,19 +10,19 @@ async function main(): Promise<void> {
         inputParams: [
             {
                 variableType: {
-                    integerType: "integerType",
+                    type: "integerType",
                 },
                 name: "name",
             },
             {
                 variableType: {
-                    integerType: "integerType",
+                    type: "integerType",
                 },
                 name: "name",
             },
         ],
         outputType: {
-            integerType: "integerType",
+            type: "integerType",
         },
         methodName: "methodName",
     });

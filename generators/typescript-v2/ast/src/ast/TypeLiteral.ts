@@ -195,7 +195,7 @@ export class TypeLiteral extends AstNode {
         }
         throw new Error("Internal error; ts.TypeLiteral is not a set");
     }
-    
+
     private isSetOfObjects(): boolean {
         return this.isSet() && this.asSetOrThrow().values.every((value) => value.isObject());
     }

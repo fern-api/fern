@@ -1,4 +1,4 @@
-import { SeedTraceClient } from "../..";
+import { SeedTraceClient, SeedTrace } from "../..";
 
 async function main(): Promise<void> {
     const client = new SeedTraceClient({
@@ -14,9 +14,7 @@ async function main(): Promise<void> {
                 filename: "filename",
                 directory: "directory",
             },
-            returnValue: {
-                integerValue: "integerValue",
-            },
+            returnValue: SeedTrace.commons.DebugVariableValue.integerValue({}),
             expressionLocation: {
                 start: 1,
                 offset: 1,
@@ -29,16 +27,12 @@ async function main(): Promise<void> {
                     scopes: [
                         {
                             variables: {
-                                variables: {
-                                    integerValue: "integerValue",
-                                },
+                                variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
                             },
                         },
                         {
                             variables: {
-                                variables: {
-                                    integerValue: "integerValue",
-                                },
+                                variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
                             },
                         },
                     ],
@@ -53,9 +47,7 @@ async function main(): Promise<void> {
                 filename: "filename",
                 directory: "directory",
             },
-            returnValue: {
-                integerValue: "integerValue",
-            },
+            returnValue: SeedTrace.commons.DebugVariableValue.integerValue({}),
             expressionLocation: {
                 start: 1,
                 offset: 1,
@@ -68,16 +60,12 @@ async function main(): Promise<void> {
                     scopes: [
                         {
                             variables: {
-                                variables: {
-                                    integerValue: "integerValue",
-                                },
+                                variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
                             },
                         },
                         {
                             variables: {
-                                variables: {
-                                    integerValue: "integerValue",
-                                },
+                                variables: SeedTrace.commons.DebugVariableValue.integerValue({}),
                             },
                         },
                     ],

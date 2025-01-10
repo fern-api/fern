@@ -20,7 +20,7 @@ export class DynamicSnippetsTypeScriptTestGenerator {
     ) {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: this.ir,
-            config: this.buildGeneratorConfig(this.generatorConfig),
+            config: this.buildGeneratorConfig(this.generatorConfig)
         });
     }
 
@@ -74,11 +74,10 @@ export class DynamicSnippetsTypeScriptTestGenerator {
                     ...outputMode,
                     publishInfo: {
                         ...publishInfo,
-                        packageName: "../..",
+                        packageName: "../.."
                     }
                 }
             }
-
         };
     }
 }

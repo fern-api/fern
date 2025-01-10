@@ -1,7 +1,7 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
-import { Reference } from "../Reference";
 import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema";
+import { Reference } from "../Reference";
 
 type ModuleName = string;
 type Alias = string;
