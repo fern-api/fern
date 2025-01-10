@@ -36,7 +36,7 @@ export function logViolations({
     }
 
     return {
-        hasErrors: stats.numErrors > 0
+        hasErrors: stats.numFatal > 0
     };
 }
 
@@ -122,16 +122,16 @@ function logViolationsSummary({
     context: TaskContext;
     logWarnings: boolean;
 }): void {
-    const { numErrors, numWarnings } = stats;
+    const { numFatal, numErrors, numWarnings } = stats;
 
-    let message = `Found ${numErrors} errors and ${numWarnings} warnings.`;
-    if (!logWarnings) {
-        message += " Run fern check --warnings to print out the warnings.";
+    let message = `Found ${numFatal} errors and ${numErrors + numWarnings} warnings.`;
+    if (!logWarnings && numWarnings > 0) {
+        message += " Run fern check --warnings to print out the warnings not shown.";
     }
 
-    if (numErrors > 0) {
+    if (numFatal > 0) {
         context.logger.error(message);
-    } else if (numWarnings > 0) {
+    } else if (numErrors + numWarnings > 0) {
         context.logger.warn(message);
     } else {
         context.logger.info(chalk.green("✓ All checks passed"));
@@ -139,20 +139,22 @@ function logViolationsSummary({
 }
 
 interface ViolationStats {
+    numFatal: number;
     numErrors: number;
     numWarnings: number;
 }
 
 function getViolationStats(violations: ValidationViolation[]): ViolationStats {
+    let numFatal = 0;
     let numErrors = 0;
     let numWarnings = 0;
     for (const violation of violations) {
         switch (violation.severity) {
             case "fatal":
-                numErrors += 1;
+                numFatal += 1;
                 continue;
             case "error":
-                numWarnings += 1;
+                numErrors += 1;
                 continue;
             case "warning":
                 numWarnings += 1;
@@ -162,6 +164,7 @@ function getViolationStats(violations: ValidationViolation[]): ViolationStats {
         }
     }
     return {
+        numFatal,
         numErrors,
         numWarnings
     };
