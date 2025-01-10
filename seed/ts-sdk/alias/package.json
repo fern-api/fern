@@ -5,6 +5,7 @@
     "repository": "https://github.com/alias/fern",
     "main": "./index.js",
     "types": "./index.d.ts",
+    "packageManager": "yarn@1.22.4",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",
