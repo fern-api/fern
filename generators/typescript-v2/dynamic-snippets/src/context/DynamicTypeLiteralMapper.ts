@@ -156,16 +156,15 @@ export class DynamicTypeLiteralMapper {
             return ts.TypeLiteral.nop();
         }
         if (this.context.customConfig?.includeUtilsOnUnionMembers) {
-            // TODO: Fix this import path.
-            const name = this.context.getFullyQualifiedReference({
-                declaration: discriminatedUnion.declaration
-            });
             return ts.TypeLiteral.reference(
                 ts.codeblock((writer) => {
                     writer.writeNode(ts.invokeMethod({
                         on: ts.reference({
-                            name,
-                            importFrom: this.context.getModuleImport()
+                            name: this.context.namespaceExport,
+                            importFrom: this.context.getModuleImport(),
+                            memberName: this.context.getFullyQualifiedReference({
+                                declaration: discriminatedUnion.declaration
+                            })
                         }),
                         method: this.context.getMethodName(unionVariant.discriminantValue.name),
                         arguments_: [ts.TypeLiteral.object({ fields: unionProperties })]

@@ -1,4 +1,4 @@
-import { FiddleClient, Fiddle.Types.Union.Animal } from "../..";
+import { FiddleClient, Fiddle } from "../..";
 
 async function main(): Promise<void> {
     const client = new FiddleClient({
@@ -6,7 +6,7 @@ async function main(): Promise<void> {
         token: "<token>",
     });
     
-    await client.endpoints.union.getAndReturnUnion(Fiddle.Types.Union.Animal.dog({
+    await client.endpoints.union.getAndReturnUnion(Fiddle.types.union.Animal.dog({
         name: "name",
         likesToWoof: true,
     }));

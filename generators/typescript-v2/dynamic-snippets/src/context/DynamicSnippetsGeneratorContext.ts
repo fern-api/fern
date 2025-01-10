@@ -86,11 +86,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         declaration: FernIr.dynamic.Declaration;
     }): string {
         if (declaration.fernFilepath.allParts.length > 0) {
-            return `${this.namespaceExport}.${declaration.fernFilepath.allParts
-                .map((val) => val.pascalCase.unsafeName)
+            return `${declaration.fernFilepath.allParts
+                .map((val) => val.camelCase.unsafeName)
                 .join(".")}.${this.getTypeName(declaration.name)}`;
         }
-        return `${this.namespaceExport}.${this.getTypeName(declaration.name)}`;
+        return `${this.getTypeName(declaration.name)}`;
     }
 
     private getEnvironmentsTypeReference(name: FernIr.Name): ts.Reference {
