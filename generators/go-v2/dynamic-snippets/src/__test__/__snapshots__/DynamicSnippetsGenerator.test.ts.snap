@@ -96,6 +96,28 @@ func do() {
 					Name: "John Doe",
 				},
 			},
+			ExtendedMovie: &acme.ExtendedMovie{
+				Cast: []string{
+					"John Travolta",
+					"Samuel L. Jackson",
+					"Uma Thurman",
+					"Bruce Willis",
+				},
+				ID:     "movie-sda231x",
+				Title:  "Pulp Fiction",
+				From:   "Quentin Tarantino",
+				Rating: 8.5,
+				Tag:    "tag-12efs9dv",
+				Metadata: map[string]interface{}{
+					"academyAward": true,
+					"releaseDate":  "2023-12-08",
+					"ratings": map[string]interface{}{
+						"rottenTomatoes": 97,
+						"imdb":           7.6,
+					},
+				},
+				Revenue: 1000000,
+			},
 		},
 	)
 }
@@ -155,6 +177,77 @@ func do() {
 				},
 			},
 			Revenue: 1000000,
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.Object.GetAndReturnWithOptionalField(
+		context.TODO(),
+		&types.ObjectWithOptionalField{
+			String: acme.String(
+				"string",
+			),
+			Integer: acme.Int(
+				1,
+			),
+			Long: acme.Int64(
+				1000000,
+			),
+			Double: acme.Float64(
+				1.1,
+			),
+			Bool: acme.Bool(
+				true,
+			),
+			Datetime: acme.Time(
+				acme.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			),
+			Date: acme.Time(
+				acme.MustParseDateTime(
+					"2023-01-15",
+				),
+			),
+			UUID: acme.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+			Base64: []byte("SGVsbG8gd29ybGQh"),
+			List: []string{
+				"list",
+				"list",
+			},
+			Set: []string{
+				"set",
+			},
+			Map: map[int]string{
+				1: "map",
+			},
+			Bigint: acme.String(
+				"1000000",
+			),
 		},
 	)
 }
@@ -667,6 +760,28 @@ func do() {
 					Name: "John Doe",
 				},
 			},
+			ExtendedMovie: &acme.ExtendedMovie{
+				Cast: []string{
+					"John Travolta",
+					"Samuel L. Jackson",
+					"Uma Thurman",
+					"Bruce Willis",
+				},
+				ID:     "movie-sda231x",
+				Title:  "Pulp Fiction",
+				From:   "Quentin Tarantino",
+				Rating: 8.5,
+				Tag:    "tag-12efs9dv",
+				Metadata: map[string]interface{}{
+					"academyAward": true,
+					"releaseDate":  "2023-12-08",
+					"ratings": map[string]interface{}{
+						"rottenTomatoes": 97,
+						"imdb":           7.6,
+					},
+				},
+				Revenue: 1000000,
+			},
 		},
 	)
 }
@@ -726,6 +841,77 @@ func do() {
 				},
 			},
 			Revenue: 1000000,
+		},
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.Object.GetAndReturnWithOptionalField(
+		context.TODO(),
+		&types.ObjectWithOptionalField{
+			String: acme.String(
+				"string",
+			),
+			Integer: acme.Int(
+				1,
+			),
+			Long: acme.Int64(
+				1000000,
+			),
+			Double: acme.Float64(
+				1.1,
+			),
+			Bool: acme.Bool(
+				true,
+			),
+			Datetime: acme.Time(
+				acme.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			),
+			Date: acme.Time(
+				acme.MustParseDateTime(
+					"2023-01-15",
+				),
+			),
+			UUID: acme.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+			Base64: []byte("SGVsbG8gd29ybGQh"),
+			List: []string{
+				"list",
+				"list",
+			},
+			Set: []string{
+				"set",
+			},
+			Map: map[int]string{
+				1: "map",
+			},
+			Bigint: acme.String(
+				"1000000",
+			),
 		},
 	)
 }

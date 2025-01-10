@@ -1,5 +1,6 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
+import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema";
 import { Reference } from "../Reference";
 
 type ModuleName = string;
@@ -7,16 +8,21 @@ type Alias = string;
 
 export declare namespace Writer {
     interface Args {
-        /* The name of the module that is being written to */
-        moduleName: string;
+        customConfig: TypescriptCustomConfigSchema | undefined;
     }
 }
 
 export class Writer extends AbstractWriter {
+    public customConfig: TypescriptCustomConfigSchema | undefined;
     protected imports: Record<ModuleName, Reference[]> = {};
     protected defaultImports: Record<ModuleName, Reference> = {};
     protected starImportAliases: Record<ModuleName, Alias> = {};
     protected starImportAliasesInverse: Record<Alias, ModuleName> = {};
+
+    constructor({ customConfig }: Writer.Args) {
+        super();
+        this.customConfig = customConfig;
+    }
 
     /**
      * Adds the given import under its module name.

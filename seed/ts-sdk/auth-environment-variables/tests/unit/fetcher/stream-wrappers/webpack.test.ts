@@ -20,6 +20,7 @@ describe("test env compatibility", () => {
                         extensions: [".tsx", ".ts", ".jsx", ".js"],
                         extensionAlias: {
                             ".js": [".ts", ".js"],
+                            ".jsx": [".tsx", ".jsx"],
                         },
                     },
                 },

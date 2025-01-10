@@ -5861,6 +5861,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
+      '@fern-api/typescript-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/typescript-v2/dynamic-snippets
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader

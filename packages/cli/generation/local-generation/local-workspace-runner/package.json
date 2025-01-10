@@ -40,6 +40,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/sdk": "0.12.3",
     "@fern-api/task-context": "workspace:*",
+    "@fern-api/typescript-dynamic-snippets": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generator-exec-sdk": "^0.0.898",

@@ -1,4 +1,3 @@
-import { Method } from "./Method";
 import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
