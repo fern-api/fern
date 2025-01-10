@@ -728,7 +728,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Log warnings in addition to errors.",
                     default: false
                 })
-                .option("no-broken-links", {
+                .option("error-for-broken-links", {
                     boolean: true,
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
@@ -742,7 +742,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
                 cliContext,
                 logWarnings: argv.warnings,
-                errorOnBrokenLinks: argv.noBrokenLinks
+                errorOnBrokenLinks: argv.errorForBrokenLinks
             });
         }
     );
