@@ -1483,9 +1483,6 @@ importers:
 
   generators/typescript-v2/ast:
     dependencies:
-      prettier2:
-        specifier: npm:prettier@^2.7.1
-        version: prettier@2.8.8
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -1500,8 +1497,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.23.0
-        version: 53.23.0
+        specifier: 53.24.0
+        version: 53.24.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1511,9 +1508,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/prettier2':
-        specifier: npm:@types/prettier@^2.7.3
-        version: '@types/prettier@2.7.3'
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -1626,7 +1620,7 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^53.23.0
+        specifier: ^53.24.0
         version: 53.24.0
       '@fern-api/path-utils':
         specifier: workspace:*
@@ -1661,6 +1655,46 @@ importers:
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(postcss@8.4.49)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/typescript-v2/formatter:
+    dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      prettier2:
+        specifier: npm:prettier@^2.7.1
+        version: prettier@2.8.8
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@types/prettier2':
+        specifier: npm:@types/prettier@^2.7.3
+        version: '@types/prettier@2.7.3'
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
         specifier: 5.7.2
         version: 5.7.2

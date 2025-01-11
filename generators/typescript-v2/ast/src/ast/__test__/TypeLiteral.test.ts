@@ -2,26 +2,26 @@ import { ts } from "../..";
 
 describe("TypeLiteral", () => {
     describe("emptyArrayToString", () => {
-        it("Should generate an empty array", () => {
+        it("Should generate an empty array", async () => {
             const literal = ts.TypeLiteral.array({
                 values: []
             });
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("arrayOfStringsToString", () => {
-        it("Should generate an array of strings", () => {
+        it("Should generate an array of strings", async () => {
             const literal = ts.TypeLiteral.array({
                 values: [ts.TypeLiteral.string("Hello, World!"), ts.TypeLiteral.string("Goodbye, World!")]
             });
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     // N.B. If the array is too short prettier is going to print it on a single line
     describe("longArrayOfStringsToString", () => {
-        it("Should generate a multiline array of strings", () => {
+        it("Should generate a multiline array of strings", async () => {
             const literal = ts.TypeLiteral.array({
                 values: [
                     ts.TypeLiteral.string("Hello, World!"),
@@ -34,63 +34,63 @@ describe("TypeLiteral", () => {
                     ts.TypeLiteral.string("Goodbye, World!")
                 ]
             });
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("trueBooleanToString", () => {
-        it("Should generate a true boolean", () => {
+        it("Should generate a true boolean", async () => {
             const literal = ts.TypeLiteral.boolean(true);
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("falseBooleanToString", () => {
-        it("Should generate a true boolean", () => {
+        it("Should generate a true boolean", async () => {
             const literal = ts.TypeLiteral.boolean(false);
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("numberToString", () => {
-        it("Should generate a simple number", () => {
+        it("Should generate a simple number", async () => {
             const literal = ts.TypeLiteral.number(7);
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("stringToString", () => {
-        it("Should generate a simple string literal", () => {
+        it("Should generate a simple string literal", async () => {
             const literal = ts.TypeLiteral.string("Hello, World!");
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("stringWithDoubleQuotesToString", () => {
-        it("Should generate a simple string literal with escaped double quotes", () => {
+        it("Should generate a simple string literal with escaped double quotes", async () => {
             const literal = ts.TypeLiteral.string('"Hello, World!"');
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("manyLinesMultilineStringToString", () => {
-        it("Should generate a multiline string with backticks", () => {
+        it("Should generate a multiline string with backticks", async () => {
             const literal = ts.TypeLiteral.string(`Hello, 
 World!`);
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("manyLinesMultilineStringWithBackticksToString", () => {
-        it("Should generate a multiline string with escaped backticks", () => {
+        it("Should generate a multiline string with escaped backticks", async () => {
             const literal = ts.TypeLiteral.string(`\`Hello, 
 World!\``);
-            expect(literal.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("simpleObjectToString", () => {
-        it("Should generate a simple object", () => {
+        it("Should generate a simple object", async () => {
             const actual = ts.codeblock((writer) => {
                 writer.write("let myObj = ");
                 writer.writeNode(
@@ -108,7 +108,7 @@ World!\``);
                     })
                 );
             });
-            expect(actual.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
         });
     });
 });

@@ -1,35 +1,33 @@
-import * as prettier from "prettier2";
-
-import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 
 import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema";
-import { Writer } from "./Writer";
+import { TypeScriptFile } from "./TypeScriptFile";
 
 export abstract class AstNode extends AbstractAstNode {
     /**
      * Writes the node to a string.
      */
     public async toString({
-        customConfig
+        customConfig,
+        formatter
     }: {
         customConfig: TypescriptCustomConfigSchema | undefined;
+        formatter?: AbstractFormatter;
     }): Promise<string> {
-        const writer = new Writer({ customConfig });
-        this.write(writer);
-        return writer.toString();
+        const file = new TypeScriptFile({ customConfig, formatter });
+        this.write(file);
+        return await file.toString();
     }
 
-    public toStringSync({ customConfig }: { customConfig: TypescriptCustomConfigSchema | undefined }): string {
-        const writer = new Writer({ customConfig });
-        this.write(writer);
-        return writer.toString();
-    }
-
-    public toStringFormatted({ customConfig }: { customConfig: TypescriptCustomConfigSchema | undefined }): string {
-        return prettier.format(this.toStringSync({ customConfig }), {
-            parser: "typescript",
-            tabWidth: 4,
-            printWidth: 120
-        });
+    public toStringSync({
+        customConfig,
+        formatter
+    }: {
+        customConfig: TypescriptCustomConfigSchema | undefined;
+        formatter?: AbstractFormatter;
+    }): string {
+        const file = new TypeScriptFile({ customConfig, formatter });
+        this.write(file);
+        return file.toStringSync();
     }
 }

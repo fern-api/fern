@@ -1,17 +1,21 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Invocation > function > Should generate a function 1`] = `
-"function withBaseURL(baseUrl: string): string {
-    console.log("foo");
-    return baseUrl + "foo";
+"function withBaseURL(
+    baseUrl: string,
+): string {
+    console.log('foo');
+    return baseUrl + 'foo';
 }
 "
 `;
 
 exports[`Invocation > function with a body > Should generate a function with a body 1`] = `
-"function withBaseURL(baseUrl: string): string {
-    console.log("foo");
-    return baseUrl + "foo";
+"function withBaseURL(
+    baseUrl: string,
+): string {
+    console.log('foo');
+    return baseUrl + 'foo';
 }
 "
 `;
@@ -19,15 +23,14 @@ exports[`Invocation > function with a body > Should generate a function with a b
 exports[`Invocation > function with a comment > Should generate a function with a body 1`] = `
 "/**
  * This is a comment
- */
-function withBaseURL(baseUrl: string): string {
-    console.log("foo");
-    return baseUrl + "foo";
+*/
+function withBaseURL(
+    baseUrl: string,
+): string {
+    console.log('foo')
+    return baseUrl + 'foo';
 }
 "
 `;
 
-exports[`Invocation > invokeFunction > Should generate an invokeFunction 1`] = `
-"withBaseURL("https://api.example.com");
-"
-`;
+exports[`Invocation > invokeFunction > Should generate an invokeFunction 1`] = `"withBaseURL("https://api.example.com")"`;
