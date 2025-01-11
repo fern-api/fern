@@ -53,6 +53,8 @@ redirects:
     destination: /learn/sdks/guides/preview-your-sdk-locally
   - source: /learn/sdks/getting-started/publish-a-public-facing-sdk
     destination: /learn/sdks/guides/publish-a-public-facing-sdk
+  - source: /learn/docs/building-your-docs/:slug
+    destination: /learn/docs/building-and-customizing-your-docs/:slug
 
 navigation:
   - tab: home
