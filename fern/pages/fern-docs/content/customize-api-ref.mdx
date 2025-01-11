@@ -110,11 +110,11 @@ navigation:
 </Frame>
 
 ### Styling endpoints
-To customize the display of an endpoint, you can expand the endpoint description to include a `title` and `slug`, or set the endpoint as `hidden`. 
+To customize the display of an endpoint, you can add a `title`. You can also use `slug` to customize the endpoint URL.
 
 <Tabs>
   <Tab title="OpenAPI Specification">
-  ```yaml title="docs.yml"
+  ```yaml title="docs.yml" {6-7}
   navigation: 
     - api: API Reference
       layout: 
@@ -126,7 +126,7 @@ To customize the display of an endpoint, you can expand the endpoint description
   ```
   </Tab>
   <Tab title="Fern Definition">
-  ```yaml title="docs.yml"
+  ```yaml title="docs.yml" {6-7}
   navigation: 
     - api: API Reference
       layout: 
@@ -143,6 +143,37 @@ To customize the display of an endpoint, you can expand the endpoint description
 <img src="custom-endpoint.png" alt="Setting an endpoint title" />
 </Frame>
 
+### Hiding endpoints
+You can hide an endpoint from the API reference by setting `hidden` to `true`. The endpoint will still be accessible at its URL.
+
+<Tabs>
+  <Tab title="OpenAPI Specification">
+  ```yaml title="docs.yml" {9-9}
+  navigation: 
+    - api: API Reference
+      layout: 
+        - user: 
+            - endpoint: POST /user
+              title: Create a User
+              slug: user-creation
+            - DELETE /user/{username}
+              hidden: true
+  ```
+  </Tab>
+  <Tab title="Fern Definition">
+  ```yaml title="docs.yml" {9-9}
+  navigation: 
+    - api: API Reference
+      layout: 
+        - user: 
+            - endpoint: user.create
+              title: Create a User
+              slug: user-creation
+            - user.delete
+              hidden: true
+  ```
+  </Tab>
+</Tabs>
 
 ### Adding custom sections
 You can add arbitrary folders in the sidebar by adding a `section` to your API Reference layout. A section can comprise entire groups of endpoints, individual endpoints, or even just Markdown pages. Sections can be customized by adding properties like a `icon`, `summary`, `slug` (or `skip-slug`), and `contents`. 
