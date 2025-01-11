@@ -18,7 +18,7 @@ export const DescribeResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace DescribeResponse {
-    interface Raw {
+    export interface Raw {
         namespaces?: Record<string, NamespaceSummary.Raw> | null;
         dimension?: number | null;
         fullness?: number | null;

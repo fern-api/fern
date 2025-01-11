@@ -1,16 +1,21 @@
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { validateAPIWorkspaceAndLogIssues } from "./validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLogIssues";
+import { validateOSSWorkspaceAndLogIssues } from "./validateOSSWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({
     project,
     cliContext,
-    logWarnings
+    logWarnings,
+    errorOnBrokenLinks
 }: {
     project: Project;
     cliContext: CliContext;
     logWarnings: boolean;
+    errorOnBrokenLinks: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
@@ -19,13 +24,23 @@ export async function validateWorkspaces({
                 workspace: docsWorkspace,
                 context,
                 logWarnings,
-                loadAPIWorkspace: project.loadAPIWorkspace
+                fernWorkspaces: await Promise.all(
+                    project.apiWorkspaces.map(async (workspace) => {
+                        return workspace.toFernWorkspace({ context });
+                    })
+                ),
+                errorOnBrokenLinks
             });
         });
     }
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
+            if (workspace instanceof OSSWorkspace) {
+                await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                    await validateOSSWorkspaceAndLogIssues({ workspace, context, logWarnings });
+                });
+            }
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
                 await validateAPIWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings });

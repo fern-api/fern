@@ -1,7 +1,9 @@
-import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { convertSchema } from "./convertSchemas";
+
+import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir";
+
 import { SchemaParserContext } from "./SchemaParserContext";
+import { convertSchema } from "./convertSchemas";
 
 export function convertArray({
     nameOverride,
@@ -91,11 +93,13 @@ export function wrapArray({
                 description,
                 availability,
                 groupName,
-                example
+                example,
+                inline: undefined
             }),
             description,
             availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return SchemaWithExample.array({
@@ -106,6 +110,7 @@ export function wrapArray({
         description,
         availability,
         groupName,
-        example
+        example,
+        inline: undefined
     });
 }

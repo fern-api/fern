@@ -15,12 +15,12 @@ import * as SeedExamples from "../../../index";
  */
 export type Exception = SeedExamples.Exception.Generic | SeedExamples.Exception.Timeout;
 
-export declare namespace Exception {
-    interface Generic extends SeedExamples.ExceptionInfo {
+export namespace Exception {
+    export interface Generic extends SeedExamples.ExceptionInfo {
         type: "generic";
     }
 
-    interface Timeout {
+    export interface Timeout {
         type: "timeout";
     }
 }

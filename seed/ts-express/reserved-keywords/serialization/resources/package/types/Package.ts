@@ -12,7 +12,7 @@ export const Package: core.serialization.ObjectSchema<serializers.Package.Raw, S
     });
 
 export declare namespace Package {
-    interface Raw {
+    export interface Raw {
         name: string;
     }
 }

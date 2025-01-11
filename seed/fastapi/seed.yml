@@ -16,7 +16,6 @@ publish:
   workingDirectory: generators/python
   preBuildCommands:
     - pip install poetry
-    - poetry shell
     - poetry config virtualenvs.in-project true
     - poetry install
   docker:
@@ -66,6 +65,10 @@ fixtures:
         async_handlers:
           - imdb.createMovie
       outputFolder: async-handlers
+    - customConfig:
+        pydantic_config:
+          version: "v1_on_v2"
+      outputFolder: v1_on_v2
 allowedFailures:
   - auth-environment-variables
   - bytes

@@ -1,8 +1,9 @@
-import { SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedType, ModelContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
+import { SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
 
 export declare namespace RawSinglePropertySingleUnionType {
     export interface Init<Context extends ModelContext> extends AbstractRawSingleUnionType.Init {

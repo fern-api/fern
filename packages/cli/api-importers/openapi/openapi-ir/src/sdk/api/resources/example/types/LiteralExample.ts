@@ -6,22 +6,22 @@ import * as FernOpenapiIr from "../../../index";
 
 export type LiteralExample = FernOpenapiIr.LiteralExample.Boolean | FernOpenapiIr.LiteralExample.String;
 
-export declare namespace LiteralExample {
-    interface Boolean extends _Utils {
+export namespace LiteralExample {
+    export interface Boolean extends _Utils {
         type: "boolean";
         value: boolean;
     }
 
-    interface String extends _Utils {
+    export interface String extends _Utils {
         type: "string";
         value: string;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         boolean: (value: boolean) => _Result;
         string: (value: string) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -35,7 +35,7 @@ export const LiteralExample = {
             type: "boolean",
             _visit: function <_Result>(
                 this: FernOpenapiIr.LiteralExample.Boolean,
-                visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>
+                visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.LiteralExample._visit(this, visitor);
             },
@@ -48,7 +48,7 @@ export const LiteralExample = {
             type: "string",
             _visit: function <_Result>(
                 this: FernOpenapiIr.LiteralExample.String,
-                visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>
+                visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.LiteralExample._visit(this, visitor);
             },
@@ -57,7 +57,7 @@ export const LiteralExample = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.LiteralExample,
-        visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>
+        visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "boolean":

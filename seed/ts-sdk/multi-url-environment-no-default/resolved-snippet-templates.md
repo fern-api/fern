@@ -8,8 +8,8 @@ const client = new SeedMultiUrlEnvironmentNoDefaultClient({
 await client.ec2.bootInstance({
   size: "size",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -22,7 +22,7 @@ const client = new SeedMultiUrlEnvironmentNoDefaultClient({
 await client.s3.getPresignedUrl({
   s3Key: "s3Key",
 });
- 
-```                        
+
+```
 
 

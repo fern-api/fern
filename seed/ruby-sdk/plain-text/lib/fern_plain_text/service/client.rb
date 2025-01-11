@@ -16,6 +16,9 @@ module SeedPlainTextClient
 
     # @param request_options [SeedPlainTextClient::RequestOptions]
     # @return [String]
+    # @example
+    #  plain_text = SeedPlainTextClient::Client.new(base_url: "https://api.example.com")
+    #  plain_text.service.get_text
     def get_text(request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -48,6 +51,9 @@ module SeedPlainTextClient
 
     # @param request_options [SeedPlainTextClient::RequestOptions]
     # @return [String]
+    # @example
+    #  plain_text = SeedPlainTextClient::Client.new(base_url: "https://api.example.com")
+    #  plain_text.service.get_text
     def get_text(request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

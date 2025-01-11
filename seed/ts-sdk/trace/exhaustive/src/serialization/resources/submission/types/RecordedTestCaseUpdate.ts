@@ -16,7 +16,7 @@ export const RecordedTestCaseUpdate: core.serialization.ObjectSchema<
 });
 
 export declare namespace RecordedTestCaseUpdate {
-    interface Raw {
+    export interface Raw {
         testCaseId: TestCaseId.Raw;
         traceResponsesSize: number;
     }

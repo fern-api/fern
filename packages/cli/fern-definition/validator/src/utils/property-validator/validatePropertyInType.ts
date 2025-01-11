@@ -1,5 +1,6 @@
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { RuleViolation } from "../../Rule";
 
 export declare namespace ValidatePropertyInType {

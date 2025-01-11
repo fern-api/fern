@@ -16,7 +16,7 @@ export const ScoredColumn: core.serialization.ObjectSchema<serializers.ScoredCol
     });
 
 export declare namespace ScoredColumn {
-    interface Raw {
+    export interface Raw {
         id: string;
         score?: number | null;
         values?: number[] | null;

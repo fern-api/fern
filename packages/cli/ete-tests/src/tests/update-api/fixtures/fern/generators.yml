@@ -1,7 +1,7 @@
 default-group: local
 api:
   path: ./openapi/openapi.json
-  origin: https://bump.sh/bump-examples/doc/train-travel-api.json
+  origin: http://localhost:4567/openapi.json
 groups:
   local:
     generators:

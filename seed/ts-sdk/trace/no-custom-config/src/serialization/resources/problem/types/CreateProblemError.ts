@@ -20,9 +20,9 @@ export const CreateProblemError: core.serialization.Schema<
     });
 
 export declare namespace CreateProblemError {
-    type Raw = CreateProblemError.Generic;
+    export type Raw = CreateProblemError.Generic;
 
-    interface Generic extends GenericCreateProblemError.Raw {
+    export interface Generic extends GenericCreateProblemError.Raw {
         _type: "generic";
     }
 }

@@ -24,7 +24,7 @@ export const PrimitiveTypeV1: core.serialization.Schema<serializers.PrimitiveTyp
     ]);
 
 export declare namespace PrimitiveTypeV1 {
-    type Raw =
+    export type Raw =
         | "INTEGER"
         | "LONG"
         | "UINT"

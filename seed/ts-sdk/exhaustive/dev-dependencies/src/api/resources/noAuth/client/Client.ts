@@ -8,12 +8,12 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 
 export declare namespace NoAuth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,7 +41,7 @@ export class NoAuth {
      */
     public async postWithNoAuth(
         request?: unknown,
-        requestOptions?: NoAuth.RequestOptions
+        requestOptions?: NoAuth.RequestOptions,
     ): Promise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-auth"),
@@ -86,7 +86,7 @@ export class NoAuth {
                                 allowUnrecognizedUnionMembers: true,
                                 allowUnrecognizedEnumValues: true,
                                 breadcrumbsPrefix: ["response"],
-                            })
+                            }),
                         ),
                     };
             }

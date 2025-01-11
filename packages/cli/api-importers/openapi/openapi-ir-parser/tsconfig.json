@@ -1,14 +1,34 @@
 {
-  "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/__test__/**/generated"
+  ],
   "references": [
-    { "path": "../../../../commons/core-utils" },
-    { "path": "../../../../commons/fs-utils" },
-    { "path": "../../../logger" },
-    { "path": "../openapi-ir" },
-    { "path": "../../../task-context" },
-    { "path": "../../../fern-definition/schema" }
+    {
+      "path": "../../../../commons/core-utils"
+    },
+    {
+      "path": "../../../fern-definition/schema"
+    },
+    {
+      "path": "../../../configuration"
+    },
+    {
+      "path": "../../../logger"
+    },
+    {
+      "path": "../../../task-context"
+    },
+    {
+      "path": "../openapi-ir"
+    }
   ]
 }

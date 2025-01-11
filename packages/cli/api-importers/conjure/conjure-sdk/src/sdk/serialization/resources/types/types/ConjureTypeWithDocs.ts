@@ -16,7 +16,7 @@ export const ConjureTypeWithDocs: core.serialization.ObjectSchema<
 });
 
 export declare namespace ConjureTypeWithDocs {
-    interface Raw {
+    export interface Raw {
         type: ConjureType.Raw;
         docs?: string | null;
     }

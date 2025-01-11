@@ -1,9 +1,11 @@
 /* eslint-disable jest/expect-expect */
-import { AbsoluteFilePath, relative } from "@fern-api/fs-utils";
-import { createMockTaskContext } from "@fern-api/task-context";
 import { diffLines } from "diff";
 import fs from "fs";
 import { resolve } from "path";
+
+import { AbsoluteFilePath, relative } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
+
 import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths";
 
 const CONTEXT = createMockTaskContext();
@@ -12,7 +14,7 @@ const MDX_PATH = AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/file.mdx")
 const DOCS_PATH = AbsoluteFilePath.of("/Volume/git/fern");
 
 const PATHS = {
-    absolutePathToMdx: MDX_PATH,
+    absolutePathToMarkdownFile: MDX_PATH,
     absolutePathToFernFolder: DOCS_PATH
 };
 
@@ -137,6 +139,90 @@ describe("parseImagePaths", () => {
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
         expect(result.markdown.trim()).toEqual(
             "---\n'og:image':\n  type: fileId\n  value: /Volume/git/fern/my/docs/folder/path/to/image.png\n---"
+        );
+    });
+
+    it("should parse logo from frontmatter text", () => {
+        const page = '---\nlogo: "path/to/image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            type: fileId
+            value: /Volume/git/fern/my/docs/folder/path/to/image.png
+          ---"
+        `
+        );
+    });
+
+    it("should parse url logo from frontmatter text", () => {
+        const page = '---\nlogo: "https://someurl.com"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            type: url
+            value: 'https://someurl.com'
+          ---"
+        `
+        );
+    });
+
+    it("should parse light and dark logo from frontmatter json", () => {
+        const page = '---\nlogo:\n  light: "path/to/light-image.png"\n  dark: "path/to/dark-image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([
+            "/Volume/git/fern/my/docs/folder/path/to/light-image.png",
+            "/Volume/git/fern/my/docs/folder/path/to/dark-image.png"
+        ]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            light:
+              type: fileId
+              value: /Volume/git/fern/my/docs/folder/path/to/light-image.png
+            dark:
+              type: fileId
+              value: /Volume/git/fern/my/docs/folder/path/to/dark-image.png
+          ---"
+        `
+        );
+    });
+
+    it("should parse light logo from frontmatter json", () => {
+        const page = '---\nlogo:\n  light: "path/to/light-image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/light-image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            light:
+              type: fileId
+              value: /Volume/git/fern/my/docs/folder/path/to/light-image.png
+          ---"
+        `
+        );
+    });
+
+    it("should parse dark logo from frontmatter json", () => {
+        const page = '---\nlogo:\n  dark: "path/to/dark-image.png"\n---';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/dark-image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            `
+          "---
+          logo:
+            dark:
+              type: fileId
+              value: /Volume/git/fern/my/docs/folder/path/to/dark-image.png
+          ---"
+        `
         );
     });
 
@@ -488,7 +574,7 @@ describe("replaceImagePaths", () => {
     it("should replace image paths with fileIDs", () => {
         const page = "This is a test page with an image ![image](/Volume/git/fern/path/to/image.png)";
         const fileIds = new Map([[AbsoluteFilePath.of("/Volume/git/fern/path/to/image.png"), "fileID"]]);
-        const result = replaceImagePathsAndUrls(page, fileIds, new Map(), PATHS, CONTEXT);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
         expect(result).toMatchInlineSnapshot(`
             "This is a test page with an image ![image](file:fileID)
             "
@@ -498,7 +584,7 @@ describe("replaceImagePaths", () => {
     it("should ignore anchors when replacing image paths", () => {
         const page = "This is a test page with an image ![image](/Volume/git/fern/path/to/image.png#anchor)";
         const fileIds = new Map([[AbsoluteFilePath.of("/Volume/git/fern/path/to/image.png"), "fileID"]]);
-        const result = replaceImagePathsAndUrls(page, fileIds, new Map(), PATHS, CONTEXT);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
         expect(result).toMatchInlineSnapshot(`
             "This is a test page with an image ![image](file:fileID#anchor)
             "
@@ -508,7 +594,7 @@ describe("replaceImagePaths", () => {
     it("should ignore anchors when replacing image paths in img tag", () => {
         const page = "This is a test page with an image <img src='/Volume/git/fern/path/to/image.png#anchor' />";
         const fileIds = new Map([[AbsoluteFilePath.of("/Volume/git/fern/path/to/image.png"), "fileID"]]);
-        const result = replaceImagePathsAndUrls(page, fileIds, new Map(), PATHS, CONTEXT);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
         expect(result).toMatchInlineSnapshot(`
             "This is a test page with an image <img src='file:fileID#anchor' />
             "
@@ -525,7 +611,7 @@ function testMdxFixture(filename: string) {
     const replaced = replaceImagePathsAndUrls(
         result.markdown,
         new Map(result.filepaths.map((path) => [AbsoluteFilePath.of(path), "123e4567-e89b-12d3-a456-426655440000"])),
-        new Map(),
+        {},
         PATHS,
         CONTEXT
     );

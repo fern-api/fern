@@ -11,5 +11,5 @@ export const WebhookGroup: core.serialization.Schema<serializers.WebhookGroup.Ra
     core.serialization.list(Webhook);
 
 export declare namespace WebhookGroup {
-    type Raw = Webhook.Raw[];
+    export type Raw = Webhook.Raw[];
 }

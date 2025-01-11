@@ -12,12 +12,12 @@ export const ObjectWithMapOfMap: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     map: core.serialization.record(
         core.serialization.string(),
-        core.serialization.record(core.serialization.string(), core.serialization.string())
+        core.serialization.record(core.serialization.string(), core.serialization.string()),
     ),
 });
 
 export declare namespace ObjectWithMapOfMap {
-    interface Raw {
+    export interface Raw {
         map: Record<string, Record<string, string>>;
     }
 }

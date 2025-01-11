@@ -21,7 +21,7 @@ export const PypiGithubPublishInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace PypiGithubPublishInfo {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         packageName: string;
         usernameEnvironmentVariable: EnvironmentVariable.Raw;

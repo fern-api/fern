@@ -10,5 +10,5 @@ export const ServiceId: core.serialization.Schema<serializers.ServiceId.Raw, Fer
     core.serialization.string();
 
 export declare namespace ServiceId {
-    type Raw = string;
+    export type Raw = string;
 }

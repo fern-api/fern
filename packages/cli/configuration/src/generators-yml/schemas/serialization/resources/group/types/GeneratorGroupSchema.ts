@@ -20,7 +20,7 @@ export const GeneratorGroupSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorGroupSchema {
-    interface Raw {
+    export interface Raw {
         audiences?: string[] | null;
         generators: GeneratorInvocationSchema.Raw[];
         metadata?: OutputMetadataSchema.Raw | null;

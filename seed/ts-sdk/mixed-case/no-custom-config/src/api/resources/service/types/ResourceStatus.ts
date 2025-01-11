@@ -3,7 +3,6 @@
  */
 
 export type ResourceStatus = "ACTIVE" | "INACTIVE";
-
 export const ResourceStatus = {
     Active: "ACTIVE",
     Inactive: "INACTIVE",

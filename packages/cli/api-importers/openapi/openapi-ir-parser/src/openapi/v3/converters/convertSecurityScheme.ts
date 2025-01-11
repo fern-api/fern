@@ -1,5 +1,7 @@
-import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
 import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
@@ -8,9 +10,9 @@ import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import {
-    getBasicSecuritySchemeNameAndEnvvar,
     HeaderSecuritySchemeNames,
-    SecuritySchemeNames
+    SecuritySchemeNames,
+    getBasicSecuritySchemeNameAndEnvvar
 } from "../extensions/getSecuritySchemeNameAndEnvvars";
 
 export function convertSecurityScheme(
@@ -101,7 +103,8 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
             wrapAsNullable: false,
             groupName: undefined,
             context: undefined,
-            source
+            source,
+            inline: undefined
         });
         const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (schema.type === "enum") {

@@ -31,13 +31,13 @@ export const LicenseConfig: core.serialization.Schema<
     });
 
 export declare namespace LicenseConfig {
-    type Raw = LicenseConfig.Basic | LicenseConfig.Custom;
+    export type Raw = LicenseConfig.Basic | LicenseConfig.Custom;
 
-    interface Basic extends BasicLicense.Raw {
+    export interface Basic extends BasicLicense.Raw {
         type: "basic";
     }
 
-    interface Custom extends CustomLicense.Raw {
+    export interface Custom extends CustomLicense.Raw {
         type: "custom";
     }
 }

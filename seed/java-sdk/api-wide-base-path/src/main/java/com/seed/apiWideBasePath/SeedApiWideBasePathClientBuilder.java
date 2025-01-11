@@ -16,6 +16,14 @@ public final class SeedApiWideBasePathClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedApiWideBasePathClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedApiWideBasePathClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedApiWideBasePathClient(clientOptionsBuilder.build());

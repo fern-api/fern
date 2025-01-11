@@ -1,6 +1,8 @@
-import { EndpointExample } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { EndpointExample } from "@fern-api/openapi-ir";
+
 import { getExtension, getExtensionAndValidate } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { OperationContext } from "../converters/contexts";
@@ -14,26 +16,22 @@ export function getExamplesFromExtension(
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
 ): EndpointExample[] {
-    const exampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema =
-        getExtension(
-            operationObject,
-            FernOpenAPIExtension.EXAMPLES
-            // RawSchemas.ExampleEndpointCallArraySchema,
-            // context.logger,
-            // [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
-        ) ?? [];
-
-    const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = exampleEndpointCalls.filter(
-        (example) => {
-            const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example);
-            if (!maybeFernExample.ok) {
-                context.logger.error(
-                    `Failed to parse x-fern-example in ${operationContext.path}/${operationContext.method}`
-                );
-            }
-            return maybeFernExample.ok;
-        }
+    const exampleEndpointCalls = getExtension<RawSchemas.ExampleEndpointCallSchema[]>(
+        operationObject,
+        FernOpenAPIExtension.EXAMPLES
     );
+
+    const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = (
+        exampleEndpointCalls ?? []
+    ).filter((example) => {
+        const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example);
+        if (!maybeFernExample.ok) {
+            context.logger.error(
+                `Failed to parse x-fern-example in ${operationContext.path}/${operationContext.method}`
+            );
+        }
+        return maybeFernExample.ok;
+    });
 
     const redoclyCodeSamplesKebabCase =
         getExtensionAndValidate<RedoclyCodeSampleArraySchema>(

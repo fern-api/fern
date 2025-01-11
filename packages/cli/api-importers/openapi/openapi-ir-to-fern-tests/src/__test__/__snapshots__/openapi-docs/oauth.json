@@ -123,12 +123,14 @@
               "refresh_token",
               "client_credentials",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "AuthGetTokenResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": "optional<string>",
               "expires_in": {
@@ -151,6 +153,7 @@
       - refresh_token
       - client_credentials
     docs: The type of grant to request
+    inline: true
     source:
       openapi: ../openapi.yml
   AuthGetTokenResponse:

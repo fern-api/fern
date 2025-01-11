@@ -11,7 +11,8 @@ export interface DiscriminatedOneOfSchema
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithEncoding,
         FernOpenapiIr.WithSource,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithInline {
     discriminantProperty: string;
     commonProperties: FernOpenapiIr.CommonProperty[];
     schemas: Record<string, FernOpenapiIr.Schema>;

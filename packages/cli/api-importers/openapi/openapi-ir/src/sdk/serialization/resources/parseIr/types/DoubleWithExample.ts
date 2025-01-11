@@ -20,7 +20,7 @@ export const DoubleWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace DoubleWithExample {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
         minimum?: number | null;
         maximum?: number | null;

@@ -35,6 +35,15 @@ Explore documentation for popular Fern CLI commands.
     fern check --warnings
     ```
 
+    ### strict-broken-links
+
+    Use `--strict-broken-links` to cause the command to fail (exit with a non-zero exit code) if any broken
+    links are found in your API docs.
+
+    ```bash
+    fern check --strict-broken-links
+    ```
+
     ## Usage in a GitHub Action
 
     <CodeBlock title = ".github/workflows/fern-check.yml" >
@@ -180,6 +189,28 @@ Explore documentation for popular Fern CLI commands.
   </Accordion>
 
 
+  <Accordion title="fern docs broken-links">
+
+    Use `fern docs broken-links` to check for broken links in your API docs.
+
+    <CodeBlock title="terminal">
+    ```bash
+    fern docs broken-links [--strict]
+    ```
+    </CodeBlock>
+
+    ### strict
+
+    Use `--strict-broken-links` to cause the command to fail (exit with a non-zero exit code) if any broken
+    links are found in your API docs.
+
+    ```bash
+    fern check --strict-broken-links
+    ```
+
+  </Accordion>
+
+
   <Accordion title="fern upgrade">
 
     Use `fern upgrade` will upgrade your compiler version in `fern.config.json` to the
@@ -272,7 +303,7 @@ Explore documentation for popular Fern CLI commands.
     ```
 
     <Note>
-    To enable CI/CD, use [`fern token`](/cli-api/cli-reference/commands#fern-token).
+    To enable CI/CD, use [`fern token`](/learn/cli-api/cli-reference/commands#fern-token).
     </Note>
 
   </Accordion>

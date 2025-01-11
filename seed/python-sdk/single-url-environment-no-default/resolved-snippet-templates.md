@@ -6,7 +6,7 @@ client = SeedSingleUrlEnvironmentNoDefault(environment=SeedSingleUrlEnvironmentN
 client.dummy.get_dummy(
 	
 )
- 
-```                        
+
+```
 
 

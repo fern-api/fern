@@ -17,57 +17,57 @@ export type Schema =
     | FernOpenapiIr.Schema.Nullable
     | FernOpenapiIr.Schema.Unknown;
 
-export declare namespace Schema {
-    interface Primitive extends FernOpenapiIr.PrimitiveSchema, _Utils {
+export namespace Schema {
+    export interface Primitive extends FernOpenapiIr.PrimitiveSchema, _Utils {
         type: "primitive";
     }
 
-    interface Object_ extends FernOpenapiIr.ObjectSchema, _Utils {
+    export interface Object_ extends FernOpenapiIr.ObjectSchema, _Utils {
         type: "object";
     }
 
-    interface Array extends FernOpenapiIr.ArraySchema, _Utils {
+    export interface Array extends FernOpenapiIr.ArraySchema, _Utils {
         type: "array";
     }
 
-    interface Map extends FernOpenapiIr.MapSchema, _Utils {
+    export interface Map extends FernOpenapiIr.MapSchema, _Utils {
         type: "map";
     }
 
-    interface Optional extends FernOpenapiIr.OptionalSchema, _Utils {
+    export interface Optional extends FernOpenapiIr.OptionalSchema, _Utils {
         type: "optional";
     }
 
-    interface Enum extends FernOpenapiIr.EnumSchema, _Utils {
+    export interface Enum extends FernOpenapiIr.EnumSchema, _Utils {
         type: "enum";
     }
 
-    interface Reference extends FernOpenapiIr.ReferencedSchema, _Utils {
+    export interface Reference extends FernOpenapiIr.ReferencedSchema, _Utils {
         type: "reference";
     }
 
-    interface Literal extends FernOpenapiIr.LiteralSchema, _Utils {
+    export interface Literal extends FernOpenapiIr.LiteralSchema, _Utils {
         type: "literal";
     }
 
-    interface OneOf extends _Utils {
+    export interface OneOf extends _Utils {
         type: "oneOf";
         value: FernOpenapiIr.OneOfSchema;
     }
 
-    interface Nullable extends FernOpenapiIr.NullableSchema, _Utils {
+    export interface Nullable extends FernOpenapiIr.NullableSchema, _Utils {
         type: "nullable";
     }
 
-    interface Unknown extends FernOpenapiIr.WithName, _Utils {
+    export interface Unknown extends FernOpenapiIr.WithName, _Utils {
         type: "unknown";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Schema._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         primitive: (value: FernOpenapiIr.PrimitiveSchema) => _Result;
         object: (value: FernOpenapiIr.ObjectSchema) => _Result;
         array: (value: FernOpenapiIr.ArraySchema) => _Result;
@@ -90,7 +90,7 @@ export const Schema = {
             type: "primitive",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Primitive,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -103,7 +103,7 @@ export const Schema = {
             type: "object",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Object_,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -116,7 +116,7 @@ export const Schema = {
             type: "array",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Array,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -129,7 +129,7 @@ export const Schema = {
             type: "map",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Map,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -142,7 +142,7 @@ export const Schema = {
             type: "optional",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Optional,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -155,7 +155,7 @@ export const Schema = {
             type: "enum",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Enum,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -168,7 +168,7 @@ export const Schema = {
             type: "reference",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Reference,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -181,7 +181,7 @@ export const Schema = {
             type: "literal",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Literal,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -194,7 +194,7 @@ export const Schema = {
             type: "oneOf",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.OneOf,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -207,7 +207,7 @@ export const Schema = {
             type: "nullable",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Nullable,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },
@@ -220,7 +220,7 @@ export const Schema = {
             type: "unknown",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Schema.Unknown,
-                visitor: FernOpenapiIr.Schema._Visitor<_Result>
+                visitor: FernOpenapiIr.Schema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Schema._visit(this, visitor);
             },

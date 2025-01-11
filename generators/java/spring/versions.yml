@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Bump IR version to latest (v53)
+      type: chore
+  createdAt: '2024-12-10'
+  irVersion: 53
+  version: 1.3.0
+- changelogEntry:
+    - summary: |
         Bump Jackson version to latest (2.17.2)
       type: chore
   createdAt: '2024-09-26'

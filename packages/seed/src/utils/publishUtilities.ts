@@ -1,5 +1,6 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+
 import { runScript } from "../runScript";
 
 // Replace the version string within the command, if one is specified

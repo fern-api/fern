@@ -1,5 +1,5 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "../express-error-schema-generator/lib",
@@ -8,7 +8,7 @@
   "include": ["../express-error-schema-generator/src"],
   "references": [
     { "path": "../../../abstract-schema-generator" },
-    { "path": "../../../commons" },
+    { "path": "../../../base" },
     { "path": "../../../contexts" }
   ]
 }

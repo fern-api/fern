@@ -10,5 +10,5 @@ export const StatusCode: core.serialization.Schema<serializers.StatusCode.Raw, F
     core.serialization.number();
 
 export declare namespace StatusCode {
-    type Raw = number;
+    export type Raw = number;
 }

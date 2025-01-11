@@ -13,5 +13,5 @@ export const OptionalStringResponse: core.serialization.Schema<
 > = StringResponse.optional();
 
 export declare namespace OptionalStringResponse {
-    type Raw = StringResponse.Raw | null | undefined;
+    export type Raw = StringResponse.Raw | null | undefined;
 }

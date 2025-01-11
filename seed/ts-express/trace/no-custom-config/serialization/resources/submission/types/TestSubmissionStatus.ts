@@ -21,7 +21,7 @@ export const TestSubmissionStatus: core.serialization.Schema<
         testCaseIdToState: core.serialization.object({
             value: core.serialization.record(
                 core.serialization.string(),
-                core.serialization.lazy(() => serializers.SubmissionStatusForTestCase)
+                core.serialization.lazy(() => serializers.SubmissionStatusForTestCase),
             ),
         }),
     })
@@ -31,27 +31,27 @@ export const TestSubmissionStatus: core.serialization.Schema<
     });
 
 export declare namespace TestSubmissionStatus {
-    type Raw =
+    export type Raw =
         | TestSubmissionStatus.Stopped
         | TestSubmissionStatus.Errored
         | TestSubmissionStatus.Running
         | TestSubmissionStatus.TestCaseIdToState;
 
-    interface Stopped {
+    export interface Stopped {
         type: "stopped";
     }
 
-    interface Errored {
+    export interface Errored {
         type: "errored";
         value: serializers.ErrorInfo.Raw;
     }
 
-    interface Running {
+    export interface Running {
         type: "running";
         value: serializers.RunningSubmissionState.Raw;
     }
 
-    interface TestCaseIdToState {
+    export interface TestCaseIdToState {
         type: "testCaseIdToState";
         value: Record<string, serializers.SubmissionStatusForTestCase.Raw>;
     }

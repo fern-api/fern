@@ -6,6 +6,7 @@ import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { EndpointLocation } from "../../endpoints/types/EndpointLocation";
+import { EnvironmentValues } from "../../environment/types/EnvironmentValues";
 import { AuthValues } from "../../auth/types/AuthValues";
 import { Values } from "./Values";
 
@@ -14,6 +15,8 @@ export const EndpointSnippetRequest: core.serialization.ObjectSchema<
     FernIr.dynamic.EndpointSnippetRequest
 > = core.serialization.objectWithoutOptionalProperties({
     endpoint: EndpointLocation,
+    baseUrl: core.serialization.property("baseURL", core.serialization.string().optional()),
+    environment: EnvironmentValues.optional(),
     auth: AuthValues.optional(),
     pathParameters: Values.optional(),
     queryParameters: Values.optional(),
@@ -22,8 +25,10 @@ export const EndpointSnippetRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace EndpointSnippetRequest {
-    interface Raw {
+    export interface Raw {
         endpoint: EndpointLocation.Raw;
+        baseURL?: string | null;
+        environment?: EnvironmentValues.Raw | null;
         auth?: AuthValues.Raw | null;
         pathParameters?: Values.Raw | null;
         queryParameters?: Values.Raw | null;

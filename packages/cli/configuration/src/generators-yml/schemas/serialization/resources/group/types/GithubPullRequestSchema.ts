@@ -20,7 +20,7 @@ export const GithubPullRequestSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GithubPullRequestSchema {
-    interface Raw {
+    export interface Raw {
         repository: string;
         branch?: string | null;
         license?: GithubLicenseSchema.Raw | null;

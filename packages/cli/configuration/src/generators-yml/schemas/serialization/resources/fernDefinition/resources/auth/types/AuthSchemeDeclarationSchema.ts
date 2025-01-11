@@ -21,7 +21,7 @@ export const AuthSchemeDeclarationSchema: core.serialization.Schema<
 ]);
 
 export declare namespace AuthSchemeDeclarationSchema {
-    type Raw =
+    export type Raw =
         | OAuthSchemeSchema.Raw
         | HeaderAuthSchemeSchema.Raw
         | BasicAuthSchemeSchema.Raw

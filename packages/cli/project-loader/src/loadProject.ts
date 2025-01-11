@@ -1,20 +1,23 @@
+import chalk from "chalk";
+import { readdir } from "fs/promises";
+
+import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import {
     APIS_DIRECTORY,
     ASYNCAPI_DIRECTORY,
     DEFINITION_DIRECTORY,
     FERN_DIRECTORY,
-    fernConfigJson,
     GENERATORS_CONFIGURATION_FILENAME,
+    OPENAPI_DIRECTORY,
+    fernConfigJson,
     generatorsYml,
     getFernDirectory,
-    OPENAPI_DIRECTORY
-} from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+    loadProjectConfig
+} from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
-import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
-import chalk from "chalk";
-import { readdir } from "fs/promises";
+
 import { Project } from "./Project";
 
 export declare namespace loadProject {
@@ -82,7 +85,7 @@ export async function loadProjectFromDirectory({
     }
 
     return {
-        config: await fernConfigJson.loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
+        config: await loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
         apiWorkspaces,
         docsWorkspaces: await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context }),
         loadAPIWorkspace: (name: string | undefined): AbstractAPIWorkspace<unknown> | undefined => {

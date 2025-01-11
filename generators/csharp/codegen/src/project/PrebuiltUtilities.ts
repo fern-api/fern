@@ -1,7 +1,9 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+
+import { File } from "@fern-api/base-generator";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { Annotation, ClassReference } from "../ast";
-import { File } from "@fern-api/generator-commons";
 
 export class PrebuiltUtilities {
     private utilitiesDirectory = RelativeFilePath.of("Utilities");

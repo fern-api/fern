@@ -3,7 +3,6 @@
  */
 
 export type Availability = "GenerallyAvailable" | "Beta" | "Deprecated";
-
 export const Availability = {
     GenerallyAvailable: "GenerallyAvailable",
     Beta: "Beta",
@@ -22,8 +21,8 @@ export const Availability = {
     },
 } as const;
 
-export declare namespace Availability {
-    interface Visitor<R> {
+export namespace Availability {
+    export interface Visitor<R> {
         generallyAvailable: () => R;
         beta: () => R;
         deprecated: () => R;

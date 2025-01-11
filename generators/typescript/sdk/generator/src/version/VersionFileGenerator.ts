@@ -1,5 +1,6 @@
 import { Directory } from "ts-morph";
-import { Writer, ts } from "@fern-api/typescript-codegen";
+
+import { Writer, ts } from "@fern-api/typescript-ast";
 
 export declare namespace VersionFileGenerator {
     interface Args {
@@ -18,7 +19,7 @@ export class VersionFileGenerator {
     }
 
     public generate(): void {
-        const writer = new Writer();
+        const writer = new Writer({ customConfig: {} });
         writer.writeNodeStatement(
             ts.variable({
                 const: true,

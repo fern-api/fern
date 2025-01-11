@@ -1,5 +1,7 @@
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
+
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
+
 import { convertIrAvailability } from "./convertPackage";
 
 export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
@@ -207,7 +209,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     long: () => {
                         return {
                             type: "long",
-                            default: 0,
+                            default: primitive.v2?.type === "long" ? primitive.v2.default : undefined,
                             minimum: undefined,
                             maximum: undefined
                         };
@@ -215,19 +217,19 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     boolean: () => {
                         return {
                             type: "boolean",
-                            default: false
+                            default: primitive.v2?.type === "boolean" ? primitive.v2.default : undefined
                         };
                     },
                     dateTime: () => {
                         return {
                             type: "datetime",
-                            default: new Date(0).toISOString()
+                            default: undefined
                         };
                     },
                     date: () => {
                         return {
                             type: "date",
-                            default: new Date(0).toISOString()
+                            default: undefined
                         };
                     },
                     uuid: () => {
@@ -239,13 +241,13 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     base64: () => {
                         return {
                             type: "base64",
-                            default: (0x00).toString()
+                            default: undefined
                         };
                     },
                     bigInteger: () => {
                         return {
                             type: "bigInteger",
-                            default: BigInt(0).toString()
+                            default: primitive.v2?.type === "bigInteger" ? primitive.v2.default : undefined
                         };
                     },
                     uint: () => {
@@ -311,9 +313,9 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
 
 function convertExtraProperties(
     extraProperties: boolean | string | Ir.types.TypeReference
-): FdrCjsSdk.api.v1.register.TypeReference {
+): FdrCjsSdk.api.v1.register.TypeReference | undefined {
     if (typeof extraProperties === "boolean") {
-        return TypeReference.unknown();
+        return extraProperties ? TypeReference.unknown() : undefined;
     } else if (typeof extraProperties === "string") {
         return {
             type: "id",

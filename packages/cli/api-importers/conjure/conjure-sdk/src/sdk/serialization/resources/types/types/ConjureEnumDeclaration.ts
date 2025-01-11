@@ -15,7 +15,7 @@ export const ConjureEnumDeclaration: core.serialization.ObjectSchema<
 });
 
 export declare namespace ConjureEnumDeclaration {
-    interface Raw {
+    export interface Raw {
         values: ConjureEnumVariant.Raw[];
     }
 }

@@ -3,7 +3,6 @@
  */
 
 export type AvailabilityStatusSchema = "in-development" | "pre-release" | "deprecated" | "generally-available";
-
 export const AvailabilityStatusSchema = {
     InDevelopment: "in-development",
     PreRelease: "pre-release",

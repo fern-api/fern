@@ -18,7 +18,7 @@ export const NpmGithubPublishInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace NpmGithubPublishInfo {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         packageName: string;
         tokenEnvironmentVariable: EnvironmentVariable.Raw;

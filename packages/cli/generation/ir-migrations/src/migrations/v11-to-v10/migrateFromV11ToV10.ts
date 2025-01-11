@@ -1,6 +1,7 @@
-import { GeneratorName } from "@fern-api/configuration";
-import { IrVersions } from "../../ir-versions";
+import { GeneratorName } from "@fern-api/configuration-loader";
+
 import { IrMigrationContext } from "../../IrMigrationContext";
+import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,

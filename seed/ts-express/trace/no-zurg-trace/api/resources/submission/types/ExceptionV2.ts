@@ -6,12 +6,12 @@ import * as SeedTrace from "../../../index";
 
 export type ExceptionV2 = SeedTrace.ExceptionV2.Generic | SeedTrace.ExceptionV2.Timeout;
 
-export declare namespace ExceptionV2 {
-    interface Generic extends SeedTrace.ExceptionInfo {
+export namespace ExceptionV2 {
+    export interface Generic extends SeedTrace.ExceptionInfo {
         type: "generic";
     }
 
-    interface Timeout {
+    export interface Timeout {
         type: "timeout";
     }
 }

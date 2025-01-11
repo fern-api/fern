@@ -17,7 +17,7 @@ type FolderCFoo struct {
 
 func (f *FolderCFoo) GetBarProperty() uuid.UUID {
 	if f == nil {
-		return uuid.UUID{}
+		return uuid.Nil
 	}
 	return f.BarProperty
 }

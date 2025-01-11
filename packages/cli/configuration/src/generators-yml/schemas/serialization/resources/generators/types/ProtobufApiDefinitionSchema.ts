@@ -15,7 +15,7 @@ export const ProtobufApiDefinitionSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ProtobufApiDefinitionSchema {
-    interface Raw {
+    export interface Raw {
         proto: ProtobufDefinitionSchema.Raw;
     }
 }

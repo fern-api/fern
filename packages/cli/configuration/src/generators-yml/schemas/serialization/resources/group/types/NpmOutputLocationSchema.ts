@@ -16,7 +16,7 @@ export const NpmOutputLocationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace NpmOutputLocationSchema {
-    interface Raw {
+    export interface Raw {
         url?: string | null;
         "package-name": string;
         token?: string | null;

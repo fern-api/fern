@@ -9,11 +9,11 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Userservice {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -35,64 +35,57 @@ export class Userservice {
      * @example
      *     await client.userservice.create()
      */
-    public create(
+    public async create(
         request: SeedApi.CreateRequest = {},
-        requestOptions?: Userservice.RequestOptions
-    ): core.APIPromise<SeedApi.CreateResponse> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "users"),
-                    method: "POST",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/grpc-proto",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/grpc-proto/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Userservice.RequestOptions,
+    ): Promise<SeedApi.CreateResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "users"),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/grpc-proto",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/grpc-proto/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.CreateResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedApiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.CreateResponse.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedApiError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /users.");
-                    case "unknown":
-                        throw new errors.SeedApiError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /users.");
+            case "unknown":
+                throw new errors.SeedApiError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

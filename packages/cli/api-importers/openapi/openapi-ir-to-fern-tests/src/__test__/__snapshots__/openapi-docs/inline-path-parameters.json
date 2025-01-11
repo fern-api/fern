@@ -82,6 +82,7 @@
         "types": {
           "GetOrganizationUserResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": "optional<list<string>>",
             },
@@ -212,12 +213,14 @@ types:
               "private",
               "public",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "SearchResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": "optional<list<string>>",
             },
@@ -233,6 +236,7 @@ types:
       - private
       - public
     docs: Access level
+    inline: true
     source:
       openapi: ../openapi.yml
   SearchResponse:

@@ -15,7 +15,7 @@ export const PrimitiveType: core.serialization.ObjectSchema<serializers.Primitiv
     });
 
 export declare namespace PrimitiveType {
-    interface Raw {
+    export interface Raw {
         v1: PrimitiveTypeV1.Raw;
         v2?: PrimitiveTypeV2.Raw | null;
     }

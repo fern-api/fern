@@ -122,7 +122,7 @@ check out the [Global Configuration](/learn/docs/getting-started/global-configur
 
 Customize the behavior of your Docs site by injecting custom JavaScript globally. Add a `custom.js` file and include it in your `fern/` project:
 
-<CodeBlock title="Add the styles.css file">
+<CodeBlock title="Add the custom.js file">
 ```bash {5}
   fern/
   ├─ openapi/
@@ -235,6 +235,7 @@ ReactDOM.render(
 - `ReactDOM.render()` may need to be called multiple times to prevent it from unmounting (this side-effect will be removed in the future).
 - `yarn build` or `npm build` must generate files with deterministic names to be referenced in `docs.yml`. The above example uses a [`vite` config](https://github.com/fern-api/docs-custom-js-example/blob/main/custom-app/vite.config.ts) to accomplish this.
 - For your hosted Docs site, you may need to update your CD steps to include building the react-app.
+- Custom components are not supported in local development. They are supported in preview links.
 
 <Info>
 This approach is subject to change, with notice, as we make improvements to the plugin architecture.

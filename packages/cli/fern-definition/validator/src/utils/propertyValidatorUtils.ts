@@ -1,6 +1,6 @@
+import { RawSchemas, isInlineRequestBody, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { PrimitiveTypeV1 } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 
 export const REQUEST_PREFIX = "$request.";
 export const RESPONSE_PREFIX = "$response.";

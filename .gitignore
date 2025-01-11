@@ -3,6 +3,9 @@
 # dependencies
 node_modules
 
+# turbo
+.turbo
+
 # production
 packages/**/build
 packages/**/lib

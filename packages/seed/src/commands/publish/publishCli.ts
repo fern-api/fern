@@ -1,10 +1,12 @@
+import path from "path";
+
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import path from "path";
+
 import { PublishCommand } from "../../config/api";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 import { runCommands, subVersion } from "../../utils/publishUtilities";
-import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities";
+import { VersionFilePair, getNewCliVersion } from "../../utils/versionUtilities";
 
 export async function publishCli({
     version,

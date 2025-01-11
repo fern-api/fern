@@ -112,6 +112,7 @@
         "types": {
           "UserRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdAt": "optional<datetime>",
               "email": "optional<string>",
@@ -126,6 +127,7 @@
           },
           "UserSettingsRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "lastModified": "optional<datetime>",
               "notifications": "optional<boolean>",
@@ -141,12 +143,14 @@
               "suspended",
               "deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "UserStatsRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accountStatus": "optional<UserStatsAccountStatus>",
               "lastLoginTime": "optional<datetime>",
@@ -250,6 +254,7 @@ types:
       - active
       - suspended
       - deleted
+    inline: true
     source:
       openapi: ../openapi.yml
   UserStatsRead:

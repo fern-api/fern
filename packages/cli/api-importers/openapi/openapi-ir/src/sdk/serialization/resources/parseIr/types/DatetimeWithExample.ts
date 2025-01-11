@@ -14,7 +14,7 @@ export const DatetimeWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace DatetimeWithExample {
-    interface Raw {
+    export interface Raw {
         example?: string | null;
     }
 }

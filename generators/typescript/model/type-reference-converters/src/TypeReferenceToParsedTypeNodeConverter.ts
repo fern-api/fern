@@ -1,6 +1,9 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
+
+import { TypeReference } from "@fern-fern/ir-sdk/api";
+
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
 export declare namespace TypeReferenceToParsedTypeNodeConverter {
@@ -8,12 +11,12 @@ export declare namespace TypeReferenceToParsedTypeNodeConverter {
 }
 
 export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override set(itemType: TypeReference): TypeReferenceNode {
+    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         if (this.includeSerdeLayer && this.isTypeReferencePrimitive(itemType)) {
-            const itemTypeNode = this.convert(itemType).typeNode;
+            const itemTypeNode = this.convert({ ...params, typeReference: itemType }).typeNode;
             return this.generateNonOptionalTypeReferenceNode(ts.factory.createTypeReferenceNode("Set", [itemTypeNode]));
         } else {
-            return this.list(itemType);
+            return this.list(itemType, params);
         }
     }
 

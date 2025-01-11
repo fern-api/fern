@@ -12,6 +12,7 @@ import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     serializers.DiscriminatedOneOfSchema.Raw,
@@ -22,7 +23,7 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
         commonProperties: core.serialization.list(core.serialization.lazyObject(() => serializers.CommonProperty)),
         schemas: core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazy(() => serializers.Schema)
+            core.serialization.lazy(() => serializers.Schema),
         ),
     })
     .extend(WithDescription)
@@ -31,17 +32,19 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     .extend(WithAvailability)
     .extend(WithEncoding)
     .extend(WithSource)
-    .extend(WithTitle);
+    .extend(WithTitle)
+    .extend(WithInline);
 
 export declare namespace DiscriminatedOneOfSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
             WithEncoding.Raw,
             WithSource.Raw,
-            WithTitle.Raw {
+            WithTitle.Raw,
+            WithInline.Raw {
         discriminantProperty: string;
         commonProperties: serializers.CommonProperty.Raw[];
         schemas: Record<string, serializers.Schema.Raw>;

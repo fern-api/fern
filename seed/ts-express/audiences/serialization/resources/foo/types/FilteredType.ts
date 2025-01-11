@@ -13,7 +13,7 @@ export const FilteredType: core.serialization.ObjectSchema<serializers.FilteredT
     });
 
 export declare namespace FilteredType {
-    interface Raw {
+    export interface Raw {
         public_property?: string | null;
         private_property: number;
     }

@@ -105,12 +105,25 @@ class CoreUtilities:
             exports={"HttpClient", "AsyncHttpClient"},
         )
 
+        is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
+        utilities_path = (
+            "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py"
+            if is_v1_on_v2 and self._use_pydantic_field_aliases
+            else (
+                "with_pydantic_v1_on_v2/pydantic_utilities.py"
+                if is_v1_on_v2
+                else (
+                    "with_pydantic_aliases/pydantic_utilities.py"
+                    if self._use_pydantic_field_aliases
+                    else "pydantic_utilities.py"
+                )
+            )
+        )
+
         self._copy_file_to_project(
             project=project,
             # Multi-plex between different versions of the file, depending on if we're using Pydantic aliases or not
-            relative_filepath_on_disk="with_pydantic_aliases/pydantic_utilities.py"
-            if self._use_pydantic_field_aliases
-            else "pydantic_utilities.py",
+            relative_filepath_on_disk=utilities_path,
             filepath_in_project=Filepath(
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
@@ -173,6 +186,9 @@ class CoreUtilities:
         if self._version == PydanticVersionCompatibility.V1:
             project.add_dependency(PYDANTIC_V1_DEPENDENCY)
         elif self._version == PydanticVersionCompatibility.V2:
+            project.add_dependency(PYDANTIC_V2_DEPENDENCY)
+        elif self._version == PydanticVersionCompatibility.V1_ON_V2:
+            # We're using v2 but with v1 compatibility layer
             project.add_dependency(PYDANTIC_V2_DEPENDENCY)
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)

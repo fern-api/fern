@@ -1,10 +1,11 @@
-import { AbsoluteFilePath, dirname, join, RelativeFilePath, relativize, getFilename } from "@fern-api/fs-utils";
 import { DefinitionFile } from "@fern-api/conjure-sdk";
-import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
-import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration";
 import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils";
-import { listConjureFiles } from "./utils/listConjureFiles";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, dirname, getFilename, join, relativize } from "@fern-api/fs-utils";
+import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
+
+import { listConjureFiles } from "./utils/listConjureFiles";
+import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration";
 
 export declare namespace ConjureImporter {
     interface Args {

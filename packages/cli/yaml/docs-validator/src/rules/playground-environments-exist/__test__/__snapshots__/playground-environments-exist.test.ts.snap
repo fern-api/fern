@@ -10,7 +10,7 @@ exports[`playground-environments-exist > no environments in api definition 1`] =
       "api",
     ],
     "relativeFilepath": "docs.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
 ]
 `;
@@ -25,7 +25,7 @@ exports[`playground-environments-exist > non existent environment specified 1`] 
       "api",
     ],
     "relativeFilepath": "docs.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
 ]
 `;

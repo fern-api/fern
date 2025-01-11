@@ -2,11 +2,11 @@ import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { Parameter } from "./Parameter";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
 
 export enum MethodType {
     INSTANCE,

@@ -16,7 +16,7 @@ export const ExampleObjectTypeWithTypeId: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleObjectTypeWithTypeId {
-    interface Raw {
+    export interface Raw {
         typeId: TypeId.Raw;
         object: serializers.ExampleObjectType.Raw;
     }

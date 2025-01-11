@@ -10,14 +10,14 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Submission {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -46,74 +46,67 @@ export class Submission {
      * @example
      *     await client.submission.createExecutionSession("JAVA")
      */
-    public createExecutionSession(
+    public async createExecutionSession(
         language: SeedTrace.Language,
-        requestOptions?: Submission.RequestOptions
-    ): core.APIPromise<SeedTrace.ExecutionSessionResponse> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/sessions/create-session/${encodeURIComponent(serializers.Language.jsonOrThrow(language))}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<SeedTrace.ExecutionSessionResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/sessions/create-session/${encodeURIComponent(serializers.Language.jsonOrThrow(language))}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /sessions/create-session/{language}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/create-session/{language}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -125,74 +118,65 @@ export class Submission {
      * @example
      *     await client.submission.getExecutionSession("sessionId")
      */
-    public getExecutionSession(
+    public async getExecutionSession(
         sessionId: string,
-        requestOptions?: Submission.RequestOptions
-    ): core.APIPromise<SeedTrace.ExecutionSessionResponse | undefined> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/sessions/${encodeURIComponent(sessionId)}`
-                    ),
-                    method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<SeedTrace.ExecutionSessionResponse | undefined> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/sessions/${encodeURIComponent(sessionId)}`,
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling GET /sessions/{sessionId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /sessions/{sessionId}.");
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -204,66 +188,59 @@ export class Submission {
      * @example
      *     await client.submission.stopExecutionSession("sessionId")
      */
-    public stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/sessions/stop/${encodeURIComponent(sessionId)}`
-                    ),
-                    method: "DELETE",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    public async stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/sessions/stop/${encodeURIComponent(sessionId)}`,
+            ),
+            method: "DELETE",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling DELETE /sessions/stop/{sessionId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling DELETE /sessions/stop/{sessionId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -272,73 +249,66 @@ export class Submission {
      * @example
      *     await client.submission.getExecutionSessionsState()
      */
-    public getExecutionSessionsState(
-        requestOptions?: Submission.RequestOptions
-    ): core.APIPromise<SeedTrace.GetExecutionSessionStateResponse> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        "/sessions/execution-sessions-state"
-                    ),
-                    method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+    public async getExecutionSessionsState(
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<SeedTrace.GetExecutionSessionStateResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                "/sessions/execution-sessions-state",
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling GET /sessions/execution-sessions-state."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling GET /sessions/execution-sessions-state.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

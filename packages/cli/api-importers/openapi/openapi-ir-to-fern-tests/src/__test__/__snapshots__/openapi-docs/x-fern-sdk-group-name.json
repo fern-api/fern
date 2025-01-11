@@ -8,6 +8,7 @@
         "types": {
           "Person": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -137,6 +138,7 @@ service:
         "types": {
           "User": {
             "docs": "This user object should be in user.yml",
+            "inline": undefined,
             "properties": {
               "associatedPersons": "optional<list<root.Person>>",
               "id": {

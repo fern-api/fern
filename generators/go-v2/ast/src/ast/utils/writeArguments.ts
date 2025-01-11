@@ -1,6 +1,7 @@
-import { Argument, Arguments, isNamedArgument } from "@fern-api/generator-commons";
-import { Writer } from "../core/Writer";
+import { Argument, Arguments, isNamedArgument } from "@fern-api/browser-compatible-base-generator";
+
 import { TypeInstantiation } from "../TypeInstantiation";
+import { Writer } from "../core/Writer";
 
 export function writeArguments({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
     const filteredArguments = filterNopArguments(arguments_);

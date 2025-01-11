@@ -23,7 +23,7 @@ COPY ./core_utilities/shared /assets/core_utilities
 COPY ./sdk/features.yml /assets/features.yml
 COPY ./tests /assets/tests
 
-RUN pip3 install poetry &&\
+RUN pip3 install poetry==1.8.5 &&\
   poetry config virtualenvs.create false &&\
   poetry install
 

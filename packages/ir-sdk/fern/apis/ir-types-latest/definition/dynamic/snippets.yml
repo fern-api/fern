@@ -1,6 +1,7 @@
 imports:
   auth: ./auth.yml
   endpoints: ./endpoints.yml
+  environment: ./environment.yml
 
 types:
   ErrorSeverity:
@@ -34,6 +35,8 @@ types:
       The user-facing request type used to generate a dynamic snippet.
     properties:
       endpoint: endpoints.EndpointLocation
+      baseURL: optional<string>
+      environment: optional<environment.EnvironmentValues>
       auth: optional<auth.AuthValues>
       pathParameters: optional<Values>
       queryParameters: optional<Values>

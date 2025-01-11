@@ -4,6 +4,9 @@ on:
   pull_request_target:
     branches:
       - main
+    paths: 
+      - 'fern/**'
+      - 'packages/cli/docs-**'
   workflow_dispatch:
     inputs:
       prNumber:
@@ -20,6 +23,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Checkout PR
+        if: github.event_name == 'pull_request_target'
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
+          git checkout pr-${{ github.event.pull_request.number }}
 
       - name: Install
         uses: ./.github/actions/install
@@ -38,10 +47,24 @@ jobs:
           echo "$OUTPUT"
           URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
           echo "Preview URL: $URL"
-          echo "🌿 Preview your docs: $URL" > preview_url.txt
+          echo "$URL" > preview_url.txt
 
-      - name: Comment URL in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
-        with:
-          filePath: preview_url.txt
-          comment_tag: docs-preview-link
+      - name: Comment or Update URL in PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PREVIEW_URL=$(cat preview_url.txt)
+          # Get existing comments
+          EXISTING_COMMENT=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq ".[] | select(.body | contains(\"Preview your docs\")) | .id")
+          if [ -z "$EXISTING_COMMENT" ]; then
+            # No existing comment, create one
+            gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+              -f "body"="🌿 Preview your docs: [$PREVIEW_URL]($PREVIEW_URL)"
+          else
+            # Update existing comment
+            gh api repos/${{ github.repository }}/issues/comments/$EXISTING_COMMENT \
+              -X PATCH \
+              -f "body"="🌿 Preview your docs: [$PREVIEW_URL]($PREVIEW_URL)"
+          fi
+

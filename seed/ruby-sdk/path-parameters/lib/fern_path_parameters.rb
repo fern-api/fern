@@ -2,10 +2,13 @@
 
 require_relative "types_export"
 require_relative "requests"
+require_relative "fern_path_parameters/organizations/client"
 require_relative "fern_path_parameters/user/client"
 
 module SeedPathParametersClient
   class Client
+    # @return [SeedPathParametersClient::OrganizationsClient]
+    attr_reader :organizations
     # @return [SeedPathParametersClient::UserClient]
     attr_reader :user
 
@@ -19,11 +22,14 @@ module SeedPathParametersClient
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds
       )
+      @organizations = SeedPathParametersClient::OrganizationsClient.new(request_client: @request_client)
       @user = SeedPathParametersClient::UserClient.new(request_client: @request_client)
     end
   end
 
   class AsyncClient
+    # @return [SeedPathParametersClient::AsyncOrganizationsClient]
+    attr_reader :organizations
     # @return [SeedPathParametersClient::AsyncUserClient]
     attr_reader :user
 
@@ -37,6 +43,7 @@ module SeedPathParametersClient
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds
       )
+      @organizations = SeedPathParametersClient::AsyncOrganizationsClient.new(request_client: @async_request_client)
       @user = SeedPathParametersClient::AsyncUserClient.new(request_client: @async_request_client)
     end
   end

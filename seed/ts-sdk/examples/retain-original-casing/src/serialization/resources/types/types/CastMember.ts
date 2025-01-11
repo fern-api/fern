@@ -13,5 +13,5 @@ export const CastMember: core.serialization.Schema<serializers.CastMember.Raw, S
     core.serialization.undiscriminatedUnion([Actor, Actress, StuntDouble]);
 
 export declare namespace CastMember {
-    type Raw = Actor.Raw | Actress.Raw | StuntDouble.Raw;
+    export type Raw = Actor.Raw | Actress.Raw | StuntDouble.Raw;
 }

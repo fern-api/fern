@@ -16,6 +16,14 @@ public final class SeedValidationClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedValidationClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedValidationClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedValidationClient(clientOptionsBuilder.build());

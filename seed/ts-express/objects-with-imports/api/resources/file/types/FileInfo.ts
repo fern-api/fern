@@ -16,7 +16,6 @@ export type FileInfo =
     /**
      * A directory (e.g. foo/). */
     | "DIRECTORY";
-
 export const FileInfo = {
     Regular: "REGULAR",
     Directory: "DIRECTORY",

@@ -19,7 +19,7 @@ export const ExampleType: core.serialization.ObjectSchema<serializers.ExampleTyp
         .extend(WithDocs);
 
 export declare namespace ExampleType {
-    interface Raw extends WithJsonExample.Raw, WithDocs.Raw {
+    export interface Raw extends WithJsonExample.Raw, WithDocs.Raw {
         name?: Name.Raw | null;
         shape: serializers.ExampleTypeShape.Raw;
     }

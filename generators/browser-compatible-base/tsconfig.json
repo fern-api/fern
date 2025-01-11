@@ -1,0 +1,25 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../packages/cli/fern-definition/schema"
+    },
+    {
+      "path": "../../packages/cli/logger"
+    },
+    {
+      "path": "../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../packages/commons/path-utils"
+    },
+  ]
+}

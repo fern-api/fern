@@ -1,3 +1,6 @@
+[project]
+name = "fern_path-parameters"
+
 [tool.poetry]
 name = "fern_path-parameters"
 version = "0.0.1"

@@ -1,4 +1,5 @@
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { GrpcEndpointGenerator } from "../grpc/GrpcEndpointGenerator";
 import { HttpEndpointGenerator } from "../http/HttpEndpointGenerator";

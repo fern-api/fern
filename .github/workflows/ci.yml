@@ -13,6 +13,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -81,9 +85,6 @@ jobs:
 
       - name: Install protoc-gen-openapi
         run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: Compile
-        run: pnpm compile
 
       - name: Run tests
         run: pnpm test

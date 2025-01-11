@@ -1,6 +1,8 @@
-import { Logger } from "@fern-api/logger";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Logger } from "@fern-api/logger";
+
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 

@@ -16,10 +16,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UserModel": {
@@ -86,10 +83,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Metadata": {
@@ -154,8 +148,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           }

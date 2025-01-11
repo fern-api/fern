@@ -18,7 +18,7 @@ export const Response: core.serialization.ObjectSchema<serializers.Response.Raw,
         .extend(WithDocs);
 
 export declare namespace Response {
-    interface Raw extends WithMetadata.Raw, WithDocs.Raw {
+    export interface Raw extends WithMetadata.Raw, WithDocs.Raw {
         data: Movie.Raw;
     }
 }

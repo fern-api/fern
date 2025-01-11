@@ -13,6 +13,7 @@ import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSchema.Raw, FernOpenapiIr.ObjectSchema> =
     core.serialization
@@ -27,16 +28,18 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
         .extend(WithSdkGroupName)
         .extend(WithAvailability)
         .extend(WithSource)
-        .extend(WithTitle);
+        .extend(WithTitle)
+        .extend(WithInline);
 
 export declare namespace ObjectSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
             WithSource.Raw,
-            WithTitle.Raw {
+            WithTitle.Raw,
+            WithInline.Raw {
         allOf: ReferencedSchema.Raw[];
         properties: serializers.ObjectProperty.Raw[];
         allOfPropertyConflicts: AllOfPropertyConflict.Raw[];

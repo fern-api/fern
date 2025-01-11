@@ -63871,6 +63871,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
+                "inline": true,
                 "type": "enum"
               },
               "generatedName": "TaskCreateOutputFormat",
@@ -65058,6 +65059,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
+                "inline": true,
                 "type": "enum"
               },
               "generatedName": "TaskRevisionOutputFormat",
@@ -65581,9 +65583,11 @@
                         "file": "../openapi.yml",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "enum"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "TaskUpdateOutputFormat",

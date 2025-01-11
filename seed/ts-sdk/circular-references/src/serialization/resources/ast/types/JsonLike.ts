@@ -11,7 +11,7 @@ export const JsonLike: core.serialization.Schema<serializers.JsonLike.Raw, SeedA
         core.serialization.list(core.serialization.lazy(() => serializers.JsonLike)),
         core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazy(() => serializers.JsonLike)
+            core.serialization.lazy(() => serializers.JsonLike),
         ),
         core.serialization.string(),
         core.serialization.number(),
@@ -19,5 +19,5 @@ export const JsonLike: core.serialization.Schema<serializers.JsonLike.Raw, SeedA
     ]);
 
 export declare namespace JsonLike {
-    type Raw = serializers.JsonLike.Raw[] | Record<string, serializers.JsonLike.Raw> | string | number | boolean;
+    export type Raw = serializers.JsonLike.Raw[] | Record<string, serializers.JsonLike.Raw> | string | number | boolean;
 }

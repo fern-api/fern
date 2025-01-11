@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
+
 import { FernUserToken } from "../FernToken";
 
 const client = jwksClient({

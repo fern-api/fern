@@ -7,8 +7,8 @@ await client.echo(
 		"Hello world!\\n\\nwith\\n\\tnewlines"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -20,8 +20,8 @@ await client.echo(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -32,8 +32,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -44,8 +44,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.file.notification.service.getException("notification-hsy129x");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -56,8 +56,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.file.notification.service.getException("notificationId");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -68,8 +68,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.file.service.getFile("file.txt");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -80,8 +80,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.file.service.getFile("filename");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -92,8 +92,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.health.service.check("id-2sdx82h");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -104,8 +104,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.health.service.check("id-3tey93i");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -116,8 +116,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.health.service.check("id");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -128,8 +128,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.health.service.ping();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -140,8 +140,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.health.service.ping();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -152,8 +152,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.service.getMovie("movie-c06a4ad7");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -164,8 +164,8 @@ const client = new SeedExamplesClient({
   token: "YOUR_TOKEN",
 });
 await client.service.getMovie("movieId");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -189,8 +189,8 @@ await client.service.createMovie({
   },
   revenue: 1000000,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -213,8 +213,8 @@ await client.service.createMovie({
   },
   revenue: 1000000,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -228,8 +228,8 @@ await client.service.getMetadata(
 		X-API-Version: "0.0.1"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -243,8 +243,8 @@ await client.service.getMetadata(
 		X-API-Version: "X-API-Version"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -340,7 +340,7 @@ await client.service.createBigEntity(
 			}
 	}
 )
- 
-```                        
+
+```
 
 

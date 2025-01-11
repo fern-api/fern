@@ -11,32 +11,32 @@ export type ExampleTypeShape =
     | FernIr.ExampleTypeShape.Union
     | FernIr.ExampleTypeShape.UndiscriminatedUnion;
 
-export declare namespace ExampleTypeShape {
-    interface Alias extends FernIr.ExampleAliasType, _Utils {
+export namespace ExampleTypeShape {
+    export interface Alias extends FernIr.ExampleAliasType, _Utils {
         type: "alias";
     }
 
-    interface Enum extends FernIr.ExampleEnumType, _Utils {
+    export interface Enum extends FernIr.ExampleEnumType, _Utils {
         type: "enum";
     }
 
-    interface Object_ extends FernIr.ExampleObjectType, _Utils {
+    export interface Object_ extends FernIr.ExampleObjectType, _Utils {
         type: "object";
     }
 
-    interface Union extends FernIr.ExampleUnionType, _Utils {
+    export interface Union extends FernIr.ExampleUnionType, _Utils {
         type: "union";
     }
 
-    interface UndiscriminatedUnion extends FernIr.ExampleUndiscriminatedUnionType, _Utils {
+    export interface UndiscriminatedUnion extends FernIr.ExampleUndiscriminatedUnionType, _Utils {
         type: "undiscriminatedUnion";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleTypeShape._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         alias: (value: FernIr.ExampleAliasType) => _Result;
         enum: (value: FernIr.ExampleEnumType) => _Result;
         object: (value: FernIr.ExampleObjectType) => _Result;
@@ -53,7 +53,7 @@ export const ExampleTypeShape = {
             type: "alias",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeShape.Alias,
-                visitor: FernIr.ExampleTypeShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeShape._visit(this, visitor);
             },
@@ -66,7 +66,7 @@ export const ExampleTypeShape = {
             type: "enum",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeShape.Enum,
-                visitor: FernIr.ExampleTypeShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeShape._visit(this, visitor);
             },
@@ -79,7 +79,7 @@ export const ExampleTypeShape = {
             type: "object",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeShape.Object_,
-                visitor: FernIr.ExampleTypeShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeShape._visit(this, visitor);
             },
@@ -92,7 +92,7 @@ export const ExampleTypeShape = {
             type: "union",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeShape.Union,
-                visitor: FernIr.ExampleTypeShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeShape._visit(this, visitor);
             },
@@ -100,14 +100,14 @@ export const ExampleTypeShape = {
     },
 
     undiscriminatedUnion: (
-        value: FernIr.ExampleUndiscriminatedUnionType
+        value: FernIr.ExampleUndiscriminatedUnionType,
     ): FernIr.ExampleTypeShape.UndiscriminatedUnion => {
         return {
             ...value,
             type: "undiscriminatedUnion",
             _visit: function <_Result>(
                 this: FernIr.ExampleTypeShape.UndiscriminatedUnion,
-                visitor: FernIr.ExampleTypeShape._Visitor<_Result>
+                visitor: FernIr.ExampleTypeShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeShape._visit(this, visitor);
             },

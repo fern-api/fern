@@ -982,6 +982,7 @@
         "types": {
           "ActiveConnectionInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "host": "string",
               "port": "double",
@@ -994,6 +995,7 @@
           },
           "AppConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "appName": {
                 "type": "string",
@@ -1012,6 +1014,7 @@
           },
           "AppConfigAuthConfiguration": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "anonymous": "optional<RecordStringNever>",
               "google": "optional<AppConfigAuthConfigurationGoogle>",
@@ -1023,6 +1026,7 @@
           },
           "AppConfigAuthConfigurationGoogle": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "clientId": "string",
             },
@@ -1033,6 +1037,7 @@
           "AppId": "string",
           "Application": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "appId": "string",
               "appName": "string",
@@ -1050,6 +1055,7 @@
           },
           "ApplicationAuthConfiguration": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "anonymous": "optional<RecordStringNever>",
               "google": "optional<ApplicationAuthConfigurationGoogle>",
@@ -1061,6 +1067,7 @@
           },
           "ApplicationAuthConfigurationGoogle": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "clientId": "string",
             },
@@ -1073,6 +1080,7 @@
             "extends": [
               "Application",
             ],
+            "inline": undefined,
             "properties": {
               "deployment": "Deployment",
             },
@@ -1082,6 +1090,7 @@
           },
           "Build": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "appId": "AppId",
               "buildId": "BuildId",
@@ -1101,6 +1110,7 @@
           "BuildId": "double",
           "BuildRegionalContainerTagsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "containerTag": "string",
               "region": "Region",
@@ -1116,6 +1126,7 @@
               "succeeded",
               "failed",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1139,6 +1150,7 @@
             "extends": [
               "DeploymentConfig",
             ],
+            "inline": undefined,
             "properties": {
               "appId": "AppId",
               "buildId": "BuildId",
@@ -1154,6 +1166,7 @@
           },
           "DeploymentConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "containerPort": {
                 "type": "integer",
@@ -1185,6 +1198,7 @@
           },
           "DeploymentConfigEnvItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "name": {
                 "type": "string",
@@ -1213,6 +1227,7 @@
           "DiscoveryResponse": "list<DiscoveryResponseItem>",
           "DiscoveryResponseItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "host": "string",
               "port": "double",
@@ -1224,6 +1239,7 @@
           },
           "Lobby": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "appId": "AppId",
               "createdAt": "datetime",
@@ -1245,6 +1261,7 @@
               "public",
               "local",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1256,12 +1273,14 @@
               "rate_egress",
               "total_egress",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "MetricValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "timestamp": "double",
               "value": "double",
@@ -1278,6 +1297,7 @@
           "OrgId": "string",
           "PickRoomExcludeKeyofRoomAllocations": {
             "docs": "From T, pick a set of properties whose keys are in the union K",
+            "inline": undefined,
             "properties": {
               "appId": "AppId",
               "currentAllocation": "optional<RoomAllocation>",
@@ -1295,12 +1315,14 @@
               "medium",
               "large",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "Process": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "activeConnections": "double",
               "appId": "AppId",
@@ -1329,6 +1351,7 @@
             "extends": [
               "Process",
             ],
+            "inline": undefined,
             "properties": {
               "rooms": "list<RoomWithoutAllocations>",
               "totalRooms": "double",
@@ -1339,6 +1362,7 @@
           },
           "RecordPartialMetricNameMetricValueArray": {
             "docs": "Construct a type with a set of properties K of type T",
+            "inline": undefined,
             "properties": {
               "cpu": "optional<list<MetricValue>>",
               "memory": "optional<list<MetricValue>>",
@@ -1351,6 +1375,7 @@
           },
           "RecordStringNever": {
             "docs": "Construct a type with a set of properties K of type T",
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -1369,12 +1394,14 @@
               "Sydney",
               "Sao_Paulo",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "Room": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allocations": "list<RoomAllocation>",
               "appId": "AppId",
@@ -1388,6 +1415,7 @@
           },
           "RoomAllocation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "processId": "ProcessId",
               "roomAllocationId": "RoomAllocationId",
@@ -1407,6 +1435,7 @@
               "suspended",
               "destroyed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1414,6 +1443,7 @@
           "RoomWithoutAllocations": "OmitRoomAllocations",
           "StartingConnectionInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "roomId": "RoomId",
             },
@@ -1437,6 +1467,7 @@
               "udp",
               "tls",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1942,6 +1973,7 @@ types:
       clientId: string
     source:
       openapi: ../openapi.json
+    inline: true
   ApplicationAuthConfiguration:
     properties:
       google: optional<ApplicationAuthConfigurationGoogle>
@@ -1949,6 +1981,7 @@ types:
       anonymous: optional<RecordStringNever>
     source:
       openapi: ../openapi.json
+    inline: true
   Application:
     properties:
       deletedBy: optional<string>
@@ -1991,6 +2024,7 @@ types:
           maxLength: 100
     source:
       openapi: ../openapi.json
+    inline: true
   DeploymentConfig:
     properties:
       env: list<DeploymentConfigEnvItem>
@@ -2036,6 +2070,7 @@ types:
       clientId: string
     source:
       openapi: ../openapi.json
+    inline: true
   AppConfigAuthConfiguration:
     properties:
       google: optional<AppConfigAuthConfigurationGoogle>
@@ -2043,6 +2078,7 @@ types:
       anonymous: optional<RecordStringNever>
     source:
       openapi: ../openapi.json
+    inline: true
   AppConfig:
     properties:
       authConfiguration: AppConfigAuthConfiguration
@@ -2073,12 +2109,14 @@ types:
       region: Region
     source:
       openapi: ../openapi.json
+    inline: true
   BuildStatus:
     enum:
       - created
       - running
       - succeeded
       - failed
+    inline: true
     source:
       openapi: ../openapi.json
   Build:
@@ -2109,6 +2147,7 @@ types:
       - private
       - public
       - local
+    inline: true
     source:
       openapi: ../openapi.json
   Lobby:
@@ -2788,6 +2827,7 @@ service:
         "types": {
           "LoginAnonymousResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "token": "string",
             },
@@ -2797,6 +2837,7 @@ service:
           },
           "LoginGoogleResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "token": "string",
             },
@@ -2806,6 +2847,7 @@ service:
           },
           "LoginNicknameResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "token": "string",
             },
@@ -4449,6 +4491,7 @@ service:
               "private",
               "local",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4785,6 +4828,7 @@ types:
       - public
       - private
       - local
+    inline: true
     source:
       openapi: ../openapi.json
 ",

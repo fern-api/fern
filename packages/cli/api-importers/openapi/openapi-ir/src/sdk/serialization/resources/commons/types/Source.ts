@@ -28,13 +28,13 @@ export const Source: core.serialization.Schema<serializers.Source.Raw, FernOpena
     });
 
 export declare namespace Source {
-    type Raw = Source.Openapi | Source.Protobuf;
+    export type Raw = Source.Openapi | Source.Protobuf;
 
-    interface Openapi extends OpenApiSource.Raw {
+    export interface Openapi extends OpenApiSource.Raw {
         type: "openapi";
     }
 
-    interface Protobuf extends ProtobufSource.Raw {
+    export interface Protobuf extends ProtobufSource.Raw {
         type: "protobuf";
     }
 }

@@ -16,7 +16,7 @@ export const GenericCreateProblemError: core.serialization.ObjectSchema<
 });
 
 export declare namespace GenericCreateProblemError {
-    interface Raw {
+    export interface Raw {
         message: string;
         type: string;
         stacktrace: string;

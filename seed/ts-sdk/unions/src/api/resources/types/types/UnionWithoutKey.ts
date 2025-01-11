@@ -10,12 +10,12 @@ export type UnionWithoutKey =
      * This is a bar field. */
     | SeedUnions.UnionWithoutKey.Bar;
 
-export declare namespace UnionWithoutKey {
-    interface Foo extends SeedUnions.Foo {
+export namespace UnionWithoutKey {
+    export interface Foo extends SeedUnions.Foo {
         type: "foo";
     }
 
-    interface Bar extends SeedUnions.Bar {
+    export interface Bar extends SeedUnions.Bar {
         type: "bar";
     }
 }

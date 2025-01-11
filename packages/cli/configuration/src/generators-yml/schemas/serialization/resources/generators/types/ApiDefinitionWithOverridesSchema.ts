@@ -20,7 +20,7 @@ export const ApiDefinitionWithOverridesSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ApiDefinitionWithOverridesSchema {
-    interface Raw {
+    export interface Raw {
         path: ApiDefinitionPathSchema.Raw;
         origin?: string | null;
         overrides?: string | null;

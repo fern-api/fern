@@ -10,26 +10,26 @@ export type Error =
     | SeedTrace.playlist.getPlaylist.Error.UnauthorizedError
     | SeedTrace.playlist.getPlaylist.Error._Unknown;
 
-export declare namespace Error {
-    interface PlaylistIdNotFoundError extends _Utils {
+export namespace Error {
+    export interface PlaylistIdNotFoundError extends _Utils {
         errorName: "PlaylistIdNotFoundError";
         content: SeedTrace.PlaylistIdNotFoundErrorBody;
     }
 
-    interface UnauthorizedError extends _Utils {
+    export interface UnauthorizedError extends _Utils {
         errorName: "UnauthorizedError";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         errorName: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         playlistIdNotFoundError: (value: SeedTrace.PlaylistIdNotFoundErrorBody) => _Result;
         unauthorizedError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
@@ -38,14 +38,14 @@ export declare namespace Error {
 
 export const Error = {
     playlistIdNotFoundError: (
-        value: SeedTrace.PlaylistIdNotFoundErrorBody
+        value: SeedTrace.PlaylistIdNotFoundErrorBody,
     ): SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError => {
         return {
             content: value,
             errorName: "PlaylistIdNotFoundError",
             _visit: function <_Result>(
                 this: SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError,
-                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
+                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
             },
@@ -57,7 +57,7 @@ export const Error = {
             errorName: "UnauthorizedError",
             _visit: function <_Result>(
                 this: SeedTrace.playlist.getPlaylist.Error.UnauthorizedError,
-                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
+                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
             },
@@ -70,7 +70,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedTrace.playlist.getPlaylist.Error._Unknown,
-                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
+                visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.playlist.getPlaylist.Error._visit(this, visitor);
             },
@@ -79,7 +79,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.playlist.getPlaylist.Error,
-        visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>
+        visitor: SeedTrace.playlist.getPlaylist.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             case "PlaylistIdNotFoundError":

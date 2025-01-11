@@ -9,5 +9,5 @@ export const NotFoundError: core.serialization.Schema<serializers.NotFoundError.
     core.serialization.string();
 
 export declare namespace NotFoundError {
-    type Raw = string;
+    export type Raw = string;
 }

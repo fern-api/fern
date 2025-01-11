@@ -764,60 +764,6 @@
       }
     }
   },
-  "webhooks": {
-    "newBooking": {
-      "post": {
-        "operationId": "new-booking",
-        "summary": "New Booking",
-        "description": "Subscribe to new bookings being created, to update integrations for your users.  Related data is available via the links provided in the request.\n",
-        "tags": [
-          "Bookings"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Booking"
-                  },
-                  {
-                    "properties": {
-                      "links": {
-                        "allOf": [
-                          {
-                            "$ref": "#/components/schemas/Links-Self"
-                          },
-                          {
-                            "$ref": "#/components/schemas/Links-Pagination"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ]
-              },
-              "example": {
-                "id": "efdbb9d1-02c2-4bc3-afb7-6788d8782b1e",
-                "trip_id": "efdbb9d1-02c2-4bc3-afb7-6788d8782b1e",
-                "passenger_name": "John Doe",
-                "has_bicycle": true,
-                "has_dog": true,
-                "links": {
-                  "self": "https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully."
-          }
-        }
-      }
-    }
-  },
   "components": {
     "securitySchemes": {
       "OAuth2": {

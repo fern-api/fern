@@ -11,9 +11,9 @@ func do() () {
     client.Create(
         context.TODO(),
         &fern.CreateRequest{
-            Decimal: 1.1,
-            Even: 1,
-            Name: "name",
+            Decimal: 2.2,
+            Even: 100,
+            Name: "foo",
             Shape: fern.ShapeSquare,
         },
     )

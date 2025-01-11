@@ -285,6 +285,7 @@
         "types": {
           "StreamUser": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -302,6 +303,7 @@
           },
           "StreamUser2": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -321,6 +323,7 @@
           },
           "User": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -338,6 +341,7 @@
           },
           "User2": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -357,6 +361,7 @@
           },
           "UserV3Response": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -375,6 +380,7 @@
           },
           "UserV3StreamResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",

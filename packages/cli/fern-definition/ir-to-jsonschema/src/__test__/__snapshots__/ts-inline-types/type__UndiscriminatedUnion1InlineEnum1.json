@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "SUNNY",
+    "CLOUDY",
+    "RAINING",
+    "SNOWING"
+  ],
+  "definitions": {}
+}

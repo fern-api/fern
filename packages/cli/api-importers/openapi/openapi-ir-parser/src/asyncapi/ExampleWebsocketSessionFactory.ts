@@ -8,6 +8,7 @@ import {
     WebsocketMessageExample,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
+
 import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory";
 import { convertSchema } from "../schema/convertSchemas";
 import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";
@@ -21,7 +22,7 @@ export class ExampleWebsocketSessionFactory {
     private schemas: Record<string, SchemaWithExample>;
 
     constructor(schemas: Record<string, SchemaWithExample>, context: AsyncAPIV2ParserContext) {
-        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context);
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas, new Set(), context);
         this.schemas = schemas;
     }
 

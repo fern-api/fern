@@ -1,6 +1,8 @@
-import { HttpEndpoint, HttpHeader, HttpService } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { HttpEndpoint, HttpHeader, HttpService } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedHeader } from "../../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { RequestParameter } from "../../request-parameter/RequestParameter";

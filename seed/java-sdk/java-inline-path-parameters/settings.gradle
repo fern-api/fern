@@ -1,0 +1,3 @@
+rootProject.name = 'java-inline-path-parameters'
+
+include 'sample-app'

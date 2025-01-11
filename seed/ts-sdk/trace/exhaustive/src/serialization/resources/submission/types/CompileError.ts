@@ -12,7 +12,7 @@ export const CompileError: core.serialization.ObjectSchema<serializers.CompileEr
     });
 
 export declare namespace CompileError {
-    interface Raw {
+    export interface Raw {
         message: string;
     }
 }

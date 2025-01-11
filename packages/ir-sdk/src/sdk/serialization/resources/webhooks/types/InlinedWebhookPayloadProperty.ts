@@ -19,7 +19,7 @@ export const InlinedWebhookPayloadProperty: core.serialization.ObjectSchema<
     .extend(WithDocsAndAvailability);
 
 export declare namespace InlinedWebhookPayloadProperty {
-    interface Raw extends WithDocsAndAvailability.Raw {
+    export interface Raw extends WithDocsAndAvailability.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
     }

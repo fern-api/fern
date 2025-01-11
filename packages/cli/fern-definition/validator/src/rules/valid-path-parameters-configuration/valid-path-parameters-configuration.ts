@@ -13,7 +13,7 @@ export const ValidPathParametersConfigurationRule: Rule = {
                     ) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: "path-parameters cannot be defined in both endpoint and request."
                             }
                         ];

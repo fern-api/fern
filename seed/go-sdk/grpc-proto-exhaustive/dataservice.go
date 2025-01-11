@@ -50,7 +50,7 @@ type Column struct {
 	IndexedData *IndexedData `json:"indexedData,omitempty" url:"indexedData,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (c *Column) GetId() string {
@@ -92,20 +92,18 @@ func (c *Column) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = Column(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.extraProperties = extraProperties
-
-	c._rawJSON = json.RawMessage(data)
+	c.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (c *Column) String() string {
-	if len(c._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c._rawJSON); err == nil {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -117,7 +115,7 @@ func (c *Column) String() string {
 
 type DeleteResponse struct {
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (d *DeleteResponse) GetExtraProperties() map[string]interface{} {
@@ -131,20 +129,18 @@ func (d *DeleteResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DeleteResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
-	d._rawJSON = json.RawMessage(data)
+	d.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (d *DeleteResponse) String() string {
-	if len(d._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(d._rawJSON); err == nil {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -161,7 +157,7 @@ type DescribeResponse struct {
 	TotalCount *int                         `json:"totalCount,omitempty" url:"totalCount,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (d *DescribeResponse) GetNamespaces() map[string]*NamespaceSummary {
@@ -203,20 +199,18 @@ func (d *DescribeResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DescribeResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
-	d._rawJSON = json.RawMessage(data)
+	d.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (d *DescribeResponse) String() string {
-	if len(d._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(d._rawJSON); err == nil {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -232,7 +226,7 @@ type FetchResponse struct {
 	Usage     *Usage             `json:"usage,omitempty" url:"usage,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (f *FetchResponse) GetColumns() map[string]*Column {
@@ -267,20 +261,18 @@ func (f *FetchResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FetchResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
-	f._rawJSON = json.RawMessage(data)
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (f *FetchResponse) String() string {
-	if len(f._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -295,7 +287,7 @@ type IndexedData struct {
 	Values  []float64 `json:"values,omitempty" url:"values,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (i *IndexedData) GetIndices() []int {
@@ -323,20 +315,18 @@ func (i *IndexedData) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = IndexedData(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
-	i._rawJSON = json.RawMessage(data)
+	i.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (i *IndexedData) String() string {
-	if len(i._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(i._rawJSON); err == nil {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -350,7 +340,7 @@ type ListElement struct {
 	Id *string `json:"id,omitempty" url:"id,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (l *ListElement) GetId() *string {
@@ -371,20 +361,18 @@ func (l *ListElement) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = ListElement(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
-	l._rawJSON = json.RawMessage(data)
+	l.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (l *ListElement) String() string {
-	if len(l._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(l._rawJSON); err == nil {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -401,7 +389,7 @@ type ListResponse struct {
 	Usage      *Usage         `json:"usage,omitempty" url:"usage,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (l *ListResponse) GetColumns() []*ListElement {
@@ -443,20 +431,18 @@ func (l *ListResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = ListResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
-	l._rawJSON = json.RawMessage(data)
+	l.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (l *ListResponse) String() string {
-	if len(l._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(l._rawJSON); err == nil {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -635,7 +621,7 @@ type NamespaceSummary struct {
 	Count *int `json:"count,omitempty" url:"count,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (n *NamespaceSummary) GetCount() *int {
@@ -656,20 +642,18 @@ func (n *NamespaceSummary) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NamespaceSummary(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
-	n._rawJSON = json.RawMessage(data)
+	n.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (n *NamespaceSummary) String() string {
-	if len(n._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n._rawJSON); err == nil {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -683,7 +667,7 @@ type Pagination struct {
 	Next *string `json:"next,omitempty" url:"next,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (p *Pagination) GetNext() *string {
@@ -704,20 +688,18 @@ func (p *Pagination) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = Pagination(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
-	p._rawJSON = json.RawMessage(data)
+	p.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (p *Pagination) String() string {
-	if len(p._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(p._rawJSON); err == nil {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -735,7 +717,7 @@ type QueryColumn struct {
 	IndexedData *IndexedData `json:"indexedData,omitempty" url:"indexedData,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (q *QueryColumn) GetValues() []float64 {
@@ -784,20 +766,18 @@ func (q *QueryColumn) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*q = QueryColumn(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
 	q.extraProperties = extraProperties
-
-	q._rawJSON = json.RawMessage(data)
+	q.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (q *QueryColumn) String() string {
-	if len(q._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(q._rawJSON); err == nil {
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -814,7 +794,7 @@ type QueryResponse struct {
 	Usage     *Usage          `json:"usage,omitempty" url:"usage,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (q *QueryResponse) GetResults() []*QueryResult {
@@ -856,20 +836,18 @@ func (q *QueryResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*q = QueryResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
 	q.extraProperties = extraProperties
-
-	q._rawJSON = json.RawMessage(data)
+	q.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (q *QueryResponse) String() string {
-	if len(q._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(q._rawJSON); err == nil {
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -884,7 +862,7 @@ type QueryResult struct {
 	Namespace *string         `json:"namespace,omitempty" url:"namespace,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (q *QueryResult) GetMatches() []*ScoredColumn {
@@ -912,20 +890,18 @@ func (q *QueryResult) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*q = QueryResult(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
 	q.extraProperties = extraProperties
-
-	q._rawJSON = json.RawMessage(data)
+	q.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (q *QueryResult) String() string {
-	if len(q._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(q._rawJSON); err == nil {
+	if len(q.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(q.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -943,7 +919,7 @@ type ScoredColumn struct {
 	IndexedData *IndexedData `json:"indexedData,omitempty" url:"indexedData,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (s *ScoredColumn) GetId() string {
@@ -992,20 +968,18 @@ func (s *ScoredColumn) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = ScoredColumn(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (s *ScoredColumn) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -1017,7 +991,7 @@ func (s *ScoredColumn) String() string {
 
 type UpdateResponse struct {
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UpdateResponse) GetExtraProperties() map[string]interface{} {
@@ -1031,20 +1005,18 @@ func (u *UpdateResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UpdateResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UpdateResponse) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -1058,7 +1030,7 @@ type UploadResponse struct {
 	Count *int `json:"count,omitempty" url:"count,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UploadResponse) GetCount() *int {
@@ -1079,20 +1051,18 @@ func (u *UploadResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UploadResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UploadResponse) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -1106,7 +1076,7 @@ type Usage struct {
 	Units *int `json:"units,omitempty" url:"units,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *Usage) GetUnits() *int {
@@ -1127,20 +1097,18 @@ func (u *Usage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = Usage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *Usage) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}

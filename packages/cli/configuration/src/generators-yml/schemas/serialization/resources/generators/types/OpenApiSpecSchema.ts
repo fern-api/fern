@@ -19,7 +19,7 @@ export const OpenApiSpecSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace OpenApiSpecSchema {
-    interface Raw {
+    export interface Raw {
         openapi: string;
         origin?: string | null;
         overrides?: string | null;

@@ -107,6 +107,7 @@
                     "type": "optional<Direction>",
                   },
                   "limit": {
+                    "default": 50,
                     "docs": "The maximum number of jobs to include in the response.",
                     "type": "optional<integer>",
                   },
@@ -255,12 +256,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "tr",
               "uk",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yaml",
             },
           },
           "BoundingBox": {
             "docs": "A bounding box around a face.",
+            "inline": undefined,
             "properties": {
               "h": {
                 "docs": "Bounding box height.",
@@ -285,6 +288,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "BurstPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "descriptions": {
                 "docs": "Modality-specific descriptive features and their scores.",
@@ -302,6 +306,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "Completed": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_timestamp_ms": {
                 "docs": "When this job was created (Unix timestamp in milliseconds).",
@@ -330,6 +335,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "DescriptionsScore": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Name of the descriptive feature being expressed.",
@@ -349,12 +355,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yaml",
             },
           },
           "EmotionScore": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Name of the emotion being expressed.",
@@ -375,6 +383,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "Error": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "file": {
                 "docs": "A file path relative to the top level source URL or file.",
@@ -391,6 +400,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "Face": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "descriptions": "optional<Empty>",
               "facs": "optional<Empty>",
@@ -432,6 +442,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "FacePrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "box": "BoundingBox",
               "descriptions": {
@@ -465,6 +476,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "FacemeshPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "emotions": {
                 "docs": "A high-dimensional embedding in emotion space.",
@@ -477,6 +489,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "FacsScore": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Name of the FACS 2.0 feature being expressed.",
@@ -493,6 +506,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "Failed": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_timestamp_ms": {
                 "docs": "When this job was created (Unix timestamp in milliseconds).",
@@ -517,6 +531,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "File": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "content_type": {
                 "docs": "The content type of the file.",
@@ -543,12 +558,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "utterance",
               "conversational_turn",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yaml",
             },
           },
           "GroupedPredictionsBurstPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "An automatically generated label to identify individuals in your media file. Will be `unknown` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -562,6 +579,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "GroupedPredictionsFacePrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "An automatically generated label to identify individuals in your media file. Will be `unknown` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -575,6 +593,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "GroupedPredictionsFacemeshPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "An automatically generated label to identify individuals in your media file. Will be `unknown` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -588,6 +607,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "GroupedPredictionsLanguagePrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "An automatically generated label to identify individuals in your media file. Will be `unknown` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -601,6 +621,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "GroupedPredictionsNerPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "An automatically generated label to identify individuals in your media file. Will be `unknown` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -614,6 +635,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "GroupedPredictionsProsodyPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "An automatically generated label to identify individuals in your media file. Will be `unknown` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -627,6 +649,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "InProgress": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_timestamp_ms": {
                 "docs": "When this job was created (Unix timestamp in milliseconds).",
@@ -643,6 +666,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "JobId": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "job_id": {
                 "docs": "The ID of the started job.",
@@ -661,6 +685,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "JobRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "job_id": {
                 "docs": "The ID associated with this job.",
@@ -691,6 +716,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "Language": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "granularity": "optional<Granularity>",
               "identify_speakers": {
@@ -707,6 +733,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "LanguagePrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "confidence": {
                 "docs": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
@@ -743,6 +770,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "Models": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "burst": "optional<Empty>",
               "face": "optional<Face>",
@@ -757,6 +785,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "ModelsPredictions": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "burst": "optional<PredictionsOptionalNullBurstPrediction>",
               "face": "optional<PredictionsOptionalNullFacePrediction>",
@@ -771,6 +800,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "Ner": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "identify_speakers": {
                 "default": false,
@@ -784,6 +814,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "NerPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "confidence": {
                 "docs": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
@@ -830,6 +861,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "PositionInterval": {
             "docs": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
+            "inline": undefined,
             "properties": {
               "begin": {
                 "docs": "The index of the first character in the text segment, inclusive.",
@@ -846,6 +878,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "Prediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "file": {
                 "docs": "A file path relative to the top level source URL or file.",
@@ -859,6 +892,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "PredictionsOptionalNullBurstPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "grouped_predictions": "list<GroupedPredictionsBurstPrediction>",
               "metadata": "optional<Null>",
@@ -869,6 +903,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "PredictionsOptionalNullFacePrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "grouped_predictions": "list<GroupedPredictionsFacePrediction>",
               "metadata": "optional<Null>",
@@ -879,6 +914,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "PredictionsOptionalNullFacemeshPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "grouped_predictions": "list<GroupedPredictionsFacemeshPrediction>",
               "metadata": "optional<Null>",
@@ -889,6 +925,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "PredictionsOptionalTranscriptionMetadataLanguagePrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "grouped_predictions": "list<GroupedPredictionsLanguagePrediction>",
               "metadata": "optional<TranscriptionMetadata>",
@@ -899,6 +936,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "PredictionsOptionalTranscriptionMetadataNerPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "grouped_predictions": "list<GroupedPredictionsNerPrediction>",
               "metadata": "optional<TranscriptionMetadata>",
@@ -909,6 +947,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "PredictionsOptionalTranscriptionMetadataProsodyPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "grouped_predictions": "list<GroupedPredictionsProsodyPrediction>",
               "metadata": "optional<TranscriptionMetadata>",
@@ -919,6 +958,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "Prosody": {
             "docs": "NOTE: the `granularity` field is ignored if transcription is not enabled or if the `window` field has been set.",
+            "inline": undefined,
             "properties": {
               "granularity": "optional<Granularity>",
               "identify_speakers": {
@@ -934,6 +974,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "ProsodyPrediction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "confidence": {
                 "docs": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
@@ -959,6 +1000,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "Queued": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_timestamp_ms": {
                 "docs": "When this job was created (Unix timestamp in milliseconds).",
@@ -971,6 +1013,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "Request": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "callback_url": {
                 "docs": "If provided, a `POST` request will be made to the URL with the generated predictions on completion or the error message on failure.",
@@ -997,6 +1040,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "Results": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "errors": "list<Error>",
               "predictions": "list<Prediction>",
@@ -1007,6 +1051,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "SentimentScore": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Level of sentiment, ranging from `1` (negative) to `9` (positive)",
@@ -1027,6 +1072,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "started",
               "ended",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yaml",
             },
@@ -1050,6 +1096,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "extends": [
               "File",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yaml",
@@ -1057,6 +1104,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "SourceResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "error": {
                 "docs": "An error message.",
@@ -1074,6 +1122,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "extends": [
               "Url",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yaml",
@@ -1100,6 +1149,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "extends": [
               "Completed",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yaml",
@@ -1110,6 +1160,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "extends": [
               "Failed",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yaml",
@@ -1120,6 +1171,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "extends": [
               "InProgress",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yaml",
@@ -1130,6 +1182,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "extends": [
               "Queued",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yaml",
@@ -1142,12 +1195,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "COMPLETED",
               "FAILED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yaml",
             },
           },
           "TimeInterval": {
             "docs": "A time range with a beginning and end, measured in seconds.",
+            "inline": undefined,
             "properties": {
               "begin": {
                 "docs": "Beginning of time range in seconds.",
@@ -1164,6 +1219,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "ToxicityScore": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Category of toxicity.",
@@ -1180,6 +1236,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "Transcription": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "language": "optional<Bcp47Tag>",
             },
@@ -1189,6 +1246,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "TranscriptionMetadata": {
             "docs": "Transcription metadata for your media file.",
+            "inline": undefined,
             "properties": {
               "confidence": {
                 "docs": "Value between `0.0` and `1.0` indicating our transcription model’s relative confidence in the transcription of your media file.",
@@ -1202,6 +1260,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "Url": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "url": {
                 "docs": "The URL of the source media file.",
@@ -1217,12 +1276,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "created_before",
               "created_after",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yaml",
             },
           },
           "Window": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "length": {
                 "default": 4,
@@ -1272,6 +1333,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         query-parameters:
           limit:
             type: optional<integer>
+            default: 50
             docs: The maximum number of jobs to include in the response.
           status:
             type: optional<Status>

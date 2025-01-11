@@ -1,5 +1,5 @@
-import { AstNode } from "./core/AstNode";
 import { Import } from "./Import";
+import { AstNode } from "./core/AstNode";
 
 export declare namespace ExampleNode {
     export interface Init extends AstNode.Init {

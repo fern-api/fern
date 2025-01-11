@@ -14,7 +14,7 @@ export const StreamCompletionRequest: core.serialization.Schema<
 });
 
 export declare namespace StreamCompletionRequest {
-    interface Raw {
+    export interface Raw {
         query: string;
     }
 }

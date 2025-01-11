@@ -17,7 +17,7 @@ export const OAuthAccessTokenRequestProperties: core.serialization.ObjectSchema<
 });
 
 export declare namespace OAuthAccessTokenRequestProperties {
-    interface Raw {
+    export interface Raw {
         clientId: RequestProperty.Raw;
         clientSecret: RequestProperty.Raw;
         scopes?: RequestProperty.Raw | null;

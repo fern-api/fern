@@ -1,8 +1,9 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { NodePath, EXAMPLE_REFERENCE_PREFIX } from "@fern-api/fern-definition-schema";
+import { EXAMPLE_REFERENCE_PREFIX, NodePath } from "@fern-api/fern-definition-schema";
+
 import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
 
-export async function visitAllReferencesInExample({
+export function visitAllReferencesInExample({
     example,
     visitor,
     nodePath
@@ -10,14 +11,14 @@ export async function visitAllReferencesInExample({
     example: unknown;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
-}): Promise<void> {
+}): void {
     if (typeof example === "string") {
         if (example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
-            await visitor.exampleTypeReference?.(example, nodePath);
+            visitor.exampleTypeReference?.(example, nodePath);
         }
     } else if (isPlainObject(example)) {
         for (const exampleValue of Object.values(example)) {
-            await visitAllReferencesInExample({
+            visitAllReferencesInExample({
                 example: exampleValue,
                 visitor,
                 nodePath
@@ -25,7 +26,7 @@ export async function visitAllReferencesInExample({
         }
     } else if (Array.isArray(example)) {
         for (const exampleItem of example) {
-            await visitAllReferencesInExample({
+            visitAllReferencesInExample({
                 example: exampleItem,
                 visitor,
                 nodePath

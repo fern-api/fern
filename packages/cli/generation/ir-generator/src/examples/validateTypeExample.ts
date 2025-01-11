@@ -1,5 +1,6 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";

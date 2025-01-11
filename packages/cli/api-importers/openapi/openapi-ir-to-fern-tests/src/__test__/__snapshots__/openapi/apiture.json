@@ -425,6 +425,7 @@ This error response may have one of the following `type` values:
         "types": {
           "AbstractBody": {
             "docs": "An abstract schema used to define other request and response body model schemas.",
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -436,6 +437,7 @@ This error response may have one of the following `type` values:
               "AbstractBody",
               "AbstractPagedBodyFields",
             ],
+            "inline": undefined,
             "properties": {
               "start": {
                 "docs": "The opaque cursor that specifies the starting location of this page of items.",
@@ -454,6 +456,7 @@ This error response may have one of the following `type` values:
           },
           "AbstractPagedBodyFields": {
             "docs": "Common properties of collection page responses.",
+            "inline": undefined,
             "properties": {
               "limit": {
                 "default": 100,
@@ -488,6 +491,7 @@ This error response may have one of the following `type` values:
               "AbstractBody",
               "AccountFields",
             ],
+            "inline": undefined,
             "properties": {
               "allows": {
                 "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
@@ -553,12 +557,14 @@ This error response may have one of the following `type` values:
               "viewCards",
               "manageCards",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "AccountBalance": {
             "docs": "The current balances of the given account.",
+            "inline": undefined,
             "properties": {
               "available": {
                 "docs": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
@@ -594,6 +600,7 @@ This error response may have one of the following `type` values:
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "An array of items, one for each of the `?accounts=` in the request, returned in the same order.",
@@ -606,6 +613,7 @@ This error response may have one of the following `type` values:
           },
           "AccountFields": {
             "docs": "Fragment schema use to build other account schemas.",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
@@ -645,6 +653,7 @@ This error response may have one of the following `type` values:
           },
           "AccountItem": {
             "docs": "An account item in a list items in the `accounts` schema.",
+            "inline": undefined,
             "properties": {
               "allows": {
                 "type": "AccountPermissions",
@@ -680,6 +689,7 @@ This error response may have one of the following `type` values:
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "id": "ReadOnlyResourceId",
               "name": {
@@ -699,6 +709,7 @@ This error response may have one of the following `type` values:
           },
           "AccountJointOwners": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "An array containing account joint owner items.",
@@ -720,6 +731,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "external",
               "outside",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -736,6 +748,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
           },
           "AccountPermissions": {
             "docs": "Flags which indicate the permissions the current authorized user has on this account item resource. Most of these properties may only be `true` for internal accounts. These permissions are available in account items in the [`accounts`](#schema-accounts) list. See [`fullAccountPermissions`](#schema-fullAccountPermissions) for all capabilities a customer has on an account (the `account.allows` object in the [`account`](#schema-account) object response from [`getAccount`](#op-getAccount).)",
+            "inline": undefined,
             "properties": {
               "billPay": {
                 "docs": "If `true`, the customer may use this account for Bill Pay.",
@@ -785,6 +798,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
@@ -878,6 +892,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "float",
               "sameDay",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -938,6 +953,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "tel",
               "web",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -947,6 +963,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
             "extends": [
               "AddressFields",
             ],
+            "inline": undefined,
             "properties": {
               "postalCode": {
                 "docs": "The postal code, which varies in format by country. If `countryCode` is `US`, this should be a five digit US ZIP code or ten character ZIP+4.",
@@ -985,6 +1002,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
           },
           "AddressFields": {
             "docs": "Properties of a simple address, used to compose other addresses.",
+            "inline": undefined,
             "properties": {
               "address1": {
                 "docs": "The first line of the postal address. In the US, this typically includes the building number and street name.",
@@ -1043,6 +1061,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
           },
           "ApiProblem": {
             "docs": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
+            "inline": undefined,
             "properties": {
               "attributes": {
                 "docs": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
@@ -1099,6 +1118,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
           },
           "ChallengeFactor": {
             "docs": "An challenge factor. See [`requiredIdentityChallenge`](#schema-requiredIdentityChallenge) for multiple examples.",
+            "inline": undefined,
             "properties": {
               "labels": {
                 "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an `sms` or `voice` challenge, the only label item is the last four digits of the corresponding phone number. For an `email` challenge, each label is the masked email address.",
@@ -1156,6 +1176,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "securityQuestions",
               "authenticatorToken",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1172,6 +1193,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
           },
           "ChallengeSecurityQuestion": {
             "docs": "A single security question within the `questions` array of the [`challengeSecurityQuestions`](#schema-challengeSecurityQuestions)",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique ID of security question prompt. This should be included in the [`challengeVerification`](#schema-challengeVerification) response as the `promptId`.",
@@ -1194,6 +1216,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
           },
           "ChallengeSecurityQuestions": {
             "docs": "Describes a `securityQuestions` challenge. This is omitted if the challenge `type` is not `securityQuestions`.",
+            "inline": undefined,
             "properties": {
               "questions": {
                 "docs": "The array of security questions.",
@@ -1230,6 +1253,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
           },
           "CutoffTime": {
             "docs": "A representation of a cutoff time for a money movement process at a financial institution.",
+            "inline": undefined,
             "properties": {
               "time": {
                 "docs": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) `time` format: `hh:mm`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
@@ -1295,6 +1319,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "externalTransfer",
               "billPay",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1304,6 +1329,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "A list of cutoff times for a financial institution.",
@@ -1338,6 +1364,7 @@ The client can use this value to localize the `items[].time` values to the local
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "items": "unknown",
               "limit": {
@@ -1419,6 +1446,7 @@ The client can use this value to localize the `items[].time` values to the local
               "microDeposits",
               "manual",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1438,6 +1466,7 @@ The client can use this value to localize the `items[].time` values to the local
             "extends": [
               "AccountPermissions",
             ],
+            "inline": undefined,
             "properties": {
               "manageJointOwners": {
                 "docs": "If `true`, the customer can list the other joint owners on the account and invite new joint owners.",
@@ -1457,6 +1486,7 @@ The client can use this value to localize the `items[].time` values to the local
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "incompleteAccounts": {
                 "docs": "Pass these values as the `?accounts=` query parameter on the next retry of the [`listAccountBalances`](#op-listAccountBalances) operation. This value is empty if the client has reached the retry limit.",
@@ -1487,6 +1517,7 @@ The client can use this value to localize the `items[].time` values to the local
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "retryCount": {
                 "docs": "Pass this value as the as the `?retryCount=` parameter with the next retry of the [`listTransactions`](#op-listTransactions) operation.",
@@ -1545,6 +1576,7 @@ The client can use this value to localize the `items[].time` values to the local
               "swiftBicCode",
               "ibanAccountNumber",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1554,6 +1586,7 @@ The client can use this value to localize the `items[].time` values to the local
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "found": {
                 "docs": "`true` if a financial institution was found matching the requested FI locator, `false` if none was found.",
@@ -1578,6 +1611,7 @@ The client can use this value to localize the `items[].time` values to the local
               "AbstractBody",
               "JointOwnerInvitationFields",
             ],
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique ID of the invitation.",
@@ -1590,6 +1624,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "JointOwnerInvitationFields": {
             "docs": "Fields used to compose other joint owner invitation schemas.",
+            "inline": undefined,
             "properties": {
               "disallowDebitCardAccess": {
                 "default": false,
@@ -1673,6 +1708,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "OverdraftAccountFields": {
             "docs": "Fields of an overdraft protection account, used to compose other schemas.",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique ID of the account resource. Use this as the `{accountId}` in [`getAccount`](#op-getAccount) or [`listAccountBalances`](#op-listAccountBalances).",
@@ -1706,6 +1742,7 @@ The client can use this value to localize the `items[].time` values to the local
               "AbstractBody",
               "OverdraftProtectionFields",
             ],
+            "inline": undefined,
             "properties": {
               "maximumOverdraftAccounts": {
                 "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
@@ -1725,6 +1762,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "OverdraftProtectionFields": {
             "docs": "Fields used to compose other overdraft protection schemas.",
+            "inline": undefined,
             "properties": {
               "accounts": {
                 "type": "optional<unknown>",
@@ -1750,6 +1788,7 @@ The client can use this value to localize the `items[].time` values to the local
               "AbstractBody",
               "ApiProblem",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -1757,6 +1796,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "ProductReference": {
             "docs": "A reference to a banking product.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "The product's product code. Codes are unique to the financial institution.",
@@ -1843,6 +1883,7 @@ The client can use this value to localize the `items[].time` values to the local
               "loan",
               "creditCard",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1857,6 +1898,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "RequiredIdentityChallenge": {
             "docs": "A request from the service for the user to verify their identity. This contains a challenge ID, the corresponding operation ID, and a list of challenge factors for identity verification. The user must complete one of these challenge factors to satisfy the challenge. This schema defines the attributes in the 401 [Unauthorized problem response](#schema-apiProblem) when the 401 problem type name is `challengeRequired`. See the "Challenge API" for details.",
+            "inline": undefined,
             "properties": {
               "challengeId": {
                 "docs": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses.",
@@ -1887,6 +1929,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "SimpleInstitution": {
             "docs": "A simple representation of a financial institution.",
+            "inline": undefined,
             "properties": {
               "address": {
                 "docs": "The financial institution's postal mailing address.",
@@ -1933,6 +1976,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "TimestampFields": {
             "docs": "Timestamps which describe when a resource was created or last updated.",
+            "inline": undefined,
             "properties": {
               "createdAt": {
                 "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
@@ -1949,6 +1993,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "TransactionCategories": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "An array containing transaction category items.",
@@ -1961,6 +2006,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "TransactionCategorization": {
             "docs": "The transaction categorization.",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique ID of this transaction's category.",
@@ -1986,6 +2032,7 @@ The client can use this value to localize the `items[].time` values to the local
               "AbstractBody",
               "TransactionCategorization",
             ],
+            "inline": undefined,
             "properties": {
               "type": {
                 "type": "TransactionCategoryType",
@@ -2031,12 +2078,14 @@ The client can use this value to localize the `items[].time` values to the local
               "credit",
               "debit",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "TransactionCheck": {
             "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction `type` is `debit` and the `subtype` is `check`.",
+            "inline": undefined,
             "properties": {
               "imageBack_url": {
                 "docs": "The URL for downloading the image of the front of the check.",
@@ -2076,6 +2125,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "TransactionFields": {
             "docs": "Common fields of the transaction resource used to build other model schemas.",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
@@ -2180,6 +2230,7 @@ The client can use this value to localize the `items[].time` values to the local
               "AbstractBody",
               "TransactionFields",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2187,6 +2238,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "TransactionMerchant": {
             "docs": "Describes the merchant associated with a transaction.",
+            "inline": undefined,
             "properties": {
               "logo_url": {
                 "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
@@ -2249,6 +2301,7 @@ The client can use this value to localize the `items[].time` values to the local
               "check",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2284,6 +2337,7 @@ The client can use this value to localize the `items[].time` values to the local
               "debit",
               "credit",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2293,6 +2347,7 @@ The client can use this value to localize the `items[].time` values to the local
             "extends": [
               "AbstractPagedBody",
             ],
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
@@ -2320,6 +2375,7 @@ The client can use this value to localize the `items[].time` values to the local
               "AbstractBody",
               "TransferItem",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2327,6 +2383,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "TransferAccountReference": {
             "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's `account.reference` object.",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique ID of a banking account.",
@@ -2357,6 +2414,7 @@ The client can use this value to localize the `items[].time` values to the local
           },
           "TransferDateRestriction": {
             "docs": "A date where a transfer restriction occurs, and the `reason` it is restricted. If the `reason` is `holiday`, `closure` and the transfer is an ACH transfer, the object also contains either a `debitOn` or `creditOn` date or both.",
+            "inline": undefined,
             "properties": {
               "creditOn": {
                 "docs": "The date the local financial institution account is credited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level. The credit-on date normally falls one business day after the restricted `date`. This property is only returned if the payment `type` is `achDebit` or `ach`.",
@@ -2443,6 +2501,7 @@ The client can use this value to localize the `items[].time` values to the local
               "closure",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2453,6 +2512,7 @@ The response may include dates prior to requested the start date, as that is use
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "accuracyEndsOn": {
                 "docs": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
@@ -2475,6 +2535,7 @@ The response may include dates prior to requested the start date, as that is use
           },
           "TransferFields": {
             "docs": "Common fields of the transfer resource used to build other model schemas.",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The amount of money to transfer between accounts.",
@@ -2584,6 +2645,7 @@ The response may include dates prior to requested the start date, as that is use
               "semiyearly",
               "yearly",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2594,6 +2656,7 @@ The response may include dates prior to requested the start date, as that is use
               "TransferFields",
               "TimestampFields",
             ],
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique identifier for this transfer resource. This is an immutable opaque string.",
@@ -2631,6 +2694,7 @@ The response may include dates prior to requested the start date, as that is use
             "extends": [
               "TransferSchedule",
             ],
+            "inline": undefined,
             "properties": {
               "creditsOn": {
                 "docs": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
@@ -2683,6 +2747,7 @@ The response may include dates prior to requested the start date, as that is use
               "fixed",
               "variable",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2691,6 +2756,7 @@ The response may include dates prior to requested the start date, as that is use
             "docs": "The scheduled date when the transfer should be completed, the recurrence, if any, and other derived dates based on the scheduled date.
 
 For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutually exclusive.",
+            "inline": undefined,
             "properties": {
               "amountLimit": {
                 "docs": "For recurring schedules (`frequency` is not `once`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if `frequency` is `once`.",
@@ -2770,12 +2836,14 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "credit",
               "both",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "TransferScheduleItem": {
             "docs": "Summary representation of a transfer schedule resource in transfer schedule list.",
+            "inline": undefined,
             "properties": {
               "effectiveOn": {
                 "docs": "The effective date of the recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is `credit` and adjusted to after the scheduled date when the transfer direction is `debit`.",
@@ -2807,6 +2875,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             "extends": [
               "AbstractBody",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "An array containing upcoming transfer schedule items.",
@@ -2868,6 +2937,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "failed",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2917,6 +2987,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "domesticWireTransfer",
               "internationalWireTransfer",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2926,6 +2997,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             "extends": [
               "AbstractPagedBody",
             ],
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The number of transfers that meet the filters in the `listTransfers` operation. This is optional and only included if the service can calculate it efficiently.",
@@ -2952,6 +3024,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             "extends": [
               "SimpleInstitution",
             ],
+            "inline": undefined,
             "properties": {
               "localClearingCode": {
                 "docs": "The clearing code used to identify the financial institution for select countries.",
@@ -6087,6 +6160,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                     "type": "optional<root.AccountAllowsFilter>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6107,6 +6181,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                     "type": "optional<root.ProductType>",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -6154,6 +6229,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                     "type": "optional<root.ResourceId>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6169,6 +6245,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                     "type": "root.AchSecCode",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -6199,6 +6276,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "internal",
               "external",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6256,6 +6334,7 @@ service:
               `account.allows.view` are all `true` for the caller.
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -6266,6 +6345,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -6488,6 +6568,7 @@ service:
               authenticated caller's customer ID (not their access ID).
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -6498,6 +6579,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -6857,6 +6939,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 "name": "InstitutionsListTransferScheduleRequest",
                 "query-parameters": {
                   "count": {
+                    "default": 6,
                     "docs": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7140,6 +7223,7 @@ service:
               `credit`, dates are adjusted to the previous business day.
           count:
             type: optional<integer>
+            default: 6
             docs: >-
               The maximum amount of dates to calculate and include in the
               response. If an end date is provided, the total count may be lower
@@ -7662,6 +7746,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                 "name": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7673,6 +7758,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                     },
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -7796,6 +7882,7 @@ service:
         query-parameters:
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -7806,6 +7893,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -8179,6 +8267,7 @@ The default response lists only recent transactions. Normally, this is transacti
                     "type": "optional<root.DateRange>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -8220,6 +8309,7 @@ The default response lists only recent transactions. Normally, this is transacti
                     },
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -8296,6 +8386,7 @@ service:
         query-parameters:
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -8306,6 +8397,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -8813,6 +8905,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "optional<boolean>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -8828,6 +8921,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "optional<root.DateRange>",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -9022,6 +9116,7 @@ service:
               finished processing. If omitted, list all transfers.
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -9032,6 +9127,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0

@@ -1,6 +1,8 @@
-import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils";
 import {
@@ -48,7 +50,7 @@ export function validateRefreshTokenEndpoint({
         });
         if (refreshTokenViolations.length > 0) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid refresh-token, such as '${DEFAULT_REFRESH_TOKEN}'.`
@@ -59,7 +61,7 @@ export function validateRefreshTokenEndpoint({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         });
         return violations;
@@ -86,7 +88,7 @@ export function validateRefreshTokenEndpoint({
         });
         if (accessTokenViolations.length > 0) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid access-token, such as '${DEFAULT_ACCESS_TOKEN}'.`

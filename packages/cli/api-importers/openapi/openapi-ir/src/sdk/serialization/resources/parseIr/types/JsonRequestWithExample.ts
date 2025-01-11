@@ -23,7 +23,7 @@ export const JsonRequestWithExample: core.serialization.ObjectSchema<
     .extend(WithSource);
 
 export declare namespace JsonRequestWithExample {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithSource.Raw {
         schema: serializers.SchemaWithExample.Raw;
         contentType?: string | null;
         fullExamples?: NamedFullExample.Raw[] | null;

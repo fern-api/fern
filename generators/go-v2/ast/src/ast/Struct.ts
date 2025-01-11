@@ -1,10 +1,8 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { CodeBlock } from "./CodeBlock";
-import { Parameter } from "./Parameter";
+import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
-import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Struct {
     interface Args {

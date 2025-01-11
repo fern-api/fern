@@ -1,6 +1,8 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema } from "@fern-typescript/contexts";
+
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkInlinedRequestBodySchemaImpl } from "./GeneratedSdkInlinedRequestBodySchemaImpl";
 
 export declare namespace SdkInlinedRequestBodySchemaGenerator {
@@ -44,7 +46,7 @@ export class SdkInlinedRequestBodySchemaGenerator {
             inlinedRequestBody: endpoint.requestBody,
             typeName,
             includeSerdeLayer: this.includeSerdeLayer,
-            allowExtraFields: this.allowExtraFields,
+            allowExtraFields: this.allowExtraFields ?? endpoint.requestBody.extraProperties,
             omitUndefined: this.omitUndefined
         });
     }

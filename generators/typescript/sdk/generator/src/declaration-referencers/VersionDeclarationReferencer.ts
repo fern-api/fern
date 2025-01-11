@@ -1,11 +1,13 @@
-import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
 import {
     ExportedFilePath,
-    getReferenceToExportViaNamespaceImport,
     ImportsManager,
-    Reference
+    Reference,
+    getReferenceToExportViaNamespaceImport
 } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
+
+import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
+
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 
 export declare namespace VersionDeclarationReferencer {

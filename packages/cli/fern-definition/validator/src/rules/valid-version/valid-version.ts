@@ -1,5 +1,6 @@
-import { TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ValidVersionRule: Rule = {
@@ -35,7 +36,7 @@ function validateApiVersionSchema({
     );
     if (!enumValues.has(root.version.default)) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `Default version "${root.version.default}" not found in version values`
         });
     }

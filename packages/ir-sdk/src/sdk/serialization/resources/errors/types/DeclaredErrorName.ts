@@ -19,7 +19,7 @@ export const DeclaredErrorName: core.serialization.ObjectSchema<
 });
 
 export declare namespace DeclaredErrorName {
-    interface Raw {
+    export interface Raw {
         errorId: ErrorId.Raw;
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;

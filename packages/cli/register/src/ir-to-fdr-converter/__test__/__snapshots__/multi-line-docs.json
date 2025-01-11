@@ -1,7 +1,7 @@
 {
   "types": {
     "type_:Operand": {
-      "description": "Tests enum name and value can be\ndifferent.",
+      "description": "Tests enum name and value can be \ndifferent.",
       "name": "Operand",
       "shape": {
         "type": "enum",
@@ -13,14 +13,14 @@
             "value": "="
           },
           {
-            "description": "The name and value should be similar\nare similar for less than.",
+            "description": "The name and value should be similar\nare similar for less than. ",
             "value": "less_than"
           }
         ]
       }
     },
     "type_user:User": {
-      "description": "A user object. This type is used throughout the following APIs:\n\n- createUser\n- getUser",
+      "description": "A user object. This type is used throughout the following APIs:\n  - createUser\n  - getUser",
       "name": "User",
       "shape": {
         "type": "object",
@@ -36,7 +36,7 @@
             }
           },
           {
-            "description": "The user's name. This name is unique to each user. A few examples are included below:\n\n- Alice\n- Bob\n- Charlie",
+            "description": "The user's name. This name is unique to each user. A few examples are included below:\n - Alice\n - Bob\n - Charlie",
             "key": "name",
             "valueType": {
               "type": "primitive",
@@ -58,10 +58,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

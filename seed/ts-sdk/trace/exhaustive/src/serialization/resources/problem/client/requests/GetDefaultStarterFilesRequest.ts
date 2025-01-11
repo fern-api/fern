@@ -17,7 +17,7 @@ export const GetDefaultStarterFilesRequest: core.serialization.Schema<
 });
 
 export declare namespace GetDefaultStarterFilesRequest {
-    interface Raw {
+    export interface Raw {
         inputParams: VariableTypeAndName.Raw[];
         outputType: serializers.VariableType.Raw;
         methodName: string;

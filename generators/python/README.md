@@ -142,12 +142,16 @@ Black is slow so this can potentially speed up code generation quite a bit.
 
 #### ✨ `pydantic_config.version`
 
-**Type:** "v1" or "v2" or "both"
+**Type:** "v1" or "v2" or "both" or "v1_on_v2"
 
 **Default:** "both"
 
 By default, the generator generates pydantic models that are v1 and v2 compatible.
-However you can override them to strictly for v1 or v2.
+However you can override them to:
+- `v1`: strictly use Pydantic v1
+- `v2`: strictly use Pydantic v2
+- `both`: maintain compatibility with both versions
+- `v1_on_v2`: use Pydantic v1 compatibility layer on v2
 
 ```
 config:

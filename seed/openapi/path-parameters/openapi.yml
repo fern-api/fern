@@ -3,13 +3,18 @@ info:
   title: path-parameters
   version: ''
 paths:
-  /user/organizations/{organizationId}:
+  /{tenant_id}/organizations/{organization_id}/:
     get:
-      operationId: user_getOrganization
+      operationId: organizations_getOrganization
       tags:
-        - User
+        - Organizations
       parameters:
-        - name: organizationId
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: organization_id
           in: path
           required: true
           schema:
@@ -21,13 +26,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
-  /user/users/{userId}:
+  /{tenant_id}/organizations/{organization_id}/users/{user_id}:
     get:
-      operationId: user_getUser
+      operationId: organizations_getOrganizationUser
       tags:
-        - User
+        - Organizations
       parameters:
-        - name: userId
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: organization_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: user_id
           in: path
           required: true
           schema:
@@ -39,62 +54,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /user/organizations/{organizationId}/users/{userId}:
+  /{tenant_id}/organizations/{organization_id}/search:
     get:
-      operationId: user_getOrganizationUser
+      operationId: organizations_searchOrganizations
       tags:
-        - User
+        - Organizations
       parameters:
-        - name: organizationId
+        - name: tenant_id
           in: path
           required: true
           schema:
             type: string
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-  /user/users/{userId}/search:
-    get:
-      operationId: user_searchUsers
-      tags:
-        - User
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: integer
-            nullable: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-  /user/organizations/{organizationId}/search:
-    get:
-      operationId: user_searchOrganizations
-      tags:
-        - User
-      parameters:
-        - name: organizationId
+        - name: organization_id
           in: path
           required: true
           schema:
@@ -114,6 +85,112 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Organization'
+  /{tenant_id}/user/{user_id}:
+    get:
+      operationId: user_getUser
+      tags:
+        - User
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    patch:
+      operationId: user_updateUser
+      tags:
+        - User
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+  /{tenant_id}/user/:
+    post:
+      operationId: user_createUser
+      tags:
+        - User
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+  /{tenant_id}/user/{user_id}/search:
+    get:
+      operationId: user_searchUsers
+      tags:
+        - User
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
 components:
   schemas:
     Organization:

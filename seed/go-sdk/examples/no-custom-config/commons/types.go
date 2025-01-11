@@ -76,6 +76,9 @@ func (d *Data) UnmarshalJSON(data []byte) error {
 }
 
 func (d Data) MarshalJSON() ([]byte, error) {
+	if err := d.validate(); err != nil {
+		return nil, err
+	}
 	switch d.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", d.Type, d)
@@ -114,6 +117,40 @@ func (d *Data) Accept(visitor DataVisitor) error {
 	case "base64":
 		return visitor.VisitBase64(d.Base64)
 	}
+}
+
+func (d *Data) validate() error {
+	if d == nil {
+		return fmt.Errorf("type %T is nil", d)
+	}
+	var fields []string
+	if d.String != "" {
+		fields = append(fields, "string")
+	}
+	if d.Base64 != nil {
+		fields = append(fields, "base64")
+	}
+	if len(fields) == 0 {
+		if d.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", d, d.Type)
+		}
+		return fmt.Errorf("type %T is empty", d)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", d, fields)
+	}
+	if d.Type != "" {
+		field := fields[0]
+		if d.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				d,
+				d.Type,
+				d,
+			)
+		}
+	}
+	return nil
 }
 
 type EventInfo struct {
@@ -182,6 +219,9 @@ func (e *EventInfo) UnmarshalJSON(data []byte) error {
 }
 
 func (e EventInfo) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
@@ -213,6 +253,40 @@ func (e *EventInfo) Accept(visitor EventInfoVisitor) error {
 	case "tag":
 		return visitor.VisitTag(e.Tag)
 	}
+}
+
+func (e *EventInfo) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Metadata != nil {
+		fields = append(fields, "metadata")
+	}
+	if e.Tag != "" {
+		fields = append(fields, "tag")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type Metadata struct {

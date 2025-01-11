@@ -1,6 +1,8 @@
-import { GeneratorName } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
 import { mapValues } from "lodash-es";
+
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
+
 import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,

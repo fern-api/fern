@@ -1,19 +1,20 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
-    constructFernFileContext,
     ErrorResolverImpl,
     ExampleResolverImpl,
-    getEndpointPathParameters,
-    resolvePathParameter,
     TypeResolverImpl,
-    VariableResolverImpl
+    VariableResolverImpl,
+    constructFernFileContext,
+    getEndpointPathParameters,
+    resolvePathParameter
 } from "@fern-api/ir-generator";
+
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateExampleEndpointCallParameters } from "./validateExampleEndpointCallParameters";
 import { validateRequest } from "./validateRequest";
 import { validateResponse } from "./validateResponse";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export const ValidExampleEndpointCallRule: Rule = {
     name: "valid-example-endpoint-call",

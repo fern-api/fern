@@ -66,6 +66,7 @@ types:
       - nok
       - sek
       - try
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSource:
@@ -90,6 +91,7 @@ types:
     docs: >-
       A bank account to take payment from. Must be able to make payments in the
       currency specified in the payment.
+    inline: true
     properties:
       account_type:
         docs: >-
@@ -122,6 +124,7 @@ types:
     enum:
       - individual
       - company
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentStatus:
@@ -130,10 +133,12 @@ types:
       - pending
       - succeeded
       - failed
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   Card:
     docs: A card (debit or credit) to take payment from.
+    inline: true
     properties:
       address_city:
         type: optional<string>

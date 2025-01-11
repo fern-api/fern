@@ -1,6 +1,5 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import path from "path";
+import { RelativeFilePath, sep } from "@fern-api/path-utils";
 
 export class FernDefinitionDirectory {
     private files: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
@@ -13,13 +12,13 @@ export class FernDefinitionDirectory {
             for (const [relativeFilePath, definition] of Object.entries(root.files)) {
                 const fullRelativeFilePath =
                     currentPath != null
-                        ? RelativeFilePath.of(`${currentPath}${path.sep}${relativeFilePath}`)
+                        ? RelativeFilePath.of(`${currentPath}${sep}${relativeFilePath}`)
                         : RelativeFilePath.of(relativeFilePath);
                 files[fullRelativeFilePath] = definition;
             }
             const sortedDirectories = Object.keys(root.directories).sort();
             for (const directory of sortedDirectories) {
-                const nextPath = currentPath != null ? `${currentPath}${path.sep}${directory}` : directory;
+                const nextPath = currentPath != null ? `${currentPath}${sep}${directory}` : directory;
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const nextDirectory = root.directories[directory]!;
                 walk(nextDirectory, nextPath);
@@ -32,7 +31,7 @@ export class FernDefinitionDirectory {
     }
 
     public getOrCreateFile(relativeFilePath: RelativeFilePath): RawSchemas.DefinitionFileSchema {
-        return this.getOrCreateFileRecursive(relativeFilePath.split(path.sep));
+        return this.getOrCreateFileRecursive(relativeFilePath.split(sep));
     }
 
     private getOrCreateFileRecursive(pathParts: string[]): RawSchemas.DefinitionFileSchema {

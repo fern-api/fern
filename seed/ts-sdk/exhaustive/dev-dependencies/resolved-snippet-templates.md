@@ -10,8 +10,8 @@ await client.endpoints.container.getAndReturnListOfPrimitives(
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -30,8 +30,8 @@ await client.endpoints.container.getAndReturnListOfObjects(
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -45,8 +45,8 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(
 		])
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -62,8 +62,8 @@ await client.endpoints.container.getAndReturnSetOfObjects(
 		])
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -77,8 +77,8 @@ await client.endpoints.container.getAndReturnMapPrimToPrim(
 		}
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -94,8 +94,8 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject(
 		}
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -108,8 +108,8 @@ const client = new FiddleClient({
 await client.endpoints.container.getAndReturnOptional({
   string: "string",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -136,8 +136,8 @@ await client.endpoints.contentType.postJsonPatchContentType({
   },
   bigint: "1000000",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -164,8 +164,8 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
   },
   bigint: "1000000",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -176,8 +176,8 @@ const client = new FiddleClient({
   token: "YOUR_TOKEN",
 });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -188,8 +188,8 @@ const client = new FiddleClient({
   token: "YOUR_TOKEN",
 });
 await client.endpoints.httpMethods.testGet("id");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -202,8 +202,8 @@ const client = new FiddleClient({
 await client.endpoints.httpMethods.testPost({
   string: "string",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -216,8 +216,8 @@ const client = new FiddleClient({
 await client.endpoints.httpMethods.testPut("id", {
   string: "string",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -244,8 +244,8 @@ await client.endpoints.httpMethods.testPatch("id", {
   },
   bigint: "1000000",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -256,8 +256,8 @@ const client = new FiddleClient({
   token: "YOUR_TOKEN",
 });
 await client.endpoints.httpMethods.testDelete("id");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -284,8 +284,8 @@ await client.endpoints.object.getAndReturnWithOptionalField({
   },
   bigint: "1000000",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -298,8 +298,8 @@ const client = new FiddleClient({
 await client.endpoints.object.getAndReturnWithRequiredField({
   string: "string",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -316,8 +316,8 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
     },
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -347,8 +347,8 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
     bigint: "1000000",
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -378,8 +378,8 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
     bigint: "1000000",
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -428,8 +428,8 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -440,8 +440,20 @@ const client = new FiddleClient({
   token: "YOUR_TOKEN",
 });
 await client.endpoints.params.getWithPath("param");
- 
-```                        
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.params.getWithInlinePath("param");
+
+```
 
 
 ```typescript
@@ -455,8 +467,8 @@ await client.endpoints.params.getWithQuery({
   query: "query",
   number: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -470,8 +482,8 @@ await client.endpoints.params.getWithAllowMultipleQuery({
   query: "query",
   numer: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -484,8 +496,22 @@ const client = new FiddleClient({
 await client.endpoints.params.getWithPathAndQuery("param", {
   query: "query",
 });
- 
-```                        
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.params.getWithInlinePathAndQuery("param", {
+  query: "query",
+});
+
+```
 
 
 ```typescript
@@ -498,8 +524,22 @@ await client.endpoints.params.modifyWithPath(
 		"string"
 	}
 )
- 
-```                        
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+await client.endpoints.params.modifyWithInlinePath(
+	"param",
+	{
+		"string"
+	}
+)
+
+```
 
 
 ```typescript
@@ -511,8 +551,8 @@ await client.endpoints.primitive.getAndReturnString(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -524,8 +564,8 @@ await client.endpoints.primitive.getAndReturnInt(
 		1
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -537,8 +577,8 @@ await client.endpoints.primitive.getAndReturnLong(
 		1000000
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -550,8 +590,8 @@ await client.endpoints.primitive.getAndReturnDouble(
 		1.1
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -563,8 +603,8 @@ await client.endpoints.primitive.getAndReturnBool(
 		true
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -576,8 +616,8 @@ await client.endpoints.primitive.getAndReturnDatetime(
 		"2024-01-15T09:30:00Z"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -589,8 +629,8 @@ await client.endpoints.primitive.getAndReturnDate(
 		"2023-01-15"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -602,8 +642,8 @@ await client.endpoints.primitive.getAndReturnUuid(
 		"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -615,8 +655,8 @@ await client.endpoints.primitive.getAndReturnBase64(
 		"SGVsbG8gd29ybGQh"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -632,8 +672,8 @@ await client.endpoints.union.getAndReturnUnion(
 		}
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -664,8 +704,8 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
     bigint: "1000000",
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -677,8 +717,8 @@ await client.noAuth.postWithNoAuth(
 		{"key":"value"}
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -689,8 +729,8 @@ const client = new FiddleClient({
   token: "YOUR_TOKEN",
 });
 await client.noReqBody.getWithNoRequestBody();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -701,8 +741,8 @@ const client = new FiddleClient({
   token: "YOUR_TOKEN",
 });
 await client.noReqBody.postWithNoRequestBody();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -715,7 +755,7 @@ await client.reqWithHeaders.getWithCustomHeader(
 		"string"
 	}
 )
- 
-```                        
+
+```
 
 

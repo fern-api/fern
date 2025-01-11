@@ -16,7 +16,7 @@ export const EnumTypeDeclaration: core.serialization.ObjectSchema<
 });
 
 export declare namespace EnumTypeDeclaration {
-    interface Raw {
+    export interface Raw {
         default?: EnumValue.Raw | null;
         values: EnumValue.Raw[];
     }

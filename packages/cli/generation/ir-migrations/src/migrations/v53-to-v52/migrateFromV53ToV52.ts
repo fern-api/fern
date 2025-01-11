@@ -1,6 +1,8 @@
-import { GeneratorName } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
 import { mapValues } from "lodash-es";
+
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
+
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import {
@@ -22,9 +24,9 @@ export const V53_TO_V52_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: "0.38.0-rc0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.3",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: "1.3.0",
+        [GeneratorName.JAVA_SDK]: "2.5.0",
+        [GeneratorName.JAVA_SPRING]: "1.3.0",
         [GeneratorName.PYTHON_FASTAPI]: "1.1.0-rc0",
         [GeneratorName.PYTHON_PYDANTIC]: "1.1.0-rc0",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,

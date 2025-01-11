@@ -27,7 +27,7 @@ describe("Test makeRequest", () => {
                 headers: mockHeaders,
                 body: mockBody,
                 credentials: undefined,
-            })
+            }),
         );
         expect(calledOptions.signal).toBeDefined();
         expect(calledOptions.signal).toBeInstanceOf(AbortSignal);
@@ -46,7 +46,7 @@ describe("Test makeRequest", () => {
                 headers: mockHeaders,
                 body: undefined,
                 credentials: undefined,
-            })
+            }),
         );
         expect(calledOptions.signal).toBeDefined();
         expect(calledOptions.signal).toBeInstanceOf(AbortSignal);

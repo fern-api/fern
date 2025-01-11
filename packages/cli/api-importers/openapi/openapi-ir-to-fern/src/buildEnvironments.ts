@@ -1,4 +1,5 @@
-import { isRawMultipleBaseUrlsEnvironment, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isRawMultipleBaseUrlsEnvironment } from "@fern-api/fern-definition-schema";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
 const PRODUCTION_ENVNIRONMENT_NAME = "Production";

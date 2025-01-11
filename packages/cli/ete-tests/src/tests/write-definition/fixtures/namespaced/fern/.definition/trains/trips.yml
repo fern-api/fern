@@ -11,6 +11,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -73,6 +74,7 @@ service:
         name: GetTripsRequest
         query-parameters:
           bicycles:
+            default: false
             docs: Only return trips where bicycles are known to be allowed
             type: optional<boolean>
           date:
@@ -86,6 +88,7 @@ service:
             validation:
               format: uuid
           dogs:
+            default: false
             docs: Only return trips where dogs are known to be allowed
             type: optional<boolean>
           origin:

@@ -1,6 +1,8 @@
-import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry, FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
+
+import { FernRegistryClient as FdrClient, FernRegistry } from "@fern-fern/generators-sdk";
+
 import { GeneratorType } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";

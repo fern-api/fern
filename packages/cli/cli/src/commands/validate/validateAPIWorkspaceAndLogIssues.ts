@@ -1,7 +1,10 @@
-import { TaskContext } from "@fern-api/task-context";
-import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import validatePackageName from "validate-npm-package-name";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
+import { validateGeneratorsWorkspace } from "@fern-api/generators-validator";
+import { TaskContext } from "@fern-api/task-context";
+
 import { logViolations } from "./logViolations";
 
 export async function validateAPIWorkspaceWithoutExiting({
@@ -15,8 +18,15 @@ export async function validateAPIWorkspaceWithoutExiting({
     logWarnings: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
-    const violations = await validateFernWorkspace(workspace, context.logger);
-    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
+    const apiViolations = validateFernWorkspace(workspace, context.logger);
+    const generatorViolations = await validateGeneratorsWorkspace(workspace, context.logger);
+    const violations = [...apiViolations, ...generatorViolations];
+    const { hasErrors } = logViolations({
+        violations,
+        context,
+        logWarnings,
+        logSummary
+    });
 
     return { hasErrors };
 }

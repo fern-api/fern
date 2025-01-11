@@ -12,5 +12,5 @@ export const ReservedKeywordEnum: core.serialization.Schema<
 > = core.serialization.enum_(["is", "as"]);
 
 export declare namespace ReservedKeywordEnum {
-    type Raw = "is" | "as";
+    export type Raw = "is" | "as";
 }

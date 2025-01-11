@@ -18,7 +18,7 @@ export const RubyGemsGithubPublishInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace RubyGemsGithubPublishInfo {
-    interface Raw {
+    export interface Raw {
         registryUrl: string;
         packageName: string;
         apiKeyEnvironmentVariable: EnvironmentVariable.Raw;

@@ -1,6 +1,8 @@
+import urlJoin from "url-join";
+
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import urlJoin from "url-join";
+
 import { isSubpackage } from "./utils/isSubpackage";
 import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts";
 
@@ -69,7 +71,10 @@ export class ApiDefinitionHolder {
         return pkg;
     }
 
-    private constructor(public readonly api: APIV1Read.ApiDefinition, private readonly context?: TaskContext) {
+    private constructor(
+        public readonly api: APIV1Read.ApiDefinition,
+        private readonly context?: TaskContext
+    ) {
         [api.rootPackage, ...Object.values(api.subpackages)].forEach((pkg) => {
             const subpackageId = APIV1Read.SubpackageId(ApiDefinitionHolder.getSubpackageId(pkg));
             const subpackageHolder = {

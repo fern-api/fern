@@ -415,12 +415,14 @@ service:
       - trade
       - cancel
       - initial
+    inline: true
     source:
       openapi: asyncapi/sample.yml
   EventsItemSide:
     enum:
       - bid
       - side
+    inline: true
     source:
       openapi: asyncapi/sample.yml
   EventsItemType:
@@ -429,6 +431,7 @@ service:
       - change
       - name: AuctionBlockTrade
         value: auction, block_trade
+    inline: true
     source:
       openapi: asyncapi/sample.yml
   Heartbeat:
@@ -483,25 +486,31 @@ channel:
       type: string
   query-parameters:
     auctions:
+      default: true
       docs: Include auction events
       type: optional<boolean>
     bids:
+      default: true
       docs: Include bids in change events
       type: optional<boolean>
     heartbeat:
+      default: false
       docs: >-
         Optionally add this parameter and set to true to receive a heartbeat
         every 5 seconds
       type: optional<boolean>
     offers:
+      default: true
       docs: Include asks in change events
       type: optional<boolean>
     top_of_book:
+      default: false
       docs: >-
         If absent or false, receive full order book depth; if present and true,
         receive top of book only. Only applies to bids and offers.
       type: optional<boolean>
     trades:
+      default: true
       docs: Include trade events
       type: optional<boolean>
 ",
@@ -583,6 +592,7 @@ channel:
       - nok
       - sek
       - try
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSource:
@@ -607,6 +617,7 @@ channel:
     docs: >-
       A bank account to take payment from. Must be able to make payments in the
       currency specified in the payment.
+    inline: true
     properties:
       account_type:
         docs: >-
@@ -639,6 +650,7 @@ channel:
     enum:
       - individual
       - company
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentStatus:
@@ -647,10 +659,12 @@ channel:
       - pending
       - succeeded
       - failed
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   Card:
     docs: A card (debit or credit) to take payment from.
+    inline: true
     properties:
       address_city:
         type: optional<string>
@@ -921,6 +935,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1283,6 +1298,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1356,6 +1372,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1396,6 +1413,7 @@ types:
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
+    inline: true
     properties: {}
     source:
       openapi: openapi/trains/openapi.yml
@@ -1458,6 +1476,7 @@ service:
         name: GetTripsRequest
         query-parameters:
           bicycles:
+            default: false
             docs: Only return trips where bicycles are known to be allowed
             type: optional<boolean>
           date:
@@ -1471,6 +1490,7 @@ service:
             validation:
               format: uuid
           dogs:
+            default: false
             docs: Only return trips where dogs are known to be allowed
             type: optional<boolean>
           origin:
@@ -1566,6 +1586,7 @@ name: api
       - 'OFF'
       - AUTO
       - AUTO_PRESERVE_ORDER
+    inline: true
     source:
       openapi: openapi/cohere.yaml
   ChatRequestSafetyMode:
@@ -1591,6 +1612,7 @@ name: api
       - CONTEXTUAL
       - STRICT
       - NONE
+    inline: true
     source:
       openapi: openapi/cohere.yaml
   ClientClosedRequestErrorBody:
@@ -2184,6 +2206,7 @@ types:
       - CONTEXTUAL
       - STRICT
       - NONE
+    inline: true
     source:
       openapi: openapi/cohere-v2.yaml
 service:

@@ -25,10 +25,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:BaseResource": {
@@ -63,10 +60,7 @@
               "value": "type_:Memo"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:ResourceList": {
@@ -152,10 +146,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Patient": {
@@ -195,10 +186,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Practitioner": {
@@ -228,10 +216,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Script": {
@@ -261,10 +246,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

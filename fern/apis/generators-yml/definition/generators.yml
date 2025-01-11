@@ -222,6 +222,9 @@ types:
       title-as-schema-name: optional<boolean>
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals: optional<boolean>
+      prefer-undiscriminated-unions-with-literals: 
+        type: optional<boolean>
+        docs: Whether to prefer undiscriminated unions with literals. Defaults to false.
       object-query-parameters: 
         type: optional<boolean>
         docs: Enables parsing deep object query parameters
@@ -234,6 +237,29 @@ types:
       inline-path-parameters:
         type: optional<boolean>
         docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
+      filter:
+        type: optional<OpenAPIFilterSchema>
+        docs: Filter to apply to the OpenAPI specification.
+      example-generation: 
+        type: optional<OpenAPIExampleGenerationSchema>
+        docs: Fine-tune your example generation
+  
+  OpenAPIExampleGenerationSchema: 
+    properties: 
+      request: optional<RequestOrResponseExampleGenerationSchema>
+      response: optional<RequestOrResponseExampleGenerationSchema>
+  
+  RequestOrResponseExampleGenerationSchema: 
+    properties: 
+      max-depth: 
+        type: optional<integer>
+        docs: Controls the maximum depth for which optional properties will have examples generated. A depth of 0 means no optional properties will have examples.
+
+  OpenAPIFilterSchema:
+    properties:
+      endpoints:
+        docs: Endpoints to include in the generated SDK (e.g. "POST /users").
+        type: optional<list<string>>
 
   OpenAPISpecSchema:
     properties:

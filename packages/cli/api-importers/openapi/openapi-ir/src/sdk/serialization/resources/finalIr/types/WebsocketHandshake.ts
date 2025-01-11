@@ -19,7 +19,7 @@ export const WebsocketHandshake: core.serialization.ObjectSchema<
 });
 
 export declare namespace WebsocketHandshake {
-    interface Raw {
+    export interface Raw {
         queryParameters: QueryParameter.Raw[];
         headers: Header.Raw[];
         pathParameters: PathParameter.Raw[];

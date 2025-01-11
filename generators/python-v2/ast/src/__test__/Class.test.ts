@@ -127,15 +127,47 @@ describe("class", () => {
         expect(clazz.getReferences().length).toBe(2);
     });
 
-    it("class with de-indented multi-line string", async () => {
+    it("class with various forms of multi-line strings", async () => {
         const clazz = python.class_({
             name: "MyClass"
         });
         clazz.add(
             python.field({
-                name: "multiline_string",
+                name: "has_newline_chars__basic",
                 type: python.Type.str(),
-                initializer: python.TypeInstantiation.str("Hello\nWorld", { multiline: true })
+                initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true })
+            })
+        );
+        clazz.add(
+            python.field({
+                name: "has_no_newline_chars__basic",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello, World!", { multiline: true })
+            })
+        );
+        clazz.add(
+            python.field({
+                name: "has_newline_chars__start_on_new_line",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true, startOnNewLine: true })
+            })
+        );
+        clazz.add(
+            python.field({
+                name: "has_newline_chars__end_with_new_line",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true, endWithNewLine: true })
+            })
+        );
+        clazz.add(
+            python.field({
+                name: "has_newline_chars__start_and_end_with_new_line",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello,\nWorld!", {
+                    multiline: true,
+                    startOnNewLine: true,
+                    endWithNewLine: true
+                })
             })
         );
 

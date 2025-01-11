@@ -5,8 +5,8 @@ client = SeedIdempotencyHeaders(base_url="https://yourhost.com/path/to/api", tok
 client.payment.create(
 	amount=1
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -16,7 +16,7 @@ client = SeedIdempotencyHeaders(base_url="https://yourhost.com/path/to/api", tok
 client.payment.delete(
 	payment_id="paymentId"
 )
- 
-```                        
+
+```
 
 

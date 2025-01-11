@@ -19,7 +19,7 @@ export const StringSchemaWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace StringSchemaWithExample {
-    interface Raw {
+    export interface Raw {
         default?: string | null;
         pattern?: string | null;
         format?: string | null;

@@ -14,7 +14,7 @@ export const GetPresignedUrlRequest: core.serialization.Schema<
 });
 
 export declare namespace GetPresignedUrlRequest {
-    interface Raw {
+    export interface Raw {
         s3Key: string;
     }
 }

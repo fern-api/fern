@@ -1,6 +1,6 @@
 import { AstNode } from "./core/AstNode";
-import { AttrPath, ModulePath } from "./core/types";
 import { Writer } from "./core/Writer";
+import { AttrPath, ModulePath } from "./core/types";
 
 export declare namespace Reference {
     interface Args {
@@ -43,7 +43,8 @@ export class Reference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write(this.alias ?? this.name);
+        const nameOverride = writer.getRefNameOverride(this);
+        writer.write(nameOverride.name);
 
         if (this.genericTypes.length > 0) {
             writer.write("[");
@@ -67,7 +68,11 @@ export class Reference extends AstNode {
         }
     }
 
-    public getFullyQualifiedModulePath(): string {
+    public getFullyQualifiedPath(): string {
         return this.modulePath.join(".");
+    }
+
+    public getFullyQualifiedModulePath(): string {
+        return `${this.getFullyQualifiedPath()}.${this.name}`;
     }
 }

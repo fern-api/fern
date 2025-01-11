@@ -1,7 +1,8 @@
 import { FernOpenapiIr } from "@fern-api/openapi-ir";
-import { buildEndpoint } from "./buildEndpoint";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { State } from "./State";
+import { buildEndpoint } from "./buildEndpoint";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 

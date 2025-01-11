@@ -563,6 +563,9 @@ func (e *ExampleRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (e ExampleRequestBody) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
@@ -587,6 +590,40 @@ func (e *ExampleRequestBody) Accept(visitor ExampleRequestBodyVisitor) error {
 	case "reference":
 		return visitor.VisitReference(e.Reference)
 	}
+}
+
+func (e *ExampleRequestBody) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.InlinedRequestBody != nil {
+		fields = append(fields, "inlinedRequestBody")
+	}
+	if e.Reference != nil {
+		fields = append(fields, "reference")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type ExampleResponse struct {
@@ -653,6 +690,9 @@ func (e *ExampleResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (e ExampleResponse) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
@@ -677,6 +717,40 @@ func (e *ExampleResponse) Accept(visitor ExampleResponseVisitor) error {
 	case "error":
 		return visitor.VisitError(e.Error)
 	}
+}
+
+func (e *ExampleResponse) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Ok != nil {
+		fields = append(fields, "ok")
+	}
+	if e.Error != nil {
+		fields = append(fields, "error")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
 }
 
 type FileDownloadResponse struct {
@@ -876,6 +950,9 @@ func (f *FileUploadRequestProperty) UnmarshalJSON(data []byte) error {
 }
 
 func (f FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
+	if err := f.validate(); err != nil {
+		return nil, err
+	}
 	switch f.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", f.Type, f)
@@ -900,6 +977,40 @@ func (f *FileUploadRequestProperty) Accept(visitor FileUploadRequestPropertyVisi
 	case "bodyProperty":
 		return visitor.VisitBodyProperty(f.BodyProperty)
 	}
+}
+
+func (f *FileUploadRequestProperty) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.File != nil {
+		fields = append(fields, "file")
+	}
+	if f.BodyProperty != nil {
+		fields = append(fields, "bodyProperty")
+	}
+	if len(fields) == 0 {
+		if f.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Type)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Type != "" {
+		field := fields[0]
+		if f.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Type,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 type HttpEndpoint struct {
@@ -1363,6 +1474,9 @@ func (h *HttpRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
+	if err := h.validate(); err != nil {
+		return nil, err
+	}
 	switch h.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
@@ -1392,6 +1506,43 @@ func (h *HttpRequestBody) Accept(visitor HttpRequestBodyVisitor) error {
 	case "fileUpload":
 		return visitor.VisitFileUpload(h.FileUpload)
 	}
+}
+
+func (h *HttpRequestBody) validate() error {
+	if h == nil {
+		return fmt.Errorf("type %T is nil", h)
+	}
+	var fields []string
+	if h.InlinedRequestBody != nil {
+		fields = append(fields, "inlinedRequestBody")
+	}
+	if h.Reference != nil {
+		fields = append(fields, "reference")
+	}
+	if h.FileUpload != nil {
+		fields = append(fields, "fileUpload")
+	}
+	if len(fields) == 0 {
+		if h.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", h, h.Type)
+		}
+		return fmt.Errorf("type %T is empty", h)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", h, fields)
+	}
+	if h.Type != "" {
+		field := fields[0]
+		if h.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				h,
+				h.Type,
+				h,
+			)
+		}
+	}
+	return nil
 }
 
 type HttpRequestBodyReference struct {
@@ -1505,6 +1656,9 @@ func (h *HttpResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (h HttpResponse) MarshalJSON() ([]byte, error) {
+	if err := h.validate(); err != nil {
+		return nil, err
+	}
 	switch h.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
@@ -1529,6 +1683,40 @@ func (h *HttpResponse) Accept(visitor HttpResponseVisitor) error {
 	case "fileDownload":
 		return visitor.VisitFileDownload(h.FileDownload)
 	}
+}
+
+func (h *HttpResponse) validate() error {
+	if h == nil {
+		return fmt.Errorf("type %T is nil", h)
+	}
+	var fields []string
+	if h.Json != nil {
+		fields = append(fields, "json")
+	}
+	if h.FileDownload != nil {
+		fields = append(fields, "fileDownload")
+	}
+	if len(fields) == 0 {
+		if h.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", h, h.Type)
+		}
+		return fmt.Errorf("type %T is empty", h)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", h, fields)
+	}
+	if h.Type != "" {
+		field := fields[0]
+		if h.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				h,
+				h.Type,
+				h,
+			)
+		}
+	}
+	return nil
 }
 
 type HttpService struct {
@@ -2157,6 +2345,9 @@ func (s *SdkRequestShape) UnmarshalJSON(data []byte) error {
 }
 
 func (s SdkRequestShape) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
 	switch s.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
@@ -2181,6 +2372,40 @@ func (s *SdkRequestShape) Accept(visitor SdkRequestShapeVisitor) error {
 	case "wrapper":
 		return visitor.VisitWrapper(s.Wrapper)
 	}
+}
+
+func (s *SdkRequestShape) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.JustRequestBody != nil {
+		fields = append(fields, "justRequestBody")
+	}
+	if s.Wrapper != nil {
+		fields = append(fields, "wrapper")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
 }
 
 type SdkRequestWrapper struct {
@@ -2330,6 +2555,9 @@ func (s *SdkResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (s SdkResponse) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
 	switch s.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
@@ -2364,6 +2592,46 @@ func (s *SdkResponse) Accept(visitor SdkResponseVisitor) error {
 	case "fileDownload":
 		return visitor.VisitFileDownload(s.FileDownload)
 	}
+}
+
+func (s *SdkResponse) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Json != nil {
+		fields = append(fields, "json")
+	}
+	if s.Streaming != nil {
+		fields = append(fields, "streaming")
+	}
+	if s.MaybeStreaming != nil {
+		fields = append(fields, "maybeStreaming")
+	}
+	if s.FileDownload != nil {
+		fields = append(fields, "fileDownload")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
 }
 
 type StreamCondition struct {
@@ -2438,6 +2706,9 @@ func (s *StreamCondition) UnmarshalJSON(data []byte) error {
 }
 
 func (s StreamCondition) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
 	switch s.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
@@ -2476,6 +2747,40 @@ func (s *StreamCondition) Accept(visitor StreamConditionVisitor) error {
 	case "requestPropertyKey":
 		return visitor.VisitRequestPropertyKey(s.RequestPropertyKey)
 	}
+}
+
+func (s *StreamCondition) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.QueryParameterKey != "" {
+		fields = append(fields, "queryParameterKey")
+	}
+	if s.RequestPropertyKey != "" {
+		fields = append(fields, "requestPropertyKey")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
 }
 
 type StreamingResponse struct {

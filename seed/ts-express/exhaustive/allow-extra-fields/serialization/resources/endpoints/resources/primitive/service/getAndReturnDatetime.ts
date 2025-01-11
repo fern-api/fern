@@ -11,7 +11,7 @@ export const Request: core.serialization.Schema<
 > = core.serialization.date();
 
 export declare namespace Request {
-    type Raw = string;
+    export type Raw = string;
 }
 
 export const Response: core.serialization.Schema<
@@ -20,5 +20,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.date();
 
 export declare namespace Response {
-    type Raw = string;
+    export type Raw = string;
 }

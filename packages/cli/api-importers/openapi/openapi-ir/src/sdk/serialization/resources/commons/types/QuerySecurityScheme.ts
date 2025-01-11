@@ -14,7 +14,7 @@ export const QuerySecurityScheme: core.serialization.ObjectSchema<
 });
 
 export declare namespace QuerySecurityScheme {
-    interface Raw {
+    export interface Raw {
         queryParameterName: string;
     }
 }

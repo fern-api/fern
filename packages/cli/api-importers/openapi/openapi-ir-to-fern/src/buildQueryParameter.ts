@@ -1,12 +1,13 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { QueryParameter, Schema } from "@fern-api/openapi-ir";
-import { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir-parser";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { buildTypeReference } from "./buildTypeReference";
+import { QueryParameter, Schema } from "@fern-api/openapi-ir";
+import { VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildTypeReference } from "./buildTypeReference";
 import { convertAvailability } from "./utils/convertAvailability";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildQueryParameter({
     queryParameter,
@@ -30,6 +31,7 @@ export function buildQueryParameter({
     }
 
     let queryParameterType = getTypeFromTypeReference(typeReference.value);
+    const queryParameterDefault = getDefaultFromTypeReference(typeReference.value);
 
     // we can assume unknown-typed query parameteters are strings by default
     if (queryParameterType === "unknown") {
@@ -50,6 +52,10 @@ export function buildQueryParameter({
     const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
         type: queryParameterType
     };
+
+    if (queryParameterDefault != null) {
+        queryParameterSchema.default = queryParameterDefault;
+    }
 
     if (typeReference.allowMultiple) {
         queryParameterSchema["allow-multiple"] = true;
@@ -108,12 +114,14 @@ function getQueryParameterTypeReference({
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
                         availability: schema.availability,
-                        groupName: undefined
+                        groupName: undefined,
+                        inline: undefined
                     }),
                     context,
                     declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
                     fileContainingReference,
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: true
             };
@@ -160,11 +168,13 @@ function getQueryParameterTypeReference({
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
-                                groupName: undefined
+                                groupName: undefined,
+                                inline: undefined
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -183,11 +193,13 @@ function getQueryParameterTypeReference({
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
-                                groupName: undefined
+                                groupName: undefined,
+                                inline: undefined
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -210,7 +222,8 @@ function getQueryParameterTypeReference({
                     context,
                     fileContainingReference,
                     declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: false
             };
@@ -232,12 +245,14 @@ function getQueryParameterTypeReference({
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
                             availability: schema.availability,
-                            groupName: undefined
+                            groupName: undefined,
+                            inline: schema.inline
                         }),
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: true
                 };
@@ -248,7 +263,8 @@ function getQueryParameterTypeReference({
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: false
                 };
@@ -264,11 +280,13 @@ function getQueryParameterTypeReference({
                         value: schema.value.value,
                         description: schema.description,
                         availability: schema.availability,
-                        groupName: undefined
+                        groupName: undefined,
+                        inline: schema.inline
                     }),
                     context,
                     fileContainingReference,
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: true
             };
@@ -315,11 +333,13 @@ function getQueryParameterTypeReference({
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
-                                groupName: undefined
+                                groupName: undefined,
+                                inline: schema.inline
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -338,11 +358,13 @@ function getQueryParameterTypeReference({
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
-                                groupName: undefined
+                                groupName: undefined,
+                                inline: schema.inline
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -359,7 +381,8 @@ function getQueryParameterTypeReference({
                         value: oneOfSchema,
                         description: undefined,
                         availability: schema.availability,
-                        groupName: undefined
+                        groupName: undefined,
+                        inline: schema.inline
                     }),
                     context,
                     fileContainingReference,
@@ -374,7 +397,8 @@ function getQueryParameterTypeReference({
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: false
                 };
@@ -386,7 +410,8 @@ function getQueryParameterTypeReference({
                 schema,
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: false
         };
@@ -402,11 +427,13 @@ function getQueryParameterTypeReference({
                     value: schema.value,
                     description: schema.description,
                     availability: schema.availability,
-                    groupName: undefined
+                    groupName: undefined,
+                    inline: schema.inline
                 }),
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: true
         };
@@ -416,7 +443,8 @@ function getQueryParameterTypeReference({
                 schema,
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: false
         };

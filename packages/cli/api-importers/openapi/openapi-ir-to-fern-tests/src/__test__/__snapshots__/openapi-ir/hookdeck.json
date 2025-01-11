@@ -46649,6 +46649,7 @@
                         "file": "../openapi.yml",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -47005,6 +47006,7 @@
                         "file": "../openapi.yml",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -47595,6 +47597,7 @@
                         "file": "../openapi.yml",
                         "type": "openapi"
                       },
+                      "inline": true,
                       "type": "undisciminated"
                     },
                     "type": "oneOf"
@@ -58278,6 +58281,7 @@
                               "type": "primitive"
                             },
                             "groupName": [],
+                            "inline": true,
                             "type": "nullable"
                           },
                           "generatedName": "ShortEventDataHeadersOne",
@@ -58975,6 +58979,7 @@
                                       "type": "primitive"
                                     },
                                     "groupName": [],
+                                    "inline": true,
                                     "type": "nullable"
                                   },
                                   "generatedName": "EventDataHeadersOne",
@@ -63839,6 +63844,7 @@
                                       "type": "primitive"
                                     },
                                     "groupName": [],
+                                    "inline": true,
                                     "type": "nullable"
                                   },
                                   "generatedName": "RequestDataHeadersOne",
@@ -64953,6 +64959,7 @@
                               "type": "primitive"
                             },
                             "groupName": [],
+                            "inline": true,
                             "type": "nullable"
                           },
                           "generatedName": "TransformFullTransformationEnv",
@@ -65935,6 +65942,7 @@
                       "type": "primitive"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "TransformationEnv",

@@ -40,11 +40,12 @@
       },
       "response": {
         "description": "Success!",
+        "fullExamples": [],
         "schema": {
+          "generatedName": "ChatCompletionsCreateResponse",
           "schema": {
             "type": "string"
           },
-          "generatedName": "ChatCompletionsCreateResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -59,7 +60,40 @@
       "authed": false,
       "method": "POST",
       "path": "/completions/chat",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": true,
+            "events": [
+              {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"

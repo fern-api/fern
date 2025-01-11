@@ -22,7 +22,7 @@ export interface AdminServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     sendTestSubmissionUpdate(
         req: express.Request<
@@ -38,7 +38,7 @@ export interface AdminServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     updateWorkspaceSubmissionStatus(
         req: express.Request<
@@ -54,7 +54,7 @@ export interface AdminServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     sendWorkspaceSubmissionUpdate(
         req: express.Request<
@@ -70,7 +70,7 @@ export interface AdminServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     storeTracedTestCase(
         req: express.Request<
@@ -87,7 +87,7 @@ export interface AdminServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     storeTracedTestCaseV2(
         req: express.Request<
@@ -104,7 +104,7 @@ export interface AdminServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     storeTracedWorkspace(
         req: express.Request<
@@ -120,7 +120,7 @@ export interface AdminServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     storeTracedWorkspaceV2(
         req: express.Request<
@@ -136,19 +136,22 @@ export interface AdminServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class AdminService {
     private router;
 
-    constructor(private readonly methods: AdminServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: AdminServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -172,7 +175,7 @@ export class AdminService {
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -180,7 +183,7 @@ export class AdminService {
                         console.warn(
                             `Endpoint 'updateTestSubmissionStatus' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -191,7 +194,7 @@ export class AdminService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -211,7 +214,7 @@ export class AdminService {
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -219,7 +222,7 @@ export class AdminService {
                         console.warn(
                             `Endpoint 'sendTestSubmissionUpdate' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -230,7 +233,7 @@ export class AdminService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -250,7 +253,7 @@ export class AdminService {
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -258,7 +261,7 @@ export class AdminService {
                         console.warn(
                             `Endpoint 'updateWorkspaceSubmissionStatus' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -269,7 +272,7 @@ export class AdminService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -289,7 +292,7 @@ export class AdminService {
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -297,7 +300,7 @@ export class AdminService {
                         console.warn(
                             `Endpoint 'sendWorkspaceSubmissionUpdate' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -308,7 +311,7 @@ export class AdminService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -328,7 +331,7 @@ export class AdminService {
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -336,7 +339,7 @@ export class AdminService {
                         console.warn(
                             `Endpoint 'storeTracedTestCase' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -347,7 +350,7 @@ export class AdminService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -369,7 +372,7 @@ export class AdminService {
                                 cookie: res.cookie.bind(res),
                                 locals: res.locals,
                             },
-                            next
+                            next,
                         );
                         next();
                     } catch (error) {
@@ -377,7 +380,7 @@ export class AdminService {
                             console.warn(
                                 `Endpoint 'storeTracedTestCaseV2' unexpectedly threw ${error.constructor.name}.` +
                                     ` If this was intentional, please add ${error.constructor.name} to` +
-                                    " the endpoint's errors list in your Fern Definition."
+                                    " the endpoint's errors list in your Fern Definition.",
                             );
                             await error.send(res);
                         } else {
@@ -388,12 +391,12 @@ export class AdminService {
                 } else {
                     res.status(422).json({
                         errors: request.errors.map(
-                            (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                            (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                         ),
                     });
                     next(request.errors);
                 }
-            }
+            },
         );
         this.router.post("/store-workspace-trace/submission/:submissionId", async (req, res, next) => {
             const request = serializers.StoreTracedWorkspaceRequest.parse(req.body);
@@ -409,7 +412,7 @@ export class AdminService {
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -417,7 +420,7 @@ export class AdminService {
                         console.warn(
                             `Endpoint 'storeTracedWorkspace' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -428,7 +431,7 @@ export class AdminService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -448,7 +451,7 @@ export class AdminService {
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -456,7 +459,7 @@ export class AdminService {
                         console.warn(
                             `Endpoint 'storeTracedWorkspaceV2' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -467,7 +470,7 @@ export class AdminService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);

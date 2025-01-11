@@ -31,7 +31,7 @@ export function register(
                 problem: v2_v3_ProblemService;
             };
         };
-    }
+    },
 ): void {
     (expressApp as any).use("/", services.v2._root.toRouter());
     (expressApp as any).use("/admin", services.admin.toRouter());

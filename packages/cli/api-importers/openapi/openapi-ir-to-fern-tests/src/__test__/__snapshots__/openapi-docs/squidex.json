@@ -5435,12 +5435,14 @@
               "User",
               "Group",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "AddFieldDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The name of the field. Must be unique within the schema.",
@@ -5467,6 +5469,7 @@
           },
           "AlgoliaRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "apiKey": {
                 "docs": "The API key to grant access to Squidex.",
@@ -5513,6 +5516,7 @@
           },
           "AllContentsByPostDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ids": {
                 "docs": "The list of ids to query.",
@@ -5549,6 +5553,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "canAccessApi": {
                 "availability": "deprecated",
@@ -5619,6 +5624,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "englishName": {
                 "docs": "The english name of the language.",
@@ -5650,6 +5656,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The languages.",
@@ -5665,6 +5672,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "editors": {
                 "docs": "The configured UI editors.",
@@ -5693,6 +5701,7 @@
           },
           "ArrayFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "maxItems": {
                 "docs": "The maximum allowed items for the field value.",
@@ -5713,6 +5722,7 @@
           },
           "AssetChangedRuleTriggerDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "condition": {
                 "docs": "Javascript condition when to trigger.",
@@ -5728,6 +5738,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "_meta": {
                 "docs": "The metadata.",
@@ -5838,6 +5849,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "folderName": {
                 "docs": "The folder name.",
@@ -5867,6 +5879,7 @@
               "Path",
               "Items",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5876,6 +5889,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The assets folders.",
@@ -5896,6 +5910,7 @@
           },
           "AssetMeta": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "isDuplicate": {
                 "docs": "Indicates whether the asset is a duplicate.",
@@ -5913,6 +5928,7 @@
               "Image",
               "FileName",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5922,6 +5938,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "annotate": {
                 "docs": "The script that is executed when annotating a content.",
@@ -5968,6 +5985,7 @@
               "Audio",
               "Video",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5977,6 +5995,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The assets.",
@@ -5993,6 +6012,7 @@
           },
           "AssetsFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowDuplicates": {
                 "docs": "True, if duplicate values are allowed.",
@@ -6087,6 +6107,7 @@
           },
           "AssignContributorDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contributorId": {
                 "docs": "The id or email of the user to add to the app.",
@@ -6113,6 +6134,7 @@
           },
           "AzureQueueRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connectionString": {
                 "docs": "The connection string to the storage account.",
@@ -6148,6 +6170,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "handledAssets": {
                 "docs": "The number of handled assets.",
@@ -6183,6 +6206,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The backups.",
@@ -6199,12 +6223,14 @@
               "Checkbox",
               "Toggle",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "BooleanFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "defaultValue": {
                 "docs": "The default value for the field value.",
@@ -6229,6 +6255,7 @@
           },
           "BulkResultDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contentId": {
                 "availability": "deprecated",
@@ -6259,12 +6286,14 @@
               "Move",
               "Delete",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "BulkUpdateAssetsJobDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "expectedVersion": {
                 "docs": "The expected version.",
@@ -6322,12 +6351,14 @@
               "Update",
               "Validate",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "BulkUpdateContentsJobDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "docs": "The data of the content when type is set to 'Upsert', 'Create', 'Update' or 'Patch.",
@@ -6380,6 +6411,7 @@
           },
           "CallsUsageDtoDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowedBytes": {
                 "docs": "The included API traffic.",
@@ -6424,6 +6456,7 @@
           },
           "CallsUsagePerDateDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "averageElapsedMs": {
                 "docs": "The average duration in milliseconds.",
@@ -6454,6 +6487,7 @@
           },
           "ChangePlanDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "planId": {
                 "docs": "The new plan id.",
@@ -6475,6 +6509,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "allowAnonymous": {
                 "docs": "True to allow anonymous access without an access token for this client.",
@@ -6514,6 +6549,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The clients.",
@@ -6526,6 +6562,7 @@
           },
           "CommentDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the comment.",
@@ -6560,6 +6597,7 @@
           },
           "CommentRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client": {
                 "docs": "An optional client name.",
@@ -6582,6 +6620,7 @@
           },
           "CommentRuleTriggerDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "condition": {
                 "docs": "Javascript condition when to trigger.",
@@ -6594,6 +6633,7 @@
           },
           "CommentsDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdComments": {
                 "docs": "The created comments including the updates.",
@@ -6618,6 +6658,7 @@
           },
           "ComponentFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "schemaIds": {
                 "docs": "The ID of the embedded schemas.",
@@ -6630,6 +6671,7 @@
           },
           "ComponentsFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "maxItems": {
                 "docs": "The maximum allowed items for the field value.",
@@ -6655,6 +6697,7 @@
           "ConfigurePreviewUrlsDto": "map<string, string>",
           "ContentChangedRuleTriggerDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "handleAll": {
                 "docs": "Determines whether the trigger should handle all content changes events.",
@@ -6679,6 +6722,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "created": {
                 "docs": "The date and time when the content item has been created.",
@@ -6764,6 +6808,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The content items.",
@@ -6787,6 +6832,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "contributorEmail": {
                 "docs": "The email address.",
@@ -6814,6 +6860,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "_meta": {
                 "docs": "The metadata to provide information about this request.",
@@ -6834,6 +6881,7 @@
           },
           "ContributorsMetadata": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "isInvited": {
                 "docs": "Indicates whether the user has been invited.",
@@ -6846,6 +6894,7 @@
           },
           "CreateContentRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client": {
                 "docs": "An optional client name.",
@@ -6882,6 +6931,7 @@
           },
           "CreateRuleDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action": {
                 "docs": "The action properties.",
@@ -6898,6 +6948,7 @@
           },
           "CurrentStorageDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "maxAllowed": {
                 "docs": "The maximum allowed asset size.",
@@ -6918,6 +6969,7 @@
               "Now",
               "Today",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -6928,12 +6980,14 @@
               "Date",
               "DateTime",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "DateTimeFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "calculatedDefaultValue": {
                 "docs": "The calculated default value for the field value.",
@@ -6970,6 +7024,7 @@
           },
           "DiscourseRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "apiKey": {
                 "docs": "The api key to authenticate to your discourse server.",
@@ -7030,6 +7085,7 @@
           },
           "EditorDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The name of the editor.",
@@ -7046,6 +7102,7 @@
           },
           "ElasticSearchRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delete": {
                 "docs": "The condition when to delete the document.",
@@ -7090,6 +7147,7 @@
           },
           "EmailRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "messageBody": {
                 "docs": "The message body.",
@@ -7172,6 +7230,7 @@
           },
           "ErrorDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "details": {
                 "docs": "Detailed error messages.",
@@ -7213,6 +7272,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The number of handled events.",
@@ -7254,6 +7314,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The event consumers.",
@@ -7267,6 +7328,7 @@
           "ExposedValues": "map<string, string>",
           "FastlyRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "apiKey": {
                 "docs": "The API key to grant access to Squidex.",
@@ -7295,6 +7357,7 @@
           },
           "FeatureDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The name of the feature.",
@@ -7311,6 +7374,7 @@
           },
           "FeaturesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "features": {
                 "docs": "The latest features.",
@@ -7330,6 +7394,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "fieldId": {
                 "docs": "The ID of the field.",
@@ -7463,12 +7528,14 @@
               "Hide",
               "Require",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "FieldRuleDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action": {
                 "docs": "The action to perform when the condition is met.",
@@ -7499,6 +7566,7 @@
           },
           "GeolocationFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "editor": {
                 "docs": "The editor that is used to manage this field.",
@@ -7511,6 +7579,7 @@
           },
           "HistoryEventDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "actor": {
                 "docs": "The user who called the action.",
@@ -7553,6 +7622,7 @@
               "TIFF",
               "WEBP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -7565,12 +7635,14 @@
               "Completed",
               "Failed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "JsonFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "graphQLSchema": {
                 "docs": "The GraphQL schema.",
@@ -7583,6 +7655,7 @@
           },
           "LanguageDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "englishName": {
                 "docs": "The english name of the language.",
@@ -7608,6 +7681,7 @@
           "LocalizedValueOfString": "map<string, string>",
           "LogDownloadDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "downloadUrl": {
                 "docs": "The url to download the log.",
@@ -7620,6 +7694,7 @@
           },
           "ManualRuleTriggerDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -7627,6 +7702,7 @@
           },
           "MediumRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessToken": {
                 "docs": "The self issued access token.",
@@ -7684,6 +7760,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "fieldId": {
                 "docs": "The ID of the field.",
@@ -7722,6 +7799,7 @@
           },
           "NotificationRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client": {
                 "docs": "An optional client name.",
@@ -7764,12 +7842,14 @@
               "Dropdown",
               "Stars",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "NumberFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowedValues": {
                 "docs": "The allowed values for the field value.",
@@ -7810,6 +7890,7 @@
           },
           "OpenSearchRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delete": {
                 "docs": "The condition when to delete the document.",
@@ -7854,6 +7935,7 @@
           },
           "PatternDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "The regex message.",
@@ -7874,6 +7956,7 @@
           },
           "PlanChangedDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "redirectUri": {
                 "docs": "Optional redirect uri.",
@@ -7886,6 +7969,7 @@
           },
           "PlanDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "confirmText": {
                 "docs": "An optional confirm text for the monthly subscription.",
@@ -7938,6 +8022,7 @@
           },
           "PlansDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "currentPlanId": {
                 "docs": "The current plan id.",
@@ -7982,12 +8067,14 @@
               "NoPermission",
               "ManagedByTeam",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "PrerenderRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "token": {
                 "docs": "The prerender token from your account.",
@@ -8017,6 +8104,7 @@
           "PropertyPath": "list<string>",
           "QueryDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ids": {
                 "docs": "The optional list of ids to query.",
@@ -8038,6 +8126,7 @@
           },
           "QueryJsonDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "filter": "optional<unknown>",
               "fullText": "optional<string>",
@@ -8060,12 +8149,14 @@
               "Checkboxes",
               "Input",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "ReferencesFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowDuplicates": {
                 "docs": "True, if duplicate values are allowed.",
@@ -8110,6 +8201,7 @@
           },
           "ReferralInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": "string",
               "condition": "string",
@@ -8121,6 +8213,7 @@
           },
           "ReorderFieldsDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "fieldIds": {
                 "docs": "The field ids in the target order.",
@@ -8142,12 +8235,14 @@
               "Min",
               "Stretch",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "Resource": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_links": {
                 "docs": "The links.",
@@ -8160,6 +8255,7 @@
           },
           "ResourceLink": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "href": {
                 "docs": "The link url.",
@@ -8195,6 +8291,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -8202,6 +8299,7 @@
           },
           "RestoreJobDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "log": {
                 "docs": "The status log.",
@@ -8239,6 +8337,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "isDefaultRole": {
                 "docs": "Indicates if the role is an builtin default role.",
@@ -8274,6 +8373,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The roles.",
@@ -8319,6 +8419,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "action": {
                 "docs": "The action properties.",
@@ -8380,6 +8481,7 @@
           },
           "RuleElementDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Describes the action or trigger type.",
@@ -8416,6 +8518,7 @@
           },
           "RuleElementPropertyDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "The optional description.",
@@ -8455,6 +8558,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "created": {
                 "docs": "The time when the event has been created.",
@@ -8502,6 +8606,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The rule events.",
@@ -8529,6 +8634,7 @@
               "TextArea",
               "Url",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -8542,6 +8648,7 @@
               "Failed",
               "Cancelled",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -8554,6 +8661,7 @@
               "Failed",
               "Timeout",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -8581,6 +8689,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The rules.",
@@ -8597,6 +8706,7 @@
           },
           "ScheduleJobDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "color": {
                 "docs": "The color of the scheduled status.",
@@ -8625,6 +8735,7 @@
           },
           "SchemaChangedRuleTriggerDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "condition": {
                 "docs": "Javascript condition when to trigger.",
@@ -8637,6 +8748,7 @@
           },
           "SchemaCondition": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "condition": "optional<string>",
               "schemaId": "string",
@@ -8650,6 +8762,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "category": {
                 "docs": "The name of the category.",
@@ -8749,6 +8862,7 @@
           },
           "SchemaPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contentEditorUrl": {
                 "docs": "The url to the editor plugin.",
@@ -8797,6 +8911,7 @@
           },
           "SchemaScriptsDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "change": {
                 "docs": "The script that is executed when change a content status.",
@@ -8834,6 +8949,7 @@
               "Singleton",
               "Component",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -8843,6 +8959,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The schemas.",
@@ -8855,6 +8972,7 @@
           },
           "ScriptRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "script": {
                 "docs": "The script to render.",
@@ -8876,6 +8994,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "label": {
                 "docs": "An optional label.",
@@ -8904,12 +9023,14 @@
               "Rule",
               "Schema",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "SignalRRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action": {
                 "docs": "* Broadcast = send to all users.
@@ -8956,6 +9077,7 @@
           },
           "SimulatedRuleEventDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "actionData": {
                 "docs": "The name of the action.",
@@ -9015,6 +9137,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The simulated rule events.",
@@ -9044,12 +9167,14 @@
               "WrongEvent",
               "WrongEventForTrigger",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "SlackRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "text": {
                 "docs": "The text that is sent as message to slack.",
@@ -9078,6 +9203,7 @@
           },
           "SortNode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "order": "SortOrder",
               "path": "PropertyPath",
@@ -9092,12 +9218,14 @@
               "Ascending",
               "Descending",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "StatusInfoDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "color": {
                 "docs": "The color of the status.",
@@ -9114,6 +9242,7 @@
           },
           "StorageUsagePerDateDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "date": {
                 "docs": "The date when the usage was tracked.",
@@ -9145,6 +9274,7 @@
               "Html",
               "Markdown",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -9163,12 +9293,14 @@
               "StockPhoto",
               "TextArea",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "StringFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowedValues": {
                 "docs": "The allowed values for the field value.",
@@ -9258,12 +9390,14 @@
               "Checkboxes",
               "Dropdown",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "TagsFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowedValues": {
                 "docs": "The allowed values for the field value.",
@@ -9303,6 +9437,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "created": {
                 "docs": "The timestamp when the team has been created.",
@@ -9338,6 +9473,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "details": {
                 "docs": "The details of the template.",
@@ -9353,6 +9489,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "The description of the template.",
@@ -9380,6 +9517,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The event consumers.",
@@ -9392,6 +9530,7 @@
           },
           "TranslationDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "result": {
                 "docs": "The result of the translation.",
@@ -9416,12 +9555,14 @@
               "Unauthorized",
               "Failed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "TweetRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessSecret": {
                 "docs": " The generated access secret.",
@@ -9460,6 +9601,7 @@
           },
           "TypesenseRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "apiKey": {
                 "docs": "The api key.",
@@ -9510,6 +9652,7 @@
           },
           "UiFieldPropertiesDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "editor": {
                 "docs": "The editor that is used to manage this field.",
@@ -9522,6 +9665,7 @@
           },
           "UiSettingsDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "canCreateApps": {
                 "docs": "True when the user can create apps.",
@@ -9538,6 +9682,7 @@
           },
           "UpdateFieldDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "properties": {
                 "docs": "The field properties.",
@@ -9550,6 +9695,7 @@
           },
           "UpdateSettingDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "value": "unknown",
             },
@@ -9559,6 +9705,7 @@
           },
           "UpsertCommentDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "text": {
                 "docs": "The comment text.",
@@ -9587,6 +9734,7 @@
           },
           "UpsertSchemaDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "category": {
                 "docs": "The category.",
@@ -9631,6 +9779,7 @@
           },
           "UpsertSchemaFieldDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "isDisabled": {
                 "docs": "Defines if the field is disabled.",
@@ -9673,6 +9822,7 @@
           },
           "UpsertSchemaNestedFieldDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "isDisabled": {
                 "docs": "Defines if the field is disabled.",
@@ -9707,6 +9857,7 @@
           },
           "UsageRuleTriggerDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "limit": {
                 "docs": "The number of monthly api calls.",
@@ -9733,6 +9884,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "displayName": {
                 "docs": "The display name (usually first name and last name) of the user.",
@@ -9761,6 +9913,7 @@
           },
           "UserProperty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "type": "string",
@@ -9790,6 +9943,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "items": {
                 "docs": "The users.",
@@ -9813,12 +9967,14 @@
               "DELETE",
               "PATCH",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
           },
           "WebhookRuleActionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "headers": {
                 "docs": "The message headers in the format '[Key]=[Value]', one entry per line.",
@@ -9860,6 +10016,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The workflow id.",
@@ -9888,6 +10045,7 @@
           },
           "WorkflowStepDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "color": {
                 "docs": "The optional color.",
@@ -9920,6 +10078,7 @@
           },
           "WorkflowTransitionDto": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "expression": {
                 "docs": "The optional expression.",
@@ -9939,6 +10098,7 @@
             "extends": [
               "Resource",
             ],
+            "inline": undefined,
             "properties": {
               "errors": {
                 "docs": "The errros that should be fixed.",
@@ -22889,6 +23049,7 @@ service:
                 "name": "BackupsGetBackupContentV2Request",
                 "query-parameters": {
                   "app": {
+                    "default": "",
                     "docs": "The name of the app.",
                     "type": "optional<string>",
                   },
@@ -23153,6 +23314,7 @@ service:
             docs: The ID of the app.
           app:
             type: optional<string>
+            default: ''
             docs: The name of the app.
       response:
         docs: Backup found and content returned.
@@ -23378,6 +23540,7 @@ service:
                 "name": "CommentsGetCommentsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The current version.",
                     "type": "optional<long>",
                   },
@@ -23590,6 +23753,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The current version.
       response:
         docs: Comments returned.
@@ -24376,6 +24540,7 @@ service:
                 "name": "ContentsGetContentRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The optional version.",
                     "type": "optional<long>",
                   },
@@ -26120,6 +26285,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The optional version.
       response:
         docs: Content returned.
@@ -28075,6 +28241,7 @@ service:
                 "name": "NewsGetNewsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": 0,
                     "docs": "The latest received version.",
                     "type": "optional<integer>",
                   },
@@ -28112,6 +28279,7 @@ service:
         query-parameters:
           version:
             type: optional<integer>
+            default: 0
             docs: The latest received version.
       response:
         docs: Latest features returned.
@@ -28226,6 +28394,7 @@ service:
                 "name": "NotificationsGetNotificationsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The current version.",
                     "type": "optional<long>",
                   },
@@ -28268,6 +28437,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The current version.
       response:
         docs: All comments returned.
@@ -29325,10 +29495,12 @@ service:
                     "type": "optional<string>",
                   },
                   "skip": {
+                    "default": 0,
                     "docs": "The number of events to skip.",
                     "type": "optional<integer>",
                   },
                   "take": {
+                    "default": 20,
                     "docs": "The number of events to take.",
                     "type": "optional<integer>",
                   },
@@ -29677,6 +29849,7 @@ service:
                 "name": "RulesPutRuleRunRequest",
                 "query-parameters": {
                   "fromSnapshots": {
+                    "default": false,
                     "docs": "Runs the rule from snapeshots if possible.",
                     "type": "optional<boolean>",
                   },
@@ -30295,6 +30468,7 @@ service:
         query-parameters:
           fromSnapshots:
             type: optional<boolean>
+            default: false
             docs: Runs the rule from snapeshots if possible.
       errors:
         - root.RulesPutRuleRunRequestBadRequestError
@@ -30445,9 +30619,11 @@ service:
             docs: The optional rule id to filter to events.
           skip:
             type: optional<integer>
+            default: 0
             docs: The number of events to skip.
           take:
             type: optional<integer>
+            default: 20
             docs: The number of events to take.
       response:
         docs: Rule events returned.
@@ -40525,10 +40701,12 @@ service:
                     "type": "optional<string>",
                   },
                   "skip": {
+                    "default": 0,
                     "docs": "The number of users to skip.",
                     "type": "optional<integer>",
                   },
                   "take": {
+                    "default": 10,
                     "docs": "The number of users to return.",
                     "type": "optional<integer>",
                   },
@@ -40864,9 +41042,11 @@ service:
             docs: Optional query to search by email address or username.
           skip:
             type: optional<integer>
+            default: 0
             docs: The number of users to skip.
           take:
             type: optional<integer>
+            default: 10
             docs: The number of users to return.
       response:
         docs: Users returned.

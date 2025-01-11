@@ -10,14 +10,14 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Admin {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -44,73 +44,64 @@ export class Admin {
      *         type: "stopped"
      *     })
      */
-    public updateTestSubmissionStatus(
+    public async updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionStatus,
-        requestOptions?: Admin.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/admin/store-test-submission-status/${encodeURIComponent(
-                            serializers.SubmissionId.jsonOrThrow(submissionId)
-                        )}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-submission-status/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /admin/store-test-submission-status/{submissionId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-submission-status/{submissionId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -127,73 +118,64 @@ export class Admin {
      *         }
      *     })
      */
-    public sendTestSubmissionUpdate(
+    public async sendTestSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionUpdate,
-        requestOptions?: Admin.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/admin/store-test-submission-status-v2/${encodeURIComponent(
-                            serializers.SubmissionId.jsonOrThrow(submissionId)
-                        )}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-submission-status-v2/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /admin/store-test-submission-status-v2/{submissionId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-submission-status-v2/{submissionId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -206,75 +188,64 @@ export class Admin {
      *         type: "stopped"
      *     })
      */
-    public updateWorkspaceSubmissionStatus(
+    public async updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionStatus,
-        requestOptions?: Admin.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/admin/store-workspace-submission-status/${encodeURIComponent(
-                            serializers.SubmissionId.jsonOrThrow(submissionId)
-                        )}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, {
-                        unrecognizedObjectKeys: "strip",
-                    }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-submission-status/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /admin/store-workspace-submission-status/{submissionId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-submission-status/{submissionId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -291,75 +262,64 @@ export class Admin {
      *         }
      *     })
      */
-    public sendWorkspaceSubmissionUpdate(
+    public async sendWorkspaceSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionUpdate,
-        requestOptions?: Admin.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/admin/store-workspace-submission-status-v2/${encodeURIComponent(
-                            serializers.SubmissionId.jsonOrThrow(submissionId)
-                        )}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, {
-                        unrecognizedObjectKeys: "strip",
-                    }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /admin/store-workspace-submission-status-v2/{submissionId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-submission-status-v2/{submissionId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -458,76 +418,65 @@ export class Admin {
      *             }]
      *     })
      */
-    public storeTracedTestCase(
+    public async storeTracedTestCase(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: string,
         request: SeedTrace.StoreTracedTestCaseRequest,
-        requestOptions?: Admin.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/admin/store-test-trace/submission/${encodeURIComponent(
-                            serializers.SubmissionId.jsonOrThrow(submissionId)
-                        )}/testCase/${encodeURIComponent(testCaseId)}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, {
-                        unrecognizedObjectKeys: "strip",
-                    }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-trace/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}/testCase/${encodeURIComponent(testCaseId)}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -615,76 +564,67 @@ export class Admin {
      *             stdout: "stdout"
      *         }])
      */
-    public storeTracedTestCaseV2(
+    public async storeTracedTestCaseV2(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: SeedTrace.v2.TestCaseId,
         request: SeedTrace.TraceResponseV2[],
-        requestOptions?: Admin.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/admin/store-test-trace-v2/submission/${encodeURIComponent(
-                            serializers.SubmissionId.jsonOrThrow(submissionId)
-                        )}/testCase/${encodeURIComponent(serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
-                        unrecognizedObjectKeys: "strip",
-                    }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-trace-v2/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}/testCase/${encodeURIComponent(serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -779,75 +719,64 @@ export class Admin {
      *             }]
      *     })
      */
-    public storeTracedWorkspace(
+    public async storeTracedWorkspace(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.StoreTracedWorkspaceRequest,
-        requestOptions?: Admin.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/admin/store-workspace-trace/submission/${encodeURIComponent(
-                            serializers.SubmissionId.jsonOrThrow(submissionId)
-                        )}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, {
-                        unrecognizedObjectKeys: "strip",
-                    }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-trace/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /admin/store-workspace-trace/submission/{submissionId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-trace/submission/{submissionId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -934,75 +863,66 @@ export class Admin {
      *             stdout: "stdout"
      *         }])
      */
-    public storeTracedWorkspaceV2(
+    public async storeTracedWorkspaceV2(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TraceResponseV2[],
-        requestOptions?: Admin.RequestOptions
-    ): core.APIPromise<void> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(
-                        (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                        `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(
-                            serializers.SubmissionId.jsonOrThrow(submissionId)
-                        )}`
-                    ),
-                    method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Random-Header":
-                            (await core.Supplier.get(this._options.xRandomHeader)) != null
-                                ? await core.Supplier.get(this._options.xRandomHeader)
-                                : undefined,
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/trace",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/trace/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
-                        unrecognizedObjectKeys: "strip",
-                    }),
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header":
+                    (await core.Supplier.get(this._options.xRandomHeader)) != null
+                        ? await core.Supplier.get(this._options.xRandomHeader)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/trace",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: undefined,
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedTraceError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedTraceTimeoutError(
-                            "Timeout exceeded when calling POST /admin/store-workspace-trace-v2/submission/{submissionId}."
-                        );
-                    case "unknown":
-                        throw new errors.SeedTraceError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+            case "timeout":
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-trace-v2/submission/{submissionId}.",
+                );
+            case "unknown":
+                throw new errors.SeedTraceError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

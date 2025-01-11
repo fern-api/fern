@@ -1,16 +1,16 @@
-import { AstNode } from "./core/AstNode";
+import { php } from "..";
+import { ClassReference } from "../php";
 import { Class } from "./Class";
-import { Writer } from "./core/Writer";
 import { CodeBlock } from "./CodeBlock";
-import { Parameter } from "./Parameter";
 import { Field } from "./Field";
 import { Method } from "./Method";
-import { Type } from "./Type";
-import { orderByAccess } from "./utils/orderByAccess";
-import { php } from "..";
-import { convertFromPhpVariableName } from "./utils/convertFromPhpVariableName";
+import { Parameter } from "./Parameter";
 import { Trait } from "./Trait";
-import { ClassReference } from "../php";
+import { Type } from "./Type";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
+import { convertFromPhpVariableName } from "./utils/convertFromPhpVariableName";
+import { orderByAccess } from "./utils/orderByAccess";
 
 const CONSTRUCTOR_PARAMETER_NAME = "values";
 
@@ -47,7 +47,7 @@ export class DataClass extends AstNode {
                 ({
                     ...field,
                     name: convertFromPhpVariableName(field.name)
-                } as Field)
+                }) as Field
         );
         if (orderedFields.length > 0) {
             this.class_.addConstructor({

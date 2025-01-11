@@ -22,5 +22,6 @@ generators/openapi/* @dsinghvi
 
 # Specific rules for packages
 packages/cli/* @amckinney
+packages/cli/api-importers/* @eyw520
 packages/generators/cli/* @dsinghvi
 packages/generators/docker/* @dsinghvi

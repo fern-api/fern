@@ -37,25 +37,25 @@ export const HttpRequestBody: core.serialization.Schema<serializers.HttpRequestB
         });
 
 export declare namespace HttpRequestBody {
-    type Raw =
+    export type Raw =
         | HttpRequestBody.InlinedRequestBody
         | HttpRequestBody.Reference
         | HttpRequestBody.FileUpload
         | HttpRequestBody.Bytes;
 
-    interface InlinedRequestBody extends InlinedRequestBody.Raw {
+    export interface InlinedRequestBody extends InlinedRequestBody.Raw {
         type: "inlinedRequestBody";
     }
 
-    interface Reference extends HttpRequestBodyReference.Raw {
+    export interface Reference extends HttpRequestBodyReference.Raw {
         type: "reference";
     }
 
-    interface FileUpload extends FileUploadRequest.Raw {
+    export interface FileUpload extends FileUploadRequest.Raw {
         type: "fileUpload";
     }
 
-    interface Bytes extends BytesRequest.Raw {
+    export interface Bytes extends BytesRequest.Raw {
         type: "bytes";
     }
 }

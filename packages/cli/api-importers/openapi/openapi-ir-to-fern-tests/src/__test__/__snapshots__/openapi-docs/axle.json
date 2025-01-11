@@ -8,6 +8,7 @@
         "types": {
           "Address": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "addressLine1": {
                 "type": "optional<string>",
@@ -34,6 +35,7 @@
           },
           "Carrier": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": {
                 "type": "Address",
@@ -53,6 +55,7 @@
           },
           "Coverage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": "CoverageCode",
               "deductible": {
@@ -84,12 +87,14 @@
               "COLL",
               "COMP",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "Error": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "Provides a reason for why the operation failed, if available.",
@@ -105,6 +110,7 @@
           },
           "Insured": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dateOfBirth": {
                 "type": "optional<string>",
@@ -136,6 +142,7 @@
           },
           "Property": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": {
                 "type": "Vehicle",
@@ -153,6 +160,7 @@
           },
           "ThirdParty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": {
                 "type": "optional<Address>",
@@ -177,12 +185,14 @@
               "lessor",
               "interest",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "User": {
             "docs": "User to attach to Ignition session. If user is set, unique `id` must be provided.",
+            "inline": undefined,
             "properties": {
               "email": {
                 "docs": "User's email address.",
@@ -211,6 +221,7 @@
           },
           "Vehicle": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "bodyStyle": {
                 "type": "optional<string>",
@@ -266,6 +277,7 @@
       - UIMPD
       - COLL
       - COMP
+    inline: true
     source:
       openapi: ../openapi.yml
   Coverage:
@@ -326,6 +338,7 @@
       - lessor
       - interest
     default: interest
+    inline: true
     source:
       openapi: ../openapi.yml
   ThirdParty:
@@ -451,6 +464,7 @@
         "types": {
           "Account": {
             "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
+            "inline": undefined,
             "properties": {
               "carrier": "string",
               "createdAt": "string",
@@ -473,6 +487,7 @@
           },
           "GetAccountResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<Account>",
               "success": "optional<root.Success>",
@@ -483,6 +498,7 @@
           },
           "Policy": {
             "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
+            "inline": undefined,
             "properties": {
               "account": "string",
               "address": {
@@ -524,6 +540,7 @@
               "auto",
               "motorcycle",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -563,6 +580,7 @@ types:
     enum:
       - auto
       - motorcycle
+    inline: true
     source:
       openapi: ../openapi.yml
   Policy:
@@ -758,6 +776,7 @@ service:
         "types": {
           "GetCarrierResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<root.Carrier>",
               "success": "optional<root.Success>",
@@ -768,6 +787,7 @@ service:
           },
           "GetCarriersResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<list<root.Carrier>>",
               "success": "optional<root.Success>",
@@ -940,6 +960,7 @@ service:
         "types": {
           "StartIgnitionResponse": {
             "docs": "",
+            "inline": undefined,
             "properties": {
               "data": "StartIgnitionResponseData",
               "success": {
@@ -952,6 +973,7 @@ service:
           },
           "StartIgnitionResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "ignitionToken": {
                 "docs": "The unique ID for the ignition session.",
@@ -981,6 +1003,7 @@ types:
         docs: The unique ID for the ignition session.
     source:
       openapi: ../openapi.yml
+    inline: true
   StartIgnitionResponse:
     docs: ''
     properties:
@@ -1170,6 +1193,7 @@ service:
         "types": {
           "GetPolicyResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<accounts.Policy>",
               "success": "optional<root.Success>",
@@ -1355,6 +1379,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "types": {
           "ExchangeTokenResponse": {
             "docs": "",
+            "inline": undefined,
             "properties": {
               "data": "ExchangeTokenResponseData",
               "success": {
@@ -1367,6 +1392,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           },
           "ExchangeTokenResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "accessToken": {
                 "docs": "The token required for access to the requested Account and Policy objects.",
@@ -1408,6 +1434,7 @@ types:
         type: list<unknown>
     source:
       openapi: ../openapi.yml
+    inline: true
   ExchangeTokenResponse:
     docs: ''
     properties:

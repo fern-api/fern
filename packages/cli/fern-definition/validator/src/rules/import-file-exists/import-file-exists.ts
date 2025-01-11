@@ -1,6 +1,8 @@
-import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import chalk from "chalk";
+
+import { getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ImportFileExistsRule: Rule = {
@@ -16,7 +18,7 @@ export const ImportFileExistsRule: Rule = {
 
         return {
             definitionFile: {
-                import: async ({ importedAs, importPath }, { relativeFilepath }) => {
+                import: ({ importedAs, importPath }, { relativeFilepath }) => {
                     const violations: RuleViolation[] = [];
                     const importAbsoluteFilepath = join(
                         workspace.definition.absoluteFilePath,
@@ -26,7 +28,7 @@ export const ImportFileExistsRule: Rule = {
                     const isDefinitionFilePresent = absolutePaths.has(importAbsoluteFilepath);
                     if (!isDefinitionFilePresent) {
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             message: `Import ${chalk.bold(importedAs)} points to non-existent path ${chalk.bold(
                                 importPath
                             )}.`

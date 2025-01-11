@@ -1,12 +1,14 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { assertNever } from "@fern-api/core-utils";
+import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import {
     Availability,
     LiteralSchemaValue,
     PrimitiveSchemaValueWithExample,
     SchemaWithExample
 } from "@fern-api/openapi-ir";
-import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
@@ -247,7 +249,8 @@ export function getSchemaFromFernType({
                           availability,
                           groupName,
                           encoding: undefined,
-                          example: undefined
+                          example: undefined,
+                          inline: undefined
                       })
                     : undefined,
             list: (itemType) =>
@@ -260,7 +263,8 @@ export function getSchemaFromFernType({
                           description,
                           availability,
                           groupName,
-                          example: undefined
+                          example: undefined,
+                          inline: undefined
                       })
                     : undefined,
             optional: (itemType) =>
@@ -272,7 +276,8 @@ export function getSchemaFromFernType({
                           value: itemType,
                           description,
                           availability,
-                          groupName
+                          groupName,
+                          inline: undefined
                       })
                     : undefined,
             set: (itemType) =>
@@ -285,7 +290,8 @@ export function getSchemaFromFernType({
                           description,
                           availability,
                           groupName,
-                          example: undefined
+                          example: undefined,
+                          inline: undefined
                       })
                     : undefined,
             literal: (literal) =>

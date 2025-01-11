@@ -1,23 +1,25 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { assertNever, MediaType } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
+import { MediaType, assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
-import { convertToHttpMethod } from "./utils/convertToHttpMethod";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
+import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { State } from "./State";
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
+import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { isWriteMethod } from "./utils/isWriteMethod";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -124,7 +126,7 @@ export function buildEndpoint({
             namespace: maybeEndpointNamespace
         });
         headers[header.name] = headerSchema;
-        names.add(typeof headerSchema === "string" ? header.name : headerSchema.name ?? header.name);
+        names.add(typeof headerSchema === "string" ? header.name : (headerSchema.name ?? header.name));
     }
 
     if (endpoint.request != null) {
@@ -179,7 +181,8 @@ export function buildEndpoint({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeEndpointNamespace
+                    namespace: maybeEndpointNamespace,
+                    declarationDepth: 0
                 });
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
@@ -194,7 +197,8 @@ export function buildEndpoint({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeEndpointNamespace
+                    namespace: maybeEndpointNamespace,
+                    declarationDepth: 0
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -207,7 +211,8 @@ export function buildEndpoint({
                     schema: jsonResponse.schema,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeEndpointNamespace
+                    namespace: maybeEndpointNamespace,
+                    declarationDepth: 0
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -289,7 +294,8 @@ export function buildEndpoint({
                 context,
                 fileContainingReference: errorDeclarationFile,
                 declarationFile: errorDeclarationFile,
-                namespace: maybeEndpointNamespace
+                namespace: maybeEndpointNamespace,
+                declarationDepth: 0
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
             errorDeclaration.docs = httpError.description;
@@ -412,7 +418,8 @@ function getRequest({
                 schema: request.schema,
                 fileContainingReference: declarationFile,
                 context,
-                namespace
+                namespace,
+                declarationDepth: 0
             });
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [],
@@ -454,7 +461,7 @@ function getRequest({
                     if (property.readonly == null) {
                         return true;
                     }
-                    const writeEndpoint = endpoint.method === "POST" || endpoint.method === "PUT";
+                    const writeEndpoint = isWriteMethod(endpoint.method);
                     if (writeEndpoint && property.readonly) {
                         return false;
                     }
@@ -465,7 +472,8 @@ function getRequest({
                         schema: property.schema,
                         fileContainingReference: declarationFile,
                         context,
-                        namespace
+                        namespace,
+                        declarationDepth: 1 // 1 level deep for request body properties
                     });
 
                     // TODO: clean up conditional logic
@@ -523,7 +531,8 @@ function getRequest({
                 schema: Schema.reference(referencedSchema),
                 fileContainingReference: declarationFile,
                 context,
-                namespace
+                namespace,
+                declarationDepth: 0
             });
             return getTypeFromTypeReference(allOfTypeReference);
         });
@@ -589,7 +598,8 @@ function getRequest({
                         schema: property.schema.value,
                         fileContainingReference: declarationFile,
                         context,
-                        namespace
+                        namespace,
+                        declarationDepth: 1 // 1 level deep for request body properties
                     });
                     if (property.contentType != null) {
                         if (typeof propertyTypeReference === "string") {

@@ -10,11 +10,11 @@ import * as errors from "../../../../../../errors/index";
 import { Metadata } from "../resources/metadata/client/Client";
 
 export declare namespace Events {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -27,7 +27,13 @@ export declare namespace Events {
 }
 
 export class Events {
+    protected _metadata: Metadata | undefined;
+
     constructor(protected readonly _options: Events.Options) {}
+
+    public get metadata(): Metadata {
+        return (this._metadata ??= new Metadata(this._options));
+    }
 
     /**
      * List all user events.
@@ -40,77 +46,65 @@ export class Events {
      *         limit: 1
      *     })
      */
-    public listEvents(
+    public async listEvents(
         request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
-        requestOptions?: Events.RequestOptions
-    ): core.APIPromise<SeedMixedFileDirectory.user.Event[]> {
-        return core.APIPromise.from(
-            (async () => {
-                const { limit } = request;
-                const _queryParams: Record<string, string | string[] | object | object[]> = {};
-                if (limit != null) {
-                    _queryParams["limit"] = limit.toString();
-                }
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "/users/events/"),
-                    method: "GET",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/mixed-file-directory",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/mixed-file-directory/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    queryParameters: _queryParams,
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
+        requestOptions?: Events.RequestOptions,
+    ): Promise<SeedMixedFileDirectory.user.Event[]> {
+        const { limit } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/users/events/"),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/mixed-file-directory",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/mixed-file-directory/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.user.events.listEvents.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedMixedFileDirectoryError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedMixedFileDirectoryError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.user.events.listEvents.Response.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedMixedFileDirectoryError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedMixedFileDirectoryError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedMixedFileDirectoryTimeoutError(
-                            "Timeout exceeded when calling GET /users/events/."
-                        );
-                    case "unknown":
-                        throw new errors.SeedMixedFileDirectoryError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
-    }
-
-    protected _metadata: Metadata | undefined;
-
-    public get metadata(): Metadata {
-        return (this._metadata ??= new Metadata(this._options));
+            case "timeout":
+                throw new errors.SeedMixedFileDirectoryTimeoutError(
+                    "Timeout exceeded when calling GET /users/events/.",
+                );
+            case "unknown":
+                throw new errors.SeedMixedFileDirectoryError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

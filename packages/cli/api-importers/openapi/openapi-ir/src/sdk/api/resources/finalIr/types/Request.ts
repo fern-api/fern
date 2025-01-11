@@ -6,24 +6,24 @@ import * as FernOpenapiIr from "../../../index";
 
 export type Request = FernOpenapiIr.Request.OctetStream | FernOpenapiIr.Request.Multipart | FernOpenapiIr.Request.Json;
 
-export declare namespace Request {
-    interface OctetStream extends FernOpenapiIr.OctetStreamRequest, _Utils {
+export namespace Request {
+    export interface OctetStream extends FernOpenapiIr.OctetStreamRequest, _Utils {
         type: "octetStream";
     }
 
-    interface Multipart extends FernOpenapiIr.MultipartRequest, _Utils {
+    export interface Multipart extends FernOpenapiIr.MultipartRequest, _Utils {
         type: "multipart";
     }
 
-    interface Json extends FernOpenapiIr.JsonRequest, _Utils {
+    export interface Json extends FernOpenapiIr.JsonRequest, _Utils {
         type: "json";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Request._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         octetStream: (value: FernOpenapiIr.OctetStreamRequest) => _Result;
         multipart: (value: FernOpenapiIr.MultipartRequest) => _Result;
         json: (value: FernOpenapiIr.JsonRequest) => _Result;
@@ -38,7 +38,7 @@ export const Request = {
             type: "octetStream",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Request.OctetStream,
-                visitor: FernOpenapiIr.Request._Visitor<_Result>
+                visitor: FernOpenapiIr.Request._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Request._visit(this, visitor);
             },
@@ -51,7 +51,7 @@ export const Request = {
             type: "multipart",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Request.Multipart,
-                visitor: FernOpenapiIr.Request._Visitor<_Result>
+                visitor: FernOpenapiIr.Request._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Request._visit(this, visitor);
             },
@@ -64,7 +64,7 @@ export const Request = {
             type: "json",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Request.Json,
-                visitor: FernOpenapiIr.Request._Visitor<_Result>
+                visitor: FernOpenapiIr.Request._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Request._visit(this, visitor);
             },

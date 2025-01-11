@@ -27,7 +27,7 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace OAuthSchemeSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         scheme: "oauth";
         type: "client-credentials";
         scopes?: string[] | null;
