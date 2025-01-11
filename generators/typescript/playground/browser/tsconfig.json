@@ -1,5 +1,5 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/react.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"]
 }

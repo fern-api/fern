@@ -1,5 +1,6 @@
-import { Type } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Type } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 
 export function convertUndiscriminatedUnionTypeDeclaration({

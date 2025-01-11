@@ -14,7 +14,7 @@ export const ExampleType: core.serialization.ObjectSchema<serializers.ExampleTyp
         .extend(core.serialization.lazyObject(() => serializers.Docs));
 
 export declare namespace ExampleType {
-    interface Raw extends serializers.Docs.Raw {
+    export interface Raw extends serializers.Docs.Raw {
         name: string;
     }
 }

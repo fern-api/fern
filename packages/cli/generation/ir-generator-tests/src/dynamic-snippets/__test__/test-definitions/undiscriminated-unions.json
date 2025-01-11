@@ -92,9 +92,9 @@
                         "wireValue": "myUnion"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_union:MyUnion"
                         }
                     }
@@ -169,41 +169,41 @@
             },
             "types": [
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 },
                 {
-                    "_type": "list",
+                    "type": "list",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "INTEGER"
                 },
                 {
-                    "_type": "list",
+                    "type": "list",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
                 {
-                    "_type": "list",
+                    "type": "list",
                     "value": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
                 },
                 {
-                    "_type": "set",
+                    "type": "set",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -276,13 +276,13 @@
                 }
             },
             "typeReference": {
-                "_type": "map",
+                "type": "map",
                 "key": {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_union:Key"
                 },
                 "value": {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 }
             }
@@ -355,11 +355,11 @@
             },
             "types": [
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_union:KeyType"
                 },
                 {
-                    "_type": "literal",
+                    "type": "literal",
                     "value": {
                         "type": "string",
                         "value": "default"
@@ -559,7 +559,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_union:MyUnion"
                     }
                 }
@@ -647,5 +647,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

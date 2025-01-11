@@ -54,7 +54,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -82,9 +82,9 @@
                         "wireValue": "values"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "FLOAT"
                         }
                     }
@@ -113,9 +113,9 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Metadata"
                         }
                     }
@@ -144,9 +144,9 @@
                         "wireValue": "indexedData"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:IndexedData"
                         }
                     }
@@ -236,15 +236,15 @@
                         "wireValue": "namespaces"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "map",
+                            "type": "map",
                             "key": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             },
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:NamespaceSummary"
                             }
                         }
@@ -274,9 +274,9 @@
                         "wireValue": "dimension"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UINT"
                         }
                     }
@@ -305,9 +305,9 @@
                         "wireValue": "fullness"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "FLOAT"
                         }
                     }
@@ -336,9 +336,9 @@
                         "wireValue": "totalCount"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UINT"
                         }
                     }
@@ -398,15 +398,15 @@
                         "wireValue": "columns"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "map",
+                            "type": "map",
                             "key": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             },
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:Column"
                             }
                         }
@@ -436,9 +436,9 @@
                         "wireValue": "namespace"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -467,9 +467,9 @@
                         "wireValue": "usage"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Usage"
                         }
                     }
@@ -529,9 +529,9 @@
                         "wireValue": "indices"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UINT"
                         }
                     }
@@ -560,9 +560,9 @@
                         "wireValue": "values"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "FLOAT"
                         }
                     }
@@ -622,9 +622,9 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -684,11 +684,11 @@
                         "wireValue": "columns"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:ListElement"
                             }
                         }
@@ -718,9 +718,9 @@
                         "wireValue": "pagination"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Pagination"
                         }
                     }
@@ -749,9 +749,9 @@
                         "wireValue": "namespace"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -780,9 +780,9 @@
                         "wireValue": "usage"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Usage"
                         }
                     }
@@ -842,9 +842,9 @@
                         "wireValue": "count"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UINT"
                         }
                     }
@@ -904,9 +904,9 @@
                         "wireValue": "next"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -966,9 +966,9 @@
                         "wireValue": "values"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "FLOAT"
                         }
                     }
@@ -997,9 +997,9 @@
                         "wireValue": "topK"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UINT"
                         }
                     }
@@ -1028,9 +1028,9 @@
                         "wireValue": "namespace"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1059,9 +1059,9 @@
                         "wireValue": "filter"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Metadata"
                         }
                     }
@@ -1090,9 +1090,9 @@
                         "wireValue": "indexedData"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:IndexedData"
                         }
                     }
@@ -1152,11 +1152,11 @@
                         "wireValue": "results"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:QueryResult"
                             }
                         }
@@ -1186,11 +1186,11 @@
                         "wireValue": "matches"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:ScoredColumn"
                             }
                         }
@@ -1220,9 +1220,9 @@
                         "wireValue": "namespace"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1251,9 +1251,9 @@
                         "wireValue": "usage"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Usage"
                         }
                     }
@@ -1313,11 +1313,11 @@
                         "wireValue": "matches"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_:ScoredColumn"
                             }
                         }
@@ -1347,9 +1347,9 @@
                         "wireValue": "namespace"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1409,7 +1409,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -1437,9 +1437,9 @@
                         "wireValue": "score"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "FLOAT"
                         }
                     }
@@ -1468,11 +1468,11 @@
                         "wireValue": "values"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "FLOAT"
                             }
                         }
@@ -1502,9 +1502,9 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Metadata"
                         }
                     }
@@ -1533,9 +1533,9 @@
                         "wireValue": "indexedData"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:IndexedData"
                         }
                     }
@@ -1625,9 +1625,9 @@
                         "wireValue": "count"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UINT"
                         }
                     }
@@ -1687,9 +1687,9 @@
                         "wireValue": "units"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UINT"
                         }
                     }
@@ -1726,24 +1726,24 @@
             },
             "types": [
                 {
-                    "_type": "map",
+                    "type": "map",
                     "key": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:MetadataValue"
                     }
                 },
                 {
-                    "_type": "map",
+                    "type": "map",
                     "key": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "value": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             ]
@@ -1778,15 +1778,15 @@
             },
             "types": [
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "DOUBLE"
                 },
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 },
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "BOOLEAN"
                 }
             ]
@@ -2039,9 +2039,9 @@
                                 "wireValue": "columns"
                             },
                             "typeReference": {
-                                "_type": "list",
+                                "type": "list",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:Column"
                                 }
                             }
@@ -2070,9 +2070,9 @@
                                 "wireValue": "namespace"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -2254,11 +2254,11 @@
                                 "wireValue": "ids"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "list",
+                                    "type": "list",
                                     "value": {
-                                        "_type": "primitive",
+                                        "type": "primitive",
                                         "value": "STRING"
                                     }
                                 }
@@ -2288,9 +2288,9 @@
                                 "wireValue": "deleteAll"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "BOOLEAN"
                                 }
                             }
@@ -2319,9 +2319,9 @@
                                 "wireValue": "namespace"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -2350,9 +2350,9 @@
                                 "wireValue": "filter"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:Metadata"
                                 }
                             }
@@ -2534,9 +2534,9 @@
                                 "wireValue": "filter"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:Metadata"
                                 }
                             }
@@ -2714,11 +2714,11 @@
                             "wireValue": "ids"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -2748,9 +2748,9 @@
                             "wireValue": "namespace"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -2929,9 +2929,9 @@
                             "wireValue": "prefix"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -2960,9 +2960,9 @@
                             "wireValue": "limit"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "UINT"
                             }
                         }
@@ -2991,9 +2991,9 @@
                             "wireValue": "paginationToken"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -3022,9 +3022,9 @@
                             "wireValue": "namespace"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -3207,9 +3207,9 @@
                                 "wireValue": "namespace"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -3238,7 +3238,7 @@
                                 "wireValue": "topK"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "UINT"
                             }
                         },
@@ -3266,9 +3266,9 @@
                                 "wireValue": "filter"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:Metadata"
                                 }
                             }
@@ -3297,9 +3297,9 @@
                                 "wireValue": "includeValues"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "BOOLEAN"
                                 }
                             }
@@ -3328,9 +3328,9 @@
                                 "wireValue": "includeMetadata"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "BOOLEAN"
                                 }
                             }
@@ -3359,11 +3359,11 @@
                                 "wireValue": "queries"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "list",
+                                    "type": "list",
                                     "value": {
-                                        "_type": "named",
+                                        "type": "named",
                                         "value": "type_:QueryColumn"
                                     }
                                 }
@@ -3393,11 +3393,11 @@
                                 "wireValue": "column"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "list",
+                                    "type": "list",
                                     "value": {
-                                        "_type": "primitive",
+                                        "type": "primitive",
                                         "value": "FLOAT"
                                     }
                                 }
@@ -3427,9 +3427,9 @@
                                 "wireValue": "id"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -3458,9 +3458,9 @@
                                 "wireValue": "indexedData"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:IndexedData"
                                 }
                             }
@@ -3642,7 +3642,7 @@
                                 "wireValue": "id"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         },
@@ -3670,11 +3670,11 @@
                                 "wireValue": "values"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "list",
+                                    "type": "list",
                                     "value": {
-                                        "_type": "primitive",
+                                        "type": "primitive",
                                         "value": "FLOAT"
                                     }
                                 }
@@ -3704,9 +3704,9 @@
                                 "wireValue": "setMetadata"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:Metadata"
                                 }
                             }
@@ -3735,9 +3735,9 @@
                                 "wireValue": "namespace"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -3766,9 +3766,9 @@
                                 "wireValue": "indexedData"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:IndexedData"
                                 }
                             }
@@ -3783,6 +3783,38 @@
             "response": {
                 "type": "json"
             }
+        }
+    },
+    "environments": {
+        "defaultEnvironment": "Default",
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Default",
+                    "name": {
+                        "originalName": "Default",
+                        "camelCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT",
+                            "safeName": "DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Default",
+                            "safeName": "Default"
+                        }
+                    },
+                    "url": "https://localhost",
+                    "docs": null
+                }
+            ]
         }
     }
 }

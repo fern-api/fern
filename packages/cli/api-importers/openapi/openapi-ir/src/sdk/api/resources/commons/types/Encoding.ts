@@ -6,16 +6,16 @@ import * as FernOpenapiIr from "../../../index";
 
 export type Encoding = FernOpenapiIr.Encoding.Protobuf;
 
-export declare namespace Encoding {
-    interface Protobuf extends FernOpenapiIr.ProtobufEncoding, _Utils {
+export namespace Encoding {
+    export interface Protobuf extends FernOpenapiIr.ProtobufEncoding, _Utils {
         type: "protobuf";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Encoding._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         protobuf: (value: FernOpenapiIr.ProtobufEncoding) => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -28,7 +28,7 @@ export const Encoding = {
             type: "protobuf",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Encoding.Protobuf,
-                visitor: FernOpenapiIr.Encoding._Visitor<_Result>
+                visitor: FernOpenapiIr.Encoding._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Encoding._visit(this, visitor);
             },

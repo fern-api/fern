@@ -1,4 +1,17 @@
 import {
+    Fetcher,
+    GetReferenceOpts,
+    ImportsManager,
+    JavaScriptRuntime,
+    PackageId,
+    getParameterNameForPositionalPathParameter,
+    getTextOfTsNode,
+    visitJavaScriptRuntime
+} from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+
+import {
     ExampleEndpointCall,
     FileProperty,
     HttpEndpoint,
@@ -6,24 +19,13 @@ import {
     HttpService,
     IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
-import {
-    Fetcher,
-    GetReferenceOpts,
-    getTextOfTsNode,
-    ImportsManager,
-    JavaScriptRuntime,
-    PackageId,
-    visitJavaScriptRuntime
-} from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData";
+
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
+import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
 import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile";
-import { getParameterNameForPathParameter } from "../endpoints/utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
 
@@ -132,7 +134,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 }
             }
         }
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             const exampleParameter = exampleParameters.find(
                 (param) => param.name.originalName === pathParameter.name.originalName
             );
@@ -178,9 +184,13 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 }
             }
         }
-        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+        for (const pathParameter of getPathParametersForEndpointSignature({
+            service: this.service,
+            endpoint: this.endpoint,
+            context
+        })) {
             parameters.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),
@@ -346,6 +356,13 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getReferenceToRequestBody(): ts.Expression | undefined {
         return this.requestParameter?.getReferenceToRequestBody();
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        if (this.requestParameter == null) {
+            throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
+        }
+        return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context);
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

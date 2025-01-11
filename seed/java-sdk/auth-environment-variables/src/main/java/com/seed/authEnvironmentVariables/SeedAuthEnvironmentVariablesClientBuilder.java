@@ -39,6 +39,14 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedAuthEnvironmentVariablesClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedAuthEnvironmentVariablesClient build() {
         if (apiKey == null) {
             throw new RuntimeException("Please provide apiKey or set the FERN_API_KEY environment variable.");

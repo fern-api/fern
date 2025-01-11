@@ -477,6 +477,7 @@
               "dropbox",
               "sharepoint",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -573,6 +574,7 @@
               "all",
               "viewable",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1053,6 +1055,7 @@ Some entities, such as Organizations, may contain members that exist without any
               "prompt_policy",
               "pii_policy",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1363,6 +1366,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "italian",
               "german",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1419,6 +1423,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 "value": "gemini-pro",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1506,6 +1511,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "prompt_policy",
               "pii_policy",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1544,6 +1550,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "user_defined",
               "zendesk",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1587,6 +1594,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "no_size",
               "site",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1596,6 +1604,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "file",
               "dir",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1637,6 +1646,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "pending",
               "accepted",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1648,6 +1658,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "joinable_by_domain",
               "joinable_by_invite",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2164,6 +2175,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "dropbox",
               "sharepoint",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2190,6 +2202,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "RETRY",
               "PROGRESS",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2199,6 +2212,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "unverified",
               "verified",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2496,6 +2510,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 "value": "gemini-pro",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2510,6 +2525,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "integer",
               "list",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2562,6 +2578,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "success",
               "validation",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2830,6 +2847,7 @@ types:
       - value: gemini-pro
         name: GeminiPro
     default: gpt-3.5-turbo
+    inline: true
     source:
       openapi: ../openapi.yml
   ChatConfig:
@@ -2872,6 +2890,7 @@ types:
       - box
       - dropbox
       - sharepoint
+    inline: true
     source:
       openapi: ../openapi.yml
   ChatDocument:
@@ -2940,6 +2959,7 @@ types:
       - source_validation
       - prompt_policy
       - pii_policy
+    inline: true
     source:
       openapi: ../openapi.yml
   Type:
@@ -2948,6 +2968,7 @@ types:
       - error
       - success
       - validation
+    inline: true
     source:
       openapi: ../openapi.yml
   ChatGuardrail:
@@ -2964,6 +2985,7 @@ types:
     enum:
       - prompt_policy
       - pii_policy
+    inline: true
     source:
       openapi: ../openapi.yml
   ChatModel:
@@ -3048,6 +3070,7 @@ types:
       - italian
       - german
     default: english_british
+    inline: true
     source:
       openapi: ../openapi.yml
   ComposeInit:
@@ -3182,6 +3205,7 @@ types:
     enum:
       - unverified
       - verified
+    inline: true
     source:
       openapi: ../openapi.yml
   DatasourceSyncRun:
@@ -3213,6 +3237,7 @@ types:
       - FAILURE
       - RETRY
       - PROGRESS
+    inline: true
     source:
       openapi: ../openapi.yml
   DocumentCreateTask:
@@ -3889,6 +3914,7 @@ types:
       - box
       - dropbox
       - sharepoint
+    inline: true
     source:
       openapi: ../openapi.yml
   SourceRow:
@@ -4040,6 +4066,7 @@ types:
       - value: gemini-pro
         name: GeminiPro
     docs: The LLM model to use for the Task.
+    inline: true
     source:
       openapi: ../openapi.yml
   TaskRevisionOutputFormatValue:
@@ -4051,6 +4078,7 @@ types:
       - int
       - integer
       - list
+    inline: true
     source:
       openapi: ../openapi.yml
   TaskRevision:
@@ -4837,6 +4865,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "organization",
               "project",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4847,6 +4876,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4857,6 +4887,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4874,6 +4905,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "view",
               "view_members",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4930,6 +4962,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "value": "gemini-pro",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5405,6 +5438,7 @@ types:
       - value: gemini-pro
         name: GeminiPro
     default: gpt-3.5-turbo
+    inline: true
     source:
       openapi: ../openapi.yml
   ChatIamListMembersRequestType:
@@ -5419,6 +5453,7 @@ types:
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   ChatIamMemberRoleUpdateRemoveItem:
@@ -5426,6 +5461,7 @@ types:
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   ChatIamPermissionTestPermissionsItem:
@@ -5440,6 +5476,7 @@ types:
       - remove_owner
       - view
       - view_members
+    inline: true
     source:
       openapi: ../openapi.yml
 ",
@@ -6309,6 +6346,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "organization",
               "project",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6319,6 +6357,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6329,6 +6368,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6350,6 +6390,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "view",
               "view_members",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6965,6 +7006,7 @@ types:
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   CollectionIamMemberRoleUpdateRemoveItem:
@@ -6972,6 +7014,7 @@ types:
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   CollectionIamPermissionTestPermissionsItem:
@@ -6990,6 +7033,7 @@ types:
       - remove_owner
       - view
       - view_members
+    inline: true
     source:
       openapi: ../openapi.yml
 ",
@@ -13924,6 +13968,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "organization",
               "project",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13934,6 +13979,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13944,6 +13990,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13961,6 +14008,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "view",
               "view_members",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13977,6 +14025,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "dropbox",
               "sharepoint",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14009,6 +14058,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   DocumentIamMemberRoleUpdateRemoveItem:
@@ -14016,6 +14066,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   DocumentIamPermissionTestPermissionsItem:
@@ -14030,6 +14081,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
       - remove_owner
       - view
       - view_members
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -16149,6 +16201,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "organization",
               "project",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16159,6 +16212,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16169,6 +16223,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16186,6 +16241,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "view",
               "view_members",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16205,6 +16261,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   OrganizationIamMemberRoleUpdateRemoveItem:
@@ -16212,6 +16269,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   OrganizationIamPermissionTestPermissionsItem:
@@ -16226,6 +16284,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
       - remove_owner
       - view
       - view_members
+    inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -17496,6 +17555,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "value": "gemini-pro",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17506,6 +17566,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "organization",
               "project",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17521,6 +17582,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "task_runner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17536,6 +17598,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "task_runner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17569,6 +17632,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "view_data",
               "view_members",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18064,6 +18128,7 @@ types:
       - value: gemini-pro
         name: GeminiPro
     default: gpt-3.5-turbo
+    inline: true
     source:
       openapi: ../openapi.yml
   ProjectIamListMembersRequestType:
@@ -18083,6 +18148,7 @@ types:
       - task_creator
       - task_runner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   ProjectIamMemberRoleUpdateRemoveItem:
@@ -18095,6 +18161,7 @@ types:
       - task_creator
       - task_runner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   ProjectIamPermissionTestPermissionsItem:
@@ -18125,6 +18192,7 @@ types:
       - view
       - view_data
       - view_members
+    inline: true
     source:
       openapi: ../openapi.yml
 ",
@@ -20265,6 +20333,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "value": "gemini-pro",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20279,6 +20348,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "integer",
               "list",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20289,6 +20359,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "organization",
               "project",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20299,6 +20370,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20309,6 +20381,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "owner",
               "viewer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20326,6 +20399,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "view",
               "view_members",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20381,6 +20455,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "value": "gemini-pro",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20395,6 +20470,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "integer",
               "list",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -21302,6 +21378,7 @@ types:
       - value: gemini-pro
         name: GeminiPro
     docs: The LLM model to use for the Task.
+    inline: true
     source:
       openapi: ../openapi.yml
   TaskCreateOutputFormatValue:
@@ -21313,6 +21390,7 @@ types:
       - int
       - integer
       - list
+    inline: true
     source:
       openapi: ../openapi.yml
   TaskUpdateLlmModel:
@@ -21341,6 +21419,7 @@ types:
         name: Gemini15ProLatest
       - value: gemini-pro
         name: GeminiPro
+    inline: true
     source:
       openapi: ../openapi.yml
   TaskUpdateOutputFormatValue:
@@ -21352,6 +21431,7 @@ types:
       - int
       - integer
       - list
+    inline: true
     source:
       openapi: ../openapi.yml
   TaskIamListMembersRequestType:
@@ -21366,6 +21446,7 @@ types:
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   TaskIamMemberRoleUpdateRemoveItem:
@@ -21373,6 +21454,7 @@ types:
       - editor
       - owner
       - viewer
+    inline: true
     source:
       openapi: ../openapi.yml
   TaskIamPermissionTestPermissionsItem:
@@ -21387,6 +21469,7 @@ types:
       - run_task
       - view
       - view_members
+    inline: true
     source:
       openapi: ../openapi.yml
 ",

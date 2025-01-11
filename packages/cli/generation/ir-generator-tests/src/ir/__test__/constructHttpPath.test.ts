@@ -1,5 +1,5 @@
-import { HttpPath } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-generator";
+import { HttpPath } from "@fern-api/ir-sdk";
 
 describe("constructHttpPath", () => {
     it("/hello/{world}", () => {

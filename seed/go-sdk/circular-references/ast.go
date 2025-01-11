@@ -76,6 +76,9 @@ func (c *ContainerValue) UnmarshalJSON(data []byte) error {
 }
 
 func (c ContainerValue) MarshalJSON() ([]byte, error) {
+	if err := c.validate(); err != nil {
+		return nil, err
+	}
 	switch c.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", c.Type, c)
@@ -114,6 +117,40 @@ func (c *ContainerValue) Accept(visitor ContainerValueVisitor) error {
 	case "optional":
 		return visitor.VisitOptional(c.Optional)
 	}
+}
+
+func (c *ContainerValue) validate() error {
+	if c == nil {
+		return fmt.Errorf("type %T is nil", c)
+	}
+	var fields []string
+	if c.List != nil {
+		fields = append(fields, "list")
+	}
+	if c.Optional != nil {
+		fields = append(fields, "optional")
+	}
+	if len(fields) == 0 {
+		if c.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", c, c.Type)
+		}
+		return fmt.Errorf("type %T is empty", c)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", c, fields)
+	}
+	if c.Type != "" {
+		field := fields[0]
+		if c.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				c,
+				c.Type,
+				c,
+			)
+		}
+	}
+	return nil
 }
 
 type FieldValue struct {
@@ -202,6 +239,9 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 }
 
 func (f FieldValue) MarshalJSON() ([]byte, error) {
+	if err := f.validate(); err != nil {
+		return nil, err
+	}
 	switch f.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", f.Type, f)
@@ -245,6 +285,43 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 	case "container_value":
 		return visitor.VisitContainerValue(f.ContainerValue)
 	}
+}
+
+func (f *FieldValue) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.PrimitiveValue != "" {
+		fields = append(fields, "primitive_value")
+	}
+	if f.ObjectValue != nil {
+		fields = append(fields, "object_value")
+	}
+	if f.ContainerValue != nil {
+		fields = append(fields, "container_value")
+	}
+	if len(fields) == 0 {
+		if f.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Type)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Type != "" {
+		field := fields[0]
+		if f.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Type,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 type JsonLike struct {

@@ -92,7 +92,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -120,9 +120,9 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -298,7 +298,7 @@
                                 "wireValue": "stream"
                             },
                             "typeReference": {
-                                "_type": "literal",
+                                "type": "literal",
                                 "value": {
                                     "type": "boolean",
                                     "value": true
@@ -329,7 +329,7 @@
                                 "wireValue": "num_events"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -510,7 +510,7 @@
                                 "wireValue": "stream"
                             },
                             "typeReference": {
-                                "_type": "literal",
+                                "type": "literal",
                                 "value": {
                                     "type": "boolean",
                                     "value": false
@@ -541,7 +541,7 @@
                                 "wireValue": "num_events"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -556,5 +556,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

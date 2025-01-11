@@ -1,33 +1,36 @@
+import { camelCase, upperFirst } from "lodash-es";
+
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import {
+    ContainerType,
+    FernFilepath,
     IntermediateRepresentation,
     Literal,
+    MapType,
     Name,
-    TypeReference,
-    TypeId,
-    TypeDeclaration,
+    NamedType,
+    ObjectTypeDeclaration,
+    PrimitiveType,
+    PrimitiveTypeV1,
     Subpackage,
     SubpackageId,
-    FernFilepath,
-    PrimitiveTypeV1,
-    ObjectTypeDeclaration,
-    ContainerType,
-    NamedType,
-    PrimitiveType,
-    MapType
+    TypeDeclaration,
+    TypeId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
-import { PhpProject } from "../project";
-import { camelCase, upperFirst } from "lodash-es";
-import { PhpTypeMapper } from "./PhpTypeMapper";
-import { PhpAttributeMapper } from "./PhpAttributeMapper";
-import { AsIsFiles } from "../AsIs";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { php } from "..";
+import { AsIsFiles } from "../AsIs";
+import { Type } from "../ast";
 import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
 import { TRAITS_DIRECTORY } from "../constants";
-import { Type } from "../ast";
-import { assertNever } from "@fern-api/core-utils";
+import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
+import { PhpProject } from "../project";
+import { PhpAttributeMapper } from "./PhpAttributeMapper";
+import { PhpTypeMapper } from "./PhpTypeMapper";
 
 export interface FileLocation {
     namespace: string;

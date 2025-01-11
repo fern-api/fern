@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidEndpointPathRule } from "../valid-endpoint-path";
 
 describe("valid-endpoint-path", () => {
@@ -19,7 +20,7 @@ describe("valid-endpoint-path", () => {
                 message: "Path must start with a slash.",
                 nodePath: ["service", "endpoints", "noLeadingSlash"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 

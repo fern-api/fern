@@ -8,22 +8,22 @@ export type FullOneOfExample =
     | FernOpenapiIr.FullOneOfExample.Discriminated
     | FernOpenapiIr.FullOneOfExample.Undisciminated;
 
-export declare namespace FullOneOfExample {
-    interface Discriminated extends _Utils {
+export namespace FullOneOfExample {
+    export interface Discriminated extends _Utils {
         type: "discriminated";
         value: Record<FernOpenapiIr.PropertyKey, FernOpenapiIr.FullExample>;
     }
 
-    interface Undisciminated extends _Utils {
+    export interface Undisciminated extends _Utils {
         type: "undisciminated";
         value: FernOpenapiIr.FullExample;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         discriminated: (value: Record<FernOpenapiIr.PropertyKey, FernOpenapiIr.FullExample>) => _Result;
         undisciminated: (value: FernOpenapiIr.FullExample) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -32,14 +32,14 @@ export declare namespace FullOneOfExample {
 
 export const FullOneOfExample = {
     discriminated: (
-        value: Record<FernOpenapiIr.PropertyKey, FernOpenapiIr.FullExample>
+        value: Record<FernOpenapiIr.PropertyKey, FernOpenapiIr.FullExample>,
     ): FernOpenapiIr.FullOneOfExample.Discriminated => {
         return {
             value: value,
             type: "discriminated",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullOneOfExample.Discriminated,
-                visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullOneOfExample._visit(this, visitor);
             },
@@ -52,7 +52,7 @@ export const FullOneOfExample = {
             type: "undisciminated",
             _visit: function <_Result>(
                 this: FernOpenapiIr.FullOneOfExample.Undisciminated,
-                visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>
+                visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.FullOneOfExample._visit(this, visitor);
             },
@@ -61,7 +61,7 @@ export const FullOneOfExample = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.FullOneOfExample,
-        visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>
+        visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "discriminated":

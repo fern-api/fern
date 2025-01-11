@@ -1,4 +1,7 @@
+import { CodeBlock } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
+
 import {
     BytesRequest,
     ContainerType,
@@ -24,6 +27,8 @@ import {
     ServiceId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { FileUploadBodyProperty } from "@fern-fern/ir-sdk/serialization";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import {
     EndpointRequest,
@@ -31,9 +36,6 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest";
-import { CodeBlock } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
-import { FileUploadBodyProperty } from "@fern-fern/ir-sdk/serialization";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {

@@ -24,6 +24,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Checkout PR
+        if: github.event_name == 'pull_request_target'
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
+          git checkout pr-${{ github.event.pull_request.number }}
+
       - name: Install
         uses: ./.github/actions/install
 
@@ -47,20 +53,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          COMMENT_TAG="<!-- docs-preview-link -->"
           PREVIEW_URL=$(cat preview_url.txt)
-
           # Get existing comments
           EXISTING_COMMENT=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-            --jq ".[] | select(.body | contains(\"${COMMENT_TAG}\")) | .id")
-
+            --jq ".[] | select(.body | contains(\"Preview your docs\")) | .id")
           if [ -z "$EXISTING_COMMENT" ]; then
             # No existing comment, create one
             gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-              -f body="${COMMENT_TAG}🌿 Preview your docs: $PREVIEW_URL"
+              -f "body"="🌿 Preview your docs: [$PREVIEW_URL]($PREVIEW_URL)"
           else
             # Update existing comment
             gh api repos/${{ github.repository }}/issues/comments/$EXISTING_COMMENT \
               -X PATCH \
-              -f body="${COMMENT_TAG}🌿 Preview your docs: $PREVIEW_URL"
+              -f "body"="🌿 Preview your docs: [$PREVIEW_URL]($PREVIEW_URL)"
           fi
+

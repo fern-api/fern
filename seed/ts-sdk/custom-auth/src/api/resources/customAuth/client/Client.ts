@@ -9,12 +9,12 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace CustomAuth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         customAuthScheme: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -39,74 +39,67 @@ export class CustomAuth {
      * @example
      *     await client.customAuth.getWithCustomAuth()
      */
-    public getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): core.APIPromise<boolean> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "custom-auth"),
-                    method: "GET",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/custom-auth",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/custom-auth/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...(await this._getCustomAuthorizationHeaders()),
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
+    public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "custom-auth"),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/custom-auth",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/custom-auth/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...(await this._getCustomAuthorizationHeaders()),
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new SeedCustomAuth.UnauthorizedRequest(
+                        serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    switch (_response.error.statusCode) {
-                        case 401:
-                            throw new SeedCustomAuth.UnauthorizedRequest(
-                                serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                    breadcrumbsPrefix: ["response"],
-                                })
-                            );
-                        default:
-                            throw new errors.SeedCustomAuthError({
-                                statusCode: _response.error.statusCode,
-                                body: _response.error.body,
-                            });
-                    }
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedCustomAuthError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling GET /custom-auth.");
-                    case "unknown":
-                        throw new errors.SeedCustomAuthError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+                    );
+                default:
+                    throw new errors.SeedCustomAuthError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedCustomAuthError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling GET /custom-auth.");
+            case "unknown":
+                throw new errors.SeedCustomAuthError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     /**
@@ -123,77 +116,70 @@ export class CustomAuth {
      *         "key": "value"
      *     })
      */
-    public postWithCustomAuth(request?: unknown, requestOptions?: CustomAuth.RequestOptions): core.APIPromise<boolean> {
-        return core.APIPromise.from(
-            (async () => {
-                const _response = await core.fetcher({
-                    url: urlJoin(await core.Supplier.get(this._options.environment), "custom-auth"),
-                    method: "POST",
-                    headers: {
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/custom-auth",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/custom-auth/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...(await this._getCustomAuthorizationHeaders()),
-                        ...requestOptions?.headers,
-                    },
-                    contentType: "application/json",
-                    requestType: "json",
-                    body: request,
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                });
-                if (_response.ok) {
-                    return {
-                        ok: _response.ok,
-                        body: serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {
+    public async postWithCustomAuth(request?: unknown, requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "custom-auth"),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/custom-auth",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/custom-auth/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...(await this._getCustomAuthorizationHeaders()),
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new SeedCustomAuth.UnauthorizedRequest(
+                        serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
-                        headers: _response.headers,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    switch (_response.error.statusCode) {
-                        case 401:
-                            throw new SeedCustomAuth.UnauthorizedRequest(
-                                serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                    breadcrumbsPrefix: ["response"],
-                                })
-                            );
-                        case 400:
-                            throw new SeedCustomAuth.BadRequest();
-                        default:
-                            throw new errors.SeedCustomAuthError({
-                                statusCode: _response.error.statusCode,
-                                body: _response.error.body,
-                            });
-                    }
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedCustomAuthError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case "timeout":
-                        throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling POST /custom-auth.");
-                    case "unknown":
-                        throw new errors.SeedCustomAuthError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            })()
-        );
+                    );
+                case 400:
+                    throw new SeedCustomAuth.BadRequest();
+                default:
+                    throw new errors.SeedCustomAuthError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedCustomAuthError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling POST /custom-auth.");
+            case "unknown":
+                throw new errors.SeedCustomAuthError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     protected async _getCustomAuthorizationHeaders() {

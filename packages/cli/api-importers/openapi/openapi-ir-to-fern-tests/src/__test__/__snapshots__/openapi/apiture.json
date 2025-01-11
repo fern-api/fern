@@ -557,6 +557,7 @@ This error response may have one of the following `type` values:
               "viewCards",
               "manageCards",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -730,6 +731,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "external",
               "outside",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -890,6 +892,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "float",
               "sameDay",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -950,6 +953,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "tel",
               "web",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1172,6 +1176,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "securityQuestions",
               "authenticatorToken",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1314,6 +1319,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "externalTransfer",
               "billPay",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1440,6 +1446,7 @@ The client can use this value to localize the `items[].time` values to the local
               "microDeposits",
               "manual",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1569,6 +1576,7 @@ The client can use this value to localize the `items[].time` values to the local
               "swiftBicCode",
               "ibanAccountNumber",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1875,6 +1883,7 @@ The client can use this value to localize the `items[].time` values to the local
               "loan",
               "creditCard",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2069,6 +2078,7 @@ The client can use this value to localize the `items[].time` values to the local
               "credit",
               "debit",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2291,6 +2301,7 @@ The client can use this value to localize the `items[].time` values to the local
               "check",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2326,6 +2337,7 @@ The client can use this value to localize the `items[].time` values to the local
               "debit",
               "credit",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2489,6 +2501,7 @@ The client can use this value to localize the `items[].time` values to the local
               "closure",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2632,6 +2645,7 @@ The response may include dates prior to requested the start date, as that is use
               "semiyearly",
               "yearly",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2733,6 +2747,7 @@ The response may include dates prior to requested the start date, as that is use
               "fixed",
               "variable",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2821,6 +2836,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "credit",
               "both",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2921,6 +2937,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "failed",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2970,6 +2987,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "domesticWireTransfer",
               "internationalWireTransfer",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6142,6 +6160,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                     "type": "optional<root.AccountAllowsFilter>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6162,6 +6181,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                     "type": "optional<root.ProductType>",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -6209,6 +6229,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                     "type": "optional<root.ResourceId>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6224,6 +6245,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                     "type": "root.AchSecCode",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -6254,6 +6276,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "internal",
               "external",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6311,6 +6334,7 @@ service:
               `account.allows.view` are all `true` for the caller.
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -6321,6 +6345,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -6543,6 +6568,7 @@ service:
               authenticated caller's customer ID (not their access ID).
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -6553,6 +6579,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -6912,6 +6939,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 "name": "InstitutionsListTransferScheduleRequest",
                 "query-parameters": {
                   "count": {
+                    "default": 6,
                     "docs": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7195,6 +7223,7 @@ service:
               `credit`, dates are adjusted to the previous business day.
           count:
             type: optional<integer>
+            default: 6
             docs: >-
               The maximum amount of dates to calculate and include in the
               response. If an end date is provided, the total count may be lower
@@ -7717,6 +7746,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                 "name": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
                 "query-parameters": {
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7728,6 +7758,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                     },
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -7851,6 +7882,7 @@ service:
         query-parameters:
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -7861,6 +7893,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -8234,6 +8267,7 @@ The default response lists only recent transactions. Normally, this is transacti
                     "type": "optional<root.DateRange>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -8275,6 +8309,7 @@ The default response lists only recent transactions. Normally, this is transacti
                     },
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -8351,6 +8386,7 @@ service:
         query-parameters:
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -8361,6 +8397,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
@@ -8868,6 +8905,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "optional<boolean>",
                   },
                   "limit": {
+                    "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
                     "type": "optional<integer>",
                     "validation": {
@@ -8883,6 +8921,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "optional<root.DateRange>",
                   },
                   "start": {
+                    "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
                     "type": "optional<string>",
                     "validation": {
@@ -9077,6 +9116,7 @@ service:
               finished processing. If omitted, list all transfers.
           start:
             type: optional<string>
+            default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
               cursor supplied by the API service. Omit this to start at the
@@ -9087,6 +9127,7 @@ service:
               maxLength: 256
           limit:
             type: optional<integer>
+            default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0

@@ -17,7 +17,7 @@ export const BodyRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace BodyRequest {
-    interface Raw {
+    export interface Raw {
         pathParameters?: NamedParameter.Raw[] | null;
         body?: ReferencedRequestBodyType.Raw | null;
     }

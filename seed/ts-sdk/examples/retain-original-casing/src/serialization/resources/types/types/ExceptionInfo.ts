@@ -14,7 +14,7 @@ export const ExceptionInfo: core.serialization.ObjectSchema<serializers.Exceptio
     });
 
 export declare namespace ExceptionInfo {
-    interface Raw {
+    export interface Raw {
         exceptionType: string;
         exceptionMessage: string;
         exceptionStacktrace: string;

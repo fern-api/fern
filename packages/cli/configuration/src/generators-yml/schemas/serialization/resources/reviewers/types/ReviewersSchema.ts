@@ -16,7 +16,7 @@ export const ReviewersSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ReviewersSchema {
-    interface Raw {
+    export interface Raw {
         teams?: ReviewerSchema.Raw[] | null;
         users?: ReviewerSchema.Raw[] | null;
     }

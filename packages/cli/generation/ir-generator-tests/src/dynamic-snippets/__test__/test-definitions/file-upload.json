@@ -68,7 +68,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -163,7 +163,7 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -452,9 +452,9 @@
                                 "wireValue": "maybeString"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -484,7 +484,7 @@
                                 "wireValue": "integer"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         },
@@ -605,9 +605,9 @@
                                 "wireValue": "maybeInteger"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "INTEGER"
                                 }
                             }
@@ -637,11 +637,11 @@
                                 "wireValue": "optionalListOfStrings"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "list",
+                                    "type": "list",
                                     "value": {
-                                        "_type": "primitive",
+                                        "type": "primitive",
                                         "value": "STRING"
                                     }
                                 }
@@ -672,9 +672,9 @@
                                 "wireValue": "listOfObjects"
                             },
                             "typeReference": {
-                                "_type": "list",
+                                "type": "list",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_service:MyObject"
                                 }
                             }
@@ -704,9 +704,9 @@
                                 "wireValue": "optionalMetadata"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "unknown"
+                                    "type": "unknown"
                                 }
                             }
                         },
@@ -735,9 +735,9 @@
                                 "wireValue": "optionalObjectType"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_service:ObjectType"
                                 }
                             }
@@ -767,9 +767,9 @@
                                 "wireValue": "optionalId"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_service:Id"
                                 }
                             }
@@ -1123,9 +1123,9 @@
                             "wireValue": "maybeString"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -1154,7 +1154,7 @@
                             "wireValue": "integer"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     },
@@ -1182,9 +1182,9 @@
                             "wireValue": "maybeInteger"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -1213,9 +1213,9 @@
                             "wireValue": "listOfStrings"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -1244,11 +1244,11 @@
                             "wireValue": "optionalListOfStrings"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -1483,7 +1483,7 @@
                                 "wireValue": "foo"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         },
@@ -1512,7 +1512,7 @@
                                 "wireValue": "bar"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_service:MyObject"
                             }
                         },
@@ -1541,9 +1541,9 @@
                                 "wireValue": "foobar"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_service:MyObject"
                                 }
                             }
@@ -1559,5 +1559,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

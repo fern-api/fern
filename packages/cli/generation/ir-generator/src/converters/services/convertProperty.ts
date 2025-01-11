@@ -1,5 +1,6 @@
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -8,7 +9,7 @@ import {
     getObjectPropertyFromResolvedType
 } from "./getObjectPropertyFromResolvedType";
 
-export async function getNestedObjectPropertyFromResolvedType({
+export function getNestedObjectPropertyFromResolvedType({
     typeResolver,
     file,
     resolvedType,
@@ -18,12 +19,12 @@ export async function getNestedObjectPropertyFromResolvedType({
     file: FernFileContext;
     resolvedType: ResolvedType;
     propertyComponents: string[];
-}): Promise<ObjectProperty | undefined> {
+}): ObjectProperty | undefined {
     if (propertyComponents.length === 0) {
         return undefined;
     }
     if (propertyComponents.length === 1) {
-        return await getObjectPropertyFromResolvedType({
+        return getObjectPropertyFromResolvedType({
             typeResolver,
             file,
             resolvedType,
@@ -42,7 +43,7 @@ export async function getNestedObjectPropertyFromResolvedType({
     });
 }
 
-export async function getNestedObjectPropertyFromObjectSchema({
+export function getNestedObjectPropertyFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -52,19 +53,19 @@ export async function getNestedObjectPropertyFromObjectSchema({
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
     propertyComponents: string[];
-}): Promise<ObjectProperty | undefined> {
+}): ObjectProperty | undefined {
     if (propertyComponents.length === 0) {
         return undefined;
     }
     if (propertyComponents.length === 1) {
-        return await getObjectPropertyFromObjectSchema({
+        return getObjectPropertyFromObjectSchema({
             typeResolver,
             file,
             objectSchema,
             property: propertyComponents[0] ?? ""
         });
     }
-    const propertyType = await getPropertyTypeFromObjectSchema({
+    const propertyType = getPropertyTypeFromObjectSchema({
         typeResolver,
         file,
         objectSchema,
@@ -82,7 +83,7 @@ export async function getNestedObjectPropertyFromObjectSchema({
     });
 }
 
-export async function getPropertyTypeFromObjectSchema({
+export function getPropertyTypeFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -92,8 +93,8 @@ export async function getPropertyTypeFromObjectSchema({
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
     property: string;
-}): Promise<string> {
-    const properties = await getAllPropertiesForRawObjectSchema({
+}): string {
+    const properties = getAllPropertiesForRawObjectSchema({
         typeResolver,
         file,
         objectSchema
@@ -105,7 +106,7 @@ export async function getPropertyTypeFromObjectSchema({
     return propertyType;
 }
 
-async function getAllPropertiesForRawObjectSchema({
+function getAllPropertiesForRawObjectSchema({
     typeResolver,
     file,
     objectSchema
@@ -113,7 +114,7 @@ async function getAllPropertiesForRawObjectSchema({
     typeResolver: TypeResolver;
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
-}): Promise<Record<string, string>> {
+}): Record<string, string> {
     let extendedTypes: string[] = [];
     if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends];
@@ -123,7 +124,7 @@ async function getAllPropertiesForRawObjectSchema({
 
     const properties: Record<string, string> = {};
     for (const extendedType of extendedTypes) {
-        const extendedProperties = await getAllPropertiesForExtendedType({
+        const extendedProperties = getAllPropertiesForExtendedType({
             typeResolver,
             file,
             extendedType
@@ -142,7 +143,7 @@ async function getAllPropertiesForRawObjectSchema({
     return properties;
 }
 
-async function getAllPropertiesForExtendedType({
+function getAllPropertiesForExtendedType({
     typeResolver,
     file,
     extendedType
@@ -150,13 +151,13 @@ async function getAllPropertiesForExtendedType({
     typeResolver: TypeResolver;
     file: FernFileContext;
     extendedType: string;
-}): Promise<Record<string, string>> {
+}): Record<string, string> {
     const resolvedType = typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
         file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return await getAllPropertiesForRawObjectSchema({
+        return getAllPropertiesForRawObjectSchema({
             typeResolver,
             file: maybeFileFromResolvedType(resolvedType) ?? file,
             objectSchema: resolvedType.declaration

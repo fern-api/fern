@@ -1,7 +1,9 @@
-import { generatorsYml } from "@fern-api/configuration";
-import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
+
+import { generatorsYml } from "@fern-api/configuration";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
+
 import { RESERVED_KEYWORDS } from "./reserved";
 
 export interface CasingsGenerator {

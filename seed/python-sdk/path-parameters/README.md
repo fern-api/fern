@@ -25,8 +25,10 @@ from seed import SeedPathParameters
 client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
-client.user.get_organization(
-    organization_id="organizationId",
+client.user.create_user(
+    tenant_id="tenant_id",
+    name="name",
+    tags=["tags", "tags"],
 )
 ```
 
@@ -45,8 +47,10 @@ client = AsyncSeedPathParameters(
 
 
 async def main() -> None:
-    await client.user.get_organization(
-        organization_id="organizationId",
+    await client.user.create_user(
+        tenant_id="tenant_id",
+        name="name",
+        tags=["tags", "tags"],
     )
 
 
@@ -62,7 +66,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.user.get_organization(...)
+    client.user.create_user(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -85,10 +89,10 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.user.get_organization(..., request_options={
-        "max_retries": 1
-    })
-    ```
+client.user.create_user(..., request_options={
+    "max_retries": 1
+})
+```
 
 ### Timeouts
 
@@ -96,7 +100,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-    from seed import SeedPathParameters
+from seed import SeedPathParameters
 
 client = SeedPathParameters(
     ...,
@@ -104,11 +108,11 @@ client = SeedPathParameters(
 )
 
 
-    # Override timeout for a specific method
-    client.user.get_organization(..., request_options={
-        "timeout_in_seconds": 1
-    })
-    ```
+# Override timeout for a specific method
+client.user.create_user(..., request_options={
+    "timeout_in_seconds": 1
+})
+```
 
 ### Custom Client
 

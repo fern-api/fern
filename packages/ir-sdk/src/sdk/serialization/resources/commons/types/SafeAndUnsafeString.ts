@@ -15,7 +15,7 @@ export const SafeAndUnsafeString: core.serialization.ObjectSchema<
 });
 
 export declare namespace SafeAndUnsafeString {
-    interface Raw {
+    export interface Raw {
         unsafeName: string;
         safeName: string;
     }

@@ -1,4 +1,5 @@
 import { Literal, PrimitiveType } from "@fern-api/ir-sdk";
+
 import { ValidationSchema } from "../schemas";
 import { visitRawTypeReference } from "./visitRawTypeReference";
 

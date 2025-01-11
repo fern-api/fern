@@ -84,9 +84,9 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.service.get_with_bearer_token(request_options={
-        "max_retries": 1
-    })
-    ```
+    "max_retries": 1
+})
+```
 
 ### Timeouts
 
@@ -94,7 +94,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-    from seed import SeedBearerTokenEnvironmentVariable
+from seed import SeedBearerTokenEnvironmentVariable
 
 client = SeedBearerTokenEnvironmentVariable(
     ...,
@@ -102,11 +102,11 @@ client = SeedBearerTokenEnvironmentVariable(
 )
 
 
-    # Override timeout for a specific method
-    client.service.get_with_bearer_token(request_options={
-        "timeout_in_seconds": 1
-    })
-    ```
+# Override timeout for a specific method
+client.service.get_with_bearer_token(request_options={
+    "timeout_in_seconds": 1
+})
+```
 
 ### Custom Client
 

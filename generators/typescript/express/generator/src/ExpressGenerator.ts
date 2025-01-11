@@ -1,7 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
-    convertExportedFilePathToFilePath,
     CoreUtilitiesManager,
     DependencyManager,
     ExportedDirectory,
@@ -11,7 +8,8 @@ import {
     NpmPackage,
     PackageId,
     SimpleTypescriptProject,
-    TypescriptProject
+    TypescriptProject,
+    convertExportedFilePathToFilePath
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
@@ -27,6 +25,12 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Directory, Project, SourceFile } from "ts-morph";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+
+import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+
 import { ExpressContextImpl } from "./contexts/ExpressContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { ExpressErrorDeclarationReferencer } from "./declaration-referencers/ExpressErrorDeclarationReferencer";
@@ -188,7 +192,8 @@ export class ExpressGenerator {
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
-            noOptionalProperties: config.noOptionalProperties
+            noOptionalProperties: config.noOptionalProperties,
+            enableInlineTypes: false
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -262,7 +267,9 @@ export class ExpressGenerator {
                 "@types/mime": "3.0.4"
             },
             extraConfigs: undefined,
-            outputJsr: false
+            outputJsr: false,
+            exportSerde: false,
+            useLegacyExports: true
         });
     }
 
@@ -276,12 +283,20 @@ export class ExpressGenerator {
         await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
+    private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
+        return this.intermediateRepresentation.types;
+    }
+
     private generateTypeDeclarations() {
-        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
-                    const context = this.generateExpressContext({ sourceFile, importsManager });
+                    const context = this.generateExpressContext({
+                        logger: this.context.logger,
+                        sourceFile,
+                        importsManager
+                    });
                     context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
                 }
             });
@@ -289,11 +304,15 @@ export class ExpressGenerator {
     }
 
     private generateTypeSchemas() {
-        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
-                    const context = this.generateExpressContext({ sourceFile, importsManager });
+                    const context = this.generateExpressContext({
+                        logger: this.context.logger,
+                        sourceFile,
+                        importsManager
+                    });
                     context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
                 }
             });
@@ -305,7 +324,11 @@ export class ExpressGenerator {
             this.withSourceFile({
                 filepath: this.expressErrorDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
-                    const context = this.generateExpressContext({ sourceFile, importsManager });
+                    const context = this.generateExpressContext({
+                        logger: this.context.logger,
+                        sourceFile,
+                        importsManager
+                    });
                     context.expressError.getGeneratedExpressError(errorDeclaration.name).writeToFile(context);
                 }
             });
@@ -317,7 +340,11 @@ export class ExpressGenerator {
             this.withSourceFile({
                 filepath: this.expressErrorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
-                    const context = this.generateExpressContext({ sourceFile, importsManager });
+                    const context = this.generateExpressContext({
+                        logger: this.context.logger,
+                        sourceFile,
+                        importsManager
+                    });
                     context.expressErrorSchema
                         .getGeneratedExpressErrorSchema(errorDeclaration.name)
                         ?.writeToFile(context);
@@ -336,7 +363,11 @@ export class ExpressGenerator {
                             endpoint
                         }),
                         run: ({ sourceFile, importsManager }) => {
-                            const context = this.generateExpressContext({ sourceFile, importsManager });
+                            const context = this.generateExpressContext({
+                                logger: this.context.logger,
+                                sourceFile,
+                                importsManager
+                            });
                             context.expressInlinedRequestBody
                                 .getGeneratedInlinedRequestBody(packageId, endpoint.name)
                                 .writeToFile(context);
@@ -357,7 +388,11 @@ export class ExpressGenerator {
                             endpoint
                         }),
                         run: ({ sourceFile, importsManager }) => {
-                            const context = this.generateExpressContext({ sourceFile, importsManager });
+                            const context = this.generateExpressContext({
+                                logger: this.context.logger,
+                                sourceFile,
+                                importsManager
+                            });
                             context.expressInlinedRequestBodySchema
                                 .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
                                 .writeToFile(context);
@@ -377,7 +412,11 @@ export class ExpressGenerator {
                         endpoint
                     }),
                     run: ({ sourceFile, importsManager }) => {
-                        const context = this.generateExpressContext({ sourceFile, importsManager });
+                        const context = this.generateExpressContext({
+                            logger: this.context.logger,
+                            sourceFile,
+                            importsManager
+                        });
                         context.expressEndpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
                             .writeToFile(context);
@@ -392,7 +431,11 @@ export class ExpressGenerator {
             this.withSourceFile({
                 filepath: this.expressServiceDeclarationReferencer.getExportedFilepath(packageId),
                 run: ({ sourceFile, importsManager }) => {
-                    const context = this.generateExpressContext({ sourceFile, importsManager });
+                    const context = this.generateExpressContext({
+                        logger: this.context.logger,
+                        sourceFile,
+                        importsManager
+                    });
                     context.expressService.getGeneratedExpressService(packageId).writeToFile(context);
                 }
             });
@@ -403,7 +446,11 @@ export class ExpressGenerator {
         this.withSourceFile({
             filepath: this.expressRegisterDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
-                const context = this.generateExpressContext({ sourceFile, importsManager });
+                const context = this.generateExpressContext({
+                    logger: this.context.logger,
+                    sourceFile,
+                    importsManager
+                });
                 context.expressRegister.getGeneratedExpressRegister()?.writeToFile(context);
             }
         });
@@ -413,7 +460,11 @@ export class ExpressGenerator {
         this.withSourceFile({
             filepath: this.genericApiExpressErrorDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
-                const context = this.generateExpressContext({ sourceFile, importsManager });
+                const context = this.generateExpressContext({
+                    logger: this.context.logger,
+                    sourceFile,
+                    importsManager
+                });
                 context.genericAPIExpressError.getGeneratedGenericAPIExpressError().writeToFile(context);
             }
         });
@@ -470,13 +521,16 @@ export class ExpressGenerator {
     }
 
     private generateExpressContext({
+        logger,
         sourceFile,
         importsManager
     }: {
+        logger: Logger;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
     }): ExpressContextImpl {
         return new ExpressContextImpl({
+            logger,
             sourceFile,
             coreUtilitiesManager: this.coreUtilitiesManager,
             dependencyManager: this.dependencyManager,
@@ -509,7 +563,8 @@ export class ExpressGenerator {
             expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
-            useBigInt: this.config.useBigInt
+            useBigInt: this.config.useBigInt,
+            enableInlineTypes: false
         });
     }
 }

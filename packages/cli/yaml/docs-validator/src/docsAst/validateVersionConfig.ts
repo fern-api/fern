@@ -1,5 +1,5 @@
-import { addPrefixToString } from "@fern-api/core-utils";
 import { docsYml } from "@fern-api/configuration-loader";
+import { addPrefixToString } from "@fern-api/core-utils";
 
 export type VersionParseResult = VersionFileSuccessParseResult | VersionFileFailureParseResult;
 
@@ -14,7 +14,7 @@ interface VersionFileFailureParseResult {
 }
 
 export async function validateVersionConfigFileSchema({ value }: { value: unknown }): Promise<VersionParseResult> {
-    const result = await docsYml.RawSchemas.Serializer.VersionFileConfig.parse(value);
+    const result = docsYml.RawSchemas.Serializer.VersionFileConfig.parse(value);
     if (result.ok) {
         return {
             type: "success",

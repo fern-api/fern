@@ -9,10 +9,12 @@ import java.lang.String;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import resources.user.types.Organization;
 import resources.user.types.User;
 
 @RequestMapping(
@@ -20,35 +22,29 @@ import resources.user.types.User;
 )
 public interface UserService {
   @GetMapping(
-      value = "/organizations/{organizationId}",
+      value = "/{user_id}",
       produces = "application/json"
   )
-  Organization getOrganization(@PathVariable("organizationId") String organizationId);
+  User getUser(@PathVariable("user_id") String userId);
+
+  @PostMapping(
+      value = "/",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  User createUser(@RequestBody User body);
+
+  @PatchMapping(
+      value = "/{user_id}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  User updateUser(@PathVariable("user_id") String userId, @RequestBody User body);
 
   @GetMapping(
-      value = "/users/{userId}",
+      value = "/{user_id}/search",
       produces = "application/json"
   )
-  User getUser(@PathVariable("userId") String userId);
-
-  @GetMapping(
-      value = "/organizations/{organizationId}/users/{userId}",
-      produces = "application/json"
-  )
-  User getOrganizationUser(@PathVariable("organizationId") String organizationId,
-      @PathVariable("userId") String userId);
-
-  @GetMapping(
-      value = "/users/{userId}/search",
-      produces = "application/json"
-  )
-  List<User> searchUsers(@PathVariable("userId") String userId,
-      @RequestParam("limit") Optional<Integer> limit);
-
-  @GetMapping(
-      value = "/organizations/{organizationId}/search",
-      produces = "application/json"
-  )
-  List<Organization> searchOrganizations(@PathVariable("organizationId") String organizationId,
+  List<User> searchUsers(@PathVariable("user_id") String userId,
       @RequestParam("limit") Optional<Integer> limit);
 }

@@ -3,8 +3,8 @@ import { SeedUnionsClient } from "@fern/unions";
 
 const client = new SeedUnionsClient({ environment: "YOUR_BASE_URL" });
 await client.union.get("id");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -19,7 +19,7 @@ await client.union.update(
 		}
 	}
 )
- 
-```                        
+
+```
 
 

@@ -14,12 +14,12 @@ export const PostWithObjectBody: core.serialization.Schema<
     integer: core.serialization.number(),
     nestedObject: core.serialization.property(
         "NestedObject",
-        core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField)
+        core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField),
     ),
 });
 
 export declare namespace PostWithObjectBody {
-    interface Raw {
+    export interface Raw {
         string: string;
         integer: number;
         NestedObject: serializers.types.ObjectWithOptionalField.Raw;

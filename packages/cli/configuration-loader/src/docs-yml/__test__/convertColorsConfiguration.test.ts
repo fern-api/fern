@@ -1,4 +1,5 @@
 import { createMockTaskContext } from "@fern-api/task-context";
+
 import { convertColorsConfiguration, getColorType } from "../convertColorsConfiguration";
 
 describe("getColorType", () => {

@@ -15,7 +15,7 @@ export const ListResponse: core.serialization.ObjectSchema<serializers.ListRespo
     });
 
 export declare namespace ListResponse {
-    interface Raw {
+    export interface Raw {
         columns?: serializers.ListElement.Raw[] | null;
         pagination?: serializers.Pagination.Raw | null;
         namespace?: string | null;

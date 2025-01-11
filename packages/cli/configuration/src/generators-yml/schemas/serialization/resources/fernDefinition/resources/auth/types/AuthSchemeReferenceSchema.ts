@@ -17,7 +17,7 @@ export const AuthSchemeReferenceSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace AuthSchemeReferenceSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         scheme: string;
     }
 }

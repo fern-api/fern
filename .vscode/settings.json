@@ -2,18 +2,34 @@
   "search.exclude": {
     "**/.pnp.*": true,
     "**/.yarn": true,
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/.next": true,
+    ".turbo": true,
+    ".husky/_": true,
   },
-  "eslint.nodePath": ".yarn/sdks",
-  "eslint.execArgv": ["--max_old_space_size=16384"],
-  "eslint.workingDirectories": [ "./packages", "./generators" ],
+  "files.readonlyInclude": {
+    ".husky/_": true,
+    ".turbo": true,
+    "pnpm-lock.yaml": true,
+  },
+  "eslint.execArgv": [
+    "--max_old_space_size=16384"
+  ],
+  "eslint.workingDirectories": [
+    "./packages",
+    "./generators"
+  ],
   "prettier.prettierPath": "node_modules/prettier/index.js",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": ["source.fixAll", "source.sortMembers"],
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": [],
   "editor.defaultFormatter": null,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "python.analysis.typeCheckingMode": "basic"
+  "python.analysis.typeCheckingMode": "basic",
+  "dotnet.automaticallyCreateSolutionInWorkspace": false,
+  "dotnet.testWindow.disableAutoDiscovery": true
 }

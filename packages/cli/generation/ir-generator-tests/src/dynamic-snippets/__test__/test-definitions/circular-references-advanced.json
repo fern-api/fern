@@ -54,9 +54,9 @@
                         "wireValue": "a"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_a:A"
                         }
                     }
@@ -116,7 +116,7 @@
                         "wireValue": "s"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -213,7 +213,7 @@
                         "wireValue": "s"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -311,9 +311,9 @@
                 "list": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_ast:FieldValue"
                         }
                     },
@@ -344,9 +344,9 @@
                 "optional": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_ast:FieldValue"
                         }
                     },
@@ -624,7 +624,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -720,7 +720,7 @@
                 "primitive_value": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_ast:PrimitiveValue"
                     },
                     "discriminantValue": {
@@ -777,7 +777,7 @@
                 "container_value": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_ast:ContainerValue"
                     },
                     "discriminantValue": {
@@ -897,7 +897,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_ast:FieldName"
                     }
                 },
@@ -925,7 +925,7 @@
                         "wireValue": "value"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_ast:FieldValue"
                     }
                 }
@@ -933,5 +933,6 @@
         }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {},
+    "environments": null
 }

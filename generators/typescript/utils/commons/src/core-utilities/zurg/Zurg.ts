@@ -92,6 +92,7 @@ export declare namespace Zurg {
 
     interface ObjectUtils {
         extend: (extension: Zurg.Schema) => ObjectSchema;
+        passthrough: () => ObjectSchema;
     }
 
     interface Property {

@@ -68,7 +68,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -163,7 +163,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_imdb:MovieId"
                     }
                 },
@@ -191,7 +191,7 @@
                         "wireValue": "title"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -219,7 +219,7 @@
                         "wireValue": "rating"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 }
@@ -415,7 +415,7 @@
                                 "wireValue": "id"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_imdb:MovieId"
                             }
                         },
@@ -443,7 +443,7 @@
                                 "wireValue": "movie_title"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         },
@@ -471,7 +471,7 @@
                                 "wireValue": "movie_rating"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "DOUBLE"
                             }
                         }
@@ -604,7 +604,7 @@
                             "wireValue": "movie_id"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_imdb:MovieId"
                         }
                     }
@@ -615,5 +615,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

@@ -1,17 +1,25 @@
+import { kebabCase } from "lodash-es";
+import urlJoin from "url-join";
+
 import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
+
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
+import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
+import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
 import { isSubpackage } from "./utils/isSubpackage";
+import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
+import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
 import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
-import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { toPageNode } from "./utils/toPageNode";
+import { toRelativeFilepath } from "./utils/toRelativeFilepath";
 
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
@@ -45,7 +53,7 @@ export class ApiReferenceNodeConverter {
 
         this.#overviewPageId =
             this.apiSection.overviewAbsolutePath != null
-                ? FernNavigation.V1.PageId(this.toRelativeFilepath(this.apiSection.overviewAbsolutePath))
+                ? FernNavigation.V1.PageId(toRelativeFilepath(this.docsWorkspace, this.apiSection.overviewAbsolutePath))
                 : undefined;
 
         // the overview page markdown could contain a full slug, which would be used as the base slug for the API section.
@@ -146,24 +154,13 @@ export class ApiReferenceNodeConverter {
         page: docsYml.DocsNavigationItem.Page,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): FernNavigation.V1.PageNode {
-        const pageId = FernNavigation.V1.PageId(this.toRelativeFilepath(page.absolutePath));
-        const pageSlug = parentSlug.apply({
-            fullSlug: this.markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
-            urlSlug: page.slug ?? kebabCase(page.title)
+        return toPageNode({
+            page,
+            parentSlug,
+            docsWorkspace: this.docsWorkspace,
+            markdownFilesToFullSlugs: this.markdownFilesToFullSlugs,
+            idgen: this.#idgen
         });
-        return {
-            id: this.#idgen.get(pageId),
-            type: "page",
-            pageId,
-            title: page.title,
-            slug: pageSlug.get(),
-            icon: page.icon,
-            hidden: page.hidden,
-            noindex: page.noindex,
-            authed: undefined,
-            viewers: page.viewers,
-            orphaned: page.orphaned
-        };
     }
 
     #convertPackage(
@@ -172,7 +169,7 @@ export class ApiReferenceNodeConverter {
     ): FernNavigation.V1.ApiPackageNode {
         const overviewPageId =
             pkg.overviewAbsolutePath != null
-                ? FernNavigation.V1.PageId(this.toRelativeFilepath(pkg.overviewAbsolutePath))
+                ? FernNavigation.V1.PageId(toRelativeFilepath(this.docsWorkspace, pkg.overviewAbsolutePath))
                 : undefined;
 
         const maybeFullSlug =
@@ -196,7 +193,7 @@ export class ApiReferenceNodeConverter {
                 pkg.slug ??
                 (isSubpackage(subpackage)
                     ? subpackage.urlSlug
-                    : this.apiSection.slug ?? kebabCase(this.apiSection.title));
+                    : (this.apiSection.slug ?? kebabCase(this.apiSection.title)));
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
@@ -210,7 +207,7 @@ export class ApiReferenceNodeConverter {
                 title:
                     pkg.title ??
                     (isSubpackage(subpackage)
-                        ? subpackage.displayName ?? titleCase(subpackage.name)
+                        ? (subpackage.displayName ?? titleCase(subpackage.name))
                         : this.apiSection.title),
                 slug: slug.get(),
                 icon: pkg.icon,
@@ -263,7 +260,7 @@ export class ApiReferenceNodeConverter {
     ): FernNavigation.V1.ApiPackageNode {
         const overviewPageId =
             section.overviewAbsolutePath != null
-                ? FernNavigation.V1.PageId(this.toRelativeFilepath(section.overviewAbsolutePath))
+                ? FernNavigation.V1.PageId(toRelativeFilepath(this.docsWorkspace, section.overviewAbsolutePath))
                 : undefined;
 
         const maybeFullSlug =
@@ -351,7 +348,7 @@ export class ApiReferenceNodeConverter {
                 type: "apiPackage",
                 children: [],
                 title: isSubpackage(subpackage)
-                    ? subpackage.displayName ?? titleCase(subpackage.name)
+                    ? (subpackage.displayName ?? titleCase(subpackage.name))
                     : this.apiSection.title,
                 slug: slug.get(),
                 icon: undefined,
@@ -510,33 +507,25 @@ export class ApiReferenceNodeConverter {
         left: FernNavigation.V1.ApiPackageChild[],
         right: FernNavigation.V1.ApiPackageChild[]
     ): FernNavigation.V1.ApiPackageChild[] {
-        return this.mergeEndpointPairs([...left, ...right]).filter((child) =>
-            child.type === "apiPackage" ? child.children.length > 0 : true
-        );
+        return mergeAndFilterChildren({
+            left,
+            right,
+            findEndpointById: (endpointId) => this.#holder.endpoints.get(endpointId),
+            stringifyEndpointPathParts: (endpoint: APIV1Read.EndpointDefinition) =>
+                stringifyEndpointPathParts(endpoint.path.parts),
+            disableEndpointPairs: this.disableEndpointPairs,
+            apiDefinitionId: this.apiDefinitionId
+        });
     }
 
     #enrichApiPackageChild(child: FernNavigation.V1.ApiPackageChild): FernNavigation.V1.ApiPackageChild {
-        if (child.type === "apiPackage") {
-            // expand the subpackage to include children that haven't been visited yet
-            const slug = FernNavigation.V1.SlugGenerator.init(child.slug);
-            const subpackageIds = this.#nodeIdToSubpackageId.get(child.id) ?? [];
-            const subpackageChildren = subpackageIds.flatMap((subpackageId) =>
-                this.#convertApiDefinitionPackageId(subpackageId, slug)
-            );
-
-            // recursively apply enrichment to children
-            const enrichedChildren = child.children.map((innerChild) => this.#enrichApiPackageChild(innerChild));
-
-            // combine children with subpackage (tacked on at the end to preserve order)
-            const children = this.#mergeAndFilterChildren(enrichedChildren, subpackageChildren);
-
-            return {
-                ...child,
-                children,
-                pointsTo: undefined
-            };
-        }
-        return child;
+        return enrichApiPackageChild({
+            child,
+            nodeIdToSubpackageId: this.#nodeIdToSubpackageId,
+            convertApiDefinitionPackageId: (subpackageId, slug) =>
+                this.#convertApiDefinitionPackageId(subpackageId, slug),
+            mergeAndFilterChildren: this.#mergeAndFilterChildren.bind(this)
+        });
     }
 
     #convertApiDefinitionPackage(
@@ -644,7 +633,7 @@ export class ApiReferenceNodeConverter {
                     type: "apiPackage",
                     children: subpackageChildren,
                     title: isSubpackage(subpackage)
-                        ? subpackage.displayName ?? titleCase(subpackage.name)
+                        ? (subpackage.displayName ?? titleCase(subpackage.name))
                         : this.apiSection.title,
                     slug: slug.get(),
                     icon: undefined,
@@ -696,79 +685,17 @@ export class ApiReferenceNodeConverter {
     #convertPlaygroundSettings(
         playgroundSettings?: docsYml.RawSchemas.PlaygroundSettings
     ): FernNavigation.V1.PlaygroundSettings | undefined {
-        if (playgroundSettings) {
-            return {
-                environments:
-                    playgroundSettings.environments != null && playgroundSettings.environments.length > 0
-                        ? playgroundSettings.environments.map((environmentId) =>
-                              FernNavigation.V1.EnvironmentId(environmentId)
-                          )
-                        : undefined,
-                button:
-                    playgroundSettings.button != null && playgroundSettings.button.href
-                        ? { href: FernNavigation.V1.Url(playgroundSettings.button.href) }
-                        : undefined,
-                "limit-websocket-messages-per-connection":
-                    playgroundSettings.limitWebsocketMessagesPerConnection != null
-                        ? playgroundSettings.limitWebsocketMessagesPerConnection
-                        : undefined
-            };
-        }
-
-        return;
+        return convertPlaygroundSettings(playgroundSettings);
     }
 
     private mergeEndpointPairs(children: FernNavigation.V1.ApiPackageChild[]): FernNavigation.V1.ApiPackageChild[] {
-        if (this.disableEndpointPairs) {
-            return children;
-        }
-
-        const toRet: FernNavigation.V1.ApiPackageChild[] = [];
-
-        const methodAndPathToEndpointNode = new Map<string, FernNavigation.V1.EndpointNode>();
-        children.forEach((child) => {
-            if (child.type !== "endpoint") {
-                toRet.push(child);
-                return;
-            }
-
-            const endpoint = this.#holder.endpoints.get(child.endpointId);
-            if (endpoint == null) {
-                throw new Error(`Endpoint ${child.endpointId} not found`);
-            }
-
-            const methodAndPath = `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path.parts)}`;
-
-            const existing = methodAndPathToEndpointNode.get(methodAndPath);
-            methodAndPathToEndpointNode.set(methodAndPath, child);
-
-            if (existing == null || existing.isResponseStream === child.isResponseStream) {
-                toRet.push(child);
-                return;
-            }
-
-            const idx = toRet.indexOf(existing);
-            const stream = child.isResponseStream ? child : existing;
-            const nonStream = child.isResponseStream ? existing : child;
-            const pairNode: FernNavigation.V1.EndpointPairNode = {
-                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${nonStream.endpointId}+${stream.endpointId}`),
-                type: "endpointPair",
-                stream,
-                nonStream
-            };
-
-            toRet[idx] = pairNode;
+        return mergeEndpointPairs({
+            children,
+            findEndpointById: (endpointId: APIV1Read.EndpointId) => this.#holder.endpoints.get(endpointId),
+            stringifyEndpointPathParts: (endpoint: APIV1Read.EndpointDefinition) =>
+                stringifyEndpointPathParts(endpoint.path.parts),
+            disableEndpointPairs: this.disableEndpointPairs,
+            apiDefinitionId: this.apiDefinitionId
         });
-
-        return toRet;
-    }
-
-    private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath;
-    private toRelativeFilepath(filepath: AbsoluteFilePath | undefined): RelativeFilePath | undefined;
-    private toRelativeFilepath(filepath: AbsoluteFilePath | undefined): RelativeFilePath | undefined {
-        if (filepath == null) {
-            return undefined;
-        }
-        return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 }

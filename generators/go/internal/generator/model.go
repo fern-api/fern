@@ -474,6 +474,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 
 	// Implement the json.Marshaler interface.
 	t.writer.P("func (", receiver, " ", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("if err := ", receiver, ".validate(); err != nil {")
+	t.writer.P("return nil, err")
+	t.writer.P("}")
 	if t.unionVersion != UnionVersionV1 {
 		t.writer.P("switch ", receiver, ".", discriminantName, " {")
 	}
@@ -656,6 +659,63 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	} else {
 		t.writer.P("return fmt.Errorf(\"type %T does not define a non-empty union type\", ", receiver, ")")
 	}
+	t.writer.P("}")
+	t.writer.P()
+
+	// Generate the validate method.
+	t.writer.P("func (", receiver, " *", t.typeName, ") validate() error {")
+	t.writer.P("if ", receiver, " == nil {")
+	t.writer.P(`return fmt.Errorf("type %T is nil", `, receiver, ")")
+	t.writer.P("}")
+	t.writer.P("var fields []string")
+	for _, unionType := range union.Types {
+		var (
+			isLiteral  bool
+			isOptional bool
+			date       *date
+		)
+		if unionType.Shape.SingleProperty != nil {
+			isLiteral = isLiteralType(unionType.Shape.SingleProperty.Type, t.writer.types)
+			isOptional = isOptionalType(unionType.Shape.SingleProperty.Type, t.writer.types)
+			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional)
+		}
+		zeroValue := "nil"
+		if unionType.Shape.PropertiesType == "singleProperty" {
+			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type, t.writer.types)
+		}
+		unionTypeValue := receiver + "." + unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		if isLiteral {
+			unionTypeValue = receiver + "." + unionType.DiscriminantValue.Name.CamelCase.SafeName
+		}
+		if date != nil && !isOptional {
+			t.writer.P("if !", unionTypeValue, ".IsZero() {")
+		} else {
+			t.writer.P("if ", unionTypeValue, " != ", zeroValue, " {")
+		}
+		t.writer.P(`fields = append(fields, "`, unionType.DiscriminantValue.WireValue, `")`)
+		t.writer.P("}")
+	}
+	t.writer.P("if len(fields) == 0 {")
+	t.writer.P("if ", receiver, ".", discriminantName, ` != "" {`)
+	t.writer.P(`return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", `, receiver, ", ", receiver, ".", discriminantName, ")")
+	t.writer.P("}")
+	t.writer.P(`return fmt.Errorf("type %T is empty", `, receiver, ")")
+	t.writer.P("}")
+	t.writer.P("if len(fields) > 1 {")
+	t.writer.P(`return fmt.Errorf("type %T defines values for %s, but only one value is allowed", `, receiver, ", fields)")
+	t.writer.P("}")
+	t.writer.P("if ", receiver, ".", discriminantName, ` != "" {`)
+	t.writer.P("field := fields[0]")
+	t.writer.P("if ", receiver, ".", discriminantName, " != field {")
+	t.writer.P("return fmt.Errorf(")
+	t.writer.P(`"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",`)
+	t.writer.P(receiver, ", ")
+	t.writer.P(receiver, ".", discriminantName, ", ")
+	t.writer.P(receiver, ", ")
+	t.writer.P(")")
+	t.writer.P("}")
+	t.writer.P("}")
+	t.writer.P("return nil")
 	t.writer.P("}")
 	t.writer.P()
 

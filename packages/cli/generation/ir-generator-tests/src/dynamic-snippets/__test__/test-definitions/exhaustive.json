@@ -92,7 +92,7 @@
                         "wireValue": "message"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -424,9 +424,9 @@
                         "wireValue": "string"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -455,9 +455,9 @@
                         "wireValue": "integer"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -486,9 +486,9 @@
                         "wireValue": "long"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "LONG"
                         }
                     }
@@ -517,9 +517,9 @@
                         "wireValue": "double"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DOUBLE"
                         }
                     }
@@ -548,9 +548,9 @@
                         "wireValue": "bool"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "BOOLEAN"
                         }
                     }
@@ -579,9 +579,9 @@
                         "wireValue": "datetime"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DATE_TIME"
                         }
                     }
@@ -610,9 +610,9 @@
                         "wireValue": "date"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DATE"
                         }
                     }
@@ -641,9 +641,9 @@
                         "wireValue": "uuid"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UUID"
                         }
                     }
@@ -672,9 +672,9 @@
                         "wireValue": "base64"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "BASE_64"
                         }
                     }
@@ -703,11 +703,11 @@
                         "wireValue": "list"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -737,11 +737,11 @@
                         "wireValue": "set"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "set",
+                            "type": "set",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -771,15 +771,15 @@
                         "wireValue": "map"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "map",
+                            "type": "map",
                             "key": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             },
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -809,9 +809,9 @@
                         "wireValue": "bigint"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "BIG_INTEGER"
                         }
                     }
@@ -948,7 +948,7 @@
                         "wireValue": "string"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1084,19 +1084,19 @@
                         "wireValue": "map"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "map",
+                            "type": "map",
                             "key": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             },
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -1234,9 +1234,9 @@
                         "wireValue": "string"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1265,9 +1265,9 @@
                         "wireValue": "NestedObject"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types/object:ObjectWithOptionalField"
                         }
                     }
@@ -1404,7 +1404,7 @@
                         "wireValue": "string"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -1432,7 +1432,7 @@
                         "wireValue": "NestedObject"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
                 }
@@ -1568,9 +1568,9 @@
                         "wireValue": "optionalAlias"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types/object:OptionalAlias"
                         }
                     }
@@ -1683,9 +1683,9 @@
                 }
             },
             "typeReference": {
-                "_type": "optional",
+                "type": "optional",
                 "value": {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 }
             }
@@ -2004,7 +2004,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -2032,7 +2032,7 @@
                         "wireValue": "likesToWoof"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -2168,7 +2168,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -2196,7 +2196,7 @@
                         "wireValue": "likesToMeow"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -2341,9 +2341,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -2489,9 +2489,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
@@ -2637,9 +2637,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -2785,9 +2785,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
@@ -2933,13 +2933,13 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -3085,13 +3085,13 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
@@ -3237,9 +3237,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types/object:ObjectWithRequiredField"
                         }
                     }
@@ -3385,7 +3385,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
                 }
@@ -3530,7 +3530,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
                 }
@@ -3675,7 +3675,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/enum:WeatherReport"
                     }
                 }
@@ -3841,7 +3841,7 @@
                             "wireValue": "id"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -3988,7 +3988,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
                 }
@@ -4154,7 +4154,7 @@
                             "wireValue": "id"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -4162,7 +4162,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
                 }
@@ -4328,7 +4328,7 @@
                             "wireValue": "id"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -4336,7 +4336,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
                 }
@@ -4502,7 +4502,7 @@
                             "wireValue": "id"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -4649,7 +4649,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithOptionalField"
                     }
                 }
@@ -4794,7 +4794,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithRequiredField"
                     }
                 }
@@ -4939,7 +4939,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:ObjectWithMapOfMap"
                     }
                 }
@@ -5084,7 +5084,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:NestedObjectWithOptionalField"
                     }
                 }
@@ -5250,7 +5250,7 @@
                             "wireValue": "string"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -5258,7 +5258,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/object:NestedObjectWithRequiredField"
                     }
                 }
@@ -5403,9 +5403,9 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types/object:NestedObjectWithRequiredField"
                         }
                     }
@@ -5572,12 +5572,289 @@
                             "wireValue": "param"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
                 ],
                 "body": null
+            },
+            "response": {
+                "type": "json"
+            }
+        },
+        "endpoint_endpoints/params.getWithInlinePath": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithInlinePath",
+                    "camelCase": {
+                        "unsafeName": "getWithInlinePath",
+                        "safeName": "getWithInlinePath"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_inline_path",
+                        "safeName": "get_with_inline_path"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_INLINE_PATH",
+                        "safeName": "GET_WITH_INLINE_PATH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithInlinePath",
+                        "safeName": "GetWithInlinePath"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "params",
+                        "camelCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PARAMS",
+                            "safeName": "PARAMS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Params",
+                            "safeName": "Params"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/params/path/{param}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "getWithInlinePath",
+                        "camelCase": {
+                            "unsafeName": "getWithInlinePath",
+                            "safeName": "getWithInlinePath"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_with_inline_path",
+                            "safeName": "get_with_inline_path"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_WITH_INLINE_PATH",
+                            "safeName": "GET_WITH_INLINE_PATH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetWithInlinePath",
+                            "safeName": "GetWithInlinePath"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "endpoints",
+                                "camelCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINTS",
+                                    "safeName": "ENDPOINTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Endpoints",
+                                    "safeName": "Endpoints"
+                                }
+                            },
+                            {
+                                "originalName": "params",
+                                "camelCase": {
+                                    "unsafeName": "params",
+                                    "safeName": "params"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "params",
+                                    "safeName": "params"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PARAMS",
+                                    "safeName": "PARAMS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Params",
+                                    "safeName": "Params"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "endpoints",
+                                "camelCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINTS",
+                                    "safeName": "ENDPOINTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Endpoints",
+                                    "safeName": "Endpoints"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "param",
+                                "camelCase": {
+                                    "unsafeName": "param",
+                                    "safeName": "param"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "param",
+                                    "safeName": "param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PARAM",
+                                    "safeName": "PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Param",
+                                    "safeName": "Param"
+                                }
+                            },
+                            "wireValue": "param"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
             },
             "response": {
                 "type": "json"
@@ -5844,7 +6121,7 @@
                             "wireValue": "query"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     },
@@ -5872,7 +6149,7 @@
                             "wireValue": "number"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -6149,9 +6426,9 @@
                             "wireValue": "query"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -6180,9 +6457,9 @@
                             "wireValue": "numer"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -6459,7 +6736,7 @@
                             "wireValue": "param"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -6489,7 +6766,7 @@
                             "wireValue": "query"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -6498,6 +6775,312 @@
                 "body": null,
                 "metadata": {
                     "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            }
+        },
+        "endpoint_endpoints/params.getWithInlinePathAndQuery": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithInlinePathAndQuery",
+                    "camelCase": {
+                        "unsafeName": "getWithInlinePathAndQuery",
+                        "safeName": "getWithInlinePathAndQuery"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_inline_path_and_query",
+                        "safeName": "get_with_inline_path_and_query"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_INLINE_PATH_AND_QUERY",
+                        "safeName": "GET_WITH_INLINE_PATH_AND_QUERY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithInlinePathAndQuery",
+                        "safeName": "GetWithInlinePathAndQuery"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "params",
+                        "camelCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PARAMS",
+                            "safeName": "PARAMS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Params",
+                            "safeName": "Params"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/params/path-query/{param}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "getWithInlinePathAndQuery",
+                        "camelCase": {
+                            "unsafeName": "getWithInlinePathAndQuery",
+                            "safeName": "getWithInlinePathAndQuery"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_with_inline_path_and_query",
+                            "safeName": "get_with_inline_path_and_query"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_WITH_INLINE_PATH_AND_QUERY",
+                            "safeName": "GET_WITH_INLINE_PATH_AND_QUERY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetWithInlinePathAndQuery",
+                            "safeName": "GetWithInlinePathAndQuery"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "endpoints",
+                                "camelCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINTS",
+                                    "safeName": "ENDPOINTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Endpoints",
+                                    "safeName": "Endpoints"
+                                }
+                            },
+                            {
+                                "originalName": "params",
+                                "camelCase": {
+                                    "unsafeName": "params",
+                                    "safeName": "params"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "params",
+                                    "safeName": "params"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PARAMS",
+                                    "safeName": "PARAMS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Params",
+                                    "safeName": "Params"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "endpoints",
+                                "camelCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINTS",
+                                    "safeName": "ENDPOINTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Endpoints",
+                                    "safeName": "Endpoints"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "param",
+                                "camelCase": {
+                                    "unsafeName": "param",
+                                    "safeName": "param"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "param",
+                                    "safeName": "param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PARAM",
+                                    "safeName": "PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Param",
+                                    "safeName": "Param"
+                                }
+                            },
+                            "wireValue": "param"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "query",
+                                "camelCase": {
+                                    "unsafeName": "query",
+                                    "safeName": "query"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "query",
+                                    "safeName": "query"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "QUERY",
+                                    "safeName": "QUERY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Query",
+                                    "safeName": "Query"
+                                }
+                            },
+                            "wireValue": "query"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
                     "onlyPathParameters": false
                 }
             },
@@ -6662,7 +7245,7 @@
                             "wireValue": "param"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -6670,9 +7253,314 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
+                }
+            },
+            "response": {
+                "type": "json"
+            }
+        },
+        "endpoint_endpoints/params.modifyWithInlinePath": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "modifyWithInlinePath",
+                    "camelCase": {
+                        "unsafeName": "modifyWithInlinePath",
+                        "safeName": "modifyWithInlinePath"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "modify_with_inline_path",
+                        "safeName": "modify_with_inline_path"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MODIFY_WITH_INLINE_PATH",
+                        "safeName": "MODIFY_WITH_INLINE_PATH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ModifyWithInlinePath",
+                        "safeName": "ModifyWithInlinePath"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "params",
+                        "camelCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PARAMS",
+                            "safeName": "PARAMS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Params",
+                            "safeName": "Params"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "PUT",
+                "path": "/params/path/{param}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ModifyResourceAtInlinedPath",
+                        "camelCase": {
+                            "unsafeName": "modifyResourceAtInlinedPath",
+                            "safeName": "modifyResourceAtInlinedPath"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "modify_resource_at_inlined_path",
+                            "safeName": "modify_resource_at_inlined_path"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MODIFY_RESOURCE_AT_INLINED_PATH",
+                            "safeName": "MODIFY_RESOURCE_AT_INLINED_PATH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ModifyResourceAtInlinedPath",
+                            "safeName": "ModifyResourceAtInlinedPath"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "endpoints",
+                                "camelCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINTS",
+                                    "safeName": "ENDPOINTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Endpoints",
+                                    "safeName": "Endpoints"
+                                }
+                            },
+                            {
+                                "originalName": "params",
+                                "camelCase": {
+                                    "unsafeName": "params",
+                                    "safeName": "params"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "params",
+                                    "safeName": "params"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PARAMS",
+                                    "safeName": "PARAMS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Params",
+                                    "safeName": "Params"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "endpoints",
+                                "camelCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoints",
+                                    "safeName": "endpoints"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINTS",
+                                    "safeName": "ENDPOINTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Endpoints",
+                                    "safeName": "Endpoints"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "param",
+                                "camelCase": {
+                                    "unsafeName": "param",
+                                    "safeName": "param"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "param",
+                                    "safeName": "param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PARAM",
+                                    "safeName": "PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Param",
+                                    "safeName": "Param"
+                                }
+                            },
+                            "wireValue": "param"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
                 }
             },
             "response": {
@@ -6815,7 +7703,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -6960,7 +7848,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -7105,7 +7993,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "LONG"
                     }
                 }
@@ -7250,7 +8138,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 }
@@ -7395,7 +8283,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 }
@@ -7540,7 +8428,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE_TIME"
                     }
                 }
@@ -7685,7 +8573,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE"
                     }
                 }
@@ -7830,7 +8718,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "UUID"
                     }
                 }
@@ -7975,7 +8863,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BASE_64"
                     }
                 }
@@ -8120,7 +9008,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types/union:Animal"
                     }
                 }
@@ -8316,7 +9204,7 @@
                                 "wireValue": "string"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         },
@@ -8344,7 +9232,7 @@
                                 "wireValue": "integer"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         },
@@ -8372,7 +9260,7 @@
                                 "wireValue": "NestedObject"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_types/object:ObjectWithOptionalField"
                             }
                         }
@@ -8484,7 +9372,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             },
@@ -8876,7 +9764,7 @@
                             "wireValue": "X-TEST-SERVICE-HEADER"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     },
@@ -8904,7 +9792,7 @@
                             "wireValue": "X-TEST-ENDPOINT-HEADER"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -8933,7 +9821,7 @@
                     "bodyType": {
                         "type": "typeReference",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -8947,5 +9835,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

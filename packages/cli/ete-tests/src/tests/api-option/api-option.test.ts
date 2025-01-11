@@ -1,5 +1,6 @@
 import path from "path";
 import tmp from "tmp-promise";
+
 import { runFernCli } from "../../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");

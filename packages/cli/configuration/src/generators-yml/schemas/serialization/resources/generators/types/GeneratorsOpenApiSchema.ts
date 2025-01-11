@@ -13,5 +13,5 @@ export const GeneratorsOpenApiSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([GeneratorsOpenApiObjectSchema, core.serialization.string()]);
 
 export declare namespace GeneratorsOpenApiSchema {
-    type Raw = GeneratorsOpenApiObjectSchema.Raw | string;
+    export type Raw = GeneratorsOpenApiObjectSchema.Raw | string;
 }

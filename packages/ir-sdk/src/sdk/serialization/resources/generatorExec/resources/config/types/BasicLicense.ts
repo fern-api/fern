@@ -15,7 +15,7 @@ export const BasicLicense: core.serialization.ObjectSchema<
 });
 
 export declare namespace BasicLicense {
-    interface Raw {
+    export interface Raw {
         id: LicenseId.Raw;
     }
 }

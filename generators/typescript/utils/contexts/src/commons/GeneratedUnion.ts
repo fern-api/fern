@@ -1,7 +1,6 @@
 import { ts } from "ts-morph";
-import { GeneratedFile } from "./GeneratedFile";
 
-export interface GeneratedUnion<Context> extends GeneratedFile<Context> {
+export interface GeneratedUnion<Context> {
     discriminant: string;
     visitPropertyName: string;
     getReferenceTo: (context: Context) => ts.TypeNode;

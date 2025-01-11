@@ -32,8 +32,6 @@ scripts:
 allowedFailures:
   # Basic auth is not supported yet.
   - basic-auth
-  # We aren't handling multiple types used in a class with the same name (from different packages).
-  - cross-package-type-names
   # Path parameter enums are not supported yet.
   - enum
   # Enums don't support the fromJson method yet.

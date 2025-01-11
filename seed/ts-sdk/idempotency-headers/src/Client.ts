@@ -6,12 +6,12 @@ import * as core from "./core";
 import { Payment } from "./api/resources/payment/client/Client";
 
 export declare namespace SeedIdempotencyHeadersClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -24,9 +24,9 @@ export declare namespace SeedIdempotencyHeadersClient {
 }
 
 export class SeedIdempotencyHeadersClient {
-    constructor(protected readonly _options: SeedIdempotencyHeadersClient.Options) {}
-
     protected _payment: Payment | undefined;
+
+    constructor(protected readonly _options: SeedIdempotencyHeadersClient.Options) {}
 
     public get payment(): Payment {
         return (this._payment ??= new Payment(this._options));

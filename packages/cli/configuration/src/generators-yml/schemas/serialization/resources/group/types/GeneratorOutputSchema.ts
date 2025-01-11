@@ -32,7 +32,7 @@ export const GeneratorOutputSchema: core.serialization.Schema<
     });
 
 export declare namespace GeneratorOutputSchema {
-    type Raw =
+    export type Raw =
         | GeneratorOutputSchema.Npm
         | GeneratorOutputSchema.Maven
         | GeneratorOutputSchema.Pypi
@@ -41,31 +41,31 @@ export declare namespace GeneratorOutputSchema {
         | GeneratorOutputSchema.Nuget
         | GeneratorOutputSchema.Rubygems;
 
-    interface Npm extends NpmOutputLocationSchema.Raw {
+    export interface Npm extends NpmOutputLocationSchema.Raw {
         location: "npm";
     }
 
-    interface Maven extends MavenOutputLocationSchema.Raw {
+    export interface Maven extends MavenOutputLocationSchema.Raw {
         location: "maven";
     }
 
-    interface Pypi extends PypiOutputLocationSchema.Raw {
+    export interface Pypi extends PypiOutputLocationSchema.Raw {
         location: "pypi";
     }
 
-    interface Postman extends PostmanOutputLocationSchema.Raw {
+    export interface Postman extends PostmanOutputLocationSchema.Raw {
         location: "postman";
     }
 
-    interface LocalFileSystem extends LocalFileSystemOutputLocationSchema.Raw {
+    export interface LocalFileSystem extends LocalFileSystemOutputLocationSchema.Raw {
         location: "local-file-system";
     }
 
-    interface Nuget extends NugetOutputLocationSchema.Raw {
+    export interface Nuget extends NugetOutputLocationSchema.Raw {
         location: "nuget";
     }
 
-    interface Rubygems extends RubyGemsOutputLocationSchema.Raw {
+    export interface Rubygems extends RubyGemsOutputLocationSchema.Raw {
         location: "rubygems";
     }
 }

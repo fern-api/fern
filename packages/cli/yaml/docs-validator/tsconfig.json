@@ -1,5 +1,5 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
@@ -28,13 +28,14 @@
       "path": "../../task-context"
     },
     {
-      "path": "../../workspace-loader"
+      "path": "../../workspace/loader"
     },
     {
       "path": "../../project-loader"
     },
     {
       "path": "../../fern-definition/schema"
-    }
+    },
+    { "path": "../../docs-resolver" }
   ]
 }

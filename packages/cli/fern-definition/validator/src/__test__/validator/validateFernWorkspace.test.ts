@@ -1,9 +1,10 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
-import { validateFernWorkspace } from "../../validateFernWorkspace";
+
 import { ValidationViolation } from "../../ValidationViolation";
+import { validateFernWorkspace } from "../../validateFernWorkspace";
 
 interface Fixture {
     name: string;
@@ -34,7 +35,7 @@ describe("validateFernWorkspace", () => {
             });
             const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context });
 
-            const violations = await validateFernWorkspace(fernWorkspace, CONSOLE_LOGGER);
+            const violations = validateFernWorkspace(fernWorkspace, CONSOLE_LOGGER);
             expect(violations).toEqual(fixture.expectedViolations);
         });
     }

@@ -21,7 +21,7 @@ export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedE
     });
 
 export declare namespace Movie {
-    interface Raw {
+    export interface Raw {
         id: serializers.MovieId.Raw;
         prequel?: serializers.MovieId.Raw | null;
         title: string;

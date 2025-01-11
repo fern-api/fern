@@ -409,6 +409,7 @@
                 "value": "site_config:write",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -802,6 +803,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "value": "-CreatedOn",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3196,6 +3198,7 @@ service:
               "Color",
               "ExtFileRef",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3291,6 +3294,7 @@ service:
               "Color",
               "ExtFileRef",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3393,6 +3397,7 @@ service:
       - Color
       - ExtFileRef
     docs: Choose these appropriate field type for your collection data
+    inline: true
     source:
       openapi: ../openapi.yml
   CollectionsCreateResponseFieldsItem:
@@ -3468,6 +3473,7 @@ service:
       - Color
       - ExtFileRef
     docs: Choose these appropriate field type for your collection data
+    inline: true
     source:
       openapi: ../openapi.yml
   CollectionsGetResponseFieldsItem:
@@ -3925,6 +3931,7 @@ service:
               "Color",
               "File",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3983,6 +3990,7 @@ service:
               "Color",
               "ExtFileRef",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4041,6 +4049,7 @@ service:
               "Color",
               "ExtFileRef",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4064,6 +4073,7 @@ service:
       - Color
       - File
     docs: Choose these appropriate field type for your collection data
+    inline: true
     source:
       openapi: ../openapi.yml
   FieldsCreateResponseType:
@@ -4082,6 +4092,7 @@ service:
       - Color
       - ExtFileRef
     docs: Choose these appropriate field type for your collection data
+    inline: true
     source:
       openapi: ../openapi.yml
   FieldsCreateResponse:
@@ -4128,6 +4139,7 @@ service:
       - Color
       - ExtFileRef
     docs: Choose these appropriate field type for your collection data
+    inline: true
     source:
       openapi: ../openapi.yml
   FieldsUpdateResponse:
@@ -4316,6 +4328,9 @@ service:
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
                     "fieldData": {
+                      "color": "#db4b68",
+                      "date": "2022-11-18T00:00:00.000Z",
+                      "featured": true,
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
@@ -4327,6 +4342,9 @@ service:
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -4408,6 +4426,9 @@ service:
                       ],
                       "createdOn": "2023-03-17T18:47:35.560Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": false,
                         "name": "My new item",
                         "slug": "my-new-item",
                       },
@@ -4482,6 +4503,9 @@ service:
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
                     "fieldData": {
+                      "color": "#db4b68",
+                      "date": "2022-11-18T00:00:00.000Z",
+                      "featured": true,
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
@@ -4493,6 +4517,9 @@ service:
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -4660,6 +4687,9 @@ service:
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -4724,6 +4754,9 @@ service:
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -4789,8 +4822,10 @@ service:
                           "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
                           "createdOn": "2022-06-25T14:51:27.809Z",
                           "fieldData": {
+                            "department": "Data",
                             "name": "Senior Data Analyst",
                             "slug": "senior-data-analyst",
+                            "url": "https://boards.greenhouse.io/webflow/jobs/26567701",
                           },
                           "id": "62b720ef280c7a7a3be8cabe",
                           "isArchived": false,
@@ -4802,8 +4837,10 @@ service:
                           "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
                           "createdOn": "2023-04-10T11:45:30.567Z",
                           "fieldData": {
+                            "department": "Product",
                             "name": "Product Manager",
                             "slug": "product-manager",
+                            "url": "https://boards.greenhouse.io/webflow/jobs/31234567",
                           },
                           "id": "62c880ef281c7b7b4cf9dabc",
                           "isArchived": false,
@@ -4894,8 +4931,10 @@ service:
                           "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
                           "createdOn": "2022-06-25T14:51:27.809Z",
                           "fieldData": {
+                            "department": "Data",
                             "name": "Senior Data Analyst",
                             "slug": "senior-data-analyst",
+                            "url": "https://boards.greenhouse.io/webflow/jobs/26567701",
                           },
                           "id": "62b720ef280c7a7a3be8cabe",
                           "isArchived": false,
@@ -4907,8 +4946,10 @@ service:
                           "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
                           "createdOn": "2023-04-10T11:45:30.567Z",
                           "fieldData": {
+                            "department": "Product",
                             "name": "Product Manager",
                             "slug": "product-manager",
+                            "url": "https://boards.greenhouse.io/webflow/jobs/31234567",
                           },
                           "id": "62c880ef281c7b7b4cf9dabc",
                           "isArchived": false,
@@ -5058,22 +5099,24 @@ service:
                   },
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "createdOn": "2022-11-17T17:11:57.148Z",
                     "fieldData": {
+                      "color": "#db4b68",
+                      "date": "2022-11-18T00:00:00.000Z",
+                      "featured": true,
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
-                    "id": "42b720ef280c7a7a3be8cabe",
                     "isArchived": false,
                     "isDraft": false,
-                    "lastPublished": "2022-11-29T16:22:43.159Z",
-                    "lastUpdated": "2022-11-17T17:19:43.282Z",
                   },
                   "response": {
                     "body": {
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -5106,15 +5149,7 @@ service:
                       "docs": "Identifier for the locale of the CMS item",
                       "type": "optional<string>",
                     },
-                    "createdOn": {
-                      "docs": "The date the item was created",
-                      "type": "optional<string>",
-                    },
                     "fieldData": "optional<ItemsUpdateItemRequestFieldData>",
-                    "id": {
-                      "docs": "Unique identifier for the Item",
-                      "type": "string",
-                    },
                     "isArchived": {
                       "default": false,
                       "docs": "Boolean determining if the Item is set to archived",
@@ -5124,14 +5159,6 @@ service:
                       "default": false,
                       "docs": "Boolean determining if the Item is set to draft",
                       "type": "optional<boolean>",
-                    },
-                    "lastPublished": {
-                      "docs": "The date the item was last published",
-                      "type": "optional<string>",
-                    },
-                    "lastUpdated": {
-                      "docs": "The date the item was last updated",
-                      "type": "optional<string>",
                     },
                   },
                 },
@@ -5168,22 +5195,24 @@ service:
                   },
                   "request": {
                     "cmsLocaleId": "653ad57de882f528b32e810e",
-                    "createdOn": "2022-11-17T17:11:57.148Z",
                     "fieldData": {
+                      "color": "#db4b68",
+                      "date": "2022-11-18T00:00:00.000Z",
+                      "featured": true,
                       "name": "Pan Galactic Gargle Blaster Recipe",
                       "slug": "pan-galactic-gargle-blaster",
                     },
-                    "id": "42b720ef280c7a7a3be8cabe",
                     "isArchived": false,
                     "isDraft": false,
-                    "lastPublished": "2022-11-29T16:22:43.159Z",
-                    "lastUpdated": "2022-11-17T17:19:43.282Z",
                   },
                   "response": {
                     "body": {
                       "cmsLocaleId": "653ad57de882f528b32e810e",
                       "createdOn": "2022-11-17T17:11:57.148Z",
                       "fieldData": {
+                        "color": "#db4b68",
+                        "date": "2022-11-18T00:00:00.000Z",
+                        "featured": true,
                         "name": "Pan Galactic Gargle Blaster Recipe",
                         "slug": "pan-galactic-gargle-blaster",
                       },
@@ -5216,15 +5245,7 @@ service:
                       "docs": "Identifier for the locale of the CMS item",
                       "type": "optional<string>",
                     },
-                    "createdOn": {
-                      "docs": "The date the item was created",
-                      "type": "optional<string>",
-                    },
                     "fieldData": "optional<ItemsUpdateItemLiveRequestFieldData>",
-                    "id": {
-                      "docs": "Unique identifier for the Item",
-                      "type": "string",
-                    },
                     "isArchived": {
                       "default": false,
                       "docs": "Boolean determining if the Item is set to archived",
@@ -5234,14 +5255,6 @@ service:
                       "default": false,
                       "docs": "Boolean determining if the Item is set to draft",
                       "type": "optional<boolean>",
-                    },
-                    "lastPublished": {
-                      "docs": "The date the item was last published",
-                      "type": "optional<string>",
-                    },
-                    "lastUpdated": {
-                      "docs": "The date the item was last updated",
-                      "type": "optional<string>",
                     },
                   },
                 },
@@ -5620,6 +5633,7 @@ service:
               "name",
               "slug",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5629,6 +5643,7 @@ service:
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5735,6 +5750,7 @@ service:
               "name",
               "slug",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5744,6 +5760,7 @@ service:
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6664,6 +6681,8 @@ service:
                   fieldData:
                     name: Senior Data Analyst
                     slug: senior-data-analyst
+                    url: https://boards.greenhouse.io/webflow/jobs/26567701
+                    department: Data
                 - id: 62c880ef281c7b7b4cf9dabc
                   cmsLocaleId: 66f6e966c9e1dc700a857ca3
                   lastPublished: '2023-04-15T10:25:18.123Z'
@@ -6674,6 +6693,8 @@ service:
                   fieldData:
                     name: Product Manager
                     slug: product-manager
+                    url: https://boards.greenhouse.io/webflow/jobs/31234567
+                    department: Product
               pagination:
                 limit: 25
                 offset: 0
@@ -6732,6 +6753,9 @@ service:
             fieldData:
               name: Pan Galactic Gargle Blaster Recipe
               slug: pan-galactic-gargle-blaster
+              date: '2022-11-18T00:00:00.000Z'
+              featured: true
+              color: '#db4b68'
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -6744,6 +6768,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     list-items-live:
       path: /collections/{collection_id}/items/live
       method: GET
@@ -6813,6 +6840,8 @@ service:
                   fieldData:
                     name: Senior Data Analyst
                     slug: senior-data-analyst
+                    url: https://boards.greenhouse.io/webflow/jobs/26567701
+                    department: Data
                 - id: 62c880ef281c7b7b4cf9dabc
                   cmsLocaleId: 66f6e966c9e1dc700a857ca3
                   lastPublished: '2023-04-15T10:25:18.123Z'
@@ -6823,6 +6852,8 @@ service:
                   fieldData:
                     name: Product Manager
                     slug: product-manager
+                    url: https://boards.greenhouse.io/webflow/jobs/31234567
+                    department: Product
               pagination:
                 limit: 25
                 offset: 0
@@ -6879,6 +6910,9 @@ service:
             fieldData:
               name: Pan Galactic Gargle Blaster Recipe
               slug: pan-galactic-gargle-blaster
+              date: '2022-11-18T00:00:00.000Z'
+              featured: true
+              color: '#db4b68'
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -6891,6 +6925,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     create-item-for-multiple-locales:
       path: /collections/{collection_id}/items/bulk
       method: POST
@@ -6952,6 +6989,9 @@ service:
               fieldData:
                 name: My new item
                 slug: my-new-item
+                date: '2022-11-18T00:00:00.000Z'
+                featured: false
+                color: '#db4b68'
     get-item:
       path: /collections/{collection_id}/items/{item_id}
       method: GET
@@ -7004,6 +7044,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     delete-item:
       path: /collections/{collection_id}/items/{item_id}
       method: DELETE
@@ -7062,21 +7105,9 @@ service:
         name: ItemsUpdateItemRequest
         body:
           properties:
-            id:
-              type: string
-              docs: Unique identifier for the Item
             cmsLocaleId:
               type: optional<string>
               docs: Identifier for the locale of the CMS item
-            lastPublished:
-              type: optional<string>
-              docs: The date the item was last published
-            lastUpdated:
-              type: optional<string>
-              docs: The date the item was last updated
-            createdOn:
-              type: optional<string>
-              docs: The date the item was created
             isArchived:
               type: optional<boolean>
               docs: Boolean determining if the Item is set to archived
@@ -7101,16 +7132,15 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           request:
-            id: 42b720ef280c7a7a3be8cabe
             cmsLocaleId: 653ad57de882f528b32e810e
-            lastPublished: '2022-11-29T16:22:43.159Z'
-            lastUpdated: '2022-11-17T17:19:43.282Z'
-            createdOn: '2022-11-17T17:11:57.148Z'
             isArchived: false
             isDraft: false
             fieldData:
               name: Pan Galactic Gargle Blaster Recipe
               slug: pan-galactic-gargle-blaster
+              date: '2022-11-18T00:00:00.000Z'
+              featured: true
+              color: '#db4b68'
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -7123,6 +7153,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     get-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: GET
@@ -7175,6 +7208,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     delete-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: DELETE
@@ -7236,21 +7272,9 @@ service:
         name: ItemsUpdateItemLiveRequest
         body:
           properties:
-            id:
-              type: string
-              docs: Unique identifier for the Item
             cmsLocaleId:
               type: optional<string>
               docs: Identifier for the locale of the CMS item
-            lastPublished:
-              type: optional<string>
-              docs: The date the item was last published
-            lastUpdated:
-              type: optional<string>
-              docs: The date the item was last updated
-            createdOn:
-              type: optional<string>
-              docs: The date the item was created
             isArchived:
               type: optional<boolean>
               docs: Boolean determining if the Item is set to archived
@@ -7275,16 +7299,15 @@ service:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
           request:
-            id: 42b720ef280c7a7a3be8cabe
             cmsLocaleId: 653ad57de882f528b32e810e
-            lastPublished: '2022-11-29T16:22:43.159Z'
-            lastUpdated: '2022-11-17T17:19:43.282Z'
-            createdOn: '2022-11-17T17:11:57.148Z'
             isArchived: false
             isDraft: false
             fieldData:
               name: Pan Galactic Gargle Blaster Recipe
               slug: pan-galactic-gargle-blaster
+              date: '2022-11-18T00:00:00.000Z'
+              featured: true
+              color: '#db4b68'
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -7297,6 +7320,9 @@ service:
               fieldData:
                 name: Pan Galactic Gargle Blaster Recipe
                 slug: pan-galactic-gargle-blaster
+                date: '2022-11-18T00:00:00.000Z'
+                featured: true
+                color: '#db4b68'
     publish-item:
       path: /collections/{collection_id}/items/publish
       method: POST
@@ -8030,6 +8056,7 @@ service:
               "Phone",
               "Number",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8197,6 +8224,7 @@ service:
               "Phone",
               "Number",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8416,6 +8444,7 @@ service:
       - Phone
       - Number
     docs: The field type
+    inline: true
     source:
       openapi: ../openapi.yml
   FormsListResponseFormsItemFieldsValue:
@@ -8528,6 +8557,7 @@ service:
       - Phone
       - Number
     docs: The field type
+    inline: true
     source:
       openapi: ../openapi.yml
   FormsGetResponseFieldsValue:
@@ -9246,6 +9276,7 @@ Required scope | `ecommerce:write`
               "infinite",
               "finite",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9277,6 +9308,7 @@ Required scope | `ecommerce:write`
               "infinite",
               "finite",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9287,6 +9319,7 @@ Required scope | `ecommerce:write`
               "infinite",
               "finite",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9318,6 +9351,7 @@ Required scope | `ecommerce:write`
               "infinite",
               "finite",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9351,6 +9385,7 @@ Required scope | `ecommerce:write`
       - infinite
       - finite
     docs: infinite or finite
+    inline: true
     source:
       openapi: ../openapi.yml
   InventoryListResponse:
@@ -9374,6 +9409,7 @@ Required scope | `ecommerce:write`
       - infinite
       - finite
     docs: infinite or finite
+    inline: true
     source:
       openapi: ../openapi.yml
   InventoryUpdateResponseInventoryType:
@@ -9381,6 +9417,7 @@ Required scope | `ecommerce:write`
       - infinite
       - finite
     docs: infinite or finite
+    inline: true
     source:
       openapi: ../openapi.yml
   InventoryUpdateResponse:
@@ -9404,6 +9441,7 @@ Required scope | `ecommerce:write`
       - infinite
       - finite
     docs: infinite or finite
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommInventoryChangedPayload:
@@ -9760,6 +9798,9 @@ webhooks:
                   "cmsLocaleId": "653ad57de882f528b32e810e",
                   "createdOn": "2022-11-17T17:11:57.148Z",
                   "fieldData": {
+                    "color": "#db4b68",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
                     "name": "Pan Galactic Gargle Blaster Recipe",
                     "slug": "pan-galactic-gargle-blaster",
                   },
@@ -9789,6 +9830,9 @@ webhooks:
                   "cmsLocaleId": "653ad57de882f528b32e810e",
                   "createdOn": "2022-11-17T17:11:57.148Z",
                   "fieldData": {
+                    "color": "#db4b68",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
                     "name": "Pan Galactic Gargle Blaster Recipe",
                     "slug": "pan-galactic-gargle-blaster",
                   },
@@ -10027,6 +10071,9 @@ webhooks:
           fieldData:
             name: Pan Galactic Gargle Blaster Recipe
             slug: pan-galactic-gargle-blaster
+            date: '2022-11-18T00:00:00.000Z'
+            featured: true
+            color: '#db4b68'
   collection_item_changed:
     method: POST
     display-name: Item Updated
@@ -10050,6 +10097,9 @@ webhooks:
           fieldData:
             name: Pan Galactic Gargle Blaster Recipe
             slug: pan-galactic-gargle-blaster
+            date: '2022-11-18T00:00:00.000Z'
+            featured: true
+            color: '#db4b68'
   collection_item_deleted:
     method: POST
     display-name: Item Deleted
@@ -12136,6 +12186,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12146,6 +12197,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12222,6 +12274,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12232,6 +12285,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12293,6 +12347,7 @@ Required scope | `ecommerce:write`
               "won",
               "lost",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12636,6 +12691,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12646,6 +12702,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12664,6 +12721,7 @@ Required scope | `ecommerce:write`
               },
               "refunded",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12711,6 +12769,7 @@ Required scope | `ecommerce:write`
               },
               "Unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12851,6 +12910,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "tax",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13102,6 +13162,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13112,6 +13173,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13188,6 +13250,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13198,6 +13261,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13259,6 +13323,7 @@ Required scope | `ecommerce:write`
               "won",
               "lost",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13602,6 +13667,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13612,6 +13678,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13630,6 +13697,7 @@ Required scope | `ecommerce:write`
               },
               "refunded",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13677,6 +13745,7 @@ Required scope | `ecommerce:write`
               },
               "Unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13817,6 +13886,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "tax",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14068,6 +14138,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14078,6 +14149,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14154,6 +14226,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14164,6 +14237,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14225,6 +14299,7 @@ Required scope | `ecommerce:write`
               "won",
               "lost",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14568,6 +14643,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14578,6 +14654,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14596,6 +14673,7 @@ Required scope | `ecommerce:write`
               },
               "refunded",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14643,6 +14721,7 @@ Required scope | `ecommerce:write`
               },
               "Unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14783,6 +14862,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "tax",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -14841,6 +14921,7 @@ Required scope | `ecommerce:write`
               "disputed",
               "unfulfilled",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15067,6 +15148,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15077,6 +15159,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15153,6 +15236,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15163,6 +15247,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15224,6 +15309,7 @@ Required scope | `ecommerce:write`
               "won",
               "lost",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15567,6 +15653,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15577,6 +15664,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15595,6 +15683,7 @@ Required scope | `ecommerce:write`
               },
               "refunded",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15642,6 +15731,7 @@ Required scope | `ecommerce:write`
               },
               "Unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15782,6 +15872,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "tax",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15856,6 +15947,7 @@ Required scope | `ecommerce:write`
               "fraudulent",
               "requested",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16065,6 +16157,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16075,6 +16168,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16151,6 +16245,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16161,6 +16256,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16222,6 +16318,7 @@ Required scope | `ecommerce:write`
               "won",
               "lost",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16565,6 +16662,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16575,6 +16673,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16593,6 +16692,7 @@ Required scope | `ecommerce:write`
               },
               "refunded",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16640,6 +16740,7 @@ Required scope | `ecommerce:write`
               },
               "Unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16780,6 +16881,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "tax",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17031,6 +17133,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17041,6 +17144,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17117,6 +17221,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17127,6 +17232,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17188,6 +17294,7 @@ Required scope | `ecommerce:write`
               "won",
               "lost",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17531,6 +17638,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17541,6 +17649,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17559,6 +17668,7 @@ Required scope | `ecommerce:write`
               },
               "refunded",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17606,6 +17716,7 @@ Required scope | `ecommerce:write`
               },
               "Unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17746,6 +17857,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "tax",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -17997,6 +18109,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18007,6 +18120,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18083,6 +18197,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18093,6 +18208,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18154,6 +18270,7 @@ Required scope | `ecommerce:write`
               "won",
               "lost",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18497,6 +18614,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18507,6 +18625,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18525,6 +18644,7 @@ Required scope | `ecommerce:write`
               },
               "refunded",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18572,6 +18692,7 @@ Required scope | `ecommerce:write`
               },
               "Unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18712,6 +18833,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "tax",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18963,6 +19085,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -18973,6 +19096,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19049,6 +19173,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19059,6 +19184,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19120,6 +19246,7 @@ Required scope | `ecommerce:write`
               "won",
               "lost",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19463,6 +19590,7 @@ Required scope | `ecommerce:write`
               "kana",
               "kanji",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19473,6 +19601,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "billing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19491,6 +19620,7 @@ Required scope | `ecommerce:write`
               },
               "refunded",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19538,6 +19668,7 @@ Required scope | `ecommerce:write`
               },
               "Unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -19678,6 +19809,7 @@ Required scope | `ecommerce:write`
               "shipping",
               "tax",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20203,6 +20335,7 @@ Required scope | `ecommerce:write`
       - refunded
     docs: |
       The status of the Order
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemDisputeLastStatus:
@@ -20218,6 +20351,7 @@ Required scope | `ecommerce:write`
     docs: >
       If an order was disputed by the customer, then this key will be set with
       the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemCustomerPaid:
@@ -20270,6 +20404,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemAllAddressesItemJapanType:
@@ -20279,6 +20414,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemAllAddressesItem:
@@ -20321,6 +20457,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemShippingAddressJapanType:
@@ -20330,6 +20467,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemShippingAddress:
@@ -20372,6 +20510,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemBillingAddressJapanType:
@@ -20381,6 +20520,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemBillingAddress:
@@ -20613,6 +20753,7 @@ Required scope | `ecommerce:write`
         name: DinersClub
       - Unknown
     docs: The card's brand (ie. credit card network)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemStripeCardExpires:
@@ -20699,6 +20840,7 @@ Required scope | `ecommerce:write`
       - shipping
       - tax
     docs: The type of extra item this is.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemTotalsExtrasItemPrice:
@@ -20954,6 +21096,7 @@ Required scope | `ecommerce:write`
       - refunded
     docs: |
       The status of the Order
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseDisputeLastStatus:
@@ -20969,6 +21112,7 @@ Required scope | `ecommerce:write`
     docs: >
       If an order was disputed by the customer, then this key will be set with
       the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseCustomerPaid:
@@ -21021,6 +21165,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseAllAddressesItemJapanType:
@@ -21030,6 +21175,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseAllAddressesItem:
@@ -21072,6 +21218,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseShippingAddressJapanType:
@@ -21081,6 +21228,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseShippingAddress:
@@ -21123,6 +21271,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseBillingAddressJapanType:
@@ -21132,6 +21281,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseBillingAddress:
@@ -21364,6 +21514,7 @@ Required scope | `ecommerce:write`
         name: DinersClub
       - Unknown
     docs: The card's brand (ie. credit card network)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseStripeCardExpires:
@@ -21450,6 +21601,7 @@ Required scope | `ecommerce:write`
       - shipping
       - tax
     docs: The type of extra item this is.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseTotalsExtrasItemPrice:
@@ -21678,6 +21830,7 @@ Required scope | `ecommerce:write`
       - refunded
     docs: |
       The status of the Order
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseDisputeLastStatus:
@@ -21693,6 +21846,7 @@ Required scope | `ecommerce:write`
     docs: >
       If an order was disputed by the customer, then this key will be set with
       the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseCustomerPaid:
@@ -21745,6 +21899,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseAllAddressesItemJapanType:
@@ -21754,6 +21909,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseAllAddressesItem:
@@ -21796,6 +21952,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseShippingAddressJapanType:
@@ -21805,6 +21962,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseShippingAddress:
@@ -21847,6 +22005,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseBillingAddressJapanType:
@@ -21856,6 +22015,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseBillingAddress:
@@ -22088,6 +22248,7 @@ Required scope | `ecommerce:write`
         name: DinersClub
       - Unknown
     docs: The card's brand (ie. credit card network)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseStripeCardExpires:
@@ -22174,6 +22335,7 @@ Required scope | `ecommerce:write`
       - shipping
       - tax
     docs: The type of extra item this is.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponseTotalsExtrasItemPrice:
@@ -22402,6 +22564,7 @@ Required scope | `ecommerce:write`
       - refunded
     docs: |
       The status of the Order
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseDisputeLastStatus:
@@ -22417,6 +22580,7 @@ Required scope | `ecommerce:write`
     docs: >
       If an order was disputed by the customer, then this key will be set with
       the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseCustomerPaid:
@@ -22469,6 +22633,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseAllAddressesItemJapanType:
@@ -22478,6 +22643,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseAllAddressesItem:
@@ -22520,6 +22686,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseShippingAddressJapanType:
@@ -22529,6 +22696,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseShippingAddress:
@@ -22571,6 +22739,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseBillingAddressJapanType:
@@ -22580,6 +22749,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseBillingAddress:
@@ -22812,6 +22982,7 @@ Required scope | `ecommerce:write`
         name: DinersClub
       - Unknown
     docs: The card's brand (ie. credit card network)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseStripeCardExpires:
@@ -22898,6 +23069,7 @@ Required scope | `ecommerce:write`
       - shipping
       - tax
     docs: The type of extra item this is.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponseTotalsExtrasItemPrice:
@@ -23126,6 +23298,7 @@ Required scope | `ecommerce:write`
       - refunded
     docs: |
       The status of the Order
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseDisputeLastStatus:
@@ -23141,6 +23314,7 @@ Required scope | `ecommerce:write`
     docs: >
       If an order was disputed by the customer, then this key will be set with
       the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseCustomerPaid:
@@ -23193,6 +23367,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseAllAddressesItemJapanType:
@@ -23202,6 +23377,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseAllAddressesItem:
@@ -23244,6 +23420,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseShippingAddressJapanType:
@@ -23253,6 +23430,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseShippingAddress:
@@ -23295,6 +23473,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseBillingAddressJapanType:
@@ -23304,6 +23483,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseBillingAddress:
@@ -23537,6 +23717,7 @@ Required scope | `ecommerce:write`
         name: DinersClub
       - Unknown
     docs: The card's brand (ie. credit card network)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseStripeCardExpires:
@@ -23623,6 +23804,7 @@ Required scope | `ecommerce:write`
       - shipping
       - tax
     docs: The type of extra item this is.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponseTotalsExtrasItemPrice:
@@ -23846,6 +24028,7 @@ Required scope | `ecommerce:write`
       - fraudulent
       - requested
     docs: The reason for the refund
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseStatus:
@@ -23859,6 +24042,7 @@ Required scope | `ecommerce:write`
       - refunded
     docs: |
       The status of the Order
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseDisputeLastStatus:
@@ -23874,6 +24058,7 @@ Required scope | `ecommerce:write`
     docs: >
       If an order was disputed by the customer, then this key will be set with
       the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseCustomerPaid:
@@ -23926,6 +24111,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseAllAddressesItemJapanType:
@@ -23935,6 +24121,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseAllAddressesItem:
@@ -23977,6 +24164,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseShippingAddressJapanType:
@@ -23986,6 +24174,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseShippingAddress:
@@ -24028,6 +24217,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseBillingAddressJapanType:
@@ -24037,6 +24227,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseBillingAddress:
@@ -24269,6 +24460,7 @@ Required scope | `ecommerce:write`
         name: DinersClub
       - Unknown
     docs: The card's brand (ie. credit card network)
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseStripeCardExpires:
@@ -24355,6 +24547,7 @@ Required scope | `ecommerce:write`
       - shipping
       - tax
     docs: The type of extra item this is.
+    inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponseTotalsExtrasItemPrice:
@@ -24583,6 +24776,7 @@ Required scope | `ecommerce:write`
       - refunded
     docs: |
       The status of the Order
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadDisputeLastStatus:
@@ -24598,6 +24792,7 @@ Required scope | `ecommerce:write`
     docs: >
       If an order was disputed by the customer, then this key will be set with
       the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadCustomerPaid:
@@ -24650,6 +24845,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadAllAddressesItemJapanType:
@@ -24659,6 +24855,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadAllAddressesItem:
@@ -24701,6 +24898,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadShippingAddressJapanType:
@@ -24710,6 +24908,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadShippingAddress:
@@ -24752,6 +24951,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadBillingAddressJapanType:
@@ -24761,6 +24961,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadBillingAddress:
@@ -24993,6 +25194,7 @@ Required scope | `ecommerce:write`
         name: DinersClub
       - Unknown
     docs: The card's brand (ie. credit card network)
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadStripeCardExpires:
@@ -25079,6 +25281,7 @@ Required scope | `ecommerce:write`
       - shipping
       - tax
     docs: The type of extra item this is.
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadTotalsExtrasItemPrice:
@@ -25307,6 +25510,7 @@ Required scope | `ecommerce:write`
       - refunded
     docs: |
       The status of the Order
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadDisputeLastStatus:
@@ -25322,6 +25526,7 @@ Required scope | `ecommerce:write`
     docs: >
       If an order was disputed by the customer, then this key will be set with
       the [dispute's status](https://stripe.com/docs/api#dispute_object-status).
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadCustomerPaid:
@@ -25374,6 +25579,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadAllAddressesItemJapanType:
@@ -25383,6 +25589,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadAllAddressesItem:
@@ -25425,6 +25632,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadShippingAddressJapanType:
@@ -25434,6 +25642,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadShippingAddress:
@@ -25476,6 +25685,7 @@ Required scope | `ecommerce:write`
       - shipping
       - billing
     docs: The type of the order address (billing or shipping)
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadBillingAddressJapanType:
@@ -25485,6 +25695,7 @@ Required scope | `ecommerce:write`
     docs: >-
       Represents a Japan-only address format. This field will only appear on
       orders placed from Japan.
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadBillingAddress:
@@ -25717,6 +25928,7 @@ Required scope | `ecommerce:write`
         name: DinersClub
       - Unknown
     docs: The card's brand (ie. credit card network)
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadStripeCardExpires:
@@ -25803,6 +26015,7 @@ Required scope | `ecommerce:write`
       - shipping
       - tax
     docs: The type of extra item this is.
+    inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadTotalsExtrasItemPrice:
@@ -28191,9 +28404,7 @@ webhooks:
                   "request": {
                     "openGraph": {
                       "description": "Dive deep into the mysteries of the universe with your guide to everything galactic.",
-                      "descriptionCopied": false,
                       "title": "Explore the Cosmos with The Ultimate Guide",
-                      "titleCopied": false,
                     },
                     "seo": {
                       "description": "Everything you need to know about the galaxy, from avoiding Vogon poetry to the importance of towels.",
@@ -28535,6 +28746,7 @@ Required scope | `pages:write`
               "text",
               "image",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -29463,6 +29675,7 @@ Required scope | `pages:write`
     enum:
       - text
       - image
+    inline: true
     source:
       openapi: ../openapi.yml
   PagesGetContentResponseNodesItemText:
@@ -29864,11 +30077,9 @@ service:
                 Vogon poetry to the importance of towels.
             openGraph:
               title: Explore the Cosmos with The Ultimate Guide
-              titleCopied: false
               description: >-
                 Dive deep into the mysteries of the universe with your guide to
                 everything galactic.
-              descriptionCopied: false
           response:
             body:
               id: 6596da6045e56dee495bcbba
@@ -30332,6 +30543,7 @@ webhooks:
               "header",
               "footer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30369,6 +30581,7 @@ webhooks:
               "header",
               "footer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30427,6 +30640,7 @@ webhooks:
               "header",
               "footer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -30442,6 +30656,7 @@ webhooks:
       Location of the script, either in the header or footer of the published
       site
     default: header
+    inline: true
     source:
       openapi: ../openapi.yml
   ScriptsGetCustomCodeResponseScriptsItem:
@@ -30487,6 +30702,7 @@ webhooks:
       Location of the script, either in the header or footer of the published
       site
     default: header
+    inline: true
     source:
       openapi: ../openapi.yml
   ScriptsUpsertCustomCodeRequestScriptsItem:
@@ -30519,6 +30735,7 @@ webhooks:
       Location of the script, either in the header or footer of the published
       site
     default: header
+    inline: true
     source:
       openapi: ../openapi.yml
   ScriptsUpsertCustomCodeResponseScriptsItem:
@@ -31572,6 +31789,7 @@ Required scope | `ecommerce:write`
               "c599e43b1a1c34d5a323aedf75d3adf6",
               "b6ccc1830db4b1babeb06a9ac5f6dd76",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -31735,6 +31953,7 @@ Required scope | `ecommerce:write`
                 "value": "service-training",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -31746,6 +31965,7 @@ Required scope | `ecommerce:write`
               "staging",
               "live",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -31849,6 +32069,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -31883,6 +32104,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -31915,6 +32137,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32049,6 +32272,7 @@ Required scope | `ecommerce:write`
               "c599e43b1a1c34d5a323aedf75d3adf6",
               "b6ccc1830db4b1babeb06a9ac5f6dd76",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32212,6 +32436,7 @@ Required scope | `ecommerce:write`
                 "value": "service-training",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32315,6 +32540,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32349,6 +32575,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32381,6 +32608,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32409,6 +32637,7 @@ Required scope | `ecommerce:write`
               "staging",
               "live",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32512,6 +32741,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32546,6 +32776,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32578,6 +32809,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32708,6 +32940,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32742,6 +32975,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32774,6 +33008,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -32908,6 +33143,7 @@ Required scope | `ecommerce:write`
               "c599e43b1a1c34d5a323aedf75d3adf6",
               "b6ccc1830db4b1babeb06a9ac5f6dd76",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33071,6 +33307,7 @@ Required scope | `ecommerce:write`
                 "value": "service-training",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33174,6 +33411,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33208,6 +33446,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33240,6 +33479,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33391,6 +33631,7 @@ Required scope | `ecommerce:write`
               "c599e43b1a1c34d5a323aedf75d3adf6",
               "b6ccc1830db4b1babeb06a9ac5f6dd76",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33554,6 +33795,7 @@ Required scope | `ecommerce:write`
                 "value": "service-training",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33657,6 +33899,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33691,6 +33934,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33723,6 +33967,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -33861,6 +34106,7 @@ Required scope | `ecommerce:write`
               "c599e43b1a1c34d5a323aedf75d3adf6",
               "b6ccc1830db4b1babeb06a9ac5f6dd76",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34024,6 +34270,7 @@ Required scope | `ecommerce:write`
                 "value": "service-training",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34035,6 +34282,7 @@ Required scope | `ecommerce:write`
               "staging",
               "live",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34138,6 +34386,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34172,6 +34421,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34204,6 +34454,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34321,6 +34572,7 @@ Required scope | `ecommerce:write`
               "c599e43b1a1c34d5a323aedf75d3adf6",
               "b6ccc1830db4b1babeb06a9ac5f6dd76",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34484,6 +34736,7 @@ Required scope | `ecommerce:write`
                 "value": "service-training",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34495,6 +34748,7 @@ Required scope | `ecommerce:write`
               "staging",
               "live",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34598,6 +34852,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34632,6 +34887,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34664,6 +34920,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34784,6 +35041,7 @@ Required scope | `ecommerce:write`
               },
               "subscription",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34818,6 +35076,7 @@ Required scope | `ecommerce:write`
               "month",
               "year",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34850,6 +35109,7 @@ Required scope | `ecommerce:write`
               "inactive",
               "canceled",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -34967,6 +35227,7 @@ Required scope | `ecommerce:write`
       - value: service-training
         name: ServiceTraining
     docs: Product tax class
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsListResponseItemsItemProductFieldDataEcProductType:
@@ -34980,6 +35241,7 @@ Required scope | `ecommerce:write`
       href="https://university.webflow.com/lesson/add-and-manage-products-and-categories?topics=ecommerce#how-to-understand-product-types">Product
       types.</a> Enums reflect the following values in order: Physical, Digital,
       Service, Advanced"
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsListResponseItemsItemProductFieldData:
@@ -35087,6 +35349,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlanInterval:
@@ -35096,6 +35359,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -35104,6 +35368,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -35244,6 +35509,7 @@ Required scope | `ecommerce:write`
       - live
     docs: Indicate whether your Product should be set as "staging" or "live"
     default: staging
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateRequestProductFieldDataSkuPropertiesItemEnumItem:
@@ -35338,6 +35604,7 @@ Required scope | `ecommerce:write`
       - value: service-training
         name: ServiceTraining
     docs: Product tax class
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateRequestProductFieldDataEcProductType:
@@ -35351,6 +35618,7 @@ Required scope | `ecommerce:write`
       href="https://university.webflow.com/lesson/add-and-manage-products-and-categories?topics=ecommerce#how-to-understand-product-types">Product
       types.</a> Enums reflect the following values in order: Physical, Digital,
       Service, Advanced"
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateRequestProductFieldData:
@@ -35434,6 +35702,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanInterval:
@@ -35443,6 +35712,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -35451,6 +35721,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -35635,6 +35906,7 @@ Required scope | `ecommerce:write`
       - value: service-training
         name: ServiceTraining
     docs: Product tax class
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateResponseProductFieldDataEcProductType:
@@ -35648,6 +35920,7 @@ Required scope | `ecommerce:write`
       href="https://university.webflow.com/lesson/add-and-manage-products-and-categories?topics=ecommerce#how-to-understand-product-types">Product
       types.</a> Enums reflect the following values in order: Physical, Digital,
       Service, Advanced"
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateResponseProductFieldData:
@@ -35755,6 +36028,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlanInterval:
@@ -35764,6 +36038,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -35772,6 +36047,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -35967,6 +36243,7 @@ Required scope | `ecommerce:write`
       - value: service-training
         name: ServiceTraining
     docs: Product tax class
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsGetResponseProductFieldDataEcProductType:
@@ -35980,6 +36257,7 @@ Required scope | `ecommerce:write`
       href="https://university.webflow.com/lesson/add-and-manage-products-and-categories?topics=ecommerce#how-to-understand-product-types">Product
       types.</a> Enums reflect the following values in order: Physical, Digital,
       Service, Advanced"
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsGetResponseProductFieldData:
@@ -36086,6 +36364,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlanInterval:
@@ -36095,6 +36374,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -36103,6 +36383,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -36212,6 +36493,7 @@ Required scope | `ecommerce:write`
       - live
     docs: Indicate whether your Product should be set as "staging" or "live"
     default: staging
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateRequestProductFieldDataSkuPropertiesItemEnumItem:
@@ -36306,6 +36588,7 @@ Required scope | `ecommerce:write`
       - value: service-training
         name: ServiceTraining
     docs: Product tax class
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateRequestProductFieldDataEcProductType:
@@ -36319,6 +36602,7 @@ Required scope | `ecommerce:write`
       href="https://university.webflow.com/lesson/add-and-manage-products-and-categories?topics=ecommerce#how-to-understand-product-types">Product
       types.</a> Enums reflect the following values in order: Physical, Digital,
       Service, Advanced"
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateRequestProductFieldData:
@@ -36425,6 +36709,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanInterval:
@@ -36434,6 +36719,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -36442,6 +36728,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -36626,6 +36913,7 @@ Required scope | `ecommerce:write`
       - value: service-training
         name: ServiceTraining
     docs: Product tax class
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateResponseFieldDataEcProductType:
@@ -36639,6 +36927,7 @@ Required scope | `ecommerce:write`
       href="https://university.webflow.com/lesson/add-and-manage-products-and-categories?topics=ecommerce#how-to-understand-product-types">Product
       types.</a> Enums reflect the following values in order: Physical, Digital,
       Service, Advanced"
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateResponseFieldData:
@@ -36721,6 +37010,7 @@ Required scope | `ecommerce:write`
       - live
     docs: Indicate whether your Product should be set as "staging" or "live"
     default: staging
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateSkuRequestSkusItemFieldDataPrice:
@@ -36752,6 +37042,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanInterval:
@@ -36761,6 +37052,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -36769,6 +37061,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -36890,6 +37183,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlanInterval:
@@ -36899,6 +37193,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -36907,6 +37202,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -37011,6 +37307,7 @@ Required scope | `ecommerce:write`
       - live
     docs: Indicate whether your Product should be set as "staging" or "live"
     default: staging
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateSkuRequestSkuFieldDataPrice:
@@ -37042,6 +37339,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanInterval:
@@ -37051,6 +37349,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -37059,6 +37358,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -37180,6 +37480,7 @@ Required scope | `ecommerce:write`
       - value: one-time
         name: OneTime
       - subscription
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlanInterval:
@@ -37189,6 +37490,7 @@ Required scope | `ecommerce:write`
       - month
       - year
     docs: Interval of subscription renewal
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlanPlansItemStatus:
@@ -37197,6 +37499,7 @@ Required scope | `ecommerce:write`
       - inactive
       - canceled
     docs: The status of the plan
+    inline: true
     source:
       openapi: ../openapi.yml
   ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlanPlansItem:
@@ -40234,6 +40537,7 @@ webhooks:
               "UNPUBLISHED",
               "DELETED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -40280,6 +40584,7 @@ webhooks:
       - PUBLISHED
       - UNPUBLISHED
       - DELETED
+    inline: true
     source:
       openapi: ../openapi.yml
   ActivityLogsListResponseItemsItemUser:
@@ -40746,6 +41051,7 @@ service:
               "header",
               "footer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -40830,6 +41136,7 @@ service:
               "header",
               "footer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -40840,6 +41147,7 @@ service:
               "page",
               "site",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -40898,6 +41206,7 @@ service:
               "header",
               "footer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -40956,6 +41265,7 @@ service:
               "header",
               "footer",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -40971,6 +41281,7 @@ service:
       Location of the script, either in the header or footer of the published
       site
     default: header
+    inline: true
     source:
       openapi: ../openapi.yml
   ScriptsGetCustomCodeResponseScriptsItem:
@@ -41016,6 +41327,7 @@ service:
       Location of the script, either in the header or footer of the published
       site
     default: header
+    inline: true
     source:
       openapi: ../openapi.yml
   ScriptsUpsertCustomCodeRequestScriptsItem:
@@ -41048,6 +41360,7 @@ service:
       Location of the script, either in the header or footer of the published
       site
     default: header
+    inline: true
     source:
       openapi: ../openapi.yml
   ScriptsUpsertCustomCodeResponseScriptsItem:
@@ -41090,6 +41403,7 @@ service:
       - page
       - site
     docs: Whether the Custom Code script is applied at the Site-level or Page-level
+    inline: true
     source:
       openapi: ../openapi.yml
   ScriptsListCustomCodeBlocksResponseBlocksItemScriptsItemLocation:
@@ -41100,6 +41414,7 @@ service:
       Location of the script, either in the header or footer of the published
       site
     default: header
+    inline: true
     source:
       openapi: ../openapi.yml
   ScriptsListCustomCodeBlocksResponseBlocksItemScriptsItem:
@@ -42282,6 +42597,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "admin",
               "ecommerce",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42336,6 +42652,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "verified",
               "unverified",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42347,6 +42664,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "user_account_updated",
               "user_account_deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42444,6 +42762,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "admin",
               "ecommerce",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42498,6 +42817,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "verified",
               "unverified",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42509,6 +42829,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "user_account_updated",
               "user_account_deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42606,6 +42927,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "admin",
               "ecommerce",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42660,6 +42982,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "verified",
               "unverified",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42671,6 +42994,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "user_account_updated",
               "user_account_deleted",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42750,6 +43074,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "admin",
               "ecommerce",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42804,6 +43129,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "verified",
               "unverified",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42883,6 +43209,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "admin",
               "ecommerce",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42937,6 +43264,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "verified",
               "unverified",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -42994,6 +43322,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "value": "-UpdatedOn",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43104,6 +43433,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "admin",
               "ecommerce",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43158,6 +43488,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "verified",
               "unverified",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43261,6 +43592,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "admin",
               "ecommerce",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43315,6 +43647,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "verified",
               "unverified",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -43451,6 +43784,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - verified
       - unverified
     docs: The status of the user
+    inline: true
     source:
       openapi: ../openapi.yml
   UsersListResponseUsersItemAccessGroupsItemType:
@@ -43461,6 +43795,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       The type of access group based on how it was assigned to the user.
       * `admin` - Assigned to the user via API or in the designer
       * `ecommerce` - Assigned to the user via an ecommerce purchase
+    inline: true
     source:
       openapi: ../openapi.yml
   UsersListResponseUsersItemAccessGroupsItem:
@@ -43574,6 +43909,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - verified
       - unverified
     docs: The status of the user
+    inline: true
     source:
       openapi: ../openapi.yml
   UsersGetResponseAccessGroupsItemType:
@@ -43584,6 +43920,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       The type of access group based on how it was assigned to the user.
       * `admin` - Assigned to the user via API or in the designer
       * `ecommerce` - Assigned to the user via an ecommerce purchase
+    inline: true
     source:
       openapi: ../openapi.yml
   UsersGetResponseAccessGroupsItem:
@@ -43691,6 +44028,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - verified
       - unverified
     docs: The status of the user
+    inline: true
     source:
       openapi: ../openapi.yml
   UsersUpdateResponseAccessGroupsItemType:
@@ -43701,6 +44039,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       The type of access group based on how it was assigned to the user.
       * `admin` - Assigned to the user via API or in the designer
       * `ecommerce` - Assigned to the user via an ecommerce purchase
+    inline: true
     source:
       openapi: ../openapi.yml
   UsersUpdateResponseAccessGroupsItem:
@@ -43791,6 +44130,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - verified
       - unverified
     docs: The status of the user
+    inline: true
     source:
       openapi: ../openapi.yml
   UsersInviteResponseAccessGroupsItemType:
@@ -43801,6 +44141,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       The type of access group based on how it was assigned to the user.
       * `admin` - Assigned to the user via API or in the designer
       * `ecommerce` - Assigned to the user via an ecommerce purchase
+    inline: true
     source:
       openapi: ../openapi.yml
   UsersInviteResponseAccessGroupsItem:
@@ -43891,6 +44232,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - user_account_updated
       - user_account_deleted
     docs: The type of event that triggered the request
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountAddedPayloadPayloadStatus:
@@ -43899,6 +44241,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - verified
       - unverified
     docs: The status of the user
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountAddedPayloadPayloadAccessGroupsItemType:
@@ -43909,6 +44252,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       The type of access group based on how it was assigned to the user.
       * `admin` - Assigned to the user via API or in the designer
       * `ecommerce` - Assigned to the user via an ecommerce purchase
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountAddedPayloadPayloadAccessGroupsItem:
@@ -44014,6 +44358,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - user_account_updated
       - user_account_deleted
     docs: The type of event that triggered the request
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountUpdatedPayloadPayloadStatus:
@@ -44022,6 +44367,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - verified
       - unverified
     docs: The status of the user
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountUpdatedPayloadPayloadAccessGroupsItemType:
@@ -44032,6 +44378,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       The type of access group based on how it was assigned to the user.
       * `admin` - Assigned to the user via API or in the designer
       * `ecommerce` - Assigned to the user via an ecommerce purchase
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountUpdatedPayloadPayloadAccessGroupsItem:
@@ -44137,6 +44484,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - user_account_updated
       - user_account_deleted
     docs: The type of event that triggered the request
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountDeletedPayloadPayloadStatus:
@@ -44145,6 +44493,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       - verified
       - unverified
     docs: The status of the user
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountDeletedPayloadPayloadAccessGroupsItemType:
@@ -44155,6 +44504,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       The type of access group based on how it was assigned to the user.
       * `admin` - Assigned to the user via API or in the designer
       * `ecommerce` - Assigned to the user via an ecommerce purchase
+    inline: true
     source:
       openapi: ../openapi.yml
   UserAccountDeletedPayloadPayloadAccessGroupsItem:
@@ -44948,6 +45298,7 @@ webhooks:
               "collection_item_deleted",
               "collection_item_unpublished",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -45055,6 +45406,7 @@ webhooks:
               "collection_item_deleted",
               "collection_item_unpublished",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -45162,6 +45514,7 @@ webhooks:
               "collection_item_deleted",
               "collection_item_unpublished",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -45304,6 +45657,7 @@ webhooks:
               "collection_item_deleted",
               "collection_item_unpublished",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -45384,6 +45738,7 @@ webhooks:
 
       * `collection_item_unpublished` - Sends the
       [collection_item_unpublished](#collection_item_unpublished) event
+    inline: true
     source:
       openapi: ../openapi.yml
   WebhooksListResponseWebhooksItemFilter:
@@ -45535,6 +45890,7 @@ webhooks:
 
       * `collection_item_unpublished` - Sends the
       [collection_item_unpublished](#collection_item_unpublished) event
+    inline: true
     source:
       openapi: ../openapi.yml
   WebhooksCreateRequestFilter:
@@ -45606,6 +45962,7 @@ webhooks:
 
       * `collection_item_unpublished` - Sends the
       [collection_item_unpublished](#collection_item_unpublished) event
+    inline: true
     source:
       openapi: ../openapi.yml
   WebhooksCreateResponseFilter:
@@ -45748,6 +46105,7 @@ webhooks:
 
       * `collection_item_unpublished` - Sends the
       [collection_item_unpublished](#collection_item_unpublished) event
+    inline: true
     source:
       openapi: ../openapi.yml
   WebhooksGetResponseFilter:

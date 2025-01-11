@@ -10,5 +10,5 @@ export const MigrationStatus: core.serialization.Schema<serializers.MigrationSta
     core.serialization.enum_(["RUNNING", "FAILED", "FINISHED"]);
 
 export declare namespace MigrationStatus {
-    type Raw = "RUNNING" | "FAILED" | "FINISHED";
+    export type Raw = "RUNNING" | "FAILED" | "FINISHED";
 }

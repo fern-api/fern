@@ -1,8 +1,9 @@
-import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
-import path, { basename, extname } from "path";
+
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
+import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative } from "@fern-api/path-utils";
+
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
 export type HttpServiceInfo = Partial<
@@ -88,10 +89,7 @@ export interface FernDefinitionBuilder {
 
     addChannelExample(file: RelativeFilePath, { example }: { example: RawSchemas.ExampleWebSocketSession }): void;
 
-    setServiceInfo(
-        file: RelativeFilePath,
-        { auth, "base-path": basePath, "display-name": displayName, docs }: HttpServiceInfo
-    ): void;
+    setServiceInfo(file: RelativeFilePath, HttpServiceInfo: HttpServiceInfo): void;
 
     addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
 
@@ -213,6 +211,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public getGlobalHeaderNames(): Set<string> {
         const headerNames = Object.keys(this.rootApiFile.headers ?? {});
+        // Get headers from auth schemes
+        if (this.rootApiFile["auth-schemes"] != null) {
+            for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
+                if (isHeaderAuthScheme(scheme)) {
+                    headerNames.push(scheme.header);
+                }
+            }
+        }
         const maybeVersionHeader = this.getVersionHeader();
         if (maybeVersionHeader != null) {
             headerNames.push(maybeVersionHeader);
@@ -260,7 +266,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         const importPrefix =
             alias ??
             camelCase(
-                (dirname(fileToImport) + "/" + basename(fileToImport, extname(fileToImport))).replaceAll(
+                (dirname(fileToImport) + "/" + basename(fileToImport, { stripExtension: true })).replaceAll(
                     "__package__",
                     "root"
                 )
@@ -401,7 +407,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
         const basePath = this.basePath;
         if (basePath != null) {
-            fernFile.channel.path = path.join(basePath, channel.path);
+            fernFile.channel.path = join(basePath, channel.path);
         }
     }
 
@@ -456,7 +462,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                                 id,
                                 {
                                     ...endpoint,
-                                    path: path.join(basePath, endpoint.path)
+                                    path: join(basePath, endpoint.path)
                                 }
                             ];
                         })
@@ -475,7 +481,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                                     id,
                                     {
                                         ...endpoint,
-                                        path: path.join(basePath, endpoint.path)
+                                        path: join(basePath, endpoint.path)
                                     }
                                 ];
                             })
@@ -561,4 +567,10 @@ function getSharedSuffix(strings: string[]): string {
 
 function isSingleBaseUrl(url: RawSchemas.EnvironmentSchema): url is RawSchemas.SingleBaseUrlEnvironmentSchema {
     return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null;
+}
+
+function isHeaderAuthScheme(
+    scheme: RawSchemas.AuthSchemeDeclarationSchema
+): scheme is RawSchemas.HeaderAuthSchemeSchema {
+    return (scheme as RawSchemas.HeaderAuthSchemeSchema)?.header != null;
 }

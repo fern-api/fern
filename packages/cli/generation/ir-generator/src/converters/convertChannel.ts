@@ -1,4 +1,6 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
@@ -13,13 +15,13 @@ import {
     WebSocketMessage,
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { VariableResolver } from "../resolvers/VariableResolver";
+import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability, convertDeclaration } from "./convertDeclaration";
 import { constructHttpPath } from "./services/constructHttpPath";
@@ -30,9 +32,8 @@ import {
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
-import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 
-export async function convertChannel({
+export function convertChannel({
     channel,
     typeResolver,
     exampleResolver,
@@ -46,7 +47,7 @@ export async function convertChannel({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): Promise<WebSocketChannel> {
+}): WebSocketChannel {
     const messages: WebSocketMessage[] = [];
     for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
         messages.push({
@@ -67,16 +68,14 @@ export async function convertChannel({
         displayName: channel["display-name"],
         headers:
             channel.headers != null
-                ? await Promise.all(
-                      Object.entries(channel.headers).map(([headerKey, header]) =>
-                          convertHttpHeader({ headerKey, header, file })
-                      )
+                ? Object.entries(channel.headers).map(([headerKey, header]) =>
+                      convertHttpHeader({ headerKey, header, file })
                   )
                 : [],
         docs: channel.docs,
         pathParameters:
             channel["path-parameters"] != null
-                ? await convertPathParameters({
+                ? convertPathParameters({
                       pathParameters: channel["path-parameters"],
                       location: PathParameterLocation.Endpoint,
                       file,
@@ -85,24 +84,22 @@ export async function convertChannel({
                 : [],
         queryParameters:
             channel["query-parameters"] != null
-                ? await Promise.all(
-                      Object.entries(channel["query-parameters"]).map(async ([queryParameterKey, queryParameter]) => {
-                          const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
-                          const valueType = file.parseTypeReference(queryParameter);
-                          return {
-                              ...(await convertDeclaration(queryParameter)),
-                              name: file.casingsGenerator.generateNameAndWireValue({
-                                  wireValue: queryParameterKey,
-                                  name
-                              }),
-                              valueType,
-                              allowMultiple:
-                                  typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
-                                      ? queryParameter["allow-multiple"]
-                                      : false
-                          };
-                      })
-                  )
+                ? Object.entries(channel["query-parameters"]).map(([queryParameterKey, queryParameter]) => {
+                      const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
+                      const valueType = file.parseTypeReference(queryParameter);
+                      return {
+                          ...convertDeclaration(queryParameter),
+                          name: file.casingsGenerator.generateNameAndWireValue({
+                              wireValue: queryParameterKey,
+                              name
+                          }),
+                          valueType,
+                          allowMultiple:
+                              typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+                                  ? queryParameter["allow-multiple"]
+                                  : false
+                      };
+                  })
                 : [],
         messages: Object.values(messages),
         examples: (channel.examples ?? []).map((example): ExampleWebSocketSession => {

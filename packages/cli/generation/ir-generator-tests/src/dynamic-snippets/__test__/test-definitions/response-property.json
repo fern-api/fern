@@ -54,7 +54,7 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -89,9 +89,9 @@
                 }
             },
             "typeReference": {
-                "_type": "optional",
+                "type": "optional",
                 "value": {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:StringResponse"
                 }
             }
@@ -149,13 +149,13 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -253,7 +253,7 @@
                         "wireValue": "docs"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -326,9 +326,9 @@
                 }
             },
             "typeReference": {
-                "_type": "optional",
+                "type": "optional",
                 "value": {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_service:WithDocs"
                 }
             }
@@ -424,7 +424,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -452,7 +452,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -549,13 +549,13 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -584,7 +584,7 @@
                         "wireValue": "docs"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -612,7 +612,7 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_service:Movie"
                     }
                 }
@@ -697,7 +697,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -782,7 +782,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -867,7 +867,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -952,7 +952,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1037,7 +1037,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1122,7 +1122,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1207,7 +1207,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1216,5 +1216,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

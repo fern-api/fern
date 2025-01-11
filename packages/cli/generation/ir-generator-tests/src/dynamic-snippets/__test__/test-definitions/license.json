@@ -54,7 +54,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -104,5 +104,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

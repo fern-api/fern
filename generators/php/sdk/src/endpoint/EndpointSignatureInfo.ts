@@ -1,4 +1,5 @@
 import { php } from "@fern-api/php-codegen";
+
 import { EndpointRequest } from "./request/EndpointRequest";
 
 export interface EndpointSignatureInfo {

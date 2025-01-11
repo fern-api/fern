@@ -23,4 +23,5 @@ export interface DynamicIntermediateRepresentation {
      * are typically included in the SDK's client constructor.
      */
     headers: FernIr.dynamic.NamedParameter[] | undefined;
+    environments: FernIr.EnvironmentsConfig | undefined;
 }

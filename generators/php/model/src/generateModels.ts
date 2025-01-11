@@ -1,7 +1,9 @@
 import { PhpFile } from "@fern-api/php-codegen";
+
 import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { EnumGenerator } from "./enum/EnumGenerator";
+
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { EnumGenerator } from "./enum/EnumGenerator";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 
 export function generateModels(context: ModelGeneratorContext): void {

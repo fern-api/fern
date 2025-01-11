@@ -1,9 +1,9 @@
-import { Writer } from "./core/Writer";
-import { ClassReference } from "./ClassReference";
 import { Access } from "./Access";
-import { AstNode } from "./core/AstNode";
+import { ClassReference } from "./ClassReference";
 import { Field } from "./Field";
 import { Method } from "./Method";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Interface {
     interface Args {

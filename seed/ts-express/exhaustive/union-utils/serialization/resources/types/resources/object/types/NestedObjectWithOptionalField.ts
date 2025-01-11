@@ -13,12 +13,12 @@ export const NestedObjectWithOptionalField: core.serialization.ObjectSchema<
     string: core.serialization.string().optional(),
     nestedObject: core.serialization.property(
         "NestedObject",
-        core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField).optional()
+        core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField).optional(),
     ),
 });
 
 export declare namespace NestedObjectWithOptionalField {
-    interface Raw {
+    export interface Raw {
         string?: string | null;
         NestedObject?: serializers.types.ObjectWithOptionalField.Raw | null;
     }

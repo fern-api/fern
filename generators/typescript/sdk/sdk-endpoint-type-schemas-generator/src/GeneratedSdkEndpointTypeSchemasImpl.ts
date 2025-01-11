@@ -1,4 +1,10 @@
+import { PackageId, getSchemaOptions } from "@fern-typescript/commons";
+import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
+
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ErrorDiscriminationStrategy,
     HttpEndpoint,
@@ -6,10 +12,7 @@ import {
     PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
-import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
-import { ts } from "ts-morph";
+
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
 import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
@@ -221,15 +224,19 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         switch (this.endpoint.requestBody.requestBodyType.type) {
             case "unknown":
                 return referenceToParsedRequest;
-            case "named":
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(this.endpoint.requestBody.requestBodyType);
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedRequest, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields,
+                            allowExtraFields:
+                                this.allowExtraFields ??
+                                (typeDeclaration.shape.type === "object" && typeDeclaration.shape.extraProperties),
                             omitUndefined: this.omitUndefined
                         })
                     });
+            }
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {

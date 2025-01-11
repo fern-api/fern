@@ -1,8 +1,8 @@
-import { go } from "@fern-api/go-ast";
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic } from "@fern-fern/ir-sdk/api";
 import { assertNever } from "@fern-api/core-utils";
-import { Severity } from "./ErrorReporter";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { go } from "@fern-api/go-ast";
+
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 export interface FilePropertyInfo {
     fileFields: go.StructField[];
@@ -20,7 +20,7 @@ export class FilePropertyMapper {
         body,
         value
     }: {
-        body: dynamic.FileUploadRequestBody;
+        body: FernIr.dynamic.FileUploadRequestBody;
         value: unknown;
     }): FilePropertyInfo {
         const result: FilePropertyInfo = {
@@ -59,54 +59,30 @@ export class FilePropertyMapper {
         property,
         record
     }: {
-        property: dynamic.FileUploadRequestBodyProperty.File_;
+        property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
-        const fileValue = record[property.wireValue];
+        const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
             return go.TypeInstantiation.nop();
         }
-        if (typeof fileValue !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected file value to be a string, got ${typeof fileValue}`
-            });
-            return go.TypeInstantiation.nop();
-        }
-        return go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(fileValue as string));
+        return go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(fileValue));
     }
 
     private getArrayFileProperty({
         property,
         record
     }: {
-        property: dynamic.FileUploadRequestBodyProperty.FileArray;
+        property: FernIr.dynamic.FileUploadRequestBodyProperty.FileArray;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
-        const fileArrayValue = record[property.wireValue];
-        if (fileArrayValue == null) {
+        const fileValues = this.context.getFileArrayValues({ property, record });
+        if (fileValues == null) {
             return go.TypeInstantiation.nop();
-        }
-        if (!Array.isArray(fileArrayValue)) {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected file array value to be an array of strings, got ${typeof fileArrayValue}`
-            });
-            return go.TypeInstantiation.nop();
-        }
-        const stringValues: string[] = [];
-        for (const value of fileArrayValue) {
-            if (typeof value !== "string") {
-                this.context.errors.add({
-                    severity: Severity.Critical,
-                    message: `Expected file array value to be an array of strings, got ${typeof value}`
-                });
-            }
-            stringValues.push(value as string);
         }
         return go.TypeInstantiation.slice({
             valueType: go.Type.reference(this.context.getIoReaderTypeReference()),
-            values: stringValues.map((value) =>
+            values: fileValues.map((value) =>
                 go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(value))
             )
         });
@@ -116,7 +92,7 @@ export class FilePropertyMapper {
         property,
         record
     }: {
-        property: dynamic.NamedParameter;
+        property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
         const bodyPropertyValue = record[property.name.wireValue];

@@ -1,6 +1,7 @@
-import { Project } from "@fern-api/project-loader";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { formatWorkspace } from "@fern-api/fern-definition-formatter";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function formatWorkspaces({

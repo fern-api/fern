@@ -1,6 +1,6 @@
 {
   "types": {
-    "type_user:Organization": {
+    "type_organizations:Organization": {
       "name": "Organization",
       "shape": {
         "type": "object",
@@ -27,10 +27,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_user:User": {
@@ -60,28 +57,34 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
   "subpackages": {
-    "subpackage_user": {
-      "subpackageId": "subpackage_user",
-      "name": "user",
+    "subpackage_organizations": {
+      "subpackageId": "subpackage_organizations",
+      "name": "organizations",
       "endpoints": [
         {
           "auth": false,
           "method": "GET",
           "id": "getOrganization",
-          "originalEndpointId": "endpoint_user.getOrganization",
+          "originalEndpointId": "endpoint_organizations.getOrganization",
           "name": "Get Organization",
           "path": {
             "pathParameters": [
               {
-                "key": "organizationId",
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "organization_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -93,7 +96,15 @@
             "parts": [
               {
                 "type": "literal",
-                "value": "/user"
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
               },
               {
                 "type": "literal",
@@ -101,11 +112,15 @@
               },
               {
                 "type": "pathParameter",
-                "value": "organizationId"
+                "value": "organization_id"
               },
               {
                 "type": "literal",
                 "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/"
               }
             ]
           },
@@ -116,95 +131,17 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_user:Organization"
+                "value": "type_organizations:Organization"
               }
             }
           },
           "errorsV2": [],
           "examples": [
             {
-              "path": "/user/organizations/organizationId",
+              "path": "/tenant_id/organizations/organization_id/",
               "pathParameters": {
-                "organizationId": "organizationId"
-              },
-              "queryParameters": {},
-              "headers": {},
-              "responseStatusCode": 200,
-              "responseBody": {
-                "name": "name",
-                "tags": [
-                  "tags",
-                  "tags"
-                ]
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "name": "name",
-                  "tags": [
-                    "tags",
-                    "tags"
-                  ]
-                }
-              },
-              "codeSamples": []
-            }
-          ]
-        },
-        {
-          "auth": false,
-          "method": "GET",
-          "id": "getUser",
-          "originalEndpointId": "endpoint_user.getUser",
-          "name": "Get User",
-          "path": {
-            "pathParameters": [
-              {
-                "key": "userId",
-                "type": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            ],
-            "parts": [
-              {
-                "type": "literal",
-                "value": "/user"
-              },
-              {
-                "type": "literal",
-                "value": "/users/"
-              },
-              {
-                "type": "pathParameter",
-                "value": "userId"
-              },
-              {
-                "type": "literal",
-                "value": ""
-              }
-            ]
-          },
-          "queryParameters": [],
-          "headers": [],
-          "response": {
-            "type": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "type_user:User"
-              }
-            }
-          },
-          "errorsV2": [],
-          "examples": [
-            {
-              "path": "/user/users/userId",
-              "pathParameters": {
-                "userId": "userId"
+                "tenant_id": "tenant_id",
+                "organization_id": "organization_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -234,12 +171,12 @@
           "auth": false,
           "method": "GET",
           "id": "getOrganizationUser",
-          "originalEndpointId": "endpoint_user.getOrganizationUser",
+          "originalEndpointId": "endpoint_organizations.getOrganizationUser",
           "name": "Get Organization User",
           "path": {
             "pathParameters": [
               {
-                "key": "organizationId",
+                "key": "tenant_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -248,7 +185,16 @@
                 }
               },
               {
-                "key": "userId",
+                "key": "organization_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "user_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -260,7 +206,15 @@
             "parts": [
               {
                 "type": "literal",
-                "value": "/user"
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
               },
               {
                 "type": "literal",
@@ -268,7 +222,11 @@
               },
               {
                 "type": "pathParameter",
-                "value": "organizationId"
+                "value": "organization_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
               },
               {
                 "type": "literal",
@@ -276,7 +234,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "userId"
+                "value": "user_id"
               },
               {
                 "type": "literal",
@@ -298,10 +256,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/user/organizations/organizationId/users/userId",
+              "path": "/tenant_id/organizations/organization_id/users/user_id",
               "pathParameters": {
-                "organizationId": "organizationId",
-                "userId": "userId"
+                "tenant_id": "tenant_id",
+                "organization_id": "organization_id",
+                "user_id": "user_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -330,126 +289,22 @@
         {
           "auth": false,
           "method": "GET",
-          "id": "searchUsers",
-          "originalEndpointId": "endpoint_user.searchUsers",
-          "name": "Search Users",
-          "path": {
-            "pathParameters": [
-              {
-                "key": "userId",
-                "type": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            ],
-            "parts": [
-              {
-                "type": "literal",
-                "value": "/user"
-              },
-              {
-                "type": "literal",
-                "value": "/users/"
-              },
-              {
-                "type": "pathParameter",
-                "value": "userId"
-              },
-              {
-                "type": "literal",
-                "value": "/search"
-              }
-            ]
-          },
-          "queryParameters": [
-            {
-              "key": "limit",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
-                }
-              }
-            }
-          ],
-          "headers": [],
-          "response": {
-            "type": {
-              "type": "reference",
-              "value": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "type_user:User"
-                }
-              }
-            }
-          },
-          "errorsV2": [],
-          "examples": [
-            {
-              "path": "/user/users/userId/search",
-              "pathParameters": {
-                "userId": "userId"
-              },
-              "queryParameters": {},
-              "headers": {},
-              "responseStatusCode": 200,
-              "responseBody": [
-                {
-                  "name": "name",
-                  "tags": [
-                    "tags",
-                    "tags"
-                  ]
-                },
-                {
-                  "name": "name",
-                  "tags": [
-                    "tags",
-                    "tags"
-                  ]
-                }
-              ],
-              "responseBodyV3": {
-                "type": "json",
-                "value": [
-                  {
-                    "name": "name",
-                    "tags": [
-                      "tags",
-                      "tags"
-                    ]
-                  },
-                  {
-                    "name": "name",
-                    "tags": [
-                      "tags",
-                      "tags"
-                    ]
-                  }
-                ]
-              },
-              "codeSamples": []
-            }
-          ]
-        },
-        {
-          "auth": false,
-          "method": "GET",
           "id": "searchOrganizations",
-          "originalEndpointId": "endpoint_user.searchOrganizations",
+          "originalEndpointId": "endpoint_organizations.searchOrganizations",
           "name": "Search Organizations",
           "path": {
             "pathParameters": [
               {
-                "key": "organizationId",
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "organization_id",
                 "type": {
                   "type": "primitive",
                   "value": {
@@ -461,7 +316,15 @@
             "parts": [
               {
                 "type": "literal",
-                "value": "/user"
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
               },
               {
                 "type": "literal",
@@ -469,7 +332,11 @@
               },
               {
                 "type": "pathParameter",
-                "value": "organizationId"
+                "value": "organization_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
               },
               {
                 "type": "literal",
@@ -499,7 +366,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "type_user:Organization"
+                  "value": "type_organizations:Organization"
                 }
               }
             }
@@ -507,9 +374,10 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/user/organizations/organizationId/search",
+              "path": "/tenant_id/organizations/organization_id/search",
               "pathParameters": {
-                "organizationId": "organizationId"
+                "tenant_id": "tenant_id",
+                "organization_id": "organization_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -557,7 +425,498 @@
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_user:Organization",
+        "type_organizations:Organization"
+      ],
+      "subpackages": []
+    },
+    "subpackage_user": {
+      "subpackageId": "subpackage_user",
+      "name": "user",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "getUser",
+          "originalEndpointId": "endpoint_user.getUser",
+          "name": "Get User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "user_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "user_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_user:User"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/tenant_id/user/user_id",
+              "pathParameters": {
+                "tenant_id": "tenant_id",
+                "user_id": "user_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "createUser",
+          "originalEndpointId": "endpoint_user.createUser",
+          "name": "Create User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_user:User"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_user:User"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/tenant_id/user/",
+              "pathParameters": {
+                "tenant_id": "tenant_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "PATCH",
+          "id": "updateUser",
+          "originalEndpointId": "endpoint_user.updateUser",
+          "name": "Update User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "user_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "user_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_user:User"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_user:User"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/tenant_id/user/user_id",
+              "pathParameters": {
+                "tenant_id": "tenant_id",
+                "user_id": "user_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "searchUsers",
+          "originalEndpointId": "endpoint_user.searchUsers",
+          "name": "Search Users",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "user_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "user_id"
+              },
+              {
+                "type": "literal",
+                "value": "/search"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "limit",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_user:User"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/tenant_id/user/user_id/search",
+              "pathParameters": {
+                "tenant_id": "tenant_id",
+                "user_id": "user_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                },
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "name": "name",
+                    "tags": [
+                      "tags",
+                      "tags"
+                    ]
+                  },
+                  {
+                    "name": "name",
+                    "tags": [
+                      "tags",
+                      "tags"
+                    ]
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
         "type_user:User"
       ],
       "subpackages": []
@@ -569,6 +928,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
+      "subpackage_organizations",
       "subpackage_user"
     ]
   },

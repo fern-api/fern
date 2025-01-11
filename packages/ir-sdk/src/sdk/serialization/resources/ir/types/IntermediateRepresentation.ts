@@ -70,7 +70,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
 });
 
 export declare namespace IntermediateRepresentation {
-    interface Raw {
+    export interface Raw {
         fdrApiDefinitionId?: string | null;
         apiVersion?: ApiVersionScheme.Raw | null;
         apiName: Name.Raw;

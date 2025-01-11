@@ -40004,6 +40004,7 @@
                   },
                   "generatedName": "ResourceReadActionGroupsValue",
                   "groupName": [],
+                  "inline": true,
                   "type": "array"
                 },
                 "generatedName": "ResourceReadActionGroups",

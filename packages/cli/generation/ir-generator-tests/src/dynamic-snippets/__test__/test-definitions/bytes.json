@@ -84,5 +84,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

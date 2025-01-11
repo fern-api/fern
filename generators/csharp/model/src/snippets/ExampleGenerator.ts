@@ -1,4 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import {
     ExampleContainer,
     ExampleNamedType,
@@ -8,6 +9,7 @@ import {
     ExampleUndiscriminatedUnionType,
     ExampleUnionType
 } from "@fern-fern/ir-sdk/api";
+
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "../object/ObjectGenerator";
 

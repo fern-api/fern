@@ -18,7 +18,7 @@ export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.
         .extend(Declaration);
 
 export declare namespace HttpHeader {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         env?: string | null;

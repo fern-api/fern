@@ -30,7 +30,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -87,7 +87,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:TypeId"
                     }
                 },
@@ -115,7 +115,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -150,7 +150,7 @@
                 }
             },
             "typeReference": {
-                "_type": "named",
+                "type": "named",
                 "value": "type_:Type"
             }
         }
@@ -216,7 +216,7 @@
                             "wireValue": "typeId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:TypeId"
                         }
                     }
@@ -227,5 +227,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

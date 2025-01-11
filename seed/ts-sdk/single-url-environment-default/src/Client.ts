@@ -7,12 +7,12 @@ import * as core from "./core";
 import { Dummy } from "./api/resources/dummy/client/Client";
 
 export declare namespace SeedSingleUrlEnvironmentDefaultClient {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedSingleUrlEnvironmentDefaultEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,9 +25,9 @@ export declare namespace SeedSingleUrlEnvironmentDefaultClient {
 }
 
 export class SeedSingleUrlEnvironmentDefaultClient {
-    constructor(protected readonly _options: SeedSingleUrlEnvironmentDefaultClient.Options) {}
-
     protected _dummy: Dummy | undefined;
+
+    constructor(protected readonly _options: SeedSingleUrlEnvironmentDefaultClient.Options) {}
 
     public get dummy(): Dummy {
         return (this._dummy ??= new Dummy(this._options));

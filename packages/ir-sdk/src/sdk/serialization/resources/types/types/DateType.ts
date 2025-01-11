@@ -10,5 +10,5 @@ export const DateType: core.serialization.ObjectSchema<serializers.DateType.Raw,
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace DateType {
-    interface Raw {}
+    export interface Raw {}
 }

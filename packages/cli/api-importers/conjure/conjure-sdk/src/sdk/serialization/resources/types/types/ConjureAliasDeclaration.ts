@@ -16,7 +16,7 @@ export const ConjureAliasDeclaration: core.serialization.ObjectSchema<
 });
 
 export declare namespace ConjureAliasDeclaration {
-    interface Raw {
+    export interface Raw {
         alias: ConjureType.Raw;
         docs?: string | null;
     }

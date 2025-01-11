@@ -1,6 +1,8 @@
-import { assertNever, MediaType } from "@fern-api/core-utils";
-import { FernOpenapiIr, ResponseWithExample, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { MediaType, assertNever } from "@fern-api/core-utils";
+import { FernOpenapiIr, ResponseWithExample, Source } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../../getExtension";
 import { convertSchema } from "../../../../schema/convertSchemas";
 import { convertSchemaWithExampleToSchema } from "../../../../schema/utils/convertSchemaWithExampleToSchema";
@@ -171,15 +173,14 @@ function convertResolvedResponse({
                 return ResponseWithExample.streamingSse({
                     description: resolvedResponse.description,
                     responseProperty: undefined,
-                    schema: convertSchemaWithExampleToSchema(
-                        convertSchema(
-                            textEventStreamObject.schema,
-                            false,
-                            context,
-                            responseBreadcrumbs,
-                            source,
-                            namespace
-                        )
+                    fullExamples: textEventStreamObject.examples,
+                    schema: convertSchema(
+                        textEventStreamObject.schema,
+                        false,
+                        context,
+                        responseBreadcrumbs,
+                        source,
+                        namespace
                     ),
                     source
                 });
@@ -209,15 +210,14 @@ function convertResolvedResponse({
                     return ResponseWithExample.streamingSse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
-                        schema: convertSchemaWithExampleToSchema(
-                            convertSchema(
-                                jsonMediaObject.schema,
-                                false,
-                                context,
-                                responseBreadcrumbs,
-                                source,
-                                namespace
-                            )
+                        fullExamples: jsonMediaObject.examples,
+                        schema: convertSchema(
+                            jsonMediaObject.schema,
+                            false,
+                            context,
+                            responseBreadcrumbs,
+                            source,
+                            namespace
                         ),
                         source
                     });

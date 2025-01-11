@@ -11,26 +11,26 @@ export type WorkspaceSubmissionStatus =
     | SeedTrace.WorkspaceSubmissionStatus.Ran
     | SeedTrace.WorkspaceSubmissionStatus.Traced;
 
-export declare namespace WorkspaceSubmissionStatus {
-    interface Stopped {
+export namespace WorkspaceSubmissionStatus {
+    export interface Stopped {
         type: "stopped";
     }
 
-    interface Errored {
+    export interface Errored {
         type: "errored";
         value: SeedTrace.ErrorInfo;
     }
 
-    interface Running {
+    export interface Running {
         type: "running";
         value: SeedTrace.RunningSubmissionState;
     }
 
-    interface Ran extends SeedTrace.WorkspaceRunDetails {
+    export interface Ran extends SeedTrace.WorkspaceRunDetails {
         type: "ran";
     }
 
-    interface Traced extends SeedTrace.WorkspaceRunDetails {
+    export interface Traced extends SeedTrace.WorkspaceRunDetails {
         type: "traced";
     }
 }

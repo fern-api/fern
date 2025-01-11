@@ -92,7 +92,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -189,7 +189,7 @@
                         "wireValue": "userName"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -217,9 +217,9 @@
                         "wireValue": "metadata_tags"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -248,13 +248,13 @@
                         "wireValue": "EXTRA_PROPERTIES"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -352,7 +352,7 @@
                         "wireValue": "Name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -380,7 +380,7 @@
                         "wireValue": "NestedUser"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_service:User"
                     }
                 }
@@ -638,7 +638,7 @@
                                 "wireValue": "status"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_service:ResourceStatus"
                             }
                         }
@@ -694,7 +694,7 @@
                                 "wireValue": "status"
                             },
                             "typeReference": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_service:ResourceStatus"
                             }
                         }
@@ -802,7 +802,7 @@
                             "wireValue": "ResourceID"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -975,7 +975,7 @@
                             "wireValue": "page_limit"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     },
@@ -1003,7 +1003,7 @@
                             "wireValue": "beforeDate"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DATE"
                         }
                     }
@@ -1019,5 +1019,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

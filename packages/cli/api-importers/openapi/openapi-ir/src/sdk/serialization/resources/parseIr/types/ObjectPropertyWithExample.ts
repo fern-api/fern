@@ -25,7 +25,7 @@ export const ObjectPropertyWithExample: core.serialization.ObjectSchema<
     .extend(WithAvailability);
 
 export declare namespace ObjectPropertyWithExample {
-    interface Raw extends WithAvailability.Raw {
+    export interface Raw extends WithAvailability.Raw {
         key: string;
         schema: serializers.SchemaWithExample.Raw;
         readonly?: boolean | null;

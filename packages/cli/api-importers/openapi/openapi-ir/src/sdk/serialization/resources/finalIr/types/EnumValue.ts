@@ -21,7 +21,7 @@ export const EnumValue: core.serialization.ObjectSchema<serializers.EnumValue.Ra
         .extend(WithAvailability);
 
 export declare namespace EnumValue {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw {
+    export interface Raw extends WithDescription.Raw, WithAvailability.Raw {
         nameOverride?: string | null;
         generatedName: string;
         value: string;

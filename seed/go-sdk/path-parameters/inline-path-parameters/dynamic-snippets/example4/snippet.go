@@ -8,13 +8,15 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.User.SearchOrganizations(
+    client.User.CreateUser(
         context.TODO(),
-        "organizationId",
-        &path.SearchOrganizationsRequest{
-            Limit: path.Int(
-                1,
-            ),
+        "tenant_id",
+        &path.User{
+            Name: "name",
+            Tags: []string{
+                "tags",
+                "tags",
+            },
         },
     )
 }

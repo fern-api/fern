@@ -54,7 +54,7 @@
                         "wireValue": "one"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -82,7 +82,7 @@
                         "wireValue": "two"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 },
@@ -110,7 +110,7 @@
                         "wireValue": "three"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -138,7 +138,7 @@
                         "wireValue": "four"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     }
                 },
@@ -166,7 +166,7 @@
                         "wireValue": "five"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "LONG"
                     }
                 },
@@ -194,7 +194,7 @@
                         "wireValue": "six"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE_TIME"
                     }
                 },
@@ -222,7 +222,7 @@
                         "wireValue": "seven"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE"
                     }
                 },
@@ -250,7 +250,7 @@
                         "wireValue": "eight"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "UUID"
                     }
                 },
@@ -278,7 +278,7 @@
                         "wireValue": "nine"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BASE_64"
                     }
                 },
@@ -306,9 +306,9 @@
                         "wireValue": "ten"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -337,9 +337,9 @@
                         "wireValue": "eleven"
                     },
                     "typeReference": {
-                        "_type": "set",
+                        "type": "set",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DOUBLE"
                         }
                     }
@@ -368,13 +368,13 @@
                         "wireValue": "twelve"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "BOOLEAN"
                         }
                     }
@@ -403,9 +403,9 @@
                         "wireValue": "thirteen"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "LONG"
                         }
                     }
@@ -434,7 +434,7 @@
                         "wireValue": "fourteen"
                     },
                     "typeReference": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 },
                 {
@@ -461,11 +461,11 @@
                         "wireValue": "fifteen"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -495,15 +495,15 @@
                         "wireValue": "sixteen"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "map",
+                            "type": "map",
                             "key": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             },
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -533,11 +533,11 @@
                         "wireValue": "seventeen"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "UUID"
                             }
                         }
@@ -567,7 +567,7 @@
                         "wireValue": "eighteen"
                     },
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "eighteen"
@@ -598,7 +598,7 @@
                         "wireValue": "nineteen"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Name"
                     }
                 },
@@ -626,7 +626,7 @@
                         "wireValue": "twenty"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "UINT"
                     }
                 },
@@ -654,7 +654,7 @@
                         "wireValue": "twentyone"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "UINT_64"
                     }
                 },
@@ -682,7 +682,7 @@
                         "wireValue": "twentytwo"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "FLOAT"
                     }
                 },
@@ -710,7 +710,7 @@
                         "wireValue": "twentythree"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BIG_INTEGER"
                     }
                 }
@@ -769,7 +769,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -797,7 +797,7 @@
                         "wireValue": "value"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -805,5 +805,6 @@
         }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {},
+    "environments": null
 }

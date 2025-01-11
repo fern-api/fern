@@ -1,4 +1,6 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever, getDuplicates, isPlainObject } from "@fern-api/core-utils";
+import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/fern-definition-schema";
 import {
     DoubleValidationRules,
     IntegerValidationRules,
@@ -8,8 +10,7 @@ import {
     PrimitiveTypeV2,
     StringValidationRules
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { ResolvedType } from "../resolvers/ResolvedType";
@@ -177,7 +178,7 @@ export function validateTypeReferenceExample({
                 if (duplicates.length > 0) {
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message:
                                 "Set has duplicate elements:\n" +
                                 duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n")

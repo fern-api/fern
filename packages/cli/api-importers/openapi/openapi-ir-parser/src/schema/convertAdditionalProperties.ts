@@ -1,3 +1,6 @@
+import { OpenAPIV3 } from "openapi-types";
+
+import { assertNever } from "@fern-api/core-utils";
 import {
     Availability,
     Encoding,
@@ -7,9 +10,9 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
-import { convertSchema } from "./convertSchemas";
+
 import { SchemaParserContext } from "./SchemaParserContext";
+import { convertSchema } from "./convertSchemas";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export function convertAdditionalProperties({
@@ -104,18 +107,54 @@ export function convertAdditionalProperties({
             }),
             groupName: undefined
         },
-        valueSchema: convertSchema(
-            additionalProperties,
-            context.options.optionalAdditionalProperties ? wrapAsNullable : false,
-            context,
-            [...breadcrumbs, "Value"],
-            source,
-            namespace
+        // Whether a type is inline is usually determined later by checking if a declaration is nested within another declaration,
+        // however this map is generated from the additionalProperties and thus is inline of the object (depending on the value type),
+        // so we allways add inline (depending on the value type).
+        valueSchema: addInline(
+            convertSchema(
+                additionalProperties,
+                context.options.optionalAdditionalProperties ? wrapAsNullable : false,
+                context,
+                [...breadcrumbs, "Value"],
+                source,
+                namespace,
+                undefined,
+                undefined,
+                undefined
+            )
         ),
         groupName,
         example,
         encoding
     });
+}
+
+function addInline(schema: SchemaWithExample): SchemaWithExample {
+    switch (schema.type) {
+        case "array":
+        case "enum":
+        case "map":
+        case "object":
+            schema.inline = true;
+            break;
+        case "literal":
+        case "primitive":
+        case "reference":
+        case "unknown":
+            break;
+        case "nullable":
+        case "optional":
+            schema.inline = true;
+            schema.value = addInline(schema.value);
+            break;
+        case "oneOf":
+            schema.value.inline = true;
+            break;
+        default:
+            assertNever(schema);
+    }
+
+    return schema;
 }
 
 export function wrapMap({
@@ -158,11 +197,13 @@ export function wrapMap({
                 value: valueSchema,
                 groupName,
                 encoding,
-                example
+                example,
+                inline: undefined
             }),
             description,
             availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return SchemaWithExample.map({
@@ -175,7 +216,8 @@ export function wrapMap({
         value: valueSchema,
         groupName,
         encoding,
-        example
+        example,
+        inline: undefined
     });
 }
 

@@ -50,6 +50,7 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/fern-api/stream-go/v2")
 	headers.Set("X-Fern-SDK-Version", "v2.0.0")
+	headers.Set("User-Agent", "github.com/streaming/fern/v2.0.0")
 	return headers
 }
 

@@ -1,12 +1,13 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WebsocketChannel } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { WebsocketChannel } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 
 export function buildChannel({
@@ -23,6 +24,10 @@ export function buildChannel({
         path: channel.path,
         auth: false
     };
+
+    if (channel.audiences != null && channel.audiences.length > 0) {
+        convertedChannel.audiences = channel.audiences;
+    }
 
     if (channel.summary != null) {
         convertedChannel["display-name"] = channel.summary;

@@ -46,7 +46,8 @@ export function convertLiteral({
             }),
             description,
             availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return SchemaWithExample.literal({

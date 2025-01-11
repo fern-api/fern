@@ -33,6 +33,19 @@ class CompletionsClient:
         Yields
         ------
         typing.Iterator[StreamedCompletion]
+
+        Examples
+        --------
+        from seed import SeedServerSentEvents
+
+        client = SeedServerSentEvents(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.completions.stream(
+            query="query",
+        )
+        for chunk in response:
+            yield chunk
         """
         with self._client_wrapper.httpx_client.stream(
             "stream",
@@ -85,6 +98,27 @@ class AsyncCompletionsClient:
         Yields
         ------
         typing.AsyncIterator[StreamedCompletion]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedServerSentEvents
+
+        client = AsyncSeedServerSentEvents(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.completions.stream(
+                query="query",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "stream",

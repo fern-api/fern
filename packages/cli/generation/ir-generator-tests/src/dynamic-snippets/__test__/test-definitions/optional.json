@@ -79,15 +79,15 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "map",
+                            "type": "map",
                             "key": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             },
                             "value": {
-                                "_type": "unknown"
+                                "type": "unknown"
                             }
                         }
                     }
@@ -97,5 +97,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

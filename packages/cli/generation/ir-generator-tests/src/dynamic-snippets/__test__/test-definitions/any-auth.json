@@ -92,7 +92,7 @@
                         "wireValue": "access_token"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -120,7 +120,7 @@
                         "wireValue": "expires_in"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -148,9 +148,9 @@
                         "wireValue": "refresh_token"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -248,7 +248,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -276,7 +276,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -472,7 +472,7 @@
                                 "wireValue": "client_id"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         },
@@ -500,7 +500,7 @@
                                 "wireValue": "client_secret"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         },
@@ -528,7 +528,7 @@
                                 "wireValue": "audience"
                             },
                             "typeReference": {
-                                "_type": "literal",
+                                "type": "literal",
                                 "value": {
                                     "type": "string",
                                     "value": "https://api.example.com"
@@ -559,7 +559,7 @@
                                 "wireValue": "grant_type"
                             },
                             "typeReference": {
-                                "_type": "literal",
+                                "type": "literal",
                                 "value": {
                                     "type": "string",
                                     "value": "client_credentials"
@@ -590,9 +590,9 @@
                                 "wireValue": "scope"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -708,5 +708,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

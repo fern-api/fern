@@ -112,7 +112,7 @@ types:
       file: finalIr.FileResponse
       json: JsonResponseWithExample
       text: finalIr.TextResponse
-      streamingSse: finalIr.JsonResponse
+      streamingSse: JsonResponseWithExample
       streamingText: finalIr.TextResponse
       streamingJson:
         type: JsonResponseWithExample
@@ -189,6 +189,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: SchemaWithExample
       example: optional<list<unknown>>
@@ -201,6 +202,7 @@ types:
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithTitle
+      - commons.WithInline
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
@@ -213,6 +215,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: SchemaWithExample
 
@@ -223,6 +226,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: SchemaWithExample
 
@@ -234,6 +238,7 @@ types:
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       default: optional<finalIr.EnumValue>
       values: list<finalIr.EnumValue>
@@ -257,6 +262,7 @@ types:
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
@@ -298,6 +304,7 @@ types:
       - commons.WithEncoding
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       discriminantProperty: string
       commonProperties: list<CommonPropertyWithExample>
@@ -317,6 +324,7 @@ types:
       - commons.WithEncoding
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       schemas: list<SchemaWithExample>
 

@@ -97,7 +97,7 @@ export type Node16FormDataFd =
                         filename?: string;
                         filepath?: string;
                         contentType?: string;
-                    }
+                    },
           ): void;
 
           getHeaders(): Record<string, string>;

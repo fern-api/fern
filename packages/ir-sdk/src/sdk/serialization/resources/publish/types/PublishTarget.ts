@@ -25,9 +25,9 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
         });
 
 export declare namespace PublishTarget {
-    type Raw = PublishTarget.Postman;
+    export type Raw = PublishTarget.Postman;
 
-    interface Postman extends PostmanPublishTarget.Raw {
+    export interface Postman extends PostmanPublishTarget.Raw {
         type: "postman";
     }
 }

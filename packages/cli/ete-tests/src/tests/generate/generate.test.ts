@@ -1,12 +1,12 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { exec } from "child_process";
 import stripAnsi from "strip-ansi";
+
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
-import { exec } from "child_process";
-import { CONSOLE_LOGGER } from "../../../../task-context/node_modules/@fern-api/logger/src";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
-// const FIXTURES = ["docs"];
 
 describe("fern generate", () => {
     it("default api (fern init)", async () => {
@@ -50,7 +50,11 @@ describe("fern generate", () => {
         );
     }, 180_000);
 
-    it("missing docs page", async () => {
+    // TODO: Re-enable this test if and when it doesn't require the user to be logged in.
+    // It's otherwise flaky on developer machines that haven't logged in with the fern CLI.
+    //
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("missing docs page", async () => {
         const { stdout } = await runFernCli(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
             reject: false

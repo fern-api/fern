@@ -6,13 +6,13 @@ import * as SeedUnions from "../../../index";
 
 export type UnionWithPrimitive = SeedUnions.UnionWithPrimitive.Integer | SeedUnions.UnionWithPrimitive.String;
 
-export declare namespace UnionWithPrimitive {
-    interface Integer {
+export namespace UnionWithPrimitive {
+    export interface Integer {
         type: "integer";
         value: number;
     }
 
-    interface String {
+    export interface String {
         type: "string";
         value: string;
     }

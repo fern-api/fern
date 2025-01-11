@@ -2,6 +2,18 @@
     "types": {},
     "endpoints": [
         {
+            "example_identifier": null,
+            "id": {
+                "path": "/generate-stream",
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate-stream"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedStreaming;\n\nvar client = new SeedStreamingClient();\nawait client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });\n"
+            }
+        },
+        {
             "example_identifier": "Default",
             "id": {
                 "path": "/generate",

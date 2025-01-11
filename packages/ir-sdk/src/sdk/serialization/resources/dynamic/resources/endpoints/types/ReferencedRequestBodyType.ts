@@ -31,13 +31,13 @@ export const ReferencedRequestBodyType: core.serialization.Schema<
     });
 
 export declare namespace ReferencedRequestBodyType {
-    type Raw = ReferencedRequestBodyType.Bytes | ReferencedRequestBodyType.TypeReference;
+    export type Raw = ReferencedRequestBodyType.Bytes | ReferencedRequestBodyType.TypeReference;
 
-    interface Bytes {
+    export interface Bytes {
         type: "bytes";
     }
 
-    interface TypeReference {
+    export interface TypeReference {
         type: "typeReference";
         value: serializers.dynamic.TypeReference.Raw;
     }

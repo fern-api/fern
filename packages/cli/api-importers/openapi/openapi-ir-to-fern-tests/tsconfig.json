@@ -1,17 +1,34 @@
 {
-  "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { 
-    "composite": true, 
-    "outDir": "lib", 
+  "extends": "@fern-api/configs/tsconfig/test.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/__test__/**/generated"
+  ],
   "references": [
-    { "path": "../../../../commons/fs-utils" },
-    { "path": "../../../task-context" },
-    { "path": "../../../workspace-loader" },
-    { "path": "../../../lazy-fern-workspace"}
+    {
+      "path": "../../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../task-context"
+    },
+    {
+      "path": "../../../workspace/browser-compatible-fern-workspace"
+    },
+    {
+      "path": "../../../workspace/loader"
+    },
+    {
+      "path": "../../../workspace/lazy-fern-workspace"
+    }
   ]
 }

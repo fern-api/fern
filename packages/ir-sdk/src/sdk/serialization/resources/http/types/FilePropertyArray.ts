@@ -17,7 +17,7 @@ export const FilePropertyArray: core.serialization.ObjectSchema<
 });
 
 export declare namespace FilePropertyArray {
-    interface Raw {
+    export interface Raw {
         key: NameAndWireValue.Raw;
         isOptional: boolean;
         contentType?: string | null;

@@ -6,21 +6,21 @@ import * as FernOpenapiIr from "../../../index";
 
 export type EndpointExample = FernOpenapiIr.EndpointExample.Unknown | FernOpenapiIr.EndpointExample.Full;
 
-export declare namespace EndpointExample {
-    interface Unknown extends _Utils {
+export namespace EndpointExample {
+    export interface Unknown extends _Utils {
         type: "unknown";
         value: FernOpenapiIr.FernExample | undefined;
     }
 
-    interface Full extends FernOpenapiIr.FullEndpointExample, _Utils {
+    export interface Full extends FernOpenapiIr.FullEndpointExample, _Utils {
         type: "full";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         unknown: (value: FernOpenapiIr.FernExample | undefined) => _Result;
         full: (value: FernOpenapiIr.FullEndpointExample) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -34,7 +34,7 @@ export const EndpointExample = {
             type: "unknown",
             _visit: function <_Result>(
                 this: FernOpenapiIr.EndpointExample.Unknown,
-                visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>
+                visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.EndpointExample._visit(this, visitor);
             },
@@ -47,7 +47,7 @@ export const EndpointExample = {
             type: "full",
             _visit: function <_Result>(
                 this: FernOpenapiIr.EndpointExample.Full,
-                visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>
+                visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.EndpointExample._visit(this, visitor);
             },
@@ -56,7 +56,7 @@ export const EndpointExample = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.EndpointExample,
-        visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>
+        visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "unknown":

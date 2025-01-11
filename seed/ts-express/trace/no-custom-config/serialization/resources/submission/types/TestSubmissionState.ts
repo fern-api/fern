@@ -17,7 +17,7 @@ export const TestSubmissionState: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestSubmissionState {
-    interface Raw {
+    export interface Raw {
         problemId: serializers.ProblemId.Raw;
         defaultTestCases: serializers.TestCase.Raw[];
         customTestCases: serializers.TestCase.Raw[];

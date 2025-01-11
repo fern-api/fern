@@ -12,7 +12,7 @@ export const ListElement: core.serialization.ObjectSchema<serializers.ListElemen
     });
 
 export declare namespace ListElement {
-    interface Raw {
+    export interface Raw {
         id?: string | null;
     }
 }

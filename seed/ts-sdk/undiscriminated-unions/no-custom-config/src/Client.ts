@@ -6,11 +6,11 @@ import * as core from "./core";
 import { Union } from "./api/resources/union/client/Client";
 
 export declare namespace SeedUndiscriminatedUnionsClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -23,9 +23,9 @@ export declare namespace SeedUndiscriminatedUnionsClient {
 }
 
 export class SeedUndiscriminatedUnionsClient {
-    constructor(protected readonly _options: SeedUndiscriminatedUnionsClient.Options) {}
-
     protected _union: Union | undefined;
+
+    constructor(protected readonly _options: SeedUndiscriminatedUnionsClient.Options) {}
 
     public get union(): Union {
         return (this._union ??= new Union(this._options));

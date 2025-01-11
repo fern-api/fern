@@ -9,16 +9,14 @@ import (
 )
 
 // A user object. This type is used throughout the following APIs:
-//
-// - createUser
-// - getUser
+//   - createUser
+//   - getUser
 type User struct {
 	Id string `json:"id" url:"id"`
 	// The user's name. This name is unique to each user. A few examples are included below:
-	//
-	// - Alice
-	// - Bob
-	// - Charlie
+	//   - Alice
+	//   - Bob
+	//   - Charlie
 	Name string `json:"name" url:"name"`
 	// The user's age.
 	Age *int `json:"age,omitempty" url:"age,omitempty"`

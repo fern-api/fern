@@ -12,5 +12,5 @@ export const Order: core.serialization.Schema<serializers.Order.Raw, SeedPaginat
 ]);
 
 export declare namespace Order {
-    type Raw = "asc" | "desc";
+    export type Raw = "asc" | "desc";
 }

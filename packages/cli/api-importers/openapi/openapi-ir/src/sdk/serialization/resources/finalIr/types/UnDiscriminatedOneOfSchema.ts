@@ -12,6 +12,7 @@ import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const UnDiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     serializers.UnDiscriminatedOneOfSchema.Raw,
@@ -26,17 +27,19 @@ export const UnDiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     .extend(WithAvailability)
     .extend(WithEncoding)
     .extend(WithSource)
-    .extend(WithTitle);
+    .extend(WithTitle)
+    .extend(WithInline);
 
 export declare namespace UnDiscriminatedOneOfSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
             WithEncoding.Raw,
             WithSource.Raw,
-            WithTitle.Raw {
+            WithTitle.Raw,
+            WithInline.Raw {
         schemas: serializers.Schema.Raw[];
     }
 }

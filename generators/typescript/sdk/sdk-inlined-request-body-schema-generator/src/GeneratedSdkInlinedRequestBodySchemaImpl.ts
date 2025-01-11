@@ -1,8 +1,9 @@
-import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getSchemaOptions, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
+import { PackageId, Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
@@ -54,7 +55,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         }
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
             ...getSchemaOptions({
-                allowExtraFields: this.allowExtraFields,
+                allowExtraFields: this.allowExtraFields ?? this.inlinedRequestBody.extraProperties,
                 omitUndefined: this.omitUndefined
             })
         });
@@ -81,7 +82,8 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             }),
             extends: this.inlinedRequestBody.extends.map((extension) =>
                 getTextOfTsNode(context.typeSchema.getReferenceToRawNamedType(extension).getTypeNode())
-            )
+            ),
+            isExported: true
         });
     }
 

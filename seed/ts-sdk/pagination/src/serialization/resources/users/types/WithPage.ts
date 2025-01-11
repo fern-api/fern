@@ -12,7 +12,7 @@ export const WithPage: core.serialization.ObjectSchema<serializers.WithPage.Raw,
     });
 
 export declare namespace WithPage {
-    interface Raw {
+    export interface Raw {
         page?: number | null;
     }
 }

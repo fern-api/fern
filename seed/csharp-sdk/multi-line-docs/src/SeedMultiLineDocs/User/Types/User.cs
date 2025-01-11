@@ -12,10 +12,9 @@ public record User
 
     /// <summary>
     /// The user's name. This name is unique to each user. A few examples are included below:
-    ///
-    /// - Alice
-    /// - Bob
-    /// - Charlie
+    ///  - Alice
+    ///  - Bob
+    ///  - Charlie
     /// </summary>
     [JsonPropertyName("name")]
     public required string Name { get; set; }

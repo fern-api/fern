@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ContainerType, ExampleContainer, ExamplePrimitive, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
+
 import { ExampleGenerationResult, ExampleGenerationSuccess } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 

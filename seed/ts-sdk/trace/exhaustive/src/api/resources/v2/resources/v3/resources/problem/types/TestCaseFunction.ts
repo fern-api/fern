@@ -9,24 +9,24 @@ export type TestCaseFunction =
     | SeedTrace.v2.v3.TestCaseFunction.Custom
     | SeedTrace.v2.v3.TestCaseFunction._Unknown;
 
-export declare namespace TestCaseFunction {
-    interface WithActualResult extends SeedTrace.v2.v3.TestCaseWithActualResultImplementation, _Utils {
+export namespace TestCaseFunction {
+    export interface WithActualResult extends SeedTrace.v2.v3.TestCaseWithActualResultImplementation, _Utils {
         type: "withActualResult";
     }
 
-    interface Custom extends SeedTrace.v2.v3.VoidFunctionDefinition, _Utils {
+    export interface Custom extends SeedTrace.v2.v3.VoidFunctionDefinition, _Utils {
         type: "custom";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         withActualResult: (value: SeedTrace.v2.v3.TestCaseWithActualResultImplementation) => _Result;
         custom: (value: SeedTrace.v2.v3.VoidFunctionDefinition) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -35,14 +35,14 @@ export declare namespace TestCaseFunction {
 
 export const TestCaseFunction = {
     withActualResult: (
-        value: SeedTrace.v2.v3.TestCaseWithActualResultImplementation
+        value: SeedTrace.v2.v3.TestCaseWithActualResultImplementation,
     ): SeedTrace.v2.v3.TestCaseFunction.WithActualResult => {
         return {
             ...value,
             type: "withActualResult",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.TestCaseFunction.WithActualResult,
-                visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.TestCaseFunction._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const TestCaseFunction = {
             type: "custom",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.TestCaseFunction.Custom,
-                visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.TestCaseFunction._visit(this, visitor);
             },
@@ -67,7 +67,7 @@ export const TestCaseFunction = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.TestCaseFunction._Unknown,
-                visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.TestCaseFunction._visit(this, visitor);
             },
@@ -76,7 +76,7 @@ export const TestCaseFunction = {
 
     _visit: <_Result>(
         value: SeedTrace.v2.v3.TestCaseFunction,
-        visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>
+        visitor: SeedTrace.v2.v3.TestCaseFunction._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "withActualResult":

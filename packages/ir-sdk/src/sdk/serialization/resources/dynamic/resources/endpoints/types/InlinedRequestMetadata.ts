@@ -15,7 +15,7 @@ export const InlinedRequestMetadata: core.serialization.ObjectSchema<
 });
 
 export declare namespace InlinedRequestMetadata {
-    interface Raw {
+    export interface Raw {
         includePathParameters: boolean;
         onlyPathParameters: boolean;
     }

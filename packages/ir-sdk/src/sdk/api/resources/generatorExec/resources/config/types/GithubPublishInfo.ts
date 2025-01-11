@@ -12,36 +12,36 @@ export type GithubPublishInfo =
     | FernIr.generatorExec.GithubPublishInfo.Rubygems
     | FernIr.generatorExec.GithubPublishInfo.Nuget;
 
-export declare namespace GithubPublishInfo {
-    interface Npm extends FernIr.generatorExec.NpmGithubPublishInfo, _Utils {
+export namespace GithubPublishInfo {
+    export interface Npm extends FernIr.generatorExec.NpmGithubPublishInfo, _Utils {
         type: "npm";
     }
 
-    interface Maven extends FernIr.generatorExec.MavenGithubPublishInfo, _Utils {
+    export interface Maven extends FernIr.generatorExec.MavenGithubPublishInfo, _Utils {
         type: "maven";
     }
 
-    interface Postman extends FernIr.generatorExec.PostmanGithubPublishInfo, _Utils {
+    export interface Postman extends FernIr.generatorExec.PostmanGithubPublishInfo, _Utils {
         type: "postman";
     }
 
-    interface Pypi extends FernIr.generatorExec.PypiGithubPublishInfo, _Utils {
+    export interface Pypi extends FernIr.generatorExec.PypiGithubPublishInfo, _Utils {
         type: "pypi";
     }
 
-    interface Rubygems extends FernIr.generatorExec.RubyGemsGithubPublishInfo, _Utils {
+    export interface Rubygems extends FernIr.generatorExec.RubyGemsGithubPublishInfo, _Utils {
         type: "rubygems";
     }
 
-    interface Nuget extends FernIr.generatorExec.NugetGithubPublishInfo, _Utils {
+    export interface Nuget extends FernIr.generatorExec.NugetGithubPublishInfo, _Utils {
         type: "nuget";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         npm: (value: FernIr.generatorExec.NpmGithubPublishInfo) => _Result;
         maven: (value: FernIr.generatorExec.MavenGithubPublishInfo) => _Result;
         postman: (value: FernIr.generatorExec.PostmanGithubPublishInfo) => _Result;
@@ -59,7 +59,7 @@ export const GithubPublishInfo = {
             type: "npm",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GithubPublishInfo.Npm,
-                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>
+                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GithubPublishInfo._visit(this, visitor);
             },
@@ -72,7 +72,7 @@ export const GithubPublishInfo = {
             type: "maven",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GithubPublishInfo.Maven,
-                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>
+                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GithubPublishInfo._visit(this, visitor);
             },
@@ -85,7 +85,7 @@ export const GithubPublishInfo = {
             type: "postman",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GithubPublishInfo.Postman,
-                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>
+                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GithubPublishInfo._visit(this, visitor);
             },
@@ -98,7 +98,7 @@ export const GithubPublishInfo = {
             type: "pypi",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GithubPublishInfo.Pypi,
-                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>
+                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GithubPublishInfo._visit(this, visitor);
             },
@@ -106,14 +106,14 @@ export const GithubPublishInfo = {
     },
 
     rubygems: (
-        value: FernIr.generatorExec.RubyGemsGithubPublishInfo
+        value: FernIr.generatorExec.RubyGemsGithubPublishInfo,
     ): FernIr.generatorExec.GithubPublishInfo.Rubygems => {
         return {
             ...value,
             type: "rubygems",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GithubPublishInfo.Rubygems,
-                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>
+                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GithubPublishInfo._visit(this, visitor);
             },
@@ -126,7 +126,7 @@ export const GithubPublishInfo = {
             type: "nuget",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.GithubPublishInfo.Nuget,
-                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>
+                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.GithubPublishInfo._visit(this, visitor);
             },
@@ -135,7 +135,7 @@ export const GithubPublishInfo = {
 
     _visit: <_Result>(
         value: FernIr.generatorExec.GithubPublishInfo,
-        visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>
+        visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "npm":

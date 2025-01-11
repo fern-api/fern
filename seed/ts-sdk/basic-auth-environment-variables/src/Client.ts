@@ -6,13 +6,13 @@ import * as core from "./core";
 import { BasicAuth } from "./api/resources/basicAuth/client/Client";
 
 export declare namespace SeedBasicAuthEnvironmentVariablesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
         password?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,9 +25,9 @@ export declare namespace SeedBasicAuthEnvironmentVariablesClient {
 }
 
 export class SeedBasicAuthEnvironmentVariablesClient {
-    constructor(protected readonly _options: SeedBasicAuthEnvironmentVariablesClient.Options) {}
-
     protected _basicAuth: BasicAuth | undefined;
+
+    constructor(protected readonly _options: SeedBasicAuthEnvironmentVariablesClient.Options) {}
 
     public get basicAuth(): BasicAuth {
         return (this._basicAuth ??= new BasicAuth(this._options));

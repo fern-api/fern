@@ -138,13 +138,13 @@ class ReadmeSnippetBuilder:
 
                     retry_snippets.append(
                         f"""
-    {client_instantiation_str}
+{client_instantiation_str}
 
-    # Override timeout for a specific method
-    client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}request_options={{
-        "timeout_in_seconds": 1
-    }})
-    """
+# Override timeout for a specific method
+client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}request_options={{
+    "timeout_in_seconds": 1
+}})
+"""
                     )
 
             return retry_snippets
@@ -204,9 +204,9 @@ class ReadmeSnippetBuilder:
                     has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
                     retry_snippets.append(
                         f"""client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}request_options={{
-        "max_retries": 1
-    }})
-    """
+    "max_retries": 1
+}})
+"""
                     )
 
             return retry_snippets

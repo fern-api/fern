@@ -18,7 +18,7 @@ export const NumberValidationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace NumberValidationSchema {
-    interface Raw {
+    export interface Raw {
         min?: number | null;
         max?: number | null;
         exclusiveMin?: boolean | null;

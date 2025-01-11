@@ -16,7 +16,7 @@ export const PostmanGithubPublishInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace PostmanGithubPublishInfo {
-    interface Raw {
+    export interface Raw {
         apiKeyEnvironmentVariable: EnvironmentVariable.Raw;
         workspaceIdEnvironmentVariable: EnvironmentVariable.Raw;
     }

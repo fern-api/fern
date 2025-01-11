@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ContainerType,
     DeclaredTypeName,
@@ -9,6 +10,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { csharp } from "../";
 import { ClassReference, Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";

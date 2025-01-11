@@ -1,5 +1,7 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
+
 import { FernIrV33 } from "@fern-fern/ir-v33-sdk";
+
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import {

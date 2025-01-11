@@ -6,19 +6,37 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
-          "EnticingTitle": {
+          "Shape": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "Triangle",
+              "Square",
+            ],
+          },
+          "Square": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "id": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "sideLength": "double",
+              "type": "literal<"square">",
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "Triangle": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "base": "double",
+              "height": "double",
+              "type": "literal<"triangle">",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -27,12 +45,24 @@
         },
       },
       "rawContents": "types:
-  EnticingTitle:
+  Shape:
+    discriminated: false
+    union:
+      - Triangle
+      - Square
+    source:
+      openapi: ../openapi.json
+  Triangle:
     properties:
-      id:
-        type: optional<string>
-        validation:
-          format: uuid
+      type: literal<"triangle">
+      base: double
+      height: double
+    source:
+      openapi: ../openapi.json
+  Square:
+    properties:
+      type: literal<"square">
+      sideLength: double
     source:
       openapi: ../openapi.json
 ",

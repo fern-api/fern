@@ -15,7 +15,7 @@ export const ProtobufFileOptions: core.serialization.ObjectSchema<
 });
 
 export declare namespace ProtobufFileOptions {
-    interface Raw {
+    export interface Raw {
         csharp?: CsharpProtobufFileOptions.Raw | null;
     }
 }

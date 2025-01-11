@@ -244,7 +244,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        page = page if page is not None else 1
+        page = page if page is not None else 0
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -1024,7 +1024,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        page = page if page is not None else 1
+        page = page if page is not None else 0
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",

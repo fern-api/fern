@@ -17,7 +17,7 @@ export const MultipleBaseUrlsEnvironments: core.serialization.ObjectSchema<
 });
 
 export declare namespace MultipleBaseUrlsEnvironments {
-    interface Raw {
+    export interface Raw {
         baseUrls: EnvironmentBaseUrlWithId.Raw[];
         environments: MultipleBaseUrlsEnvironment.Raw[];
     }

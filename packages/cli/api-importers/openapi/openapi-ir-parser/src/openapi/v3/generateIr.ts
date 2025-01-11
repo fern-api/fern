@@ -1,3 +1,6 @@
+import { mapValues } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
+
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import {
     Endpoint,
@@ -19,21 +22,23 @@ import {
     WebhookWithExample
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { mapValues } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../../getExtension";
 import { ParseOpenAPIOptions } from "../../options";
 import { convertSchema } from "../../schema/convertSchemas";
+import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
 import { convertToFullExample } from "../../schema/examples/convertToFullExample";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
+import { getSchemas } from "../../utils/getSchemas";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
+import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
+import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
-import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { ConvertedOperation } from "./converters/operation/convertOperation";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernBasePath } from "./extensions/getFernBasePath";
@@ -44,10 +49,7 @@ import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject";
 import { hasIncompleteExample } from "./hasIncompleteExample";
-import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
-import { getSchemas } from "../../utils/getSchemas";
-import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
 
 export function generateIr({
     openApi,
@@ -83,6 +85,13 @@ export function generateIr({
             return null;
         })
     );
+    const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
+    const globalHeaders = getGlobalHeaders(openApi);
+    const idempotencyHeaders = getIdempotencyHeaders(openApi);
+    const audiences = options.audiences ?? [];
+    const endpointsWithExample: EndpointWithExample[] = [];
+    const webhooksWithExample: WebhookWithExample[] = [];
+
     const context = new OpenAPIV3ParserContext({
         document: openApi,
         taskContext,
@@ -91,21 +100,17 @@ export function generateIr({
         source,
         namespace
     });
-    const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
-    const globalHeaders = getGlobalHeaders(openApi);
-    const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
-    const audiences = options.audiences ?? [];
+    if (context.filter.hasEndpoints()) {
+        taskContext.logger.debug("Endpoint filter applied...");
+    }
 
-    const endpointsWithExample: EndpointWithExample[] = [];
-    const webhooksWithExample: WebhookWithExample[] = [];
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
         }
         taskContext.logger.debug(`Converting path ${path}`);
         const convertedOperations = convertPathItem(path, pathItem, openApi, context);
-
         for (const operation of convertedOperations) {
             const operationAudiences = getAudiences({ operation });
             if (audiences.length > 0 && !audiences.some((audience) => operationAudiences.includes(audience))) {
@@ -190,7 +195,11 @@ export function generateIr({
         taskContext.logger.debug(`Converted schema ${key}`);
     }
 
-    const exampleTypeFactory = new ExampleTypeFactory(schemasWithDiscriminants, context);
+    const exampleTypeFactory = new ExampleTypeFactory(
+        schemasWithDiscriminants,
+        context.nonRequestReferencedSchemas,
+        context
+    );
 
     const webhooks: Webhook[] = webhooksWithExample.map((webhookWithExample) => {
         const extensionExamples = webhookWithExample.examples;

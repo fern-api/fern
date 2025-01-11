@@ -110,6 +110,7 @@
               "User",
               "Group",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -553,6 +554,7 @@
               "Path",
               "Items",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -601,6 +603,7 @@
               "Image",
               "FileName",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -657,6 +660,7 @@
               "Audio",
               "Video",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -894,6 +898,7 @@
               "Checkbox",
               "Toggle",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -956,6 +961,7 @@
               "Move",
               "Delete",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1020,6 +1026,7 @@
               "Update",
               "Validate",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1637,6 +1644,7 @@
               "Now",
               "Today",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1647,6 +1655,7 @@
               "Date",
               "DateTime",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2194,6 +2203,7 @@
               "Hide",
               "Require",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2287,6 +2297,7 @@
               "TIFF",
               "WEBP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2299,6 +2310,7 @@
               "Completed",
               "Failed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2505,6 +2517,7 @@
               "Dropdown",
               "Stars",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2729,6 +2742,7 @@
               "NoPermission",
               "ManagedByTeam",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2810,6 +2824,7 @@
               "Checkboxes",
               "Input",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2895,6 +2910,7 @@
               "Min",
               "Stretch",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3293,6 +3309,7 @@
               "TextArea",
               "Url",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3306,6 +3323,7 @@
               "Failed",
               "Cancelled",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3318,6 +3336,7 @@
               "Failed",
               "Timeout",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3605,6 +3624,7 @@
               "Singleton",
               "Component",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3678,6 +3698,7 @@
               "Rule",
               "Schema",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3821,6 +3842,7 @@
               "WrongEvent",
               "WrongEventForTrigger",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3871,6 +3893,7 @@
               "Ascending",
               "Descending",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3926,6 +3949,7 @@
               "Html",
               "Markdown",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3944,6 +3968,7 @@
               "StockPhoto",
               "TextArea",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4040,6 +4065,7 @@
               "Checkboxes",
               "Dropdown",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4204,6 +4230,7 @@
               "Unauthorized",
               "Failed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4615,6 +4642,7 @@
               "DELETE",
               "PATCH",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -14652,6 +14680,7 @@ service:
                 "name": "BackupsGetBackupContentV2Request",
                 "query-parameters": {
                   "app": {
+                    "default": "",
                     "docs": "The name of the app.",
                     "type": "optional<string>",
                   },
@@ -14916,6 +14945,7 @@ service:
             docs: The ID of the app.
           app:
             type: optional<string>
+            default: ''
             docs: The name of the app.
       response:
         docs: Backup found and content returned.
@@ -15141,6 +15171,7 @@ service:
                 "name": "CommentsGetCommentsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The current version.",
                     "type": "optional<long>",
                   },
@@ -15353,6 +15384,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The current version.
       response:
         docs: Comments returned.
@@ -16139,6 +16171,7 @@ service:
                 "name": "ContentsGetContentRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The optional version.",
                     "type": "optional<long>",
                   },
@@ -17883,6 +17916,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The optional version.
       response:
         docs: Content returned.
@@ -19838,6 +19872,7 @@ service:
                 "name": "NewsGetNewsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": 0,
                     "docs": "The latest received version.",
                     "type": "optional<integer>",
                   },
@@ -19875,6 +19910,7 @@ service:
         query-parameters:
           version:
             type: optional<integer>
+            default: 0
             docs: The latest received version.
       response:
         docs: Latest features returned.
@@ -19989,6 +20025,7 @@ service:
                 "name": "NotificationsGetNotificationsRequest",
                 "query-parameters": {
                   "version": {
+                    "default": -2,
                     "docs": "The current version.",
                     "type": "optional<long>",
                   },
@@ -20031,6 +20068,7 @@ service:
         query-parameters:
           version:
             type: optional<long>
+            default: -2
             docs: The current version.
       response:
         docs: All comments returned.
@@ -21088,10 +21126,12 @@ service:
                     "type": "optional<string>",
                   },
                   "skip": {
+                    "default": 0,
                     "docs": "The number of events to skip.",
                     "type": "optional<integer>",
                   },
                   "take": {
+                    "default": 20,
                     "docs": "The number of events to take.",
                     "type": "optional<integer>",
                   },
@@ -21440,6 +21480,7 @@ service:
                 "name": "RulesPutRuleRunRequest",
                 "query-parameters": {
                   "fromSnapshots": {
+                    "default": false,
                     "docs": "Runs the rule from snapeshots if possible.",
                     "type": "optional<boolean>",
                   },
@@ -22058,6 +22099,7 @@ service:
         query-parameters:
           fromSnapshots:
             type: optional<boolean>
+            default: false
             docs: Runs the rule from snapeshots if possible.
       errors:
         - root.BadRequestError
@@ -22208,9 +22250,11 @@ service:
             docs: The optional rule id to filter to events.
           skip:
             type: optional<integer>
+            default: 0
             docs: The number of events to skip.
           take:
             type: optional<integer>
+            default: 20
             docs: The number of events to take.
       response:
         docs: Rule events returned.
@@ -32287,10 +32331,12 @@ service:
                     "type": "optional<string>",
                   },
                   "skip": {
+                    "default": 0,
                     "docs": "The number of users to skip.",
                     "type": "optional<integer>",
                   },
                   "take": {
+                    "default": 10,
                     "docs": "The number of users to return.",
                     "type": "optional<integer>",
                   },
@@ -32626,9 +32672,11 @@ service:
             docs: Optional query to search by email address or username.
           skip:
             type: optional<integer>
+            default: 0
             docs: The number of users to skip.
           take:
             type: optional<integer>
+            default: 10
             docs: The number of users to return.
       response:
         docs: Users returned.

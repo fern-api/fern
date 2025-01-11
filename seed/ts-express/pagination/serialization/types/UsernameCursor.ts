@@ -14,7 +14,7 @@ export const UsernameCursor: core.serialization.ObjectSchema<
 });
 
 export declare namespace UsernameCursor {
-    interface Raw {
+    export interface Raw {
         cursor: serializers.UsernamePage.Raw;
     }
 }

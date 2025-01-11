@@ -1,7 +1,7 @@
 import { CodeBlock } from "./CodeBlock";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
 
 export declare namespace Parameter {
     interface Args {

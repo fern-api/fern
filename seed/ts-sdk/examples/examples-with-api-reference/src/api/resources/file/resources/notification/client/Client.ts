@@ -7,12 +7,12 @@ import * as core from "../../../../../../core";
 import { Service } from "../resources/service/client/Client";
 
 export declare namespace Notification {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,9 +25,9 @@ export declare namespace Notification {
 }
 
 export class Notification {
-    constructor(protected readonly _options: Notification.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: Notification.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

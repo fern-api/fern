@@ -68,7 +68,7 @@
                 }
             },
             "typeReference": {
-                "_type": "unknown"
+                "type": "unknown"
             }
         },
         "type_unknown:MyObject": {
@@ -162,7 +162,7 @@
                         "wireValue": "unknown"
                     },
                     "typeReference": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             ]
@@ -246,7 +246,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             },
@@ -330,7 +330,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_unknown:MyObject"
                     }
                 }
@@ -339,5 +339,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

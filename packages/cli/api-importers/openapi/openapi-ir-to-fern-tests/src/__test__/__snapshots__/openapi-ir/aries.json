@@ -2074,13 +2074,6 @@
                 },
                 "type": "primitive"
               },
-              "@type": {
-                "value": {
-                  "value": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
               "did": {
                 "value": {
                   "value": "WgWxqztrNooG92RXvxSTWv",
@@ -6666,13 +6659,6 @@
               "@id": {
                 "value": {
                   "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "@type": {
-                "value": {
-                  "value": "https://didcomm.org/my-family/1.0/my-message-type",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -35713,6 +35699,7 @@
                       "type": "primitive"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "AttributeMimeTypesResultResults",
@@ -35972,6 +35959,7 @@
                   },
                   "generatedName": "ClearPendingRevocationsRequestPurgeValue",
                   "groupName": [],
+                  "inline": true,
                   "type": "array"
                 },
                 "generatedName": "ClearPendingRevocationsRequestPurge",
@@ -45492,6 +45480,7 @@
                       },
                       "type": "reference"
                     },
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrGroups",
@@ -45540,6 +45529,7 @@
                       },
                       "type": "reference"
                     },
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrs",
@@ -51504,6 +51494,7 @@
                   },
                   "generatedName": "PublishRevocationsRrid2CridValue",
                   "groupName": [],
+                  "inline": true,
                   "type": "array"
                 },
                 "generatedName": "PublishRevocationsRrid2Crid",

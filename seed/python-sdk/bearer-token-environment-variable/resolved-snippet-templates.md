@@ -5,7 +5,7 @@ client = SeedBearerTokenEnvironmentVariable(base_url="https://yourhost.com/path/
 client.service.get_with_bearer_token(
 	
 )
- 
-```                        
+
+```
 
 

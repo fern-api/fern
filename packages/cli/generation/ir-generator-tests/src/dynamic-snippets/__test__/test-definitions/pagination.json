@@ -54,7 +54,7 @@
                         "wireValue": "cursor"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:UsernamePage"
                     }
                 }
@@ -113,9 +113,9 @@
                         "wireValue": "after"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -144,9 +144,9 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -357,9 +357,9 @@
                         "wireValue": "page"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "INTEGER"
                         }
                     }
@@ -457,9 +457,9 @@
                         "wireValue": "cursor"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -557,9 +557,9 @@
                         "wireValue": "users"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_users:User"
                         }
                     }
@@ -657,7 +657,7 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_users:UserListContainer"
                     }
                 },
@@ -685,9 +685,9 @@
                         "wireValue": "next"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UUID"
                         }
                     }
@@ -785,11 +785,11 @@
                         "wireValue": "users"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_users:User"
                             }
                         }
@@ -888,7 +888,7 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_users:UserOptionalListContainer"
                     }
                 },
@@ -916,9 +916,9 @@
                         "wireValue": "next"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UUID"
                         }
                     }
@@ -1016,9 +1016,9 @@
                         "wireValue": "results"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1116,7 +1116,7 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_users:UserListContainer"
                     }
                 },
@@ -1144,9 +1144,9 @@
                         "wireValue": "next"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UUID"
                         }
                     }
@@ -1175,7 +1175,7 @@
                         "wireValue": "total_count"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -1272,7 +1272,7 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_users:UserOptionalListContainer"
                     }
                 },
@@ -1300,9 +1300,9 @@
                         "wireValue": "next"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UUID"
                         }
                     }
@@ -1331,7 +1331,7 @@
                         "wireValue": "total_count"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -1428,9 +1428,9 @@
                         "wireValue": "hasNextPage"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "BOOLEAN"
                         }
                     }
@@ -1459,9 +1459,9 @@
                         "wireValue": "page"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_users:Page"
                         }
                     }
@@ -1490,7 +1490,7 @@
                         "wireValue": "total_count"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -1518,9 +1518,9 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_users:User"
                         }
                     }
@@ -1618,7 +1618,7 @@
                         "wireValue": "page"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -1646,9 +1646,9 @@
                         "wireValue": "next"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_users:NextPage"
                         }
                     }
@@ -1677,7 +1677,7 @@
                         "wireValue": "per_page"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -1705,7 +1705,7 @@
                         "wireValue": "total_page"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -1802,7 +1802,7 @@
                         "wireValue": "page"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 },
@@ -1830,7 +1830,7 @@
                         "wireValue": "starting_after"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1927,7 +1927,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -1955,7 +1955,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -2147,9 +2147,9 @@
                             "wireValue": "page"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -2178,9 +2178,9 @@
                             "wireValue": "per_page"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -2209,9 +2209,9 @@
                             "wireValue": "order"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_users:Order"
                             }
                         }
@@ -2240,9 +2240,9 @@
                             "wireValue": "starting_after"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -2446,9 +2446,9 @@
                                 "wireValue": "pagination"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_users:WithCursor"
                                 }
                             }
@@ -2647,9 +2647,9 @@
                             "wireValue": "page"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -2678,9 +2678,9 @@
                             "wireValue": "per_page"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -2709,9 +2709,9 @@
                             "wireValue": "order"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_users:Order"
                             }
                         }
@@ -2740,9 +2740,9 @@
                             "wireValue": "starting_after"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -2946,9 +2946,9 @@
                                 "wireValue": "pagination"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_users:WithPage"
                                 }
                             }
@@ -3147,9 +3147,9 @@
                             "wireValue": "page"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -3178,9 +3178,9 @@
                             "wireValue": "limit"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -3209,9 +3209,9 @@
                             "wireValue": "order"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_users:Order"
                             }
                         }
@@ -3411,9 +3411,9 @@
                             "wireValue": "page"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -3442,9 +3442,9 @@
                             "wireValue": "limit"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -3473,9 +3473,9 @@
                             "wireValue": "order"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_users:Order"
                             }
                         }
@@ -3675,9 +3675,9 @@
                             "wireValue": "cursor"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "UUID"
                             }
                         }
@@ -3877,9 +3877,9 @@
                             "wireValue": "cursor"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "UUID"
                             }
                         }
@@ -4079,9 +4079,9 @@
                             "wireValue": "starting_after"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -4281,9 +4281,9 @@
                             "wireValue": "offset"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "INTEGER"
                             }
                         }
@@ -4300,5 +4300,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

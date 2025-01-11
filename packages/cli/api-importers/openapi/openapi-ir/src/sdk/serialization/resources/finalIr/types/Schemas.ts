@@ -12,19 +12,19 @@ export const Schemas: core.serialization.ObjectSchema<serializers.Schemas.Raw, F
     core.serialization.objectWithoutOptionalProperties({
         rootSchemas: core.serialization.record(
             SchemaId,
-            core.serialization.lazy(() => serializers.Schema)
+            core.serialization.lazy(() => serializers.Schema),
         ),
         namespacedSchemas: core.serialization.record(
             NamespaceId,
             core.serialization.record(
                 SchemaId,
-                core.serialization.lazy(() => serializers.Schema)
-            )
+                core.serialization.lazy(() => serializers.Schema),
+            ),
         ),
     });
 
 export declare namespace Schemas {
-    interface Raw {
+    export interface Raw {
         rootSchemas: Record<SchemaId.Raw, serializers.Schema.Raw>;
         namespacedSchemas: Record<NamespaceId.Raw, Record<SchemaId.Raw, serializers.Schema.Raw>>;
     }

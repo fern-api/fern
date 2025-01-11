@@ -1,3 +1,6 @@
+// Required for ES2017 compatibility.
+import "string.prototype.replaceall";
+
 export { constructCasingsGenerator, type CasingsGenerator } from "./casings/CasingsGenerator";
 export { constructHttpPath } from "./converters/services/constructHttpPath";
 export { convertResponseErrors } from "./converters/services/convertResponseErrors";
@@ -23,7 +26,6 @@ export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver
 export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";
 export { type ResolvedEndpoint } from "./resolvers/ResolvedEndpoint";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType";
-export { SourceResolverImpl, type SourceResolver } from "./resolvers/SourceResolver";
 export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
 export { VariableResolverImpl, type VariableResolver } from "./resolvers/VariableResolver";
 export {
@@ -33,6 +35,7 @@ export {
     type ObjectPropertyWithPath
 } from "./utils/getAllPropertiesForObject";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
+export { hashJSON } from "./utils/hashJSON";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
 export { parseInlineType } from "./utils/parseInlineType";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";

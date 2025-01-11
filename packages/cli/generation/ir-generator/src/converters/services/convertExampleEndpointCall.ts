@@ -1,4 +1,14 @@
+import urlJoin from "url-join";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
+import {
+    RawSchemas,
+    isInlineRequestBody,
+    parseBytesRequest,
+    parseRawFileType,
+    visitExampleResponseSchema
+} from "@fern-api/fern-definition-schema";
 import {
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
@@ -10,20 +20,14 @@ import {
     ExampleResponse,
     Name
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import {
-    isInlineRequestBody,
-    parseBytesRequest,
-    parseRawFileType,
-    RawSchemas,
-    visitExampleResponseSchema
-} from "@fern-api/fern-definition-schema";
-import crypto from "crypto";
+
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
+import { hashJSON } from "../../utils/hashJSON";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,
@@ -32,13 +36,6 @@ import {
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
-import urlJoin from "url-join";
-import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
-
-function hashJSON(obj: unknown): string {
-    const jsonString = JSON.stringify(obj);
-    return crypto.createHash("sha256").update(jsonString).digest("hex");
-}
 
 export function convertExampleEndpointCall({
     service,

@@ -19,7 +19,7 @@ export const MavenOutputLocationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace MavenOutputLocationSchema {
-    interface Raw {
+    export interface Raw {
         url?: string | null;
         coordinate: string;
         username?: string | null;

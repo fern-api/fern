@@ -1,4 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export const BASE_URL_FIELD_NAME = "BaseUrl";

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
 
 export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group";

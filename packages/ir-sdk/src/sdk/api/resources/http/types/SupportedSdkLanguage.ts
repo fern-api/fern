@@ -3,7 +3,6 @@
  */
 
 export type SupportedSdkLanguage = "curl" | "python" | "javascript" | "typescript" | "go" | "ruby" | "csharp" | "java";
-
 export const SupportedSdkLanguage = {
     Curl: "curl",
     Python: "python",
@@ -37,8 +36,8 @@ export const SupportedSdkLanguage = {
     },
 } as const;
 
-export declare namespace SupportedSdkLanguage {
-    interface Visitor<R> {
+export namespace SupportedSdkLanguage {
+    export interface Visitor<R> {
         curl: () => R;
         python: () => R;
         javascript: () => R;

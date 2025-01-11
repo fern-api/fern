@@ -20,7 +20,7 @@ export const PypiOutputLocationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace PypiOutputLocationSchema {
-    interface Raw {
+    export interface Raw {
         url?: string | null;
         "package-name": string;
         token?: string | null;

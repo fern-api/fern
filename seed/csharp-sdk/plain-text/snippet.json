@@ -1,4 +1,17 @@
 {
     "types": {},
-    "endpoints": []
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/text",
+                "method": "POST",
+                "identifier_override": "endpoint_service.getText"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPlainText;\n\nvar client = new SeedPlainTextClient();\nawait client.Service.GetTextAsync();\n"
+            }
+        }
+    ]
 }

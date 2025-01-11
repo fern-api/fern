@@ -3,7 +3,6 @@
  */
 
 export type MessageNamingSettingsSchema = "v1" | "v2";
-
 export const MessageNamingSettingsSchema = {
     V1: "v1",
     V2: "v2",

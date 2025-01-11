@@ -1668,6 +1668,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "SUCCEEDED",
               "FAILED",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2762,6 +2763,7 @@ We return one of the following enum values:
               "INDIVIDUAL",
               "BUSINESS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2781,6 +2783,7 @@ We return one of the following enum values:
               "SAVINGS",
               "SALARY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2798,6 +2801,7 @@ Can be either:
               "LOAN_ACCOUNT",
               "SAVINGS_ACCOUNT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2812,6 +2816,7 @@ Can be either:
               "INDIVIDUAL",
               "BUSINESS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2936,6 +2941,7 @@ Can be either:
               "INFLOW",
               "OUTFLOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2949,6 +2955,7 @@ Can be either:
               "CPF",
               "CNPJ",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2965,6 +2972,7 @@ Can be either:
               "TI",
               "NIT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2982,6 +2990,7 @@ Can be either:
               "INDIVIDUAL",
               "BUSINESS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2996,6 +3005,7 @@ Can be either:
               "NSS",
               "CURP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3007,6 +3017,7 @@ Can be either:
               "EMPLOYED",
               "UNEMPLOYED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3029,6 +3040,7 @@ Can be either:
               "ABSENCE",
               "SICK_LEAVE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3047,6 +3059,7 @@ You can send through one of the following values:
               "MEDIUM",
               "LOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3073,6 +3086,7 @@ We return one of the following enum values:
               "MEDIUM",
               "LOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3095,6 +3109,7 @@ We return one of the following enum values:
               "IRREGULAR",
               "SINGLE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3127,6 +3142,7 @@ We return one of the following enum values:
               "DEPOSIT",
               "UNKNOWN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3140,6 +3156,7 @@ Can be either:
               "CHECKING_ACCOUNT",
               "SAVINGS_ACCOUNT",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3167,6 +3184,7 @@ Can be either:
               "credentials",
               "openbanking",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3178,6 +3196,7 @@ Can be either:
               "healthy",
               "down",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3194,6 +3213,7 @@ Can be either:
               "fiscal",
               "employment",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3220,6 +3240,7 @@ We return one of the following values:
               "PENSION",
               "STOCK",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3240,6 +3261,7 @@ We return one of the following values:
               "PENSION",
               "VARIABLE_INCOME",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3269,6 +3291,7 @@ You can send through one or more of the following values:
               "DEPOSIT",
               "UNKNOWN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3314,6 +3337,7 @@ For Mexico's SAT, we return one of the following values:
               "Pago",
               "Traslado",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3344,6 +3368,7 @@ For more information, see our [Links](https://developers.belvo.com/docs/links-an
               "single",
               "recurrent",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3385,6 +3410,7 @@ We return one of the following values:
               "unconfirmed",
               "token_required",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3401,6 +3427,7 @@ We return one of the following values:
               "INSURANCE_FEE",
               "OTHERS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3415,6 +3442,7 @@ We return one of the following values:
               "MONTHLY",
               "YEARLY",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3425,6 +3453,7 @@ We return one of the following values:
               "INDIVIDUAL",
               "BUSINESS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3439,6 +3468,7 @@ We return one of the following values:
               "PROCESSING",
               "FAILED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3452,6 +3482,7 @@ We return one of the following values:
               "open_finance",
               "pse",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3467,6 +3498,7 @@ We return one of the following values:
               "belvo",
               "payments_way",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3482,6 +3514,7 @@ We return one of the following values:
               "ACTIVE",
               "INACTIVE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3495,6 +3528,7 @@ We return one of the following values:
               "INFLOW",
               "OUTFLOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3510,6 +3544,7 @@ We return one of the following values:
               "BRA",
               "COL",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3524,6 +3559,7 @@ We return one of the following values:
               "BRL",
               "COP",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3547,6 +3583,7 @@ We return one of the following values:
               "REVERTED",
               "UNCATEGORIZED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3596,6 +3633,7 @@ We return one of the following values:
               },
               "Taxes",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3618,6 +3656,7 @@ We return one of the following values:
               "SUBSCRIPTION",
               "REGULAR",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3629,6 +3668,7 @@ We return one of the following values:
               "NEGATIVE",
               "NO_OBLIGATIONS",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3642,6 +3682,7 @@ We return one of the following values:
               "PAID",
               "PROVISIONED",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3655,6 +3696,7 @@ We return one of the following values:
               "NATIONAL",
               "FOREIGN",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3669,6 +3711,7 @@ We return one of the following values:
               "OUTFLOW",
               "INFLOW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -20424,6 +20467,7 @@ types:
       - FAILED
     docs: |
       The current status of the charge.
+    inline: true
     source:
       openapi: ../openapi.yml
   ChargePaymentMethodDetails:
@@ -22755,6 +22799,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -24761,6 +24806,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -28372,6 +28418,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -28914,6 +28961,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -32306,6 +32354,7 @@ At the moment, the employment records resource is available for:
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -32484,6 +32533,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -33596,6 +33646,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -34045,6 +34096,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -35248,6 +35300,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -35325,6 +35378,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -36168,6 +36222,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -36563,6 +36618,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -39658,6 +39714,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -41157,6 +41214,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -45031,6 +45089,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -45778,6 +45837,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -47551,6 +47611,7 @@ Cancun, COL 10447",
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -47915,6 +47976,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -50733,6 +50795,7 @@ types:
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page.
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 100. If you enter a value greater than 100, our API will default to the maximum value (1000).
@@ -50837,6 +50900,7 @@ types:
                 "value": "-created_at",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -50846,6 +50910,7 @@ types:
               "ACTIVE",
               "INACTIVE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -50912,6 +50977,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page.
@@ -52284,6 +52350,7 @@ docs: >+
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -52491,6 +52558,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -53397,6 +53465,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -53884,6 +53953,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -55340,6 +55410,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -55830,6 +55901,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -57495,6 +57567,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -57715,6 +57788,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -58904,6 +58978,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -59303,6 +59378,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -60343,6 +60419,7 @@ client.tax_retentions.list(params: {
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -60533,6 +60610,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -62292,6 +62370,7 @@ client.connect()
                         },
                         "tipo_declaracion": "Normal",
                       },
+                      "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                       "pdf": "=PDF-STRING=",
                       "receipt_pdf": "=PDF-STRING=",
                     },
@@ -62662,6 +62741,9 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -62779,6 +62861,7 @@ client.connect()
                             "pagos_provisionales": 0,
                             "titular_clabe_permite_verificacion": "SÍ",
                           },
+                          "dividendos": {},
                           "id": "02589c41-ba22-4d44-8558-8111cc751318",
                           "informacion_general": {
                             "ejercicio": 2018,
@@ -62858,6 +62941,7 @@ client.connect()
                             ],
                             "subsidio_empleo": 0,
                           },
+                          "type": "yearly",
                         },
                       ],
                     },
@@ -62967,11 +63051,15 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "informacion_general": {},
                           "isr": {
                             "detalle_del_pago": {
                               "a_cargo": 0,
@@ -63126,11 +63214,15 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
                           "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "informacion_general": {},
                           "isr": {
                             "detalle_del_pago": {
                               "a_cargo": 0,
@@ -63293,6 +63385,9 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "cifras_cierre_ejercicio": {
@@ -63374,6 +63469,7 @@ client.connect()
                               "utilidad_o_perdida_fiscal_antes_de_ptu": 416134,
                             },
                           },
+                          "dividendos_o_utilidades_distribuidos": {},
                           "estado_posicion_financiera_balance": {
                             "activo": {
                               "cargos_y_gastos_diferidos": 9319,
@@ -63454,8 +63550,10 @@ client.connect()
                             "rfc": "ABC1111111A1",
                             "tipo_declaracion": "Normal",
                           },
+                          "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                           "pdf": "=PDF-STRING=",
                           "receipt_pdf": "=PDF-STRING=",
+                          "type": "yearly",
                         },
                       ],
                     },
@@ -63565,6 +63663,9 @@ client.connect()
                     "body": {
                       "count": 101,
                       "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                      "previous": {
+                        "key": "value",
+                      },
                       "results": [
                         {
                           "collected_at": "2022-02-09T08:45:50Z",
@@ -63793,6 +63894,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -65270,6 +65372,7 @@ client.connect()
                           },
                           "tipo_declaracion": "Normal",
                         },
+                        "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                         "pdf": "=PDF-STRING=",
                         "receipt_pdf": "=PDF-STRING=",
                       },
@@ -65750,6 +65853,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -66004,6 +66108,10 @@ service:
                     saldo_credito_fiscal_anteriores_produccion_distribucion_cinematografica: 0
                   pdf: '=PDF-STRING='
                   receipt_pdf: '=PDF-STRING='
+                  dividendos: {}
+                  type: yearly
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -66141,6 +66249,9 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
+                  informacion_general: {}
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -66286,6 +66397,9 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
+                  informacion_general: {}
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -66523,6 +66637,11 @@ service:
                     cantidad_a_pagar: 113002
                   pdf: '=PDF-STRING='
                   receipt_pdf: '=PDF-STRING='
+                  link: 19697249-01b8-443e-a451-76bfc5fbeebf
+                  dividendos_o_utilidades_distribuidos: {}
+                  type: yearly
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -66733,6 +66852,8 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
+              previous:
+                key: value
           code-samples:
             - language: cURL
               code: |
@@ -67867,6 +67988,7 @@ service:
                   cantidad_a_pagar: 113002
                 pdf: '=PDF-STRING='
                 receipt_pdf: '=PDF-STRING='
+                link: 19697249-01b8-443e-a451-76bfc5fbeebf
           code-samples:
             - language: cURL
               code: |-
@@ -69105,6 +69227,7 @@ service:
                 cantidad_a_pagar: 113002
               pdf: '=PDF-STRING='
               receipt_pdf: '=PDF-STRING='
+              link: 19697249-01b8-443e-a451-76bfc5fbeebf
           code-samples:
             - language: cURL
               code: |
@@ -70445,6 +70568,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -70920,6 +71044,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page. 
@@ -73690,6 +73815,7 @@ client.connect()
                     "type": "optional<integer>",
                   },
                   "page_size": {
+                    "default": 100,
                     "docs": "Indicates how many results to return per page. By default we return 100 results per page.
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
@@ -75154,6 +75280,7 @@ service:
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
+            default: 100
             docs: >
               Indicates how many results to return per page. By default we
               return 100 results per page.

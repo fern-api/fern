@@ -75,7 +75,7 @@ func (t *Type) GetSeven() time.Time {
 
 func (t *Type) GetEight() uuid.UUID {
 	if t == nil {
-		return uuid.UUID{}
+		return uuid.Nil
 	}
 	return t.Eight
 }

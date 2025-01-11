@@ -71,6 +71,12 @@ favicon: path/to/favicon.ico
   `landing-page` configuration [here](/learn/docs/getting-started/global-configuration#landing-page-configuration).
 </ParamField>
 
+<ParamField path="default-language" type="string" required={false}>
+  Sets the default language displayed by code snippets in the API Reference. 
+  
+  Options include: `typescript`, `python`, `java`, `go`, `ruby`, `csharp`, `curl`
+</ParamField>
+
 ## Instances configuration
 
 An `instance` is the backend of a distinct docs website. Each instance is published to a unique domain using the `--instance` flag. It is most common to use instances to configure staging and production docs which publish to separate URLs.

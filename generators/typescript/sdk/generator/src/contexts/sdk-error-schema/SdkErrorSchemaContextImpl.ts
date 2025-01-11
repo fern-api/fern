@@ -1,10 +1,12 @@
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import { GeneratedSdkErrorSchema, SdkErrorSchemaContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
 import { SourceFile } from "ts-morph";
+
+import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+
 import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 

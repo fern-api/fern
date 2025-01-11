@@ -145,6 +145,7 @@
               "array",
               "json",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -357,6 +358,7 @@
               "userset",
               "resourceset",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -741,6 +743,7 @@
               "failed",
               "canceled",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -766,6 +769,7 @@
               "read",
               "no_access",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -777,6 +781,7 @@
               "project",
               "env",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -793,6 +798,7 @@
               "connect_sdk",
               "done",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2633,6 +2639,7 @@ The actions represents the ways you can interact with a protected resource.",
               "active",
               "pending",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5158,6 +5165,7 @@ If the permission is already granted, it is skipped.",
                 "name": "ListSetPermissionsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -5169,6 +5177,7 @@ If the permission is already granted, it is skipped.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -5334,11 +5343,13 @@ service:
               permission is granted on this resource set
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -6017,6 +6028,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 "name": "GetConditionSetAncestorsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6028,6 +6040,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -6161,6 +6174,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 "name": "GetConditionSetDescendantsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6172,6 +6186,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -6299,10 +6314,12 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 "name": "ListConditionSetsRequest",
                 "query-parameters": {
                   "include_total_count": {
+                    "default": false,
                     "docs": "Include total count in response",
                     "type": "optional<boolean>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6314,6 +6331,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -6578,14 +6596,17 @@ service:
               type. e.g: only user sets.
           include_total_count:
             type: optional<boolean>
+            default: false
             docs: Include total count in response
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -7062,11 +7083,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -7166,11 +7189,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -7611,6 +7636,7 @@ allowed.",
                 "name": "ListEnvironmentsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7622,6 +7648,7 @@ allowed.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -7874,6 +7901,7 @@ allowed.",
               "fail",
               "overwrite",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -8001,11 +8029,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -8340,6 +8370,7 @@ types:
       Action to take when detecting a conflict when copying. Only applies to
       copying into an existing environment
     default: fail
+    inline: true
     source:
       openapi: ../openapi.json
 ",
@@ -8581,6 +8612,7 @@ authenticated actor (i.e: human team member or api key).",
                 "name": "ListOrganizationsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -8592,6 +8624,7 @@ authenticated actor (i.e: human team member or api key).",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -8709,11 +8742,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -9156,6 +9191,7 @@ Every project is a separate silo, and has its own unique set of environments and
                 "name": "ListProjectsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -9167,6 +9203,7 @@ Every project is a separate silo, and has its own unique set of environments and
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -9293,11 +9330,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -9804,6 +9843,7 @@ This includes any permissions granted to perform the action.",
                 "name": "ListResourceActionGroupsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -9815,6 +9855,7 @@ This includes any permissions granted to perform the action.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -9971,11 +10012,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -10563,6 +10606,7 @@ This includes any permissions granted to perform the action.",
                 "name": "ListResourceActionsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -10574,6 +10618,7 @@ This includes any permissions granted to perform the action.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -10726,11 +10771,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -11160,6 +11207,7 @@ attribute to evaluate as `undefined`.",
                 "name": "DeleteResourceAttributeRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -11171,6 +11219,7 @@ attribute to evaluate as `undefined`.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -11304,6 +11353,7 @@ attribute to evaluate as `undefined`.",
                 "name": "ListResourceAttributesRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -11315,6 +11365,7 @@ attribute to evaluate as `undefined`.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -11448,11 +11499,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -11633,11 +11686,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -12003,6 +12058,7 @@ and will return the existing instance object in the response body.",
                 "name": "ListResourceInstancesRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -12014,6 +12070,7 @@ and will return the existing instance object in the response body.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -12152,11 +12209,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -12974,6 +13033,7 @@ This includes any permissions granted to said role.",
                 "name": "ListResourceRolesRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -12985,6 +13045,7 @@ This includes any permissions granted to said role.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -13235,11 +13296,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -14250,14 +14313,17 @@ A resource may also contain:
                 "name": "ListResourcesRequest",
                 "query-parameters": {
                   "include_built_in": {
+                    "default": false,
                     "docs": "Whether to include or exclude built-in resources, default is False",
                     "type": "optional<boolean>",
                   },
                   "include_total_count": {
+                    "default": false,
                     "docs": "Include total count in response",
                     "type": "optional<boolean>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -14269,6 +14335,7 @@ A resource may also contain:
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -14645,17 +14712,21 @@ service:
             docs: Text search for the resources name or key
           include_built_in:
             type: optional<boolean>
+            default: false
             docs: Whether to include or exclude built-in resources, default is False
           include_total_count:
             type: optional<boolean>
+            default: false
             docs: Include total count in response
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -15466,6 +15537,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "name": "ListRoleAssignmentsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -15477,6 +15549,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -15618,11 +15691,13 @@ service:
               in that tenant.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -16335,10 +16410,12 @@ This includes any permissions granted to said role.",
                 "name": "ListRolesRequest",
                 "query-parameters": {
                   "include_total_count": {
+                    "default": false,
                     "docs": "Include total count in response",
                     "type": "optional<boolean>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -16350,6 +16427,7 @@ This includes any permissions granted to said role.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -16615,14 +16693,17 @@ service:
             docs: Text search for the roles name or key
           include_total_count:
             type: optional<boolean>
+            default: false
             docs: Include total count in response
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -17493,6 +17574,7 @@ and will return the existing tenant object in the response body.",
                 "name": "ListTenantUsersRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -17504,6 +17586,7 @@ and will return the existing tenant object in the response body.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -17590,10 +17673,12 @@ and will return the existing tenant object in the response body.",
                 "name": "ListTenantsRequest",
                 "query-parameters": {
                   "include_total_count": {
+                    "default": false,
                     "docs": "Include total count in response",
                     "type": "optional<boolean>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -17605,6 +17690,7 @@ and will return the existing tenant object in the response body.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -17778,11 +17864,13 @@ service:
             docs: Match users with a specific role
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -17857,14 +17945,17 @@ service:
             docs: Text search for the tenant name or key
           include_total_count:
             type: optional<boolean>
+            default: false
             docs: Include total count in response
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -18308,6 +18399,7 @@ attribute to evaluate as `undefined`.",
                 "name": "DeleteUserAttributeRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -18319,6 +18411,7 @@ attribute to evaluate as `undefined`.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -18449,6 +18542,7 @@ attribute to evaluate as `undefined`.",
                 "name": "ListUserAttributesRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -18460,6 +18554,7 @@ attribute to evaluate as `undefined`.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -18589,11 +18684,13 @@ service:
           resource_id: optional<string>
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -18762,11 +18859,13 @@ service:
           resource_id: optional<string>
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -19278,6 +19377,7 @@ and will return the existing user object in the response body.",
                 "name": "ListUsersRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -19289,6 +19389,7 @@ and will return the existing user object in the response body.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -19652,11 +19753,13 @@ service:
             docs: Match users with a specific role
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1

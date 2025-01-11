@@ -1,5 +1,5 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
@@ -13,7 +13,7 @@
       "path": "../../../commons/core-utils"
     },
     {
-      "path": "../../../commons/fs-utils"
+      "path": "../../../commons/path-utils"
     },
     {
       "path": "../../../ir-sdk"
@@ -25,10 +25,13 @@
       "path": "../../task-context"
     },
     {
-      "path": "../../workspace-commons"
+      "path": "../../fern-definition/schema"
     },
     {
-      "path": "../../fern-definition/schema"
-    }
+      "path": "../source-resolver"
+    },
+    {
+      "path": "../../workspace/commons"
+    },
   ]
 }

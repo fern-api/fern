@@ -54,9 +54,9 @@
                         "wireValue": "a"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_a:A"
                         }
                     }
@@ -116,7 +116,7 @@
                         "wireValue": "s"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -213,7 +213,7 @@
                         "wireValue": "s"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -311,7 +311,7 @@
                 "primitive_value": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_ast:PrimitiveValue"
                     },
                     "discriminantValue": {
@@ -368,7 +368,7 @@
                 "container_value": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_ast:ContainerValue"
                     },
                     "discriminantValue": {
@@ -489,9 +489,9 @@
                 "list": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_ast:FieldValue"
                         }
                     },
@@ -522,9 +522,9 @@
                 "optional": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_ast:FieldValue"
                         }
                     },
@@ -803,38 +803,39 @@
             },
             "types": [
                 {
-                    "_type": "list",
+                    "type": "list",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_ast:JsonLike"
                     }
                 },
                 {
-                    "_type": "map",
+                    "type": "map",
                     "key": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_ast:JsonLike"
                     }
                 },
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 },
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "INTEGER"
                 },
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "BOOLEAN"
                 }
             ]
         }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {},
+    "environments": null
 }

@@ -1,10 +1,12 @@
+import { writeFile } from "fs/promises";
+
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join, stringifyLargeObject } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { writeFile } from "fs/promises";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 
 export async function generateAndSnapshotIRFromPath({
     absolutePathToWorkspace,
@@ -47,7 +49,7 @@ export async function generateAndSnapshotIR({
         context
     });
 
-    const intermediateRepresentation = await generateIntermediateRepresentation({
+    const intermediateRepresentation = generateIntermediateRepresentation({
         workspace: fernWorkspace,
         generationLanguage: undefined,
         audiences,
@@ -57,7 +59,8 @@ export async function generateAndSnapshotIR({
         readme: undefined,
         version: undefined,
         packageName: undefined,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, fernWorkspace)
     });
 
     const intermediateRepresentationJson = IrSerialization.IntermediateRepresentation.jsonOrThrow(

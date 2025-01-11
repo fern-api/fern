@@ -15,7 +15,7 @@ export class UnauthorizedRequest extends errors.SeedBasicAuthError {
 
     public async send(res: express.Response): Promise<void> {
         res.status(401).json(
-            serializers.UnauthorizedRequestErrorBody.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
+            serializers.UnauthorizedRequestErrorBody.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }),
         );
     }
 }

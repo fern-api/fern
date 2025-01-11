@@ -31,11 +31,11 @@
             },
             "types": [
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:BasicType"
                 },
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:ComplexType"
                 }
             ]
@@ -93,7 +93,7 @@
                         "wireValue": "type"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Type"
                     }
                 },
@@ -121,7 +121,7 @@
                         "wireValue": "value"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -149,7 +149,7 @@
                         "wireValue": "label"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -433,7 +433,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -567,7 +567,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -595,15 +595,15 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "map",
+                            "type": "map",
                             "key": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             },
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -633,9 +633,9 @@
                         "wireValue": "jsonString"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -800,7 +800,7 @@
                 "tag": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons/types:Tag"
                     },
                     "discriminantValue": {
@@ -960,7 +960,7 @@
                 "string": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -990,7 +990,7 @@
                 "base64": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BASE_64"
                     },
                     "discriminantValue": {
@@ -1125,7 +1125,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -1196,7 +1196,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -1291,7 +1291,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:MovieId"
                     }
                 },
@@ -1319,9 +1319,9 @@
                         "wireValue": "prequel"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:MovieId"
                         }
                     }
@@ -1350,7 +1350,7 @@
                         "wireValue": "title"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -1378,7 +1378,7 @@
                         "wireValue": "from"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -1406,7 +1406,7 @@
                         "wireValue": "rating"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 },
@@ -1434,7 +1434,7 @@
                         "wireValue": "type"
                     },
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "movie"
@@ -1465,7 +1465,7 @@
                         "wireValue": "tag"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons/types:Tag"
                     }
                 },
@@ -1493,9 +1493,9 @@
                         "wireValue": "book"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1524,13 +1524,13 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "unknown"
+                            "type": "unknown"
                         }
                     }
                 },
@@ -1558,7 +1558,7 @@
                         "wireValue": "revenue"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "LONG"
                     }
                 }
@@ -1632,15 +1632,15 @@
             },
             "types": [
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_types:Actor"
                 },
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_types:Actress"
                 },
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_types:StuntDouble"
                 }
             ]
@@ -1736,7 +1736,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -1764,7 +1764,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1861,7 +1861,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -1889,7 +1889,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1986,7 +1986,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -2014,7 +2014,7 @@
                         "wireValue": "actorOrActressId"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -2111,7 +2111,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:MovieId"
                     }
                 },
@@ -2139,9 +2139,9 @@
                         "wireValue": "prequel"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:MovieId"
                         }
                     }
@@ -2170,7 +2170,7 @@
                         "wireValue": "title"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -2198,7 +2198,7 @@
                         "wireValue": "from"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -2226,7 +2226,7 @@
                         "wireValue": "rating"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 },
@@ -2254,7 +2254,7 @@
                         "wireValue": "type"
                     },
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "movie"
@@ -2285,7 +2285,7 @@
                         "wireValue": "tag"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons/types:Tag"
                     }
                 },
@@ -2313,9 +2313,9 @@
                         "wireValue": "book"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -2344,13 +2344,13 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "map",
+                        "type": "map",
                         "key": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         },
                         "value": {
-                            "_type": "unknown"
+                            "type": "unknown"
                         }
                     }
                 },
@@ -2378,7 +2378,7 @@
                         "wireValue": "revenue"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "LONG"
                     }
                 },
@@ -2406,9 +2406,9 @@
                         "wireValue": "cast"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -2506,7 +2506,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "UUID"
                     }
                 },
@@ -2534,7 +2534,7 @@
                         "wireValue": "date"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE"
                     }
                 },
@@ -2562,7 +2562,7 @@
                         "wireValue": "datetime"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE_TIME"
                     }
                 }
@@ -2659,7 +2659,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -2687,7 +2687,7 @@
                         "wireValue": "contents"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -2784,7 +2784,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -2812,11 +2812,11 @@
                         "wireValue": "files"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_types:File"
                             }
                         }
@@ -2846,11 +2846,11 @@
                         "wireValue": "directories"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_types:Directory"
                             }
                         }
@@ -2949,7 +2949,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -2977,11 +2977,11 @@
                         "wireValue": "nodes"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_types:Node"
                             }
                         }
@@ -3011,11 +3011,11 @@
                         "wireValue": "trees"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_types:Tree"
                             }
                         }
@@ -3114,11 +3114,11 @@
                         "wireValue": "nodes"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "named",
+                                "type": "named",
                                 "value": "type_types:Node"
                             }
                         }
@@ -3218,7 +3218,7 @@
                 "html": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -3268,13 +3268,13 @@
                                 "wireValue": "extra"
                             },
                             "typeReference": {
-                                "_type": "map",
+                                "type": "map",
                                 "key": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 },
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -3303,9 +3303,9 @@
                                 "wireValue": "tags"
                             },
                             "typeReference": {
-                                "_type": "set",
+                                "type": "set",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -3315,7 +3315,7 @@
                 "markdown": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -3365,13 +3365,13 @@
                                 "wireValue": "extra"
                             },
                             "typeReference": {
-                                "_type": "map",
+                                "type": "map",
                                 "key": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 },
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -3400,9 +3400,9 @@
                                 "wireValue": "tags"
                             },
                             "typeReference": {
-                                "_type": "set",
+                                "type": "set",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -3646,7 +3646,7 @@
                         "wireValue": "exceptionType"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -3674,7 +3674,7 @@
                         "wireValue": "exceptionMessage"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -3702,7 +3702,7 @@
                         "wireValue": "exceptionStacktrace"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -3934,7 +3934,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -3962,7 +3962,7 @@
                         "wireValue": "status"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:MigrationStatus"
                     }
                 }
@@ -4059,7 +4059,7 @@
                         "wireValue": "request"
                     },
                     "typeReference": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             ]
@@ -4155,7 +4155,7 @@
                         "wireValue": "response"
                     },
                     "typeReference": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 },
                 {
@@ -4182,9 +4182,9 @@
                         "wireValue": "identifiers"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Identifier"
                         }
                     }
@@ -4282,7 +4282,7 @@
                         "wireValue": "type"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Type"
                     }
                 }
@@ -4380,7 +4380,7 @@
                 "and": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     },
                     "discriminantValue": {
@@ -4410,7 +4410,7 @@
                 "or": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "BOOLEAN"
                     },
                     "discriminantValue": {
@@ -4530,7 +4530,7 @@
                         "wireValue": "type"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Type"
                     }
                 },
@@ -4558,7 +4558,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -4655,9 +4655,9 @@
                         "wireValue": "castMember"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:CastMember"
                         }
                     }
@@ -4686,9 +4686,9 @@
                         "wireValue": "extendedMovie"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:ExtendedMovie"
                         }
                     }
@@ -4717,9 +4717,9 @@
                         "wireValue": "entity"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:Entity"
                         }
                     }
@@ -4748,9 +4748,9 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:Metadata"
                         }
                     }
@@ -4779,9 +4779,9 @@
                         "wireValue": "commonMetadata"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons/types:Metadata"
                         }
                     }
@@ -4810,9 +4810,9 @@
                         "wireValue": "eventInfo"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons/types:EventInfo"
                         }
                     }
@@ -4841,9 +4841,9 @@
                         "wireValue": "data"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_commons/types:Data"
                         }
                     }
@@ -4872,9 +4872,9 @@
                         "wireValue": "migration"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:Migration"
                         }
                     }
@@ -4903,9 +4903,9 @@
                         "wireValue": "exception"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:Exception"
                         }
                     }
@@ -4934,9 +4934,9 @@
                         "wireValue": "test"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:Test"
                         }
                     }
@@ -4965,9 +4965,9 @@
                         "wireValue": "node"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:Node"
                         }
                     }
@@ -4996,9 +4996,9 @@
                         "wireValue": "directory"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:Directory"
                         }
                     }
@@ -5027,9 +5027,9 @@
                         "wireValue": "moment"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:Moment"
                         }
                     }
@@ -5098,7 +5098,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -5166,7 +5166,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Type"
                     }
                 }
@@ -5370,7 +5370,7 @@
                             "wireValue": "notificationId"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -5641,7 +5641,7 @@
                             "wireValue": "filename"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -5672,7 +5672,7 @@
                             "wireValue": "X-File-API-Version"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -5844,7 +5844,7 @@
                             "wireValue": "id"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -6112,7 +6112,7 @@
                             "wireValue": "movieId"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_types:MovieId"
                         }
                     }
@@ -6220,7 +6220,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:Movie"
                     }
                 }
@@ -6412,9 +6412,9 @@
                             "wireValue": "shallow"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "type": "optional",
                             "value": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "BOOLEAN"
                             }
                         }
@@ -6443,11 +6443,11 @@
                             "wireValue": "tag"
                         },
                         "typeReference": {
-                            "_type": "list",
+                            "type": "list",
                             "value": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -6479,7 +6479,7 @@
                             "wireValue": "X-API-Version"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -6591,7 +6591,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:BigEntity"
                     }
                 }
@@ -6599,6 +6599,62 @@
             "response": {
                 "type": "json"
             }
+        }
+    },
+    "environments": {
+        "defaultEnvironment": null,
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Production",
+                    "name": {
+                        "originalName": "Production",
+                        "camelCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTION",
+                            "safeName": "PRODUCTION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Production",
+                            "safeName": "Production"
+                        }
+                    },
+                    "url": "https://production.com/api",
+                    "docs": null
+                },
+                {
+                    "id": "Staging",
+                    "name": {
+                        "originalName": "Staging",
+                        "camelCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STAGING",
+                            "safeName": "STAGING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Staging",
+                            "safeName": "Staging"
+                        }
+                    },
+                    "url": "https://staging.com/api",
+                    "docs": null
+                }
+            ]
         }
     }
 }

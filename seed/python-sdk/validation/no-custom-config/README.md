@@ -26,9 +26,9 @@ client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
 )
 client.create(
-    decimal=1.1,
-    even=1,
-    name="name",
+    decimal=2.2,
+    even=100,
+    name="foo",
     shape="SQUARE",
 )
 ```
@@ -49,9 +49,9 @@ client = AsyncSeedValidation(
 
 async def main() -> None:
     await client.create(
-        decimal=1.1,
-        even=1,
-        name="name",
+        decimal=2.2,
+        even=100,
+        name="foo",
         shape="SQUARE",
     )
 
@@ -92,9 +92,9 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.create(..., request_options={
-        "max_retries": 1
-    })
-    ```
+    "max_retries": 1
+})
+```
 
 ### Timeouts
 
@@ -102,7 +102,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-    from seed import SeedValidation
+from seed import SeedValidation
 
 client = SeedValidation(
     ...,
@@ -110,11 +110,11 @@ client = SeedValidation(
 )
 
 
-    # Override timeout for a specific method
-    client.create(..., request_options={
-        "timeout_in_seconds": 1
-    })
-    ```
+# Override timeout for a specific method
+client.create(..., request_options={
+    "timeout_in_seconds": 1
+})
+```
 
 ### Custom Client
 

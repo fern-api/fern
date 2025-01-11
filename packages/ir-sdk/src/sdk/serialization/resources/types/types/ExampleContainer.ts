@@ -37,30 +37,30 @@ export const ExampleContainer: core.serialization.Schema<serializers.ExampleCont
         });
 
 export declare namespace ExampleContainer {
-    type Raw =
+    export type Raw =
         | ExampleContainer.List
         | ExampleContainer.Set
         | ExampleContainer.Optional
         | ExampleContainer.Map
         | ExampleContainer.Literal;
 
-    interface List extends serializers.ExampleListContainer.Raw {
+    export interface List extends serializers.ExampleListContainer.Raw {
         type: "list";
     }
 
-    interface Set extends serializers.ExampleSetContainer.Raw {
+    export interface Set extends serializers.ExampleSetContainer.Raw {
         type: "set";
     }
 
-    interface Optional extends serializers.ExampleOptionalContainer.Raw {
+    export interface Optional extends serializers.ExampleOptionalContainer.Raw {
         type: "optional";
     }
 
-    interface Map extends serializers.ExampleMapContainer.Raw {
+    export interface Map extends serializers.ExampleMapContainer.Raw {
         type: "map";
     }
 
-    interface Literal extends ExampleLiteralContainer.Raw {
+    export interface Literal extends ExampleLiteralContainer.Raw {
         type: "literal";
     }
 }

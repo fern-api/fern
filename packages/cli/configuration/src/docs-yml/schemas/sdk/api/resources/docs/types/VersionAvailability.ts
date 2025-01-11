@@ -3,7 +3,6 @@
  */
 
 export type VersionAvailability = "deprecated" | "ga" | "stable" | "beta";
-
 export const VersionAvailability = {
     Deprecated: "deprecated",
     Ga: "ga",

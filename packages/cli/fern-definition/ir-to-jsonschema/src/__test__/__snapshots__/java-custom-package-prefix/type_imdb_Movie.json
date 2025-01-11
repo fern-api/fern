@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/imdb.MovieId"
+    },
+    "title": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "rating"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "imdb.MovieId": {
+      "type": "string"
+    }
+  }
+}

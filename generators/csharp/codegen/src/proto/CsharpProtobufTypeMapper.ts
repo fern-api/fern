@@ -1,5 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import { ContainerType, Literal, MapType, NamedType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { csharp } from "../";
 import { CodeBlock, MethodType } from "../ast";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";

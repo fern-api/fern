@@ -119,6 +119,7 @@
               "consumer",
               "business",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -129,6 +130,7 @@
               "consumer",
               "business",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -148,6 +150,7 @@
               "financing",
               "taxes",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -287,6 +290,7 @@
               "invalid_bank_statement",
               "internal_error",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -328,6 +332,7 @@
               "completed",
               "error",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -459,6 +464,7 @@ enriched transactions.",
               "completed",
               "error",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -488,6 +494,7 @@ enriched transactions.",
               "low",
               "unknown",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -545,6 +552,7 @@ enriched transactions.",
               "person",
               "organization",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -797,6 +805,7 @@ enriched transactions.",
               "ZM",
               "ZW",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -955,6 +964,7 @@ enriched transactions.",
               "ZWL",
               "HRK",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -982,6 +992,7 @@ enriched transactions.",
               "processed",
               "failed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -996,6 +1007,7 @@ enriched transactions.",
               "person",
               "transaction_type",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1098,6 +1110,7 @@ enriched transactions.",
               "incoming",
               "outgoing",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1454,6 +1467,7 @@ enriched transactions.",
               "delivery_service",
               "payment_processor",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1811,6 +1825,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "yearly",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1825,6 +1840,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
                 "value": "one off",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1885,6 +1901,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "resolved",
               "rejected",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2044,6 +2061,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "account_holder_not_found",
               "internal_error",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2216,6 +2234,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
                 "value": "batches.error",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2289,6 +2308,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "account_holder_id",
               "account_holder_name",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3606,6 +3626,7 @@ types:
         name: BatchesCompleted
       - value: batches.error
         name: BatchesError
+    inline: true
     source:
       openapi: ../openapi.yml
   Webhook:
@@ -4204,6 +4225,7 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "The limit of account holders to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -4335,6 +4357,7 @@ service:
             docs: Starting point for the set of account holders
           limit:
             type: optional<integer>
+            default: 10
             docs: The limit of account holders to be returned
             validation:
               min: 1
@@ -4820,6 +4843,7 @@ for bs in sdk.bank_statements.list().auto_paginate():
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "The limit of bank statements to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -4957,6 +4981,7 @@ service:
             docs: Starting point for the set of bank statements
           limit:
             type: optional<integer>
+            default: 10
             docs: The limit of bank statements to be returned
             validation:
               min: 1
@@ -5472,6 +5497,7 @@ for batch in sdk.batches.list().auto_paginate():
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "The limit of batches to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -5709,6 +5735,7 @@ service:
             docs: Starting point for the set of batches
           limit:
             type: optional<integer>
+            default: 10
             docs: The limit of batches to be returned
             validation:
               min: 1
@@ -7785,6 +7812,7 @@ reports = sdk.reports.list()
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "The limit of report to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -7950,6 +7978,7 @@ service:
             docs: Starting point for the set of report
           limit:
             type: optional<integer>
+            default: 10
             docs: The limit of report to be returned
             validation:
               min: 1
@@ -8436,6 +8465,7 @@ for tx in sdk.transactions.list().auto_paginate():
                     "type": "optional<string>",
                   },
                   "limit": {
+                    "default": 25,
                     "docs": "The limit of transactions to be returned",
                     "type": "optional<integer>",
                     "validation": {
@@ -8904,6 +8934,7 @@ service:
             docs: Starting point for the set of transactions
           limit:
             type: optional<integer>
+            default: 25
             docs: The limit of transactions to be returned
             validation:
               min: 1
@@ -9684,6 +9715,7 @@ sdk.webhooks.create(
                 "value": "batches.error",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9719,6 +9751,7 @@ sdk.webhooks.create(
                 "value": "batches.error",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10052,6 +10085,7 @@ types:
         name: BatchesCompleted
       - value: batches.error
         name: BatchesError
+    inline: true
     source:
       openapi: ../openapi.yml
   WebhookPatchEventsItem:
@@ -10070,6 +10104,7 @@ types:
         name: BatchesCompleted
       - value: batches.error
         name: BatchesError
+    inline: true
     source:
       openapi: ../openapi.yml
 ",

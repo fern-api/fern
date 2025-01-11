@@ -864,6 +864,7 @@ in the Evaluation Report.",
               "system",
               "tool",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1206,6 +1207,7 @@ in the inheriting classes with documentation and appropriate Field definitions."
               "default",
               "other",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1422,6 +1424,7 @@ function.",
               "cancelled",
               "failed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1483,6 +1486,7 @@ function.",
               "target_free",
               "target_required",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1629,6 +1633,7 @@ function.",
               "boolean",
               "number",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1641,6 +1646,7 @@ function.",
               "text",
               "number",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1652,6 +1658,7 @@ function.",
               "active",
               "inactive",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1728,6 +1735,7 @@ function.",
               "correction",
               "comment",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1913,6 +1921,7 @@ function.",
               "low",
               "auto",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1974,6 +1983,7 @@ Used by a File's PAPV (Positive Action Per View) metric.",
               "neutral",
               "unset",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2559,6 +2569,7 @@ Does not have things like the signature or setup schema.",
               "chat",
               "edit",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2577,6 +2588,7 @@ Does not have things like the signature or setup schema.",
               "google",
               "groq",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2631,6 +2643,7 @@ Does not have things like the signature or setup schema.",
               "active",
               "inactive",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2697,6 +2710,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
               "completed",
               "failed",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2804,6 +2818,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
               "supportadmin",
               "user",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2815,6 +2830,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
               "updated_at",
               "name",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3481,6 +3497,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
               "asc",
               "desc",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3539,6 +3556,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
               "week",
               "month",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3823,6 +3841,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
               "organization",
               "inline",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3866,6 +3885,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
               "json_schema",
               "get_api_call",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3877,6 +3897,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
               "add",
               "remove",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4060,6 +4081,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
               "committed",
               "deleted",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5267,6 +5289,7 @@ types:
       Specify the detail level of the image provided to the model. For more
       details see:
       https://platform.openai.com/docs/guides/vision/low-or-high-fidelity-image-understanding
+    inline: true
     source:
       openapi: ../openapi.yml
   ImageUrl:
@@ -7534,6 +7557,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     "type": "optional<string>",
                   },
                   "include_datapoints": {
+                    "default": false,
                     "docs": "If set to `true`, include all Datapoints in the response. Defaults to `false`. Consider using the paginated List Datapoints endpoint instead.",
                     "type": "optional<boolean>",
                   },
@@ -7614,6 +7638,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     "type": "optional<root.SortOrder>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7625,6 +7650,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Datasets to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7707,6 +7733,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7718,6 +7745,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     },
                   },
                   "size": {
+                    "default": 50,
                     "docs": "Page size for pagination. Number of Datapoints to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7935,11 +7963,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page offset for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Datasets to fetch.
             validation:
               min: 0
@@ -8156,6 +8186,7 @@ service:
             docs: An environment tag to retrieve a deployed Version from.
           include_datapoints:
             type: optional<boolean>
+            default: false
             docs: >-
               If set to `true`, include all Datapoints in the response. Defaults
               to `false`. Consider using the paginated List Datapoints endpoint
@@ -8293,11 +8324,13 @@ service:
             docs: An environment tag to retrieve a deployed Version from.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 50
             docs: Page size for pagination. Number of Datapoints to fetch.
             validation:
               min: 0
@@ -9034,6 +9067,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                     "type": "string",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -9045,6 +9079,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Evaluations to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -9387,11 +9422,13 @@ service:
               File will be returned.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Evaluations to fetch.
             validation:
               min: 0
@@ -10684,6 +10721,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                     "type": "optional<root.SortOrder>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -10695,6 +10733,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Evaluators to fetch.",
                     "type": "optional<integer>",
                   },
@@ -11022,11 +11061,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page offset for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Evaluators to fetch.
           name:
             type: optional<string>
@@ -12069,6 +12110,7 @@ You can manually create Logs through the API.
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -12084,6 +12126,7 @@ You can manually create Logs through the API.
                     "type": "optional<string>",
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Logs to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -12144,11 +12187,13 @@ service:
             docs: Unique identifier for the File to list Logs for.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Logs to fetch.
             validation:
               min: 0
@@ -13359,6 +13404,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     "type": "optional<root.SortOrder>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -13370,6 +13416,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Prompts to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -14029,11 +14076,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Prompts to fetch.
             validation:
               min: 0
@@ -15563,6 +15612,7 @@ Log is in, nested within the evaluated Log.
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -15574,6 +15624,7 @@ Log is in, nested within the evaluated Log.
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Sessions to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -15722,11 +15773,13 @@ service:
               that contain any Logs associated to this Version will be returned.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Sessions to fetch.
             validation:
               min: 0
@@ -16292,6 +16345,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     "type": "optional<root.SortOrder>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -16303,6 +16357,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Tools to fetch.",
                     "type": "optional<integer>",
                   },
@@ -16809,11 +16864,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page offset for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Tools to fetch.
           name:
             type: optional<string>

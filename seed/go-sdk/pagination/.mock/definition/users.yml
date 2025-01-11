@@ -139,6 +139,7 @@ service:
           page:
             type: optional<integer>
             docs: Defaults to first page
+            default: 0
           per_page:
             type: optional<integer>
             docs: Defaults to per page

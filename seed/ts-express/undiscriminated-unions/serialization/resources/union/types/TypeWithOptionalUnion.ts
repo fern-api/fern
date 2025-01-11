@@ -14,7 +14,7 @@ export const TypeWithOptionalUnion: core.serialization.ObjectSchema<
 });
 
 export declare namespace TypeWithOptionalUnion {
-    interface Raw {
+    export interface Raw {
         myUnion?: serializers.MyUnion.Raw | null;
     }
 }

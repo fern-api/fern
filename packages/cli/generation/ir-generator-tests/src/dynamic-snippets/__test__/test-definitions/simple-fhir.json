@@ -54,7 +54,7 @@
                         "wireValue": "description"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -82,9 +82,9 @@
                         "wireValue": "account"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Account"
                         }
                     }
@@ -144,7 +144,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -172,9 +172,9 @@
                         "wireValue": "related_resources"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:ResourceList"
                         }
                     }
@@ -203,7 +203,7 @@
                         "wireValue": "memo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Memo"
                     }
                 }
@@ -239,19 +239,19 @@
             },
             "types": [
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:Account"
                 },
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:Patient"
                 },
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:Practitioner"
                 },
                 {
-                    "_type": "named",
+                    "type": "named",
                     "value": "type_:Script"
                 }
             ]
@@ -309,7 +309,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -337,9 +337,9 @@
                         "wireValue": "related_resources"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:ResourceList"
                         }
                     }
@@ -368,7 +368,7 @@
                         "wireValue": "memo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Memo"
                     }
                 },
@@ -396,7 +396,7 @@
                         "wireValue": "resource_type"
                     },
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "Account"
@@ -427,7 +427,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -455,9 +455,9 @@
                         "wireValue": "patient"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Patient"
                         }
                     }
@@ -486,9 +486,9 @@
                         "wireValue": "practitioner"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Practitioner"
                         }
                     }
@@ -548,7 +548,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -576,9 +576,9 @@
                         "wireValue": "related_resources"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:ResourceList"
                         }
                     }
@@ -607,7 +607,7 @@
                         "wireValue": "memo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Memo"
                     }
                 },
@@ -635,7 +635,7 @@
                         "wireValue": "resource_type"
                     },
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "Patient"
@@ -666,7 +666,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -694,9 +694,9 @@
                         "wireValue": "scripts"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Script"
                         }
                     }
@@ -756,7 +756,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -784,9 +784,9 @@
                         "wireValue": "related_resources"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:ResourceList"
                         }
                     }
@@ -815,7 +815,7 @@
                         "wireValue": "memo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Memo"
                     }
                 },
@@ -843,7 +843,7 @@
                         "wireValue": "resource_type"
                     },
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "Practitioner"
@@ -874,7 +874,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -933,7 +933,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 },
@@ -961,9 +961,9 @@
                         "wireValue": "related_resources"
                     },
                     "typeReference": {
-                        "_type": "list",
+                        "type": "list",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:ResourceList"
                         }
                     }
@@ -992,7 +992,7 @@
                         "wireValue": "memo"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:Memo"
                     }
                 },
@@ -1020,7 +1020,7 @@
                         "wireValue": "resource_type"
                     },
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "Script"
@@ -1051,7 +1051,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1119,7 +1119,7 @@
                             "wireValue": "account_id"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -1130,5 +1130,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

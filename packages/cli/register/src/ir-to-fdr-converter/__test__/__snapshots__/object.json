@@ -39,8 +39,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "boolean",
-                "default": false
+                "type": "boolean"
               }
             }
           },
@@ -49,8 +48,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "long",
-                "default": 0
+                "type": "long"
               }
             }
           },
@@ -59,8 +57,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "datetime",
-                "default": "1970-01-01T00:00:00.000Z"
+                "type": "datetime"
               }
             }
           },
@@ -69,8 +66,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "date",
-                "default": "1970-01-01T00:00:00.000Z"
+                "type": "date"
               }
             }
           },
@@ -88,8 +84,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "base64",
-                "default": "0"
+                "type": "base64"
               }
             }
           },
@@ -130,8 +125,7 @@
               "valueType": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -143,8 +137,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "long",
-                  "default": 0
+                  "type": "long"
                 }
               }
             }
@@ -255,15 +248,11 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "bigInteger",
-                "default": "0"
+                "type": "bigInteger"
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Name": {
@@ -290,10 +279,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

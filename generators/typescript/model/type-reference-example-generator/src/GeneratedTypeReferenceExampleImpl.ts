@@ -1,13 +1,15 @@
+import { GetReferenceOpts } from "@fern-typescript/commons";
+import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
+
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ExampleContainer,
     ExamplePrimitive,
     ExampleTypeReference,
     ExampleTypeReferenceShape
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedTypeReferenceExample, ModelContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
     export interface Init {
@@ -22,7 +24,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         this.example = example;
     }
 
-    public build(context: ModelContext, opts: GetReferenceOpts): ts.Expression {
+    public build(context: BaseContext, opts: GetReferenceOpts): ts.Expression {
         return this.buildExample({ example: this.example, context, opts });
     }
 
@@ -32,7 +34,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         opts
     }: {
         example: ExampleTypeReference;
-        context: ModelContext;
+        context: BaseContext;
         opts: GetReferenceOpts;
     }): ts.Expression {
         return ExampleTypeReferenceShape._visit(example.shape, {
@@ -164,7 +166,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         opts
     }: {
         example: ExampleTypeReference;
-        context: ModelContext;
+        context: BaseContext;
         opts: GetReferenceOpts;
     }): ts.PropertyName {
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {

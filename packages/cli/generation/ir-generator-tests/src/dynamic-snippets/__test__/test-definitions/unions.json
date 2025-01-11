@@ -93,7 +93,7 @@
                 "foo": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:Foo"
                     },
                     "discriminantValue": {
@@ -123,7 +123,7 @@
                 "bar": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:Bar"
                     },
                     "discriminantValue": {
@@ -244,7 +244,7 @@
                 "foo": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:Foo"
                     },
                     "discriminantValue": {
@@ -274,7 +274,7 @@
                 "bar": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_types:Bar"
                     },
                     "discriminantValue": {
@@ -395,7 +395,7 @@
                 "integer": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     },
                     "discriminantValue": {
@@ -425,7 +425,7 @@
                 "string": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -835,7 +835,7 @@
                 "fern": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "literal",
+                        "type": "literal",
                         "value": {
                             "type": "string",
                             "value": "fern"
@@ -888,7 +888,7 @@
                                 "wireValue": "base"
                             },
                             "typeReference": {
-                                "_type": "literal",
+                                "type": "literal",
                                 "value": {
                                     "type": "string",
                                     "value": "base"
@@ -991,7 +991,7 @@
                 "integer": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     },
                     "discriminantValue": {
@@ -1041,7 +1041,7 @@
                                 "wireValue": "id"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -1050,7 +1050,7 @@
                 "string": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "discriminantValue": {
@@ -1100,7 +1100,7 @@
                                 "wireValue": "id"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -1156,7 +1156,7 @@
                                 "wireValue": "id"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -1256,7 +1256,7 @@
                 "value": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     },
                     "discriminantValue": {
@@ -1286,7 +1286,7 @@
                 "date": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE"
                     },
                     "discriminantValue": {
@@ -1316,7 +1316,7 @@
                 "datetime": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DATE_TIME"
                     },
                     "discriminantValue": {
@@ -1437,9 +1437,9 @@
                 "date": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DATE"
                         }
                     },
@@ -1470,9 +1470,9 @@
                 "dateimte": {
                     "type": "singleProperty",
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "DATE_TIME"
                         }
                     },
@@ -1711,7 +1711,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1808,7 +1808,7 @@
                         "wireValue": "name"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -1905,7 +1905,7 @@
                         "wireValue": "id"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -2050,7 +2050,7 @@
                                 "wireValue": "id"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -2106,7 +2106,7 @@
                                 "wireValue": "id"
                             },
                             "typeReference": {
-                                "_type": "primitive",
+                                "type": "primitive",
                                 "value": "STRING"
                             }
                         }
@@ -2205,7 +2205,7 @@
                         "wireValue": "radius"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 }
@@ -2302,7 +2302,7 @@
                         "wireValue": "length"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "DOUBLE"
                     }
                 }
@@ -2408,7 +2408,7 @@
                             "wireValue": "id"
                         },
                         "typeReference": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -2495,7 +2495,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_union:Shape"
                     }
                 }
@@ -2504,5 +2504,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

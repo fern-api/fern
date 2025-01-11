@@ -1,5 +1,6 @@
-import { AstNode } from "./core/AstNode";
 import { Arguments } from "@fern-api/base-generator";
+
+import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { writeArguments } from "./utils/writeArguments";
 

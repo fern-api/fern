@@ -7,8 +7,9 @@ import (
 
 func do() () {
     client := client.NewClient()
-    client.User.GetOrganization(
+    client.Organizations.GetOrganization(
         context.TODO(),
-        "organizationId",
+        "tenant_id",
+        "organization_id",
     )
 }

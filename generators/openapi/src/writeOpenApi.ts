@@ -1,19 +1,22 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { convertToOpenApi } from "./convertToOpenApi";
-import { getCustomConfig } from "./customConfig";
+
 import {
+    ExitStatusUpdate,
     GeneratorNotificationService,
     GeneratorUpdate,
-    ExitStatusUpdate,
     parseGeneratorConfig,
     parseIR
 } from "@fern-api/base-generator";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { mergeWithOverrides } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+
+import { convertToOpenApi } from "./convertToOpenApi";
+import { getCustomConfig } from "./customConfig";
 
 export type Mode = "stoplight" | "openapi";
 
@@ -39,11 +42,16 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                 ir,
                 mode
             });
+
+            if (openapi == null) {
+                throw new Error("Failed to convert IR to OpenAPI");
+            }
+
             // eslint-disable-next-line no-console
             console.log(`openapi before override ${JSON.stringify(openapi)}`);
 
             if (customConfig.customOverrides != null) {
-                openapi = await mergeWithOverrides({
+                openapi = mergeWithOverrides({
                     data: openapi,
                     overrides: customConfig.customOverrides
                 });

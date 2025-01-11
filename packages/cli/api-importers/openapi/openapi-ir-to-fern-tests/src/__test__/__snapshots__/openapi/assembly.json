@@ -94,6 +94,7 @@
               "success",
               "unavailable",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -537,6 +538,7 @@ Valid values are in the range [0, 1] inclusive.
                 "value": "us_social_security_number",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -634,6 +636,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "default",
               "basic",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -809,6 +812,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "drivers_license",
               "banking_information",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -896,6 +900,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "NEUTRAL",
               "NEGATIVE",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -985,6 +990,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "entity_type",
               "hash",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -995,6 +1001,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "srt",
               "vtt",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1007,6 +1014,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "conversational",
               "catchy",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1021,6 +1029,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "headline",
               "paragraph",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1354,6 +1363,7 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
               "default",
               "high",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1441,6 +1451,7 @@ The default value is 'en_us'.
               "uk",
               "vi",
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1577,6 +1588,7 @@ The default value is 'en_us'.
                 "value": "error",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4718,6 +4730,7 @@ docs: Real-time transcription
                     },
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "Maximum amount of transcripts to retrieve",
                     "type": "optional<long>",
                   },
@@ -4805,6 +4818,7 @@ docs: Real-time transcription
                 "value": "error",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4846,6 +4860,7 @@ service:
         query-parameters:
           limit:
             type: optional<long>
+            default: 10
             docs: Maximum amount of transcripts to retrieve
           status:
             type: optional<TranscriptListRequestStatus>

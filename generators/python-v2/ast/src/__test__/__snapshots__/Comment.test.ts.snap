@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Comment > toString > Writes a basic one-line comment 1`] = `
+"# Hello, world!
+"
+`;
+
+exports[`Comment > toString > Writes a multi-line comment 1`] = `
+"# Hello,
+# World!
+"
+`;
+
+exports[`Comment > toString > Writes an empty comment for an string 1`] = `
+"#
+"
+`;
+
+exports[`Comment > toString > Writes nothing for an undefined value 1`] = `""`;

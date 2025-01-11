@@ -5,6 +5,180 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.46.6] - 2025-01-09
+
+- Fix: Update `@types/node` to `18+`, required for the generated `Node18UniversalStreamWrapper` test.
+
+## [0.46.5] - 2025-01-09
+
+- Fix: Fix the webpack test to work with .js/.jsx extensions in TypeScript
+- Fix: Only map .js modules in Jest, not .json files.
+
+## [0.46.4] - 2025-01-09
+
+- Fix: Fix packageJson custom configuration & package.json types field.
+
+## [0.46.3] - 2025-01-09
+
+- Fix: Revert to using legacy exports by default.
+
+## [0.46.2] - 2025-01-09
+
+- Fix: Fix Jest to work with files imported using `.js` extension.
+- Fix: Make sure Jest loads Jest configuration regardless of package.json type.
+
+## [0.46.1] - 2025-01-08
+
+- Fix: ESModule output is fixed to be compatible with Node.js ESM loading.
+
+## [0.46.0] - 2025-01-06
+
+- Feat: SDKs are now built and exported in both CommonJS (legacy) and ESModule format.
+
+- Feat: Export `serialization` code from root package export.
+  ```ts
+  import { serialization } from `@packageName`;
+  ```
+
+  The serialization code is also exported as `@packageName/serialization`.
+  ```ts
+  import * as serialization from `@packageName/serialization`;
+  ```
+
+- Feat: `package.json` itself is exported in `package.json` to allow consumers to easily read metadata about the package they are consuming.
+
+## [0.45.2] - 2024-12-31
+
+- Fix: TS generated snippets now respect proper parameter casing when noSerdeLayer is enabled.
+
+## [0.45.1] - 2024-12-27
+
+- Fix: Export everything inside of TypeScript namespaces that used to be ambient.
+
+  For the `enableInlineTypes` feature, some namespaces were no longer declared (ambient), and types and interfaces inside the namespace would no longer be automatically exported without the `export` keyword. This fix exports everything that's inside these namespaces and also declared namespaces for good measure (in case they are not declared in the future).
+
+## [0.45.0] - 2024-12-26
+
+- Feat: Update dependencies of the generated TS SDK and Express generator. TypeScript has been updated to 5.7.2 which is a major version upgrade from 4.6.4.
+
+## [0.44.5] - 2024-12-23
+
+- Fix: Fix a bug where we attempt to parse an empty terminator when receiving streaming JSON responses.
+
+## [0.44.4] - 2024-12-20
+
+- Feat: Use specified defaults for pagination offset parameters during SDK generation.
+
+## [0.44.3] - 2024-12-18
+
+- Fix: Fix a bug where client would send request wrapper instead of the body of the request wrapper, when the request has inline path parameters and a body property.
+
+## [0.44.2] - 2024-12-17
+
+- Fix: Inline path parameters will use their original name when `retainOriginalName` or `noSerdeLayer` is enabled.
+
+## [0.44.1] - 2024-12-16
+
+- Fix: When there is an environment variable set, you do not need to pass in any parameters
+  to the client constructor.
+
+## [0.44.0] - 2024-12-13
+
+- Feature: Inline path parameters into request types by setting `inlinePathParameters` to `true` in the generator config.
+
+  Here's an example of how users would use the same endpoint method without and with `inlinePathParameters` set to `true`.
+
+  Without `inlinePathParameters`:
+
+  ```ts
+  await service.getFoo("pathParamValue", { id: "SOME_ID" });
+  ```
+
+  With `inlinePathParameters`:
+
+  ```ts
+  await service.getFoo({ pathParamName: "pathParamValue", id: "SOME_ID" });
+  ```
+
+## [0.43.1] - 2024-12-11
+
+- Fix: When `noSerdeLayer` is enabled, streaming endpoints were failing to compile because
+  they assumed that the serialization layer existed. This is now fixed.
+
+## [0.43.0] - 2024-12-11
+
+- Feature: Generate inline types for inline schemas by setting `enableInlineTypes` to `true` in the generator config.
+  When enabled, the inline schemas will be generated as nested types in TypeScript.
+  This results in cleaner type names and a more intuitive developer experience.
+
+  Before:
+
+  ```ts
+  // MyRootType.ts
+  import * as MySdk from "...";
+
+  export interface MyRootType {
+    foo: MySdk.MyRootTypeFoo;
+  }
+
+  // MyRootTypeFoo.ts
+  import * as MySdk from "...";
+
+  export interface MyRootTypeFoo {
+    bar: MySdk.MyRootTypeFooBar;
+  }
+
+  // MyRootTypeFooBar.ts
+  import * as MySdk from "...";
+
+  export interface MyRootTypeFooBar {}
+  ```
+
+  After:
+
+  ```ts
+  // MyRootType.ts
+  import * as MySdk from "...";
+
+  export interface MyRootType {
+    foo: MyRootType.Foo;
+  }
+
+  export namespace MyRootType {
+    export interface Foo {
+      bar: Foo.Bar;
+    }
+
+    export namespace Foo {
+      export interface Bar {}
+    }
+  }
+  ```
+
+  Now users can get the deep nested `Bar` type as follows:
+
+  ```ts
+  import { MyRootType } from MySdk;
+
+  const bar: MyRootType.Foo.Bar = {};
+  ```
+
+## [0.42.7] - 2024-12-03
+
+- Feature: Support `additionalProperties` in OpenAPI or `extra-properties` in the Fern Defnition. Now
+  an object that has additionalProperties marked as true will generate the following interface:
+
+  ```ts
+  interface User {
+    propertyOne: string;
+    [key: string]: any;
+  }
+  ```
+
+## [0.42.6] - 2024-11-23
+
+- Fix: Remove the generated `APIPromise` since it is not compatible on certain node versions.
+
 ## [0.42.5] - 2024-11-23
 
 - Fix: Remove extraenous import in pagination snippets.

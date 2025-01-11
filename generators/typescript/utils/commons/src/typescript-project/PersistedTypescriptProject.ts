@@ -1,11 +1,13 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
+import { Project } from "ts-morph";
 import urlJoin from "url-join";
-import { PublishInfo } from "../NpmPackage";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
+import { PublishInfo } from "@fern-api/typescript-base";
 
 export declare namespace PersistedTypescriptProject {
     export interface Init {

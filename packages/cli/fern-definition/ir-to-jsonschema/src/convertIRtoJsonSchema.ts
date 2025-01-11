@@ -1,6 +1,8 @@
-import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-api/ir-sdk/";
 import { JSONSchema4 } from "json-schema";
+
+import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-api/ir-sdk/";
 import { TaskContext } from "@fern-api/task-context";
+
 import { JsonSchemaConverterContext } from "./JsonSchemaConverterContext";
 import { convertTypeDeclarationToJsonSchema } from "./converters/convertTypeDeclarationToJsonSchema";
 

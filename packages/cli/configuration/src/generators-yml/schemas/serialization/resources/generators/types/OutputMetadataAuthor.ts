@@ -15,7 +15,7 @@ export const OutputMetadataAuthor: core.serialization.ObjectSchema<
 });
 
 export declare namespace OutputMetadataAuthor {
-    interface Raw {
+    export interface Raw {
         name: string;
         email: string;
     }

@@ -29,13 +29,13 @@ export const JsonResponse: core.serialization.Schema<serializers.JsonResponse.Ra
         });
 
 export declare namespace JsonResponse {
-    type Raw = JsonResponse.Response | JsonResponse.NestedPropertyAsResponse;
+    export type Raw = JsonResponse.Response | JsonResponse.NestedPropertyAsResponse;
 
-    interface Response extends JsonResponseBody.Raw {
+    export interface Response extends JsonResponseBody.Raw {
         type: "response";
     }
 
-    interface NestedPropertyAsResponse extends JsonResponseBodyWithProperty.Raw {
+    export interface NestedPropertyAsResponse extends JsonResponseBodyWithProperty.Raw {
         type: "nestedPropertyAsResponse";
     }
 }

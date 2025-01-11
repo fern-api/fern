@@ -20,7 +20,7 @@ export const ApiDefinitionSettingsSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ApiDefinitionSettingsSchema {
-    interface Raw {
+    export interface Raw {
         "use-title"?: boolean | null;
         unions?: UnionSettingsSchema.Raw | null;
         "message-naming"?: MessageNamingSettingsSchema.Raw | null;

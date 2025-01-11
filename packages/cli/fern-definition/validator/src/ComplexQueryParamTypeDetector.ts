@@ -1,22 +1,23 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
 import {
-    constructFernFileContext,
-    FernFileContext,
-    getAllPropertiesForObject,
-    ResolvedContainerType,
-    ResolvedType,
-    TypeResolver,
-    TypeResolverImpl
-} from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import {
     DefinitionFileSchema,
+    RawSchemas,
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
-    isRawUndiscriminatedUnionDefinition,
-    RawSchemas
+    isRawUndiscriminatedUnionDefinition
 } from "@fern-api/fern-definition-schema";
+import {
+    FernFileContext,
+    ResolvedContainerType,
+    ResolvedType,
+    TypeResolver,
+    TypeResolverImpl,
+    constructFernFileContext,
+    getAllPropertiesForObject
+} from "@fern-api/ir-generator";
+
 import { RuleRunnerArgs } from "./Rule";
 import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
 

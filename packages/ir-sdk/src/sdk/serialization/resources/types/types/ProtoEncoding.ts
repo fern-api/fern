@@ -10,5 +10,5 @@ export const ProtoEncoding: core.serialization.ObjectSchema<serializers.ProtoEnc
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace ProtoEncoding {
-    interface Raw {}
+    export interface Raw {}
 }

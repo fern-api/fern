@@ -1,8 +1,7 @@
 import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
 
 export abstract class AbstractDynamicSnippetsGenerator<
-    DynamicIntermediateRepresentation,
-    Context extends AbstractDynamicSnippetsGeneratorContext<DynamicIntermediateRepresentation>,
+    Context extends AbstractDynamicSnippetsGeneratorContext,
     EndpointSnippetRequest,
     EndpointSnippetResponse
 > {
@@ -13,4 +12,10 @@ export abstract class AbstractDynamicSnippetsGenerator<
      * @param request
      */
     public abstract generate(request: EndpointSnippetRequest): Promise<EndpointSnippetResponse>;
+
+    /**
+     * Generates code for the specified request.
+     * @param request
+     */
+    public abstract generateSync(request: EndpointSnippetRequest): EndpointSnippetResponse;
 }

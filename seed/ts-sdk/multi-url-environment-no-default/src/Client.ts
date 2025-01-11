@@ -8,7 +8,7 @@ import { Ec2 } from "./api/resources/ec2/client/Client";
 import { S3 } from "./api/resources/s3/client/Client";
 
 export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
@@ -16,7 +16,7 @@ export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -29,15 +29,14 @@ export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
 }
 
 export class SeedMultiUrlEnvironmentNoDefaultClient {
-    constructor(protected readonly _options: SeedMultiUrlEnvironmentNoDefaultClient.Options) {}
-
     protected _ec2: Ec2 | undefined;
+    protected _s3: S3 | undefined;
+
+    constructor(protected readonly _options: SeedMultiUrlEnvironmentNoDefaultClient.Options) {}
 
     public get ec2(): Ec2 {
         return (this._ec2 ??= new Ec2(this._options));
     }
-
-    protected _s3: S3 | undefined;
 
     public get s3(): S3 {
         return (this._s3 ??= new S3(this._options));

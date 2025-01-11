@@ -1,5 +1,5 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
@@ -31,10 +31,10 @@
       "path": "../../task-context"
     },
     {
-      "path": "../../workspace-commons"
+      "path": "../../workspace/commons"
     },
     {
-      "path": "../../lazy-fern-workspace"
+      "path": "../../workspace/lazy-fern-workspace"
     },
     {
       "path": "../schema"

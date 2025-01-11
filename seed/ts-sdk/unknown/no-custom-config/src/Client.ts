@@ -6,11 +6,11 @@ import * as core from "./core";
 import { Unknown } from "./api/resources/unknown/client/Client";
 
 export declare namespace SeedUnknownAsAnyClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -23,9 +23,9 @@ export declare namespace SeedUnknownAsAnyClient {
 }
 
 export class SeedUnknownAsAnyClient {
-    constructor(protected readonly _options: SeedUnknownAsAnyClient.Options) {}
-
     protected _unknown: Unknown | undefined;
+
+    constructor(protected readonly _options: SeedUnknownAsAnyClient.Options) {}
 
     public get unknown(): Unknown {
         return (this._unknown ??= new Unknown(this._options));

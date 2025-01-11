@@ -95,6 +95,9 @@ func (t *Tag) UnmarshalJSON(data []byte) error {
 }
 
 func (t Tag) MarshalJSON() ([]byte, error) {
+	if err := t.validate(); err != nil {
+		return nil, err
+	}
 	switch t.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
@@ -145,4 +148,41 @@ func (t *Tag) Accept(visitor TagVisitor) error {
 	case "boolean":
 		return visitor.VisitBoolean(t.Boolean)
 	}
+}
+
+func (t *Tag) validate() error {
+	if t == nil {
+		return fmt.Errorf("type %T is nil", t)
+	}
+	var fields []string
+	if t.Number != 0 {
+		fields = append(fields, "number")
+	}
+	if t.String != "" {
+		fields = append(fields, "string")
+	}
+	if t.Boolean != false {
+		fields = append(fields, "boolean")
+	}
+	if len(fields) == 0 {
+		if t.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", t, t.Type)
+		}
+		return fmt.Errorf("type %T is empty", t)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", t, fields)
+	}
+	if t.Type != "" {
+		field := fields[0]
+		if t.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				t,
+				t.Type,
+				t,
+			)
+		}
+	}
+	return nil
 }

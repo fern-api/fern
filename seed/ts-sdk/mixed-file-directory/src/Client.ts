@@ -7,11 +7,11 @@ import { Organization } from "./api/resources/organization/client/Client";
 import { User } from "./api/resources/user/client/Client";
 
 export declare namespace SeedMixedFileDirectoryClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -24,15 +24,14 @@ export declare namespace SeedMixedFileDirectoryClient {
 }
 
 export class SeedMixedFileDirectoryClient {
-    constructor(protected readonly _options: SeedMixedFileDirectoryClient.Options) {}
-
     protected _organization: Organization | undefined;
+    protected _user: User | undefined;
+
+    constructor(protected readonly _options: SeedMixedFileDirectoryClient.Options) {}
 
     public get organization(): Organization {
         return (this._organization ??= new Organization(this._options));
     }
-
-    protected _user: User | undefined;
 
     public get user(): User {
         return (this._user ??= new User(this._options));

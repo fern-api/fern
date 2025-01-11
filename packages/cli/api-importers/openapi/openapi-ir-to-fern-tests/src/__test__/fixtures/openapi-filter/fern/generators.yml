@@ -1,0 +1,8 @@
+api:
+  specs:
+    - openapi: ../openapi.yml
+      settings:
+        filter:
+          endpoints:
+            - POST /companies
+        only-include-referenced-schemas: true

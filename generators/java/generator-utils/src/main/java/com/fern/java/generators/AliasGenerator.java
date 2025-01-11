@@ -214,6 +214,21 @@ public final class AliasGenerator extends AbstractFileGenerator {
         }
 
         @Override
+        public CodeBlock visitUint() {
+            return CodeBlock.of("return $T.$L($L)", Long.class, "toString", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitUint64() {
+            return CodeBlock.of("return $T.$L($L)", Long.class, "toString", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitFloat() {
+            return CodeBlock.of("return $T.$L($L)", Float.class, "toString", VALUE_FIELD_NAME);
+        }
+
+        @Override
         public CodeBlock visitDateTime() {
             return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
         }
@@ -271,6 +286,21 @@ public final class AliasGenerator extends AbstractFileGenerator {
         @Override
         public CodeBlock visitLong() {
             return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitUint() {
+            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitUint64() {
+            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitFloat() {
+            return CodeBlock.of("return $T.hashCode($L)", Float.class, VALUE_FIELD_NAME);
         }
 
         @Override

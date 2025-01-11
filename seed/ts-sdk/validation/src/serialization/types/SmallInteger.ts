@@ -10,5 +10,5 @@ export const SmallInteger: core.serialization.Schema<serializers.SmallInteger.Ra
     core.serialization.number();
 
 export declare namespace SmallInteger {
-    type Raw = number;
+    export type Raw = number;
 }

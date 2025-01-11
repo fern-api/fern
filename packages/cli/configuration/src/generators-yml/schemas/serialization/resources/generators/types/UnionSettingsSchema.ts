@@ -12,5 +12,5 @@ export const UnionSettingsSchema: core.serialization.Schema<
 > = core.serialization.enum_(["v1"]);
 
 export declare namespace UnionSettingsSchema {
-    type Raw = "v1";
+    export type Raw = "v1";
 }

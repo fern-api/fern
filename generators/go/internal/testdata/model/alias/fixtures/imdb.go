@@ -73,7 +73,7 @@ type Foo struct {
 
 func (f *Foo) GetId() uuid.UUID {
 	if f == nil {
-		return uuid.UUID{}
+		return uuid.Nil
 	}
 	return f.Id
 }
@@ -224,6 +224,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 }
 
 func (u Union) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
 	switch u.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
@@ -267,6 +270,43 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 	case "doubleAlias":
 		return visitor.VisitDoubleAlias(u.DoubleAlias)
 	}
+}
+
+func (u *Union) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.FooAlias != nil {
+		fields = append(fields, "fooAlias")
+	}
+	if u.BarAlias != nil {
+		fields = append(fields, "barAlias")
+	}
+	if u.DoubleAlias != 0 {
+		fields = append(fields, "doubleAlias")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
 }
 
 type Unknown = interface{}

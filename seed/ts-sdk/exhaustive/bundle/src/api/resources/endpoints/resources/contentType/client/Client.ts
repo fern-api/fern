@@ -8,12 +8,12 @@ import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace ContentType {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -53,7 +53,7 @@ export class ContentType {
      */
     public async postJsonPatchContentType(
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions
+        requestOptions?: ContentType.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/foo/bar"),
@@ -113,7 +113,7 @@ export class ContentType {
      */
     public async postJsonPatchContentWithCharsetType(
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions
+        requestOptions?: ContentType.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/foo/baz"),

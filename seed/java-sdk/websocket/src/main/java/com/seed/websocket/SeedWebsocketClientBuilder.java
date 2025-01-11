@@ -16,6 +16,14 @@ public final class SeedWebsocketClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedWebsocketClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedWebsocketClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedWebsocketClient(clientOptionsBuilder.build());

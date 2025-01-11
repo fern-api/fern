@@ -92,7 +92,7 @@
                         "wireValue": "message"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -336,7 +336,7 @@
                 "body": {
                     "type": "typeReference",
                     "value": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             },
@@ -344,5 +344,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }

@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
+
 import { isReferenceObject } from "../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 

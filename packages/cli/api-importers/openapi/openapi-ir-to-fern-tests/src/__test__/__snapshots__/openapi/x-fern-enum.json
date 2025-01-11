@@ -21,6 +21,7 @@
                 "value": "nano",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

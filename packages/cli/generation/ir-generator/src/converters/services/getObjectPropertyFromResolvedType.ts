@@ -1,12 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertiesFromRawObjectSchema } from "../type-declarations/convertObjectTypeDeclaration";
 
-export async function getObjectPropertyFromResolvedType({
+export function getObjectPropertyFromResolvedType({
     typeResolver,
     file,
     resolvedType,
@@ -16,11 +17,11 @@ export async function getObjectPropertyFromResolvedType({
     file: FernFileContext;
     resolvedType: ResolvedType;
     property: string;
-}): Promise<ObjectProperty> {
+}): ObjectProperty {
     switch (resolvedType._type) {
         case "container":
             if (resolvedType.container._type === "optional") {
-                return await getObjectPropertyFromResolvedType({
+                return getObjectPropertyFromResolvedType({
                     typeResolver,
                     file,
                     resolvedType: resolvedType.container.itemType,
@@ -30,7 +31,7 @@ export async function getObjectPropertyFromResolvedType({
             break;
         case "named":
             if (isRawObjectDefinition(resolvedType.declaration)) {
-                return await getObjectPropertyFromObjectSchema({
+                return getObjectPropertyFromObjectSchema({
                     typeResolver,
                     file: resolvedType.file,
                     objectSchema: resolvedType.declaration,
@@ -47,7 +48,7 @@ export async function getObjectPropertyFromResolvedType({
     throw new Error("Internal error; response must be an object in order to return a property as a response");
 }
 
-export async function getObjectPropertyFromObjectSchema({
+export function getObjectPropertyFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -57,8 +58,8 @@ export async function getObjectPropertyFromObjectSchema({
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
     property: string;
-}): Promise<ObjectProperty> {
-    const properties = await getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
+}): ObjectProperty {
+    const properties = getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
     const objectProperty = properties[property];
     if (objectProperty == null) {
         throw new Error(`Object does not have a property named ${property}.`);
@@ -66,11 +67,11 @@ export async function getObjectPropertyFromObjectSchema({
     return objectProperty;
 }
 
-async function getAllPropertiesForRawObjectSchema(
+function getAllPropertiesForRawObjectSchema(
     objectSchema: RawSchemas.ObjectSchema,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Promise<Record<string, ObjectProperty>> {
+): Record<string, ObjectProperty> {
     let extendedTypes: string[] = [];
     if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends];
@@ -80,13 +81,13 @@ async function getAllPropertiesForRawObjectSchema(
 
     const properties: Record<string, ObjectProperty> = {};
     for (const extendedType of extendedTypes) {
-        const extendedProperties = await getAllPropertiesForExtendedType(extendedType, file, typeResolver);
+        const extendedProperties = getAllPropertiesForExtendedType(extendedType, file, typeResolver);
         Object.entries(extendedProperties).map(([propertyKey, objectProperty]) => {
             properties[propertyKey] = objectProperty;
         });
     }
 
-    const objectProperties = await getObjectPropertiesFromRawObjectSchema(objectSchema, file);
+    const objectProperties = getObjectPropertiesFromRawObjectSchema(objectSchema, file);
     objectProperties.forEach((objectProperty) => {
         properties[objectProperty.name.name.originalName] = objectProperty;
     });
@@ -94,17 +95,17 @@ async function getAllPropertiesForRawObjectSchema(
     return properties;
 }
 
-async function getAllPropertiesForExtendedType(
+function getAllPropertiesForExtendedType(
     extendedType: string,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Promise<Record<string, ObjectProperty>> {
+): Record<string, ObjectProperty> {
     const resolvedType = typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
         file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return await getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
+        return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
     }
     // This should be unreachable; extended types must be named objects.
     throw new Error(`Extended type ${extendedType} must be another named type`);

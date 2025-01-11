@@ -68,7 +68,7 @@
                 }
             },
             "typeReference": {
-                "_type": "primitive",
+                "type": "primitive",
                 "value": "STRING"
             }
         },
@@ -202,9 +202,9 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_folder-b/common:Foo"
                         }
                     }
@@ -341,9 +341,9 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_folder-c/common:FolderCFoo"
                         }
                     }
@@ -480,7 +480,7 @@
                         "wireValue": "bar_property"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "UUID"
                     }
                 }
@@ -616,7 +616,7 @@
                         "wireValue": "foo"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     }
                 }
@@ -713,7 +713,7 @@
                         "wireValue": "imported"
                     },
                     "typeReference": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_commons:Imported"
                     }
                 }
@@ -786,9 +786,9 @@
                 }
             },
             "typeReference": {
-                "_type": "optional",
+                "type": "optional",
                 "value": {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 }
             }
@@ -884,9 +884,9 @@
                         "wireValue": "public_property"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -915,7 +915,7 @@
                         "wireValue": "private_property"
                     },
                     "typeReference": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "INTEGER"
                     }
                 }
@@ -1322,7 +1322,7 @@
                             "wireValue": "optionalString"
                         },
                         "typeReference": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_foo:OptionalString"
                         }
                     }
@@ -1355,9 +1355,9 @@
                                 "wireValue": "publicProperty"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -1386,9 +1386,9 @@
                                 "wireValue": "privateProperty"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "INTEGER"
                                 }
                             }
@@ -1403,6 +1403,62 @@
             "response": {
                 "type": "json"
             }
+        }
+    },
+    "environments": {
+        "defaultEnvironment": null,
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "environment-a",
+                    "name": {
+                        "originalName": "environment-a",
+                        "camelCase": {
+                            "unsafeName": "environmentA",
+                            "safeName": "environmentA"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "environment_a",
+                            "safeName": "environment_a"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ENVIRONMENT_A",
+                            "safeName": "ENVIRONMENT_A"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "EnvironmentA",
+                            "safeName": "EnvironmentA"
+                        }
+                    },
+                    "url": "https://api.example.a.com",
+                    "docs": null
+                },
+                {
+                    "id": "environment-b",
+                    "name": {
+                        "originalName": "environment-b",
+                        "camelCase": {
+                            "unsafeName": "environmentB",
+                            "safeName": "environmentB"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "environment_b",
+                            "safeName": "environment_b"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ENVIRONMENT_B",
+                            "safeName": "ENVIRONMENT_B"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "EnvironmentB",
+                            "safeName": "EnvironmentB"
+                        }
+                    },
+                    "url": "https://api.example.b.com",
+                    "docs": null
+                }
+            ]
         }
     }
 }

@@ -1,4 +1,5 @@
 import { CodeBlock as CommonCodeBlock } from "@fern-api/base-generator";
+
 import { AstNode, Writer } from "../csharp";
 
 export declare namespace CodeBlock {

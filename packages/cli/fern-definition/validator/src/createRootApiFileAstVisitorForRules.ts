@@ -1,8 +1,9 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { NodePath, RootApiFileSchema } from "@fern-api/fern-definition-schema";
-import { RootApiFileAstNodeTypes, RootApiFileAstNodeVisitor, RootApiFileAstVisitor } from "./ast";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
+import { RootApiFileAstNodeTypes, RootApiFileAstNodeVisitor, RootApiFileAstVisitor } from "./ast";
 
 export function createRootApiFileAstVisitorForRules({
     relativeFilepath,
@@ -18,11 +19,11 @@ export function createRootApiFileAstVisitorForRules({
     function createAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes>(
         nodeType: K
     ): Record<K, RootApiFileAstNodeVisitor<K>> {
-        const visit: RootApiFileAstNodeVisitor<K> = async (node: RootApiFileAstNodeTypes[K], nodePath: NodePath) => {
+        const visit: RootApiFileAstNodeVisitor<K> = (node: RootApiFileAstNodeTypes[K], nodePath: NodePath) => {
             for (const ruleVisitors of allRuleVisitors) {
                 const visitFromRule = ruleVisitors.rootApiFile?.[nodeType];
                 if (visitFromRule != null) {
-                    const ruleViolations = await visitFromRule(node, { relativeFilepath, contents });
+                    const ruleViolations = visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
                         ruleViolations.map((violation) => ({
                             severity: violation.severity,

@@ -1396,6 +1396,7 @@
               "removing",
               "unknown",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1406,6 +1407,7 @@
               "time_bound",
               "ongoing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1479,6 +1481,7 @@
               "salto_access_group",
               "brivo_group",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1490,6 +1493,7 @@
               "salto_access_group",
               "brivo_group",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1585,6 +1589,7 @@
               "card",
               "mobile_key",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1607,6 +1612,7 @@
               "hid_credential",
               "visionline_card",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1723,6 +1729,7 @@
               "guest",
               "staff",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1820,6 +1827,7 @@
                 "value": "common (PMS)",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1841,6 +1849,7 @@
               "commonDoor",
               "touch",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1948,6 +1957,7 @@
               "assa_abloy_credential_service",
               "latch_building",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1968,6 +1978,7 @@
               "assa_abloy_credential_service",
               "latch_building",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2079,6 +2090,7 @@
               "salto_site_user",
               "latch_user",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3782,6 +3794,7 @@
               "cool",
               "heat_cool",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3895,6 +3908,7 @@
               "single",
               "multiple",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3905,6 +3919,7 @@
               "failed",
               "authorized",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4058,6 +4073,7 @@
               "battery",
               "phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4112,6 +4128,7 @@
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4411,6 +4428,7 @@
               "good",
               "full",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4455,6 +4473,7 @@
               "name_length",
               "name_must_be_unique",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4481,6 +4500,7 @@
               "at_least_three_unique_digits",
               "cannot_contain_089",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4811,6 +4831,7 @@
               "indoor",
               "outdoor",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4874,6 +4895,7 @@
               "bridge",
               "doorking",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5000,6 +5022,7 @@
               "honeywell_resideo",
               "latch",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5012,6 +5035,7 @@
               "noise_sensors",
               "access_control_systems",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5307,6 +5331,7 @@
               "battery",
               "phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5329,6 +5354,7 @@
               "android_phone",
               "ios_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5422,6 +5448,7 @@
               "degraded",
               "down",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5489,6 +5516,7 @@
               "time_bound",
               "ongoing",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5570,6 +5598,7 @@
               "battery",
               "phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5611,6 +5640,7 @@
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -5757,6 +5787,7 @@
               "good",
               "full",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -6948,6 +6979,7 @@ types:
       Nature of the access code. Values are "ongoing" for access codes that are
       active continuously until deactivated manually or "time_bound" for access
       codes that have a specific duration.
+    inline: true
     source:
       openapi: ../openapi.json
   AccessCodeStatus:
@@ -6961,6 +6993,7 @@ types:
 
           Current status of the access code within the operational lifecycle. Values are "setting," a transitional phase that indicates that the code is being configured or activated; "set", which indicates that the code is active and operational; "unset," which indicates a deactivated or unused state, either before activation or after deliberate deactivation; "removing," which indicates a transitional period in which the code is being deleted or made inactive; and "unknown," which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting.
         
+    inline: true
     source:
       openapi: ../openapi.json
   AccessCode:
@@ -7064,6 +7097,7 @@ types:
       Nature of the access code. Values are "ongoing" for access codes that are
       active continuously until deactivated manually or "time_bound" for access
       codes that have a specific duration.
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedAccessCode:
@@ -8276,6 +8310,7 @@ types:
       - heat
       - cool
       - heat_cool
+    inline: true
     source:
       openapi: ../openapi.json
   ClimateSettingSchedule:
@@ -8309,6 +8344,7 @@ types:
       - none
       - single
       - multiple
+    inline: true
     source:
       openapi: ../openapi.json
   ConnectWebviewStatus:
@@ -8316,6 +8352,7 @@ types:
       - pending
       - failed
       - authorized
+    inline: true
     source:
       openapi: ../openapi.json
   ConnectWebviewCustomMetadataValue:
@@ -8451,6 +8488,7 @@ types:
       - ios_phone
       - android_phone
     docs: Type of the device.
+    inline: true
     source:
       openapi: ../openapi.json
   DeviceCapabilitiesSupportedItem:
@@ -8461,6 +8499,7 @@ types:
       - thermostat
       - battery
       - phone
+    inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesAccessoryKeypadBattery:
@@ -8535,6 +8574,7 @@ types:
       - low
       - good
       - full
+    inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesBattery:
@@ -8674,6 +8714,7 @@ types:
     enum:
       - indoor
       - outdoor
+    inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesNoiseawareMetadata:
@@ -8774,6 +8815,7 @@ types:
     enum:
       - bridge
       - doorking
+    inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesSeamBridgeMetadata:
@@ -8892,6 +8934,7 @@ types:
       - no_ascending_or_descending_sequence
       - at_least_three_unique_digits
       - cannot_contain_089
+    inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesCodeConstraintsItemZero:
@@ -8904,6 +8947,7 @@ types:
     enum:
       - name_length
       - name_must_be_unique
+    inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesCodeConstraintsItemMaxLength:
@@ -9210,6 +9254,7 @@ types:
       - ios_phone
       - android_phone
     docs: Type of the device.
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedDeviceCapabilitiesSupportedItem:
@@ -9220,6 +9265,7 @@ types:
       - thermostat
       - battery
       - phone
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedDeviceErrorsItem:
@@ -9265,6 +9311,7 @@ types:
       - low
       - good
       - full
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedDevicePropertiesBattery:
@@ -9484,6 +9531,7 @@ types:
       - tedee
       - honeywell_resideo
       - latch
+    inline: true
     source:
       openapi: ../openapi.json
   DeviceProviderProviderCategoriesItem:
@@ -9493,6 +9541,7 @@ types:
       - thermostats
       - noise_sensors
       - access_control_systems
+    inline: true
     source:
       openapi: ../openapi.json
   DeviceProvider:
@@ -9568,6 +9617,7 @@ types:
       - healthy
       - degraded
       - down
+    inline: true
     source:
       openapi: ../openapi.json
   ServiceHealth:
@@ -9614,6 +9664,7 @@ types:
       - visionline_system
       - assa_abloy_credential_service
       - latch_building
+    inline: true
     source:
       openapi: ../openapi.json
   AcsSystemSystemType:
@@ -9632,6 +9683,7 @@ types:
             deprecated: use external_type
             ---
             
+    inline: true
     source:
       openapi: ../openapi.json
   AcsSystemErrorsItemSeamBridgeDisconnected:
@@ -9714,6 +9766,7 @@ types:
           deprecated: use external_type
           ---
         
+    inline: true
     source:
       openapi: ../openapi.json
   AcsAccessGroupExternalType:
@@ -9722,6 +9775,7 @@ types:
       - pti_access_level
       - salto_access_group
       - brivo_group
+    inline: true
     source:
       openapi: ../openapi.json
   AcsAccessGroup:
@@ -9768,6 +9822,7 @@ types:
       - hid_credential_manager_user
       - salto_site_user
       - latch_user
+    inline: true
     source:
       openapi: ../openapi.json
   AcsUserAccessSchedule:
@@ -9848,6 +9903,7 @@ types:
       - common
       - value: common (PMS)
         name: CommonPms
+    inline: true
     source:
       openapi: ../openapi.json
   AcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType:
@@ -9855,6 +9911,7 @@ types:
       - BLE
       - commonDoor
       - touch
+    inline: true
     source:
       openapi: ../openapi.json
   AcsEntranceVisionlineMetadataProfilesItem:
@@ -9938,6 +9995,7 @@ types:
       - code
       - card
       - mobile_key
+    inline: true
     source:
       openapi: ../openapi.json
   AcsCredentialExternalType:
@@ -9946,6 +10004,7 @@ types:
       - brivo_credential
       - hid_credential
       - visionline_card
+    inline: true
     source:
       openapi: ../openapi.json
   AcsCredentialErrorsItem:
@@ -9966,6 +10025,7 @@ types:
     enum:
       - guest
       - staff
+    inline: true
     source:
       openapi: ../openapi.json
   AcsCredentialVisionlineMetadata:
@@ -10047,6 +10107,7 @@ types:
     enum:
       - android_phone
       - ios_phone
+    inline: true
     source:
       openapi: ../openapi.json
   PhoneCapabilitiesSupportedItem:
@@ -10057,6 +10118,7 @@ types:
       - thermostat
       - battery
       - phone
+    inline: true
     source:
       openapi: ../openapi.json
   PhonePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
@@ -10977,6 +11039,7 @@ types:
               "throw",
               "create_random_code",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -11001,6 +11064,7 @@ types:
                 "value": "1d",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -11036,6 +11100,7 @@ types:
                 "value": "1d",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -11127,6 +11192,7 @@ types:
                 "value": "1d",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -11136,6 +11202,7 @@ types:
               "ongoing",
               "time_bound",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -11165,6 +11232,7 @@ types:
       - value: 1d
         name: OneD
     default: 1hour
+    inline: true
     source:
       openapi: ../openapi.json
   AccessCodesCreateResponse:
@@ -11179,6 +11247,7 @@ types:
       - throw
       - create_random_code
     default: throw
+    inline: true
     source:
       openapi: ../openapi.json
   AccessCodesCreateMultipleRequestMaxTimeRounding:
@@ -11192,6 +11261,7 @@ types:
       - value: 1d
         name: OneD
     default: 1hour
+    inline: true
     source:
       openapi: ../openapi.json
   AccessCodesCreateMultipleResponse:
@@ -11241,12 +11311,14 @@ types:
       - value: 1d
         name: OneD
     default: 1hour
+    inline: true
     source:
       openapi: ../openapi.json
   AccessCodesUpdateRequestType:
     enum:
       - ongoing
       - time_bound
+    inline: true
     source:
       openapi: ../openapi.json
   AccessCodesUpdateResponse:
@@ -14300,6 +14372,7 @@ service:
               "card",
               "mobile_key",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -14342,6 +14415,7 @@ service:
               "TLCode",
               "rfid48",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -14352,6 +14426,7 @@ service:
               "guest",
               "staff",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -14448,12 +14523,14 @@ types:
       - code
       - card
       - mobile_key
+    inline: true
     source:
       openapi: ../openapi.json
   CredentialsCreateRequestVisionlineMetadataCardFormat:
     enum:
       - TLCode
       - rfid48
+    inline: true
     source:
       openapi: ../openapi.json
   CredentialsCreateRequestVisionlineMetadataCardFunctionType:
@@ -14461,6 +14538,7 @@ types:
       - guest
       - staff
     default: guest
+    inline: true
     source:
       openapi: ../openapi.json
   CredentialsCreateRequestVisionlineMetadata:
@@ -18950,6 +19028,7 @@ service:
               "hid_cm",
               "google_nest",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -18982,6 +19061,7 @@ service:
               "single",
               "multiple",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -18995,6 +19075,7 @@ service:
               "access_control_systems",
               "internal_beta",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -19063,6 +19144,7 @@ service:
       - none
       - single
       - multiple
+    inline: true
     source:
       openapi: ../openapi.json
   ConnectWebviewsCreateRequestAcceptedProvidersItem:
@@ -19107,6 +19189,7 @@ service:
       - yale_access
       - hid_cm
       - google_nest
+    inline: true
     source:
       openapi: ../openapi.json
   ConnectWebviewsCreateRequestProviderCategory:
@@ -19117,6 +19200,7 @@ service:
       - noise_sensors
       - access_control_systems
       - internal_beta
+    inline: true
     source:
       openapi: ../openapi.json
   ConnectWebviewsCreateRequestCustomMetadataValue:
@@ -20645,6 +20729,7 @@ service:
               "noise_sensors",
               "access_control_systems",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -20709,6 +20794,7 @@ service:
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -20749,6 +20835,7 @@ service:
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -20763,6 +20850,7 @@ service:
               "can_simulate_connection",
               "can_simulate_disconnection",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -20777,6 +20865,7 @@ service:
               "can_simulate_connection",
               "can_simulate_disconnection",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -20818,6 +20907,7 @@ service:
               "tedee",
               "honeywell_resideo",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -20924,6 +21014,7 @@ service:
       - honeywell_resideo_thermostat
       - ios_phone
       - android_phone
+    inline: true
     source:
       openapi: ../openapi.json
   DevicesListRequestDeviceTypesItem:
@@ -20961,6 +21052,7 @@ service:
       - honeywell_resideo_thermostat
       - ios_phone
       - android_phone
+    inline: true
     source:
       openapi: ../openapi.json
   DevicesListRequestManufacturer:
@@ -20999,6 +21091,7 @@ service:
       - dormakaba_oracode
       - tedee
       - honeywell_resideo
+    inline: true
     source:
       openapi: ../openapi.json
   DevicesListRequestCustomMetadataHasValue:
@@ -21018,6 +21111,7 @@ service:
       - can_simulate_removal
       - can_simulate_connection
       - can_simulate_disconnection
+    inline: true
     source:
       openapi: ../openapi.json
   DevicesListRequestExcludeIfItem:
@@ -21029,6 +21123,7 @@ service:
       - can_simulate_removal
       - can_simulate_connection
       - can_simulate_disconnection
+    inline: true
     source:
       openapi: ../openapi.json
   DevicesListResponse:
@@ -21044,6 +21139,7 @@ service:
       - thermostats
       - noise_sensors
       - access_control_systems
+    inline: true
     source:
       openapi: ../openapi.json
   DevicesListDeviceProvidersResponse:
@@ -22139,6 +22235,7 @@ service:
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -22179,6 +22276,7 @@ service:
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -22193,6 +22291,7 @@ service:
               "can_simulate_connection",
               "can_simulate_disconnection",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -22207,6 +22306,7 @@ service:
               "can_simulate_connection",
               "can_simulate_disconnection",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -22248,6 +22348,7 @@ service:
               "tedee",
               "honeywell_resideo",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -22319,6 +22420,7 @@ types:
       - honeywell_resideo_thermostat
       - ios_phone
       - android_phone
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedListRequestDeviceTypesItem:
@@ -22356,6 +22458,7 @@ types:
       - honeywell_resideo_thermostat
       - ios_phone
       - android_phone
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedListRequestManufacturer:
@@ -22394,6 +22497,7 @@ types:
       - dormakaba_oracode
       - tedee
       - honeywell_resideo
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedListRequestCustomMetadataHasValue:
@@ -22413,6 +22517,7 @@ types:
       - can_simulate_removal
       - can_simulate_connection
       - can_simulate_disconnection
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedListRequestExcludeIfItem:
@@ -22424,6 +22529,7 @@ types:
       - can_simulate_removal
       - can_simulate_connection
       - can_simulate_disconnection
+    inline: true
     source:
       openapi: ../openapi.json
   UnmanagedListResponse:
@@ -23062,6 +23168,7 @@ service:
                 "value": "action_attempt.unlock_door.failed",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -23301,6 +23408,7 @@ service:
                 "value": "action_attempt.unlock_door.failed",
               },
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -23454,6 +23562,7 @@ types:
         name: ActionAttemptUnlockDoorSucceeded
       - value: action_attempt.unlock_door.failed
         name: ActionAttemptUnlockDoorFailed
+    inline: true
     source:
       openapi: ../openapi.json
   EventsListRequestEventTypesItem:
@@ -23574,6 +23683,7 @@ types:
         name: ActionAttemptUnlockDoorSucceeded
       - value: action_attempt.unlock_door.failed
         name: ActionAttemptUnlockDoorFailed
+    inline: true
     source:
       openapi: ../openapi.json
   EventsListResponse:
@@ -24625,6 +24735,7 @@ service:
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -24665,6 +24776,7 @@ service:
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -24679,6 +24791,7 @@ service:
               "can_simulate_connection",
               "can_simulate_disconnection",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -24693,6 +24806,7 @@ service:
               "can_simulate_connection",
               "can_simulate_disconnection",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -24734,6 +24848,7 @@ service:
               "tedee",
               "honeywell_resideo",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -24819,6 +24934,7 @@ types:
       - honeywell_resideo_thermostat
       - ios_phone
       - android_phone
+    inline: true
     source:
       openapi: ../openapi.json
   LocksListRequestDeviceTypesItem:
@@ -24856,6 +24972,7 @@ types:
       - honeywell_resideo_thermostat
       - ios_phone
       - android_phone
+    inline: true
     source:
       openapi: ../openapi.json
   LocksListRequestManufacturer:
@@ -24894,6 +25011,7 @@ types:
       - dormakaba_oracode
       - tedee
       - honeywell_resideo
+    inline: true
     source:
       openapi: ../openapi.json
   LocksListRequestCustomMetadataHasValue:
@@ -24913,6 +25031,7 @@ types:
       - can_simulate_removal
       - can_simulate_connection
       - can_simulate_disconnection
+    inline: true
     source:
       openapi: ../openapi.json
   LocksListRequestExcludeIfItem:
@@ -24924,6 +25043,7 @@ types:
       - can_simulate_removal
       - can_simulate_connection
       - can_simulate_disconnection
+    inline: true
     source:
       openapi: ../openapi.json
   LocksListResponse:
@@ -27057,6 +27177,7 @@ service:
               "android",
               "ios",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -27080,6 +27201,7 @@ service:
       - android
       - ios
     default: android
+    inline: true
     source:
       openapi: ../openapi.json
   SimulateCreateSandboxPhoneRequestPhoneMetadata:
@@ -28118,6 +28240,7 @@ service:
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28158,6 +28281,7 @@ service:
               "ios_phone",
               "android_phone",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28172,6 +28296,7 @@ service:
               "can_simulate_connection",
               "can_simulate_disconnection",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28186,6 +28311,7 @@ service:
               "can_simulate_connection",
               "can_simulate_disconnection",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28227,6 +28353,7 @@ service:
               "tedee",
               "honeywell_resideo",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28258,6 +28385,7 @@ service:
               "auto",
               "on",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28267,6 +28395,7 @@ service:
               "auto",
               "on",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28306,6 +28435,7 @@ service:
               "cool",
               "heat_cool",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28384,6 +28514,7 @@ types:
       - honeywell_resideo_thermostat
       - ios_phone
       - android_phone
+    inline: true
     source:
       openapi: ../openapi.json
   ThermostatsListRequestDeviceTypesItem:
@@ -28421,6 +28552,7 @@ types:
       - honeywell_resideo_thermostat
       - ios_phone
       - android_phone
+    inline: true
     source:
       openapi: ../openapi.json
   ThermostatsListRequestManufacturer:
@@ -28459,6 +28591,7 @@ types:
       - dormakaba_oracode
       - tedee
       - honeywell_resideo
+    inline: true
     source:
       openapi: ../openapi.json
   ThermostatsListRequestCustomMetadataHasValue:
@@ -28478,6 +28611,7 @@ types:
       - can_simulate_removal
       - can_simulate_connection
       - can_simulate_disconnection
+    inline: true
     source:
       openapi: ../openapi.json
   ThermostatsListRequestExcludeIfItem:
@@ -28489,6 +28623,7 @@ types:
       - can_simulate_removal
       - can_simulate_connection
       - can_simulate_disconnection
+    inline: true
     source:
       openapi: ../openapi.json
   ThermostatsListResponse:
@@ -28507,12 +28642,14 @@ types:
     enum:
       - auto
       - 'on'
+    inline: true
     source:
       openapi: ../openapi.json
   ThermostatsSetFanModeRequestFanModeSetting:
     enum:
       - auto
       - 'on'
+    inline: true
     source:
       openapi: ../openapi.json
   ThermostatsSetFanModeResponse:
@@ -28527,6 +28664,7 @@ types:
       - heat
       - cool
       - heat_cool
+    inline: true
     source:
       openapi: ../openapi.json
   ThermostatsUpdateRequestDefaultClimateSetting:
@@ -29480,6 +29618,7 @@ service:
               "cool",
               "heat_cool",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -29534,6 +29673,7 @@ service:
               "cool",
               "heat_cool",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -29558,6 +29698,7 @@ service:
       - heat
       - cool
       - heat_cool
+    inline: true
     source:
       openapi: ../openapi.json
   ClimateSettingSchedulesCreateResponse:
@@ -29589,6 +29730,7 @@ service:
       - heat
       - cool
       - heat_cool
+    inline: true
     source:
       openapi: ../openapi.json
   ClimateSettingSchedulesUpdateResponse:
@@ -32811,6 +32953,7 @@ service:
               "circle",
               "square",
             ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -32866,6 +33009,7 @@ service:
     enum:
       - circle
       - square
+    inline: true
     source:
       openapi: ../openapi.json
   WorkspacesCreateResponse:

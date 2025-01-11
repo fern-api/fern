@@ -8,11 +8,11 @@ import { PathParam } from "./api/resources/pathParam/client/Client";
 import { QueryParam } from "./api/resources/queryParam/client/Client";
 
 export declare namespace SeedEnumClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,21 +25,19 @@ export declare namespace SeedEnumClient {
 }
 
 export class SeedEnumClient {
-    constructor(protected readonly _options: SeedEnumClient.Options) {}
-
     protected _inlinedRequest: InlinedRequest | undefined;
+    protected _pathParam: PathParam | undefined;
+    protected _queryParam: QueryParam | undefined;
+
+    constructor(protected readonly _options: SeedEnumClient.Options) {}
 
     public get inlinedRequest(): InlinedRequest {
         return (this._inlinedRequest ??= new InlinedRequest(this._options));
     }
 
-    protected _pathParam: PathParam | undefined;
-
     public get pathParam(): PathParam {
         return (this._pathParam ??= new PathParam(this._options));
     }
-
-    protected _queryParam: QueryParam | undefined;
 
     public get queryParam(): QueryParam {
         return (this._queryParam ??= new QueryParam(this._options));

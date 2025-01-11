@@ -54,9 +54,9 @@
                         "wireValue": "user"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:UserModel"
                         }
                     }
@@ -116,9 +116,9 @@
                         "wireValue": "username"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -147,9 +147,9 @@
                         "wireValue": "email"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "STRING"
                         }
                     }
@@ -178,9 +178,9 @@
                         "wireValue": "age"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "UINT"
                         }
                     }
@@ -209,9 +209,9 @@
                         "wireValue": "weight"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "primitive",
+                            "type": "primitive",
                             "value": "FLOAT"
                         }
                     }
@@ -240,9 +240,9 @@
                         "wireValue": "metadata"
                     },
                     "typeReference": {
-                        "_type": "optional",
+                        "type": "optional",
                         "value": {
-                            "_type": "named",
+                            "type": "named",
                             "value": "type_:Metadata"
                         }
                     }
@@ -279,24 +279,24 @@
             },
             "types": [
                 {
-                    "_type": "map",
+                    "type": "map",
                     "key": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "value": {
-                        "_type": "named",
+                        "type": "named",
                         "value": "type_:MetadataValue"
                     }
                 },
                 {
-                    "_type": "map",
+                    "type": "map",
                     "key": {
-                        "_type": "primitive",
+                        "type": "primitive",
                         "value": "STRING"
                     },
                     "value": {
-                        "_type": "unknown"
+                        "type": "unknown"
                     }
                 }
             ]
@@ -331,15 +331,15 @@
             },
             "types": [
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "DOUBLE"
                 },
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "STRING"
                 },
                 {
-                    "_type": "primitive",
+                    "type": "primitive",
                     "value": "BOOLEAN"
                 }
             ]
@@ -513,9 +513,9 @@
                                 "wireValue": "username"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -544,9 +544,9 @@
                                 "wireValue": "email"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "STRING"
                                 }
                             }
@@ -575,9 +575,9 @@
                                 "wireValue": "age"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "UINT"
                                 }
                             }
@@ -606,9 +606,9 @@
                                 "wireValue": "weight"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "primitive",
+                                    "type": "primitive",
                                     "value": "FLOAT"
                                 }
                             }
@@ -637,9 +637,9 @@
                                 "wireValue": "metadata"
                             },
                             "typeReference": {
-                                "_type": "optional",
+                                "type": "optional",
                                 "value": {
-                                    "_type": "named",
+                                    "type": "named",
                                     "value": "type_:Metadata"
                                 }
                             }
@@ -655,5 +655,6 @@
                 "type": "json"
             }
         }
-    }
+    },
+    "environments": null
 }
