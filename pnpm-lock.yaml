@@ -1496,12 +1496,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/typescript-formatter':
-        specifier: workspace:*
-        version: link:../formatter
       '@fern-fern/ir-sdk':
-        specifier: 53.23.0
-        version: 53.23.0
+        specifier: 53.24.0
+        version: 53.24.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1623,7 +1620,7 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^53.23.0
+        specifier: ^53.24.0
         version: 53.24.0
       '@fern-api/path-utils':
         specifier: workspace:*
