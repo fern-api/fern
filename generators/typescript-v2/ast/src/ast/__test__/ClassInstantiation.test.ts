@@ -34,4 +34,3 @@ describe("ClassInstantiation", () => {
         });
     });
 });
-

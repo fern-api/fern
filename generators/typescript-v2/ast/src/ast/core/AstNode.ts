@@ -9,7 +9,7 @@ export abstract class AstNode extends AbstractAstNode {
      */
     public async toString({
         customConfig,
-        formatter,
+        formatter
     }: {
         customConfig: TypescriptCustomConfigSchema | undefined;
         formatter?: AbstractFormatter;
