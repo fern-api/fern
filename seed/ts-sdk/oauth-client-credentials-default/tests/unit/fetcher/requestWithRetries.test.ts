@@ -1,4 +1,3 @@
-import { RUNTIME } from "../../../src/core/runtime";
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
 
 describe("requestWithRetries", () => {
