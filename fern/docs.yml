@@ -41,6 +41,10 @@ css: ./assets/styles.css
 redirects:
   - source: /learn/api-definition/fern/api-yml-reference
     destination: /learn/api-definition/fern/api-yml/overview
+  - source: /learn/docs/api-references/api-playground/:slug
+    destination: /learn/docs/api-references/api-explorer/:slug
+  - source: /learn/docs/api-references/api-playground
+    destination: /learn/docs/api-references/api-explorer
   - source: /learn/sdks/features/:slug
     destination: /learn/sdks/capabilities/:slug
   - source: /learn/sdks/package-managers/:slug
@@ -478,8 +482,9 @@ navigation:
           - page: SDK Snippets
             icon: fa-regular fa-code
             path: ./pages/fern-docs/config/sdk-snippets.mdx
-          - section: API Playground
-            path: ./pages/fern-docs/content/api-playground.mdx
+          - section: API Explorer
+            slug: api-explorer
+            path: ./pages/fern-docs/content/api-explorer.mdx
             icon: fa-regular fa-play
             contents:
               - page: Auto-populate API Keys
@@ -487,7 +492,7 @@ navigation:
                 path: ./pages/fern-docs/content/autopopulate-api-key.mdx
               - page: Advanced Configuration
                 icon: fa-regular fa-screwdriver-wrench
-                path: ./pages/fern-docs/content/customize-api-playground.mdx
+                path: ./pages/fern-docs/content/customize-api-explorer.mdx
           - page: Endpoint Errors
             icon: fa-regular fa-triangle-exclamation
             path: ./pages/fern-docs/config/endpoint-errors.mdx
