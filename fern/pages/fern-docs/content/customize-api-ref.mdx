@@ -148,9 +148,10 @@ You can hide an endpoint from the API reference by setting `hidden` to `true`. T
 
 <Tabs>
   <Tab title="OpenAPI Specification">
-  ```yaml title="docs.yml" {9-9}
+  ```yaml title="docs.yml" {10}
   navigation: 
     - api: API Reference
+      paginated: true
       layout: 
         - user: 
             - endpoint: POST /user
@@ -161,9 +162,10 @@ You can hide an endpoint from the API reference by setting `hidden` to `true`. T
   ```
   </Tab>
   <Tab title="Fern Definition">
-  ```yaml title="docs.yml" {9-9}
+  ```yaml title="docs.yml" {10}
   navigation: 
     - api: API Reference
+      paginated: true
       layout: 
         - user: 
             - endpoint: user.create
@@ -174,6 +176,10 @@ You can hide an endpoint from the API reference by setting `hidden` to `true`. T
   ```
   </Tab>
 </Tabs>
+
+<Tip title="Fully hidden endpoints">
+For best results, API References with hidden endpoints should use the `paginated: true` configuration to avoid discovering endpoints from long-scrolling.
+</Tip>
 
 ### Adding custom sections
 You can add arbitrary folders in the sidebar by adding a `section` to your API Reference layout. A section can comprise entire groups of endpoints, individual endpoints, or even just Markdown pages. Sections can be customized by adding properties like a `icon`, `summary`, `slug` (or `skip-slug`), and `contents`. 
