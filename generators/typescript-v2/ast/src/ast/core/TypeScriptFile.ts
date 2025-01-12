@@ -9,7 +9,7 @@ export class TypeScriptFile extends Writer {
         super({ customConfig, formatter });
     }
 
-    public async toString(): Promise<string> {
+    public async toStringAsync(): Promise<string> {
         const content = this.getContent();
         if (this.formatter != null) {
             try {
@@ -21,7 +21,7 @@ export class TypeScriptFile extends Writer {
         return content;
     }
 
-    public toStringSync(): string {
+    public toString(): string {
         const content = this.getContent();
         if (this.formatter != null) {
             try {
