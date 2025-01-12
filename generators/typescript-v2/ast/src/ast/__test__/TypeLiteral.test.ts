@@ -6,7 +6,7 @@ describe("TypeLiteral", () => {
             const literal = ts.TypeLiteral.array({
                 values: []
             });
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -15,7 +15,7 @@ describe("TypeLiteral", () => {
             const literal = ts.TypeLiteral.array({
                 values: [ts.TypeLiteral.string("Hello, World!"), ts.TypeLiteral.string("Goodbye, World!")]
             });
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -34,58 +34,58 @@ describe("TypeLiteral", () => {
                     ts.TypeLiteral.string("Goodbye, World!")
                 ]
             });
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("trueBooleanToString", () => {
         it("Should generate a true boolean", async () => {
             const literal = ts.TypeLiteral.boolean(true);
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("falseBooleanToString", () => {
         it("Should generate a true boolean", async () => {
             const literal = ts.TypeLiteral.boolean(false);
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("numberToString", () => {
         it("Should generate a simple number", async () => {
             const literal = ts.TypeLiteral.number(7);
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("stringToString", () => {
         it("Should generate a simple string literal", async () => {
             const literal = ts.TypeLiteral.string("Hello, World!");
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("stringWithDoubleQuotesToString", () => {
         it("Should generate a simple string literal with escaped double quotes", async () => {
             const literal = ts.TypeLiteral.string('"Hello, World!"');
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("manyLinesMultilineStringToString", () => {
         it("Should generate a multiline string with backticks", async () => {
-            const literal = ts.TypeLiteral.string(`Hello, 
+            const literal = ts.TypeLiteral.string(`Hello,
 World!`);
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("manyLinesMultilineStringWithBackticksToString", () => {
         it("Should generate a multiline string with escaped backticks", async () => {
-            const literal = ts.TypeLiteral.string(`\`Hello, 
+            const literal = ts.TypeLiteral.string(`\`Hello,
 World!\``);
-            expect(await literal.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await literal.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -108,7 +108,7 @@ World!\``);
                     })
                 );
             });
-            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 });

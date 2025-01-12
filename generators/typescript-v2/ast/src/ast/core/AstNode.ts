@@ -7,7 +7,7 @@ export abstract class AstNode extends AbstractAstNode {
     /**
      * Writes the node to a string.
      */
-    public async toString({
+    public async toStringAsync({
         customConfig,
         formatter
     }: {
@@ -16,10 +16,10 @@ export abstract class AstNode extends AbstractAstNode {
     }): Promise<string> {
         const file = new TypeScriptFile({ customConfig, formatter });
         this.write(file);
-        return await file.toString();
+        return await file.toStringAsync();
     }
 
-    public toStringSync({
+    public toString({
         customConfig,
         formatter
     }: {
@@ -28,6 +28,6 @@ export abstract class AstNode extends AbstractAstNode {
     }): string {
         const file = new TypeScriptFile({ customConfig, formatter });
         this.write(file);
-        return file.toStringSync();
+        return file.toString();
     }
 }

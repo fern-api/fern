@@ -10,7 +10,7 @@ describe("Reference", () => {
                     type: "default"
                 }
             });
-            expect(await reference.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await reference.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -64,7 +64,7 @@ describe("Reference", () => {
                     })
                 );
             });
-            expect(await references.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -77,7 +77,7 @@ describe("Reference", () => {
                     moduleName: "module"
                 }
             });
-            expect(await reference.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await reference.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -112,7 +112,7 @@ describe("Reference", () => {
                     })
                 );
             });
-            expect(await references.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -165,7 +165,7 @@ describe("Reference", () => {
                     })
                 );
             });
-            expect(await references.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -231,7 +231,7 @@ describe("Reference", () => {
                     })
                 );
             });
-            expect(await references.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 });

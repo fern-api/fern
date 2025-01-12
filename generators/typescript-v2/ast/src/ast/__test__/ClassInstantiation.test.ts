@@ -7,7 +7,7 @@ describe("ClassInstantiation", () => {
                 class_: ts.reference({ name: "TestClass" }),
                 arguments_: []
             });
-            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -17,7 +17,7 @@ describe("ClassInstantiation", () => {
                 class_: ts.reference({ name: "TestClass" }),
                 arguments_: [ts.TypeLiteral.string("https://api.example.com")]
             });
-            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -30,7 +30,7 @@ describe("ClassInstantiation", () => {
                     ts.TypeLiteral.string("https://api.otherexample.com")
                 ]
             });
-            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 });
