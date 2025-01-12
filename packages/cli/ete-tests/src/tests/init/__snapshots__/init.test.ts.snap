@@ -105,7 +105,8 @@ colors:
         "type": "file",
       },
       {
-        "contents": "default-group: local
+        "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
 groups:
   local:
     generators:
@@ -186,7 +187,8 @@ exports[`fern init > init openapi 1`] = `
         "type": "file",
       },
       {
-        "contents": "default-group: local
+        "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
 groups:
   local:
     generators:
@@ -422,7 +424,8 @@ errors:
     "type": "file",
   },
   {
-    "contents": "default-group: local
+    "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
 groups:
   local:
     generators:
