@@ -28,7 +28,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return await code.toString({
+        return await code.toStringAsync({
             packageName: SNIPPET_PACKAGE_NAME,
             importPath: SNIPPET_IMPORT_PATH,
             rootImportPath: this.context.rootImportPath,
@@ -45,7 +45,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return code.toStringSync({
+        return code.toString({
             packageName: SNIPPET_PACKAGE_NAME,
             importPath: SNIPPET_IMPORT_PATH,
             rootImportPath: this.context.rootImportPath,

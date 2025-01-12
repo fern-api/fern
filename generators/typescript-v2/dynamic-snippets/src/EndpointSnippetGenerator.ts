@@ -28,7 +28,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return await code.toString({ customConfig: this.context.customConfig });
+        return await code.toStringAsync({ customConfig: this.context.customConfig });
     }
 
     public generateSnippetSync({
@@ -39,7 +39,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return code.toStringSync({ customConfig: this.context.customConfig });
+        return code.toString({ customConfig: this.context.customConfig });
     }
 
     private buildCodeBlock({

@@ -25,12 +25,12 @@ exports[`TypeLiteral > longArrayOfStringsToString > Should generate a multiline 
 `;
 
 exports[`TypeLiteral > manyLinesMultilineStringToString > Should generate a multiline string with backticks 1`] = `
-"\`Hello, 
+"\`Hello,
 World!\`"
 `;
 
 exports[`TypeLiteral > manyLinesMultilineStringWithBackticksToString > Should generate a multiline string with escaped backticks 1`] = `
-"\`\\\`Hello, 
+"\`\\\`Hello,
 World!\\\`\`"
 `;
 

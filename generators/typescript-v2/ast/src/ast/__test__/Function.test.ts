@@ -7,7 +7,7 @@ describe("Invocation", () => {
                 function_: ts.reference({ name: "withBaseURL" }),
                 arguments_: [ts.TypeLiteral.string("https://api.example.com")]
             });
-            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -20,7 +20,7 @@ describe("Invocation", () => {
                 body: ts.codeblock("console.log('foo');\nreturn baseUrl + 'foo';"),
                 docs: undefined
             });
-            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -33,7 +33,7 @@ describe("Invocation", () => {
                 body: ts.codeblock("console.log('foo');\nreturn baseUrl + 'foo';"),
                 docs: undefined
             });
-            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
@@ -49,7 +49,7 @@ describe("Invocation", () => {
                 }),
                 docs: "This is a comment"
             });
-            expect(await actual.toString({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 });
