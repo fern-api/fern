@@ -100,7 +100,6 @@ async function getDefaultGeneratorsConfiguration({
         );
     }
     const config: generatorsYml.GeneratorsConfigurationSchema = {
-        # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
         "default-group": DEFAULT_GROUP_NAME,
         groups: {
             [DEFAULT_GROUP_NAME]: {
@@ -133,7 +132,8 @@ async function writeGeneratorsConfiguration({
 }): Promise<void> {
     await writeFile(
         filepath,
-        yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
+        "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
+            yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
     );
 }
 
