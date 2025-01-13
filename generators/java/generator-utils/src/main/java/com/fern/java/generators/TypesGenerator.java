@@ -55,7 +55,8 @@ public final class TypesGenerator {
                                     typeDeclaration.getName(),
                                     className,
                                     generatedInterfaces,
-                                    false));
+                                    false,
+                                    Set.of()));
                     return maybeGeneratedJavaFile;
                 })
                 .filter(Optional::isPresent)

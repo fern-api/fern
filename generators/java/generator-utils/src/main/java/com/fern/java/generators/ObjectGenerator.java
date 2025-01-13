@@ -30,8 +30,6 @@ import com.fern.java.output.GeneratedObject;
 import com.google.common.collect.ImmutableMap;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -42,7 +40,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class ObjectGenerator extends AbstractFileGenerator {
+public final class ObjectGenerator extends AbstractTypeGenerator {
     private final List<EnrichedObjectProperty> enrichedObjectProperties;
     private final Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
     private final List<ImplementsInterface> implementsInterfaces;
@@ -54,8 +52,9 @@ public final class ObjectGenerator extends AbstractFileGenerator {
             List<GeneratedJavaInterface> extendedInterfaces,
             AbstractGeneratorContext<?, ?> generatorContext,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
-            ClassName className) {
-        super(className, generatorContext);
+            ClassName className,
+            Set<String> reservedTypeNames) {
+        super(className, generatorContext, reservedTypeNames);
         List<GeneratedJavaInterface> allExtendedInterfaces = new ArrayList<>();
         selfInterface.ifPresent(allExtendedInterfaces::add);
         allExtendedInterfaces.addAll(extendedInterfaces);
@@ -76,20 +75,6 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                         .mapKeys(EnrichedObjectProperty::objectProperty)
                         .collectToMap())
                 .build();
-    }
-
-    public GeneratedObject generateObject() {
-        GeneratedJavaFile javaFile = generateFile();
-        return GeneratedObject.builder()
-                .className(className)
-                .javaFile(javaFile.javaFile())
-                .putAllObjectPropertyGetters(objectPropertyGetters)
-                .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
-                .build();
-    }
-
-    @Override
-    public GeneratedJavaFile generateFile() {
         ObjectTypeSpecGenerator genericObjectGenerator = new ObjectTypeSpecGenerator(
                 className,
                 generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
@@ -101,12 +86,16 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 generatorContext.getCustomConfig().jsonInclude(),
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
                 generatorContext.builderNotNullChecks());
-        TypeSpec objectTypeSpec = genericObjectGenerator.generate();
-        JavaFile javaFile =
-                JavaFile.builder(className.packageName(), objectTypeSpec).build();
-        return GeneratedJavaFile.builder()
+        this.typeSpec = genericObjectGenerator.generate();
+    }
+
+    public GeneratedObject generateObject() {
+        GeneratedJavaFile javaFile = generateFile();
+        return GeneratedObject.builder()
                 .className(className)
-                .javaFile(javaFile)
+                .javaFile(javaFile.javaFile())
+                .putAllObjectPropertyGetters(objectPropertyGetters)
+                .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
                 .build();
     }
 

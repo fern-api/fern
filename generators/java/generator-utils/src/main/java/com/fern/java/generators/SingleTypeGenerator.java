@@ -16,6 +16,7 @@ import com.squareup.javapoet.ClassName;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class SingleTypeGenerator implements Type.Visitor<Optional<GeneratedJavaFile>> {
@@ -25,18 +26,21 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
     private final ClassName className;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean fromErrorDeclaration;
+    private final Set<String> reservedTypeNamesInScope;
 
     public SingleTypeGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
             DeclaredTypeName declaredTypeName,
             ClassName className,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
-            boolean fromErrorDeclaration) {
+            boolean fromErrorDeclaration,
+            Set<String> reservedTypeNamesInScope) {
         this.generatorContext = generatorContext;
         this.className = className;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.declaredTypeName = declaredTypeName;
         this.fromErrorDeclaration = fromErrorDeclaration;
+        this.reservedTypeNamesInScope = reservedTypeNamesInScope;
     }
 
     @Override
@@ -66,7 +70,8 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
                 extendedInterfaces,
                 generatorContext,
                 allGeneratedInterfaces,
-                className);
+                className,
+                reservedTypeNamesInScope);
         GeneratedObject generatedObject = objectGenerator.generateObject();
         return Optional.of(GeneratedJavaFile.builder()
                 .className(generatedObject.getClassName())
