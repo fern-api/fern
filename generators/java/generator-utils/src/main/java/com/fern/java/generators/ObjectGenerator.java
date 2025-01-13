@@ -27,11 +27,11 @@ import com.fern.java.generators.object.ObjectTypeSpecGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
+import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,7 +46,8 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     private final Optional<GeneratedJavaInterface> selfInterface;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces = new ArrayList<>();
-    private Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
+    private final List<EnrichedObjectProperty> enrichedObjectProperties;
+    private final Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
     private List<EnrichedObjectProperty> extendedPropertyGetters = new ArrayList<>();
 
     public ObjectGenerator(
@@ -62,6 +63,11 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         selfInterface.ifPresent(this.extendedInterfaces::add);
         this.extendedInterfaces.addAll(extendedInterfaces);
         this.allGeneratedInterfaces = allGeneratedInterfaces;
+        this.enrichedObjectProperties = enrichedObjectProperties(
+                selfInterface, objectTypeDeclaration, generatorContext.getPoetTypeNameMapper());
+        this.objectPropertyGetters = KeyedStream.of(enrichedObjectProperties.stream())
+                .mapKeys(EnrichedObjectProperty::objectProperty)
+                .collectToMap();
     }
 
     public GeneratedObject generateObject() {
@@ -78,19 +84,6 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedJavaFile generateFile() {
         reset();
-        PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
-        List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
-        if (selfInterface.isEmpty()) {
-            enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
-                    .map(objectProperty -> EnrichedObjectProperty.of(
-                            objectProperty,
-                            false,
-                            poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType())))
-                    .collect(Collectors.toList());
-            for (EnrichedObjectProperty enrichedObjectProperty : enrichedObjectProperties) {
-                objectPropertyGetters.put(enrichedObjectProperty.objectProperty(), enrichedObjectProperty);
-            }
-        }
         List<ImplementsInterface> implementsInterfaces = new ArrayList<>();
         getUniqueAncestorsInLevelOrder().stream()
                 .map(generatedInterface -> ImplementsInterface.builder()
@@ -146,6 +139,21 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         return result;
     }
 
+    private static List<EnrichedObjectProperty> enrichedObjectProperties(
+            Optional<GeneratedJavaInterface> selfInterface,
+            ObjectTypeDeclaration objectTypeDeclaration,
+            PoetTypeNameMapper poetTypeNameMapper) {
+        if (selfInterface.isEmpty()) {
+            return objectTypeDeclaration.getProperties().stream()
+                    .map(objectProperty -> EnrichedObjectProperty.of(
+                            objectProperty,
+                            false,
+                            poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType())))
+                    .collect(Collectors.toList());
+        }
+        return List.of();
+    }
+
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(
             GeneratedJavaInterface generatedJavaInterface,
             Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters) {
@@ -163,7 +171,6 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     //  We can get rid of this once we've refactored these methods to give back objectPropertyGetters and
     //  extendedPropertyGetters idempotently without resetting.
     private void reset() {
-        objectPropertyGetters = new HashMap<>();
         extendedPropertyGetters = new ArrayList<>();
     }
 }
