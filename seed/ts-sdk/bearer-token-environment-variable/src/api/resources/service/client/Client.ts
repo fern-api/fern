@@ -10,6 +10,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -38,7 +40,11 @@ export class Service {
      */
     public async getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "apiKey"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "apiKey",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
