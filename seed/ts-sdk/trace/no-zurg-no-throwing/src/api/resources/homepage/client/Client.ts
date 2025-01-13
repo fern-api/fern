@@ -10,6 +10,8 @@ import urlJoin from "url-join";
 export declare namespace Homepage {
     export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
@@ -43,7 +45,9 @@ export class Homepage {
     ): Promise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
                 "/homepage-problems",
             ),
             method: "GET",
@@ -93,7 +97,9 @@ export class Homepage {
     ): Promise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
                 "/homepage-problems",
             ),
             method: "POST",

@@ -11,6 +11,8 @@ import { V3 } from "../resources/v3/client/Client";
 export declare namespace V2 {
     export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
@@ -52,7 +54,10 @@ export class V2 {
      */
     public async test(requestOptions?: V2.RequestOptions): Promise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
         const _response = await core.fetcher({
-            url: (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.SeedTraceEnvironment.Prod,
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

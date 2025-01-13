@@ -10,6 +10,7 @@ import * as errors from "./errors/index";
 export declare namespace SeedObjectClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -44,7 +45,11 @@ export class SeedObjectClient {
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<SeedObject.RootType1> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/root/root"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/root/root",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -115,7 +120,11 @@ export class SeedObjectClient {
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/root/discriminated-union"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/root/discriminated-union",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -187,7 +196,11 @@ export class SeedObjectClient {
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/root/undiscriminated-union"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/root/undiscriminated-union",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

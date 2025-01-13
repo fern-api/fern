@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Query {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
@@ -55,7 +57,11 @@ export class Query {
         _queryParams["query"] = query;
         _queryParams["stream"] = stream.toString();
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "query",
+            ),
             method: "POST",
             headers: {
                 "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",

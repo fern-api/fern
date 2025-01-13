@@ -15,6 +15,7 @@ export declare namespace Ec2 {
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
         >;
+        /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
@@ -48,7 +49,11 @@ export class Ec2 {
         requestOptions?: Ec2.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin((await core.Supplier.get(this._options.environment)).ec2, "/ec2/boot"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).ec2,
+                "/ec2/boot",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

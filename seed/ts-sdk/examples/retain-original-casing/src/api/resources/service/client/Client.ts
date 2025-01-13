@@ -12,6 +12,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -43,7 +45,8 @@ export class Service {
     ): Promise<SeedExamples.Movie> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`,
             ),
             method: "GET",
@@ -127,7 +130,11 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.MovieId> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/movie",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -207,7 +214,11 @@ export class Service {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/metadata"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/metadata",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -428,7 +439,11 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.Response> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/big-entity"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/big-entity",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

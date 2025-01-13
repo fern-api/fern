@@ -13,6 +13,7 @@ export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
         >;
+        /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }

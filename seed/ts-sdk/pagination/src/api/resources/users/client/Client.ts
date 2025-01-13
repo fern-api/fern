@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Users {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
@@ -64,7 +65,11 @@ export class Users {
                 _queryParams["starting_after"] = startingAfter;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -140,7 +145,11 @@ export class Users {
             request: SeedPagination.ListUsersBodyCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "POST",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -233,7 +242,11 @@ export class Users {
                 _queryParams["starting_after"] = startingAfter;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -311,7 +324,11 @@ export class Users {
             request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "POST",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -402,7 +419,11 @@ export class Users {
                 _queryParams["order"] = order;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -491,7 +512,11 @@ export class Users {
                 _queryParams["order"] = order;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -572,7 +597,11 @@ export class Users {
                 _queryParams["cursor"] = cursor;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -651,7 +680,11 @@ export class Users {
                 _queryParams["cursor"] = cursor;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -728,7 +761,11 @@ export class Users {
                 _queryParams["starting_after"] = startingAfter;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -807,7 +844,11 @@ export class Users {
                 _queryParams["offset"] = offset.toString();
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),

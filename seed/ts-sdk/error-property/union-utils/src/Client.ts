@@ -8,6 +8,7 @@ import { PropertyBasedError } from "./api/resources/propertyBasedError/client/Cl
 export declare namespace SeedErrorPropertyClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
     }
 

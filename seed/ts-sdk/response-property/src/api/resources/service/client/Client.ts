@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
     }
 
@@ -42,8 +43,9 @@ export class Service {
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ?? null,
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
             ),
             method: "POST",
             headers: {
@@ -106,8 +108,9 @@ export class Service {
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ?? null,
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
             ),
             method: "POST",
             headers: {
@@ -170,8 +173,9 @@ export class Service {
     ): Promise<SeedResponseProperty.StringResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ?? null,
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
             ),
             method: "POST",
             headers: {
@@ -234,8 +238,9 @@ export class Service {
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ?? null,
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
             ),
             method: "POST",
             headers: {
@@ -300,8 +305,9 @@ export class Service {
     ): Promise<SeedResponseProperty.Response | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ?? null,
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
             ),
             method: "POST",
             headers: {
@@ -366,8 +372,9 @@ export class Service {
     ): Promise<SeedResponseProperty.OptionalWithDocs | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ?? null,
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
             ),
             method: "POST",
             headers: {
@@ -432,8 +439,9 @@ export class Service {
     ): Promise<SeedResponseProperty.OptionalStringResponse | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ?? null,
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
             ),
             method: "POST",
             headers: {

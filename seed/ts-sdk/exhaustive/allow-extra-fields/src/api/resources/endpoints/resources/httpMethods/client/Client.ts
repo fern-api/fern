@@ -11,6 +11,8 @@ import * as SeedExhaustive from "../../../../../index";
 export declare namespace HttpMethods {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -38,7 +40,11 @@ export class HttpMethods {
      */
     public async testGet(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${encodeURIComponent(id)}`,
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -101,7 +107,11 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/http-methods"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/http-methods",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -171,7 +181,11 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${encodeURIComponent(id)}`,
+            ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -255,7 +269,11 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${encodeURIComponent(id)}`,
+            ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -318,7 +336,11 @@ export class HttpMethods {
      */
     public async testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${encodeURIComponent(id)}`,
+            ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
