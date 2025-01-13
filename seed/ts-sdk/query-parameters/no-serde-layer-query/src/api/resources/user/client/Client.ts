@@ -10,6 +10,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace User {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
     }
 

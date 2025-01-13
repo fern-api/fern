@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -41,7 +43,8 @@ export class Service {
     ): Promise<SeedMixedCase.Resource> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/resource/${encodeURIComponent(ResourceID)}`,
             ),
             method: "GET",
@@ -110,7 +113,11 @@ export class Service {
         _queryParams["page_limit"] = pageLimit.toString();
         _queryParams["beforeDate"] = beforeDate;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/resource"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/resource",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

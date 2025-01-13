@@ -9,6 +9,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -34,7 +36,11 @@ export class Service {
      */
     public async getText(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "text"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "text",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

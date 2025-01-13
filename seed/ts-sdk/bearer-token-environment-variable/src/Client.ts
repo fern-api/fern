@@ -8,6 +8,8 @@ import { Service } from "./api/resources/service/client/Client";
 export declare namespace SeedBearerTokenEnvironmentVariableClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
     }
 

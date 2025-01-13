@@ -12,6 +12,8 @@ import urlJoin from "url-join";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -82,12 +84,12 @@ export class Service {
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
+                {for (const _item of request.optionalMetadata) {
                     await _request.append(
                         "optionalMetadata",
                         typeof _item === "string" ? _item : JSON.stringify(_item),
                     );
-                }
+                }}
         }
 
         if (request.optionalObjectType != null) {
@@ -100,7 +102,9 @@ export class Service {
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -154,7 +158,11 @@ export class Service {
         await _request.appendFile("file", file);
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/just-file",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -237,7 +245,11 @@ export class Service {
         await _request.appendFile("file", file);
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/just-file-with-query-params",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -305,7 +317,11 @@ export class Service {
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/with-content-type"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/with-content-type",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
