@@ -31,7 +31,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                             if (typeof type !== "string" && hasKey) {
                                 return [
                                     {
-                                        severity: "error",
+                                        severity: "fatal",
                                         message: `Union variant ${discriminantValue} has no type, so "key" cannot be defined`
                                     }
                                 ];

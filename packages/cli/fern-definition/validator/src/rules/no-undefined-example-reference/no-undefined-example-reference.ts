@@ -16,7 +16,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                     if (exampleResolver.parseExampleReference(exampleReference) == null) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Example ${chalk.bold(
                                     exampleReference
                                 )} is malformed. Examples should be formatted like ${chalk.bold(
@@ -42,7 +42,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                     } else {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Example ${chalk.bold(exampleReference)} is not defined.`
                             }
                         ];

@@ -9,11 +9,13 @@ import { validateOSSWorkspaceAndLogIssues } from "./validateOSSWorkspaceAndLogIs
 export async function validateWorkspaces({
     project,
     cliContext,
-    logWarnings
+    logWarnings,
+    errorOnBrokenLinks
 }: {
     project: Project;
     cliContext: CliContext;
     logWarnings: boolean;
+    errorOnBrokenLinks: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
@@ -22,7 +24,12 @@ export async function validateWorkspaces({
                 workspace: docsWorkspace,
                 context,
                 logWarnings,
-                loadAPIWorkspace: project.loadAPIWorkspace
+                fernWorkspaces: await Promise.all(
+                    project.apiWorkspaces.map(async (workspace) => {
+                        return workspace.toFernWorkspace({ context });
+                    })
+                ),
+                errorOnBrokenLinks
             });
         });
     }

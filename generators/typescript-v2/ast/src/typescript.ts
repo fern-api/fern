@@ -20,10 +20,6 @@ export function invokeMethod(args: AST.MethodInvocation.Args): AST.MethodInvocat
     return new AST.MethodInvocation(args);
 }
 
-export function method(args: AST.Method.Args): AST.Method {
-    return new AST.Method(args);
-}
-
 export function parameter(args: AST.Parameter.Args): AST.Parameter {
     return new AST.Parameter(args);
 }

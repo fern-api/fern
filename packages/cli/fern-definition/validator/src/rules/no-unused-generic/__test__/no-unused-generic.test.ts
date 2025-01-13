@@ -19,13 +19,13 @@ describe("no-unused-generic", () => {
                 message: 'Generic "AnotherGenericUnusedType<T>" is declared but never used.',
                 nodePath: ["types", "AnotherGenericUnusedType<T>"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Generic "GenericUnusedType<T>" is declared but never used.',
                 nodePath: ["types", "GenericUnusedType<T>"],
                 relativeFilepath: RelativeFilePath.of("2.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

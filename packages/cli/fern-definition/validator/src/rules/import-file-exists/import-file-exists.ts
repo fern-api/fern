@@ -28,7 +28,7 @@ export const ImportFileExistsRule: Rule = {
                     const isDefinitionFilePresent = absolutePaths.has(importAbsoluteFilepath);
                     if (!isDefinitionFilePresent) {
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             message: `Import ${chalk.bold(importedAs)} points to non-existent path ${chalk.bold(
                                 importPath
                             )}.`

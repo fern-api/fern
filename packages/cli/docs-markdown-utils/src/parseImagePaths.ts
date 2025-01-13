@@ -10,10 +10,11 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
+import { getMarkdownFormat } from "./getMarkdownFormat";
 import { parseMarkdownToTree } from "./parseMarkdownToTree";
 
 interface AbsolutePathMetadata {
-    absolutePathToMdx: AbsoluteFilePath;
+    absolutePathToMarkdownFile: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
 }
 
@@ -54,7 +55,7 @@ export function parseImagePaths(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
-    const tree = parseMarkdownToTree(content);
+    const tree = parseMarkdownToTree(content, getMarkdownFormat(metadata.absolutePathToMarkdownFile));
 
     let offset = 0;
 
@@ -148,14 +149,14 @@ export function parseImagePaths(
 
 function resolvePath(
     pathToImage: string | undefined,
-    { absolutePathToFernFolder, absolutePathToMdx }: AbsolutePathMetadata
+    { absolutePathToFernFolder, absolutePathToMarkdownFile }: AbsolutePathMetadata
 ): AbsoluteFilePath | undefined {
     if (pathToImage == null || isExternalUrl(pathToImage) || isDataUrl(pathToImage)) {
         return undefined;
     }
 
     const filepath = resolve(
-        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMdx),
+        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     );
 
@@ -181,7 +182,7 @@ function isDataUrl(url: string): boolean {
 export function replaceImagePathsAndUrls(
     markdown: string,
     fileIdsMap: ReadonlyMap<AbsoluteFilePath, string>,
-    markdownFilesToPathName: ReadonlyMap<AbsoluteFilePath, string>,
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>,
     metadata: AbsolutePathMetadata,
     context: TaskContext
 ): string {
@@ -235,7 +236,7 @@ export function replaceImagePathsAndUrls(
             if (href.endsWith(".md") || href.endsWith(".mdx")) {
                 const absoluteFilePath = resolvePath(href, metadata);
                 if (absoluteFilePath != null) {
-                    const pathName = markdownFilesToPathName.get(absoluteFilePath);
+                    const pathName = markdownFilesToPathName[absoluteFilePath];
                     if (pathName != null) {
                         replaced = replaced.replace(href, pathName);
                     } else {
@@ -245,7 +246,7 @@ export function replaceImagePathsAndUrls(
                                 absoluteFilePath
                             )} has no slug defined but is referenced by ${relative(
                                 metadata.absolutePathToFernFolder,
-                                metadata.absolutePathToMdx
+                                metadata.absolutePathToMarkdownFile
                             )}`
                         );
                     }

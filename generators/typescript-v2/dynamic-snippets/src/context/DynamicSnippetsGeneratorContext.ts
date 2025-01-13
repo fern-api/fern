@@ -2,7 +2,6 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { constructNpmPackage, getNamespaceExport } from "@fern-api/typescript-browser-compatible-base";
@@ -59,9 +58,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getPropertyName(name: FernIr.Name): string {
         if (this.customConfig?.retainOriginalCasing || this.customConfig?.noSerdeLayer) {
-            return name.originalName;
+            return this.formatOriginalPropertyName(name.originalName);
         }
-        return name.camelCase.safeName;
+        return name.camelCase.unsafeName;
     }
 
     public getMethodName(name: FernIr.Name): string {
@@ -80,12 +79,34 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.getEnvironmentsTypeReference(environmentName);
     }
 
+    public getFullyQualifiedReference({ declaration }: { declaration: FernIr.dynamic.Declaration }): string {
+        if (declaration.fernFilepath.allParts.length > 0) {
+            return `${declaration.fernFilepath.allParts
+                .map((val) => val.camelCase.unsafeName)
+                .join(".")}.${this.getTypeName(declaration.name)}`;
+        }
+        return `${this.getTypeName(declaration.name)}`;
+    }
+
     private getEnvironmentsTypeReference(name: FernIr.Name): ts.Reference {
         return ts.reference({
             name: `${this.namespaceExport}Environments`,
             importFrom: this.getModuleImport(),
             memberName: this.getTypeName(name)
         });
+    }
+
+    private formatOriginalPropertyName(value: string): string {
+        if (value.includes("-")) {
+            // For example, header names like the following:
+            //
+            // {
+            //   "X-API-Version": "X-API-Version",
+            //   body: "string"
+            // }
+            return `"${value}"`;
+        }
+        return value;
     }
 }
 

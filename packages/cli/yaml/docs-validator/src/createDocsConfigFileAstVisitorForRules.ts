@@ -31,6 +31,7 @@ export function createDocsConfigFileAstVisitorForRules({
                     const ruleViolations = await visitFromRule(node);
                     addViolations(
                         ruleViolations.map((violation) => ({
+                            name: violation.name,
                             severity: violation.severity,
                             relativeFilepath,
                             nodePath,

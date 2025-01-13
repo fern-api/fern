@@ -14,13 +14,13 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, listFiles, relative, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
@@ -30,6 +30,7 @@ import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfi
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
 
 dayjs.extend(utc);
@@ -107,12 +108,25 @@ export class DocsDefinitionResolver {
         });
 
         // track all changelog markdown files in parsedDocsConfig.pages
-        this.fernWorkspaces.forEach((workspace) => {
-            workspace.changelog?.files.forEach((file) => {
-                const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
-                this.parsedDocsConfig.pages[relativePath] = file.contents;
+        if (this.docsWorkspace.config.navigation != null) {
+            await visitNavigationAst({
+                navigation: this.docsWorkspace.config.navigation,
+                visitor: {
+                    apiSection: async ({ workspace }) => {
+                        const fernWorkspace = await workspace.toFernWorkspace(
+                            { context: this.taskContext },
+                            { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                        );
+                        fernWorkspace.changelog?.files.forEach((file) => {
+                            const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
+                            this.parsedDocsConfig.pages[relativePath] = file.contents;
+                        });
+                    }
+                },
+                fernWorkspaces: this.fernWorkspaces,
+                context: this.taskContext
             });
-        });
+        }
 
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
@@ -124,7 +138,7 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-                absolutePathToMdx: this.resolveFilepath(relativePath),
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
         }
@@ -134,7 +148,7 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-                absolutePathToMdx: this.resolveFilepath(relativePath),
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
         }
@@ -144,7 +158,7 @@ export class DocsDefinitionResolver {
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
-                absolutePathToMdx: this.resolveFilepath(relativePath),
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
             });
 
@@ -172,18 +186,21 @@ export class DocsDefinitionResolver {
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
         const basePath = this.getDocsBasePath();
+
+        // TODO: include more (canonical) slugs from the navigation tree
+        const markdownFilesToPathName: Record<AbsoluteFilePath, string> = {};
+        this.markdownFilesToFullSlugs.forEach((value, key) => {
+            markdownFilesToPathName[key] = urlJoin(basePath, value);
+        });
+
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
                 markdown,
                 this.collectedFileIds,
                 // convert slugs to full URL pathnames
-                new Map(
-                    Array.from(this.markdownFilesToFullSlugs.entries()).map(([key, value]) => {
-                        return [key, urlJoin(basePath, value)];
-                    })
-                ),
+                markdownFilesToPathName,
                 {
-                    absolutePathToMdx: this.resolveFilepath(relativePath),
+                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                     absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
                 },
                 this.taskContext

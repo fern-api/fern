@@ -165,7 +165,7 @@ export function validateUnionExample({
 
 function getRuleViolationForExtraProperties(extraProperties: Record<string, unknown>): ExampleViolation[] {
     return Object.keys(extraProperties).map((key) => ({
-        severity: "error",
+        severity: "fatal",
         message: `Unexpected property "${key}"`
     }));
 }

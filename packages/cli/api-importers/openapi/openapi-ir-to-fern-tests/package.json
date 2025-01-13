@@ -37,12 +37,13 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.8",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^9.16.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "eslint": "^8.56.0",
     "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.8"
   }
 }

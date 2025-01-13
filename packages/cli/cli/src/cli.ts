@@ -42,6 +42,7 @@ import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
 import { upgrade } from "./commands/upgrade/upgrade";
+import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
@@ -161,7 +162,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
-    addDocsPreviewCommand(cli, cliContext);
+    addDocsCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -233,6 +234,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Migrate docs from Mintlify"
                 }),
         async (argv) => {
+            if (argv.organization == null) {
+                argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+            }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
             } else if (argv.docs != null) {
@@ -727,6 +731,12 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Log warnings in addition to errors.",
                     default: false
+                })
+                .option("strict-broken-links", {
+                    boolean: true,
+                    description:
+                        "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                    default: false
                 }),
         async (argv) => {
             await validateWorkspaces({
@@ -735,7 +745,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     defaultToAllApiWorkspaces: true
                 }),
                 cliContext,
-                logWarnings: argv.warnings
+                logWarnings: argv.warnings,
+                errorOnBrokenLinks: argv.strictBrokenLinks
             });
         }
     );
@@ -989,9 +1000,18 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
     );
 }
 
+function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("docs", "Commands for managing your docs", (yargs) => {
+        // Add subcommands directly
+        addDocsPreviewCommand(yargs, cliContext);
+        addDocsBrokenLinksCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "docs dev",
+        "dev",
         "Run a local development server to preview your docs",
         (yargs) =>
             yargs
@@ -1021,6 +1041,26 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 cliContext,
                 port,
                 bundlePath
+            });
+        }
+    );
+}
+
+function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "broken-links",
+        "Check for broken links in your docs",
+        (yargs) =>
+            yargs.option("strict", { boolean: true, default: false, description: "Fail with non-zero exit status" }),
+        async (argv) => {
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+            await validateDocsBrokenLinks({
+                project,
+                cliContext,
+                errorOnBrokenLinks: argv.strict
             });
         }
     );

@@ -82,7 +82,7 @@ export async function validateSchema({
     context: TaskContext;
     filepathBeingParsed: string;
 }): Promise<docsYml.RawSchemas.DocsConfiguration> {
-    const result = await docsYml.RawSchemas.Serializer.DocsConfiguration.parse(value);
+    const result = docsYml.RawSchemas.Serializer.DocsConfiguration.parse(value);
     if (result.ok) {
         return result.value;
     }

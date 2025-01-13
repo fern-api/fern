@@ -9,48 +9,63 @@ export declare namespace Function {
     interface Args {
         name: string;
         parameters: Parameter[];
+        body: CodeBlock;
         return_?: Type;
-        body: CodeBlock | undefined;
-        docs: string | undefined;
+        async?: boolean;
+        docs?: string;
     }
 }
 
 export class Function extends AstNode {
     readonly name: string;
     readonly parameters: Parameter[];
-    readonly return_?: Type;
-    readonly body: CodeBlock | undefined;
+    readonly async: boolean;
+    readonly body: CodeBlock;
+    readonly return_: Type | undefined;
     readonly docs: string | undefined;
 
-    constructor({ name, parameters, return_, body, docs }: Function.Args) {
+    constructor({ name, parameters, async, body, return_, docs }: Function.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
-        this.return_ = return_;
+        this.async = async ?? false;
         this.body = body;
+        this.return_ = return_;
         this.docs = docs;
     }
 
     public write(writer: Writer): void {
         writer.writeNode(new Comment({ docs: this.docs }));
+        if (this.async) {
+            writer.write("async ");
+        }
         writer.write("function ");
         writer.write(`${this.name}`);
-        writer.writeLine("(");
-        writer.delimit({
-            nodes: this.parameters,
-            delimiter: ",\n",
-            writeFunction: (parameter) => parameter.writeWithType(writer)
-        });
-        writer.writeLine(")");
+        this.writeParameters(writer);
         if (this.return_ != null) {
             writer.write(": ");
-            writer.writeNode(this.return_);
+            writer.writeNode(this.async ? Type.promise(this.return_) : this.return_);
         }
-        writer.writeLine("{");
+        writer.writeLine(" {");
         writer.indent();
         this.body?.write(writer);
         writer.dedent();
         writer.writeNewLineIfLastLineNot();
         writer.writeLine("}");
+    }
+
+    private writeParameters(writer: Writer): void {
+        if (this.parameters.length === 0) {
+            writer.write("()");
+            return;
+        }
+        writer.indent();
+        writer.writeLine("(");
+        for (const parameter of this.parameters) {
+            writer.writeNode(parameter);
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.write(")");
     }
 }

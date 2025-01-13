@@ -27,28 +27,29 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.127.4-331678a74",
+    "@fern-fern/fdr-cjs-sdk": "0.127.5-c465d2cf0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/api-workspace-commons": "workspace:*",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@types/lodash-es": "^4.17.12",
+    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^9.16.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "eslint": "^8.56.0",
     "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.0.5"
+    "@types/lodash-es": "^4.17.12",
+    "vitest": "^2.1.8"
   }
 }

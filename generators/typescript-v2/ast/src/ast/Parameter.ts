@@ -24,10 +24,6 @@ export class Parameter extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write(`${this.name}`);
-    }
-
-    public writeWithType(writer: Writer): void {
         if (this.docs != null) {
             writer.writeNode(new Comment({ docs: this.docs }));
         }

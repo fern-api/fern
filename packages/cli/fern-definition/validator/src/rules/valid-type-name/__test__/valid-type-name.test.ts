@@ -20,7 +20,7 @@ describe("valid-type-name", () => {
                 message: "Type name must begin with a letter",
                 nodePath: ["types", "_InvalidType"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 

@@ -1,4 +1,3 @@
-import { RUNTIME } from "../../runtime";
 import { makeRequest } from "../makeRequest";
 
 describe("Test makeRequest", () => {

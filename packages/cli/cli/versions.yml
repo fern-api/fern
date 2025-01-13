@@ -1,7 +1,31 @@
 - changelogEntry:
   - summary: |
-      Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more 
-      idiomatic discriminated unions. 
+      Allows for creating nullable types and pass formats on strings using the OpenAPI v2 parser.
+    type: feat
+  irVersion: 53
+  version: 0.47.4
+
+- changelogEntry:
+  - summary: |
+      Add the JSON schema to the generators.yml file for validation and autocomplete.
+    type: feat
+  irVersion: 53
+  version: 0.47.3
+
+- changelogEntry:
+  - summary: |
+      The CLI now supports checking for broken links in your docs. You will see warnings in `fern check` if your docs link to any
+      page that can't be resolved, and the `--strict-broken-links` option will cause the command to fail (exit with a non-zero exit code) if
+      any broken links are found. You can also run the new command `fern docs broken-links` to only check for broken links (ignoring
+      other possible errors), with the `--strict` option to cause the command to fail if any broken links are found.
+    type: feat
+  irVersion: 53
+  version: 0.47.2
+
+- changelogEntry:
+  - summary: |
+      Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more
+      idiomatic discriminated unions.
       ```yml
       api:
         specs:
@@ -34,27 +58,27 @@
     type: feat
   irVersion: 53
   version: 0.46.22
-  
-- changelogEntry: 
+
+- changelogEntry:
   - summary: |
       The CLI now supports the `prefer-undiscriminated-unions-with-literals` setting in OpenAPI settings.
     type: fix
   irVersion: 53
   version: 0.46.21
 
-- changelogEntry: 
+- changelogEntry:
   - summary: |
-      The `fern init` command now supports a `--mintlify` option. You can pass in 
-      the path to your `mint.json` and the Fern CLI will generate a fern documentation 
-      website. 
+      The `fern init` command now supports a `--mintlify` option. You can pass in
+      the path to your `mint.json` and the Fern CLI will generate a fern documentation
+      website.
     type: feat
   irVersion: 53
   version: 0.46.20
 
 - changelogEntry:
     - summary: |
-        If a schema in OpenAPI or AsyncAPI has `additionalProperties: true` then the Fern CLI will now respect bringing in 
-        example properties that are not defined in the schema. Previously, the CLI would skip them. 
+        If a schema in OpenAPI or AsyncAPI has `additionalProperties: true` then the Fern CLI will now respect bringing in
+        example properties that are not defined in the schema. Previously, the CLI would skip them.
       type: fix
   irVersion: 53
   version: 0.46.19
@@ -62,13 +86,13 @@
 - changelogEntry:
     - summary: |
         If an object or request is annotated with `extra-properties: true` then the user can provide an example that includes
-        extra properties that are no longer in the schema. 
+        extra properties that are no longer in the schema.
 
-        For example, check out this fern definition 
-        
+        For example, check out this fern definition
+
         ```yml service.yml
         types:
-          Item: 
+          Item:
             extra-properties: true
             properties:
               id: string

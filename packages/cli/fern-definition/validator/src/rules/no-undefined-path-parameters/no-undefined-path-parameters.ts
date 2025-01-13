@@ -62,7 +62,7 @@ function getPathParameterRuleViolations({
     httpPath.parts.forEach((part) => {
         if (urlPathParameters.has(part.pathParameter)) {
             errors.push({
-                severity: "error",
+                severity: "fatal",
                 message: `${capitalize(pathType)} has duplicate path parameter: ${chalk.bold(part.pathParameter)}.`
             });
         }
@@ -75,7 +75,7 @@ function getPathParameterRuleViolations({
     const undefinedPathParameters = getDifference(urlPathParameters, definedPathParameters);
     undefinedPathParameters.forEach((pathParameter) => {
         errors.push({
-            severity: "error",
+            severity: "fatal",
             message: `${capitalize(pathType)} has missing path-parameter: ${chalk.bold(pathParameter)}.`
         });
     });
@@ -84,7 +84,7 @@ function getPathParameterRuleViolations({
     const missingUrlPathParameters = getDifference(definedPathParameters, urlPathParameters);
     missingUrlPathParameters.forEach((pathParameter) => {
         errors.push({
-            severity: "error",
+            severity: "fatal",
             message: `Path parameter is unreferenced in ${pathType}: ${chalk.bold(pathParameter)}.`
         });
     });

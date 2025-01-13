@@ -152,6 +152,24 @@ export class DynamicSnippetsTestRunner {
                             castMember: {
                                 id: "john.doe",
                                 name: "John Doe"
+                            },
+                            extendedMovie: {
+                                cast: ["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"],
+                                id: "movie-sda231x",
+                                title: "Pulp Fiction",
+                                from: "Quentin Tarantino",
+                                rating: 8.5,
+                                type: "movie",
+                                tag: "tag-12efs9dv",
+                                metadata: {
+                                    academyAward: true,
+                                    releaseDate: "2023-12-08",
+                                    ratings: {
+                                        rottenTomatoes: 97,
+                                        imdb: 7.6
+                                    }
+                                },
+                                revenue: 1000000
                             }
                         }
                     }
@@ -279,6 +297,41 @@ export class DynamicSnippetsTestRunner {
                                 string: 42
                             }
                         ]
+                    }
+                },
+                {
+                    description: "GET /object/get-and-return-with-optional-field",
+                    giveRequest: {
+                        endpoint: {
+                            method: "POST",
+                            path: "/object/get-and-return-with-optional-field"
+                        },
+                        baseURL: undefined,
+                        environment: undefined,
+                        auth: {
+                            type: "bearer",
+                            token: "<YOUR_API_KEY>"
+                        },
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: undefined,
+                        requestBody: {
+                            string: "string",
+                            integer: 1,
+                            long: 1000000,
+                            double: 1.1,
+                            bool: true,
+                            datetime: "2024-01-15T09:30:00Z",
+                            date: "2023-01-15",
+                            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                            base64: "SGVsbG8gd29ybGQh",
+                            list: ["list", "list"],
+                            set: ["set"],
+                            map: {
+                                1: "map"
+                            },
+                            bigint: "1000000"
+                        }
                     }
                 }
             ]

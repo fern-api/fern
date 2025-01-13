@@ -49,7 +49,7 @@ export class JestTestGenerator {
                 preset: "ts-jest",
                 testEnvironment: "node",
                 moduleNameMapper: {
-                    '(.+)\\.js': '$1'
+                    '(.+)\\.js$': '$1'
                 }
             };
             `.toString({ dprintOptions: { indentWidth: 4 } })

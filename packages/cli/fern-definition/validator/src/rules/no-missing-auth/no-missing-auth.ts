@@ -10,7 +10,7 @@ export const NoMissingAuthRule: Rule = {
                     if (service.auth && !authIsDefined) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: "Service requires auth, but no auth is defined."
                             }
                         ];
@@ -21,7 +21,7 @@ export const NoMissingAuthRule: Rule = {
                     if (endpoint.auth != null && endpoint.auth && !authIsDefined) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: "Endpoint requires auth, but no auth is defined."
                             }
                         ];

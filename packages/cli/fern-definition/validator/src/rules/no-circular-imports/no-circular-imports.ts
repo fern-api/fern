@@ -36,7 +36,7 @@ export const NoCircularImportsRule: Rule = {
                     );
 
                     return circularImportsToReport.map((circularImport) => ({
-                        severity: "error",
+                        severity: "fatal",
                         message:
                             circularImport.chainWithoutStartingFilepath.length === 0
                                 ? "A file cannot import itself"

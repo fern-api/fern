@@ -19,7 +19,7 @@ export const NoExtensionsWithFileUploadRule: Rule = {
 
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message: "Request body extensions are not supported for file-upload requests."
                         }
                     ];

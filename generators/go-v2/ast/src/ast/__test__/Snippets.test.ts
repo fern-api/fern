@@ -276,7 +276,7 @@ describe("Snippets", () => {
         file.write("var value = ");
         file.writeNode(giveNode);
 
-        const content = await file.toString();
+        const content = await file.toStringAsync();
         expect(content).toMatchSnapshot();
     });
 });

@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.46.7] - 2025-01-09
+
+- Fix: Simplify runtime detection to reduce the chance of using an unsupported API like `process.`
+  Detect Edge Runtime by Vercel.
+
+## [0.46.6] - 2025-01-09
+
+- Fix: Update `@types/node` to `18+`, required for the generated `Node18UniversalStreamWrapper` test.
+
+## [0.46.5] - 2025-01-09
+
+- Fix: Fix the webpack test to work with .js/.jsx extensions in TypeScript
+- Fix: Only map .js modules in Jest, not .json files.
+
+## [0.46.4] - 2025-01-09
+
+- Fix: Fix packageJson custom configuration & package.json types field.
+
 ## [0.46.3] - 2025-01-09
 
 - Fix: Revert to using legacy exports by default.

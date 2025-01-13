@@ -11,7 +11,7 @@ export const NoGetRequestBodyRule: Rule = {
                     if (endpoint.method === "GET" && getRequestBody(endpoint) != null) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: "Endpoint is a GET, so it cannot have a request body."
                             }
                         ];
