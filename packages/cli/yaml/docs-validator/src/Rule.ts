@@ -1,3 +1,4 @@
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
@@ -15,6 +16,7 @@ export type RuleVisitor<AstNodeTypes> = {
 export interface RuleContext {
     workspace: DocsWorkspace;
     fernWorkspaces: FernWorkspace[];
+    ossWorkspaces: OSSWorkspace[];
     logger: Logger;
 }
 
