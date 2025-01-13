@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Playlist {
     export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
@@ -64,7 +66,9 @@ export class Playlist {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/create`,
             ),
             method: "POST",
@@ -163,7 +167,9 @@ export class Playlist {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/all`,
             ),
             method: "GET",
@@ -236,7 +242,9 @@ export class Playlist {
     ): Promise<SeedTrace.Playlist> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`,
             ),
             method: "GET",
@@ -321,7 +329,9 @@ export class Playlist {
     ): Promise<SeedTrace.Playlist | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`,
             ),
             method: "PUT",
@@ -398,7 +408,9 @@ export class Playlist {
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`,
             ),
             method: "DELETE",

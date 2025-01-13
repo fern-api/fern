@@ -15,6 +15,8 @@ import { Union } from "../resources/union/client/Client";
 export declare namespace Endpoints {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 

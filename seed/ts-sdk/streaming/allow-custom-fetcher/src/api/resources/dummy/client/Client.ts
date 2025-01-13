@@ -12,6 +12,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Dummy {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         fetcher?: core.FetchFunction;
     }
 
@@ -35,7 +37,11 @@ export class Dummy {
         requestOptions?: Dummy.RequestOptions,
     ): Promise<core.Stream<SeedStreaming.StreamResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "generate-stream"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "generate-stream",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -112,7 +118,11 @@ export class Dummy {
         requestOptions?: Dummy.RequestOptions,
     ): Promise<SeedStreaming.StreamResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "generate"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "generate",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

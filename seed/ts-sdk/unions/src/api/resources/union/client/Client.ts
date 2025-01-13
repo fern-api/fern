@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Union {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -37,7 +39,11 @@ export class Union {
      */
     public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/${encodeURIComponent(id)}`,
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -97,7 +103,9 @@ export class Union {
      */
     public async update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "PATCH",
             headers: {
                 "X-Fern-Language": "JavaScript",

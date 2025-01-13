@@ -9,6 +9,8 @@ import { Problem } from "../resources/problem/client/Client";
 export declare namespace V3 {
     export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;

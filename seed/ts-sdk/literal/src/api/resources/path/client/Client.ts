@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Path {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
@@ -45,7 +47,11 @@ export class Path {
      */
     public async send(id: "123", requestOptions?: Path.RequestOptions): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `path/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `path/${encodeURIComponent(id)}`,
+            ),
             method: "POST",
             headers: {
                 "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",

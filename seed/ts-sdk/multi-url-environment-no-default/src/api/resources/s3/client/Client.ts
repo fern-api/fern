@@ -15,6 +15,8 @@ export declare namespace S3 {
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
         >;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
@@ -47,7 +49,11 @@ export class S3 {
         requestOptions?: S3.RequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin((await core.Supplier.get(this._options.environment)).s3, "/s3/presigned-url"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).s3,
+                "/s3/presigned-url",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

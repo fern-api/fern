@@ -10,6 +10,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace NoReqBody {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -38,7 +40,11 @@ export class NoReqBody {
         requestOptions?: NoReqBody.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-req-body",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -90,7 +96,11 @@ export class NoReqBody {
      */
     public async postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-req-body",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

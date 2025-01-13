@@ -8,6 +8,8 @@ import { Service } from "./api/resources/service/client/Client";
 export declare namespace SeedFileDownloadClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {

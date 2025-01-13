@@ -10,6 +10,8 @@ import { Folder } from "./api/resources/folder/client/Client";
 export declare namespace SeedApiClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -46,7 +48,9 @@ export class SeedApiClient {
      */
     public async foo(requestOptions?: SeedApiClient.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
