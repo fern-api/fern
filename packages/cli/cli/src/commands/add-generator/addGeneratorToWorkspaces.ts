@@ -49,7 +49,11 @@ export async function addGeneratorToWorkspaces({
                     return;
                 }
 
-                await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(newConfiguration));
+                await writeFile(
+                    absolutePathToGeneratorsConfiguration,
+                    "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
+                        yaml.dump(newConfiguration)
+                );
                 context.logger.info(chalk.green(`Added ${generatorName} generator`));
             });
         })

@@ -132,7 +132,8 @@ async function writeGeneratorsConfiguration({
 }): Promise<void> {
     await writeFile(
         filepath,
-        yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
+        "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
+            yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
     );
 }
 

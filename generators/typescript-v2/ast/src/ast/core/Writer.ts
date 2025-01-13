@@ -1,4 +1,4 @@
-import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
+import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/browser-compatible-base-generator";
 
 import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema";
 import { Reference } from "../Reference";
@@ -8,20 +8,29 @@ type Alias = string;
 
 export declare namespace Writer {
     interface Args {
+        /* Custom generator config */
         customConfig: TypescriptCustomConfigSchema | undefined;
+        /* Formatter used to format TypeScript source files */
+        formatter?: AbstractFormatter;
     }
 }
 
 export class Writer extends AbstractWriter {
+    /* Custom generator config */
     public customConfig: TypescriptCustomConfigSchema | undefined;
+    /* Formatter used to format Go source files */
+    public formatter: AbstractFormatter;
+
+    /* Import statements */
     protected imports: Record<ModuleName, Reference[]> = {};
     protected defaultImports: Record<ModuleName, Reference> = {};
     protected starImportAliases: Record<ModuleName, Alias> = {};
     protected starImportAliasesInverse: Record<Alias, ModuleName> = {};
 
-    constructor({ customConfig }: Writer.Args) {
+    constructor({ customConfig, formatter }: Writer.Args) {
         super();
         this.customConfig = customConfig;
+        this.formatter = formatter ?? new NopFormatter();
     }
 
     /**
@@ -122,51 +131,5 @@ export class Writer extends AbstractWriter {
                     "module in the same file"
             );
         }
-    }
-
-    public toString(): string {
-        const imports = this.stringifyImports();
-        if (imports.length > 0) {
-            return imports + "\n" + this.buffer;
-        }
-        return this.buffer;
-    }
-
-    private stringifyImports(): string {
-        let result = "";
-        for (const [module, references] of Object.entries(this.imports)) {
-            const defaultImport = this.defaultImports[module];
-            let stringifiedNonDefault = "";
-            const named = references.filter((r) => r.importFrom?.type === "named");
-            const starImportAlias = this.starImportAliases[module];
-            if (named.length > 0 || defaultImport != null || starImportAlias != null) {
-                result += "import";
-                if (defaultImport != null) {
-                    result += ` ${defaultImport.name}`;
-                }
-                if (named.length > 0) {
-                    for (const ref of named.slice(0, -1)) {
-                        stringifiedNonDefault += `${ref.name}, `;
-                    }
-                    const lastRef = named[named.length - 1];
-                    // Need for eslint; lastRef will not be null because length > 0
-                    if (lastRef != null) {
-                        stringifiedNonDefault += `${lastRef.name}`;
-                    }
-                    if (defaultImport != null) {
-                        result += ",";
-                    }
-                    result += ` { ${stringifiedNonDefault} }`;
-                }
-                if (starImportAlias != null) {
-                    if (defaultImport != null || named.length > 0) {
-                        result += ", ";
-                    }
-                    result += ` * as ${starImportAlias}`;
-                }
-                result += ` from "${module}";\n`;
-            }
-        }
-        return result;
     }
 }

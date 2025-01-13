@@ -59,12 +59,13 @@ export class Function extends AstNode {
             writer.write("()");
             return;
         }
+        writer.indent();
         writer.writeLine("(");
-        writer.delimit({
-            nodes: this.parameters,
-            delimiter: ",\n",
-            writeFunction: (parameter) => parameter.writeWithType(writer)
-        });
+        for (const parameter of this.parameters) {
+            writer.writeNode(parameter);
+            writer.writeLine(",");
+        }
+        writer.dedent();
         writer.write(")");
     }
 }

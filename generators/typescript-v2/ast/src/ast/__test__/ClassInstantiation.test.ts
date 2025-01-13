@@ -2,27 +2,27 @@ import { ts } from "../..";
 
 describe("ClassInstantiation", () => {
     describe("new Instantiation", () => {
-        it("Should generate a new instantiation without arguments", () => {
+        it("Should generate a new instantiation without arguments", async () => {
             const actual = ts.instantiateClass({
                 class_: ts.reference({ name: "TestClass" }),
                 arguments_: []
             });
-            expect(actual.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("new Instantiation with arguments", () => {
-        it("Should generate a new instantiation with arguments", () => {
+        it("Should generate a new instantiation with arguments", async () => {
             const actual = ts.instantiateClass({
                 class_: ts.reference({ name: "TestClass" }),
                 arguments_: [ts.TypeLiteral.string("https://api.example.com")]
             });
-            expect(actual.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 
     describe("new Instantiation with 2 arguments", () => {
-        it("Should generate a new instantiation with arguments", () => {
+        it("Should generate a new instantiation with arguments", async () => {
             const actual = ts.instantiateClass({
                 class_: ts.reference({ name: "TestClass" }),
                 arguments_: [
@@ -30,7 +30,7 @@ describe("ClassInstantiation", () => {
                     ts.TypeLiteral.string("https://api.otherexample.com")
                 ]
             });
-            expect(actual.toStringFormatted({ customConfig: {} })).toMatchSnapshot();
+            expect(await actual.toStringAsync({ customConfig: {} })).toMatchSnapshot();
         });
     });
 });

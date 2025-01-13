@@ -174,6 +174,10 @@ export class AbstractWriter {
         }
     }
 
+    public toString(): string {
+        return this.buffer;
+    }
+
     /*******************************
      * Helper Methods
      *******************************/
