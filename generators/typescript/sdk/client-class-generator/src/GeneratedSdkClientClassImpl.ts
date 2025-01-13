@@ -1190,7 +1190,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                 )
             ),
-            hasQuestionToken: true
+            hasQuestionToken: true,
+            docs: ["Specify a custom URL to connect the client to."]
         });
 
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
