@@ -2293,6 +2293,9 @@ importers:
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
+      '@fern-typescript/contexts':
+        specifier: workspace:*
+        version: link:../../utils/contexts
       '@fern-typescript/resolvers':
         specifier: workspace:*
         version: link:../../utils/resolvers

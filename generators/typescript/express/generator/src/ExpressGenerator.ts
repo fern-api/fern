@@ -564,7 +564,9 @@ export class ExpressGenerator {
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
             useBigInt: this.config.useBigInt,
-            enableInlineTypes: false
+            enableInlineTypes: false,
+            allowExtraFields: this.config.allowExtraFields,
+            omitUndefined: false
         });
     }
 }

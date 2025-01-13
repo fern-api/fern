@@ -171,42 +171,13 @@ export function appendPropertyToFormData({
                     statement = ts.factory.createIfStatement(condition, statement);
                 }
             } else {
-                const namedType =
-                    property.valueType.type === "container"
-                        ? property.valueType.container.type === "optional"
-                            ? property.valueType.container.optional.type === "named"
-                                ? property.valueType.container.optional
-                                : undefined
-                            : undefined
-                        : property.valueType.type === "named"
-                          ? property.valueType
-                          : undefined;
-                if (namedType && includeSerdeLayer) {
-                    const typeDeclaration = context.type.getTypeDeclaration(namedType);
-                    statement = context.coreUtilities.formDataUtils.append({
-                        referencetoFormData: referenceToFormData,
-                        key: property.name.wireValue,
-                        value: context.typeSchema
-                            .getSchemaOfTypeReference(property.valueType)
-                            .jsonOrThrow(referenceToBodyProperty, {
-                                ...getSchemaOptions({
-                                    allowExtraFields:
-                                        allowExtraFields ??
-                                        (typeDeclaration.shape.type === "object" &&
-                                            typeDeclaration.shape.extraProperties),
-                                    omitUndefined: omitUndefined
-                                })
-                            })
-                    });
-                } else {
-                    statement = context.coreUtilities.formDataUtils.append({
-                        referencetoFormData: referenceToFormData,
-                        key: property.name.wireValue,
-                        value: context.type.stringify(referenceToBodyProperty, property.valueType, {
-                            includeNullCheckIfOptional: false
-                        })
-                    });
-                }
+                statement = context.coreUtilities.formDataUtils.append({
+                    referencetoFormData: referenceToFormData,
+                    key: property.name.wireValue,
+                    value: context.type.stringify(referenceToBodyProperty, property.valueType, {
+                        includeNullCheckIfOptional: false
+                    })
+                });
             }
 
             if (context.type.getReferenceToType(property.valueType).isOptional) {

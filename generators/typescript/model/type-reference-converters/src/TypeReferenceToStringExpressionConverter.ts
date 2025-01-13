@@ -1,3 +1,4 @@
+import { getSchemaOptions } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
 import {
@@ -24,7 +25,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         const type = params.typeReference;
         const isNullable = TypeReference._visit(type, {
             named: (typeName) => {
-                const resolvedType = this.typeResolver.resolveTypeName(typeName);
+                const resolvedType = this.context.type.resolveTypeName(typeName);
                 return resolvedType.type === "container" && resolvedType.container.type === "optional";
             },
             container: (container) => container.type === "optional",
@@ -57,7 +58,23 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         typeName: DeclaredTypeName,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        const resolvedType = this.typeResolver.resolveTypeName(typeName);
+        if (this.includeSerdeLayer) {
+            return (reference) => {
+                const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
+                return this.context.typeSchema
+                    .getSchemaOfNamedType(typeName, { isGeneratingSchema: false })
+                    .jsonOrThrow(reference, {
+                        ...getSchemaOptions({
+                            allowExtraFields:
+                                this.allowExtraFields ??
+                                (typeDeclaration.shape.type === "object" && typeDeclaration.shape.extraProperties),
+                            omitUndefined: this.omitUndefined
+                        })
+                    });
+            };
+        }
+
+        const resolvedType = this.context.type.resolveTypeName(typeName);
         return ResolvedTypeReference._visit<(reference: ts.Expression) => ts.Expression>(resolvedType, {
             container: (containerType) =>
                 ContainerType._visit(containerType, {

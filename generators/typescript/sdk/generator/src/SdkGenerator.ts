@@ -1314,7 +1314,8 @@ export class SdkGenerator {
             generateOAuthClients: this.generateOAuthClients,
             omitUndefined: this.config.omitUndefined,
             useBigInt: this.config.useBigInt,
-            neverThrowErrors: this.config.neverThrowErrors
+            neverThrowErrors: this.config.neverThrowErrors,
+            allowExtraFields: this.config.allowExtraFields
         });
     }
 }
