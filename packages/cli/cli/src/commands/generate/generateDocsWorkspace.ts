@@ -1,12 +1,12 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { isNonNullish } from "@fern-api/core-utils";
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 
 import { CliContext } from "../../cli-context/CliContext";
-import { filterOssWorkspaces } from "../../utils/filterOssWorkspaces";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function generateDocsWorkspace({
@@ -59,6 +59,7 @@ export async function generateDocsWorkspace({
             context,
             logWarnings: false,
             fernWorkspaces,
+            ossWorkspaces: await filterOssWorkspaces(project),
             errorOnBrokenLinks: false
         });
 

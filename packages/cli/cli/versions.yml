@@ -3,6 +3,13 @@
       The IR now pulls in additional request properties from the OAuth getToken endpoint to support custom OAuth schemas.
     type: feat
   irVersion: 54
+  version: 0.47.6
+
+- changelogEntry:
+  - summary: |
+      Fixes an issue with broken link checking in the OpenAPI v2 parser.
+    type: feat
+  irVersion: 53
   version: 0.47.5
 
 - changelogEntry:

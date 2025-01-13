@@ -2,3 +2,4 @@ export { DocsDefinitionResolver, type UploadedFile } from "./DocsDefinitionResol
 export { wrapWithHttps } from "./wrapWithHttps";
 export { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
+export { filterOssWorkspaces } from "./utils/filterOssWorkspaces";

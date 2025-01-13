@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { isNonNullish } from "@fern-api/core-utils";
-import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -48,16 +48,7 @@ export async function getPreviewDocsDefinition({
         )
     );
 
-    const ossWorkspaces = (
-        await Promise.all(
-            apiWorkspaces.map(async (workspace) => {
-                if (workspace instanceof OSSWorkspace) {
-                    return workspace as OSSWorkspace;
-                }
-                return null;
-            })
-        )
-    ).filter(isNonNullish);
+    const ossWorkspaces = await filterOssWorkspaces(project);
 
     const apiCollector = new ReferencedAPICollector(context);
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
