@@ -1,9 +1,8 @@
 import chalk from "chalk";
 import { randomUUID } from "crypto";
-import type { Position } from "unist";
 
 import { noop } from "@fern-api/core-utils";
-import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -22,12 +21,10 @@ const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
-    create: async ({ workspace, fernWorkspaces }) => {
+    create: async ({ workspace, fernWorkspaces, ossWorkspaces }) => {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
-
-        const ossWorkspaces: OSSWorkspace[] = [];
 
         const docsDefinitionResolver = new DocsDefinitionResolver(
             url,

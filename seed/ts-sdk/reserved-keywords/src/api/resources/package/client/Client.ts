@@ -9,6 +9,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Package {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -40,7 +42,9 @@ export class Package {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["for"] = for_;
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

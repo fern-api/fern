@@ -8,6 +8,8 @@ import { User } from "./api/resources/user/client/Client";
 export declare namespace SeedVersionClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         xApiVersion: "1.0.0" | "2.0.0" | "latest";
     }

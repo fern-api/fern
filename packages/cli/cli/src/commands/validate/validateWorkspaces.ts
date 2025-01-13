@@ -1,3 +1,4 @@
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 
@@ -29,6 +30,7 @@ export async function validateWorkspaces({
                         return workspace.toFernWorkspace({ context });
                     })
                 ),
+                ossWorkspaces: await filterOssWorkspaces(project),
                 errorOnBrokenLinks
             });
         });

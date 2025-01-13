@@ -9,6 +9,8 @@ import { Dummy } from "./api/resources/dummy/client/Client";
 export declare namespace SeedSingleUrlEnvironmentNoDefaultClient {
     export interface Options {
         environment: core.Supplier<environments.SeedSingleUrlEnvironmentNoDefaultEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 

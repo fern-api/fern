@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace PathParam {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -43,7 +45,8 @@ export class PathParam {
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `path/${encodeURIComponent(serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(serializers.ColorOrOperand.jsonOrThrow(operandOrColor))}`,
             ),
             method: "POST",

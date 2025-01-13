@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace User {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         tenant_id: string;
     }
 
@@ -44,7 +46,8 @@ export class User {
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenant_id)}/user/${encodeURIComponent(user_id)}`,
             ),
             method: "GET",
@@ -112,7 +115,8 @@ export class User {
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenant_id)}/user/`,
             ),
             method: "POST",
@@ -185,7 +189,8 @@ export class User {
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenant_id)}/user/${encodeURIComponent(user_id)}`,
             ),
             method: "PATCH",
@@ -261,7 +266,8 @@ export class User {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenant_id)}/user/${encodeURIComponent(user_id)}/search`,
             ),
             method: "GET",

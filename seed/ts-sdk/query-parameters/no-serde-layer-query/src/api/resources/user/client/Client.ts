@@ -10,6 +10,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace User {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -86,7 +88,11 @@ export class User {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/user"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/user",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

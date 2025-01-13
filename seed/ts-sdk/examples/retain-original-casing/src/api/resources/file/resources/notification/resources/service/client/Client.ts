@@ -12,6 +12,8 @@ import * as errors from "../../../../../../../../errors/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -43,7 +45,8 @@ export class Service {
     ): Promise<SeedExamples.Exception> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/file/notification/${encodeURIComponent(notificationId)}`,
             ),
             method: "GET",

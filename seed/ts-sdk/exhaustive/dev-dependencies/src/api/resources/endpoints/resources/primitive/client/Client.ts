@@ -10,6 +10,8 @@ import urlJoin from "url-join";
 export declare namespace Primitive {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -40,7 +42,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnString.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/string"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/string",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -91,7 +97,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnInt.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/integer"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/integer",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -142,7 +152,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnLong.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/long"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/long",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -193,7 +207,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnDouble.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/double"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/double",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -244,7 +262,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<boolean, Fiddle.endpoints.primitive.getAndReturnBool.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/boolean"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/boolean",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -295,7 +317,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<Date, Fiddle.endpoints.primitive.getAndReturnDatetime.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/datetime"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/datetime",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -346,7 +372,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDate.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/date"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/date",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -397,7 +427,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnUuid.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/uuid"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/uuid",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -448,7 +482,11 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnBase64.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/base64"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/base64",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

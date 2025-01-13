@@ -9,6 +9,8 @@ import { Service } from "../resources/service/client/Client";
 export declare namespace FolderD {
     export interface Options {
         environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
