@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      The Mintlify docs importer now correctly generates the proper display-name key in the docs.yml file.
+    type: fix
+  irVersion: 54
+  version: 0.47.7
+
+- changelogEntry:
+  - summary: |
       The IR now pulls in additional request properties from the OAuth getToken endpoint to support custom OAuth schemas.
     type: feat
   irVersion: 54
