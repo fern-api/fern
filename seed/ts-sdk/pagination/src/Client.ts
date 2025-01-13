@@ -8,6 +8,7 @@ import { Users } from "./api/resources/users/client/Client";
 export declare namespace SeedPaginationClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 

@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace CustomAuth {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         customAuthScheme: core.Supplier<string>;
     }
 

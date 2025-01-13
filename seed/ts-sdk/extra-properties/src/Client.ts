@@ -8,6 +8,7 @@ import { User } from "./api/resources/user/client/Client";
 export declare namespace SeedExtraPropertiesClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {

@@ -9,6 +9,7 @@ import { User } from "./api/resources/user/client/Client";
 export declare namespace SeedPathParametersClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         tenant_id: string;
     }
 

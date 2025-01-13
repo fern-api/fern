@@ -12,6 +12,7 @@ import { Service } from "./api/resources/service/client/Client";
 export declare namespace SeedPackageYmlClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         id: string;
     }
 

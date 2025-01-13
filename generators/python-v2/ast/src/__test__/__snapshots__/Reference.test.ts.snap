@@ -31,11 +31,6 @@ exports[`Reference > toString > handles deeply nested module path 1`] = `
 `;
 
 exports[`Reference > toString > handles dict with reference as inner type 1`] = `
-"Union[InnerClass, str]
-"
-`;
-
-exports[`Reference > toString > handles dict with reference as inner type 2`] = `
 "DictClass[Dict[str, InnerClass]]
 "
 `;
@@ -62,6 +57,11 @@ exports[`Reference > toString > handles single-level module path 1`] = `
 
 exports[`Reference > toString > handles tuple with reference as inner type 1`] = `
 "Tuple[InnerClass, str]
+"
+`;
+
+exports[`Reference > toString > handles union with reference as inner type 1`] = `
+"Union[InnerClass, str]
 "
 `;
 

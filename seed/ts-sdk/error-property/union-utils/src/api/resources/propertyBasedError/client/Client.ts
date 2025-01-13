@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace PropertyBasedError {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {

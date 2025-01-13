@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace User {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         tenant_id: string;
     }
 
@@ -44,8 +45,8 @@ export class User {
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenant_id)}/user/${encodeURIComponent(user_id)}`,
             ),
             method: "GET",
             headers: {
@@ -112,8 +113,8 @@ export class User {
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenant_id)}/user/`,
             ),
             method: "POST",
             headers: {
@@ -185,8 +186,8 @@ export class User {
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenant_id)}/user/${encodeURIComponent(user_id)}`,
             ),
             method: "PATCH",
             headers: {
@@ -261,8 +262,8 @@ export class User {
 
         const _response = await core.fetcher({
             url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenant_id)}/user/${encodeURIComponent(user_id)}/search`,
             ),
             method: "GET",
             headers: {

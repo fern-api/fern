@@ -10,6 +10,7 @@ import { QueryParam } from "./api/resources/queryParam/client/Client";
 export declare namespace SeedEnumClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {

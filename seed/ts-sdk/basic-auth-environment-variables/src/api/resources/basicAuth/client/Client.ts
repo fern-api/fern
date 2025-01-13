@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace BasicAuth {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
         password?: core.Supplier<string | undefined>;
     }

@@ -33,6 +33,17 @@ exports[`Method > toString > should generate a method with a specified return ty
 "
 `;
 
+exports[`Method > toString > should generate a method with local classes 1`] = `
+"def method_with_local_classes():
+    class ChildClass(ParentClass):
+        def child_method(self: str):
+            self.parent_method()
+            return "Child method called"
+
+    return ChildClass()
+"
+`;
+
 exports[`Method > toString > should generate a method with multiple arguments 1`] = `
 "def multi_args(arg1: str, arg2: int):
     pass

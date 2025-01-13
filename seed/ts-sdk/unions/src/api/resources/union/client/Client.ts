@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Union {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -37,7 +38,10 @@ export class Union {
      */
     public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -97,7 +101,10 @@ export class Union {
      */
     public async update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "PATCH",
             headers: {
                 "X-Fern-Language": "JavaScript",

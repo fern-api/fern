@@ -9,6 +9,7 @@ import { User } from "./api/resources/user/client/Client";
 export declare namespace SeedAnyAuthClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         clientId?: core.Supplier<string>;
         clientSecret?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;

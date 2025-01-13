@@ -76,13 +76,6 @@ cars: List[Car] = [Car(), Car()]
 `;
 
 exports[`PythonFile > Ensure we don't duplicate imports 1`] = `
-"from typing import Union, List, Set
-
-variable: Union[List[str], Set[str]]
-"
-`;
-
-exports[`PythonFile > Ensure we don't duplicate imports 2`] = `
 "from typing import List
 
 var_a: List[str]
@@ -95,6 +88,13 @@ exports[`PythonFile > Initialize with a statement containing a reference 1`] = `
 "from uuid import UUID
 
 my_id = UUID("1234")
+"
+`;
+
+exports[`PythonFile > Multiple imports from the same module should work 1`] = `
+"from typing import Union, List, Set
+
+variable: Union[List[str], Set[str]]
 "
 `;
 

@@ -10,6 +10,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace QueryParam {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -56,7 +57,10 @@ export class QueryParam {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -153,7 +157,10 @@ export class QueryParam {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query-list"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

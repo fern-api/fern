@@ -8,6 +8,7 @@ import { Service } from "./api/resources/service/client/Client";
 export declare namespace SeedResponsePropertyClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {

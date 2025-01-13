@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Organizations {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         tenant_id: string;
     }
 
@@ -42,8 +43,8 @@ export class Organizations {
     ): Promise<SeedPathParameters.Organization> {
         const _response = await core.fetcher({
             url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organization_id)}/`,
             ),
             method: "GET",
             headers: {
@@ -111,8 +112,8 @@ export class Organizations {
     ): Promise<SeedPathParameters.User> {
         const _response = await core.fetcher({
             url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organization_id)}/users/${encodeURIComponent(user_id)}`,
             ),
             method: "GET",
             headers: {
@@ -186,8 +187,8 @@ export class Organizations {
 
         const _response = await core.fetcher({
             url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
                 await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organization_id)}/search`,
             ),
             method: "GET",
             headers: {

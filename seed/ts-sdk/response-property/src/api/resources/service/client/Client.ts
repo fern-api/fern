@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -40,7 +41,10 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -101,7 +105,10 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -162,7 +169,10 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.StringResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -223,7 +233,10 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.Response> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -286,7 +299,10 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.Response | undefined> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -349,7 +365,10 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.OptionalWithDocs | undefined> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -412,7 +431,10 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedResponseProperty.OptionalStringResponse | undefined> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
+                await core.Supplier.get(this._options.environment),
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

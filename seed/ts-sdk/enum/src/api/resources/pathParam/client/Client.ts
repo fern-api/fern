@@ -4,13 +4,13 @@
 
 import * as core from "../../../../core";
 import * as SeedEnum from "../../../index";
-import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace PathParam {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -43,8 +43,8 @@ export class PathParam {
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ?? null,
                 await core.Supplier.get(this._options.environment),
-                `path/${encodeURIComponent(serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(serializers.ColorOrOperand.jsonOrThrow(operandOrColor))}`,
             ),
             method: "POST",
             headers: {

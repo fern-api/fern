@@ -8,6 +8,7 @@ import { BasicAuth } from "./api/resources/basicAuth/client/Client";
 export declare namespace SeedBasicAuthClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         username: core.Supplier<string>;
         password: core.Supplier<string>;
     }

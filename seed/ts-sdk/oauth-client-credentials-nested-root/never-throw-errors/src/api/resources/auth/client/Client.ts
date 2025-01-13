@@ -10,6 +10,7 @@ import urlJoin from "url-join";
 export declare namespace Auth {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 

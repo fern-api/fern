@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Auth {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         apiKey?: core.Supplier<string | undefined>;
     }

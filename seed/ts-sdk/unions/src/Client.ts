@@ -8,6 +8,7 @@ import { Union } from "./api/resources/union/client/Client";
 export declare namespace SeedUnionsClient {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {

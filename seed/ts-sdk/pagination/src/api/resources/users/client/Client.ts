@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Users {
     export interface Options {
         environment: core.Supplier<string>;
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 

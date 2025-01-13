@@ -10,6 +10,11 @@ exports[`TypeInstantiation > bool > true 1`] = `
 "
 `;
 
+exports[`TypeInstantiation > bytes 1`] = `
+"b"world"
+"
+`;
+
 exports[`TypeInstantiation > dict > should correctly write a dict with primitives 1`] = `
 "{"one": 1, "two": True}
 "
@@ -39,11 +44,6 @@ exports[`TypeInstantiation > int 1`] = `
 `;
 
 exports[`TypeInstantiation > list > basic 1`] = `
-"b"world"
-"
-`;
-
-exports[`TypeInstantiation > list > basic 2`] = `
 "[1, "two", True]
 "
 `;
