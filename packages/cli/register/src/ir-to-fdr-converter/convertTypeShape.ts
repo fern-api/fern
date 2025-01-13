@@ -282,6 +282,7 @@ function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         primitive != null && primitive.type === "string" ? primitive.validation : undefined;
     return {
         type: "string",
+        format: rules != null ? rules.format : undefined,
         regex: rules != null ? rules.pattern : undefined,
         minLength: rules != null ? rules.minLength : undefined,
         maxLength: rules != null ? rules.maxLength : undefined,
