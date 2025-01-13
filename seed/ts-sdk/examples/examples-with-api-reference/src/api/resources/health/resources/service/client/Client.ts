@@ -11,6 +11,8 @@ import * as serializers from "../../../../../../serialization/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -43,7 +45,11 @@ export class Service {
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/check/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/check/${encodeURIComponent(id)}`,
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -97,7 +103,11 @@ export class Service {
      */
     public async ping(requestOptions?: Service.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/ping"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/ping",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

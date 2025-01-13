@@ -10,6 +10,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Organizations {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         tenantId: string;
     }
 
@@ -41,7 +43,8 @@ export class Organizations {
     ): Promise<SeedPathParameters.Organization> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/`,
             ),
             method: "GET",
@@ -105,7 +108,8 @@ export class Organizations {
         const { organization_id: organizationId, user_id: userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/users/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
@@ -175,7 +179,8 @@ export class Organizations {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/search`,
             ),
             method: "GET",

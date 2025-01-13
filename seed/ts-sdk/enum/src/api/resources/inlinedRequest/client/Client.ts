@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace InlinedRequest {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -43,7 +45,11 @@ export class InlinedRequest {
         requestOptions?: InlinedRequest.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "inlined"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "inlined",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

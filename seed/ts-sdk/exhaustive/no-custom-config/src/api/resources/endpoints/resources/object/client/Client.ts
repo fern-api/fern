@@ -11,6 +11,8 @@ import * as errors from "../../../../../../errors/index";
 export declare namespace Object_ {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -58,7 +60,8 @@ export class Object_ {
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-with-optional-field",
             ),
             method: "POST",
@@ -127,7 +130,8 @@ export class Object_ {
     ): Promise<SeedExhaustive.types.ObjectWithRequiredField> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-with-required-field",
             ),
             method: "POST",
@@ -199,7 +203,11 @@ export class Object_ {
         requestOptions?: Object_.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithMapOfMap> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-with-map-of-map"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-map-of-map",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -283,7 +291,8 @@ export class Object_ {
     ): Promise<SeedExhaustive.types.NestedObjectWithOptionalField> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-nested-with-optional-field",
             ),
             method: "POST",
@@ -373,7 +382,8 @@ export class Object_ {
     ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`,
             ),
             method: "POST",
@@ -480,7 +490,8 @@ export class Object_ {
     ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-nested-with-required-field-list",
             ),
             method: "POST",
