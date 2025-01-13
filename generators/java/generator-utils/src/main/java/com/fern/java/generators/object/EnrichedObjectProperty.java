@@ -35,6 +35,8 @@ public interface EnrichedObjectProperty {
 
     Optional<Literal> literal();
 
+    ObjectProperty objectProperty();
+
     @Value.Lazy
     default Optional<FieldSpec> fieldSpec() {
         if (literal().isPresent()) {
@@ -103,6 +105,7 @@ public interface EnrichedObjectProperty {
                 .pascalCaseKey(name.getPascalCase().getSafeName())
                 .poetTypeName(poetTypeName)
                 .fromInterface(fromInterface)
+                .objectProperty(objectProperty)
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)

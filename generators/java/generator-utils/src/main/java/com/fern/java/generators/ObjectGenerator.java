@@ -82,15 +82,14 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
         if (selfInterface.isEmpty()) {
             enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
-                    .map(objectProperty -> {
-                        EnrichedObjectProperty enrichedObjectProperty = EnrichedObjectProperty.of(
-                                objectProperty,
-                                false,
-                                poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
-                        objectPropertyGetters.put(objectProperty, enrichedObjectProperty);
-                        return enrichedObjectProperty;
-                    })
+                    .map(objectProperty -> EnrichedObjectProperty.of(
+                            objectProperty,
+                            false,
+                            poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType())))
                     .collect(Collectors.toList());
+            for (EnrichedObjectProperty enrichedObjectProperty : enrichedObjectProperties) {
+                objectPropertyGetters.put(enrichedObjectProperty.objectProperty(), enrichedObjectProperty);
+            }
         }
         List<ImplementsInterface> implementsInterfaces = new ArrayList<>();
         getUniqueAncestorsInLevelOrder().stream()
