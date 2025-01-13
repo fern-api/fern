@@ -194,10 +194,14 @@ You can override the site-wide logo for a page by setting a field named `logo` i
 ```mdx
 ---
 logo:
-  light: /path/to/page-logo.png
-  dark: /path/to/page-logo.png
+  light: https://link-to-image.com/image-light-mode.png
+  dark: https://link-to-image.com/image-dark-mode.png
 ---
 ```
+
+<Info>
+Currently, relative paths are _not_ supported for this field.
+</Info>
 
 </CodeBlock>
 
