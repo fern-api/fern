@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace User {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
@@ -42,7 +44,8 @@ export class User {
     public async getUser(userId: SeedVersion.UserId, requestOptions?: User.RequestOptions): Promise<SeedVersion.User> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`,
             ),
             method: "GET",

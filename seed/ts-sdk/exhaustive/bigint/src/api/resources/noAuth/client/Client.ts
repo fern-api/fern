@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace NoAuth {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -44,7 +46,11 @@ export class NoAuth {
      */
     public async postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/no-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-auth",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

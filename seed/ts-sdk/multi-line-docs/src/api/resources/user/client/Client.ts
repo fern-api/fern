@@ -11,6 +11,8 @@ import * as serializers from "../../../../serialization/index";
 export declare namespace User {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -41,7 +43,11 @@ export class User {
      */
     public async getUser(userId: string, requestOptions?: User.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `users/${encodeURIComponent(userId)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `users/${encodeURIComponent(userId)}`,
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -102,7 +108,11 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<SeedMultiLineDocs.User> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "users"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

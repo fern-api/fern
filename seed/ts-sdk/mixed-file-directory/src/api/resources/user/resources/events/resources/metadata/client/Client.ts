@@ -11,6 +11,8 @@ import * as errors from "../../../../../../../../errors/index";
 export declare namespace Metadata {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -47,7 +49,11 @@ export class Metadata {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["id"] = id;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/users/events/metadata/"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users/events/metadata/",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

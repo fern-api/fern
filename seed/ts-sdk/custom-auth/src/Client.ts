@@ -8,6 +8,8 @@ import { CustomAuth } from "./api/resources/customAuth/client/Client";
 export declare namespace SeedCustomAuthClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         customAuthScheme: core.Supplier<string>;
     }
 

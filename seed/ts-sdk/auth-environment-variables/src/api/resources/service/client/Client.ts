@@ -11,6 +11,8 @@ import * as SeedAuthEnvironmentVariables from "../../../index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
         /** Override the X-Another-Header header */
         xAnotherHeader: core.Supplier<string>;
@@ -47,7 +49,11 @@ export class Service {
      */
     public async getWithApiKey(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "apiKey"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "apiKey",
+            ),
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
@@ -115,7 +121,11 @@ export class Service {
     ): Promise<string> {
         const { xEndpointHeader } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "apiKeyInHeader"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "apiKeyInHeader",
+            ),
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),

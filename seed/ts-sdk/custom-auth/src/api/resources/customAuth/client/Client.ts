@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace CustomAuth {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         customAuthScheme: core.Supplier<string>;
     }
 
@@ -41,7 +43,11 @@ export class CustomAuth {
      */
     public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "custom-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "custom-auth",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -118,7 +124,11 @@ export class CustomAuth {
      */
     public async postWithCustomAuth(request?: unknown, requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "custom-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "custom-auth",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

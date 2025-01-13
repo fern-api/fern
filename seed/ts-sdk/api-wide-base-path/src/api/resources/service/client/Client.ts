@@ -9,6 +9,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Service {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         pathParam: string;
     }
 
@@ -44,7 +46,8 @@ export class Service {
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(serviceParam)}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`,
             ),
             method: "POST",

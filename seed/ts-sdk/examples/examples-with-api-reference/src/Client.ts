@@ -14,6 +14,8 @@ import { Service } from "./api/resources/service/client/Client";
 export declare namespace SeedExamplesClient {
     export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -57,7 +59,9 @@ export class SeedExamplesClient {
      */
     public async echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -119,7 +123,9 @@ export class SeedExamplesClient {
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): Promise<SeedExamples.Identifier> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

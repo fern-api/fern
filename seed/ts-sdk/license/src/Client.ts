@@ -9,6 +9,8 @@ import * as errors from "./errors/index";
 export declare namespace SeedLicenseClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -34,7 +36,11 @@ export class SeedLicenseClient {
      */
     public async get(requestOptions?: SeedLicenseClient.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
