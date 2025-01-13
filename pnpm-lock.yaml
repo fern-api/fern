@@ -5097,6 +5097,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../project-loader
       '@fern-api/register':
         specifier: workspace:*
         version: link:../register

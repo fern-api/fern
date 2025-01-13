@@ -1,3 +1,4 @@
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
@@ -27,7 +28,8 @@ export async function validateDocsBrokenLinks({
                 return workspace.toFernWorkspace({ context });
             })
         );
-        const violations = await validateDocsWorkspace(docsWorkspace, context, fernWorkspaces, true);
+        const ossWorkspaces = await filterOssWorkspaces(project);
+        const violations = await validateDocsWorkspace(docsWorkspace, context, fernWorkspaces, ossWorkspaces, true);
         logViolations({ violations, context, logWarnings: true, logSummary: true });
 
         if (violations.length > 0 && errorOnBrokenLinks) {

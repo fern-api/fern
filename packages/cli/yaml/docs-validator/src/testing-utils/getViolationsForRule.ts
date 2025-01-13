@@ -1,5 +1,6 @@
 import stripAnsi from "strip-ansi";
 
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadProjectFromDirectory } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -46,7 +47,8 @@ export async function getViolationsForRule({
         workspace: project.docsWorkspaces,
         context,
         rules: [rule],
-        fernWorkspaces
+        fernWorkspaces,
+        ossWorkspaces: await filterOssWorkspaces(project)
     });
 
     return violations.map((violation) => ({
