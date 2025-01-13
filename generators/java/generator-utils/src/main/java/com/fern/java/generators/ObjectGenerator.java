@@ -46,7 +46,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class ObjectGenerator extends AbstractFileGenerator {
+public final class ObjectGenerator extends AbstractTypeGenerator {
     private final ObjectTypeDeclaration objectTypeDeclaration;
     private final Optional<GeneratedJavaInterface> selfInterface;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
@@ -69,8 +69,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         this.allGeneratedInterfaces = allGeneratedInterfaces;
     }
 
-    @Override
-    public GeneratedObject generateFile() {
+    public GeneratedObject generateObject() {
         objectPropertyGetters = new HashMap<>();
         extendedPropertyGetters = new ArrayList<>();
         JavaFile javaFile =
@@ -141,6 +140,11 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
                 generatorContext.builderNotNullChecks());
         return genericObjectGenerator.generate();
+    }
+
+    @Override
+    public Map<String, TypeId> getTypeIdsByPropertyName() {
+        return Map.of();
     }
 
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(

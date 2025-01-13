@@ -156,7 +156,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 generatorContext,
                 allGeneratedInterfaces,
                 className);
-        GeneratedObject generatedObject = objectGenerator.generateFile();
+        GeneratedObject generatedObject = objectGenerator.generateObject();
         RequestBodyGetterFactory requestBodyGetterFactory =
                 new RequestBodyGetterFactory(objectProperties, generatedObject);
         return GeneratedWrappedRequest.builder()

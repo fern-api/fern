@@ -67,15 +67,7 @@ public final class TypesGenerator {
                                     false,
                                     typeDeclaration));
 
-                    return maybeTypeSpec.map(typeSpec -> typeDeclaration
-                            .getShape()
-                            .visit(new SingleTypeGenerator(
-                                    generatorContext,
-                                    typeDeclaration.getName(),
-                                    className,
-                                    generatedInterfaces,
-                                    false,
-                                    typeSpec)));
+                    return maybeTypeSpec.map(typeSpec -> AbstractTypeGenerator.generateFile(className, typeSpec));
                 })
                 .filter(Optional::isPresent)
                 .map(Optional::get)
