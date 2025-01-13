@@ -9,8 +9,8 @@ client.dataservice.upload(
 		)
 	]
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -28,8 +28,8 @@ client.dataservice.upload(
 	],
 	namespace="namespace"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -37,8 +37,8 @@ client.dataservice.upload(
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
 undefined
- 
-```                        
+
+```
 
 
 ```python
@@ -53,8 +53,8 @@ client.dataservice.delete(
 	delete_all=true,
 	namespace="namespace"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -62,8 +62,8 @@ client.dataservice.delete(
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
 undefined
- 
-```                        
+
+```
 
 
 ```python
@@ -71,8 +71,8 @@ undefined
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
 undefined
- 
-```                        
+
+```
 
 
 ```python
@@ -80,8 +80,8 @@ undefined
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
 undefined
- 
-```                        
+
+```
 
 
 ```python
@@ -92,8 +92,8 @@ client.dataservice.fetch(
 	ids="ids",
 	namespace="namespace"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -101,8 +101,8 @@ client.dataservice.fetch(
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
 undefined
- 
-```                        
+
+```
 
 
 ```python
@@ -115,8 +115,8 @@ client.dataservice.list(
 	pagination_token="paginationToken",
 	namespace="namespace"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -126,8 +126,8 @@ client = SeedApi(base_url="https://yourhost.com/path/to/api", )
 client.dataservice.query(
 	top_k=1
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -186,8 +186,8 @@ client.dataservice.query(
 		]
 	)
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -197,8 +197,8 @@ client = SeedApi(base_url="https://yourhost.com/path/to/api", )
 client.dataservice.update(
 	id="id"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -223,7 +223,7 @@ client.dataservice.update(
 		]
 	)
 )
- 
-```                        
+
+```
 
 
