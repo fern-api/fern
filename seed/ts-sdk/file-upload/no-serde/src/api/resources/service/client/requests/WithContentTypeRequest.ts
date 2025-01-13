@@ -7,5 +7,5 @@ import * as SeedFileUpload from "../../../../index";
 export interface WithContentTypeRequest {
     foo: string;
     bar: SeedFileUpload.MyObject;
-    fooBar?: SeedFileUpload.MyObject;
+    foo_bar?: SeedFileUpload.MyObject;
 }

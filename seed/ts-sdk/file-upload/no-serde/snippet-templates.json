@@ -141,7 +141,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "maybeString: $FERN_INPUT",
+                                        "templateString": "maybe_string: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -173,7 +173,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "maybeInteger: $FERN_INPUT",
+                                        "templateString": "maybe_integer: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -190,7 +190,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "optionalListOfStrings: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "optional_list_of_strings: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -217,7 +217,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "listOfObjects: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "list_of_objects: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -256,7 +256,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "optionalMetadata: $FERN_INPUT",
+                                        "templateString": "optional_metadata: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -277,7 +277,7 @@
                                             "FOO": "\"FOO\"",
                                             "BAR": "\"BAR\""
                                         },
-                                        "templateString": "optionalObjectType: $FERN_INPUT",
+                                        "templateString": "optional_object_type: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "BODY",
                                             "path": "optional_object_type",
@@ -290,7 +290,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "optionalId: $FERN_INPUT",
+                                        "templateString": "optional_id: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -694,7 +694,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "fooBar: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "foo_bar: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
                                         "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [

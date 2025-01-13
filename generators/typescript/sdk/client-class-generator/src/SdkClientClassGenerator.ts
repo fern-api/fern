@@ -122,7 +122,7 @@ export class SdkClientClassGenerator {
             inlineFileProperties: this.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: this.omitUndefined,
-            allowExtraFields: this.allowExtraFields,
+            allowExtraFields: this.allowExtraFields
         });
     }
 }

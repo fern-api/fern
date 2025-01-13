@@ -1,3 +1,4 @@
+import { getSchemaOptions } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -5,7 +6,6 @@ import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@
 
 import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter";
 import { getParameterNameForFile } from "./getParameterNameForFile";
-import { getSchemaOptions } from "@fern-typescript/commons";
 
 export function appendPropertyToFormData({
     property,
@@ -171,13 +171,17 @@ export function appendPropertyToFormData({
                     statement = ts.factory.createIfStatement(condition, statement);
                 }
             } else {
-                const namedType = property.valueType.type === "container" ?
-                                   (property.valueType.container.type === "optional" ?
-                                        (property.valueType.container.optional.type === "named" ?
-                                            property.valueType.container.optional : undefined) : undefined):
-                                property.valueType.type === "named" ?
-                                    property.valueType : undefined;
-                if(namedType && includeSerdeLayer){
+                const namedType =
+                    property.valueType.type === "container"
+                        ? property.valueType.container.type === "optional"
+                            ? property.valueType.container.optional.type === "named"
+                                ? property.valueType.container.optional
+                                : undefined
+                            : undefined
+                        : property.valueType.type === "named"
+                          ? property.valueType
+                          : undefined;
+                if (namedType && includeSerdeLayer) {
                     const typeDeclaration = context.type.getTypeDeclaration(namedType);
                     statement = context.coreUtilities.formDataUtils.append({
                         referencetoFormData: referenceToFormData,
@@ -186,14 +190,15 @@ export function appendPropertyToFormData({
                             .getSchemaOfTypeReference(property.valueType)
                             .jsonOrThrow(referenceToBodyProperty, {
                                 ...getSchemaOptions({
-                                    allowExtraFields: allowExtraFields ??
-                                        (typeDeclaration.shape.type === "object" && typeDeclaration.shape.extraProperties),
+                                    allowExtraFields:
+                                        allowExtraFields ??
+                                        (typeDeclaration.shape.type === "object" &&
+                                            typeDeclaration.shape.extraProperties),
                                     omitUndefined: omitUndefined
                                 })
                             })
                     });
-                }
-                else {
+                } else {
                     statement = context.coreUtilities.formDataUtils.append({
                         referencetoFormData: referenceToFormData,
                         key: property.name.wireValue,

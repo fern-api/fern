@@ -6,11 +6,8 @@ import * as core from "../../../../core";
 import * as fs from "fs";
 import { Blob } from "buffer";
 import * as SeedFileUpload from "../../../index";
-import { ObjectType } from "../../../../serialization/resources/service/types/ObjectType";
-import { Id } from "../../../../serialization/resources/service/types/Id";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
-import { MyObject } from "../../../../serialization/resources/service/types/MyObject";
 
 export declare namespace Service {
     export interface Options {
@@ -34,58 +31,58 @@ export class Service {
 
     /**
      * @param {File | fs.ReadStream | Blob} file
-     * @param {File[] | fs.ReadStream[] | Blob[]} fileList
-     * @param {File | fs.ReadStream | Blob | undefined} maybeFile
-     * @param {File[] | fs.ReadStream[] | Blob[] | undefined} maybeFileList
+     * @param {File[] | fs.ReadStream[] | Blob[]} file_list
+     * @param {File | fs.ReadStream | Blob | undefined} maybe_file
+     * @param {File[] | fs.ReadStream[] | Blob[] | undefined} maybe_file_list
      * @param {SeedFileUpload.MyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public async post(
         file: File | fs.ReadStream | Blob,
-        fileList: File[] | fs.ReadStream[] | Blob[],
-        maybeFile: File | fs.ReadStream | Blob | undefined,
-        maybeFileList: File[] | fs.ReadStream[] | Blob[] | undefined,
+        file_list: File[] | fs.ReadStream[] | Blob[],
+        maybe_file: File | fs.ReadStream | Blob | undefined,
+        maybe_file_list: File[] | fs.ReadStream[] | Blob[] | undefined,
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
-        if (request.maybeString != null) {
-            await _request.append("maybe_string", request.maybeString);
+        if (request.maybe_string != null) {
+            await _request.append("maybe_string", request.maybe_string);
         }
 
         await _request.append("integer", request.integer.toString());
         await _request.appendFile("file", file);
-        for (const _file of fileList) {
+        for (const _file of file_list) {
             await _request.appendFile("file_list", _file);
         }
 
-        if (maybeFile != null) {
-            await _request.appendFile("maybe_file", maybeFile);
+        if (maybe_file != null) {
+            await _request.appendFile("maybe_file", maybe_file);
         }
 
-        if (maybeFileList != null) {
-            for (const _file of maybeFileList) {
+        if (maybe_file_list != null) {
+            for (const _file of maybe_file_list) {
                 await _request.appendFile("maybe_file_list", _file);
             }
         }
 
-        if (request.maybeInteger != null) {
-            await _request.append("maybe_integer", request.maybeInteger.toString());
+        if (request.maybe_integer != null) {
+            await _request.append("maybe_integer", request.maybe_integer.toString());
         }
 
-        if (request.optionalListOfStrings != null) {
-            for (const _item of request.optionalListOfStrings) {
+        if (request.optional_list_of_strings != null) {
+            for (const _item of request.optional_list_of_strings) {
                 await _request.append("optional_list_of_strings", _item);
             }
         }
 
-        for (const _item of request.listOfObjects) {
+        for (const _item of request.list_of_objects) {
             await _request.append("list_of_objects", JSON.stringify(_item));
         }
 
-        if (request.optionalMetadata != null) {
-            if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
+        if (request.optional_metadata != null) {
+            if (Array.isArray(request.optional_metadata) || request.optional_metadata instanceof Set)
+                for (const _item of request.optional_metadata) {
                     await _request.append(
                         "optional_metadata",
                         typeof _item === "string" ? _item : JSON.stringify(_item),
@@ -93,18 +90,12 @@ export class Service {
                 }
         }
 
-        if (request.optionalObjectType != null) {
-            await _request.append(
-                "optional_object_type",
-                ObjectType.optional().jsonOrThrow(request.optionalObjectType, { unrecognizedObjectKeys: "strip" }),
-            );
+        if (request.optional_object_type != null) {
+            await _request.append("optional_object_type", request.optional_object_type);
         }
 
-        if (request.optionalId != null) {
-            await _request.append(
-                "optional_id",
-                Id.optional().jsonOrThrow(request.optionalId, { unrecognizedObjectKeys: "strip" }),
-            );
+        if (request.optional_id != null) {
+            await _request.append("optional_id", request.optional_id);
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
@@ -307,12 +298,9 @@ export class Service {
         const _request = await core.newFormData();
         await _request.appendFile("file", file);
         await _request.append("foo", request.foo);
-        await _request.append("bar", MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip" }));
-        if (request.fooBar != null) {
-            await _request.append(
-                "foo_bar",
-                MyObject.optional().jsonOrThrow(request.fooBar, { unrecognizedObjectKeys: "strip" }),
-            );
+        await _request.append("bar", JSON.stringify(request.bar));
+        if (request.foo_bar != null) {
+            await _request.append("foo_bar", JSON.stringify(request.foo_bar));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
