@@ -4,11 +4,9 @@
 
 import * as core from "../../../../core";
 import * as SeedFileUpload from "../../../index";
-import { ObjectType } from "../../../../serialization/resources/service/types/ObjectType";
-import { Id } from "../../../../serialization/resources/service/types/Id";
+import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
-import { MyObject } from "../../../../serialization/resources/service/types/MyObject";
 
 export declare namespace Service {
     export interface Options {
@@ -37,10 +35,10 @@ export class Service {
     public async post(request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = await core.newFormData();
         if (request.maybeString != null) {
-            await _request.append("maybe_string", request.maybeString);
+            _request.append("maybe_string", request.maybeString);
         }
 
-        await _request.append("integer", request.integer.toString());
+        _request.append("integer", request.integer.toString());
         await _request.appendFile("file", request.file);
         for (const _file of request.fileList) {
             await _request.appendFile("file_list", _file);
@@ -57,40 +55,40 @@ export class Service {
         }
 
         if (request.maybeInteger != null) {
-            await _request.append("maybe_integer", request.maybeInteger.toString());
+            _request.append("maybe_integer", request.maybeInteger.toString());
         }
 
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
-                await _request.append("optional_list_of_strings", _item);
+                _request.append("optional_list_of_strings", _item);
             }
         }
 
         for (const _item of request.listOfObjects) {
-            await _request.append("list_of_objects", JSON.stringify(_item));
+            _request.append(
+                "list_of_objects",
+                serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" }),
+            );
         }
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
-                    await _request.append(
-                        "optional_metadata",
-                        typeof _item === "string" ? _item : JSON.stringify(_item),
-                    );
-                }
+                {for (const _item of request.optionalMetadata) {
+                    _request.append("optional_metadata", typeof _item === "string" ? _item : JSON.stringify(_item));
+                }}
         }
 
         if (request.optionalObjectType != null) {
-            await _request.append(
+            _request.append(
                 "optional_object_type",
-                ObjectType.optional().jsonOrThrow(request.optionalObjectType, { unrecognizedObjectKeys: "strip" }),
+                serializers.ObjectType.jsonOrThrow(request.optionalObjectType, { unrecognizedObjectKeys: "strip" }),
             );
         }
 
         if (request.optionalId != null) {
-            await _request.append(
+            _request.append(
                 "optional_id",
-                Id.optional().jsonOrThrow(request.optionalId, { unrecognizedObjectKeys: "strip" }),
+                serializers.Id.jsonOrThrow(request.optionalId, { unrecognizedObjectKeys: "strip" }),
             );
         }
 
@@ -292,12 +290,12 @@ export class Service {
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
-        await _request.append("foo", request.foo);
-        await _request.append("bar", MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip" }));
+        _request.append("foo", request.foo);
+        _request.append("bar", serializers.MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip" }));
         if (request.fooBar != null) {
-            await _request.append(
+            _request.append(
                 "foo_bar",
-                MyObject.optional().jsonOrThrow(request.fooBar, { unrecognizedObjectKeys: "strip" }),
+                serializers.MyObject.jsonOrThrow(request.fooBar, { unrecognizedObjectKeys: "strip" }),
             );
         }
 

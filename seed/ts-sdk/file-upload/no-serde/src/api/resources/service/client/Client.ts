@@ -47,10 +47,10 @@ export class Service {
     ): Promise<void> {
         const _request = await core.newFormData();
         if (request.maybe_string != null) {
-            await _request.append("maybe_string", request.maybe_string);
+            _request.append("maybe_string", request.maybe_string);
         }
 
-        await _request.append("integer", request.integer.toString());
+        _request.append("integer", request.integer.toString());
         await _request.appendFile("file", file);
         for (const _file of file_list) {
             await _request.appendFile("file_list", _file);
@@ -67,35 +67,32 @@ export class Service {
         }
 
         if (request.maybe_integer != null) {
-            await _request.append("maybe_integer", request.maybe_integer.toString());
+            _request.append("maybe_integer", request.maybe_integer.toString());
         }
 
         if (request.optional_list_of_strings != null) {
             for (const _item of request.optional_list_of_strings) {
-                await _request.append("optional_list_of_strings", _item);
+                _request.append("optional_list_of_strings", _item);
             }
         }
 
         for (const _item of request.list_of_objects) {
-            await _request.append("list_of_objects", JSON.stringify(_item));
+            _request.append("list_of_objects", JSON.stringify(_item));
         }
 
         if (request.optional_metadata != null) {
             if (Array.isArray(request.optional_metadata) || request.optional_metadata instanceof Set)
-                for (const _item of request.optional_metadata) {
-                    await _request.append(
-                        "optional_metadata",
-                        typeof _item === "string" ? _item : JSON.stringify(_item),
-                    );
-                }
+                {for (const _item of request.optional_metadata) {
+                    _request.append("optional_metadata", typeof _item === "string" ? _item : JSON.stringify(_item));
+                }}
         }
 
         if (request.optional_object_type != null) {
-            await _request.append("optional_object_type", request.optional_object_type);
+            _request.append("optional_object_type", request.optional_object_type);
         }
 
         if (request.optional_id != null) {
-            await _request.append("optional_id", request.optional_id);
+            _request.append("optional_id", request.optional_id);
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
@@ -297,10 +294,10 @@ export class Service {
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", file);
-        await _request.append("foo", request.foo);
-        await _request.append("bar", JSON.stringify(request.bar));
+        _request.append("foo", request.foo);
+        _request.append("bar", JSON.stringify(request.bar));
         if (request.foo_bar != null) {
-            await _request.append("foo_bar", JSON.stringify(request.foo_bar));
+            _request.append("foo_bar", JSON.stringify(request.foo_bar));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
