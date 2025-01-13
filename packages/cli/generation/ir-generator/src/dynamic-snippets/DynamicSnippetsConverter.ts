@@ -331,6 +331,8 @@ export class DynamicSnippetsConverter {
                 });
             case "optional":
                 return DynamicSnippets.TypeReference.optional(this.convertTypeReference(container.optional));
+            case "nullable":
+                return DynamicSnippets.TypeReference.nullable(this.convertTypeReference(container.nullable));
             case "set":
                 return DynamicSnippets.TypeReference.set(this.convertTypeReference(container.set));
             case "literal":

@@ -706,6 +706,9 @@ function populateReferencesFromContainer(
         optional: (optionalType) => {
             populateReferencesFromTypeReference(optionalType, referencedTypes, referencedSubpackages);
         },
+        nullable: (nullableType) => {
+            populateReferencesFromTypeReference(nullableType, referencedTypes, referencedSubpackages);
+        },
         set: (setType) => {
             populateReferencesFromTypeReference(setType, referencedTypes, referencedSubpackages);
         },

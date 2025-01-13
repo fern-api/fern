@@ -1,5 +1,20 @@
 - changelogEntry:
   - summary: |
+      Adds support for nullable<T> types in the Fern definition, such as the following:
+
+      ```yaml
+      types:
+        User:
+          properties:
+            name: string
+            email: nullable<string>
+      ```
+    type: feat
+  irVersion: 53
+  version: 0.47.5
+
+- changelogEntry:
+  - summary: |
       Fixes an issue with broken link checking in the OpenAPI v2 parser.
     type: feat
   irVersion: 53
