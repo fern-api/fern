@@ -67,7 +67,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
                 generatorContext,
                 allGeneratedInterfaces,
                 className);
-        GeneratedObject generatedObject = objectGenerator.generateFile();
+        GeneratedObject generatedObject = objectGenerator.generateObject();
         return Optional.of(GeneratedJavaFile.builder()
                 .className(generatedObject.getClassName())
                 .javaFile(generatedObject.javaFile())

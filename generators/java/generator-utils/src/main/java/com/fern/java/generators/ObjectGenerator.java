@@ -24,6 +24,7 @@ import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ImplementsInterface;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
@@ -45,6 +46,8 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     private final Optional<GeneratedJavaInterface> selfInterface;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces = new ArrayList<>();
+    private Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
+    private List<EnrichedObjectProperty> extendedPropertyGetters = new ArrayList<>();
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
@@ -61,12 +64,22 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         this.allGeneratedInterfaces = allGeneratedInterfaces;
     }
 
+    public GeneratedObject generateObject() {
+        reset();
+        GeneratedJavaFile javaFile = generateFile();
+        return GeneratedObject.builder()
+                .className(className)
+                .javaFile(javaFile.javaFile())
+                .putAllObjectPropertyGetters(objectPropertyGetters)
+                .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
+                .build();
+    }
+
     @Override
-    public GeneratedObject generateFile() {
+    public GeneratedJavaFile generateFile() {
+        reset();
         PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
         List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
-        Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
-        List<EnrichedObjectProperty> extendedPropertyGetters = new ArrayList<>();
         if (selfInterface.isEmpty()) {
             enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
                     .map(objectProperty -> {
@@ -122,11 +135,9 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), objectTypeSpec).build();
-        return GeneratedObject.builder()
+        return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(javaFile)
-                .putAllObjectPropertyGetters(objectPropertyGetters)
-                .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
                 .build();
     }
 
@@ -141,5 +152,13 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                     return enrichedObjectProperty;
                 })
                 .collect(Collectors.toList());
+    }
+
+    // TODO(ajgateno): This is a hack!!!
+    //  We can get rid of this once we've refactored these methods to give back objectPropertyGetters and
+    //  extendedPropertyGetters idempotently without resetting.
+    private void reset() {
+        objectPropertyGetters = new HashMap<>();
+        extendedPropertyGetters = new ArrayList<>();
     }
 }
