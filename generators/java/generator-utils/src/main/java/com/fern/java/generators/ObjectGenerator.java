@@ -93,30 +93,12 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                     .collect(Collectors.toList());
         }
         List<ImplementsInterface> implementsInterfaces = new ArrayList<>();
-        Set<GeneratedJavaInterface> visited = new HashSet<>();
-        extendedInterfaces.stream()
-                .map(generatedInterface -> {
-                    List<EnrichedObjectProperty> enrichedProperties = new ArrayList<>();
-                    Queue<GeneratedJavaInterface> interfaceQueue = new LinkedList<>();
-                    interfaceQueue.add(generatedInterface);
-                    while (!interfaceQueue.isEmpty()) {
-                        GeneratedJavaInterface generatedJavaInterface = interfaceQueue.poll();
-                        if (visited.contains(generatedJavaInterface)) {
-                            continue;
-                        }
-                        interfaceQueue.addAll(generatedJavaInterface.extendedInterfaces().stream()
-                                .map(DeclaredTypeName::getTypeId)
-                                .map(allGeneratedInterfaces::get)
-                                .collect(Collectors.toList()));
-                        enrichedProperties.addAll(
-                                getEnrichedObjectProperties(generatedJavaInterface, objectPropertyGetters));
-                        visited.add(generatedJavaInterface);
-                    }
-                    return ImplementsInterface.builder()
-                            .interfaceClassName(generatedInterface.getClassName())
-                            .addAllInterfaceProperties(enrichedProperties)
-                            .build();
-                })
+        getUniqueAncestorsInLevelOrder().stream()
+                .map(generatedInterface -> ImplementsInterface.builder()
+                        .interfaceClassName(generatedInterface.getClassName())
+                        .addAllInterfaceProperties(
+                                getEnrichedObjectProperties(generatedInterface, objectPropertyGetters))
+                        .build())
                 .forEach(implementsInterface -> {
                     extendedPropertyGetters.addAll(implementsInterface.interfaceProperties());
                     implementsInterfaces.add(implementsInterface);
@@ -139,6 +121,30 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 .className(className)
                 .javaFile(javaFile)
                 .build();
+    }
+
+    /** Gets all ancestors under the interface implementation relation exactly once, in level order. */
+    private List<GeneratedJavaInterface> getUniqueAncestorsInLevelOrder() {
+        List<GeneratedJavaInterface> result = new ArrayList<>();
+
+        Set<GeneratedJavaInterface> visited = new HashSet<>();
+        for (GeneratedJavaInterface extendedInterface : extendedInterfaces) {
+            Queue<GeneratedJavaInterface> interfaceQueue = new LinkedList<>();
+            interfaceQueue.add(extendedInterface);
+            while (!interfaceQueue.isEmpty()) {
+                GeneratedJavaInterface curr = interfaceQueue.poll();
+                if (!visited.contains(curr)) {
+                    visited.add(curr);
+                    result.add(curr);
+                    interfaceQueue.addAll(curr.extendedInterfaces().stream()
+                            .map(DeclaredTypeName::getTypeId)
+                            .map(allGeneratedInterfaces::get)
+                            .collect(Collectors.toList()));
+                }
+            }
+        }
+
+        return result;
     }
 
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(
