@@ -1,3 +1,6 @@
+[project]
+name = "fern_reserved-keywords"
+
 [tool.poetry]
 name = "fern_reserved-keywords"
 version = "0.0.1"
