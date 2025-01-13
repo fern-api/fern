@@ -136,7 +136,6 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
             absoluteFilePathToDocsYml,
             yaml.dump(docsYml.RawSchemas.Serializer.DocsConfiguration.jsonOrThrow(this.docsYml))
         );
-        // await writeFile(absoluteFilePathToDocsYml, yaml.dump(this.docsYml));
 
         await Promise.all(
             Object.entries(this.markdownPages).map(async ([filepath, page]) => {
