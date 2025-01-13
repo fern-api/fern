@@ -360,7 +360,8 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             inlineFileProperties: config.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
-            omitUndefined: config.omitUndefined
+            omitUndefined: config.omitUndefined,
+            allowExtraFields: config.allowExtraFields
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
