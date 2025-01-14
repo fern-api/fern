@@ -380,6 +380,7 @@ navigation:
             path: ./pages/docs/building-your-docs/versioning.mdx
           - page: Announcement Banner
             icon: fa-regular fa-bullhorn
+            slug: announcements
             path: ./pages/docs/building-your-docs/announcement-banner.mdx
           - page: Links and Redirects
             icon: fa-regular fa-link
