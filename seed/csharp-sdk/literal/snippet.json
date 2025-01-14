@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Query.SendAsync(\n    new SendLiteralsInQueryRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        Stream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Query.SendAsync(\n    new SendLiteralsInQueryRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        OptionalPrompt = \"You are a helpful assistant\",\n        AliasPrompt = \"You are a helpful assistant\",\n        AliasOptionalPrompt = \"You are a helpful assistant\",\n        Stream = false,\n        OptionalStream = false,\n        AliasStream = false,\n        AliasOptionalStream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
             }
         },
         {

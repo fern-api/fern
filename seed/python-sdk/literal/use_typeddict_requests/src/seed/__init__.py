@@ -4,6 +4,7 @@ from .types import SendResponse
 from . import headers, inlined, path, query, reference
 from .client import AsyncSeedLiteral, SeedLiteral
 from .inlined import ANestedLiteral, ANestedLiteralParams, ATopLevelLiteral, ATopLevelLiteralParams, SomeAliasedLiteral
+from .query import AliasToPrompt, AliasToStream
 from .reference import (
     ContainerObject,
     ContainerObjectParams,
@@ -21,6 +22,8 @@ __all__ = [
     "ANestedLiteralParams",
     "ATopLevelLiteral",
     "ATopLevelLiteralParams",
+    "AliasToPrompt",
+    "AliasToStream",
     "AsyncSeedLiteral",
     "ContainerObject",
     "ContainerObjectParams",
