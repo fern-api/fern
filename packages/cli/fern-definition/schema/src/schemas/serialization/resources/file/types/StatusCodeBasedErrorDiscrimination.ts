@@ -14,7 +14,7 @@ export const StatusCodeBasedErrorDiscrimination: core.serialization.ObjectSchema
 });
 
 export declare namespace StatusCodeBasedErrorDiscrimination {
-    interface Raw {
+    export interface Raw {
         strategy: "status-code";
     }
 }

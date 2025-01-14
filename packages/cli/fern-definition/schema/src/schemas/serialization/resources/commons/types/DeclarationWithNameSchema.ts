@@ -14,5 +14,5 @@ export const DeclarationWithNameSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({}).extend(DeclarationSchema).extend(WithName);
 
 export declare namespace DeclarationWithNameSchema {
-    interface Raw extends DeclarationSchema.Raw, WithName.Raw {}
+    export interface Raw extends DeclarationSchema.Raw, WithName.Raw {}
 }

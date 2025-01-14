@@ -18,5 +18,5 @@ export const WebhookPayloadSchema: core.serialization.Schema<
 ]);
 
 export declare namespace WebhookPayloadSchema {
-    type Raw = string | WebhookReferencedPayloadSchema.Raw | WebhookInlinedPayloadSchema.Raw;
+    export type Raw = string | WebhookReferencedPayloadSchema.Raw | WebhookInlinedPayloadSchema.Raw;
 }

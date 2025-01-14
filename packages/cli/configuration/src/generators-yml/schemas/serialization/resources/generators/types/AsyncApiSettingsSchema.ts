@@ -13,6 +13,7 @@ export const AsyncApiSettingsSchema: core.serialization.ObjectSchema<
     "title-as-schema-name": core.serialization.boolean().optional(),
     "optional-additional-properties": core.serialization.boolean().optional(),
     "coerce-enums-to-literals": core.serialization.boolean().optional(),
+    "respect-nullable-schemas": core.serialization.boolean().optional(),
 });
 
 export declare namespace AsyncApiSettingsSchema {
@@ -20,5 +21,6 @@ export declare namespace AsyncApiSettingsSchema {
         "title-as-schema-name"?: boolean | null;
         "optional-additional-properties"?: boolean | null;
         "coerce-enums-to-literals"?: boolean | null;
+        "respect-nullable-schemas"?: boolean | null;
     }
 }

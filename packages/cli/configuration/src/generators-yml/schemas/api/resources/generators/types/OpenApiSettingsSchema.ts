@@ -14,6 +14,8 @@ export interface OpenApiSettingsSchema {
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */
     "respect-readonly-schemas"?: boolean;
+    /** Preserves nullable schemas in OpenAPI specifications. Defaults to false, where nullable schemas are treated as optional. */
+    "respect-nullable-schemas"?: boolean;
     /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
     "only-include-referenced-schemas"?: boolean;
     /** Whether to include path parameters within the generated in-lined request. Defaults to false. */

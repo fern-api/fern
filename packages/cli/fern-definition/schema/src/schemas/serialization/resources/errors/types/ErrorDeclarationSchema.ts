@@ -20,7 +20,7 @@ export const ErrorDeclarationSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace ErrorDeclarationSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         "status-code": number;
         type?: string | null;
         examples?: ExampleTypeSchema.Raw[] | null;

@@ -13,5 +13,5 @@ export const HttpResponseStreamSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), HttpResponseStreamSchemaDetailed]);
 
 export declare namespace HttpResponseStreamSchema {
-    type Raw = string | HttpResponseStreamSchemaDetailed.Raw;
+    export type Raw = string | HttpResponseStreamSchemaDetailed.Raw;
 }

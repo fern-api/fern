@@ -1,4 +1,21 @@
 - changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports respecting nullable properties in schemas. When enabled, nullable properties will
+        be preserved in the gnerated SDK. By default (without this setting), nullable properties are treated as `optional`.
+        To enable this, configure the setting in your `generators.yml`:
+
+        ```yml
+        api:
+         specs:
+           - openapi: ./path/to/openapi.yml
+             settings:
+               respect-nullable-schemas: true
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.49.0
+
+- changelogEntry:
   - summary: |
       Adds support for nullable types in the Fern definition, such as the following:
 
@@ -10,7 +27,7 @@
             email: nullable<string>
       ```
     type: feat
-  irVersion: 53
+  irVersion: 55
   version: 0.48.0
 
 - changelogEntry:

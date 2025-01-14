@@ -15,7 +15,7 @@ export const PropertyBasedErrorDiscrimination: core.serialization.ObjectSchema<
 });
 
 export declare namespace PropertyBasedErrorDiscrimination {
-    interface Raw {
+    export interface Raw {
         strategy: "property";
         "property-name": string;
     }

@@ -15,6 +15,7 @@ export const ApiDefinitionSettingsSchema: core.serialization.ObjectSchema<
     "use-title": core.serialization.boolean().optional(),
     unions: UnionSettingsSchema.optional(),
     "message-naming": MessageNamingSettingsSchema.optional(),
+    "respect-nullable-schemas": core.serialization.boolean().optional(),
     "only-include-referenced-schemas": core.serialization.boolean().optional(),
     "inline-path-parameters": core.serialization.boolean().optional(),
 });
@@ -24,6 +25,7 @@ export declare namespace ApiDefinitionSettingsSchema {
         "use-title"?: boolean | null;
         unions?: UnionSettingsSchema.Raw | null;
         "message-naming"?: MessageNamingSettingsSchema.Raw | null;
+        "respect-nullable-schemas"?: boolean | null;
         "only-include-referenced-schemas"?: boolean | null;
         "inline-path-parameters"?: boolean | null;
     }

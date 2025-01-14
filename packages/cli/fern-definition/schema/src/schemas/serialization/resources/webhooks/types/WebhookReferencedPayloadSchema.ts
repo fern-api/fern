@@ -17,7 +17,7 @@ export const WebhookReferencedPayloadSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace WebhookReferencedPayloadSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         type: string;
     }
 }

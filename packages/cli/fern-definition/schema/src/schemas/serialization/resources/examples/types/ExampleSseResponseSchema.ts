@@ -15,7 +15,7 @@ export const ExampleSseResponseSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleSseResponseSchema {
-    interface Raw {
+    export interface Raw {
         stream: ExampleSseEventSchema.Raw[];
     }
 }

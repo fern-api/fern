@@ -16,5 +16,5 @@ export const HttpInlineRequestBodyPropertySchema: core.serialization.Schema<
 ]);
 
 export declare namespace HttpInlineRequestBodyPropertySchema {
-    type Raw = string | TypeReferenceDeclarationWithContentTypeSchema.Raw;
+    export type Raw = string | TypeReferenceDeclarationWithContentTypeSchema.Raw;
 }
