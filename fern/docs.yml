@@ -543,6 +543,10 @@ navigation:
 
       - section: Developer Tools
         contents:
+          - page: LLMs.txt
+            icon: fa-regular fa-laptop-code
+            path: ./pages/docs/developer-tools/llms-txt.mdx
+            slug: llms-txt
           - page: Cursor
             icon: fa-regular fa-laptop-code
             path: ./pages/docs/developer-tools/cursor.mdx
