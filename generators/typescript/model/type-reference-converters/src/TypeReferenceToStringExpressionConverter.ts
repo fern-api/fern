@@ -58,10 +58,11 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         typeName: DeclaredTypeName,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
+        const resolvedType = this.context.type.resolveTypeName(typeName);
         if (this.includeSerdeLayer) {
             return (reference) => {
                 const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
-                return this.context.typeSchema
+                const mapExpression = this.context.typeSchema
                     .getSchemaOfNamedType(typeName, { isGeneratingSchema: false })
                     .jsonOrThrow(reference, {
                         ...getSchemaOptions({
@@ -71,10 +72,27 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                             omitUndefined: this.omitUndefined
                         })
                     });
+
+                return ResolvedTypeReference._visit<ts.Expression>(resolvedType, {
+                    container: () => this.jsonStringify(mapExpression),
+                    primitive: () => mapExpression,
+                    named: ({ shape }) => {
+                        if (shape === ShapeType.Enum) {
+                            return mapExpression;
+                        }
+                        if (shape === ShapeType.UndiscriminatedUnion) {
+                            return this.jsonStringifyIfNotStringNoRecompute(mapExpression);
+                        }
+                        return this.jsonStringify(mapExpression);
+                    },
+                    unknown: () => this.jsonStringifyIfNotStringNoRecompute(mapExpression),
+                    _other: () => {
+                        throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
+                    }
+                });
             };
         }
 
-        const resolvedType = this.context.type.resolveTypeName(typeName);
         return ResolvedTypeReference._visit<(reference: ts.Expression) => ts.Expression>(resolvedType, {
             container: (containerType) =>
                 ContainerType._visit(containerType, {
@@ -208,6 +226,12 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         return this.jsonStringify.bind(this);
     }
 
+    /**
+     * Example:
+     * ```ts
+     * JSON.stringify(REFERENCE)
+     * ```
+     */
     private jsonStringify(reference: ts.Expression): ts.Expression {
         return ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
@@ -219,6 +243,12 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         );
     }
 
+    /**
+     * Example:
+     * ```ts
+     * typeof REFERENCE === "string" ? REFERENCE : JSON.stringify(REFERENCE)
+     * ```
+     */
     private jsonStringifyIfNotString(reference: ts.Expression): ts.Expression {
         return ts.factory.createConditionalExpression(
             ts.factory.createBinaryExpression(
@@ -230,6 +260,52 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             reference,
             ts.factory.createToken(ts.SyntaxKind.ColonToken),
             this.jsonStringify(reference)
+        );
+    }
+
+    /**
+     * Example:
+     * ```ts
+     * (() => {
+     *   const mapped = REFERENCE;
+     *   return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+     * })()
+     * ```
+     */
+    private jsonStringifyIfNotStringNoRecompute(reference: ts.Expression): ts.Expression {
+        const mappedConst = ts.factory.createIdentifier("mapped");
+        return ts.factory.createCallExpression(
+            ts.factory.createParenthesizedExpression(
+                ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createVariableStatement(
+                                undefined,
+                                ts.factory.createVariableDeclarationList(
+                                    [
+                                        ts.factory.createVariableDeclaration(
+                                            mappedConst,
+                                            undefined,
+                                            undefined,
+                                            reference
+                                        )
+                                    ],
+                                    ts.NodeFlags.Const
+                                )
+                            ),
+                            ts.factory.createReturnStatement(this.jsonStringifyIfNotString(mappedConst))
+                        ],
+                        true
+                    )
+                )
+            ),
+            undefined,
+            []
         );
     }
 }
