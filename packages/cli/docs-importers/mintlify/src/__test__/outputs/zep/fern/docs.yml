@@ -5,18 +5,21 @@ favicon: logo/favicon.png
 logo:
   light: logo/zep-name-logo-gradient.svg
   dark: logo/zep-name-logo-pink.svg
+  href: null
   height: 28
 colors:
-  accentPrimary:
+  accent-primary:
     dark: '#D5479D'
     light: '#D5479D'
-  background: {}
+  background:
+    dark: null
+    light: null
 tabs:
   api-reference:
     slug: api-reference
-    displayName: API Reference
+    display-name: API Reference
   documentation:
-    displayName: Documentation
+    display-name: Documentation
     slug: documentation
 navigation:
   - tab: api-reference
