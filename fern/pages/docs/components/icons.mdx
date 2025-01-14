@@ -1,6 +1,80 @@
 ---
 title: 'Icons'
-description: 'Use icons in your MDX files.'
+description: 'Use icons in your MDX files'
+icon: 'icons'
 ---
 
-The `Icon` component is used to display icons in your MDX files.
+The `Icon` component lets you display [Font Awesome](https://fontawesome.com/icons) icons in your MDX files.
+
+<Tabs>
+  <Tab title="Example">
+    <Icon name="rocket" /> Launch
+    <br/>
+    <Icon name="check" color="#00FF00" /> Success
+    <br/>
+    <Icon name="warning" size="lg" /> Warning
+  </Tab>
+  <Tab title="Markdown">
+    ```jsx
+    <Icon name="rocket" /> Launch
+    <Icon name="check" color="#00FF00" /> Success
+    <Icon name="warning" size="lg" /> Warning
+    ```
+  </Tab>
+</Tabs>
+
+## Icon Properties
+
+<ParamField path="name" type="string" required={true}>
+  The name of the Font Awesome icon to display
+</ParamField>
+
+<ParamField path="color" type="string" required={false}>
+  Custom color for the icon (hex, RGB, or color name)
+</ParamField>
+
+<ParamField path="size" type="string" required={false}>
+  Size of the icon: 'xs', 'sm', 'lg', 'xl', '2x', '3x', etc.
+</ParamField>
+
+## Common Use Cases
+
+### Basic Icons
+<Icon name="circle-info" /> Information
+<Icon name="bell" /> Notification
+<Icon name="envelope" /> Message
+
+```jsx
+<Icon name="circle-info" /> Information
+<Icon name="bell" /> Notification  
+<Icon name="envelope" /> Message
+```
+
+### Colored Icons
+<Icon name="circle-check" color="#22C55E" /> Success
+<Icon name="circle-xmark" color="#EF4444" /> Error
+<Icon name="circle-exclamation" color="#F59E0B" /> Warning
+
+```jsx
+<Icon name="circle-check" color="#22C55E" /> Success
+<Icon name="circle-xmark" color="#EF4444" /> Error
+<Icon name="circle-exclamation" color="#F59E0B" /> Warning
+```
+
+### Different Sizes
+<Icon name="star" size="xs" /> Extra Small
+<Icon name="star" size="sm" /> Small
+<Icon name="star" /> Regular
+<Icon name="star" size="lg" /> Large
+
+```jsx
+<Icon name="star" size="xs" /> Extra Small
+<Icon name="star" size="sm" /> Small
+<Icon name="star" /> Regular
+<Icon name="star" size="lg" /> Large
+```
+
+<Note>
+  Visit [Font Awesome's icon library](https://fontawesome.com/icons) to browse all available icons.
+</Note>
+
