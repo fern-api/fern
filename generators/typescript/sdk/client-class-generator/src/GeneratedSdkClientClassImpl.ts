@@ -315,6 +315,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response: HttpResponseBody.text(textResponse)
                         });
                     },
+                    bytes: (bytesResponse) => {
+                        throw new Error("Bytes response type is not supported yet");
+                    },
                     _other: () => {
                         throw new Error("Unknown Response type: " + endpoint.response?.body?.type);
                     }

@@ -62,6 +62,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             container: (containerType) =>
                 ContainerType._visit(containerType, {
                     list: this.list.bind(this),
+                    nullable: (nullableType) => this.nullable(nullableType, params),
                     optional: (optionalType) => this.optional(optionalType, params),
                     set: this.set.bind(this),
                     map: (mapType) => this.map(mapType, params),
@@ -143,6 +144,13 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 );
         }
         return (reference) => reference;
+    }
+
+    protected override nullable(
+        itemType: TypeReference,
+        params: ConvertTypeReferenceParams
+    ): (reference: ts.Expression) => ts.Expression {
+        return (reference) => this.convert({ ...params, typeReference: itemType })(reference);
     }
 
     protected override optional(

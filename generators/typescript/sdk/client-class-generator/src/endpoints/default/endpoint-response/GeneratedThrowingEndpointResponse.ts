@@ -405,6 +405,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     literal: () => undefined,
                     list: () => undefined,
                     set: () => undefined,
+                    nullable: (optType) => this.getDefaultPaginationValue({ type: optType }),
                     optional: (optType) => this.getDefaultPaginationValue({ type: optType }),
                     map: () => undefined,
                     _other: () => undefined

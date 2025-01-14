@@ -91,6 +91,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                             ),
                             true
                         ),
+                    nullable: (exampleItem) =>
+                        exampleItem.nullable != null
+                            ? this.buildExample({ example: exampleItem.nullable, context, opts })
+                            : ts.factory.createIdentifier("null"),
                     optional: (exampleItem) =>
                         exampleItem.optional != null
                             ? this.buildExample({ example: exampleItem.optional, context, opts })

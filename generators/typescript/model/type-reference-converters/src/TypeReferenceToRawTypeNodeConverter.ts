@@ -29,6 +29,22 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
         };
     }
 
+    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
+        return {
+            isOptional: true,
+            typeNode: ts.factory.createUnionTypeNode([
+                referencedToValueType,
+                ts.factory.createLiteralTypeNode(ts.factory.createNull()),
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+            ]),
+            typeNodeWithoutUndefined: ts.factory.createUnionTypeNode([
+                referencedToValueType,
+                ts.factory.createLiteralTypeNode(ts.factory.createNull())
+            ])
+        };
+    }
+
     protected override dateTime(): TypeReferenceNode {
         return this.string();
     }

@@ -161,6 +161,15 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
     }
 
+    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
+        return {
+            isOptional: false,
+            typeNode: this.addNullToTypeNode(referencedToValueType),
+            typeNodeWithoutUndefined: referencedToValueType
+        };
+    }
+
     protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
         return {
@@ -168,6 +177,10 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             typeNode: this.addUndefinedToTypeNode(referencedToValueType),
             typeNodeWithoutUndefined: referencedToValueType
         };
+    }
+
+    private addNullToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {
+        return ts.factory.createUnionTypeNode([typeNode, ts.factory.createLiteralTypeNode(ts.factory.createNull())]);
     }
 
     private addUndefinedToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {

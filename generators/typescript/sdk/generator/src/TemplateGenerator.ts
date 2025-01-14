@@ -216,6 +216,10 @@ export class TemplateGenerator {
                             keyType: this.convertIRTypeReferenceToFdrTypeReference(mapType.keyType),
                             valueType: this.convertIRTypeReferenceToFdrTypeReference(mapType.valueType)
                         }),
+                    nullable: (nullableType) =>
+                        FDRAPIV1Read.TypeReference.optional({
+                            itemType: this.convertIRTypeReferenceToFdrTypeReference(nullableType)
+                        }),
                     optional: (optionalType) =>
                         FDRAPIV1Read.TypeReference.optional({
                             itemType: this.convertIRTypeReferenceToFdrTypeReference(optionalType)
@@ -638,6 +642,16 @@ export class TemplateGenerator {
                       })
                     : undefined;
             },
+            nullable: (optionalType) =>
+                this.getTemplateFromTypeReference({
+                    typeReference: optionalType,
+                    name,
+                    location,
+                    wireOrOriginalName,
+                    nameBreadcrumbs,
+                    indentationLevel,
+                    isObjectInlined
+                }),
             optional: (optionalType) =>
                 this.getTemplateFromTypeReference({
                     typeReference: optionalType,
