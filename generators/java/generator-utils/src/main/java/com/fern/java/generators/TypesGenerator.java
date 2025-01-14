@@ -43,7 +43,7 @@ public final class TypesGenerator {
     }
 
     public Result generateFiles() {
-        Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces();
+        Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces(generatorContext);
         Map<TypeId, GeneratedJavaFile> generatedTypes = KeyedStream.stream(typeDeclarations)
                 .map(typeDeclaration -> {
                     ClassName className =
@@ -65,10 +65,12 @@ public final class TypesGenerator {
         return new Result(generatedInterfaces, generatedTypes);
     }
 
-    private Map<TypeId, GeneratedJavaInterface> getGeneratedInterfaces() {
+    public static Map<TypeId, GeneratedJavaInterface> getGeneratedInterfaces(
+            AbstractGeneratorContext<?, ?> generatorContext) {
         Set<TypeId> interfaceCandidates = generatorContext.getInterfaceIds();
         return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), typeId -> {
-            TypeDeclaration typeDeclaration = typeDeclarations.get(typeId);
+            TypeDeclaration typeDeclaration =
+                    generatorContext.getTypeDeclarations().get(typeId);
             ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration
                     .getShape()
                     .getObject()

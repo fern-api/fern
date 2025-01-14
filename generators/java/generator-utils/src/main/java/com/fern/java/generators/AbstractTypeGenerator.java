@@ -9,7 +9,9 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
@@ -33,15 +35,30 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     }
 
     private List<TypeSpec> getInlineTypeSpecs() {
-        //        if (generatorContext.getCustomConfig().enableInlineTypes()) {
-        //            return List.of();
-        //        }
-        //
-        //        List<TypeDeclaration> declarations = getInlineTypeDeclarations();
-        //        for (TypeDeclaration declaration : declarations) {
-        //
-        //        }
-        return List.of();
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            return List.of();
+        }
+
+        List<TypeDeclaration> declarations = getInlineTypeDeclarations();
+        List<TypeSpec> result = new ArrayList<>();
+        for (TypeDeclaration declaration : declarations) {
+            Optional<AbstractTypeGenerator> generator = declaration
+                    .getShape()
+                    .visit(new SingleTypeGenerator(
+                            generatorContext,
+                            declaration.getName(),
+                            className.nestedClass(declaration
+                                    .getName()
+                                    .getName()
+                                    .getPascalCase()
+                                    .getSafeName()),
+                            TypesGenerator.getGeneratedInterfaces(generatorContext),
+                            false,
+                            reservedTypeNames));
+            generator.map(AbstractTypeGenerator::getTypeSpec).ifPresent(result::add);
+        }
+
+        return result;
     }
 
     protected String resolveName(String rawName) {
