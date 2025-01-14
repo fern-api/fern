@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core";
 import * as SeedEnum from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
@@ -43,16 +44,20 @@ export class QueryParam {
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        _queryParams["operand"] = operand;
+        _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
         if (maybeOperand != null) {
-            _queryParams["maybeOperand"] = maybeOperand;
+            _queryParams["maybeOperand"] = serializers.Operand.jsonOrThrow(maybeOperand, {
+                unrecognizedObjectKeys: "strip",
+            });
         }
 
-        _queryParams["operandOrColor"] =
-            typeof operandOrColor === "string" ? operandOrColor : JSON.stringify(operandOrColor);
+        _queryParams["operandOrColor"] = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
+            unrecognizedObjectKeys: "strip",
+        });
         if (maybeOperandOrColor != null) {
-            _queryParams["maybeOperandOrColor"] =
-                typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : JSON.stringify(maybeOperandOrColor);
+            _queryParams["maybeOperandOrColor"] = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                unrecognizedObjectKeys: "strip",
+            });
         }
 
         const _response = await core.fetcher({
@@ -119,36 +124,44 @@ export class QueryParam {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (Array.isArray(operand)) {
-            _queryParams["operand"] = operand.map((item) => item);
+            _queryParams["operand"] = operand.map((item) =>
+                serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+            );
         } else {
-            _queryParams["operand"] = operand;
+            _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
         }
 
         if (maybeOperand != null) {
             if (Array.isArray(maybeOperand)) {
-                _queryParams["maybeOperand"] = maybeOperand.map((item) => item);
+                _queryParams["maybeOperand"] = maybeOperand.map((item) =>
+                    serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+                );
             } else {
-                _queryParams["maybeOperand"] = maybeOperand;
+                _queryParams["maybeOperand"] = serializers.Operand.jsonOrThrow(maybeOperand, {
+                    unrecognizedObjectKeys: "strip",
+                });
             }
         }
 
         if (Array.isArray(operandOrColor)) {
             _queryParams["operandOrColor"] = operandOrColor.map((item) =>
-                typeof item === "string" ? item : JSON.stringify(item),
+                serializers.ColorOrOperand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
             );
         } else {
-            _queryParams["operandOrColor"] =
-                typeof operandOrColor === "string" ? operandOrColor : JSON.stringify(operandOrColor);
+            _queryParams["operandOrColor"] = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
+                unrecognizedObjectKeys: "strip",
+            });
         }
 
         if (maybeOperandOrColor != null) {
             if (Array.isArray(maybeOperandOrColor)) {
                 _queryParams["maybeOperandOrColor"] = maybeOperandOrColor.map((item) =>
-                    typeof item === "string" ? item : JSON.stringify(item),
+                    serializers.ColorOrOperand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
                 );
             } else {
-                _queryParams["maybeOperandOrColor"] =
-                    typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : JSON.stringify(maybeOperandOrColor);
+                _queryParams["maybeOperandOrColor"] = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                    unrecognizedObjectKeys: "strip",
+                });
             }
         }
 
