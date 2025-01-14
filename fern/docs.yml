@@ -543,8 +543,12 @@ navigation:
 
       - section: Developer Tools
         contents:
-          - page: Cursor
+          - page: LLMs.txt
             icon: fa-regular fa-laptop-code
+            path: ./pages/docs/developer-tools/llms-txt.mdx
+            slug: llms-txt
+          - page: Cursor
+            icon: fa-regular fa-mouse-pointer
             path: ./pages/docs/developer-tools/cursor.mdx
           - page: GitLab
             slug: gitlab
