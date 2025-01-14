@@ -19,6 +19,7 @@ import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
@@ -27,10 +28,13 @@ import com.fern.java.generators.object.ObjectTypeSpecGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
+import com.fern.java.utils.NamedTypeId;
+import com.fern.java.utils.TypeIdResolver;
 import com.google.common.collect.ImmutableMap;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,6 +101,60 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 .putAllObjectPropertyGetters(objectPropertyGetters)
                 .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
                 .build();
+    }
+
+    private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
+            AbstractGeneratorContext<?, ?> generatorContext,
+            Set<String> reservedTypeNames,
+            Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters) {
+        Map<TypeId, TypeDeclaration> result = new HashMap<>();
+        Set<String> propertyNames = new HashSet<>();
+
+        for (EnrichedObjectProperty prop : objectPropertyGetters.values()) {
+            propertyNames.add(prop.pascalCaseKey());
+        }
+
+        for (EnrichedObjectProperty prop : objectPropertyGetters.values()) {
+            List<NamedTypeId> resolvedIds = prop.objectProperty()
+                    .getValueType()
+                    .visit(new TypeIdResolver(
+                            prop.pascalCaseKey(), prop.objectProperty().getValueType()));
+
+            // See if the names require further resolution
+            for (NamedTypeId resolvedId : resolvedIds) {
+                // Don't override non-inline types
+                if (!resolvedId.type().getInline().orElse(false)) {
+                    continue;
+                }
+
+                String name = resolvedId.name();
+                Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
+                        generatorContext.getTypeDeclarations().get(resolvedId.typeId()));
+
+                if (maybeRawTypeDeclaration.isEmpty()) {
+                    continue;
+                }
+
+                TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
+
+                boolean valid;
+                do {
+                    // Prevent something like "Bar_" generated from resolution on a property name called "bar"
+                    // colliding with "Bar_" generated from a property name called "bar_"
+                    boolean newNameCollides = !(propertyNames.contains(name) && !name.equals(prop.pascalCaseKey()));
+                    valid = !reservedTypeNames.contains(name) && !newNameCollides;
+
+                    if (!valid) {
+                        name += "_";
+                    }
+                } while (!valid);
+
+                TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
+                result.put(resolvedId.typeId(), overriddenTypeDeclaration);
+            }
+        }
+
+        return result;
     }
 
     private static List<ImplementsInterface> implementsInterfaces(List<GeneratedJavaInterface> ancestors) {
