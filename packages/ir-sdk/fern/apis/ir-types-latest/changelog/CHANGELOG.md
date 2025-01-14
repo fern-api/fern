@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feature: The IR now supports `nullable<T>` types to distinguish if a property should support explicit `null` values.
 
+## [v54.1.0] - 2024-01-10
+
+- Feature: OAuthAccessTokenRequestProperties now pulls in additional request properties from the OAuth
+  getToken endpoint to support custom OAuth schemas.
+
 ## [v54.0.0] - 2024-12-11
 
 - Break: The HttpResponse type in the IR now supports bytes responses. This is useful for different languages - 

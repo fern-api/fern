@@ -11,4 +11,5 @@ export interface OAuthAccessTokenRequestProperties {
     clientId: FernIr.RequestProperty;
     clientSecret: FernIr.RequestProperty;
     scopes: FernIr.RequestProperty | undefined;
+    customProperties: FernIr.RequestProperty[] | undefined;
 }

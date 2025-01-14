@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Userservice {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -40,7 +42,11 @@ export class Userservice {
         requestOptions?: Userservice.RequestOptions,
     ): Promise<SeedApi.CreateResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "users"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

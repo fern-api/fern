@@ -3,8 +3,8 @@ import { SeedApiClient } from "@fern/grpc-proto";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -17,7 +17,7 @@ await client.userservice.create({
   age: 1,
   weight: 1.1,
 });
- 
-```                        
+
+```
 
 
