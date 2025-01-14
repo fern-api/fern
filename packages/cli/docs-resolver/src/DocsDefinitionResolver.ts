@@ -593,6 +593,11 @@ export class DocsDefinitionResolver {
         item: docsYml.DocsNavigationItem.ApiSection,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
+
+        if (item.openrpc != null) {
+            throw new Error("OpenRPC is not yet supported");
+        }
+
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
             const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);

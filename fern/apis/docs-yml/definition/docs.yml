@@ -567,6 +567,9 @@ types:
       "api-name":
         type: optional<string>
         docs: Name of API that we are referencing
+      openrpc: 
+        type: optional<string>
+        docs: Path to an openrpc spec. This is experimental. 
       audiences: optional<list<AudienceId>>
       display-errors:
         type: optional<boolean>

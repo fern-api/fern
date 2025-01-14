@@ -649,6 +649,7 @@ async function convertNavigationItem({
     if (isRawApiSectionConfig(rawConfig)) {
         return {
             type: "apiSection",
+            openrpc: rawConfig.openrpc ?? undefined,
             title: rawConfig.api,
             icon: rawConfig.icon,
             apiName: rawConfig.apiName ?? undefined,
