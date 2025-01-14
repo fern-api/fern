@@ -351,7 +351,6 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
-	io "io"
 	strings "strings"
 )
 
@@ -363,14 +362,6 @@ func do() {
 			File: strings.NewReader(
 				"Hello, world!",
 			),
-			FileList: []io.Reader{
-				strings.NewReader(
-					"First",
-				),
-				strings.NewReader(
-					"Second",
-				),
-			},
 		},
 	)
 }
@@ -1015,7 +1006,6 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
-	io "io"
 	strings "strings"
 )
 
@@ -1027,14 +1017,6 @@ func do() {
 			File: strings.NewReader(
 				"Hello, world!",
 			),
-			FileList: []io.Reader{
-				strings.NewReader(
-					"First",
-				),
-				strings.NewReader(
-					"Second",
-				),
-			},
 		},
 	)
 }
