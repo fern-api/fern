@@ -1,5 +1,11 @@
 import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
+import {
+    BaseContext,
+    GeneratedType,
+    GeneratedTypeReferenceExample,
+    TypeContext,
+    TypeSchemaContext
+} from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -12,7 +18,6 @@ import { SourceFile, ts } from "ts-morph";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
-    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
@@ -34,6 +39,8 @@ export declare namespace TypeContextImpl {
         useBigInt: boolean;
         context: BaseContext;
         enableInlineTypes: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -62,6 +69,8 @@ export class TypeContextImpl implements TypeContext {
         retainOriginalCasing,
         useBigInt,
         enableInlineTypes,
+        allowExtraFields,
+        omitUndefined,
         context
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
@@ -77,18 +86,22 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
     }
 

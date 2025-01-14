@@ -155,7 +155,11 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         inlineFileProperties: true
-      outputFolder: wrap-file-properties
+        inlinePathParameters: true
+      outputFolder: inline
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde
   unknown:
     - customConfig: null
       outputFolder: no-custom-config

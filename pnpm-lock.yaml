@@ -2293,9 +2293,9 @@ importers:
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
-      '@fern-typescript/resolvers':
+      '@fern-typescript/contexts':
         specifier: workspace:*
-        version: link:../../utils/resolvers
+        version: link:../../utils/contexts
       ts-morph:
         specifier: ^15.1.0
         version: 15.1.0
