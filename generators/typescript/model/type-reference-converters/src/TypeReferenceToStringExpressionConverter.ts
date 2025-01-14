@@ -73,23 +73,35 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                         })
                     });
 
-                return ResolvedTypeReference._visit<ts.Expression>(resolvedType, {
-                    container: () => this.jsonStringify(mapExpression),
-                    primitive: () => mapExpression,
-                    named: ({ shape }) => {
-                        if (shape === ShapeType.Enum) {
-                            return mapExpression;
+                const getStringify = (resolvedType: ResolvedTypeReference): ts.Expression =>
+                    ResolvedTypeReference._visit<ts.Expression>(resolvedType, {
+                        container: (containerType) =>
+                            ContainerType._visit(containerType, {
+                                list: () => this.jsonStringify(mapExpression),
+                                optional: (optional) => getStringify(this.context.type.resolveTypeReference(optional)),
+                                set: () => this.jsonStringify(mapExpression),
+                                map: () => this.jsonStringify(mapExpression),
+                                literal: () => this.jsonStringifyIfNotString(mapExpression),
+                                _other: () => {
+                                    throw new Error("Unknown ContainerType: " + containerType.type);
+                                }
+                            }),
+                        primitive: () => mapExpression,
+                        named: ({ shape }) => {
+                            if (shape === ShapeType.Enum) {
+                                return mapExpression;
+                            }
+                            if (shape === ShapeType.UndiscriminatedUnion) {
+                                return this.jsonStringifyIfNotStringNoRecompute(mapExpression);
+                            }
+                            return this.jsonStringify(mapExpression);
+                        },
+                        unknown: () => this.jsonStringifyIfNotStringNoRecompute(mapExpression),
+                        _other: () => {
+                            throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
                         }
-                        if (shape === ShapeType.UndiscriminatedUnion) {
-                            return this.jsonStringifyIfNotStringNoRecompute(mapExpression);
-                        }
-                        return this.jsonStringify(mapExpression);
-                    },
-                    unknown: () => this.jsonStringifyIfNotStringNoRecompute(mapExpression),
-                    _other: () => {
-                        throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
-                    }
-                });
+                    });
+                return getStringify(resolvedType);
             };
         }
 
