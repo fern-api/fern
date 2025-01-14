@@ -39,6 +39,49 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
  * schema utils are defined in one file to resolve issues with circular imports
  */
 
+export function nullable<Raw, Parsed>(
+    schema: BaseSchema<Raw, Parsed>,
+): Schema<Raw | null | undefined, Parsed | null | undefined> {
+    const baseSchema: BaseSchema<Raw | null | undefined, Parsed | null | undefined> = {
+        parse: (raw, opts) => {
+            if (raw === undefined) {
+                return {
+                    ok: true,
+                    value: undefined,
+                };
+            }
+            if (raw == null) {
+                return {
+                    ok: true,
+                    value: null,
+                };
+            }
+            return schema.parse(raw, opts);
+        },
+        json: (parsed, opts) => {
+            if (parsed === undefined) {
+                return {
+                    ok: true,
+                    value: undefined,
+                };
+            }
+            if (parsed == null) {
+                return {
+                    ok: true,
+                    value: null,
+                };
+            }
+            return schema.json(parsed, opts);
+        },
+        getType: () => SchemaType.NULLABLE,
+    };
+
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
+}
+
 export function optional<Raw, Parsed>(
     schema: BaseSchema<Raw, Parsed>,
 ): Schema<Raw | null | undefined, Parsed | undefined> {
