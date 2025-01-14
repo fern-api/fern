@@ -192,17 +192,17 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     continue;
                 }
 
-//                boolean valid;
-//                do {
-//                    // Prevent something like "Bar_" generated from resolution on a property name called "bar"
-//                    // colliding with "Bar_" generated from a property name called "bar_"
-//                    boolean newNameCollides = !(propertyNames.contains(name) && !name.equals(prop.pascalCaseKey()));
-//                    valid = !allReservedTypeNames.contains(name) && !newNameCollides;
-//
-//                    if (!valid) {
-//                        name += "_";
-//                    }
-//                } while (!valid);
+                boolean valid;
+                do {
+                    // Prevent something like "Bar_" generated from resolution on a property name called "bar"
+                    // colliding with "Bar_" generated from a property name called "bar_"
+                    boolean newNameCollides = propertyNames.contains(name) && !name.equals(prop.pascalCaseKey());
+                    valid = !allReservedTypeNames.contains(name) && !newNameCollides;
+
+                    if (!valid) {
+                        name += "_";
+                    }
+                } while (!valid);
 
                 allReservedTypeNames.add(name);
                 TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
