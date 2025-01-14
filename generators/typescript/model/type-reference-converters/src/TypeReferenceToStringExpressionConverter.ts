@@ -81,7 +81,12 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                                 optional: (optional) => getStringify(this.context.type.resolveTypeReference(optional)),
                                 set: () => this.jsonStringify(mapExpression),
                                 map: () => this.jsonStringify(mapExpression),
-                                literal: () => this.jsonStringifyIfNotString(mapExpression),
+                                literal: (literal) => {
+                                    if (literal.type === "string") {
+                                        return mapExpression;
+                                    }
+                                    return this.jsonStringify(mapExpression);
+                                },
                                 _other: () => {
                                     throw new Error("Unknown ContainerType: " + containerType.type);
                                 }
