@@ -3,6 +3,7 @@ import { JsonError } from "./JsonError";
 import { ParseError } from "./ParseError";
 
 export interface SchemaUtils<Raw, Parsed> {
+    nullable: () => Schema<Raw | null | undefined, Parsed | null | undefined>;
     optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
     transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
     parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed;
@@ -16,6 +17,7 @@ export interface SchemaTransformer<Parsed, Transformed> {
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
     return {
+        nullable: () => nullable(schema),
         optional: () => optional(schema),
         transform: (transformer) => transform(schema, transformer),
         parseOrThrow: (raw, opts) => {

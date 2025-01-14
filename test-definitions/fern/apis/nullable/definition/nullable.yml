@@ -23,14 +23,14 @@ service:
         name: GetUsersRequest
         query-parameters:
           usernames:
-            type: optional<nullable<string>>
+            type: optional<string>
             allow-multiple: true
-          avatar: optional<nullable<string>>
+          avatar: optional<string>
           activated:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             allow-multiple: true
           tags:
-            type: optional<nullable<string>>
+            type: nullable<string>
             allow-multiple: true
       response: list<User>
 

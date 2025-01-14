@@ -162,12 +162,9 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
-        const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
-        return {
-            isOptional: false,
-            typeNode: this.addNullToTypeNode(referencedToValueType),
-            typeNodeWithoutUndefined: referencedToValueType
-        };
+        return this.generateNonOptionalTypeReferenceNode(
+            this.addNullToTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode)
+        );
     }
 
     protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
