@@ -326,12 +326,24 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (!isQueryParamNullable && !isQueryParamOptional) {
             return statements;
         }
+        if (isQueryParamNullable) {
+            return [
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        referenceToQueryParameterProperty,
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                        ts.factory.createIdentifier("undefined")
+                    ),
+                    ts.factory.createBlock(statements)
+                )
+            ];
+        }
         return [
             ts.factory.createIfStatement(
                 ts.factory.createBinaryExpression(
                     referenceToQueryParameterProperty,
                     ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    isQueryParamNullable ? ts.factory.createIdentifier("undefined") : ts.factory.createNull()
+                    ts.factory.createNull()
                 ),
                 ts.factory.createBlock(statements)
             )

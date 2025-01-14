@@ -27,13 +27,26 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         if (!isNullable && !isOptional) {
             return this.convert(params);
         }
-
+        if (isNullable) {
+            return (reference) =>
+                ts.factory.createConditionalExpression(
+                    ts.factory.createBinaryExpression(
+                        reference,
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                        ts.factory.createIdentifier("undefined")
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    this.convert(params)(reference),
+                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                    ts.factory.createIdentifier("undefined")
+                );
+        }
         return (reference) =>
             ts.factory.createConditionalExpression(
                 ts.factory.createBinaryExpression(
                     reference,
                     ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    isNullable ? ts.factory.createIdentifier("undefined") : ts.factory.createNull()
+                    ts.factory.createNull()
                 ),
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                 this.convert(params)(reference),
