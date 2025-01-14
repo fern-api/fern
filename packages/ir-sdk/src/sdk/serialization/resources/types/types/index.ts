@@ -61,6 +61,7 @@ export * from "./ExampleContainer";
 export * from "./ExampleListContainer";
 export * from "./ExampleSetContainer";
 export * from "./ExampleOptionalContainer";
+export * from "./ExampleNullableContainer";
 export * from "./ExampleMapContainer";
 export * from "./ExampleLiteralContainer";
 export * from "./ExampleKeyValuePair";

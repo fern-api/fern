@@ -24,6 +24,9 @@ export const TypeReference: core.serialization.Schema<
         named: core.serialization.object({
             value: TypeId,
         }),
+        nullable: core.serialization.object({
+            value: core.serialization.lazy(() => serializers.dynamic.TypeReference),
+        }),
         optional: core.serialization.object({
             value: core.serialization.lazy(() => serializers.dynamic.TypeReference),
         }),
@@ -46,6 +49,8 @@ export const TypeReference: core.serialization.Schema<
                     return FernIr.dynamic.TypeReference.map(value);
                 case "named":
                     return FernIr.dynamic.TypeReference.named(value.value);
+                case "nullable":
+                    return FernIr.dynamic.TypeReference.nullable(value.value);
                 case "optional":
                     return FernIr.dynamic.TypeReference.optional(value.value);
                 case "primitive":
@@ -67,6 +72,7 @@ export declare namespace TypeReference {
         | TypeReference.Literal
         | TypeReference.Map
         | TypeReference.Named
+        | TypeReference.Nullable
         | TypeReference.Optional
         | TypeReference.Primitive
         | TypeReference.Set
@@ -89,6 +95,11 @@ export declare namespace TypeReference {
     export interface Named {
         type: "named";
         value: TypeId.Raw;
+    }
+
+    export interface Nullable {
+        type: "nullable";
+        value: serializers.dynamic.TypeReference.Raw;
     }
 
     export interface Optional {
