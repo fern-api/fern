@@ -33,7 +33,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): TypeReferenceNode {
-        const resolvedType = this.typeResolver.resolveTypeName(typeName);
+        const resolvedType = this.context.type.resolveTypeName(typeName);
         const isOptional = ResolvedTypeReference._visit<boolean>(resolvedType, {
             container: (container) => this.container(container, params).isOptional,
             primitive: (primitive) => this.primitive(primitive).isOptional,
@@ -45,7 +45,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         });
 
         let typeNodeWithoutUndefined: ts.TypeNode;
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
+        const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         if (this.enableInlineTypes && typeDeclaration.inline) {
             if (ConvertTypeReferenceParams.isInlinePropertyParams(params)) {
                 typeNodeWithoutUndefined = this.createTypeRefenceForInlinePropertyNamedType(params);

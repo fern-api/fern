@@ -79,20 +79,20 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             data={
-                "maybeString": maybe_string,
+                "maybe_string": maybe_string,
                 "integer": integer,
-                "maybeInteger": maybe_integer,
-                "optionalListOfStrings": optional_list_of_strings,
-                "listOfObjects": list_of_objects,
-                "optionalMetadata": optional_metadata,
-                "optionalObjectType": optional_object_type,
-                "optionalId": optional_id,
+                "maybe_integer": maybe_integer,
+                "optional_list_of_strings": optional_list_of_strings,
+                "list_of_objects": list_of_objects,
+                "optional_metadata": optional_metadata,
+                "optional_object_type": optional_object_type,
+                "optional_id": optional_id,
             },
             files={
                 "file": file,
-                "fileList": file_list,
-                "maybeFile": maybe_file,
-                "maybeFileList": maybe_file_list,
+                "file_list": file_list,
+                "maybe_file": maybe_file,
+                "maybe_file_list": maybe_file_list,
             },
             request_options=request_options,
             omit=OMIT,
@@ -202,7 +202,7 @@ class ServiceClient:
         file: core.File,
         foo: str,
         bar: MyObject,
-        foobar: typing.Optional[MyObject] = OMIT,
+        foo_bar: typing.Optional[MyObject] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -215,7 +215,7 @@ class ServiceClient:
 
         bar : MyObject
 
-        foobar : typing.Optional[MyObject]
+        foo_bar : typing.Optional[MyObject]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -234,8 +234,8 @@ class ServiceClient:
                 "file": core.with_content_type(file=file, default_content_type="application/octet-stream"),
                 "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
                 **(
-                    {"foobar": (None, json.dumps(jsonable_encoder(foobar)), "application/json")}
-                    if foobar is not OMIT
+                    {"foo_bar": (None, json.dumps(jsonable_encoder(foo_bar)), "application/json")}
+                    if foo_bar is not OMIT
                     else {}
                 ),
             },
@@ -313,20 +313,20 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             data={
-                "maybeString": maybe_string,
+                "maybe_string": maybe_string,
                 "integer": integer,
-                "maybeInteger": maybe_integer,
-                "optionalListOfStrings": optional_list_of_strings,
-                "listOfObjects": list_of_objects,
-                "optionalMetadata": optional_metadata,
-                "optionalObjectType": optional_object_type,
-                "optionalId": optional_id,
+                "maybe_integer": maybe_integer,
+                "optional_list_of_strings": optional_list_of_strings,
+                "list_of_objects": list_of_objects,
+                "optional_metadata": optional_metadata,
+                "optional_object_type": optional_object_type,
+                "optional_id": optional_id,
             },
             files={
                 "file": file,
-                "fileList": file_list,
-                "maybeFile": maybe_file,
-                "maybeFileList": maybe_file_list,
+                "file_list": file_list,
+                "maybe_file": maybe_file,
+                "maybe_file_list": maybe_file_list,
             },
             request_options=request_options,
             omit=OMIT,
@@ -436,7 +436,7 @@ class AsyncServiceClient:
         file: core.File,
         foo: str,
         bar: MyObject,
-        foobar: typing.Optional[MyObject] = OMIT,
+        foo_bar: typing.Optional[MyObject] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -449,7 +449,7 @@ class AsyncServiceClient:
 
         bar : MyObject
 
-        foobar : typing.Optional[MyObject]
+        foo_bar : typing.Optional[MyObject]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -468,8 +468,8 @@ class AsyncServiceClient:
                 "file": core.with_content_type(file=file, default_content_type="application/octet-stream"),
                 "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
                 **(
-                    {"foobar": (None, json.dumps(jsonable_encoder(foobar)), "application/json")}
-                    if foobar is not OMIT
+                    {"foo_bar": (None, json.dumps(jsonable_encoder(foo_bar)), "application/json")}
+                    if foo_bar is not OMIT
                     else {}
                 ),
             },

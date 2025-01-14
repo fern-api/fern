@@ -84,6 +84,8 @@ export declare namespace ExpressContextImpl {
         retainOriginalCasing: boolean;
         useBigInt: boolean;
         enableInlineTypes: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -141,6 +143,8 @@ export class ExpressContextImpl implements ExpressContext {
         includeSerdeLayer,
         retainOriginalCasing,
         enableInlineTypes,
+        allowExtraFields,
+        omitUndefined,
         useBigInt
     }: ExpressContextImpl.Init) {
         this.logger = logger;
@@ -168,13 +172,15 @@ export class ExpressContextImpl implements ExpressContext {
             retainOriginalCasing,
             useBigInt,
             enableInlineTypes,
+            allowExtraFields,
+            omitUndefined,
             context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
             coreUtilities: this.coreUtilities,
             importsManager,
-            typeResolver,
+            context: this,
             typeSchemaDeclarationReferencer,
             typeDeclarationReferencer,
             typeGenerator,
@@ -183,7 +189,9 @@ export class ExpressContextImpl implements ExpressContext {
             includeSerdeLayer,
             retainOriginalCasing,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
 
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextImpl({

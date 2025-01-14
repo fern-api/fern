@@ -1,5 +1,5 @@
 import { TypeReferenceNode } from "@fern-typescript/commons";
-import { TypeResolver } from "@fern-typescript/resolvers";
+import { BaseContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import {
@@ -15,11 +15,13 @@ import {
 
 export declare namespace AbstractTypeReferenceConverter {
     export interface Init {
-        typeResolver: TypeResolver;
+        context: BaseContext;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
         useBigInt: boolean;
         enableInlineTypes: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -86,24 +88,30 @@ export namespace ConvertTypeReferenceParams {
 const genericIn = ConvertTypeReferenceParams.GenericIn;
 
 export abstract class AbstractTypeReferenceConverter<T> {
-    protected typeResolver: TypeResolver;
+    protected context: BaseContext;
     protected treatUnknownAsAny: boolean;
     protected includeSerdeLayer: boolean;
     protected useBigInt: boolean;
     protected enableInlineTypes: boolean;
+    protected allowExtraFields: boolean;
+    protected omitUndefined: boolean;
 
     constructor({
-        typeResolver,
+        context,
         treatUnknownAsAny,
         includeSerdeLayer,
         useBigInt,
-        enableInlineTypes
+        enableInlineTypes,
+        allowExtraFields,
+        omitUndefined
     }: AbstractTypeReferenceConverter.Init) {
-        this.typeResolver = typeResolver;
+        this.context = context;
         this.treatUnknownAsAny = treatUnknownAsAny;
         this.includeSerdeLayer = includeSerdeLayer;
         this.useBigInt = useBigInt;
         this.enableInlineTypes = enableInlineTypes;
+        this.allowExtraFields = allowExtraFields;
+        this.omitUndefined = omitUndefined;
     }
 
     public convert(params: ConvertTypeReferenceParams): T {
@@ -169,7 +177,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     }
 
     protected map(mapType: MapType, params: ConvertTypeReferenceParams): T {
-        const resolvdKeyType = this.typeResolver.resolveTypeReference(mapType.keyType);
+        const resolvdKeyType = this.context.type.resolveTypeReference(mapType.keyType);
         if (resolvdKeyType.type === "named" && resolvdKeyType.shape === ShapeType.Enum) {
             return this.mapWithEnumKeys(mapType, params);
         } else {
@@ -181,7 +189,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract mapWithNonEnumKeys(mapType: MapType, params: ConvertTypeReferenceParams): T;
 
     protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
-        const resolvedType = this.typeResolver.resolveTypeReference(typeReference);
+        const resolvedType = this.context.type.resolveTypeReference(typeReference);
         if (resolvedType.type === "primitive") {
             return true;
         }
@@ -192,51 +200,11 @@ export abstract class AbstractTypeReferenceConverter<T> {
     }
 
     public isTypeReferenceOptional(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "named":
-                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
-                switch (typeDeclaration.shape.type) {
-                    case "alias":
-                        return this.isTypeReferenceOptional(typeDeclaration.shape.aliasOf);
-                    default:
-                        return false;
-                }
-            case "container":
-                switch (typeReference.container.type) {
-                    case "nullable":
-                        return this.isTypeReferenceOptional(typeReference.container.nullable);
-                    case "optional":
-                        return true;
-                    default:
-                        return false;
-                }
-            default:
-                return false;
-        }
+        return this.context.type.isOptional(typeReference);
     }
 
     public isTypeReferenceNullable(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "named":
-                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
-                switch (typeDeclaration.shape.type) {
-                    case "alias":
-                        return this.isTypeReferenceNullable(typeDeclaration.shape.aliasOf);
-                    default:
-                        return false;
-                }
-            case "container":
-                switch (typeReference.container.type) {
-                    case "nullable":
-                        return true;
-                    case "optional":
-                        return this.isTypeReferenceNullable(typeReference.container.optional);
-                    default:
-                        return false;
-                }
-            default:
-                return false;
-        }
+        return this.context.type.isNullable(typeReference);
     }
 
     protected generateNonOptionalTypeReferenceNode(typeNode: ts.TypeNode): TypeReferenceNode {

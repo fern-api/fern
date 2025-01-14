@@ -4,8 +4,8 @@
 
 import * as core from "../../../../core";
 import * as SeedPagination from "../../../index";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Users {
@@ -59,7 +59,7 @@ export class Users {
                 _queryParams["per_page"] = perPage.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             if (startingAfter != null) {
                 _queryParams["starting_after"] = startingAfter;
@@ -236,7 +236,7 @@ export class Users {
                 _queryParams["per_page"] = perPage.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             if (startingAfter != null) {
                 _queryParams["starting_after"] = startingAfter;
@@ -416,7 +416,7 @@ export class Users {
                 _queryParams["limit"] = limit.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             const _response = await core.fetcher({
                 url: urlJoin(
@@ -509,7 +509,7 @@ export class Users {
                 _queryParams["limit"] = limit.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             const _response = await core.fetcher({
                 url: urlJoin(

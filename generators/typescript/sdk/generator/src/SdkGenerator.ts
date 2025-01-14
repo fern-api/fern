@@ -360,7 +360,8 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             inlineFileProperties: config.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
-            omitUndefined: config.omitUndefined
+            omitUndefined: config.omitUndefined,
+            allowExtraFields: config.allowExtraFields
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -1313,7 +1314,8 @@ export class SdkGenerator {
             generateOAuthClients: this.generateOAuthClients,
             omitUndefined: this.config.omitUndefined,
             useBigInt: this.config.useBigInt,
-            neverThrowErrors: this.config.neverThrowErrors
+            neverThrowErrors: this.config.neverThrowErrors,
+            allowExtraFields: this.config.allowExtraFields
         });
     }
 }

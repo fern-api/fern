@@ -77,6 +77,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -113,7 +114,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private includeSerdeLayer: boolean;
     private omitUndefined: boolean;
+    private allowExtraFields: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -136,6 +139,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         retainOriginalCasing,
         inlineFileProperties,
         omitUndefined,
+        allowExtraFields,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -150,7 +154,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
+        this.allowExtraFields = allowExtraFields;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -189,7 +195,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            inlineFileProperties: this.inlineFileProperties
+                            inlineFileProperties: this.inlineFileProperties,
+                            includeSerdeLayer: this.includeSerdeLayer,
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: this.omitUndefined
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({

@@ -34,6 +34,8 @@ export declare namespace TypeContextImpl {
         retainOriginalCasing: boolean;
         useBigInt: boolean;
         enableInlineTypes: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
         context: BaseContext;
     }
 }
@@ -67,6 +69,8 @@ export class TypeContextImpl implements TypeContext {
         retainOriginalCasing,
         useBigInt,
         enableInlineTypes,
+        allowExtraFields,
+        omitUndefined,
         context
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
@@ -84,18 +88,22 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
     }
 
@@ -215,10 +223,54 @@ export class TypeContextImpl implements TypeContext {
     }
 
     public isOptional(typeReference: TypeReference): boolean {
-        return this.typeReferenceToParsedTypeNodeConverter.isTypeReferenceOptional(typeReference);
+        switch (typeReference.type) {
+            case "named": {
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
+                switch (typeDeclaration.shape.type) {
+                    case "alias":
+                        return this.isOptional(typeDeclaration.shape.aliasOf);
+                    default:
+                        return false;
+                }
+            }
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return this.isOptional(typeReference.container.nullable);
+                    case "optional":
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+            default:
+                return false;
+        }
     }
 
     public isNullable(typeReference: TypeReference): boolean {
-        return this.typeReferenceToParsedTypeNodeConverter.isTypeReferenceNullable(typeReference);
+        switch (typeReference.type) {
+            case "named": {
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
+                switch (typeDeclaration.shape.type) {
+                    case "alias":
+                        return this.isNullable(typeDeclaration.shape.aliasOf);
+                    default:
+                        return false;
+                }
+            }
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return true;
+                    case "optional":
+                        return this.isNullable(typeReference.container.optional);
+                    default:
+                        return false;
+                }
+            }
+            default:
+                return false;
+        }
     }
 }
