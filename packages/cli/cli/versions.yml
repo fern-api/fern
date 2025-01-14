@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      The Mintlify docs importer now correctly generates the proper display-name key in the docs.yml file.
+    type: fix
+  irVersion: 54
+  version: 0.48.1
+
+- changelogEntry:
+  - summary: |
       Adds support for nullable types in the Fern definition, such as the following:
 
       ```yaml
