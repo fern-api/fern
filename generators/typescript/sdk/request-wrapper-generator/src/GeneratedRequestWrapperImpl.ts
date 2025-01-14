@@ -323,20 +323,19 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         const isQueryParamOptional = context.type.isOptional(queryParameter.valueType);
         const isQueryParamNullable = context.type.isNullable(queryParameter.valueType);
-        if (isQueryParamNullable || (isQueryParamOptional && !isQueryParamNullable)) {
-            statements = [
-                ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        referenceToQueryParameterProperty,
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock(statements)
-                )
-            ];
+        if (!isQueryParamNullable && !isQueryParamOptional) {
+            return statements;
         }
-
-        return statements;
+        return [
+            ts.factory.createIfStatement(
+                ts.factory.createBinaryExpression(
+                    referenceToQueryParameterProperty,
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    isQueryParamNullable ? ts.factory.createIdentifier("undefined") : ts.factory.createNull()
+                ),
+                ts.factory.createBlock(statements)
+            )
+        ];
     }
 
     #areBodyPropertiesOptional: boolean | undefined;

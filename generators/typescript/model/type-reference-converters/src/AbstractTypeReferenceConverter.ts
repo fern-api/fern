@@ -191,6 +191,54 @@ export abstract class AbstractTypeReferenceConverter<T> {
         return false;
     }
 
+    public isTypeReferenceOptional(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "named":
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
+                switch (typeDeclaration.shape.type) {
+                    case "alias":
+                        return this.isTypeReferenceOptional(typeDeclaration.shape.aliasOf);
+                    default:
+                        return false;
+                }
+            case "container":
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return this.isTypeReferenceOptional(typeReference.container.nullable);
+                    case "optional":
+                        return true;
+                    default:
+                        return false;
+                }
+            default:
+                return false;
+        }
+    }
+
+    public isTypeReferenceNullable(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "named":
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
+                switch (typeDeclaration.shape.type) {
+                    case "alias":
+                        return this.isTypeReferenceNullable(typeDeclaration.shape.aliasOf);
+                    default:
+                        return false;
+                }
+            case "container":
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return true;
+                    case "optional":
+                        return this.isTypeReferenceNullable(typeReference.container.optional);
+                    default:
+                        return false;
+                }
+            default:
+                return false;
+        }
+    }
+
     protected generateNonOptionalTypeReferenceNode(typeNode: ts.TypeNode): TypeReferenceNode {
         return {
             isOptional: false,

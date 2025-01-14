@@ -21,21 +21,9 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     public convertWithNullCheckIfOptional(
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        const type = params.typeReference;
-        const isNullable = TypeReference._visit(type, {
-            named: (typeName) => {
-                const resolvedType = this.typeResolver.resolveTypeName(typeName);
-                return resolvedType.type === "container" && resolvedType.container.type === "optional";
-            },
-            container: (container) => container.type === "optional" || container.type === "nullable",
-            primitive: () => false,
-            unknown: () => true,
-            _other: () => {
-                throw new Error("Unknown TypeReference: " + type.type);
-            }
-        });
-
-        if (!isNullable) {
+        const isNullable = this.isTypeReferenceNullable(params.typeReference);
+        const isOptional = this.isTypeReferenceOptional(params.typeReference);
+        if (!isNullable && !isOptional) {
             return this.convert(params);
         }
 
@@ -44,7 +32,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 ts.factory.createBinaryExpression(
                     reference,
                     ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    ts.factory.createNull()
+                    isNullable ? ts.factory.createIdentifier("undefined") : ts.factory.createNull()
                 ),
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                 this.convert(params)(reference),

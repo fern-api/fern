@@ -6,14 +6,12 @@ import {
     TypeReferenceToParsedTypeNodeConverter,
     TypeReferenceToStringExpressionConverter
 } from "@fern-typescript/type-reference-converters";
-import { ConvertTypeReferenceParams } from "@fern-typescript/type-reference-converters/src/AbstractTypeReferenceConverter";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
 
 import {
     DeclaredTypeName,
     ExampleTypeReference,
-    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
@@ -217,50 +215,10 @@ export class TypeContextImpl implements TypeContext {
     }
 
     public isOptional(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "named":
-                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
-                switch (typeDeclaration.shape.type) {
-                    case "alias":
-                        return this.isOptional(typeDeclaration.shape.aliasOf);
-                    default:
-                        return false;
-                }
-            case "container":
-                switch (typeReference.container.type) {
-                    case "nullable":
-                        return this.isOptional(typeReference.container.nullable);
-                    case "optional":
-                        return true;
-                    default:
-                        return false;
-                }
-            default:
-                return false;
-        }
+        return this.typeReferenceToParsedTypeNodeConverter.isTypeReferenceOptional(typeReference);
     }
 
     public isNullable(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "named":
-                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
-                switch (typeDeclaration.shape.type) {
-                    case "alias":
-                        return this.isNullable(typeDeclaration.shape.aliasOf);
-                    default:
-                        return false;
-                }
-            case "container":
-                switch (typeReference.container.type) {
-                    case "nullable":
-                        return true;
-                    case "optional":
-                        return this.isNullable(typeReference.container.optional);
-                    default:
-                        return false;
-                }
-            default:
-                return false;
-        }
+        return this.typeReferenceToParsedTypeNodeConverter.isTypeReferenceNullable(typeReference);
     }
 }
