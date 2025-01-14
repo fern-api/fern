@@ -29,7 +29,6 @@
     "@fern-fern/ir-sdk": "53.23.0",
     "@fern-api/core-utils": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "ts-morph": "^15.1.0"
   },
