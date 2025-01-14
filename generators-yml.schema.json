@@ -644,6 +644,16 @@
             }
           ]
         },
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1525,6 +1535,16 @@
           ]
         },
         "coerce-enums-to-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-nullable-schemas": {
           "oneOf": [
             {
               "type": "boolean"
