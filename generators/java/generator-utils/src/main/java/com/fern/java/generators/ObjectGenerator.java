@@ -177,11 +177,6 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
 
             // See if the names require further resolution
             for (NamedTypeId resolvedId : resolvedIds) {
-                // Don't override non-inline types
-                if (!resolvedId.type().getInline().orElse(false)) {
-                    continue;
-                }
-
                 String name = resolvedId.name();
                 Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
                         generatorContext.getTypeDeclarations().get(resolvedId.typeId()));
@@ -192,17 +187,22 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
 
                 TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
 
-                boolean valid;
-                do {
-                    // Prevent something like "Bar_" generated from resolution on a property name called "bar"
-                    // colliding with "Bar_" generated from a property name called "bar_"
-                    boolean newNameCollides = !(propertyNames.contains(name) && !name.equals(prop.pascalCaseKey()));
-                    valid = !allReservedTypeNames.contains(name) && !newNameCollides;
+                // Don't override non-inline types
+                if (!rawTypeDeclaration.getInline().orElse(false)) {
+                    continue;
+                }
 
-                    if (!valid) {
-                        name += "_";
-                    }
-                } while (!valid);
+//                boolean valid;
+//                do {
+//                    // Prevent something like "Bar_" generated from resolution on a property name called "bar"
+//                    // colliding with "Bar_" generated from a property name called "bar_"
+//                    boolean newNameCollides = !(propertyNames.contains(name) && !name.equals(prop.pascalCaseKey()));
+//                    valid = !allReservedTypeNames.contains(name) && !newNameCollides;
+//
+//                    if (!valid) {
+//                        name += "_";
+//                    }
+//                } while (!valid);
 
                 allReservedTypeNames.add(name);
                 TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);

@@ -79,7 +79,7 @@ public final class PoetTypeNameMapper {
                     poetClassNameFactory.getTypeClassName(DeclaredTypeName.builder()
                             .typeId(named.getTypeId())
                             .fernFilepath(named.getFernFilepath())
-                            .name(named.getName())
+                            .name(typeDeclaration.getName().getName())
                             .build()));
         }
 
