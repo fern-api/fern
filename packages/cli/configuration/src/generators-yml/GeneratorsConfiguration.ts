@@ -60,6 +60,7 @@ export interface APIDefinitionSettings {
     coerceEnumsToLiterals: boolean | undefined;
     objectQueryParameters: boolean | undefined;
     respectReadonlySchemas: boolean | undefined;
+    respectNullableSchemas: boolean | undefined;
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
     filter: OpenApiFilterSchema | undefined;

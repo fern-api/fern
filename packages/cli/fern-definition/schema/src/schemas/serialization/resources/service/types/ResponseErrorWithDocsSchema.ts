@@ -17,7 +17,7 @@ export const ResponseErrorWithDocsSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace ResponseErrorWithDocsSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         error: string;
     }
 }

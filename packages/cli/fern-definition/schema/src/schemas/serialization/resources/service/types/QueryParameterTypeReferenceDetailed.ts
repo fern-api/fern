@@ -17,7 +17,7 @@ export const QueryParameterTypeReferenceDetailed: core.serialization.ObjectSchem
     .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace QueryParameterTypeReferenceDetailed {
-    interface Raw extends TypeReferenceDeclarationWithName.Raw {
+    export interface Raw extends TypeReferenceDeclarationWithName.Raw {
         "allow-multiple"?: boolean | null;
     }
 }

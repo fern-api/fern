@@ -18,7 +18,7 @@ export const WebhookInlinedPayloadSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace WebhookInlinedPayloadSchema {
-    interface Raw {
+    export interface Raw {
         name: string;
         extends?: ObjectExtendsSchema.Raw | null;
         properties?: Record<string, ObjectPropertySchema.Raw> | null;

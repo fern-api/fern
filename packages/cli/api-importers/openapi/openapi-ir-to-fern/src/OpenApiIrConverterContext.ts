@@ -37,6 +37,7 @@ export class OpenApiIrConverterContext {
     public detectGlobalHeaders: boolean;
     public objectQueryParameters: boolean;
     public respectReadonlySchemas: boolean;
+    public respectNullableSchemas: boolean;
     public onlyIncludeReferencedSchemas: boolean;
     public inlinePathParameters: boolean;
 
@@ -82,6 +83,7 @@ export class OpenApiIrConverterContext {
         this.detectGlobalHeaders = options?.detectGlobalHeaders ?? true;
         this.objectQueryParameters = options?.objectQueryParameters ?? false;
         this.respectReadonlySchemas = options?.respectReadonlySchemas ?? false;
+        this.respectNullableSchemas = options?.respectNullableSchemas ?? false;
         this.onlyIncludeReferencedSchemas = options?.onlyIncludeReferencedSchemas ?? false;
         this.inlinePathParameters = options?.inlinePathParameters ?? false;
         this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;

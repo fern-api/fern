@@ -10,5 +10,5 @@ export const StreamFormat: core.serialization.Schema<serializers.StreamFormat.Ra
     core.serialization.enum_(["sse", "json"]);
 
 export declare namespace StreamFormat {
-    type Raw = "sse" | "json";
+    export type Raw = "sse" | "json";
 }

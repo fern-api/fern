@@ -25,7 +25,7 @@ export const SingleUnionTypeDetailedSchema: core.serialization.ObjectSchema<
     .extend(WithDisplayName);
 
 export declare namespace SingleUnionTypeDetailedSchema {
-    interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAvailability.Raw, WithDisplayName.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithName.Raw, WithAvailability.Raw, WithDisplayName.Raw {
         type?: string | null;
         key?: SingleUnionTypeKey.Raw | null;
     }

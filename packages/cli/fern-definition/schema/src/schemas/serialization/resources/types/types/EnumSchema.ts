@@ -17,7 +17,7 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
         .extend(BaseTypeDeclarationSchema);
 
 export declare namespace EnumSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw {
+    export interface Raw extends BaseTypeDeclarationSchema.Raw {
         default?: string | null;
         enum: EnumValue.Raw[];
     }

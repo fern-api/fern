@@ -11,5 +11,5 @@ export const Export: core.serialization.Schema<serializers.Export.Raw, FernDefin
     core.serialization.undiscriminatedUnion([core.serialization.string(), ExportDetailed]);
 
 export declare namespace Export {
-    type Raw = string | ExportDetailed.Raw;
+    export type Raw = string | ExportDetailed.Raw;
 }

@@ -27,7 +27,7 @@ export const DefinitionFileSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace DefinitionFileSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         imports?: Record<string, string> | null;
         types?: Record<string, TypeDeclarationSchema.Raw> | null;
         service?: HttpServiceSchema.Raw | null;

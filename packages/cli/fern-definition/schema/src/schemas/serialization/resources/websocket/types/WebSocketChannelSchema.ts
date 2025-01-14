@@ -30,7 +30,7 @@ export const WebSocketChannelSchema: core.serialization.ObjectSchema<
     .extend(WithDisplayName);
 
 export declare namespace WebSocketChannelSchema {
-    interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw {
+    export interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw {
         auth: boolean;
         path: string;
         headers?: Record<string, HttpHeaderSchema.Raw> | null;
