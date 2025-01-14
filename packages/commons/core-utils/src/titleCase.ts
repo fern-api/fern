@@ -376,5 +376,14 @@ export const SPECIAL_TOKENS = [
     // Frameworks and Libraries
     "Vue.js",
     "Node.js",
-    ".NET"
+    ".NET",
+
+    // LLM-related
+    "LLM",
+    "LLMs",
+    "GPT",
+    "GPT-4",
+    "ChatGPT",
+    "DALL-E",
+    "RAG"
 ];
