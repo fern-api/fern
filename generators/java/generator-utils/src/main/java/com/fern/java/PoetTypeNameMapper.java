@@ -58,9 +58,12 @@ public final class PoetTypeNameMapper {
 
         private ClassName applyEnclosing(DeclaredTypeName name, ClassName raw) {
             Optional<ClassName> enclosingClass = Optional.ofNullable(enclosingClasses.get(name));
-            return enclosingClass
-                    .map(className -> className.nestedClass(raw.simpleName()))
-                    .orElse(raw);
+
+            if (enclosingClass.isPresent() && !enclosingClass.get().equals(raw)) {
+                return enclosingClass.get().nestedClass(raw.simpleName());
+            }
+
+            return raw;
         }
 
         @Override

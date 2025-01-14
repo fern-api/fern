@@ -21,6 +21,7 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     public AbstractTypeGenerator(
             ClassName className, AbstractGeneratorContext<?, ?> generatorContext, Set<String> reservedTypeNames) {
         super(className, generatorContext);
+        this.reservedTypeNames = reservedTypeNames;
     }
 
     public abstract List<TypeDeclaration> getInlineTypeDeclarations();
@@ -30,13 +31,14 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     public TypeSpec getTypeSpec() {
         TypeSpec typeSpec = getTypeSpecWithoutInlineTypes();
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
-            typeSpec = typeSpec.toBuilder().addTypes(getInlineTypeSpecs()).build();
+            List<TypeSpec> inlineTypeSpecs = getInlineTypeSpecs();
+            typeSpec = typeSpec.toBuilder().addTypes(inlineTypeSpecs).build();
         }
         return typeSpec;
     }
 
     private List<TypeSpec> getInlineTypeSpecs() {
-        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+        if (!generatorContext.getCustomConfig().enableInlineTypes()) {
             return List.of();
         }
 
@@ -56,17 +58,12 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
                                     .addAll(reservedTypeNames)
                                     .add(name)
                                     .build()));
-            generator.map(AbstractTypeGenerator::getTypeSpec).ifPresent(result::add);
+            if (generator.isPresent()) {
+                TypeSpec typeSpec = generator.get().getTypeSpec();
+                result.add(typeSpec);
+            }
         }
 
-        return result;
-    }
-
-    protected String resolveName(String rawName) {
-        String result = rawName;
-        while (reservedTypeNames.contains(result)) {
-            result += "_";
-        }
         return result;
     }
 

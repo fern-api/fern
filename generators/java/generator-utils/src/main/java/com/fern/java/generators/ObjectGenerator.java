@@ -80,8 +80,12 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .map(ImplementsInterface::interfaceProperties)
                     .flatMap(List::stream)
                     .collect(Collectors.toList()));
-            Map<EnrichedObjectProperty, EnrichedObjectProperty> propertyOverrides =
-                    overridePropertyTypes(className, generatorContext, reservedTypeNames, allEnrichedProperties);
+            Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides = ImmutableMap.<TypeId, TypeDeclaration>builder()
+                    .putAll(generatorContext.getTypeDeclarations())
+                    .putAll(overriddenTypeDeclarations(generatorContext, reservedTypeNames, allEnrichedProperties))
+                    .buildKeepingLast();
+            Map<EnrichedObjectProperty, EnrichedObjectProperty> propertyOverrides = overridePropertyTypes(
+                    className, generatorContext, allEnrichedProperties, typeDeclarationsWithOverrides);
             this.enrichedObjectProperties = enriched.stream()
                     .map(prop -> applyOverrideIfNecessary(prop, propertyOverrides))
                     .collect(Collectors.toList());
@@ -110,7 +114,9 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
 
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
-        return List.of();
+        return new ArrayList<>(overriddenTypeDeclarations(
+                        generatorContext, reservedTypeNames, new ArrayList<>(objectPropertyGetters.values()))
+                .values());
     }
 
     @Override
@@ -154,16 +160,13 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 .build();
     }
 
-    private static Map<EnrichedObjectProperty, EnrichedObjectProperty> overridePropertyTypes(
-            ClassName className,
+    private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
             AbstractGeneratorContext<?, ?> generatorContext,
             Set<String> reservedTypeNames,
             List<EnrichedObjectProperty> enrichedObjectProperties) {
         Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
-        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>(generatorContext.getTypeDeclarations());
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
         Set<String> propertyNames = new HashSet<>();
-        Map<DeclaredTypeName, ClassName> enclosingMappings = new HashMap<>();
-        Map<EnrichedObjectProperty, EnrichedObjectProperty> result = new HashMap<>();
 
         for (EnrichedObjectProperty prop : enrichedObjectProperties) {
             propertyNames.add(prop.pascalCaseKey());
@@ -206,9 +209,23 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
 
                 allReservedTypeNames.add(name);
                 TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
-                enclosingMappings.put(overriddenTypeDeclaration.getName(), className);
                 overriddenTypeDeclarations.put(resolvedId.typeId(), overriddenTypeDeclaration);
             }
+        }
+
+        return overriddenTypeDeclarations;
+    }
+
+    private static Map<EnrichedObjectProperty, EnrichedObjectProperty> overridePropertyTypes(
+            ClassName className,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            List<EnrichedObjectProperty> enrichedObjectProperties,
+            Map<TypeId, TypeDeclaration> overriddenTypeDeclarations) {
+        Map<EnrichedObjectProperty, EnrichedObjectProperty> result = new HashMap<>();
+        Map<DeclaredTypeName, ClassName> enclosingMappings = new HashMap<>();
+
+        for (Map.Entry<TypeId, TypeDeclaration> entry : overriddenTypeDeclarations.entrySet()) {
+            enclosingMappings.put(entry.getValue().getName(), className);
         }
 
         PoetTypeNameMapper overriddenMapper = new PoetTypeNameMapper(
