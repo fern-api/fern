@@ -5,19 +5,21 @@ favicon: logo.png
 logo:
   light: logo/light.svg
   dark: logo/dark.svg
+  href: null
   height: 28
 colors:
-  accentPrimary:
+  accent-primary:
     dark: '#0b0a18'
     light: '#847AF9'
   background:
     dark: '#0A141B'
+    light: null
 tabs:
   api-v1:
     slug: api-v1
-    displayName: V1 API Reference
+    display-name: V1 API Reference
   documentation:
-    displayName: Documentation
+    display-name: Documentation
     slug: documentation
 navigation:
   - tab: api-v1
