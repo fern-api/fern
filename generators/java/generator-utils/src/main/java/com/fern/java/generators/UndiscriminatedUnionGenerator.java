@@ -30,14 +30,12 @@ import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
 import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -112,11 +110,6 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     @Override
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
-        return null;
-    }
-
-    @Override
-    public GeneratedJavaFile generateFile() {
         EqualsMethod equalsMethod = generateEqualsMethod();
 
         TypeSpec.Builder unionTypeSpec = TypeSpec.classBuilder(className)
@@ -145,12 +138,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .addMethods(getStaticFactories())
                 .addType(getVisitor())
                 .addType(getDeserializer());
-        JavaFile javaFile =
-                JavaFile.builder(className.packageName(), unionTypeSpec.build()).build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(javaFile)
-                .build();
+        return unionTypeSpec.build();
     }
 
     private MethodSpec getRetriever() {

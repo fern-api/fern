@@ -8,10 +8,8 @@ import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
-import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -43,11 +41,6 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
     @Override
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
-        return null;
-    }
-
-    @Override
-    public GeneratedJavaFile generateFile() {
         TypeSpec.Builder aliasTypeSpecBuilder =
                 TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         TypeName aliasTypeName =
@@ -70,12 +63,7 @@ public final class AliasGenerator extends AbstractTypeGenerator {
                     .addCode(maybeValueOfFactoryMethod.get())
                     .build());
         }
-        JavaFile aliasFile = JavaFile.builder(className.packageName(), aliasTypeSpecBuilder.build())
-                .build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(aliasFile)
-                .build();
+        return aliasTypeSpecBuilder.build();
     }
 
     private MethodSpec getConstructor(TypeName aliasTypeName) {

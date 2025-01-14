@@ -20,10 +20,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
@@ -53,15 +51,10 @@ public final class EnumGenerator extends AbstractTypeGenerator {
 
     @Override
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
-        return null;
-    }
-
-    @Override
-    public GeneratedJavaFile generateFile() {
         if (generatorContext.getCustomConfig().enableForwardCompatibleEnum()) {
-            ForwardCompatibleEnumGenerator forwardCompatibleEnumGenerator =
-                    new ForwardCompatibleEnumGenerator(className, generatorContext, enumTypeDeclaration);
-            return forwardCompatibleEnumGenerator.generateFile();
+            ForwardCompatibleEnumGenerator forwardCompatibleEnumGenerator = new ForwardCompatibleEnumGenerator(
+                    className, generatorContext, enumTypeDeclaration, reservedTypeNames);
+            return forwardCompatibleEnumGenerator.getTypeSpecWithoutInlineTypes();
         } else {
             TypeSpec.Builder enumTypeSpecBuilder = TypeSpec.enumBuilder(className);
             enumTypeDeclaration.getValues().forEach(enumValue -> {
@@ -86,12 +79,7 @@ public final class EnumGenerator extends AbstractTypeGenerator {
                             .build())
                     .build();
 
-            JavaFile enumFile = JavaFile.builder(className.packageName(), enumTypeSpecBuilder.build())
-                    .build();
-            return GeneratedJavaFile.builder()
-                    .className(className)
-                    .javaFile(enumFile)
-                    .build();
+            return enumTypeSpecBuilder.build();
         }
     }
 }
