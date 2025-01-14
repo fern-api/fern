@@ -5,7 +5,6 @@ import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -15,7 +14,6 @@ import java.util.Set;
 public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     protected TypeSpec typeSpec;
     protected Set<String> reservedTypeNames;
-    protected PoetTypeNameMapper poetTypeNameMapper;
 
     public AbstractTypeGenerator(
             ClassName className, AbstractGeneratorContext<?, ?> generatorContext, Set<String> reservedTypeNames) {

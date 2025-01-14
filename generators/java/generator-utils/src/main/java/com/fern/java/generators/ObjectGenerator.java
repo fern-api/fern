@@ -33,6 +33,7 @@ import com.fern.java.utils.TypeIdResolver;
 import com.google.common.collect.ImmutableMap;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,14 +60,39 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             ClassName className,
             Set<String> reservedTypeNames) {
         super(className, generatorContext, reservedTypeNames);
+
         List<GeneratedJavaInterface> allExtendedInterfaces = new ArrayList<>();
         selfInterface.ifPresent(allExtendedInterfaces::add);
         allExtendedInterfaces.addAll(extendedInterfaces);
-        this.enrichedObjectProperties = enrichedObjectProperties(
-                selfInterface, objectTypeDeclaration, generatorContext.getPoetTypeNameMapper());
+
         List<GeneratedJavaInterface> ancestors =
                 getUniqueAncestorsInLevelOrder(allExtendedInterfaces, allGeneratedInterfaces);
-        this.implementsInterfaces = implementsInterfaces(ancestors);
+
+        List<EnrichedObjectProperty> enriched = enrichedObjectProperties(
+                selfInterface, objectTypeDeclaration, generatorContext.getPoetTypeNameMapper());
+        List<ImplementsInterface> implemented = implementsInterfaces(ancestors);
+
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            List<EnrichedObjectProperty> allEnrichedProperties = new ArrayList<>();
+            allEnrichedProperties.addAll(enriched);
+            allEnrichedProperties.addAll(implemented.stream()
+                    .map(ImplementsInterface::interfaceProperties)
+                    .flatMap(List::stream)
+                    .collect(Collectors.toList()));
+            Map<EnrichedObjectProperty, EnrichedObjectProperty> propertyOverrides =
+                    overridePropertyTypes(className, generatorContext, reservedTypeNames, allEnrichedProperties);
+            this.enrichedObjectProperties = enriched.stream()
+                    .map(prop -> applyOverrideIfNecessary(prop, propertyOverrides))
+                    .collect(Collectors.toList());
+            this.implementsInterfaces = implemented.stream()
+                    .map(implementsInterface ->
+                            applyPropertyOverridesIfNecessary(implementsInterface, propertyOverrides))
+                    .collect(Collectors.toList());
+        } else {
+            this.enrichedObjectProperties = enriched;
+            this.implementsInterfaces = implemented;
+        }
+
         this.extendedPropertyGetters = implementsInterfaces.stream()
                 .map(ImplementsInterface::interfaceProperties)
                 .flatMap(List::stream)
@@ -79,6 +105,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                         .mapKeys(EnrichedObjectProperty::objectProperty)
                         .collectToMap())
                 .build();
+
         ObjectTypeSpecGenerator genericObjectGenerator = new ObjectTypeSpecGenerator(
                 className,
                 generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
@@ -103,18 +130,37 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 .build();
     }
 
-    private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
+    private static EnrichedObjectProperty applyOverrideIfNecessary(
+            EnrichedObjectProperty raw, Map<EnrichedObjectProperty, EnrichedObjectProperty> overrides) {
+        return Optional.ofNullable(overrides.get(raw)).orElse(raw);
+    }
+
+    private static ImplementsInterface applyPropertyOverridesIfNecessary(
+            ImplementsInterface raw, Map<EnrichedObjectProperty, EnrichedObjectProperty> overrides) {
+        return ImplementsInterface.builder()
+                .interfaceClassName(raw.interfaceClassName())
+                .addAllInterfaceProperties(raw.interfaceProperties().stream()
+                        .map(prop -> applyOverrideIfNecessary(prop, overrides))
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    private static Map<EnrichedObjectProperty, EnrichedObjectProperty> overridePropertyTypes(
+            ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             Set<String> reservedTypeNames,
-            Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters) {
-        Map<TypeId, TypeDeclaration> result = new HashMap<>();
+            List<EnrichedObjectProperty> enrichedObjectProperties) {
+        Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>(generatorContext.getTypeDeclarations());
         Set<String> propertyNames = new HashSet<>();
+        Map<DeclaredTypeName, ClassName> enclosingMappings = new HashMap<>();
+        Map<EnrichedObjectProperty, EnrichedObjectProperty> result = new HashMap<>();
 
-        for (EnrichedObjectProperty prop : objectPropertyGetters.values()) {
+        for (EnrichedObjectProperty prop : enrichedObjectProperties) {
             propertyNames.add(prop.pascalCaseKey());
         }
 
-        for (EnrichedObjectProperty prop : objectPropertyGetters.values()) {
+        for (EnrichedObjectProperty prop : enrichedObjectProperties) {
             List<NamedTypeId> resolvedIds = prop.objectProperty()
                     .getValueType()
                     .visit(new TypeIdResolver(
@@ -142,16 +188,40 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     // Prevent something like "Bar_" generated from resolution on a property name called "bar"
                     // colliding with "Bar_" generated from a property name called "bar_"
                     boolean newNameCollides = !(propertyNames.contains(name) && !name.equals(prop.pascalCaseKey()));
-                    valid = !reservedTypeNames.contains(name) && !newNameCollides;
+                    valid = !allReservedTypeNames.contains(name) && !newNameCollides;
 
                     if (!valid) {
                         name += "_";
                     }
                 } while (!valid);
 
+                allReservedTypeNames.add(name);
                 TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
-                result.put(resolvedId.typeId(), overriddenTypeDeclaration);
+                enclosingMappings.put(overriddenTypeDeclaration.getName(), className);
+                overriddenTypeDeclarations.put(resolvedId.typeId(), overriddenTypeDeclaration);
             }
+        }
+
+        PoetTypeNameMapper overriddenMapper = new PoetTypeNameMapper(
+                generatorContext.getPoetClassNameFactory(),
+                generatorContext.getCustomConfig(),
+                overriddenTypeDeclarations,
+                enclosingMappings);
+
+        for (EnrichedObjectProperty prop : enrichedObjectProperties) {
+            TypeName typeName = overriddenMapper.convertToTypeName(
+                    false, prop.objectProperty().getValueType());
+            EnrichedObjectProperty overridden = EnrichedObjectProperty.builder()
+                    .camelCaseKey(prop.camelCaseKey())
+                    .pascalCaseKey(prop.pascalCaseKey())
+                    .poetTypeName(typeName)
+                    .fromInterface(prop.fromInterface())
+                    .objectProperty(prop.objectProperty())
+                    .wireKey(prop.wireKey())
+                    .docs(prop.docs())
+                    .literal(prop.literal())
+                    .build();
+            result.put(prop, overridden);
         }
 
         return result;
