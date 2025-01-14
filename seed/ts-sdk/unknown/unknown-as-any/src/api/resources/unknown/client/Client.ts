@@ -11,6 +11,8 @@ import urlJoin from "url-join";
 export declare namespace Unknown {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -39,7 +41,9 @@ export class Unknown {
      */
     public async post(request?: any, requestOptions?: Unknown.RequestOptions): Promise<any[]> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -104,7 +108,11 @@ export class Unknown {
         requestOptions?: Unknown.RequestOptions,
     ): Promise<any[]> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/with-object"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/with-object",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

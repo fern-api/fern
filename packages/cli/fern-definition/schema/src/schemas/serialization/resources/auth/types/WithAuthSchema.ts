@@ -17,7 +17,7 @@ export const WithAuthSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithAuthSchema {
-    interface Raw {
+    export interface Raw {
         auth?: ApiAuthSchema.Raw | null;
         "auth-schemes"?: Record<string, AuthSchemeDeclarationSchema.Raw> | null;
     }

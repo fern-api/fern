@@ -18,6 +18,8 @@ export interface ParseOpenAPIOptions {
     cooerceEnumsToLiterals: boolean;
     /* Whether or not to respect readonly properties in schemas */
     respectReadonlySchemas: boolean;
+    /* Whether or not to respect nullable properties in schemas */
+    respectNullableSchemas: boolean;
     /* Whether or not to only include endpoint referenced schemas */
     onlyIncludeReferencedSchemas: boolean;
     /* Whether or not to include path parameters in the in-lined request */
@@ -47,6 +49,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     optionalAdditionalProperties: true,
     cooerceEnumsToLiterals: true,
     respectReadonlySchemas: false,
+    respectNullableSchemas: false,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: false,
     preserveSchemaIds: false,
@@ -85,6 +88,10 @@ export function getParseOptions({
             overrides?.respectReadonlySchemas ??
             options?.respectReadonlySchemas ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas,
+        respectNullableSchemas:
+            overrides?.respectNullableSchemas ??
+            options?.respectNullableSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectNullableSchemas,
         onlyIncludeReferencedSchemas:
             overrides?.onlyIncludeReferencedSchemas ??
             options?.onlyIncludeReferencedSchemas ??

@@ -8,17 +8,18 @@ logo:
   href: http://layerfi.com
   height: 28
 colors:
-  accentPrimary:
+  accent-primary:
     dark: '#0c48e5'
     light: '#7e9be5'
   background:
     dark: '#090014'
+    light: null
 tabs:
   api-reference:
     slug: api-reference
-    displayName: API Reference
+    display-name: API Reference
   documentation:
-    displayName: Documentation
+    display-name: Documentation
     slug: documentation
 navigation:
   - tab: api-reference

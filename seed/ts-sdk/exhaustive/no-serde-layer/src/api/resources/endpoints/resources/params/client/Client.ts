@@ -10,6 +10,8 @@ import * as SeedExhaustive from "../../../../../index";
 export declare namespace Params {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -40,7 +42,8 @@ export class Params {
     public async getWithPath(param: string, requestOptions?: Params.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "GET",
@@ -103,7 +106,8 @@ export class Params {
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "GET",
@@ -170,7 +174,11 @@ export class Params {
         _queryParams["query"] = query;
         _queryParams["number"] = number_.toString();
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/params"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/params",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -246,7 +254,11 @@ export class Params {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/params"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/params",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -313,7 +325,8 @@ export class Params {
         _queryParams["query"] = query;
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/params/path-query/${encodeURIComponent(param)}`,
             ),
             method: "GET",
@@ -384,7 +397,8 @@ export class Params {
         _queryParams["query"] = query;
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/params/path-query/${encodeURIComponent(param)}`,
             ),
             method: "GET",
@@ -450,7 +464,8 @@ export class Params {
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "PUT",
@@ -516,7 +531,8 @@ export class Params {
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/params/path/${encodeURIComponent(param)}`,
             ),
             method: "PUT",

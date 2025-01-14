@@ -18,6 +18,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     "prefer-undiscriminated-unions-with-literals": core.serialization.boolean().optional(),
     "object-query-parameters": core.serialization.boolean().optional(),
     "respect-readonly-schemas": core.serialization.boolean().optional(),
+    "respect-nullable-schemas": core.serialization.boolean().optional(),
     "only-include-referenced-schemas": core.serialization.boolean().optional(),
     "inline-path-parameters": core.serialization.boolean().optional(),
     filter: OpenApiFilterSchema.optional(),
@@ -32,6 +33,7 @@ export declare namespace OpenApiSettingsSchema {
         "prefer-undiscriminated-unions-with-literals"?: boolean | null;
         "object-query-parameters"?: boolean | null;
         "respect-readonly-schemas"?: boolean | null;
+        "respect-nullable-schemas"?: boolean | null;
         "only-include-referenced-schemas"?: boolean | null;
         "inline-path-parameters"?: boolean | null;
         filter?: OpenApiFilterSchema.Raw | null;

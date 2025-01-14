@@ -9,6 +9,7 @@ export type TypeReference =
     | FernIr.dynamic.TypeReference.Literal
     | FernIr.dynamic.TypeReference.Map
     | FernIr.dynamic.TypeReference.Named
+    | FernIr.dynamic.TypeReference.Nullable
     | FernIr.dynamic.TypeReference.Optional
     | FernIr.dynamic.TypeReference.Primitive
     | FernIr.dynamic.TypeReference.Set
@@ -32,6 +33,11 @@ export namespace TypeReference {
     export interface Named extends _Utils {
         type: "named";
         value: FernIr.TypeId;
+    }
+
+    export interface Nullable extends _Utils {
+        type: "nullable";
+        value: FernIr.dynamic.TypeReference;
     }
 
     export interface Optional extends _Utils {
@@ -62,6 +68,7 @@ export namespace TypeReference {
         literal: (value: FernIr.dynamic.LiteralType) => _Result;
         map: (value: FernIr.dynamic.MapType) => _Result;
         named: (value: FernIr.TypeId) => _Result;
+        nullable: (value: FernIr.dynamic.TypeReference) => _Result;
         optional: (value: FernIr.dynamic.TypeReference) => _Result;
         primitive: (value: FernIr.PrimitiveTypeV1) => _Result;
         set: (value: FernIr.dynamic.TypeReference) => _Result;
@@ -116,6 +123,19 @@ export const TypeReference = {
             type: "named",
             _visit: function <_Result>(
                 this: FernIr.dynamic.TypeReference.Named,
+                visitor: FernIr.dynamic.TypeReference._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.TypeReference._visit(this, visitor);
+            },
+        };
+    },
+
+    nullable: (value: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference.Nullable => {
+        return {
+            value: value,
+            type: "nullable",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.TypeReference.Nullable,
                 visitor: FernIr.dynamic.TypeReference._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.TypeReference._visit(this, visitor);
@@ -187,6 +207,8 @@ export const TypeReference = {
                 return visitor.map(value);
             case "named":
                 return visitor.named(value.value);
+            case "nullable":
+                return visitor.nullable(value.value);
             case "optional":
                 return visitor.optional(value.value);
             case "primitive":

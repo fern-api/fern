@@ -14,5 +14,5 @@ export const ValidationSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([StringValidationSchema, NumberValidationSchema]);
 
 export declare namespace ValidationSchema {
-    type Raw = StringValidationSchema.Raw | NumberValidationSchema.Raw;
+    export type Raw = StringValidationSchema.Raw | NumberValidationSchema.Raw;
 }

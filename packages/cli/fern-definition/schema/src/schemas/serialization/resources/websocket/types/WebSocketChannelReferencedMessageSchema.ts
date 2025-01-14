@@ -17,7 +17,7 @@ export const WebSocketChannelReferencedMessageSchema: core.serialization.ObjectS
     .extend(WithDocsSchema);
 
 export declare namespace WebSocketChannelReferencedMessageSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         type: string;
     }
 }

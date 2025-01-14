@@ -17,7 +17,7 @@ export const CasingOverridesSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace CasingOverridesSchema {
-    interface Raw {
+    export interface Raw {
         camel?: string | null;
         snake?: string | null;
         pascal?: string | null;

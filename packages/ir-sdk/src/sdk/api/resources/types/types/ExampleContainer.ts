@@ -8,6 +8,7 @@ export type ExampleContainer =
     | FernIr.ExampleContainer.List
     | FernIr.ExampleContainer.Set
     | FernIr.ExampleContainer.Optional
+    | FernIr.ExampleContainer.Nullable
     | FernIr.ExampleContainer.Map
     | FernIr.ExampleContainer.Literal;
 
@@ -22,6 +23,10 @@ export namespace ExampleContainer {
 
     export interface Optional extends FernIr.ExampleOptionalContainer, _Utils {
         type: "optional";
+    }
+
+    export interface Nullable extends FernIr.ExampleNullableContainer, _Utils {
+        type: "nullable";
     }
 
     export interface Map extends FernIr.ExampleMapContainer, _Utils {
@@ -40,6 +45,7 @@ export namespace ExampleContainer {
         list: (value: FernIr.ExampleListContainer) => _Result;
         set: (value: FernIr.ExampleSetContainer) => _Result;
         optional: (value: FernIr.ExampleOptionalContainer) => _Result;
+        nullable: (value: FernIr.ExampleNullableContainer) => _Result;
         map: (value: FernIr.ExampleMapContainer) => _Result;
         literal: (value: FernIr.ExampleLiteralContainer) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -86,6 +92,19 @@ export const ExampleContainer = {
         };
     },
 
+    nullable: (value: FernIr.ExampleNullableContainer): FernIr.ExampleContainer.Nullable => {
+        return {
+            ...value,
+            type: "nullable",
+            _visit: function <_Result>(
+                this: FernIr.ExampleContainer.Nullable,
+                visitor: FernIr.ExampleContainer._Visitor<_Result>,
+            ) {
+                return FernIr.ExampleContainer._visit(this, visitor);
+            },
+        };
+    },
+
     map: (value: FernIr.ExampleMapContainer): FernIr.ExampleContainer.Map => {
         return {
             ...value,
@@ -120,6 +139,8 @@ export const ExampleContainer = {
                 return visitor.set(value);
             case "optional":
                 return visitor.optional(value);
+            case "nullable":
+                return visitor.nullable(value);
             case "map":
                 return visitor.map(value);
             case "literal":

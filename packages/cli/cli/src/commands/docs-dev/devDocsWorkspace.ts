@@ -1,4 +1,5 @@
 import { runPreviewServer } from "@fern-api/docs-preview";
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -47,7 +48,8 @@ export async function previewDocsWorkspace({
                         project.apiWorkspaces.map(async (workspace) => {
                             return workspace.toFernWorkspace({ context });
                         })
-                    )
+                    ),
+                    ossWorkspaces: await filterOssWorkspaces(project)
                 });
                 for (const apiWorkspace of project.apiWorkspaces) {
                     await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {

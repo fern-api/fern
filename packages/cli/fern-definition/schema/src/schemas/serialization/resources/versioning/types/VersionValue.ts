@@ -11,5 +11,5 @@ export const VersionValue: core.serialization.Schema<serializers.VersionValue.Ra
     core.serialization.undiscriminatedUnion([core.serialization.string(), VersionValueDetailed]);
 
 export declare namespace VersionValue {
-    type Raw = string | VersionValueDetailed.Raw;
+    export type Raw = string | VersionValueDetailed.Raw;
 }

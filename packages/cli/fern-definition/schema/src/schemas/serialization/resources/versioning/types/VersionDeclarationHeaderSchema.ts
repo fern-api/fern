@@ -13,5 +13,5 @@ export const VersionDeclarationHeaderSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), VersionDeclarationHeaderObjectSchema]);
 
 export declare namespace VersionDeclarationHeaderSchema {
-    type Raw = string | VersionDeclarationHeaderObjectSchema.Raw;
+    export type Raw = string | VersionDeclarationHeaderObjectSchema.Raw;
 }

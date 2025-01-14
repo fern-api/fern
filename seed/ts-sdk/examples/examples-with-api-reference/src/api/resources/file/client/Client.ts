@@ -10,6 +10,8 @@ import { Service } from "../resources/service/client/Client";
 export declare namespace File_ {
     export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 

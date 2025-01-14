@@ -113,6 +113,7 @@ export class ComplexQueryParamTypeDetector {
                     )
                 );
             case "optional":
+            case "nullable":
             case "list":
             case "set":
                 return this.isResolvedReferenceComplex({
@@ -254,6 +255,7 @@ export class ComplexQueryParamTypeDetector {
                     })
                 );
             case "optional":
+            case "nullable":
             case "list":
             case "set":
                 return this.isComplex({

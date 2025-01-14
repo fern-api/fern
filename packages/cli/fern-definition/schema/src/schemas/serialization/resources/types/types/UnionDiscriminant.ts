@@ -13,5 +13,5 @@ export const UnionDiscriminant: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), UnionDiscriminantSchema]);
 
 export declare namespace UnionDiscriminant {
-    type Raw = string | UnionDiscriminantSchema.Raw;
+    export type Raw = string | UnionDiscriminantSchema.Raw;
 }

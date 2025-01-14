@@ -15,5 +15,5 @@ export const ObjectExtendsSchema: core.serialization.Schema<
 ]);
 
 export declare namespace ObjectExtendsSchema {
-    type Raw = string | string[];
+    export type Raw = string | string[];
 }

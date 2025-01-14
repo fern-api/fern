@@ -8,6 +8,8 @@ import { Payment } from "./api/resources/payment/client/Client";
 export declare namespace SeedIdempotencyHeadersClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 

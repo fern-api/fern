@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Foo {
     export interface Options {
         environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -50,7 +52,9 @@ export class Foo {
         }
 
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
