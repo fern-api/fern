@@ -13,7 +13,7 @@ import {
     loadProjectConfig
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs, initializeWithMintlify } from "@fern-api/init";
+import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
@@ -231,7 +231,11 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 })
                 .option("mintlify", {
                     type: "string",
-                    description: "Migrate docs from Mintlify"
+                    description: "Migrate docs from Mintlify provided a path to a mint.json file"
+                })
+                .option("readme", {
+                    type: "string",
+                    description: "Migrate docs from Readme provided a URL to a Readme generated docs site"
                 }),
         async (argv) => {
             if (argv.organization == null) {
@@ -239,6 +243,18 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            } else if (argv.readme != null && argv.mintlify != null) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --readme and --mintlify. Please choose one."
+                );
+            } else if (argv.readme != null) {
+                await cliContext.runTask(async (context) => {
+                    await initializeWithReadme({
+                        readmeUrl: argv.readme,
+                        taskContext: context,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
+                    });
+                });
             } else if (argv.docs != null) {
                 await cliContext.runTask(async (context) => {
                     await initializeDocs({
