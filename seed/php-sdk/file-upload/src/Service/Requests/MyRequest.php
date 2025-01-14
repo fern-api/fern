@@ -14,7 +14,7 @@ class MyRequest extends JsonSerializableType
     /**
      * @var ?string $maybeString
      */
-    #[JsonProperty('maybeString')]
+    #[JsonProperty('maybe_string')]
     public ?string $maybeString;
 
     /**
@@ -46,37 +46,37 @@ class MyRequest extends JsonSerializableType
     /**
      * @var ?int $maybeInteger
      */
-    #[JsonProperty('maybeInteger')]
+    #[JsonProperty('maybe_integer')]
     public ?int $maybeInteger;
 
     /**
      * @var ?array<string> $optionalListOfStrings
      */
-    #[JsonProperty('optionalListOfStrings'), ArrayType(['string'])]
+    #[JsonProperty('optional_list_of_strings'), ArrayType(['string'])]
     public ?array $optionalListOfStrings;
 
     /**
      * @var array<MyObject> $listOfObjects
      */
-    #[JsonProperty('listOfObjects'), ArrayType([MyObject::class])]
+    #[JsonProperty('list_of_objects'), ArrayType([MyObject::class])]
     public array $listOfObjects;
 
     /**
      * @var mixed $optionalMetadata
      */
-    #[JsonProperty('optionalMetadata')]
+    #[JsonProperty('optional_metadata')]
     public mixed $optionalMetadata;
 
     /**
      * @var ?value-of<ObjectType> $optionalObjectType
      */
-    #[JsonProperty('optionalObjectType')]
+    #[JsonProperty('optional_object_type')]
     public ?string $optionalObjectType;
 
     /**
      * @var ?string $optionalId
      */
-    #[JsonProperty('optionalId')]
+    #[JsonProperty('optional_id')]
     public ?string $optionalId;
 
     /**
