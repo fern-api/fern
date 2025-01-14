@@ -27,7 +27,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 const resolvedType = this.typeResolver.resolveTypeName(typeName);
                 return resolvedType.type === "container" && resolvedType.container.type === "optional";
             },
-            container: (container) => container.type === "optional",
+            container: (container) => container.type === "optional" || container.type === "nullable",
             primitive: () => false,
             unknown: () => true,
             _other: () => {

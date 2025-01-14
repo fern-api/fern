@@ -88,6 +88,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
         }
+        if (typeReference.type === "container" && typeReference.container.type === "nullable") {
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.nullable);
+        }
         return undefined;
     }
 

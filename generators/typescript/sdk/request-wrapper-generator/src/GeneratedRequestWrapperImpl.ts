@@ -321,9 +321,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             statements = queryParamSetter(referenceToQueryParameterProperty);
         }
 
-        const resolvedType = context.type.resolveTypeReference(queryParameter.valueType);
-        const isQueryParamOptional = resolvedType.type === "container" && resolvedType.container.type === "optional";
-        if (isQueryParamOptional) {
+        const isQueryParamOptional = context.type.isOptional(queryParameter.valueType);
+        const isQueryParamNullable = context.type.isNullable(queryParameter.valueType);
+        if (isQueryParamNullable || (isQueryParamOptional && !isQueryParamNullable)) {
             statements = [
                 ts.factory.createIfStatement(
                     ts.factory.createBinaryExpression(
