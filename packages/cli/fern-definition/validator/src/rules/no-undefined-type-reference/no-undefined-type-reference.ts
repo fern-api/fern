@@ -199,6 +199,7 @@ function getAllNamedTypes({
             list: (namesInValueType) => namesInValueType,
             set: (namesInValueType) => namesInValueType,
             optional: (namesInValueType) => namesInValueType,
+            nullable: (namesInValueType) => namesInValueType,
             literal: () => [],
             named: (named) => {
                 const reference = parseReferenceToTypeName({

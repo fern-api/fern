@@ -303,6 +303,25 @@ export function convertTypeReferenceExample({
                     })
                 );
             },
+            nullable: (itemType) => {
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.nullable({
+                        nullable:
+                            resolvedExample != null
+                                ? convertTypeReferenceExample({
+                                      example: resolvedExample,
+                                      fileContainingExample: fileContainingResolvedExample,
+                                      rawTypeBeingExemplified: itemType,
+                                      fileContainingRawTypeReference,
+                                      typeResolver,
+                                      exampleResolver,
+                                      workspace
+                                  })
+                                : undefined,
+                        valueType: fileContainingRawTypeReference.parseTypeReference(itemType)
+                    })
+                );
+            },
             literal: (literal) => {
                 switch (literal.type) {
                     case "boolean":

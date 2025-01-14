@@ -96,6 +96,30 @@ export function generateContainerExample({
                 jsonExample: example.jsonExample
             };
         }
+        case "nullable": {
+            if (skipOptionalProperties) {
+                return generateEmptyContainerExample({ containerType });
+            }
+            const example = generateTypeReferenceExample({
+                fieldName,
+                typeReference: containerType.nullable,
+                maxDepth,
+                currentDepth: currentDepth + 1,
+                typeDeclarations,
+                skipOptionalProperties
+            });
+            if (example.type === "failure") {
+                return generateEmptyContainerExample({ containerType });
+            }
+            return {
+                type: "success",
+                example: ExampleContainer.nullable({
+                    nullable: example.example,
+                    valueType: containerType.nullable
+                }),
+                jsonExample: example.jsonExample
+            };
+        }
         case "set": {
             const example = generateTypeReferenceExample({
                 fieldName,
@@ -202,6 +226,16 @@ export function generateEmptyContainerExample({
                 example: ExampleContainer.optional({
                     optional: undefined,
                     valueType: containerType.optional
+                }),
+                jsonExample: undefined
+            };
+        }
+        case "nullable": {
+            return {
+                type: "success",
+                example: ExampleContainer.nullable({
+                    nullable: undefined,
+                    valueType: containerType.nullable
                 }),
                 jsonExample: undefined
             };

@@ -24,6 +24,7 @@ types:
       literal: LiteralType
       map: MapType
       named: commons.TypeId
+      nullable: TypeReference
       optional: TypeReference
       primitive: root.PrimitiveTypeV1
       set: TypeReference
