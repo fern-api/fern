@@ -237,6 +237,10 @@ async function main() {
     const client = new AcmeClient();
     await client.service.post({
         file: new Blob(["Hello, world!"]),
+        fileList: [
+            new Blob(["First"]),
+            new Blob(["Second"]),
+        ],
     });
 }
 main();
