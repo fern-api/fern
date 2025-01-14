@@ -1,6 +1,6 @@
 - changelogEntry:
   - summary: |
-      Adds support for nullable<T> types in the Fern definition, such as the following:
+      Adds support for nullable types in the Fern definition, such as the following:
 
       ```yaml
       types:
