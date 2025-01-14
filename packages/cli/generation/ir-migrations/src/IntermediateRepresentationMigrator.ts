@@ -84,7 +84,7 @@ export interface IntermediateRepresentationMigrator {
         targetGenerator?: GeneratorNameAndVersion;
     }): MigratedIntermediateMigration<Migrated>;
     getIRVersionForGenerator(args: { targetGenerator: GeneratorNameAndVersion }): string | undefined;
-    }
+}
 
 export interface MigratedIntermediateMigration<Migrated> {
     ir: Migrated;
