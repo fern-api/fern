@@ -41,8 +41,22 @@ class QueryClient
     {
         $query = [];
         $query['prompt'] = 'You are a helpful assistant';
+        $query['alias_prompt'] = $request->aliasPrompt;
         $query['query'] = $request->query;
         $query['stream'] = 'false';
+        $query['alias_stream'] = $request->aliasStream;
+        if ($request->optionalPrompt != null) {
+            $query['optional_prompt'] = $request->optionalPrompt;
+        }
+        if ($request->aliasOptionalPrompt != null) {
+            $query['alias_optional_prompt'] = $request->aliasOptionalPrompt;
+        }
+        if ($request->optionalStream != null) {
+            $query['optional_stream'] = $request->optionalStream;
+        }
+        if ($request->aliasOptionalStream != null) {
+            $query['alias_optional_stream'] = $request->aliasOptionalStream;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
