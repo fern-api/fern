@@ -51,13 +51,17 @@ export class QueryParam {
             });
         }
 
-        _queryParams["operandOrColor"] = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
-            unrecognizedObjectKeys: "strip",
-        });
+        _queryParams["operandOrColor"] = (() => {
+            const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, { unrecognizedObjectKeys: "strip" });
+            return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+        })();
         if (maybeOperandOrColor != null) {
-            _queryParams["maybeOperandOrColor"] = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
-                unrecognizedObjectKeys: "strip",
-            });
+            _queryParams["maybeOperandOrColor"] = (() => {
+                const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                    unrecognizedObjectKeys: "strip",
+                });
+                return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+            })();
         }
 
         const _response = await core.fetcher({
@@ -145,23 +149,37 @@ export class QueryParam {
 
         if (Array.isArray(operandOrColor)) {
             _queryParams["operandOrColor"] = operandOrColor.map((item) =>
-                serializers.ColorOrOperand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+                (() => {
+                    const mapped = serializers.ColorOrOperand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" });
+                    return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+                })(),
             );
         } else {
-            _queryParams["operandOrColor"] = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
-                unrecognizedObjectKeys: "strip",
-            });
+            _queryParams["operandOrColor"] = (() => {
+                const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
+                    unrecognizedObjectKeys: "strip",
+                });
+                return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+            })();
         }
 
         if (maybeOperandOrColor != null) {
             if (Array.isArray(maybeOperandOrColor)) {
                 _queryParams["maybeOperandOrColor"] = maybeOperandOrColor.map((item) =>
-                    serializers.ColorOrOperand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+                    (() => {
+                        const mapped = serializers.ColorOrOperand.jsonOrThrow(item, {
+                            unrecognizedObjectKeys: "strip",
+                        });
+                        return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+                    })(),
                 );
             } else {
-                _queryParams["maybeOperandOrColor"] = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
-                    unrecognizedObjectKeys: "strip",
-                });
+                _queryParams["maybeOperandOrColor"] = (() => {
+                    const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                        unrecognizedObjectKeys: "strip",
+                    });
+                    return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+                })();
             }
         }
 

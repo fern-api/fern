@@ -67,15 +67,15 @@ export class Service {
         for (const _item of request.listOfObjects) {
             _request.append(
                 "list_of_objects",
-                serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" }),
+                JSON.stringify(serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" })),
             );
         }
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                {for (const _item of request.optionalMetadata) {
+                for (const _item of request.optionalMetadata) {
                     _request.append("optional_metadata", typeof _item === "string" ? _item : JSON.stringify(_item));
-                }}
+                }
         }
 
         if (request.optionalObjectType != null) {
@@ -291,11 +291,14 @@ export class Service {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         _request.append("foo", request.foo);
-        _request.append("bar", serializers.MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip" }));
+        _request.append(
+            "bar",
+            JSON.stringify(serializers.MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip" })),
+        );
         if (request.fooBar != null) {
             _request.append(
                 "foo_bar",
-                serializers.MyObject.jsonOrThrow(request.fooBar, { unrecognizedObjectKeys: "strip" }),
+                JSON.stringify(serializers.MyObject.jsonOrThrow(request.fooBar, { unrecognizedObjectKeys: "strip" })),
             );
         }
 
