@@ -53,7 +53,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
+public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     private static final String TYPE_COMMENT = "If %d, value is of type %s";
     private static final String TYPE_FIELD_NAME = "type";
@@ -79,8 +79,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
     public UndiscriminatedUnionGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-        super(className, generatorContext);
+            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
+            Set<String> reservedTypeNames) {
+        super(className, generatorContext, reservedTypeNames);
         this.undiscriminatedUnion = undiscriminatedUnion;
         this.memberTypeNames = undiscriminatedUnion.getMembers().stream()
                 .collect(Collectors.toMap(
@@ -102,6 +103,16 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                 .filter(entry -> entry.getValue() > 1)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<TypeDeclaration> getInlineTypeDeclarations() {
+        return List.of();
+    }
+
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
+        return null;
     }
 
     @Override

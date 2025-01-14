@@ -23,19 +23,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public final class UnionGenerator extends AbstractFileGenerator {
+public final class UnionGenerator extends AbstractTypeGenerator {
 
     private final UnionTypeDeclaration unionTypeDeclaration;
 
     public UnionGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            UnionTypeDeclaration unionTypeDeclaration) {
-        super(className, generatorContext);
+            UnionTypeDeclaration unionTypeDeclaration,
+            Set<String> reservedTypeNames) {
+        super(className, generatorContext, reservedTypeNames);
         this.unionTypeDeclaration = unionTypeDeclaration;
+    }
+
+    @Override
+    public List<TypeDeclaration> getInlineTypeDeclarations() {
+        return List.of();
+    }
+
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
+        return null;
     }
 
     @Override

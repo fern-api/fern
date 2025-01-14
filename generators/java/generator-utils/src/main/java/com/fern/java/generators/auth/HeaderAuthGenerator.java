@@ -9,6 +9,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.AliasGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import java.util.Set;
 
 public final class HeaderAuthGenerator extends AbstractFileGenerator {
     private final HeaderAuthScheme headerAuthScheme;
@@ -34,7 +35,7 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
                 .resolvedType(ResolvedTypeReference.primitive(
                         PrimitiveType.builder().v1(PrimitiveTypeV1.STRING).build()))
                 .build();
-        AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, aliasTypeDeclaration);
+        AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, aliasTypeDeclaration, Set.of());
         return aliasGenerator.generateFile();
     }
 }

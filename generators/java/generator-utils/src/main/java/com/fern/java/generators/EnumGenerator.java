@@ -18,6 +18,7 @@ package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -25,9 +26,11 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
+import java.util.List;
+import java.util.Set;
 import javax.lang.model.element.Modifier;
 
-public final class EnumGenerator extends AbstractFileGenerator {
+public final class EnumGenerator extends AbstractTypeGenerator {
     private static final FieldSpec VALUE_FIELD = FieldSpec.builder(String.class, "value")
             .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
             .build();
@@ -37,9 +40,20 @@ public final class EnumGenerator extends AbstractFileGenerator {
     public EnumGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            EnumTypeDeclaration enumTypeDeclaration) {
-        super(className, generatorContext);
+            EnumTypeDeclaration enumTypeDeclaration,
+            Set<String> reservedTypeNames) {
+        super(className, generatorContext, reservedTypeNames);
         this.enumTypeDeclaration = enumTypeDeclaration;
+    }
+
+    @Override
+    public List<TypeDeclaration> getInlineTypeDeclarations() {
+        return List.of();
+    }
+
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
+        return null;
     }
 
     @Override

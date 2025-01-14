@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.PrimitiveTypeV1;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
@@ -15,10 +16,12 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.lang.model.element.Modifier;
 
-public final class AliasGenerator extends AbstractFileGenerator {
+public final class AliasGenerator extends AbstractTypeGenerator {
 
     private static final String VALUE_FIELD_NAME = "value";
     private static final String OF_METHOD_NAME = "of";
@@ -27,9 +30,20 @@ public final class AliasGenerator extends AbstractFileGenerator {
     public AliasGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            AliasTypeDeclaration aliasTypeDeclaration) {
-        super(className, generatorContext);
+            AliasTypeDeclaration aliasTypeDeclaration,
+            Set<String> reservedTypeNames) {
+        super(className, generatorContext, reservedTypeNames);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
+    }
+
+    @Override
+    public List<TypeDeclaration> getInlineTypeDeclarations() {
+        return List.of();
+    }
+
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
+        return null;
     }
 
     @Override

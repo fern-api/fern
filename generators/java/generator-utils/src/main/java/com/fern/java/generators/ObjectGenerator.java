@@ -34,6 +34,7 @@ import com.google.common.collect.ImmutableMap;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -105,7 +106,15 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                         .mapKeys(EnrichedObjectProperty::objectProperty)
                         .collectToMap())
                 .build();
+    }
 
+    @Override
+    public List<TypeDeclaration> getInlineTypeDeclarations() {
+        return List.of();
+    }
+
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
         ObjectTypeSpecGenerator genericObjectGenerator = new ObjectTypeSpecGenerator(
                 className,
                 generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
@@ -117,7 +126,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 generatorContext.getCustomConfig().jsonInclude(),
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
                 generatorContext.builderNotNullChecks());
-        this.typeSpec = genericObjectGenerator.generate();
+        return genericObjectGenerator.generate();
     }
 
     public GeneratedObject generateObject() {

@@ -9,10 +9,10 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
+import java.util.List;
 import java.util.Set;
 
 public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
-    protected TypeSpec typeSpec;
     protected Set<String> reservedTypeNames;
 
     public AbstractTypeGenerator(
@@ -20,8 +20,28 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
         super(className, generatorContext);
     }
 
+    public abstract List<TypeDeclaration> getInlineTypeDeclarations();
+
+    protected abstract TypeSpec getTypeSpecWithoutInlineTypes();
+
     public TypeSpec getTypeSpec() {
+        TypeSpec typeSpec = getTypeSpecWithoutInlineTypes();
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            typeSpec = typeSpec.toBuilder().addTypes(getInlineTypeSpecs()).build();
+        }
         return typeSpec;
+    }
+
+    private List<TypeSpec> getInlineTypeSpecs() {
+        //        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+        //            return List.of();
+        //        }
+        //
+        //        List<TypeDeclaration> declarations = getInlineTypeDeclarations();
+        //        for (TypeDeclaration declaration : declarations) {
+        //
+        //        }
+        return List.of();
     }
 
     protected String resolveName(String rawName) {
@@ -36,7 +56,8 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     public GeneratedJavaFile generateFile() {
         return GeneratedJavaFile.builder()
                 .className(className)
-                .javaFile(JavaFile.builder(className.packageName(), typeSpec).build())
+                .javaFile(
+                        JavaFile.builder(className.packageName(), getTypeSpec()).build())
                 .build();
     }
 

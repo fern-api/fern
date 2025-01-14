@@ -48,7 +48,7 @@ public final class TypesGenerator {
                 .map(typeDeclaration -> {
                     ClassName className =
                             generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
-                    Optional<GeneratedJavaFile> maybeGeneratedJavaFile = typeDeclaration
+                    Optional<AbstractTypeGenerator> maybeGeneratedJavaFile = typeDeclaration
                             .getShape()
                             .visit(new SingleTypeGenerator(
                                     generatorContext,
@@ -57,7 +57,7 @@ public final class TypesGenerator {
                                     generatedInterfaces,
                                     false,
                                     Set.of()));
-                    return maybeGeneratedJavaFile;
+                    return maybeGeneratedJavaFile.map(AbstractTypeGenerator::generateFile);
                 })
                 .filter(Optional::isPresent)
                 .map(Optional::get)
