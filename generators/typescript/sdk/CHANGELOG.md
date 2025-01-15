@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```typescript
   const _queryParams: Record< ... >;
   if (value !== undefined) {
-      _queryParams["value"] = value?.toString ?? null;
+      _queryParams["value"] = value?.toString() ?? null;
   }
   ```
 
