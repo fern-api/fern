@@ -90,6 +90,19 @@ async function visitNavigationItem({
         api: noop,
         apiName: noop,
         audiences: noop,
+        openrpc: async (path: string | undefined): Promise<void> => {
+            if (path == null) {
+                return;
+            }
+
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: path,
+                visitor,
+                nodePath: [...nodePath, "openrpc"],
+                willBeUploaded: false
+            });
+        },
         displayErrors: noop,
         snippets: noop,
         summary: noop,

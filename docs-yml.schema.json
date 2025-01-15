@@ -1437,6 +1437,16 @@
             }
           ]
         },
+        "openrpc": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "audiences": {
           "oneOf": [
             {
