@@ -8,6 +8,8 @@ import { Package } from "./api/resources/package/client/Client";
 export declare namespace SeedNurseryApiClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {

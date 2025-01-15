@@ -34,6 +34,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         super({
             ...superArgs,
             respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
+            respectNullableSchemas: specs.every((spec) => spec.settings?.respectNullableSchemas),
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
             objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
@@ -64,6 +65,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             options: {
                 ...settings,
                 respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.respectReadonlySchemas,
+                respectNullableSchemas: settings?.respectNullableSchemas ?? this.respectNullableSchemas,
                 onlyIncludeReferencedSchemas:
                     settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,

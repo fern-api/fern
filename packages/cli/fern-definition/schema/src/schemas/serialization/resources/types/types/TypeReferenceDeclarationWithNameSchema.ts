@@ -13,5 +13,5 @@ export const TypeReferenceDeclarationWithNameSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), TypeReferenceDeclarationWithName]);
 
 export declare namespace TypeReferenceDeclarationWithNameSchema {
-    type Raw = string | TypeReferenceDeclarationWithName.Raw;
+    export type Raw = string | TypeReferenceDeclarationWithName.Raw;
 }

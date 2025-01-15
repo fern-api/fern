@@ -4,13 +4,15 @@
 
 import * as core from "../../../../core";
 import * as SeedLiteral from "../../../index";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Query {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
@@ -42,6 +44,12 @@ export class Query {
      *
      * @example
      *     await client.query.send({
+     *         optionalPrompt: "You are a helpful assistant",
+     *         aliasPrompt: "You are a helpful assistant",
+     *         aliasOptionalPrompt: "You are a helpful assistant",
+     *         optionalStream: false,
+     *         aliasStream: false,
+     *         aliasOptionalStream: false,
      *         query: "What is the weather today"
      *     })
      */
@@ -49,13 +57,53 @@ export class Query {
         request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions,
     ): Promise<SeedLiteral.SendResponse> {
-        const { prompt, query, stream } = request;
+        const {
+            prompt,
+            optionalPrompt,
+            aliasPrompt,
+            aliasOptionalPrompt,
+            query,
+            stream,
+            optionalStream,
+            aliasStream,
+            aliasOptionalStream,
+        } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["prompt"] = prompt;
+        if (optionalPrompt != null) {
+            _queryParams["optional_prompt"] = optionalPrompt;
+        }
+
+        _queryParams["alias_prompt"] = serializers.AliasToPrompt.jsonOrThrow(aliasPrompt, {
+            unrecognizedObjectKeys: "strip",
+        });
+        if (aliasOptionalPrompt != null) {
+            _queryParams["alias_optional_prompt"] = serializers.AliasToPrompt.jsonOrThrow(aliasOptionalPrompt, {
+                unrecognizedObjectKeys: "strip",
+            });
+        }
+
         _queryParams["query"] = query;
         _queryParams["stream"] = stream.toString();
+        if (optionalStream != null) {
+            _queryParams["optional_stream"] = optionalStream.toString();
+        }
+
+        _queryParams["alias_stream"] = JSON.stringify(
+            serializers.AliasToStream.jsonOrThrow(aliasStream, { unrecognizedObjectKeys: "strip" }),
+        );
+        if (aliasOptionalStream != null) {
+            _queryParams["alias_optional_stream"] = JSON.stringify(
+                serializers.AliasToStream.jsonOrThrow(aliasOptionalStream, { unrecognizedObjectKeys: "strip" }),
+            );
+        }
+
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "query",
+            ),
             method: "POST",
             headers: {
                 "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",

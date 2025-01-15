@@ -13,5 +13,5 @@ export const Navigation: core.serialization.Schema<serializers.Navigation.Raw, F
     ]);
 
 export declare namespace Navigation {
-    type Raw = string | string[];
+    export type Raw = string | string[];
 }

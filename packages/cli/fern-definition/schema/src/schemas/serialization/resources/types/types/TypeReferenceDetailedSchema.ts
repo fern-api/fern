@@ -21,7 +21,7 @@ export const TypeReferenceDetailedSchema: core.serialization.ObjectSchema<
     .extend(WithAudiences);
 
 export declare namespace TypeReferenceDetailedSchema {
-    interface Raw extends BaseTypeReferenceSchema.Raw, WithName.Raw, WithAudiences.Raw {
+    export interface Raw extends BaseTypeReferenceSchema.Raw, WithName.Raw, WithAudiences.Raw {
         type: string;
     }
 }

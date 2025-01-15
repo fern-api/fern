@@ -280,6 +280,19 @@ export function getSchemaFromFernType({
                           inline: undefined
                       })
                     : undefined,
+            nullable: (itemType) =>
+                itemType != null
+                    ? SchemaWithExample.nullable({
+                          nameOverride,
+                          generatedName,
+                          title,
+                          value: itemType,
+                          description,
+                          availability,
+                          groupName,
+                          inline: undefined
+                      })
+                    : undefined,
             set: (itemType) =>
                 itemType != null
                     ? SchemaWithExample.array({

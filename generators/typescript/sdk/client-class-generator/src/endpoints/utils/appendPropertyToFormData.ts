@@ -1,3 +1,4 @@
+import { getSchemaOptions } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -11,13 +12,19 @@ export function appendPropertyToFormData({
     context,
     referenceToFormData,
     wrapperName,
-    requestParameter
+    requestParameter,
+    includeSerdeLayer,
+    allowExtraFields,
+    omitUndefined
 }: {
     property: FileUploadRequestProperty;
     context: SdkContext;
     referenceToFormData: ts.Expression;
     wrapperName: string;
     requestParameter: FileUploadRequestParameter | undefined;
+    includeSerdeLayer: boolean;
+    allowExtraFields: boolean;
+    omitUndefined: boolean;
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {

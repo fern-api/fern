@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.46.11] - 2025-01-14
+
+- Fix: Don't double check whether an optional string literal alias (see example below) is a string when using serializer to build query string parameters.
+
+  ```yml
+  types:
+    LiteralAliasExample: literal<"MyLiteralValue">
+
+  service:
+    endpoints:
+      foo:
+        path: /bar
+        method: POST
+        request:
+          name: FooBarRequest
+          query-parameters:
+            optional_alias_literal: optional<LiteralAliasExample>
+  ```
+
+  ```ts
+  // before
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = typeof serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) === "string" ? serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) : JSON.stringify(serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }));
+  }
+
+  // after
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      });
+  }
+  ```
+
+## [0.46.10] - 2025-01-14
+
+- Fix: Use serialization layer to convert types to JSON strings when enabled.
+
+## [0.46.9] - 2025-01-13
+
+- Fix: Expose `baseUrl` as a default Client constructor option and construct URL correctly.
+
+## [0.46.8] - 2025-01-13
+
+- Fix: Generate the `version.ts` file correctly
+
 ## [0.46.7] - 2025-01-09
 
 - Fix: Simplify runtime detection to reduce the chance of using an unsupported API like `process.`

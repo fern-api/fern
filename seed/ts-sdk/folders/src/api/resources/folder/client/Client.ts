@@ -9,6 +9,8 @@ import { Service } from "../resources/service/client/Client";
 export declare namespace Folder {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
     export interface RequestOptions {
@@ -40,7 +42,9 @@ export class Folder {
      */
     public async foo(requestOptions?: Folder.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

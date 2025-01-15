@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace Dummy {
     export interface Options {
         environment: core.Supplier<environments.SeedSingleUrlEnvironmentNoDefaultEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
@@ -37,7 +39,11 @@ export class Dummy {
      */
     public async getDummy(requestOptions?: Dummy.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "dummy"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "dummy",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

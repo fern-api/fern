@@ -17,7 +17,7 @@ export const UnionDiscriminantSchema: core.serialization.ObjectSchema<
     .extend(WithName);
 
 export declare namespace UnionDiscriminantSchema {
-    interface Raw extends WithName.Raw {
+    export interface Raw extends WithName.Raw {
         value: string;
     }
 }

@@ -214,6 +214,21 @@ export function validateTypeReferenceExample({
                     depth: depth + 1
                 });
             },
+            nullable: (itemType) => {
+                if (example == null) {
+                    return [];
+                }
+                return validateTypeReferenceExample({
+                    rawTypeReference: itemType,
+                    example,
+                    typeResolver,
+                    exampleResolver,
+                    file,
+                    workspace,
+                    breadcrumbs,
+                    depth: depth + 1
+                });
+            },
             unknown: () => {
                 return [];
             },
@@ -485,6 +500,15 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
                     expected: expected.container.itemType,
                     actual:
                         actual._type === "container" && actual.container._type === "optional"
+                            ? actual.container.itemType
+                            : actual
+                });
+            case "nullable":
+                // special case: if expected is a nullable but actual is not, that's okay
+                return areResolvedTypesEquivalent({
+                    expected: expected.container.itemType,
+                    actual:
+                        actual._type === "container" && actual.container._type === "nullable"
                             ? actual.container.itemType
                             : actual
                 });

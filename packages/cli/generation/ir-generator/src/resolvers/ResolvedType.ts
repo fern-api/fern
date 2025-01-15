@@ -49,6 +49,7 @@ export declare type ResolvedContainerType =
     | ResolvedContainerType.Map
     | ResolvedContainerType.List
     | ResolvedContainerType.Optional
+    | ResolvedContainerType.Nullable
     | ResolvedContainerType.Set
     | ResolvedContainerType.Literal;
 
@@ -66,6 +67,11 @@ export declare namespace ResolvedContainerType {
 
     interface Optional {
         _type: "optional";
+        itemType: ResolvedType;
+    }
+
+    interface Nullable {
+        _type: "nullable";
         itemType: ResolvedType;
     }
 

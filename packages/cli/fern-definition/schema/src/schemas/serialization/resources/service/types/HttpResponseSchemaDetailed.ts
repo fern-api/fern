@@ -19,7 +19,7 @@ export const HttpResponseSchemaDetailed: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace HttpResponseSchemaDetailed {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         type: string;
         property?: string | null;
         "status-code"?: number | null;

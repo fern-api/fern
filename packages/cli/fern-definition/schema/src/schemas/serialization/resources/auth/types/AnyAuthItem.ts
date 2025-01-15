@@ -11,5 +11,5 @@ export const AnyAuthItem: core.serialization.Schema<serializers.AnyAuthItem.Raw,
     core.serialization.undiscriminatedUnion([core.serialization.string(), AuthSchemeReferenceSchema]);
 
 export declare namespace AnyAuthItem {
-    type Raw = string | AuthSchemeReferenceSchema.Raw;
+    export type Raw = string | AuthSchemeReferenceSchema.Raw;
 }

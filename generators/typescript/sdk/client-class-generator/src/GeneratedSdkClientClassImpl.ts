@@ -77,6 +77,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -89,6 +90,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "_options";
+    private static BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
@@ -112,7 +114,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private includeSerdeLayer: boolean;
     private omitUndefined: boolean;
+    private allowExtraFields: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -135,6 +139,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         retainOriginalCasing,
         inlineFileProperties,
         omitUndefined,
+        allowExtraFields,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -149,7 +154,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
+        this.allowExtraFields = allowExtraFields;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -188,7 +195,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            inlineFileProperties: this.inlineFileProperties
+                            inlineFileProperties: this.inlineFileProperties,
+                            includeSerdeLayer: this.includeSerdeLayer,
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: this.omitUndefined
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -518,6 +528,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                             GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME
                                         )
                                     )
+                                ),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier(
+                                        GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME
+                                    ),
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createThis(),
+                                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                                        ),
+                                        ts.factory.createIdentifier(
+                                            GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME
+                                        )
+                                    )
                                 )
                             ],
                             true
@@ -719,6 +743,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             return false;
         }
         return this.getCustomAuthorizationHeaders().length > 0;
+    }
+
+    public getBaseUrl(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
+        const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
+
+        const environment = this.getEnvironment(endpoint, context);
+
+        return ts.factory.createBinaryExpression(
+            referenceToBaseUrl,
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            environment
+        );
     }
 
     public getEnvironment(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
@@ -1156,6 +1192,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
+        properties.push({
+            name: GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
+            type: getTextOfTsNode(
+                context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                )
+            ),
+            hasQuestionToken: true,
+            docs: ["Specify a custom URL to connect the client to."]
+        });
+
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push({
                 name: OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
@@ -1361,6 +1408,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
+        );
+    }
+
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        return context.coreUtilities.fetcher.Supplier.get(
+            this.getReferenceToOption(GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME)
         );
     }
 

@@ -12,7 +12,7 @@ export declare namespace GeneratedQueryParams {
 }
 
 export class GeneratedQueryParams {
-    private static QUERY_PARAMS_VARIABLE_NAME = "_queryParams";
+    private static readonly QUERY_PARAMS_VARIABLE_NAME = "_queryParams" as const;
 
     private requestParameter: RequestParameter | undefined;
 
@@ -62,26 +62,40 @@ export class GeneratedQueryParams {
                             (referenceToQueryParameter) => {
                                 let assignmentExpression: ts.Expression;
                                 const objectType = this.getObjectType(queryParameter.valueType, context);
-                                if (objectType != null && context.includeSerdeLayer) {
-                                    assignmentExpression = context.typeSchema
-                                        .getSchemaOfNamedType(objectType, {
-                                            isGeneratingSchema: false
-                                        })
-                                        .jsonOrThrow(referenceToQueryParameter, {
-                                            allowUnrecognizedEnumValues: true,
-                                            allowUnrecognizedUnionMembers: true,
-                                            unrecognizedObjectKeys: "passthrough",
-                                            skipValidation: false,
-                                            breadcrumbsPrefix: [
-                                                "request",
-                                                context.retainOriginalCasing
-                                                    ? queryParameter.name.name.originalName
-                                                    : queryParameter.name.name.camelCase.unsafeName
-                                            ],
-                                            omitUndefined: context.omitUndefined
-                                        });
-                                } else if (objectType != null) {
-                                    assignmentExpression = referenceToQueryParameter;
+                                const primitiveType = objectType
+                                    ? undefined
+                                    : this.getPrimitiveType(queryParameter.valueType, context);
+                                const paramName = context.retainOriginalCasing
+                                    ? queryParameter.name.name.originalName
+                                    : queryParameter.name.name.camelCase.unsafeName;
+                                if (objectType != null) {
+                                    if (context.includeSerdeLayer) {
+                                        assignmentExpression = context.typeSchema
+                                            .getSchemaOfNamedType(objectType, {
+                                                isGeneratingSchema: false
+                                            })
+                                            .jsonOrThrow(referenceToQueryParameter, {
+                                                allowUnrecognizedEnumValues: true,
+                                                allowUnrecognizedUnionMembers: true,
+                                                unrecognizedObjectKeys: "passthrough",
+                                                skipValidation: false,
+                                                breadcrumbsPrefix: ["request", paramName],
+                                                omitUndefined: context.omitUndefined
+                                            });
+                                    } else {
+                                        assignmentExpression = referenceToQueryParameter;
+                                    }
+                                }
+                                // if it's a primitive type, the previous null check already unwrapped the null or undefined
+                                // use the primitive type directly to stringify
+                                else if (primitiveType != null) {
+                                    assignmentExpression = context.type.stringify(
+                                        referenceToQueryParameter,
+                                        primitiveType,
+                                        {
+                                            includeNullCheckIfOptional: false
+                                        }
+                                    );
                                 } else {
                                     assignmentExpression = context.type.stringify(
                                         referenceToQueryParameter,
@@ -91,6 +105,7 @@ export class GeneratedQueryParams {
                                         }
                                     );
                                 }
+
                                 return [
                                     this.getQueryParameterAssignExpression({
                                         queryParameter,
@@ -238,6 +253,33 @@ export class GeneratedQueryParams {
                 mapExpression
             )
         );
+    }
+
+    /**
+     * Get primitive type from type reference, whether it's nested in optional or alias.
+     */
+    private getPrimitiveType(typeReference: TypeReference, context: SdkContext): TypeReference.Primitive | undefined {
+        switch (typeReference.type) {
+            case "primitive":
+                return typeReference;
+            case "named":
+                {
+                    const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                    switch (typeDeclaration.shape.type) {
+                        case "alias": {
+                            return this.getPrimitiveType(typeDeclaration.shape.aliasOf, context);
+                        }
+                    }
+                }
+                break;
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.getPrimitiveType(typeReference.container.optional, context);
+                }
+            }
+        }
+        return undefined;
     }
 
     private getObjectType(typeReference: TypeReference, context: SdkContext): DeclaredTypeName | undefined {

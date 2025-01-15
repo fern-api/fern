@@ -15,7 +15,7 @@ export const WithHeadersSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithHeadersSchema {
-    interface Raw {
+    export interface Raw {
         headers?: Record<string, HttpHeaderSchema.Raw> | null;
     }
 }

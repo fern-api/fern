@@ -12,6 +12,8 @@ import { Service } from "./api/resources/service/client/Client";
 export declare namespace SeedPackageYmlClient {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         id: string;
     }
 
@@ -52,7 +54,8 @@ export class SeedPackageYmlClient {
     ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.id)}/`,
             ),
             method: "POST",

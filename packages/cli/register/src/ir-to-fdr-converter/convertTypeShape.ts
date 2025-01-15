@@ -145,6 +145,13 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         defaultValue: undefined
                     };
                 },
+                nullable: (itemType) => {
+                    return {
+                        type: "optional",
+                        itemType: convertTypeReference(itemType),
+                        defaultValue: undefined
+                    };
+                },
                 set: (itemType) => {
                     return {
                         type: "set",

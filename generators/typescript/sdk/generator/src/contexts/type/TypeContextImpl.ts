@@ -6,14 +6,12 @@ import {
     TypeReferenceToParsedTypeNodeConverter,
     TypeReferenceToStringExpressionConverter
 } from "@fern-typescript/type-reference-converters";
-import { ConvertTypeReferenceParams } from "@fern-typescript/type-reference-converters/src/AbstractTypeReferenceConverter";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
 
 import {
     DeclaredTypeName,
     ExampleTypeReference,
-    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
@@ -36,6 +34,8 @@ export declare namespace TypeContextImpl {
         retainOriginalCasing: boolean;
         useBigInt: boolean;
         enableInlineTypes: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
         context: BaseContext;
     }
 }
@@ -69,6 +69,8 @@ export class TypeContextImpl implements TypeContext {
         retainOriginalCasing,
         useBigInt,
         enableInlineTypes,
+        allowExtraFields,
+        omitUndefined,
         context
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
@@ -86,18 +88,22 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
     }
 

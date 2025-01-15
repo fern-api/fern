@@ -11,6 +11,8 @@ import * as errors from "../../../../../../errors/index";
 export declare namespace Union {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -45,7 +47,11 @@ export class Union {
         requestOptions?: Union.RequestOptions,
     ): Promise<SeedExhaustive.types.Animal> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/union"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/union",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

@@ -19,7 +19,7 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
         .extend(BaseTypeDeclarationSchema);
 
 export declare namespace ObjectSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw {
+    export interface Raw extends BaseTypeDeclarationSchema.Raw {
         extends?: ObjectExtendsSchema.Raw | null;
         properties?: Record<string, ObjectPropertySchema.Raw> | null;
         "extra-properties"?: boolean | null;

@@ -7,6 +7,7 @@ import * as FernIr from "../../../index";
 export type ContainerType =
     | FernIr.ContainerType.List
     | FernIr.ContainerType.Map
+    | FernIr.ContainerType.Nullable
     | FernIr.ContainerType.Optional
     | FernIr.ContainerType.Set
     | FernIr.ContainerType.Literal;
@@ -19,6 +20,11 @@ export namespace ContainerType {
 
     export interface Map extends FernIr.MapType, _Utils {
         type: "map";
+    }
+
+    export interface Nullable extends _Utils {
+        type: "nullable";
+        nullable: FernIr.TypeReference;
     }
 
     export interface Optional extends _Utils {
@@ -43,6 +49,7 @@ export namespace ContainerType {
     export interface _Visitor<_Result> {
         list: (value: FernIr.TypeReference) => _Result;
         map: (value: FernIr.MapType) => _Result;
+        nullable: (value: FernIr.TypeReference) => _Result;
         optional: (value: FernIr.TypeReference) => _Result;
         set: (value: FernIr.TypeReference) => _Result;
         literal: (value: FernIr.Literal) => _Result;
@@ -70,6 +77,19 @@ export const ContainerType = {
             type: "map",
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Map,
+                visitor: FernIr.ContainerType._Visitor<_Result>,
+            ) {
+                return FernIr.ContainerType._visit(this, visitor);
+            },
+        };
+    },
+
+    nullable: (value: FernIr.TypeReference): FernIr.ContainerType.Nullable => {
+        return {
+            nullable: value,
+            type: "nullable",
+            _visit: function <_Result>(
+                this: FernIr.ContainerType.Nullable,
                 visitor: FernIr.ContainerType._Visitor<_Result>,
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
@@ -122,6 +142,8 @@ export const ContainerType = {
                 return visitor.list(value.list);
             case "map":
                 return visitor.map(value);
+            case "nullable":
+                return visitor.nullable(value.nullable);
             case "optional":
                 return visitor.optional(value.optional);
             case "set":

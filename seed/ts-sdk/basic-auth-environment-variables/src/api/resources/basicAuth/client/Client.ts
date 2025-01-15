@@ -11,6 +11,8 @@ import * as errors from "../../../../errors/index";
 export declare namespace BasicAuth {
     export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
         password?: core.Supplier<string | undefined>;
     }
@@ -42,7 +44,11 @@ export class BasicAuth {
      */
     public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "basic-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "basic-auth",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -121,7 +127,11 @@ export class BasicAuth {
      */
     public async postWithBasicAuth(request?: unknown, requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "basic-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "basic-auth",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

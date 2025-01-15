@@ -13,5 +13,5 @@ export const HttpHeaderSchema: core.serialization.Schema<
 > = TypeReferenceDeclarationWithEnvOverride;
 
 export declare namespace HttpHeaderSchema {
-    type Raw = TypeReferenceDeclarationWithEnvOverride.Raw;
+    export type Raw = TypeReferenceDeclarationWithEnvOverride.Raw;
 }

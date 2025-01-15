@@ -140,10 +140,12 @@ logo:
   dark: logo.png
   height: 28
 colors:
-  accentPrimary:
+  accent-primary:
     dark: '#0050B4'
     light: '#4D9CFF'
-  background: {}
+  background:
+    dark: null
+    light: null
 navigation: []
 ",
         "name": "docs.yml",

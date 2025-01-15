@@ -18,7 +18,7 @@ export const WebSocketChannelInlinedMessageSchema: core.serialization.ObjectSche
 });
 
 export declare namespace WebSocketChannelInlinedMessageSchema {
-    interface Raw {
+    export interface Raw {
         name: string;
         extends?: ObjectExtendsSchema.Raw | null;
         properties?: Record<string, ObjectPropertySchema.Raw> | null;

@@ -9,6 +9,21 @@ import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from "@fer
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 
+const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
+    shouldUseTitleAsName: undefined,
+    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+    asyncApiMessageNaming: undefined,
+    onlyIncludeReferencedSchemas: undefined,
+    shouldUseOptionalAdditionalProperties: undefined,
+    coerceEnumsToLiterals: undefined,
+    objectQueryParameters: undefined,
+    respectReadonlySchemas: undefined,
+    respectNullableSchemas: undefined,
+    inlinePathParameters: undefined,
+    filter: undefined,
+    exampleGeneration: undefined
+};
+
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
     rawGeneratorsConfiguration
@@ -65,19 +80,7 @@ async function parseAPIConfigurationToApiLocations(
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                settings: {
-                    shouldUseTitleAsName: undefined,
-                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                    asyncApiMessageNaming: undefined,
-                    onlyIncludeReferencedSchemas: undefined,
-                    shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined,
-                    objectQueryParameters: undefined,
-                    respectReadonlySchemas: undefined,
-                    inlinePathParameters: undefined,
-                    filter: undefined,
-                    exampleGeneration: undefined
-                }
+                settings: UNDEFINED_API_DEFINITION_SETTINGS
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
             apiDefinitions.push({
@@ -90,19 +93,7 @@ async function parseAPIConfigurationToApiLocations(
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
                 audiences: [],
-                settings: {
-                    shouldUseTitleAsName: undefined,
-                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                    asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined,
-                    objectQueryParameters: undefined,
-                    respectReadonlySchemas: undefined,
-                    onlyIncludeReferencedSchemas: undefined,
-                    inlinePathParameters: undefined,
-                    filter: undefined,
-                    exampleGeneration: undefined
-                }
+                settings: UNDEFINED_API_DEFINITION_SETTINGS
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -115,19 +106,7 @@ async function parseAPIConfigurationToApiLocations(
                         origin: undefined,
                         overrides: undefined,
                         audiences: [],
-                        settings: {
-                            shouldUseTitleAsName: undefined,
-                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                            asyncApiMessageNaming: undefined,
-                            shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined,
-                            objectQueryParameters: undefined,
-                            respectReadonlySchemas: undefined,
-                            onlyIncludeReferencedSchemas: undefined,
-                            inlinePathParameters: undefined,
-                            filter: undefined,
-                            exampleGeneration: undefined
-                        }
+                        settings: UNDEFINED_API_DEFINITION_SETTINGS
                     });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
                     apiDefinitions.push({
@@ -140,19 +119,7 @@ async function parseAPIConfigurationToApiLocations(
                         origin: undefined,
                         overrides: definition.proto.overrides,
                         audiences: [],
-                        settings: {
-                            shouldUseTitleAsName: undefined,
-                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                            asyncApiMessageNaming: undefined,
-                            shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined,
-                            objectQueryParameters: undefined,
-                            respectReadonlySchemas: undefined,
-                            onlyIncludeReferencedSchemas: undefined,
-                            inlinePathParameters: undefined,
-                            filter: undefined,
-                            exampleGeneration: undefined
-                        }
+                        settings: UNDEFINED_API_DEFINITION_SETTINGS
                     });
                 } else {
                     apiDefinitions.push({
@@ -164,17 +131,11 @@ async function parseAPIConfigurationToApiLocations(
                         overrides: definition.overrides,
                         audiences: definition.audiences,
                         settings: {
+                            ...UNDEFINED_API_DEFINITION_SETTINGS,
                             shouldUseTitleAsName: definition.settings?.["use-title"],
                             shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
                             asyncApiMessageNaming: definition.settings?.["message-naming"],
-                            onlyIncludeReferencedSchemas: definition.settings?.["only-include-referenced-schemas"],
-                            shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined,
-                            objectQueryParameters: undefined,
-                            respectReadonlySchemas: undefined,
-                            inlinePathParameters: undefined,
-                            filter: undefined,
-                            exampleGeneration: undefined
+                            onlyIncludeReferencedSchemas: definition.settings?.["only-include-referenced-schemas"]
                         }
                     });
                 }
@@ -189,17 +150,11 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: apiConfiguration.overrides,
                 audiences: apiConfiguration.audiences,
                 settings: {
+                    ...UNDEFINED_API_DEFINITION_SETTINGS,
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
                     asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
-                    onlyIncludeReferencedSchemas: apiConfiguration.settings?.["only-include-referenced-schemas"],
-                    shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined,
-                    objectQueryParameters: undefined,
-                    respectReadonlySchemas: undefined,
-                    inlinePathParameters: undefined,
-                    filter: undefined,
-                    exampleGeneration: undefined
+                    onlyIncludeReferencedSchemas: apiConfiguration.settings?.["only-include-referenced-schemas"]
                 }
             });
         }
@@ -219,17 +174,10 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: openapiOverrides,
                 audiences: [],
                 settings: {
+                    ...UNDEFINED_API_DEFINITION_SETTINGS,
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
-                    onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
-                    asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined,
-                    objectQueryParameters: undefined,
-                    respectReadonlySchemas: undefined,
-                    inlinePathParameters: undefined,
-                    filter: undefined,
-                    exampleGeneration: undefined
+                    onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"]
                 }
             });
         } else if (openapi != null) {
@@ -242,17 +190,10 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: openapi.overrides,
                 audiences: [],
                 settings: {
+                    ...UNDEFINED_API_DEFINITION_SETTINGS,
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
-                    onlyIncludeReferencedSchemas: openapi.settings?.["only-include-referenced-schemas"],
-                    asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined,
-                    objectQueryParameters: undefined,
-                    respectReadonlySchemas: undefined,
-                    inlinePathParameters: undefined,
-                    filter: undefined,
-                    exampleGeneration: undefined
+                    onlyIncludeReferencedSchemas: openapi.settings?.["only-include-referenced-schemas"]
                 }
             });
         }
@@ -267,17 +208,11 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: undefined,
                 audiences: [],
                 settings: {
+                    ...UNDEFINED_API_DEFINITION_SETTINGS,
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
                     asyncApiMessageNaming: settings?.["message-naming"],
-                    onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
-                    shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined,
-                    objectQueryParameters: undefined,
-                    respectReadonlySchemas: undefined,
-                    inlinePathParameters: undefined,
-                    filter: undefined,
-                    exampleGeneration: undefined
+                    onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"]
                 }
             });
         }
@@ -346,6 +281,7 @@ async function parseApiConfigurationV2Schema({
                     coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"],
                     objectQueryParameters: spec.settings?.["object-query-parameters"],
                     respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"],
+                    respectNullableSchemas: spec.settings?.["respect-nullable-schemas"],
                     inlinePathParameters: spec.settings?.["inline-path-parameters"],
                     filter: spec.settings?.filter,
                     exampleGeneration: spec.settings?.["example-generation"]

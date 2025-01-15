@@ -14,6 +14,7 @@ export const OAuthAccessTokenRequestProperties: core.serialization.ObjectSchema<
     clientId: RequestProperty,
     clientSecret: RequestProperty,
     scopes: RequestProperty.optional(),
+    customProperties: core.serialization.list(RequestProperty).optional(),
 });
 
 export declare namespace OAuthAccessTokenRequestProperties {
@@ -21,5 +22,6 @@ export declare namespace OAuthAccessTokenRequestProperties {
         clientId: RequestProperty.Raw;
         clientSecret: RequestProperty.Raw;
         scopes?: RequestProperty.Raw | null;
+        customProperties?: RequestProperty.Raw[] | null;
     }
 }

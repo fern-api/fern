@@ -9,8 +9,8 @@ await client.dataservice.upload({
     },
   ],
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -28,8 +28,8 @@ await client.dataservice.upload({
   ],
   namespace: "namespace",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -37,8 +37,8 @@ import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -50,8 +50,8 @@ await client.dataservice.delete({
   deleteAll: true,
   namespace: "namespace",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -59,8 +59,8 @@ import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -68,8 +68,8 @@ import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -77,8 +77,8 @@ import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -89,8 +89,8 @@ await client.dataservice.fetch({
   ids: "ids",
   namespace: "namespace",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -98,8 +98,8 @@ import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -112,8 +112,8 @@ await client.dataservice.list({
   paginationToken: "paginationToken",
   namespace: "namespace",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -123,8 +123,8 @@ const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.query({
   topK: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -161,8 +161,8 @@ await client.dataservice.query({
     values: [1.1, 1.1],
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -172,8 +172,8 @@ const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.update({
   id: "id",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -189,7 +189,7 @@ await client.dataservice.update({
     values: [1.1, 1.1],
   },
 });
- 
-```                        
+
+```
 
 

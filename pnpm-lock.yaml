@@ -99,8 +99,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       fern-api:
-        specifier: latest
-        version: 0.47.1
+        specifier: ^0.48.1
+        version: 0.48.1
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -2293,9 +2293,9 @@ importers:
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
-      '@fern-typescript/resolvers':
+      '@fern-typescript/contexts':
         specifier: workspace:*
-        version: link:../../utils/resolvers
+        version: link:../../utils/contexts
       ts-morph:
         specifier: ^15.1.0
         version: 15.1.0
@@ -5773,6 +5773,9 @@ importers:
       '@fern-fern/ir-v53-sdk':
         specifier: 0.0.1
         version: 0.0.1
+      '@fern-fern/ir-v54-sdk':
+        specifier: 0.0.1
+        version: 0.0.1
       '@fern-fern/ir-v6-model':
         specifier: 0.0.33
         version: 0.0.33
@@ -8962,6 +8965,9 @@ packages:
   '@fern-fern/ir-v53-sdk@0.0.1':
     resolution: {integrity: sha512-7KNvdLlWyYkkhVsplvVmVKm6+LCGKTQJxE7jqjmjg+1AUBC75zcGAkiHylDLB8gkOCLN3Qcs2RHljC0yHVLlOw==}
 
+  '@fern-fern/ir-v54-sdk@0.0.1':
+    resolution: {integrity: sha512-RyVtsKaeLQNr6WAgVG/eMO9YFXVs68pthof1p+IJ4/1acKLB8pONR0Tg2qr7y+6yek1Ch3bbgs6JFyxvsCEjrQ==}
+
   '@fern-fern/ir-v6-model@0.0.33':
     resolution: {integrity: sha512-I3KLvdrRzSrh5CcpU0v/Mjn4ywZhzVwhqJC8IDIQiP1yPvsCnjgbTBNwLRG8KdJqHfLOgdt/hfVzjeuFugSlGA==}
 
@@ -11111,8 +11117,8 @@ packages:
       picomatch:
         optional: true
 
-  fern-api@0.47.1:
-    resolution: {integrity: sha512-BEx4PZCZTrNL6SOVq6QjfCvfVvalwj27Y4GfCn8Z4hBWWrup14/2Ezi+KZKF7NPrOlLd1v1KulRl+DYRH7FfDg==}
+  fern-api@0.48.1:
+    resolution: {integrity: sha512-8801SzJS8IOKrIZAotUg8FF4i4he4/lfHWqMgj221FphEYgvUj8Q6kzRk+NILROnn/DAVgo/W4VcGZMN4KrX5g==}
     hasBin: true
 
   file-entry-cache@6.0.1:
@@ -15893,6 +15899,8 @@ snapshots:
 
   '@fern-fern/ir-v53-sdk@0.0.1': {}
 
+  '@fern-fern/ir-v54-sdk@0.0.1': {}
+
   '@fern-fern/ir-v6-model@0.0.33': {}
 
   '@fern-fern/ir-v7-model@0.0.2': {}
@@ -18606,7 +18614,7 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
-  fern-api@0.47.1: {}
+  fern-api@0.48.1: {}
 
   file-entry-cache@6.0.1:
     dependencies:

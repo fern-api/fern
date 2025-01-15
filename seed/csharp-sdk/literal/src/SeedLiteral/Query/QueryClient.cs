@@ -22,7 +22,13 @@ public partial class QueryClient
     ///     new SendLiteralsInQueryRequest
     ///     {
     ///         Prompt = "You are a helpful assistant",
+    ///         OptionalPrompt = "You are a helpful assistant",
+    ///         AliasPrompt = "You are a helpful assistant",
+    ///         AliasOptionalPrompt = "You are a helpful assistant",
     ///         Stream = false,
+    ///         OptionalStream = false,
+    ///         AliasStream = false,
+    ///         AliasOptionalStream = false,
     ///         Query = "What is the weather today",
     ///     }
     /// );
@@ -36,8 +42,26 @@ public partial class QueryClient
     {
         var _query = new Dictionary<string, object>();
         _query["prompt"] = request.Prompt.ToString();
+        _query["alias_prompt"] = request.AliasPrompt.ToString();
         _query["query"] = request.Query;
         _query["stream"] = request.Stream.ToString();
+        _query["alias_stream"] = request.AliasStream.ToString();
+        if (request.OptionalPrompt != null)
+        {
+            _query["optional_prompt"] = request.OptionalPrompt.ToString();
+        }
+        if (request.AliasOptionalPrompt != null)
+        {
+            _query["alias_optional_prompt"] = request.AliasOptionalPrompt.ToString();
+        }
+        if (request.OptionalStream != null)
+        {
+            _query["optional_stream"] = request.OptionalStream.ToString();
+        }
+        if (request.AliasOptionalStream != null)
+        {
+            _query["alias_optional_stream"] = request.AliasOptionalStream.ToString();
+        }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
