@@ -1,20 +1,29 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.AliasTypeDeclaration;
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
+import com.fern.java.PoetTypeNameMapper;
+import com.fern.java.utils.NamedTypeId;
+import com.fern.java.utils.NamedTypeIdResolver;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
@@ -22,6 +31,7 @@ import javax.lang.model.element.Modifier;
 public final class AliasGenerator extends AbstractTypeGenerator {
 
     private static final String VALUE_FIELD_NAME = "value";
+    private static final String VALUE_FIELD_NAME_PASCAL = "Value";
     private static final String OF_METHOD_NAME = "of";
     private final AliasTypeDeclaration aliasTypeDeclaration;
 
@@ -37,15 +47,69 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
-        return List.of();
+        return new ArrayList<>(overriddenTypeDeclarations(generatorContext, aliasTypeDeclaration)
+                .values());
+    }
+
+    private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
+            AbstractGeneratorContext<?, ?> generatorContext, AliasTypeDeclaration aliasTypeDeclaration) {
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
+
+        List<NamedTypeId> resolvedIds = aliasTypeDeclaration
+                .getAliasOf()
+                .visit(new NamedTypeIdResolver(VALUE_FIELD_NAME_PASCAL, aliasTypeDeclaration.getAliasOf()));
+        for (NamedTypeId resolvedId : resolvedIds) {
+            String name = resolvedId.name();
+            Optional<TypeDeclaration> maybeRawTypeDeclaration =
+                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(resolvedId.typeId()));
+
+            if (maybeRawTypeDeclaration.isEmpty()) {
+                continue;
+            }
+
+            TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
+
+            // Don't override non-inline types
+            if (!rawTypeDeclaration.getInline().orElse(false)) {
+                continue;
+            }
+
+            TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
+            overriddenTypeDeclarations.put(resolvedId.typeId(), overriddenTypeDeclaration);
+        }
+
+        return overriddenTypeDeclarations;
+    }
+
+    private PoetTypeNameMapper overriddenPoetTypeNameMapper(Map<TypeId, TypeDeclaration> overriddenTypeDeclarations) {
+        Map<DeclaredTypeName, ClassName> enclosingMapping = new HashMap<>();
+        for (TypeDeclaration override : overriddenTypeDeclarations.values()) {
+            enclosingMapping.put(override.getName(), className);
+        }
+
+        Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides =
+                new HashMap<>(generatorContext.getTypeDeclarations());
+        typeDeclarationsWithOverrides.putAll(overriddenTypeDeclarations);
+
+        return new PoetTypeNameMapper(
+                generatorContext.getPoetClassNameFactory(),
+                generatorContext.getCustomConfig(),
+                typeDeclarationsWithOverrides,
+                enclosingMapping);
     }
 
     @Override
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
         TypeSpec.Builder aliasTypeSpecBuilder =
                 TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
-        TypeName aliasTypeName =
-                generatorContext.getPoetTypeNameMapper().convertToTypeName(true, aliasTypeDeclaration.getAliasOf());
+        PoetTypeNameMapper poetTypeNameMapper;
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            poetTypeNameMapper =
+                    overriddenPoetTypeNameMapper(overriddenTypeDeclarations(generatorContext, aliasTypeDeclaration));
+        } else {
+            poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
+        }
+        TypeName aliasTypeName = poetTypeNameMapper.convertToTypeName(true, aliasTypeDeclaration.getAliasOf());
         TypeSpec.Builder aliasBuilder = aliasTypeSpecBuilder
                 .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                 .addMethod(getConstructor(aliasTypeName))

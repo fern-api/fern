@@ -90,14 +90,14 @@ fixtures:
         enable-inline-types: true
         wrapped-aliases: true
       outputFolder: inline
-    # - customConfig:
-    #     enable-inline-types: false
-    #     wrapped-aliases: true
-    #   outputFolder: no-inline
-    # - customConfig:
-    #     enable-inline-types: true
-    #     wrapped-aliases: false
-    #   outputFolder: no-wrapped-aliases
+    - customConfig:
+        enable-inline-types: false
+        wrapped-aliases: true
+      outputFolder: no-inline
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: false
+      outputFolder: no-wrapped-aliases
   imdb:
     - customConfig:
         disable-required-property-builder-checks: true
