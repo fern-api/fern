@@ -21,7 +21,7 @@ export const EnumValueSchema: core.serialization.ObjectSchema<
     .extend(WithName);
 
 export declare namespace EnumValueSchema {
-    interface Raw extends WithDocsSchema.Raw, WithName.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithName.Raw {
         value: string;
         casing?: CasingOverridesSchema.Raw | null;
     }

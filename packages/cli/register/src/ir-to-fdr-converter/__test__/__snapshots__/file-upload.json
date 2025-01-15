@@ -79,7 +79,7 @@
                 "properties": [
                   {
                     "type": "bodyProperty",
-                    "key": "maybeString",
+                    "key": "maybe_string",
                     "valueType": {
                       "type": "optional",
                       "itemType": {
@@ -112,7 +112,7 @@
                     "type": "file",
                     "value": {
                       "type": "fileArray",
-                      "key": "fileList",
+                      "key": "file_list",
                       "isOptional": false
                     }
                   },
@@ -120,7 +120,7 @@
                     "type": "file",
                     "value": {
                       "type": "file",
-                      "key": "maybeFile",
+                      "key": "maybe_file",
                       "isOptional": true
                     }
                   },
@@ -128,13 +128,13 @@
                     "type": "file",
                     "value": {
                       "type": "fileArray",
-                      "key": "maybeFileList",
+                      "key": "maybe_file_list",
                       "isOptional": true
                     }
                   },
                   {
                     "type": "bodyProperty",
-                    "key": "maybeInteger",
+                    "key": "maybe_integer",
                     "valueType": {
                       "type": "optional",
                       "itemType": {
@@ -147,7 +147,7 @@
                   },
                   {
                     "type": "bodyProperty",
-                    "key": "optionalListOfStrings",
+                    "key": "optional_list_of_strings",
                     "valueType": {
                       "type": "optional",
                       "itemType": {
@@ -163,7 +163,7 @@
                   },
                   {
                     "type": "bodyProperty",
-                    "key": "listOfObjects",
+                    "key": "list_of_objects",
                     "valueType": {
                       "type": "list",
                       "itemType": {
@@ -174,7 +174,7 @@
                   },
                   {
                     "type": "bodyProperty",
-                    "key": "optionalMetadata",
+                    "key": "optional_metadata",
                     "valueType": {
                       "type": "optional",
                       "itemType": {
@@ -184,7 +184,7 @@
                   },
                   {
                     "type": "bodyProperty",
-                    "key": "optionalObjectType",
+                    "key": "optional_object_type",
                     "valueType": {
                       "type": "optional",
                       "itemType": {
@@ -195,7 +195,7 @@
                   },
                   {
                     "type": "bodyProperty",
-                    "key": "optionalId",
+                    "key": "optional_id",
                     "valueType": {
                       "type": "optional",
                       "itemType": {
@@ -407,7 +407,7 @@
                   },
                   {
                     "type": "bodyProperty",
-                    "key": "foobar",
+                    "key": "foo_bar",
                     "valueType": {
                       "type": "optional",
                       "itemType": {

@@ -18,5 +18,5 @@ export const WebSocketChannelMessageBodySchema: core.serialization.Schema<
 ]);
 
 export declare namespace WebSocketChannelMessageBodySchema {
-    type Raw = string | WebSocketChannelReferencedMessageSchema.Raw | WebSocketChannelInlinedMessageSchema.Raw;
+    export type Raw = string | WebSocketChannelReferencedMessageSchema.Raw | WebSocketChannelInlinedMessageSchema.Raw;
 }

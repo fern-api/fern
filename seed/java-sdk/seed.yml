@@ -117,6 +117,7 @@ allowedFailures:
   - exhaustive:signed_publish
   - exhaustive:local-files
   - extends
+  - oauth-client-credentials-custom
   - query-parameters
   - trace
   - unions

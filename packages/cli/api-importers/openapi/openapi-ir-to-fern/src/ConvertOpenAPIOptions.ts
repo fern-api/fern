@@ -22,6 +22,11 @@ export interface ConvertOpenAPIOptions {
     respectReadonlySchemas: boolean;
 
     /**
+     * If true, the converter will respect nullable properties in OpenAPI schemas.
+     */
+    respectNullableSchemas: boolean;
+
+    /**
      * If true, the converter will only include schemas referenced by endpoints.
      */
     onlyIncludeReferencedSchemas: boolean;
@@ -37,6 +42,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     detectGlobalHeaders: true,
     objectQueryParameters: false,
     respectReadonlySchemas: false,
+    respectNullableSchemas: false,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: false
 };
@@ -65,6 +71,10 @@ export function getConvertOptions({
             overrides?.respectReadonlySchemas ??
             options?.respectReadonlySchemas ??
             DEFAULT_CONVERT_OPENAPI_OPTIONS.respectReadonlySchemas,
+        respectNullableSchemas:
+            overrides?.respectNullableSchemas ??
+            options?.respectNullableSchemas ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectNullableSchemas,
         onlyIncludeReferencedSchemas:
             overrides?.onlyIncludeReferencedSchemas ??
             options?.onlyIncludeReferencedSchemas ??

@@ -4,8 +4,8 @@
 
 import * as core from "../../../../core";
 import * as SeedPagination from "../../../index";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Users {
@@ -51,7 +51,7 @@ export class Users {
             request: SeedPagination.ListUsersCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, perPage, order, startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (page != null) {
                 _queryParams["page"] = page.toString();
             }
@@ -59,7 +59,7 @@ export class Users {
                 _queryParams["per_page"] = perPage.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             if (startingAfter != null) {
                 _queryParams["starting_after"] = startingAfter;
@@ -228,7 +228,7 @@ export class Users {
             request: SeedPagination.ListUsersOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, perPage, order, startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (page != null) {
                 _queryParams["page"] = page.toString();
             }
@@ -236,7 +236,7 @@ export class Users {
                 _queryParams["per_page"] = perPage.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             if (startingAfter != null) {
                 _queryParams["starting_after"] = startingAfter;
@@ -408,7 +408,7 @@ export class Users {
             request: SeedPagination.ListUsersOffsetStepPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, limit, order } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (page != null) {
                 _queryParams["page"] = page.toString();
             }
@@ -416,7 +416,7 @@ export class Users {
                 _queryParams["limit"] = limit.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             const _response = await core.fetcher({
                 url: urlJoin(
@@ -501,7 +501,7 @@ export class Users {
             request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, limit, order } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (page != null) {
                 _queryParams["page"] = page.toString();
             }
@@ -509,7 +509,7 @@ export class Users {
                 _queryParams["limit"] = limit.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             const _response = await core.fetcher({
                 url: urlJoin(
@@ -592,7 +592,7 @@ export class Users {
             request: SeedPagination.ListUsersExtendedRequest,
         ): Promise<SeedPagination.ListUsersExtendedResponse> => {
             const { cursor } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (cursor != null) {
                 _queryParams["cursor"] = cursor;
             }
@@ -675,7 +675,7 @@ export class Users {
             request: SeedPagination.ListUsersExtendedRequestForOptionalData,
         ): Promise<SeedPagination.ListUsersExtendedOptionalListResponse> => {
             const { cursor } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (cursor != null) {
                 _queryParams["cursor"] = cursor;
             }
@@ -756,7 +756,7 @@ export class Users {
     ): Promise<core.Page<string>> {
         const list = async (request: SeedPagination.ListUsernamesRequest): Promise<SeedPagination.UsernameCursor> => {
             const { startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (startingAfter != null) {
                 _queryParams["starting_after"] = startingAfter;
             }
@@ -839,7 +839,7 @@ export class Users {
             request: SeedPagination.ListWithGlobalConfigRequest,
         ): Promise<SeedPagination.UsernameContainer> => {
             const { offset } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (offset != null) {
                 _queryParams["offset"] = offset.toString();
             }

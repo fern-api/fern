@@ -45,7 +45,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
     .extend(DeclarationSchema);
 
 export declare namespace HttpEndpointSchema {
-    interface Raw extends WithDisplayName.Raw, DeclarationSchema.Raw {
+    export interface Raw extends WithDisplayName.Raw, DeclarationSchema.Raw {
         method?: HttpMethodSchema.Raw | null;
         "base-path"?: string | null;
         path: string;

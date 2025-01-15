@@ -2,6 +2,8 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 import typing
+from .types.alias_to_prompt import AliasToPrompt
+from .types.alias_to_stream import AliasToStream
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
 from ..core.pydantic_utilities import parse_obj_as
@@ -14,11 +16,28 @@ class QueryClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    def send(
+        self,
+        *,
+        query: str,
+        optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
+        alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
+        optional_stream: typing.Optional[typing.Literal[False]] = None,
+        alias_optional_stream: typing.Optional[AliasToStream] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendResponse:
         """
         Parameters
         ----------
         query : str
+
+        optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
+
+        alias_optional_prompt : typing.Optional[AliasToPrompt]
+
+        optional_stream : typing.Optional[typing.Literal[False]]
+
+        alias_optional_stream : typing.Optional[AliasToStream]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -43,8 +62,14 @@ class QueryClient:
             method="POST",
             params={
                 "prompt": "You are a helpful assistant",
+                "optional_prompt": optional_prompt,
+                "alias_prompt": "You are a helpful assistant",
+                "alias_optional_prompt": alias_optional_prompt,
                 "query": query,
                 "stream": False,
+                "optional_stream": optional_stream,
+                "alias_stream": False,
+                "alias_optional_stream": alias_optional_stream,
             },
             request_options=request_options,
         )
@@ -67,11 +92,28 @@ class AsyncQueryClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    async def send(
+        self,
+        *,
+        query: str,
+        optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
+        alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
+        optional_stream: typing.Optional[typing.Literal[False]] = None,
+        alias_optional_stream: typing.Optional[AliasToStream] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendResponse:
         """
         Parameters
         ----------
         query : str
+
+        optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
+
+        alias_optional_prompt : typing.Optional[AliasToPrompt]
+
+        optional_stream : typing.Optional[typing.Literal[False]]
+
+        alias_optional_stream : typing.Optional[AliasToStream]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -104,8 +146,14 @@ class AsyncQueryClient:
             method="POST",
             params={
                 "prompt": "You are a helpful assistant",
+                "optional_prompt": optional_prompt,
+                "alias_prompt": "You are a helpful assistant",
+                "alias_optional_prompt": alias_optional_prompt,
                 "query": query,
                 "stream": False,
+                "optional_stream": optional_stream,
+                "alias_stream": False,
+                "alias_optional_stream": alias_optional_stream,
             },
             request_options=request_options,
         )

@@ -243,7 +243,7 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<SeedPathParameters.User[]> {
         const { user_id: userId, limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }

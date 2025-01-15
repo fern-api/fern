@@ -117,6 +117,7 @@ export function getReferencedTypesFromRawDeclaration({
                 map: ({ keyType, valueType }) => [...keyType, ...valueType],
                 list: (valueType) => valueType,
                 optional: (valueType) => valueType,
+                nullable: (valueType) => valueType,
                 set: (valueType) => valueType,
                 named: (name) => [name],
                 literal: () => [],

@@ -17,7 +17,7 @@ export const OffsetPaginationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace OffsetPaginationSchema {
-    interface Raw {
+    export interface Raw {
         offset: string;
         results: string;
         step?: string | null;

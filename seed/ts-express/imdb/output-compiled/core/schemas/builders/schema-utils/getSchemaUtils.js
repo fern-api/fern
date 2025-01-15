@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSchemaUtils = getSchemaUtils;
+exports.nullable = nullable;
 exports.optional = optional;
 exports.transform = transform;
 const Schema_1 = require("../../Schema");
@@ -8,6 +9,7 @@ const JsonError_1 = require("./JsonError");
 const ParseError_1 = require("./ParseError");
 function getSchemaUtils(schema) {
     return {
+        nullable: () => nullable(schema),
         optional: () => optional(schema),
         transform: (transformer) => transform(schema, transformer),
         parseOrThrow: (raw, opts) => {
@@ -29,6 +31,30 @@ function getSchemaUtils(schema) {
 /**
  * schema utils are defined in one file to resolve issues with circular imports
  */
+function nullable(schema) {
+    const baseSchema = {
+        parse: (raw, opts) => {
+            if (raw == null) {
+                return {
+                    ok: true,
+                    value: null,
+                };
+            }
+            return schema.parse(raw, opts);
+        },
+        json: (parsed, opts) => {
+            if (parsed == null) {
+                return {
+                    ok: true,
+                    value: null,
+                };
+            }
+            return schema.json(parsed, opts);
+        },
+        getType: () => Schema_1.SchemaType.NULLABLE,
+    };
+    return Object.assign(Object.assign({}, baseSchema), getSchemaUtils(baseSchema));
+}
 function optional(schema) {
     const baseSchema = {
         parse: (raw, opts) => {

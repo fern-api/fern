@@ -13,5 +13,5 @@ export const ResponseErrorsSchema: core.serialization.Schema<
 > = core.serialization.list(ResponseError);
 
 export declare namespace ResponseErrorsSchema {
-    type Raw = ResponseError.Raw[];
+    export type Raw = ResponseError.Raw[];
 }

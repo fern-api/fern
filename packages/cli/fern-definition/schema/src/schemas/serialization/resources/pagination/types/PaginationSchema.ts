@@ -14,5 +14,5 @@ export const PaginationSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([CursorPaginationSchema, OffsetPaginationSchema]);
 
 export declare namespace PaginationSchema {
-    type Raw = CursorPaginationSchema.Raw | OffsetPaginationSchema.Raw;
+    export type Raw = CursorPaginationSchema.Raw | OffsetPaginationSchema.Raw;
 }

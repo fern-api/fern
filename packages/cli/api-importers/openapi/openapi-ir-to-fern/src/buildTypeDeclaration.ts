@@ -24,6 +24,7 @@ import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
     buildMapTypeReference,
+    buildNullableTypeReference,
     buildOptionalTypeReference,
     buildPrimitiveTypeReference,
     buildReferenceTypeReference,
@@ -84,8 +85,16 @@ export function buildTypeDeclaration({
             typeDeclaration = buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
             break;
         case "optional":
-        case "nullable":
             typeDeclaration = buildOptionalTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth
+            });
+            break;
+        case "nullable":
+            typeDeclaration = buildNullableTypeDeclaration({
                 schema,
                 context,
                 declarationFile,
@@ -519,6 +528,42 @@ export function buildReferenceTypeDeclaration({
             context,
             fileContainingReference: declarationFile,
             namespace
+        })
+    };
+}
+
+export function buildNullableTypeDeclaration({
+    schema,
+    context,
+    declarationFile,
+    namespace,
+    declarationDepth
+}: {
+    schema: OptionalSchema;
+    context: OpenApiIrConverterContext;
+    declarationFile: RelativeFilePath;
+    namespace: string | undefined;
+    declarationDepth: number;
+}): ConvertedTypeDeclaration {
+    if (!context.respectNullableSchemas) {
+        return buildOptionalTypeDeclaration({
+            schema,
+            context,
+            declarationFile,
+            namespace,
+            declarationDepth
+        });
+    }
+
+    return {
+        name: schema.nameOverride ?? schema.generatedName,
+        schema: buildNullableTypeReference({
+            schema,
+            context,
+            fileContainingReference: declarationFile,
+            declarationFile,
+            namespace,
+            declarationDepth
         })
     };
 }

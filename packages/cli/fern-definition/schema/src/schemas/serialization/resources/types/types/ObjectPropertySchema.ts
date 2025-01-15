@@ -13,5 +13,5 @@ export const ObjectPropertySchema: core.serialization.Schema<
 > = TypeReferenceDeclarationWithNameSchema;
 
 export declare namespace ObjectPropertySchema {
-    type Raw = TypeReferenceDeclarationWithNameSchema.Raw;
+    export type Raw = TypeReferenceDeclarationWithNameSchema.Raw;
 }

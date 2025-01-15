@@ -15,7 +15,7 @@ export const ExportDetailed: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExportDetailed {
-    interface Raw {
+    export interface Raw {
         dependency: string;
         url?: string | null;
     }

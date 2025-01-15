@@ -15,7 +15,7 @@ export const ExampleStreamResponseSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleStreamResponseSchema {
-    interface Raw {
+    export interface Raw {
         stream: (ExampleTypeReferenceSchema.Raw | undefined)[];
     }
 }

@@ -76,7 +76,10 @@ function validateResolvedType({
         return [];
     }
 
-    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
+    if (
+        resolvedType._type === "container" &&
+        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
+    ) {
         return validateResolvedType({
             resolvedType: resolvedType.container.itemType,
             _default,

@@ -13,5 +13,5 @@ export const VariableDeclarationSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), VariableDeclarationDetailed]);
 
 export declare namespace VariableDeclarationSchema {
-    type Raw = string | VariableDeclarationDetailed.Raw;
+    export type Raw = string | VariableDeclarationDetailed.Raw;
 }

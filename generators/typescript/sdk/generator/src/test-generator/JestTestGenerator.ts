@@ -373,6 +373,12 @@ describe("test", () => {
                                     })
                                 );
                             },
+                            nullable: (value) => {
+                                if (!value.nullable) {
+                                    return code`null`;
+                                }
+                                return visitExampleTypeReference(value.nullable);
+                            },
                             optional: (value) => {
                                 if (!value.optional) {
                                     return code`undefined`;

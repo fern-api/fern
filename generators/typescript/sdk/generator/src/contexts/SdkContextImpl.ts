@@ -117,6 +117,7 @@ export declare namespace SdkContextImpl {
         inlinePathParameters: boolean;
         enableInlineTypes: boolean;
         omitUndefined: boolean;
+        allowExtraFields: boolean;
         neverThrowErrors: boolean;
         useBigInt: boolean;
     }
@@ -209,6 +210,7 @@ export class SdkContextImpl implements SdkContext {
         inlinePathParameters,
         generateOAuthClients,
         omitUndefined,
+        allowExtraFields,
         useBigInt,
         neverThrowErrors,
         enableInlineTypes
@@ -261,13 +263,15 @@ export class SdkContextImpl implements SdkContext {
             retainOriginalCasing,
             useBigInt,
             enableInlineTypes,
+            allowExtraFields,
+            omitUndefined,
             context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
             coreUtilities: this.coreUtilities,
             importsManager,
-            typeResolver,
+            context: this,
             typeSchemaDeclarationReferencer,
             typeDeclarationReferencer,
             typeGenerator,
@@ -276,7 +280,9 @@ export class SdkContextImpl implements SdkContext {
             includeSerdeLayer,
             retainOriginalCasing,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,

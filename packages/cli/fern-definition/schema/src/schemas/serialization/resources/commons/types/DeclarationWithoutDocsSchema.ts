@@ -14,5 +14,5 @@ export const DeclarationWithoutDocsSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({}).extend(WithAvailability).extend(WithAudiences);
 
 export declare namespace DeclarationWithoutDocsSchema {
-    interface Raw extends WithAvailability.Raw, WithAudiences.Raw {}
+    export interface Raw extends WithAvailability.Raw, WithAudiences.Raw {}
 }

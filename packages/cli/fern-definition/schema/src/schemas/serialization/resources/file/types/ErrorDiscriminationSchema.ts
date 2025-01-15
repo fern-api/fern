@@ -14,5 +14,5 @@ export const ErrorDiscriminationSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([PropertyBasedErrorDiscrimination, StatusCodeBasedErrorDiscrimination]);
 
 export declare namespace ErrorDiscriminationSchema {
-    type Raw = PropertyBasedErrorDiscrimination.Raw | StatusCodeBasedErrorDiscrimination.Raw;
+    export type Raw = PropertyBasedErrorDiscrimination.Raw | StatusCodeBasedErrorDiscrimination.Raw;
 }

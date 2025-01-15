@@ -1,4 +1,96 @@
 - changelogEntry:
+    - summary: |
+        Fixes an issue where optional, nullable properties resulted in a double optional in the
+        IRv55 -> IRv54 migration.
+      type: internal
+  irVersion: 55
+  version: 0.50.3
+
+- changelogEntry:
+    - summary: |
+        The docs now includes alpha support for parsing openrpc specs. To leverage this feature, 
+        simply define an API section in your docs.yml and point at an openrpc spec. 
+
+        ```yml docs.yml
+        navigation: 
+          - api: API Reference
+            openrpc: <path to openrpc file>
+        ```
+      type: fix
+  irVersion: 55
+  version: 0.50.2
+
+- changelogEntry:
+    - summary: |
+        Fixes an issue where nullable schemas were not coerced into optional values.
+      type: fix
+    - summary: |
+        Fixes an issue where `fern check` would fail for optional, nullable properties.
+      type: fix
+  irVersion: 55
+  version: 0.50.1
+
+- changelogEntry:
+    - summary: |
+        The CLI is capable of migrating the latest TypeScript generator to IRv55.
+      type: internal
+  irVersion: 55
+  version: 0.50.0
+
+- changelogEntry:
+  - summary: |
+      The OpenAPI v2 parser now supports `x-fern-global-headers` and fixes an issue with generating webhook content.
+    type: fix
+  irVersion: 55
+  version: 0.49.1
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports respecting nullable properties in schemas. When enabled, nullable properties will
+        be preserved in the gnerated SDK. By default (without this setting), nullable properties are treated as `optional`.
+        To enable this, configure the setting in your `generators.yml`:
+
+        ```yml
+        api:
+         specs:
+           - openapi: ./path/to/openapi.yml
+             settings:
+               respect-nullable-schemas: true
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.49.0
+
+- changelogEntry:
+  - summary: |
+      The Mintlify docs importer now correctly generates the proper display-name key in the docs.yml file.
+    type: fix
+  irVersion: 54
+  version: 0.48.1
+
+- changelogEntry:
+  - summary: |
+      Adds support for nullable types in the Fern definition, such as the following:
+
+      ```yaml
+      types:
+        User:
+          properties:
+            name: string
+            email: nullable<string>
+      ```
+    type: feat
+  irVersion: 55
+  version: 0.48.0
+
+- changelogEntry:
+  - summary: |
+      The IR now pulls in additional request properties from the OAuth getToken endpoint to support custom OAuth schemas.
+    type: feat
+  irVersion: 54
+  version: 0.47.6
+
+- changelogEntry:
   - summary: |
       Fixes an issue with broken link checking in the OpenAPI v2 parser.
     type: feat

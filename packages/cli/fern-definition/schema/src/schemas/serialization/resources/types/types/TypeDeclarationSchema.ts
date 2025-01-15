@@ -24,7 +24,7 @@ export const TypeDeclarationSchema: core.serialization.Schema<
 ]);
 
 export declare namespace TypeDeclarationSchema {
-    type Raw =
+    export type Raw =
         | string
         | ObjectSchema.Raw
         | EnumSchema.Raw

@@ -17,6 +17,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
     .object({
         api: core.serialization.string(),
         apiName: core.serialization.property("api-name", core.serialization.string().optional()),
+        openrpc: core.serialization.string().optional(),
         audiences: core.serialization.list(AudienceId).optional(),
         displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
         snippets: SnippetsConfiguration.optional(),
@@ -37,6 +38,7 @@ export declare namespace ApiReferenceConfiguration {
     export interface Raw extends WithPermissions.Raw {
         api: string;
         "api-name"?: string | null;
+        openrpc?: string | null;
         audiences?: AudienceId.Raw[] | null;
         "display-errors"?: boolean | null;
         snippets?: SnippetsConfiguration.Raw | null;

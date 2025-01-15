@@ -18,7 +18,7 @@ export const HttpInlineRequestBodySchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace HttpInlineRequestBodySchema {
-    interface Raw {
+    export interface Raw {
         extends?: ObjectExtendsSchema.Raw | null;
         "extra-properties"?: boolean | null;
         properties?: Record<string, HttpInlineRequestBodyPropertySchema.Raw> | null;

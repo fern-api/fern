@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v55
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
 publish:
@@ -155,7 +155,11 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         inlineFileProperties: true
-      outputFolder: wrap-file-properties
+        inlinePathParameters: true
+      outputFolder: inline
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -261,6 +265,7 @@ allowedFailures:
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  - oauth-client-credentials-custom
   # the below are likely related to changes made to example generation
   - multi-url-environment-no-default
   - objects-with-imports

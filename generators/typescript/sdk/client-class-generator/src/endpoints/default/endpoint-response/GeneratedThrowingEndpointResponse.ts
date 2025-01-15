@@ -88,6 +88,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
         }
+        if (typeReference.type === "container" && typeReference.container.type === "nullable") {
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.nullable);
+        }
         return undefined;
     }
 
@@ -405,7 +408,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     literal: () => undefined,
                     list: () => undefined,
                     set: () => undefined,
-                    optional: (optType) => this.getDefaultPaginationValue({ type: optType }),
+                    nullable: (nullableType) => this.getDefaultPaginationValue({ type: nullableType }),
+                    optional: (optionalType) => this.getDefaultPaginationValue({ type: optionalType }),
                     map: () => undefined,
                     _other: () => undefined
                 });
