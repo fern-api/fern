@@ -156,7 +156,7 @@ export class Nullable {
                     (await core.Supplier.get(this._options.environment)),
                 "/users",
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/nullable",
@@ -196,7 +196,7 @@ export class Nullable {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling GET /users.");
+                throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":
                 throw new errors.SeedNullableError({
                     message: _response.error.errorMessage,

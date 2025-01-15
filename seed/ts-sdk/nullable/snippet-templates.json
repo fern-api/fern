@@ -139,7 +139,7 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET",
+            "method": "POST",
             "identifierOverride": "endpoint_nullable.createUser"
         },
         "snippetTemplate": {

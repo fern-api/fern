@@ -14,7 +14,7 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET",
+                "method": "POST",
                 "identifier_override": "endpoint_nullable.createUser"
             },
             "snippet": {
