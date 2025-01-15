@@ -83,8 +83,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .collect(Collectors.toList()));
             Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides = ImmutableMap.<TypeId, TypeDeclaration>builder()
                     .putAll(generatorContext.getTypeDeclarations())
-                    .putAll(overriddenTypeDeclarations(
-                            generatorContext, reservedTypeNames, allEnrichedProperties, isTopLevelClass))
+                    .putAll(overriddenTypeDeclarations(generatorContext, reservedTypeNames, allEnrichedProperties))
                     .buildKeepingLast();
             Map<EnrichedObjectProperty, EnrichedObjectProperty> propertyOverrides = overridePropertyTypes(
                     className, generatorContext, allEnrichedProperties, typeDeclarationsWithOverrides);
@@ -117,10 +116,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
         return new ArrayList<>(overriddenTypeDeclarations(
-                        generatorContext,
-                        reservedTypeNames,
-                        new ArrayList<>(objectPropertyGetters.values()),
-                        isTopLevelClass)
+                        generatorContext, reservedTypeNames, new ArrayList<>(objectPropertyGetters.values()))
                 .values());
     }
 
@@ -168,8 +164,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
     private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
             AbstractGeneratorContext<?, ?> generatorContext,
             Set<String> reservedTypeNames,
-            List<EnrichedObjectProperty> enrichedObjectProperties,
-            boolean isTopLevelClass) {
+            List<EnrichedObjectProperty> enrichedObjectProperties) {
         Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
         Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
         Set<String> propertyNames = new HashSet<>();
