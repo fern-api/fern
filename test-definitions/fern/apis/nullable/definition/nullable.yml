@@ -44,4 +44,23 @@ service:
             username: string
             tags: optional<list<string>>
             metadata: optional<Metadata>
+            avatar:
+              type: optional<nullable<string>>
       response: User
+
+    deleteUser:
+      method: DELETE
+      path: ""
+      request:
+        name: DeleteUserRequest
+        body:
+          properties:
+            username:
+              docs: >-
+                The user to delete.
+              type: optional<nullable<string>>
+              validation:
+                minLength: 2
+                maxLength: 1024
+      response:
+        type: boolean

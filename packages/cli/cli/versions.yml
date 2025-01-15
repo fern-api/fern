@@ -1,5 +1,15 @@
 - changelogEntry:
     - summary: |
+        Fixes an issue where nullable schemas were not coerced into optional values.
+      type: fix
+    - summary: |
+        Fixes an issue where `fern check` would fail for optional, nullable properties.
+      type: fix
+  irVersion: 55
+  version: 0.50.1
+
+- changelogEntry:
+    - summary: |
         The CLI is capable of migrating the latest TypeScript generator to IRv55.
       type: internal
   irVersion: 55

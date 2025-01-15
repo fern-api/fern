@@ -85,7 +85,7 @@ function resolvedTypeHasProperty(
 ): Result {
     switch (resolvedType._type) {
         case "container":
-            if (resolvedType.container._type !== "optional") {
+            if (resolvedType.container._type !== "optional" && resolvedType.container._type !== "nullable") {
                 return Result.IsNotObject;
             }
             return resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);
