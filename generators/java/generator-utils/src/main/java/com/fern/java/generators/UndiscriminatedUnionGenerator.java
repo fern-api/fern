@@ -125,10 +125,6 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
         Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
 
         for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
-            if (member.getType().getNamed().isEmpty()) {
-                continue;
-            }
-
             List<NamedTypeId> resolvedIds = member.getType().visit(new NamedTypeIdResolver("", member.getType()));
             for (NamedTypeId resolvedId : resolvedIds) {
                 Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
