@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Fixes an issue where optional, nullable properties resulted in a double optional in the
+        IRv55 -> IRv54 migration.
+      type: internal
+  irVersion: 55
+  version: 0.50.3
+
+- changelogEntry:
+    - summary: |
         The docs now includes alpha support for parsing openrpc specs. To leverage this feature, 
         simply define an API section in your docs.yml and point at an openrpc spec. 
 

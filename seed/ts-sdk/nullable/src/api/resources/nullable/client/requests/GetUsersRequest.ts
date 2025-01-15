@@ -8,7 +8,8 @@
  *         usernames: "usernames",
  *         avatar: "avatar",
  *         activated: true,
- *         tags: null
+ *         tags: null,
+ *         extra: null
  *     }
  */
 export interface GetUsersRequest {
@@ -16,4 +17,5 @@ export interface GetUsersRequest {
     avatar?: string;
     activated?: boolean | boolean[];
     tags?: (string | null) | (string | null)[];
+    extra?: boolean | null;
 }

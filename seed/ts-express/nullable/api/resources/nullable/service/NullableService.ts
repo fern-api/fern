@@ -17,7 +17,8 @@ export interface NullableServiceMethods {
                 usernames?: string;
                 avatar?: string;
                 activated?: boolean;
-                tags?: string | undefined;
+                tags?: string;
+                extra?: boolean;
             }
         >,
         res: {
@@ -31,6 +32,15 @@ export interface NullableServiceMethods {
         req: express.Request<never, SeedNullable.User, SeedNullable.CreateUserRequest, never>,
         res: {
             send: (responseBody: SeedNullable.User) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    deleteUser(
+        req: express.Request<never, boolean, SeedNullable.DeleteUserRequest, never>,
+        res: {
+            send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
@@ -91,7 +101,7 @@ export class NullableService {
                 next(error);
             }
         });
-        this.router.get("", async (req, res, next) => {
+        this.router.post("", async (req, res, next) => {
             const request = serializers.CreateUserRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
@@ -114,6 +124,49 @@ export class NullableService {
                     if (error instanceof errors.SeedNullableError) {
                         console.warn(
                             `Endpoint 'createUser' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.delete("", async (req, res, next) => {
+            const request = serializers.DeleteUserRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.deleteUser(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.nullable.deleteUser.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedNullableError) {
+                        console.warn(
+                            `Endpoint 'deleteUser' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
                                 " the endpoint's errors list in your Fern Definition.",
                         );

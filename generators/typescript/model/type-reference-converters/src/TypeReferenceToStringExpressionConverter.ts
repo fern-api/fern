@@ -120,12 +120,12 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     optional: (optionalType) => this.optional(optionalType, params),
                     set: this.set.bind(this),
                     map: (mapType) => this.map(mapType, params),
-                    literal: this.literal.bind(this),
+                    literal: (literal) => this.literal(literal, params),
                     _other: () => {
                         throw new Error("Unknown ContainerType: " + containerType.type);
                     }
                 }),
-            primitive: this.primitive.bind(this),
+            primitive: (type) => this.primitive(type, params),
             named: ({ shape }) => {
                 if (shape === ShapeType.Enum) {
                     return (reference) => reference;
@@ -146,56 +146,28 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         return (reference) => reference;
     }
 
-    protected override number(): (reference: ts.Expression) => ts.Expression {
-        return (reference) =>
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(reference, "toString"),
-                undefined,
-                undefined
-            );
+    protected override number(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
+        return this.nullSafeCall("toString", params);
     }
 
-    protected long(): (reference: ts.Expression) => ts.Expression {
-        if (this.useBigInt) {
-            return (reference) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(reference, "toString"),
-                    undefined,
-                    undefined
-                );
-        }
-        return this.number();
+    protected long(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
+        return this.nullSafeCall("toString", params);
     }
 
-    protected bigInteger(): (reference: ts.Expression) => ts.Expression {
+    protected bigInteger(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
         if (this.useBigInt) {
-            return (reference) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(reference, "toString"),
-                    undefined,
-                    undefined
-                );
+            return this.nullSafeCall("toString", params);
         }
         return this.string();
     }
 
-    protected override boolean(): (reference: ts.Expression) => ts.Expression {
-        return (reference) =>
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(reference, "toString"),
-                undefined,
-                undefined
-            );
+    protected override boolean(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
+        return this.nullSafeCall("toString", params);
     }
 
-    protected override dateTime(): (reference: ts.Expression) => ts.Expression {
+    protected override dateTime(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
         if (this.includeSerdeLayer) {
-            return (reference) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(reference, "toISOString"),
-                    undefined,
-                    undefined
-                );
+            return this.nullSafeCall("toISOString", params);
         }
         return (reference) => reference;
     }
@@ -204,7 +176,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         itemType: TypeReference,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        return (reference) => this.convert({ ...params, typeReference: itemType })(reference);
+        return (reference) => this.convert({ ...params, typeReference: itemType, nullable: true })(reference);
     }
 
     protected override optional(
@@ -226,15 +198,13 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         return this.jsonStringify.bind(this);
     }
 
-    protected override literal(literal: Literal): (reference: ts.Expression) => ts.Expression {
+    protected override literal(
+        literal: Literal,
+        params: ConvertTypeReferenceParams
+    ): (reference: ts.Expression) => ts.Expression {
         return Literal._visit(literal, {
             string: () => (reference: ts.Expression) => reference,
-            boolean: () => (reference: ts.Expression) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(reference, "toString"),
-                    undefined,
-                    undefined
-                ),
+            boolean: () => (reference: ts.Expression) => this.nullSafeCall("toString", params)(reference),
             _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
             }
@@ -334,5 +304,29 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             undefined,
             []
         );
+    }
+
+    private nullSafeCall(
+        methodName: string,
+        params: ConvertTypeReferenceParams
+    ): (reference: ts.Expression) => ts.Expression {
+        if (params.nullable) {
+            return (reference) =>
+                ts.factory.createBinaryExpression(
+                    ts.factory.createPropertyAccessChain(
+                        reference,
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(`${methodName}()`)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createNull()
+                );
+        }
+        return (reference) =>
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(reference, methodName),
+                undefined,
+                undefined
+            );
     }
 }
