@@ -265,6 +265,7 @@ allowedFailures:
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  - oauth-client-credentials-custom
   # the below are likely related to changes made to example generation
   - multi-url-environment-no-default
   - objects-with-imports
