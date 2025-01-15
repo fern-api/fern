@@ -1,0 +1,65 @@
+# June 2024
+
+## RSS Feed Integration
+Added support for RSS and Atom feeds to keep users updated on documentation changes. Teams can now offer automated update notifications for their documentation.
+
+```yaml
+rss:
+  enabled: true
+  title: "API Documentation Updates"
+  description: "Latest changes and updates"
+  categories:
+    - name: breaking-changes
+      priority: high
+    - name: new-features
+      priority: medium
+```
+
+## JSON-LD Enhancement
+Implemented structured data support through JSON-LD for improved SEO. Documentation pages now provide richer information to search engines and social platforms.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "API Authentication Guide",
+  "datePublished": "2024-06-15",
+  "technicalAudience": "Software Developers"
+}
+```
+
+## Image Zoom Controls
+Added configurable image zoom functionality with custom triggers and behaviors. Users can now better examine diagrams and technical illustrations in documentation.
+
+```typescript
+const zoomConfig = {
+  enabled: true,
+  background: 'rgba(0, 0, 0, 0.8)',
+  excludeClass: 'no-zoom',
+  maxScale: 4
+}
+```
+
+## Syntax Extension Support
+Added support for additional syntax highlighting languages including BAML and Jinja. Documentation can now properly display a wider range of code examples.
+
+```typescript
+const syntaxConfig = {
+  languages: {
+    baml: {
+      source: 'custom',
+      aliases: ['buildaml']
+    },
+    jinja: {
+      source: 'prismjs',
+      dependencies: ['python']
+    }
+  }
+}
+```
+
+_Image suggestions:
+1. RSS feed configuration interface
+2. JSON-LD validation tool
+3. Image zoom interaction demo
+4. Extended syntax highlighting examples_

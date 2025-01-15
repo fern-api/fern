@@ -1,33 +1,57 @@
-## WebSocket Support
-Added WebSocket support to API Playground for testing real-time endpoints.
+## WebSocket Support in API Playground
+Added real-time WebSocket testing capabilities to the API playground, enabling developers to test streaming and real-time endpoints directly in the documentation. WebSocket connections can now be established, tested, and debugged without leaving the docs.
 
 ```typescript
-// Testing WebSocket endpoints in playground
-const ws = new WebSocket('wss://api.example.com/ws');
-ws.onmessage = (event) => {
-  console.log('Received:', event.data);
+// WebSocket playground configuration
+const wsConfig = {
+  endpoint: 'wss://api.example.com',
+  protocols: ['v1', 'v2'],
+  onMessage: (event) => {
+    console.log('Received:', event.data);
+  }
 };
 ```
 
-## Java UTF-8 Support
-Added proper UTF-8 encoding support for Java SDK file operations.
-
-```java
-// Automatic UTF-8 handling
-String content = client.files.readTextFile("document.txt");
-client.files.writeTextFile("новый.txt", "Hello, 世界!");
-```
-
-## Version Navigation
-Improved version selector and navigation in documentation.
+## Enhanced Code Highlighting
+Implemented a new code highlighting system using Shiki for improved syntax highlighting accuracy and performance. The system now supports more languages and provides better dark mode compatibility.
 
 ```yaml
-# versions.yml
-versions:
-  - label: v2.0 (Latest)
-    path: /v2
-  - label: v1.0
-    path: /v1
+# Code block configuration
+highlight:
+  theme: 'github-dark'
+  languages: ['typescript', 'python', 'go', 'ruby']
+  inline: true
 ```
 
-_Image suggestion: Version selector dropdown interface_
+## Feedback System
+Introduced a new feedback collection system using Radix UI components for improved accessibility. Users can now provide structured feedback about documentation quality and usefulness directly within the interface.
+
+```typescript
+interface FeedbackForm {
+  helpful: boolean;
+  category?: 'clarity' | 'accuracy' | 'completeness';
+  details?: string;
+}
+```
+
+## Layout Configuration System
+Implemented a flexible layout configuration system that allows for custom header, footer, and sidebar arrangements. Documentation can now be customized to match your brand and preferences.
+
+```yaml
+layout:
+  header:
+    position: 'fixed'
+    height: 'auto'
+  sidebar:
+    width: 280
+    collapsible: true
+```
+
+## Custom Styling Support
+Added support for custom CSS and scripts, enabling deep customization of documentation appearance and behavior. Organizations can now apply their branding consistently across their documentation.
+
+_Image suggestions: 
+1. WebSocket playground interface with message log
+2. Code highlighting theme comparison
+3. New feedback interface modal
+4. Layout customization options_

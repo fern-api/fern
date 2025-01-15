@@ -1,32 +1,76 @@
-## FastAPI Generator v1.6.1
-Fixed critical issues in Python FastAPI server generation to better match your Fern specification.
+## Audio Streaming in API Explorer
+Added support for streaming audio directly within the API Explorer. This feature enables testing audio endpoints without leaving the documentation. 
 
-```python
-# Generated endpoints now correctly handle path parameters
-@router.get("/users/{user_id}/posts/{post_id}")
-async def get_user_post(user_id: str, post_id: str):
-    return {"user_id": user_id, "post_id": post_id}
-```
+Check it out live in ElevenLabs' [API Explorer](https://elevenlabs.io/docs/api-reference/text-to-speech/convert?playground=/docs/api-reference/text-to-speech/convert-as-stream) to let users test text-to-speech endpoints and hear the results instantly.
 
-## Enhanced Edge Functions
-Optimized URL parameter handling in edge functions for better performance and reliability.
-
-```typescript
-// New URLSearchParams handling
-const params = new URLSearchParams({
-  filter: 'active',
-  sort: 'created_at'
-}).toString();
-```
-
-## Documentation Controls
-Control documentation layout with new frontmatter options.
+## Table of Contents Control
+Added granular control over table of contents visibility using frontmatter configuration. Documentation authors can now customize TOC display per page.
 
 ```yaml
 ---
 title: API Reference
 hide-toc: true
+toc:
+  minHeadings: 2
+  maxDepth: 3
+  exclude:
+    - '#examples'
+    - '#changelog'
 ---
 ```
 
-_Image suggestion: Screenshot comparing docs layout with and without TOC_
+## Feedback Collection
+Enhanced the documentation feedback system with improved form handling and data collection. Teams can now gather more detailed feedback about their documentation.
+
+```typescript
+interface FeedbackSystem {
+  categories: {
+    helpful: boolean;
+    clarity?: 'clear' | 'confusing' | 'incomplete';
+    technical?: 'accurate' | 'outdated' | 'incorrect';
+  };
+  allowComments: boolean;
+  notifyOn: ['negative', 'technical-issue'];
+}
+```
+
+## Domain Path Resolution
+Improved handling of documentation across multiple domains and path structures. Documentation now maintains proper navigation regardless of hosting configuration.
+
+```typescript
+const pathResolver = {
+  mode: 'strict',
+  rules: [
+    {
+      domain: 'docs.example.com',
+      basePath: '/',
+      versions: true
+    },
+    {
+      domain: 'api.example.com',
+      basePath: '/docs',
+      versions: false
+    }
+  ],
+  fallback: '/404'
+}
+```
+
+## Form Data Optimization
+Enhanced handling of URL parameters and form data in edge functions. Documentation playground now handles complex data structures more efficiently.
+
+```typescript
+const formConfig = {
+  encoding: 'application/x-www-form-urlencoded',
+  arrayFormat: 'brackets',
+  allowNullables: true,
+  sanitize: true,
+  maxDepth: 5
+}
+```
+
+_Image suggestions:
+1. TOC configuration interface
+2. Feedback form flow
+3. Domain path structure diagram
+4. Form data handling visualization_

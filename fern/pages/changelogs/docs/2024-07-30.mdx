@@ -1,37 +1,59 @@
-## OSS Workspace Settings
-Fixed settings propagation for APIs with dependencies in open-source workspaces.
+# July 2024
+
+## Meta Image System
+Implemented comprehensive meta image support for better social sharing. Documentation pages now display properly when shared on social media platforms.
 
 ```yaml
-# workspace.yml
-dependencies:
-  common-types: ../common-types
-  auth-api: ../auth
-propagateSettings: true
+metadata:
+  og:image: /assets/og-image.png
+  og:type: documentation
+  twitter:card: summary_large_image
+  twitter:image: /assets/twitter-card.png
 ```
 
-## Extended Properties Support
-Added support for extended properties in API definitions.
+## Search Path Configuration
+Enhanced search functionality with configurable base paths and index paths. Users can now search within specific sections of documentation more effectively.
 
-```yaml
-types:
-  User:
-    properties:
-      name: string
-      email: string
-    x-fern-extended:
-      audit: true
-      validation: strict
+```typescript
+const searchConfig = {
+  basePath: '/docs',
+  indexPaths: ['/api', '/guides'],
+  excludePaths: ['/internal', '/deprecated'],
+  weightedTerms: {
+    'authentication': 2,
+    'getting-started': 1.5
+  }
+}
 ```
 
-## Documentation Images
-Added support for images in frontmatter and better image handling.
+## Type-Safe Components
+Implemented strict TypeScript checking for documentation components. This ensures more reliable documentation rendering and easier maintenance.
 
-```yaml
----
-title: API Overview
-image: ./assets/api-diagram.png
-og:image: https://yourapi.com/images/og-card.png
----
+```typescript
+interface CodeBlockProps {
+  language: SupportedLanguage;
+  fileName?: string;
+  showLineNumbers: boolean;
+  highlight?: number[];
+  maxHeight?: number;
+}
 ```
 
-_Image suggestion: Screenshot showing new image handling capabilities in documentation_
+## Base Path Handling
+Improved handling of base paths for search records and navigation. Documentation now works correctly when hosted under custom paths.
+
+```typescript
+const pathConfig = {
+  stripBasePath: true,
+  rewriteRules: [
+    { from: '/api/', to: '/reference/' },
+    { from: '/v1/', to: '/v2/' }
+  ]
+}
+```
+
+_Image suggestions:
+1. Social media card preview tool
+2. Search configuration interface
+3. Type checking visualization
+4. Path configuration dashboard_

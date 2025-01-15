@@ -1,36 +1,52 @@
-## Default Table of Contents
-Added feature flags for enabling table of contents by default.
+## Table of Contents Features
+Introduced feature flags system for controlling table of contents behavior across different documentation instances. Teams can now customize TOC display per documentation section.
 
 ```yaml
-# docs-config.yml
-features:
-  toc:
-    defaultEnabled: true
-    instances: ['api-docs', 'guides']
+toc:
+  defaultEnabled: true
+  instances:
+    api-docs: true
+    tutorials: false
+  maxDepth: 3
 ```
 
-## Virtualized Syntax Highlighting
-Improved performance for long code blocks with virtualization.
-
-```jsx
-<SyntaxHighlighter
-  virtualized
-  maxHeight={400}
-  language="typescript"
->
-  {longCodeExample}
-</SyntaxHighlighter>
-```
-
-## Enhanced Error Information
-Added richer error information for string validation.
+## Link Management System
+Implemented comprehensive link validation and management system. Documentation links are now automatically validated, with broken link detection and suggested fixes.
 
 ```typescript
-try {
-  validateEmail("invalid-email")
-} catch (error) {
-  console.log(error.details) // Now includes specific validation failure info
+const linkValidation = {
+  ignoreExternal: true,
+  checkAnchors: true,
+  suggestFixes: true
 }
 ```
 
-_Image suggestion: Performance comparison chart showing syntax highlighting improvements_
+## Sidebar Navigation Enhancement
+Improved sidebar padding and visual hierarchy with refined spacing and typography. The documentation navigation now provides clearer visual structure and better readability.
+
+```css
+.sidebar-section {
+  padding: theme('spacing.4');
+  border-left: 2px solid transparent;
+  &.active {
+    border-left-color: theme('colors.primary.500');
+  }
+}
+```
+
+## Base Path Configuration
+Added flexible base path configuration for documentation routing. Organizations can now host documentation under custom paths while maintaining proper navigation.
+
+```typescript
+const routingConfig = {
+  basePath: '/docs',
+  preserveHash: true,
+  trailingSlash: false
+}
+```
+
+_Image suggestions:
+1. TOC customization interface
+2. Link validation report example
+3. Sidebar hierarchy visualization
+4. Custom base path configuration dashboard_

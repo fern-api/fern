@@ -1,36 +1,66 @@
-## Ruby SDK Support
-Added full Ruby SDK generation capabilities.
+## API Playground Launch
+Enable interactive API testing directly in the documentation.
+- Added full API request testing capability
+- Improved error handling and status code display
+- Added support for recursive property rendering
 
-```ruby
-# Generated Ruby client
-client = YourAPI::Client.new(api_key: "key_123")
-
-response = client.users.create(
-  name: "Alice",
-  role: "admin"
-)
+```typescript
+// New playground configuration
+interface PlaygroundConfig {
+  environments: {
+    name: string;
+    url: string;
+  }[];
+  authentication: {
+    type: 'bearer' | 'apiKey';
+    location: 'header' | 'query';
+  };
+}
 ```
 
-## Dark Mode Syntax
-Improved dark mode syntax highlighting in documentation.
+## Enhanced Dark Mode
+Multiple improvements to dark mode readability for syntax highlighting, dropdowns, and search results.
 
-```yaml
-# theme.yml
-syntax:
-  dark:
-    background: '#1a1a1a'
-    keyword: '#c678dd'
-    string: '#98c379'
+```css
+/* Dark mode improvements */
+[data-theme='dark'] {
+  --syntax-bg: #1a1a1a;
+  --dropdown-bg: #2d2d2d;
+  --search-highlight: #ffd700;
+}
 ```
 
-## Table of Contents
-Enhanced table of contents with better markdown parsing.
+## Mobile-Friendly Navigation
+Comprehensive updates to mobile navigation experience with collapsible and scrolling.
 
-```md
-<!-- Automatically generates proper hierarchy -->
-# Main Title {#main}
-## Section 1 {#section-1}
-### Subsection A {#subsection-a}
+```typescript
+// Mobile-optimized navigation
+const sidebarConfig = {
+  collapsible: true,
+  mobileBreakpoint: 768,
+  animationDuration: 200
+};
 ```
 
-_Image suggestion: Dark mode syntax highlighting comparison_
+## Search Enhancements
+Multiple improvements to the search experience.
+- Default and configurable keyboard shortcuts (`Cmd+A`, `/`) for search
+- Improved search box sizing
+- Added auto-focus functionality
+
+```jsx
+// Enhanced search component
+<Search
+  autoFocus
+  shortcuts={['/', 'cmd+a']}
+  highlightMatches
+  instantLoading
+/>
+```
+
+## Performance Optimization
+Several performance improvements across the platform.
+- Moved FontAwesome to CDN 
+- Improved search dialog loading
+- Optimized static props loading 
+- Added polyfill DOM parser for server-side TOC rendering

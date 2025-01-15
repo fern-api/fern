@@ -1,40 +1,49 @@
-## Enhanced Mock Server
-Improved reliability of API mocking for testing and development.
+## Tab URL Management
+Enhanced URL handling in documentation tabs, allowing control over URL behavior when switching between tabs. This provides better navigation history and sharing capabilities.
 
 ```typescript
-// Mock server now supports dynamic responses
-mock.get('/users/:id', (req, res) => {
-  return res.json({
-    id: req.params.id,
-    name: `User ${req.params.id}`,
-    generated: new Date().toISOString()
-  });
-});
+const tabConfig = {
+  updateURL: true,
+  preserveScroll: true,
+  shareableState: true
+}
 ```
 
-## Skip URL Slugs
-Added ability to skip URL slugs in documentation tabs.
+## Advanced Redirects
+Implemented a powerful redirects system supporting pattern matching and parameter preservation. Teams can now manage documentation URL structure while maintaining backwards compatibility.
 
 ```yaml
-# In your MDX file
-<Tabs skipUrlSlug>
-  <Tab title="Python">
-    Python content
-  </Tab>
-  <Tab title="TypeScript">
-    TypeScript content
-  </Tab>
-</Tabs>
-```
-
-## Configurable Redirects
-Added support for custom redirects in documentation.
-
-```yaml
-# config.yml
 redirects:
-  /old-docs: /docs/new-location
-  /v1/*: /v2/:splat
+  - source: /v1/api/*
+    destination: /v2/api/:splat
+    permanent: true
+  - source: /guides/:name
+    destination: /tutorials/:name
 ```
 
-_Image suggestion: Flow diagram showing redirect configuration options_
+## Sitemap Optimization
+Improved sitemap generation with direct file access and customizable update frequencies. Search engines can now better understand and index your documentation structure.
+
+```typescript
+const sitemapOptions = {
+  changefreq: 'weekly',
+  priority: 0.8,
+  lastmodISO: true
+}
+```
+
+## API Authorization Handling
+Enhanced API authorization handling in the documentation platform. Developers can now test authenticated endpoints more easily with improved token management.
+
+```typescript
+const authConfig = {
+  methods: ['bearer', 'apiKey'],
+  persistence: 'session',
+  autoRefresh: true
+}
+```
+
+_Image suggestions:
+1. Tab URL behavior demonstration
+2. Redirect management interface
+3. Si

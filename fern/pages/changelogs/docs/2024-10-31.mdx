@@ -1,34 +1,72 @@
+# October 2024
+
 ## JWT API Key Integration
-Automatically extract API keys from JWTs for simpler authentication.
+Implemented automatic API key extraction from JWT tokens in the documentation playground. Users can now test authenticated endpoints more easily with automatic credential handling.
 
 ```typescript
-const client = new ApiClient({
-    jwt: 'your.jwt.token',
-    autoExtractApiKey: true
-});
+const jwtConfig = {
+  extractApiKey: true,
+  tokenLocation: 'header',
+  autoRefresh: true,
+  schema: {
+    apiKeyPath: 'payload.api_key',
+    rolePath: 'payload.permissions'
+  }
+}
 ```
 
-## TypeScript Type Safety
-Improved type definitions in TypeScript SDKs for better error catching.
+## Query Parameter Enhancement
+Improved handling of query parameters in documentation middleware. Complex query parameters are now properly handled and displayed in the documentation.
 
 ```typescript
-// Now supports strict union types
-type OrderStatus = 'pending' | 'processing' | 'completed';
-
-// With runtime validation
-client.orders.update({ 
-    id: '123',
-    status: 'pending' // TypeScript error if invalid status
-});
+const queryConfig = {
+  arrayFormat: 'brackets',
+  allowDots: true,
+  parseNumbers: true,
+  parseBooleans: true
+}
 ```
 
-## Go SDK Improvements
-Added dynamic response handling to Go SDK.
+## Documentation Parsing System
+Enhanced documentation parsing for special elements like asides and custom components. Documentation authors can now use richer formatting options.
 
-```go
-// Flexible response handling
-data := client.Users.Get()
-username := data.MustGet("user.profile.name")
+```yaml
+asides:
+  types:
+    - note
+    - warning
+    - tip
+    - important
+  styling:
+    note:
+      icon: 'info'
+      color: 'blue'
+    warning:
+      icon: 'alert-triangle'
+      color: 'amber'
 ```
 
-_Image suggestion: Diagram showing JWT authentication flow with API key extraction_
+## Host Query Handling
+Improved handling of host information in query parameters for better middleware support. Documentation now handles complex hosting scenarios more reliably.
+
+```typescript
+const hostConfig = {
+  appendHost: true,
+  allowedHosts: [
+    'api.example.com',
+    '*.staging.example.com'
+  ],
+  rewriteRules: [
+    { 
+      pattern: 'localhost:*',
+      rewrite: 'api.local'
+    }
+  ]
+}
+```
+
+_Image suggestions:
+1. JWT playground authentication flow
+2. Query parameter builder interface
+3. Aside styling examples
+4. Host configuration dashboard_
