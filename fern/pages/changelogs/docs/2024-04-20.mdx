@@ -1,0 +1,36 @@
+## Default Table of Contents
+Added feature flags for enabling table of contents by default.
+
+```yaml
+# docs-config.yml
+features:
+  toc:
+    defaultEnabled: true
+    instances: ['api-docs', 'guides']
+```
+
+## Virtualized Syntax Highlighting
+Improved performance for long code blocks with virtualization.
+
+```jsx
+<SyntaxHighlighter
+  virtualized
+  maxHeight={400}
+  language="typescript"
+>
+  {longCodeExample}
+</SyntaxHighlighter>
+```
+
+## Enhanced Error Information
+Added richer error information for string validation.
+
+```typescript
+try {
+  validateEmail("invalid-email")
+} catch (error) {
+  console.log(error.details) // Now includes specific validation failure info
+}
+```
+
+_Image suggestion: Performance comparison chart showing syntax highlighting improvements_

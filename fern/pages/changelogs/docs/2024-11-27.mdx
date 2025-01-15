@@ -1,11 +1,35 @@
-## Auth token autocompletion in API Explorer
+## API Group Organization
+Group API endpoints logically using new OpenAPI extensions.
 
-Auth tokens are now automatically injected into API explorer after authenticating to your API.
+```yaml
+/create-payment:
+  post:
+    x-fern-group-name: Payments
+    x-fern-availability: stable
+```
 
-### Why it matters?
-- Saves time for your users by automatically filling in API keys.
-- Minimizes errors during authentication.
+## OpenAPI Null Examples
+Added support for null values in OpenAPI examples for better documentation.
 
-![API Explorer Splash Image](../../../../fern/images/changelogs/docs/api-explorer.png)
+```yaml
+components:
+  examples:
+    UserResponse:
+      value:
+        name: "John Doe"
+        middle_name: null
+```
 
-Check it out live in [Webflow's API Explorer](https://developers.webflow.com/data/reference/sites/list?playground=/data/reference/sites/list).
+## Python SDK Documentation
+Added comprehensive inline code documentation to Python SDKs.
+
+```python
+def create_user(name: str, role: str = "user") -> User:
+    """Create a new user.
+    
+    Examples:
+        client.users.create_user("Jane", role="admin")
+    """
+```
+
+_Image suggestion: Screenshot of new Python SDK documentation in an IDE_

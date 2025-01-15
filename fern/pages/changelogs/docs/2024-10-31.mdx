@@ -1,0 +1,34 @@
+## JWT API Key Integration
+Automatically extract API keys from JWTs for simpler authentication.
+
+```typescript
+const client = new ApiClient({
+    jwt: 'your.jwt.token',
+    autoExtractApiKey: true
+});
+```
+
+## TypeScript Type Safety
+Improved type definitions in TypeScript SDKs for better error catching.
+
+```typescript
+// Now supports strict union types
+type OrderStatus = 'pending' | 'processing' | 'completed';
+
+// With runtime validation
+client.orders.update({ 
+    id: '123',
+    status: 'pending' // TypeScript error if invalid status
+});
+```
+
+## Go SDK Improvements
+Added dynamic response handling to Go SDK.
+
+```go
+// Flexible response handling
+data := client.Users.Get()
+username := data.MustGet("user.profile.name")
+```
+
+_Image suggestion: Diagram showing JWT authentication flow with API key extraction_

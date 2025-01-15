@@ -1,7 +1,32 @@
-## Support for /sitemap.xml
+## FastAPI Generator v1.6.1
+Fixed critical issues in Python FastAPI server generation to better match your Fern specification.
 
-Added a `/sitemap.xml` file to improve search engine indexing and site visibility.
+```python
+# Generated endpoints now correctly handle path parameters
+@router.get("/users/{user_id}/posts/{post_id}")
+async def get_user_post(user_id: str, post_id: str):
+    return {"user_id": user_id, "post_id": post_id}
+```
 
-### Why it matters:
-- Ensures all key pages are easily discoverable by search engines.
-- Speeds up indexing for new and updated pages, improving SEO and user access.
+## Enhanced Edge Functions
+Optimized URL parameter handling in edge functions for better performance and reliability.
+
+```typescript
+// New URLSearchParams handling
+const params = new URLSearchParams({
+  filter: 'active',
+  sort: 'created_at'
+}).toString();
+```
+
+## Documentation Controls
+Control documentation layout with new frontmatter options.
+
+```yaml
+---
+title: API Reference
+hide-toc: true
+---
+```
+
+_Image suggestion: Screenshot comparing docs layout with and without TOC_

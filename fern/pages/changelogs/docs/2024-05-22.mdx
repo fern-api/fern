@@ -1,0 +1,40 @@
+## Enhanced Mock Server
+Improved reliability of API mocking for testing and development.
+
+```typescript
+// Mock server now supports dynamic responses
+mock.get('/users/:id', (req, res) => {
+  return res.json({
+    id: req.params.id,
+    name: `User ${req.params.id}`,
+    generated: new Date().toISOString()
+  });
+});
+```
+
+## Skip URL Slugs
+Added ability to skip URL slugs in documentation tabs.
+
+```yaml
+# In your MDX file
+<Tabs skipUrlSlug>
+  <Tab title="Python">
+    Python content
+  </Tab>
+  <Tab title="TypeScript">
+    TypeScript content
+  </Tab>
+</Tabs>
+```
+
+## Configurable Redirects
+Added support for custom redirects in documentation.
+
+```yaml
+# config.yml
+redirects:
+  /old-docs: /docs/new-location
+  /v1/*: /v2/:splat
+```
+
+_Image suggestion: Flow diagram showing redirect configuration options_

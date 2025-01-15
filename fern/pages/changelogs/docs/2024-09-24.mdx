@@ -1,0 +1,28 @@
+## gRPC Endpoint Support
+Added support for calling gRPC endpoints through the proxy.
+
+```protobuf
+service UserService {
+  rpc GetUser(GetUserRequest) returns (User) {}
+}
+```
+
+## Editable API Playground
+Test different API environments directly in the documentation playground.
+
+```yaml
+environments:
+  production: api.example.com
+  staging: api-staging.example.com
+```
+
+## Java Streaming Support
+Stream large file uploads and downloads in Java SDK.
+
+```java
+try (InputStream fileStream = client.files.download("file-id")) {
+    Files.copy(fileStream, Paths.get("downloaded-file.pdf"));
+}
+```
+
+_Image suggestion: Screenshot of new playground environment selector_

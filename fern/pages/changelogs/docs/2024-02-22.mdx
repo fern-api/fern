@@ -1,0 +1,33 @@
+## WebSocket Support
+Added WebSocket support to API Playground for testing real-time endpoints.
+
+```typescript
+// Testing WebSocket endpoints in playground
+const ws = new WebSocket('wss://api.example.com/ws');
+ws.onmessage = (event) => {
+  console.log('Received:', event.data);
+};
+```
+
+## Java UTF-8 Support
+Added proper UTF-8 encoding support for Java SDK file operations.
+
+```java
+// Automatic UTF-8 handling
+String content = client.files.readTextFile("document.txt");
+client.files.writeTextFile("новый.txt", "Hello, 世界!");
+```
+
+## Version Navigation
+Improved version selector and navigation in documentation.
+
+```yaml
+# versions.yml
+versions:
+  - label: v2.0 (Latest)
+    path: /v2
+  - label: v1.0
+    path: /v1
+```
+
+_Image suggestion: Version selector dropdown interface_

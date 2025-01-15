@@ -1,0 +1,37 @@
+## OSS Workspace Settings
+Fixed settings propagation for APIs with dependencies in open-source workspaces.
+
+```yaml
+# workspace.yml
+dependencies:
+  common-types: ../common-types
+  auth-api: ../auth
+propagateSettings: true
+```
+
+## Extended Properties Support
+Added support for extended properties in API definitions.
+
+```yaml
+types:
+  User:
+    properties:
+      name: string
+      email: string
+    x-fern-extended:
+      audit: true
+      validation: strict
+```
+
+## Documentation Images
+Added support for images in frontmatter and better image handling.
+
+```yaml
+---
+title: API Overview
+image: ./assets/api-diagram.png
+og:image: https://yourapi.com/images/og-card.png
+---
+```
+
+_Image suggestion: Screenshot showing new image handling capabilities in documentation_

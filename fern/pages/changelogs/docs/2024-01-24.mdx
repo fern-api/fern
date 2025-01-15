@@ -1,0 +1,36 @@
+## Ruby SDK Support
+Added full Ruby SDK generation capabilities.
+
+```ruby
+# Generated Ruby client
+client = YourAPI::Client.new(api_key: "key_123")
+
+response = client.users.create(
+  name: "Alice",
+  role: "admin"
+)
+```
+
+## Dark Mode Syntax
+Improved dark mode syntax highlighting in documentation.
+
+```yaml
+# theme.yml
+syntax:
+  dark:
+    background: '#1a1a1a'
+    keyword: '#c678dd'
+    string: '#98c379'
+```
+
+## Table of Contents
+Enhanced table of contents with better markdown parsing.
+
+```md
+<!-- Automatically generates proper hierarchy -->
+# Main Title {#main}
+## Section 1 {#section-1}
+### Subsection A {#subsection-a}
+```
+
+_Image suggestion: Dark mode syntax highlighting comparison_

@@ -1,0 +1,37 @@
+## C# Model Generation
+Added support for generating C# models from your API definition.
+
+```csharp
+// Generated C# model
+public class User
+{
+    [JsonPropertyName("id")]
+    public string Id { get; set; }
+
+    [JsonPropertyName("email")]
+    public string Email { get; set; }
+}
+```
+
+## License Configuration
+Added ability to specify license information in SDK metadata.
+
+```yaml
+# generators.yml
+sdk:
+  license:
+    type: MIT
+    file: ./LICENSE
+```
+
+## Mobile Sidebar Improvements
+Enhanced search and navigation experience in mobile documentation.
+
+```css
+/* New mobile-optimized sidebar styles */
+.sidebar-mobile {
+  @apply fixed inset-0 z-50 transform transition-transform;
+}
+```
+
+_Image suggestion: Mobile sidebar navigation interaction demo_
