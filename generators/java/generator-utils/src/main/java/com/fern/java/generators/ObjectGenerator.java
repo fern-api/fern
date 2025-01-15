@@ -81,12 +81,11 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .map(ImplementsInterface::interfaceProperties)
                     .flatMap(List::stream)
                     .collect(Collectors.toList()));
-            Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides = ImmutableMap.<TypeId, TypeDeclaration>builder()
-                    .putAll(generatorContext.getTypeDeclarations())
-                    .putAll(overriddenTypeDeclarations(generatorContext, reservedTypeNames, allEnrichedProperties))
-                    .buildKeepingLast();
             Map<EnrichedObjectProperty, EnrichedObjectProperty> propertyOverrides = overridePropertyTypes(
-                    className, generatorContext, allEnrichedProperties, typeDeclarationsWithOverrides);
+                    className,
+                    generatorContext,
+                    allEnrichedProperties,
+                    overriddenTypeDeclarations(generatorContext, reservedTypeNames, allEnrichedProperties));
             this.enrichedObjectProperties = enriched.stream()
                     .map(prop -> applyOverrideIfNecessary(prop, propertyOverrides))
                     .collect(Collectors.toList());
@@ -229,10 +228,14 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             enclosingMappings.put(entry.getValue().getName(), className);
         }
 
+        Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides =
+                new HashMap<>(generatorContext.getTypeDeclarations());
+        typeDeclarationsWithOverrides.putAll(overriddenTypeDeclarations);
+
         PoetTypeNameMapper overriddenMapper = new PoetTypeNameMapper(
                 generatorContext.getPoetClassNameFactory(),
                 generatorContext.getCustomConfig(),
-                overriddenTypeDeclarations,
+                typeDeclarationsWithOverrides,
                 enclosingMappings);
 
         for (EnrichedObjectProperty prop : enrichedObjectProperties) {
