@@ -316,7 +316,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     ts.factory.createPropertyAccessChain(
                         reference,
                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                        ts.factory.createIdentifier(methodName)
+                        ts.factory.createIdentifier(`${methodName}()`)
                     ),
                     ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                     ts.factory.createNull()

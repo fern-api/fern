@@ -6,5 +6,5 @@ export interface Metadata {
     createdAt: Date;
     updatedAt: Date;
     avatar?: string;
-    activated?: boolean | undefined;
+    activated?: boolean;
 }

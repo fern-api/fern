@@ -78,7 +78,7 @@ export class Nullable {
         }
 
         if (extra !== undefined) {
-            _queryParams["extra"] = extra?.toString ?? null;
+            _queryParams["extra"] = extra?.toString() ?? null;
         }
 
         const _response = await core.fetcher({

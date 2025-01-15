@@ -13,7 +13,7 @@ export const CreateUserRequest: core.serialization.Schema<
     username: core.serialization.string(),
     tags: core.serialization.list(core.serialization.string()).optional(),
     metadata: core.serialization.lazyObject(() => serializers.Metadata).optional(),
-    avatar: core.serialization.string().optional().optional(),
+    avatar: core.serialization.string().optional(),
 });
 
 export declare namespace CreateUserRequest {
@@ -21,6 +21,6 @@ export declare namespace CreateUserRequest {
         username: string;
         tags?: string[] | null;
         metadata?: serializers.Metadata.Raw | null;
-        avatar?: (string | null | undefined) | null;
+        avatar?: string | null;
     }
 }

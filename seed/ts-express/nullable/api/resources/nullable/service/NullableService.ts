@@ -17,8 +17,8 @@ export interface NullableServiceMethods {
                 usernames?: string;
                 avatar?: string;
                 activated?: boolean;
-                tags?: string | undefined;
-                extra?: boolean | undefined;
+                tags?: string;
+                extra?: boolean;
             }
         >,
         res: {
