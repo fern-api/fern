@@ -14,7 +14,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   await client.users.update({ username: "john.doe", metadata: null });
   ```
 
-## [0.46.10] - 2025-01-13
+## [0.46.11] - 2025-01-14
+
+- Fix: Don't double check whether an optional string literal alias (see example below) is a string when using serializer to build query string parameters.
+
+  ```yml
+  types:
+    LiteralAliasExample: literal<"MyLiteralValue">
+
+  service:
+    endpoints:
+      foo:
+        path: /bar
+        method: POST
+        request:
+          name: FooBarRequest
+          query-parameters:
+            optional_alias_literal: optional<LiteralAliasExample>
+  ```
+
+  ```ts
+  // before
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = typeof serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) === "string" ? serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) : JSON.stringify(serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }));
+  }
+
+  // after
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      });
+  }
+  ```
+
+## [0.46.10] - 2025-01-14
 
 - Fix: Use serialization layer to convert types to JSON strings when enabled.
 

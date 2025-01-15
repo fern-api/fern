@@ -15,8 +15,14 @@ export interface QueryServiceMethods {
             never,
             {
                 prompt: "You are a helpful assistant";
+                optional_prompt?: "You are a helpful assistant";
+                alias_prompt: SeedLiteral.AliasToPrompt;
+                alias_optional_prompt?: SeedLiteral.AliasToPrompt;
                 query: string;
                 stream: false;
+                optional_stream?: false;
+                alias_stream: SeedLiteral.AliasToStream;
+                alias_optional_stream?: SeedLiteral.AliasToStream;
             }
         >,
         res: {
