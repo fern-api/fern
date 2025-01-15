@@ -114,7 +114,10 @@ export function maybeFileFromResolvedType(resolvedType: ResolvedType | undefined
     if (resolvedType._type === "named") {
         return resolvedType.file;
     }
-    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
+    if (
+        resolvedType._type === "container" &&
+        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
+    ) {
         return maybeFileFromResolvedType(resolvedType.container.itemType);
     }
     return undefined;
@@ -127,7 +130,10 @@ function getMaybeObject(resolvedType: ResolvedType | undefined): RawSchemas.Obje
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return resolvedType.declaration;
     }
-    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
+    if (
+        resolvedType._type === "container" &&
+        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
+    ) {
         return getMaybeObject(resolvedType.container.itemType);
     }
     return undefined;
