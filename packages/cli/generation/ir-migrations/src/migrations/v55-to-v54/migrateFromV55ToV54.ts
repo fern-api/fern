@@ -322,6 +322,9 @@ function convertHttpHeader(header: IrVersions.V55.http.HttpHeader): IrVersions.V
 }
 
 function convertTypeReference(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
+    if (typeReference.type === "container" && typeReference.container.type === "nullable") {
+        return convertTypeReferenceToOptionalIfNotAlready(typeReference.container.nullable);
+    }
     return IrVersions.V55.types.TypeReference._visit<IrVersions.V54.types.TypeReference>(typeReference, {
         container: (container) => IrVersions.V54.types.TypeReference.container(convertContainerType(container)),
         primitive: (primitiveType) => IrVersions.V54.types.TypeReference.primitive(convertPrimitiveType(primitiveType)),
@@ -1129,7 +1132,7 @@ function convertDynamicTypeReference(
         case "optional":
             return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference.value));
         case "nullable":
-            return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference.value));
+            return convertDynamicTypeReferenceToOptionalIfNotAlready(typeReference.value);
         case "map":
             return IrVersions.V54.dynamic.TypeReference.map({
                 ...typeReference,
@@ -1297,4 +1300,18 @@ function convertDynamicFileUploadRequestBodyProperty(
         default:
             assertNever(fileUploadRequestBodyProperty);
     }
+}
+
+function convertTypeReferenceToOptionalIfNotAlready(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
+    if (typeReference.type === "container" && typeReference.container.type === "optional") {
+        return convertTypeReference(typeReference.container.optional);
+    }
+    return convertTypeReference(typeReference);
+}
+
+function convertDynamicTypeReferenceToOptionalIfNotAlready(typeReference: IrVersions.V55.dynamic.TypeReference): IrVersions.V54.dynamic.TypeReference {
+    if (typeReference.type === "optional") {
+        return convertDynamicTypeReference(typeReference.value);
+    }
+    return convertDynamicTypeReference(typeReference);
 }
