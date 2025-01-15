@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The CLI is capable of migrating the latest TypeScript generator to IRv55.
+      type: internal
+  irVersion: 55
+  version: 0.50.0
+
+- changelogEntry:
+    - summary: |
         The OpenAPI importer now supports respecting nullable properties in schemas. When enabled, nullable properties will
         be preserved in the gnerated SDK. By default (without this setting), nullable properties are treated as `optional`.
         To enable this, configure the setting in your `generators.yml`:
