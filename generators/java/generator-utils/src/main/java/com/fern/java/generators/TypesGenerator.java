@@ -61,7 +61,8 @@ public final class TypesGenerator {
                                     className,
                                     generatedInterfaces,
                                     false,
-                                    Set.of()));
+                                    Set.of(className.simpleName()),
+                                    true));
                     return maybeGeneratedJavaFile.map(AbstractTypeGenerator::generateFile);
                 })
                 .filter(Optional::isPresent)

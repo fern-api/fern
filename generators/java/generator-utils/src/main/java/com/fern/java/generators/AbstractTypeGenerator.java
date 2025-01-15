@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import javax.lang.model.element.Modifier;
 
 public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     protected Set<String> reservedTypeNames;
@@ -38,11 +39,14 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
             List<TypeSpec> inlineTypeSpecs = getInlineTypeSpecs();
             typeSpec = typeSpec.toBuilder().addTypes(inlineTypeSpecs).build();
+            if (!isTopLevelClass) {
+                typeSpec = typeSpec.toBuilder().addModifiers(Modifier.STATIC).build();
+            }
         }
         return typeSpec;
     }
 
-    private List<TypeSpec> getInlineTypeSpecs() {
+    protected List<TypeSpec> getInlineTypeSpecs() {
         if (!generatorContext.getCustomConfig().enableInlineTypes()) {
             return List.of();
         }
@@ -62,7 +66,8 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
                             ImmutableSet.<String>builder()
                                     .addAll(reservedTypeNames)
                                     .add(name)
-                                    .build()));
+                                    .build(),
+                            false));
             if (generator.isPresent()) {
                 TypeSpec typeSpec = generator.get().getTypeSpec();
                 result.add(typeSpec);

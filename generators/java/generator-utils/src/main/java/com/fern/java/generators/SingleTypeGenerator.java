@@ -25,6 +25,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean fromErrorDeclaration;
     private final Set<String> reservedTypeNamesInScope;
+    private final boolean isTopLevelClass;
 
     public SingleTypeGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
@@ -32,20 +33,22 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
             ClassName className,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             boolean fromErrorDeclaration,
-            Set<String> reservedTypeNamesInScope) {
+            Set<String> reservedTypeNamesInScope,
+            boolean isTopLevelClass) {
         this.generatorContext = generatorContext;
         this.className = className;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.declaredTypeName = declaredTypeName;
         this.fromErrorDeclaration = fromErrorDeclaration;
         this.reservedTypeNamesInScope = reservedTypeNamesInScope;
+        this.isTopLevelClass = isTopLevelClass;
     }
 
     @Override
     public Optional<AbstractTypeGenerator> visitAlias(AliasTypeDeclaration value) {
         if (generatorContext.getCustomConfig().wrappedAliases() || fromErrorDeclaration) {
             AliasGenerator aliasGenerator =
-                    new AliasGenerator(className, generatorContext, value, reservedTypeNamesInScope, true);
+                    new AliasGenerator(className, generatorContext, value, reservedTypeNamesInScope, isTopLevelClass);
             return Optional.of(aliasGenerator);
         }
         return Optional.empty();
@@ -54,7 +57,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
     @Override
     public Optional<AbstractTypeGenerator> visitEnum(EnumTypeDeclaration value) {
         EnumGenerator forwardCompatibleEnumGenerator =
-                new EnumGenerator(className, generatorContext, value, reservedTypeNamesInScope, true);
+                new EnumGenerator(className, generatorContext, value, reservedTypeNamesInScope, isTopLevelClass);
         return Optional.of(forwardCompatibleEnumGenerator);
     }
 
@@ -72,14 +75,14 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
                 allGeneratedInterfaces,
                 className,
                 reservedTypeNamesInScope,
-                true);
+                isTopLevelClass);
         return Optional.of(objectGenerator);
     }
 
     @Override
     public Optional<AbstractTypeGenerator> visitUnion(UnionTypeDeclaration value) {
         UnionGenerator unionGenerator =
-                new UnionGenerator(className, generatorContext, value, reservedTypeNamesInScope, true);
+                new UnionGenerator(className, generatorContext, value, reservedTypeNamesInScope, isTopLevelClass);
         return Optional.of(unionGenerator);
     }
 
@@ -87,7 +90,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
     public Optional<AbstractTypeGenerator> visitUndiscriminatedUnion(
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
         UndiscriminatedUnionGenerator unionGenerator = new UndiscriminatedUnionGenerator(
-                className, generatorContext, undiscriminatedUnion, reservedTypeNamesInScope, true);
+                className, generatorContext, undiscriminatedUnion, reservedTypeNamesInScope, isTopLevelClass);
         return Optional.of(unionGenerator);
     }
 

@@ -83,4 +83,17 @@ public final class EnumGenerator extends AbstractTypeGenerator {
             return enumTypeSpecBuilder.build();
         }
     }
+
+    @Override
+    public TypeSpec getTypeSpec() {
+        TypeSpec typeSpec = getTypeSpecWithoutInlineTypes();
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            List<TypeSpec> inlineTypeSpecs = getInlineTypeSpecs();
+            typeSpec = typeSpec.toBuilder().addTypes(inlineTypeSpecs).build();
+            if (!isTopLevelClass && !generatorContext.getCustomConfig().enableForwardCompatibleEnum()) {
+                typeSpec = typeSpec.toBuilder().addModifiers(Modifier.STATIC).build();
+            }
+        }
+        return typeSpec;
+    }
 }
