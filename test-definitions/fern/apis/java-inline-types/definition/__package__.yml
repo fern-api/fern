@@ -201,8 +201,6 @@ types:
         docs: lorem ipsum
       - type: UndiscriminatedUnion1DiscriminatedUnion1
         docs: lorem ipsum
-      - type: UndiscriminatedUnion1DiscriminatedUnion1
-        docs: lorem ipsum
       - type: UndiscriminatedUnion1InlineEnum1
         docs: lorem ipsum
       - type: UserId

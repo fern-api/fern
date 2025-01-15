@@ -46,7 +46,6 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
-import java.nio.file.spi.FileTypeDetector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -161,7 +160,8 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
             mapperEnclosingClasses.put(override.getName(), className);
         }
 
-        Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides = new HashMap<>(generatorContext.getTypeDeclarations());
+        Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides =
+                new HashMap<>(generatorContext.getTypeDeclarations());
         typeDeclarationsWithOverrides.putAll(overriddenDeclarations);
 
         Map<UndiscriminatedUnionMember, TypeName> result = new HashMap<>();
