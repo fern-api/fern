@@ -14,11 +14,13 @@ import * as SeedNullable from "../../../../index";
  *             updatedAt: "2024-01-15T09:30:00Z",
  *             avatar: "avatar",
  *             activated: true
- *         }
+ *         },
+ *         avatar: "avatar"
  *     }
  */
 export interface CreateUserRequest {
     username: string;
     tags?: string[];
     metadata?: SeedNullable.Metadata;
+    avatar?: string | null;
 }

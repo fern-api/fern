@@ -8,4 +8,5 @@ export interface CreateUserRequest {
     username: string;
     tags?: string[];
     metadata?: SeedNullable.Metadata;
+    avatar?: string | undefined;
 }

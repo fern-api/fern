@@ -47,25 +47,25 @@ export namespace ConvertTypeReferenceParams {
         return isInlinePropertyParams(params) || isInlineAliasParams(params);
     }
 
-    export interface DefaultParams extends WithTypeReference {
+    export interface DefaultParams extends WithTypeReference, WithNullable {
         type?: undefined;
     }
 
     /**
      * Metadata for converting inline types
      */
-    export interface InlinePropertyTypeParams extends WithGenericIn, WithTypeReference {
+    export interface InlinePropertyTypeParams extends WithGenericIn, WithTypeReference, WithNullable {
         type: "inlinePropertyParams";
         parentTypeName: string;
         propertyName: string;
     }
 
-    export interface InlineAliasTypeParams extends WithGenericIn, WithTypeReference {
+    export interface InlineAliasTypeParams extends WithGenericIn, WithTypeReference, WithNullable {
         type: "inlineAliasParams";
         aliasTypeName: string;
     }
 
-    export interface ForInlineUnionTypeParams extends WithTypeReference {
+    export interface ForInlineUnionTypeParams extends WithTypeReference, WithNullable {
         type: "forInlineUnionParams";
     }
 
@@ -75,6 +75,10 @@ export namespace ConvertTypeReferenceParams {
 
     export interface WithTypeReference {
         typeReference: TypeReference;
+    }
+
+    export interface WithNullable {
+        nullable?: boolean;
     }
 
     export const GenericIn = {
@@ -117,7 +121,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     public convert(params: ConvertTypeReferenceParams): T {
         return TypeReference._visit<T>(params.typeReference, {
             named: (type) => this.named(type, params),
-            primitive: (type) => this.primitive(type),
+            primitive: (type) => this.primitive(type, params),
             container: (type) => this.container(type, params),
             unknown: () => (this.treatUnknownAsAny ? this.any() : this.unknown()),
             _other: () => {
@@ -142,11 +146,11 @@ export abstract class AbstractTypeReferenceConverter<T> {
 
     protected abstract named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): T;
     protected abstract string(): T;
-    protected abstract number(): T;
-    protected abstract long(): T;
-    protected abstract bigInteger(): T;
-    protected abstract boolean(): T;
-    protected abstract dateTime(): T;
+    protected abstract number(params: ConvertTypeReferenceParams): T;
+    protected abstract long(params: ConvertTypeReferenceParams): T;
+    protected abstract bigInteger(params: ConvertTypeReferenceParams): T;
+    protected abstract boolean(params: ConvertTypeReferenceParams): T;
+    protected abstract dateTime(params: ConvertTypeReferenceParams): T;
     protected abstract list(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
     protected abstract set(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
     protected abstract optional(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
@@ -155,21 +159,21 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract unknown(): T;
     protected abstract any(): T;
 
-    protected primitive(primitive: PrimitiveType): T {
+    protected primitive(primitive: PrimitiveType, params: ConvertTypeReferenceParams): T {
         return PrimitiveTypeV1._visit<T>(primitive.v1, {
-            boolean: this.boolean.bind(this),
-            double: this.number.bind(this),
-            integer: this.number.bind(this),
-            long: this.long.bind(this),
-            float: this.number.bind(this),
-            uint: this.number.bind(this),
-            uint64: this.number.bind(this),
+            boolean: () => this.boolean(params),
+            double: () => this.number(params),
+            integer: () => this.number(params),
+            long: () => this.long(params),
+            float: () => this.number(params),
+            uint: () => this.number(params),
+            uint64: () => this.number(params),
             string: this.string.bind(this),
             uuid: this.string.bind(this),
-            dateTime: this.dateTime.bind(this),
+            dateTime: () => this.dateTime(params),
             date: this.string.bind(this),
             base64: this.string.bind(this),
-            bigInteger: this.bigInteger.bind(this),
+            bigInteger: () => this.bigInteger(params),
             _other: () => {
                 throw new Error("Unexpected primitive type: " + primitive.v1);
             }
