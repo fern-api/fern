@@ -60,13 +60,6 @@
 
 - changelogEntry:
   - summary: |
-      Fixes an issue with broken link checking in the OpenAPI v2 parser.
-    type: feat
-  irVersion: 53
-  version: 0.47.5
-
-- changelogEntry:
-  - summary: |
       Allows for creating nullable types and pass formats on strings using the OpenAPI v2 parser.
     type: feat
   irVersion: 53
