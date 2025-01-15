@@ -408,8 +408,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     literal: () => undefined,
                     list: () => undefined,
                     set: () => undefined,
-                    nullable: (optType) => this.getDefaultPaginationValue({ type: optType }),
-                    optional: (optType) => this.getDefaultPaginationValue({ type: optType }),
+                    nullable: (nullableType) => this.getDefaultPaginationValue({ type: nullableType }),
+                    optional: (optionalType) => this.getDefaultPaginationValue({ type: optionalType }),
                     map: () => undefined,
                     _other: () => undefined
                 });

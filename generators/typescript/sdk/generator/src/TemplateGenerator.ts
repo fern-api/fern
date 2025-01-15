@@ -642,9 +642,9 @@ export class TemplateGenerator {
                       })
                     : undefined;
             },
-            nullable: (optionalType) =>
+            nullable: (nullableType) =>
                 this.getTemplateFromTypeReference({
-                    typeReference: optionalType,
+                    typeReference: nullableType,
                     name,
                     location,
                     wireOrOriginalName,
