@@ -46,6 +46,10 @@ public final class TypesGenerator {
         Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces(generatorContext);
         Map<TypeId, GeneratedJavaFile> generatedTypes = KeyedStream.stream(typeDeclarations)
                 .map(typeDeclaration -> {
+                    if (generatorContext.getCustomConfig().enableInlineTypes() && typeDeclaration.getInline().orElse(false)) {
+                        return Optional.<GeneratedJavaFile>empty();
+                    }
+
                     ClassName className =
                             generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
                     Optional<AbstractTypeGenerator> maybeGeneratedJavaFile = typeDeclaration
