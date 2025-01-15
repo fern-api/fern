@@ -1305,28 +1305,42 @@ function convertDynamicFileUploadRequestBodyProperty(
     }
 }
 
-function convertOptionalTypeReferenceWithoutNullable(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
+function convertOptionalTypeReferenceWithoutNullable(
+    typeReference: IrVersions.V55.types.TypeReference
+): IrVersions.V54.types.TypeReference {
     if (typeReference.type === "container" && typeReference.container.type === "nullable") {
-        return IrVersions.V54.types.TypeReference.container(IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference.container.nullable)));
+        return IrVersions.V54.types.TypeReference.container(
+            IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference.container.nullable))
+        );
     }
-    return IrVersions.V54.types.TypeReference.container(IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference)));
+    return IrVersions.V54.types.TypeReference.container(
+        IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference))
+    );
 }
 
-function convertNullableTypeReferenceToOptionalIfNotAlready(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
+function convertNullableTypeReferenceToOptionalIfNotAlready(
+    typeReference: IrVersions.V55.types.TypeReference
+): IrVersions.V54.types.TypeReference {
     if (typeReference.type === "container" && typeReference.container.type === "optional") {
         return convertTypeReference(typeReference);
     }
-    return IrVersions.V54.types.TypeReference.container(IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference)));
+    return IrVersions.V54.types.TypeReference.container(
+        IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference))
+    );
 }
 
-function convertNullableDynamicTypeReferenceToOptionalIfNotAlready(typeReference: IrVersions.V55.dynamic.TypeReference): IrVersions.V54.dynamic.TypeReference {
+function convertNullableDynamicTypeReferenceToOptionalIfNotAlready(
+    typeReference: IrVersions.V55.dynamic.TypeReference
+): IrVersions.V54.dynamic.TypeReference {
     if (typeReference.type === "optional") {
         return convertDynamicTypeReference(typeReference);
     }
     return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference));
 }
 
-function convertOptionalDynamicTypeReferenceWithoutNullable(typeReference: IrVersions.V55.dynamic.TypeReference): IrVersions.V54.dynamic.TypeReference {
+function convertOptionalDynamicTypeReferenceWithoutNullable(
+    typeReference: IrVersions.V55.dynamic.TypeReference
+): IrVersions.V54.dynamic.TypeReference {
     if (typeReference.type === "nullable") {
         return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference.value));
     }
