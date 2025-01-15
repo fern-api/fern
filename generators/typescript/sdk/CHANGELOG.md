@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.47.2] - 2025-01-15
+
+- Fix: Record types with `null` values are now correctly serialized.
+
 ## [0.47.1] - 2025-01-15
 
 - Fix: Resolves an issue where nullable query parameters were not null-safe in their method invocations. The

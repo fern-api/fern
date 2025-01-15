@@ -4,7 +4,7 @@ import { ParseError } from "./ParseError";
 
 export interface SchemaUtils<Raw, Parsed> {
     nullable: () => Schema<Raw | null, Parsed | null>;
-    optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
+    optional: () => Schema<Raw | null | undefined, Parsed | null | undefined>;
     transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
     parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed;
     jsonOrThrow: (raw: unknown, opts?: SchemaOptions) => Raw;
@@ -72,13 +72,25 @@ export function nullable<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<R
 
 export function optional<Raw, Parsed>(
     schema: BaseSchema<Raw, Parsed>
-): Schema<Raw | null | undefined, Parsed | undefined> {
-    const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
+): Schema<Raw | null | undefined, Parsed | null | undefined> {
+    const baseSchema: BaseSchema<Raw | null | undefined, Parsed | null | undefined> = {
         parse: (raw, opts) => {
-            if (raw == null) {
+            if (raw === undefined) {
                 return {
                     ok: true,
                     value: undefined
+                };
+            }
+            if (raw == null) {
+                if (opts?.omitUndefined) {
+                    return {
+                        ok: true,
+                        value: undefined
+                    };
+                }
+                return {
+                    ok: true,
+                    value: null
                 };
             }
             return schema.parse(raw, opts);
