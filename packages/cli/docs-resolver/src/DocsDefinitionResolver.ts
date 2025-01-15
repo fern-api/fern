@@ -594,9 +594,11 @@ export class DocsDefinitionResolver {
         item: docsYml.DocsNavigationItem.ApiSection,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
-
         if (item.openrpc != null) {
-            const absoluteFilepathToOpenrpc = resolve(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(item.openrpc));
+            const absoluteFilepathToOpenrpc = resolve(
+                this.docsWorkspace.absoluteFilePath,
+                RelativeFilePath.of(item.openrpc)
+            );
             if (!(await doesPathExist(absoluteFilepathToOpenrpc))) {
                 throw new Error(`OpenRPC file does not exist at path: ${absoluteFilepathToOpenrpc}`);
             }

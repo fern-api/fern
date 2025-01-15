@@ -1,10 +1,9 @@
-
-import { OpenrpcDocumentConverterNode } from "@fern-api/docs-parsers";
-import { OpenrpcContext } from "@fern-api/docs-parsers/dist/openrpc/OpenrpcContext";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { readFile } from "fs/promises";
+
+import { OpenrpcContext, OpenrpcDocumentConverterNode } from "@fern-api/docs-parsers";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 
 export async function generateFdrFromOpenrpc(
     openrpcPath: AbsoluteFilePath,
