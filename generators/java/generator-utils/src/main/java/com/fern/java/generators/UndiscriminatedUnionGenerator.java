@@ -32,6 +32,8 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeNameMapper;
+import com.fern.java.utils.NamedTypeId;
+import com.fern.java.utils.NamedTypeIdResolver;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
 import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
@@ -44,6 +46,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
+import java.nio.file.spi.FileTypeDetector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -117,35 +120,34 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .values());
     }
 
-    private static Map<UndiscriminatedUnionMember, TypeDeclaration> overriddenTypeDeclarations(
+    private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
             AbstractGeneratorContext<?, ?> generatorContext, UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-        Map<UndiscriminatedUnionMember, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
 
         for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
             if (member.getType().getNamed().isEmpty()) {
                 continue;
             }
 
-            TypeId typeId = member.getType().getNamed().get().getTypeId();
-            String name =
-                    member.getType().getNamed().get().getName().getPascalCase().getSafeName();
+            List<NamedTypeId> resolvedIds = member.getType().visit(new NamedTypeIdResolver("", member.getType()));
+            for (NamedTypeId resolvedId : resolvedIds) {
+                Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
+                        generatorContext.getTypeDeclarations().get(resolvedId.typeId()));
 
-            Optional<TypeDeclaration> maybeRawTypeDeclaration =
-                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(typeId));
+                if (maybeRawTypeDeclaration.isEmpty()) {
+                    continue;
+                }
 
-            if (maybeRawTypeDeclaration.isEmpty()) {
-                continue;
+                TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
+
+                // Don't override non-inline types
+                if (!rawTypeDeclaration.getInline().orElse(false)) {
+                    continue;
+                }
+
+                // We're not changing the name, but we need to track it as inline and enclosed
+                overriddenTypeDeclarations.put(resolvedId.typeId(), rawTypeDeclaration);
             }
-
-            TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
-
-            // Don't override non-inline types
-            if (!rawTypeDeclaration.getInline().orElse(false)) {
-                continue;
-            }
-
-            TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
-            overriddenTypeDeclarations.put(member, overriddenTypeDeclaration);
         }
 
         return overriddenTypeDeclarations;
@@ -155,40 +157,23 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-        Map<UndiscriminatedUnionMember, TypeDeclaration> overriddenDeclarations =
+        Map<TypeId, TypeDeclaration> overriddenDeclarations =
                 overriddenTypeDeclarations(generatorContext, undiscriminatedUnion);
-
-        Map<TypeId, TypeDeclaration> mapperOverrides = new HashMap<>(generatorContext.getTypeDeclarations());
         Map<DeclaredTypeName, ClassName> mapperEnclosingClasses = new HashMap<>();
 
-        Map<UndiscriminatedUnionMember, TypeName> result = new HashMap<>();
-
-        for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
-            Optional<TypeDeclaration> maybeDeclarationOverride =
-                    Optional.ofNullable(overriddenDeclarations.get(member));
-
-            if (maybeDeclarationOverride.isEmpty()) {
-                continue;
-            }
-
-            TypeDeclaration declarationOverride = maybeDeclarationOverride.get();
-
-            // We know we're not going to get any non-named by how overriddenDeclarations is constructed but we
-            // include this check here for the linter.
-            if (member.getType().getNamed().isEmpty()) {
-                continue;
-            }
-
-            TypeId typeId = member.getType().getNamed().get().getTypeId();
-
-            mapperOverrides.put(typeId, declarationOverride);
-            mapperEnclosingClasses.put(declarationOverride.getName(), className);
+        for (TypeDeclaration override : overriddenDeclarations.values()) {
+            mapperEnclosingClasses.put(override.getName(), className);
         }
+
+        Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides = new HashMap<>(generatorContext.getTypeDeclarations());
+        typeDeclarationsWithOverrides.putAll(overriddenDeclarations);
+
+        Map<UndiscriminatedUnionMember, TypeName> result = new HashMap<>();
 
         PoetTypeNameMapper overriddenMapper = new PoetTypeNameMapper(
                 generatorContext.getPoetClassNameFactory(),
                 generatorContext.getCustomConfig(),
-                mapperOverrides,
+                typeDeclarationsWithOverrides,
                 mapperEnclosingClasses);
 
         for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
