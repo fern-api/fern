@@ -51,6 +51,20 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                 .values());
     }
 
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
+        List<ModelUnionSubTypes> unionSubTypes = unionTypeDeclaration.getTypes().stream()
+                .map(singleUnionType -> new ModelUnionSubTypes(className, singleUnionType))
+                .collect(Collectors.toList());
+        ModelUnionUnknownSubType unknownSubType = new ModelUnionUnknownSubType(className);
+        ModelUnionTypeSpecGenerator unionTypeSpecGenerator = new ModelUnionTypeSpecGenerator(
+                className,
+                unionSubTypes,
+                unknownSubType,
+                generatorContext.getIr().getConstants());
+        return unionTypeSpecGenerator.generateUnionTypeSpec();
+    }
+
     private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
             AbstractGeneratorContext<?, ?> generatorContext,
             UnionTypeDeclaration unionTypeDeclaration,
@@ -163,19 +177,6 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         return overriddenTypeDeclarations;
     }
 
-    @Override
-    protected TypeSpec getTypeSpecWithoutInlineTypes() {
-        List<ModelUnionSubTypes> unionSubTypes = unionTypeDeclaration.getTypes().stream()
-                .map(singleUnionType -> new ModelUnionSubTypes(className, singleUnionType))
-                .collect(Collectors.toList());
-        ModelUnionUnknownSubType unknownSubType = new ModelUnionUnknownSubType(className);
-        ModelUnionTypeSpecGenerator unionTypeSpecGenerator = new ModelUnionTypeSpecGenerator(
-                className,
-                unionSubTypes,
-                unknownSubType,
-                generatorContext.getIr().getConstants());
-        return unionTypeSpecGenerator.generateUnionTypeSpec();
-    }
 
     private final class ModelUnionTypeSpecGenerator extends UnionTypeSpecGenerator {
 
