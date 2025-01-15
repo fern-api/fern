@@ -323,7 +323,10 @@ function convertHttpHeader(header: IrVersions.V55.http.HttpHeader): IrVersions.V
 
 function convertTypeReference(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
     if (typeReference.type === "container" && typeReference.container.type === "nullable") {
-        return convertTypeReferenceToOptionalIfNotAlready(typeReference.container.nullable);
+        return convertNullableTypeReferenceToOptionalIfNotAlready(typeReference.container.nullable);
+    }
+    if (typeReference.type === "container" && typeReference.container.type === "optional") {
+        return convertOptionalTypeReferenceWithoutNullable(typeReference.container.optional);
     }
     return IrVersions.V55.types.TypeReference._visit<IrVersions.V54.types.TypeReference>(typeReference, {
         container: (container) => IrVersions.V54.types.TypeReference.container(convertContainerType(container)),
@@ -1130,9 +1133,9 @@ function convertDynamicTypeReference(
         case "list":
             return IrVersions.V54.dynamic.TypeReference.list(convertDynamicTypeReference(typeReference.value));
         case "optional":
-            return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference.value));
+            return convertOptionalDynamicTypeReferenceWithoutNullable(typeReference.value);
         case "nullable":
-            return convertDynamicTypeReferenceToOptionalIfNotAlready(typeReference.value);
+            return convertNullableDynamicTypeReferenceToOptionalIfNotAlready(typeReference.value);
         case "map":
             return IrVersions.V54.dynamic.TypeReference.map({
                 ...typeReference,
@@ -1302,16 +1305,30 @@ function convertDynamicFileUploadRequestBodyProperty(
     }
 }
 
-function convertTypeReferenceToOptionalIfNotAlready(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
-    if (typeReference.type === "container" && typeReference.container.type === "optional") {
-        return convertTypeReference(typeReference.container.optional);
+function convertOptionalTypeReferenceWithoutNullable(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
+    if (typeReference.type === "container" && typeReference.container.type === "nullable") {
+        return IrVersions.V54.types.TypeReference.container(IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference.container.nullable)));
     }
-    return convertTypeReference(typeReference);
+    return IrVersions.V54.types.TypeReference.container(IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference)));
 }
 
-function convertDynamicTypeReferenceToOptionalIfNotAlready(typeReference: IrVersions.V55.dynamic.TypeReference): IrVersions.V54.dynamic.TypeReference {
-    if (typeReference.type === "optional") {
-        return convertDynamicTypeReference(typeReference.value);
+function convertNullableTypeReferenceToOptionalIfNotAlready(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
+    if (typeReference.type === "container" && typeReference.container.type === "optional") {
+        return convertTypeReference(typeReference);
     }
-    return convertDynamicTypeReference(typeReference);
+    return IrVersions.V54.types.TypeReference.container(IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference)));
+}
+
+function convertNullableDynamicTypeReferenceToOptionalIfNotAlready(typeReference: IrVersions.V55.dynamic.TypeReference): IrVersions.V54.dynamic.TypeReference {
+    if (typeReference.type === "optional") {
+        return convertDynamicTypeReference(typeReference);
+    }
+    return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference));
+}
+
+function convertOptionalDynamicTypeReferenceWithoutNullable(typeReference: IrVersions.V55.dynamic.TypeReference): IrVersions.V54.dynamic.TypeReference {
+    if (typeReference.type === "nullable") {
+        return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference.value));
+    }
+    return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference));
 }

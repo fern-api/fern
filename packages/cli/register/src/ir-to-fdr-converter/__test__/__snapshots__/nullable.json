@@ -176,6 +176,21 @@
                   }
                 }
               }
+            },
+            {
+              "key": "extra",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
             }
           ],
           "headers": [],
