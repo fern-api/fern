@@ -3,6 +3,7 @@ import { JsonError } from "./JsonError";
 import { ParseError } from "./ParseError";
 
 export interface SchemaUtils<Raw, Parsed> {
+    nullable: () => Schema<Raw | null, Parsed | null>;
     optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
     transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
     parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed;
@@ -16,6 +17,7 @@ export interface SchemaTransformer<Parsed, Transformed> {
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
     return {
+        nullable: () => nullable(schema),
         optional: () => optional(schema),
         transform: (transformer) => transform(schema, transformer),
         parseOrThrow: (raw, opts) => {
@@ -40,45 +42,33 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
  */
 
 export function nullable<Raw, Parsed>(
-    schema: BaseSchema<Raw, Parsed>
-): Schema<Raw | null | undefined, Parsed | null | undefined> {
-    const baseSchema: BaseSchema<Raw | null | undefined, Parsed | null | undefined> = {
+    schema: BaseSchema<Raw, Parsed>,
+): Schema<Raw | null, Parsed | null> {
+    const baseSchema: BaseSchema<Raw | null, Parsed | null> = {
         parse: (raw, opts) => {
-            if (raw === undefined) {
-                return {
-                    ok: true,
-                    value: undefined
-                };
-            }
             if (raw == null) {
                 return {
                     ok: true,
-                    value: null
+                    value: null,
                 };
             }
             return schema.parse(raw, opts);
         },
         json: (parsed, opts) => {
-            if (parsed === undefined) {
-                return {
-                    ok: true,
-                    value: undefined
-                };
-            }
             if (parsed == null) {
                 return {
                     ok: true,
-                    value: null
+                    value: null,
                 };
             }
             return schema.json(parsed, opts);
         },
-        getType: () => SchemaType.NULLABLE
+        getType: () => SchemaType.NULLABLE,
     };
 
     return {
         ...baseSchema,
-        ...getSchemaUtils(baseSchema)
+        ...getSchemaUtils(baseSchema),
     };
 }
 

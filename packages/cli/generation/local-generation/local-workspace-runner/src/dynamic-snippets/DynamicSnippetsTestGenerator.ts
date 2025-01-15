@@ -26,7 +26,7 @@ export class DynamicSnippetsTestGenerator {
     private static readonly GENERATORS: Record<generatorsYml.GenerationLanguage, DynamicSnippetsGenerator | undefined> =
         {
             go: DynamicSnippetsGoTestGenerator,
-            typescript: DynamicSnippetsTypeScriptTestGenerator,
+            typescript: undefined, // TODO: Re-enable dynamic snippet tests when example generation is resolved.
             java: undefined,
             python: undefined,
             ruby: undefined,
