@@ -387,20 +387,14 @@ export class DocsDefinitionResolver {
     }
 
     private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
-        console.log("Looking for OpenAPI workspace...");
-        console.log(`Number of OSS workspaces: ${this.ossWorkspaces.length}`);
         if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
-            console.log("Found single OSS workspace");
             return this.ossWorkspaces[0];
         } else if (apiSection.apiName != null) {
-            console.log(`Looking for workspace with name: ${apiSection.apiName}`);
             const ossWorkspace = this.ossWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
             if (ossWorkspace != null) {
-                console.log("Found matching OSS workspace");
                 return ossWorkspace;
             }
         }
-        console.error("Failed to find matching OSS workspace");
         throw new Error("Failed to load API Definition referenced in docs");
     }
 
