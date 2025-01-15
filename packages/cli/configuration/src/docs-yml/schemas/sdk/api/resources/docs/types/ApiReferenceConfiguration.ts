@@ -8,7 +8,7 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     api: string;
     /** Name of API that we are referencing */
     apiName?: string;
-    /** Path to an openrpc spec. This is experimental. */
+    /** Path to an openrpc spec. */
     openrpc?: string;
     audiences?: FernDocsConfig.AudienceId[];
     /** Defaults to false */
