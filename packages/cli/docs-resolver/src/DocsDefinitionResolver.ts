@@ -598,9 +598,12 @@ export class DocsDefinitionResolver {
         if (item.openrpc != null) {
             const absoluteFilepathToOpenrpc = resolve(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(item.openrpc));
             if (!(await doesPathExist(absoluteFilepathToOpenrpc))) {
-                throw new Error(`OpenRPC file does not exist at path: ${openrpcPath}`);
+                throw new Error(`OpenRPC file does not exist at path: ${absoluteFilepathToOpenrpc}`);
             }
             const api = await generateFdrFromOpenrpc(absoluteFilepathToOpenrpc, this.taskContext);
+            if (api == null) {
+                throw new Error("Failed to generate API Definition from OpenRPC document");
+            }
             await this.registerApiV2({
                 api,
                 apiName: item.apiName
@@ -609,7 +612,7 @@ export class DocsDefinitionResolver {
                 item,
                 api,
                 parentSlug,
-                this.docsWorkspace,
+                undefined,
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,

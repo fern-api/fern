@@ -1,7 +1,5 @@
 
-import {
-    OpenRpcDocumentConverterNode
-} from "@fern-api/docs-parsers";
+import { OpenrpcDocumentConverterNode } from "@fern-api/docs-parsers";
 import { OpenrpcContext } from "@fern-api/docs-parsers/dist/openrpc/OpenrpcContext";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -11,7 +9,7 @@ import { readFile } from "fs/promises";
 export async function generateFdrFromOpenrpc(
     openrpcPath: AbsoluteFilePath,
     context: TaskContext
-): Promise<ReturnType<OpenRpcDocumentConverterNode["convert"]>> {
+): Promise<ReturnType<OpenrpcDocumentConverterNode["convert"]>> {
     // Read and parse the OpenRPC document
     const openrpcContent = await readFile(openrpcPath, "utf-8");
     const openrpcDocument = JSON.parse(openrpcContent) as OpenrpcDocument;
@@ -21,7 +19,7 @@ export async function generateFdrFromOpenrpc(
         logger: context.logger
     });
 
-    const openrpcFdrJson = new OpenRpcDocumentConverterNode({
+    const openrpcFdrJson = new OpenrpcDocumentConverterNode({
         input: openrpcDocument,
         context: openrpcContext,
         accessPath: [],
