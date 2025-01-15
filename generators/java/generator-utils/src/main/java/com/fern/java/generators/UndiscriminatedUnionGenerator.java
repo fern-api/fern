@@ -30,6 +30,8 @@ import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
+import com.fern.java.utils.NamedTypeId;
+import com.fern.java.utils.NamedTypeIdResolver;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
 import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
@@ -43,6 +45,8 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -106,7 +110,48 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
-        return List.of();
+        Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
+
+        for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
+            if (member.getType().getNamed().isEmpty()) {
+                continue;
+            }
+
+            TypeId typeId = member.getType().getNamed().get().getTypeId();
+            String name = member.getType().getNamed().get().getName().getPascalCase().getSafeName();
+
+            Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
+                    generatorContext.getTypeDeclarations().get(typeId));
+
+            if (maybeRawTypeDeclaration.isEmpty()) {
+                continue;
+            }
+
+            TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
+
+            // Don't override non-inline types
+            if (!rawTypeDeclaration.getInline().orElse(false)) {
+                continue;
+            }
+
+            boolean valid;
+            do {
+                // Prevent something like "Bar_" generated from resolution on a property name called "bar"
+                // colliding with "Bar_" generated from a property name called "bar_"
+                valid = !allReservedTypeNames.contains(name);
+
+                if (!valid) {
+                    name += "_";
+                }
+            } while (!valid);
+
+            allReservedTypeNames.add(name);
+            TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
+            overriddenTypeDeclarations.put(typeId, overriddenTypeDeclaration);
+        }
+
+        return new ArrayList<>(overriddenTypeDeclarations.values());
     }
 
     @Override

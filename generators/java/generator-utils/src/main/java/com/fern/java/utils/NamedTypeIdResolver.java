@@ -9,7 +9,7 @@ import com.fern.ir.model.types.TypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeIdResolver
+public class NamedTypeIdResolver
         implements TypeReference.Visitor<List<NamedTypeId>>, ContainerType.Visitor<List<NamedTypeId>> {
 
     private static final String KEY = "Key";
@@ -19,7 +19,7 @@ public class TypeIdResolver
     private final String name;
     private final TypeReference visitedReference;
 
-    public TypeIdResolver(String name, TypeReference visitedReference) {
+    public NamedTypeIdResolver(String name, TypeReference visitedReference) {
         this.name = name;
         this.visitedReference = visitedReference;
     }
@@ -65,14 +65,14 @@ public class TypeIdResolver
 
     @Override
     public List<NamedTypeId> visitList(TypeReference typeReference) {
-        return typeReference.visit(new TypeIdResolver(name + ITEM, typeReference));
+        return typeReference.visit(new NamedTypeIdResolver(name + ITEM, typeReference));
     }
 
     @Override
     public List<NamedTypeId> visitMap(MapType mapType) {
         List<NamedTypeId> result = new ArrayList<>();
-        result.addAll(mapType.getKeyType().visit(new TypeIdResolver(name + KEY, mapType.getKeyType())));
-        result.addAll(mapType.getValueType().visit(new TypeIdResolver(name + VALUE, mapType.getValueType())));
+        result.addAll(mapType.getKeyType().visit(new NamedTypeIdResolver(name + KEY, mapType.getKeyType())));
+        result.addAll(mapType.getValueType().visit(new NamedTypeIdResolver(name + VALUE, mapType.getValueType())));
         return result;
     }
 
@@ -83,6 +83,6 @@ public class TypeIdResolver
 
     @Override
     public List<NamedTypeId> visitSet(TypeReference typeReference) {
-        return typeReference.visit(new TypeIdResolver(name + ITEM, typeReference));
+        return typeReference.visit(new NamedTypeIdResolver(name + ITEM, typeReference));
     }
 }
