@@ -1,26 +1,3 @@
-## Table of Contents Features
-Introduced feature flags system for controlling table of contents behavior across different documentation instances. Teams can now customize TOC display per documentation section.
-
-```yaml
-toc:
-  defaultEnabled: true
-  instances:
-    api-docs: true
-    tutorials: false
-  maxDepth: 3
-```
-
-## Link Management System
-Implemented comprehensive link validation and management system. Documentation links are now automatically validated, with broken link detection and suggested fixes.
-
-```typescript
-const linkValidation = {
-  ignoreExternal: true,
-  checkAnchors: true,
-  suggestFixes: true
-}
-```
-
 ## Sidebar Navigation Enhancement
 Improved sidebar padding and visual hierarchy with refined spacing and typography. The documentation navigation now provides clearer visual structure and better readability.
 
@@ -37,16 +14,8 @@ Improved sidebar padding and visual hierarchy with refined spacing and typograph
 ## Base Path Configuration
 Added flexible base path configuration for documentation routing. Organizations can now host documentation under custom paths while maintaining proper navigation.
 
-```typescript
-const routingConfig = {
-  basePath: '/docs',
-  preserveHash: true,
-  trailingSlash: false
-}
+```yaml docs.yml
+instances:
+  - url: your-site.docs.buildwithfern.com
+    custom-domain: your-site.com/docs
 ```
-
-_Image suggestions:
-1. TOC customization interface
-2. Link validation report example
-3. Sidebar hierarchy visualization
-4. Custom base path configuration dashboard_

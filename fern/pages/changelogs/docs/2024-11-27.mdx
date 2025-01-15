@@ -42,38 +42,3 @@ interface CardAction {
   onClick?: () => void;
 }
 ```
-
-## OpenAPI Group Extensions
-Added support for OpenAPI documentation grouping extensions. API endpoints can now be organized into logical groups for better navigation.
-
-```yaml
-openapi: 3.0.0
-paths:
-  /users:
-    get:
-      x-fern-group: User Management
-      x-group-order: 1
-    post:
-      x-fern-group: User Management
-      x-group-order: 2
-```
-
-## Parser Improvements
-Enhanced documentation parser with better support for complex data structures. Documentation now handles nested elements and special characters more reliably.
-
-```typescript
-const parserConfig = {
-  extensions: ['mdx', 'md'],
-  plugins: ['remark-gfm', 'remark-math'],
-  handlers: {
-    codeBlock: (node) => customCodeBlockRenderer(node),
-    table: (node) => responsiveTableRenderer(node)
-  }
-}
-```
-
-_Image suggestions:
-1. Domain management interface
-2. Card component variations
-3. API grouping visualization
-4. Parser configuration tool_

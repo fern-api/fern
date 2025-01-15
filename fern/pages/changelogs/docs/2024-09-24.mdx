@@ -3,53 +3,12 @@
 ## Environment Testing Interface
 Created an editable playground environment system for testing API endpoints. Users can now switch between different API environments seamlessly within the documentation.
 
-```typescript
-interface Environment {
-  name: string;
-  baseUrl: string;
-  variables: Record<string, string>;
-  headers: Record<string, string>;
-}
-
-const environments: Environment[] = [
-  {
-    name: 'Production',
-    baseUrl: 'https://api.example.com',
-    variables: {
-      version: 'v1'
-    }
-  }
-]
-```
-
-## API Migration Tools
-Implemented tools for migrating API definitions and maintaining documentation consistency. Teams can now handle API version transitions more smoothly.
-
-```typescript
-const migrationConfig = {
-  versionMapping: {
-    'v1': 'v2',
-    preserveExamples: true,
-    updateEndpoints: true
-  }
-}
-```
-
-## State Machine Updates
-Enhanced state handling in the documentation platform for more reliable operation. Documentation features now behave more predictably across different states.
-
-```typescript
-type DocState = 'loading' | 'ready' | 'error' | 'updating';
-
-const stateConfig = {
-  initialState: 'loading',
-  transitions: {
-    loading: ['ready', 'error'],
-    ready: ['updating', 'error'],
-    updating: ['ready', 'error'],
-    error: ['loading']
-  }
-}
+```yaml openapi.yml
+servers:
+  - url: https://api.example.com
+    x-fern-server-name: Production
+  - url: https://sandbox.example.com
+    x-fern-server-name: Sandbox
 ```
 
 ## Server Upload Validation

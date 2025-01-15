@@ -4,26 +4,10 @@
 Implemented comprehensive meta image support for better social sharing. Documentation pages now display properly when shared on social media platforms.
 
 ```yaml
-metadata:
-  og:image: /assets/og-image.png
-  og:type: documentation
-  twitter:card: summary_large_image
-  twitter:image: /assets/twitter-card.png
-```
-
-## Search Path Configuration
-Enhanced search functionality with configurable base paths and index paths. Users can now search within specific sections of documentation more effectively.
-
-```typescript
-const searchConfig = {
-  basePath: '/docs',
-  indexPaths: ['/api', '/guides'],
-  excludePaths: ['/internal', '/deprecated'],
-  weightedTerms: {
-    'authentication': 2,
-    'getting-started': 1.5
-  }
-}
+og:image: /assets/og-image.png
+og:type: documentation
+twitter:card: summary_large_image
+twitter:image: /assets/twitter-card.png
 ```
 
 ## Type-Safe Components
@@ -40,7 +24,7 @@ interface CodeBlockProps {
 ```
 
 ## Base Path Handling
-Improved handling of base paths for search records and navigation. Documentation now works correctly when hosted under custom paths.
+Improved handling of base paths for search records and navigation. 
 
 ```typescript
 const pathConfig = {

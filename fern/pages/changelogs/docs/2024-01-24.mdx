@@ -4,20 +4,6 @@ Enable interactive API testing directly in the documentation.
 - Improved error handling and status code display
 - Added support for recursive property rendering
 
-```typescript
-// New playground configuration
-interface PlaygroundConfig {
-  environments: {
-    name: string;
-    url: string;
-  }[];
-  authentication: {
-    type: 'bearer' | 'apiKey';
-    location: 'header' | 'query';
-  };
-}
-```
-
 ## Enhanced Dark Mode
 Multiple improvements to dark mode readability for syntax highlighting, dropdowns, and search results.
 
@@ -33,30 +19,11 @@ Multiple improvements to dark mode readability for syntax highlighting, dropdown
 ## Mobile-Friendly Navigation
 Comprehensive updates to mobile navigation experience with collapsible and scrolling.
 
-```typescript
-// Mobile-optimized navigation
-const sidebarConfig = {
-  collapsible: true,
-  mobileBreakpoint: 768,
-  animationDuration: 200
-};
-```
-
 ## Search Enhancements
 Multiple improvements to the search experience.
 - Default and configurable keyboard shortcuts (`Cmd+A`, `/`) for search
 - Improved search box sizing
 - Added auto-focus functionality
-
-```jsx
-// Enhanced search component
-<Search
-  autoFocus
-  shortcuts={['/', 'cmd+a']}
-  highlightMatches
-  instantLoading
-/>
-```
 
 ## Performance Optimization
 Several performance improvements across the platform.
