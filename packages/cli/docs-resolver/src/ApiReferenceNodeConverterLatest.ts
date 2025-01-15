@@ -715,7 +715,7 @@ export class ApiReferenceNodeConverterLatest {
                 orphaned: undefined
             };
             if (webSocket.namespace != null && webSocket.namespace.length > 0) {
-                const firstNamespacePart = webSocket.namespace[0];
+                const firstNamespacePart = camelCase(webSocket.namespace[0]);
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {
@@ -788,7 +788,7 @@ export class ApiReferenceNodeConverterLatest {
             };
 
             if (webhook.namespace != null && webhook.namespace.length > 0) {
-                const firstNamespacePart = webhook.namespace[0];
+                const firstNamespacePart = camelCase(webhook.namespace[0]);
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {
