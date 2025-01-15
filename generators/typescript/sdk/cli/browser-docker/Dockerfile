@@ -9,6 +9,7 @@ ENV YARN_CACHE_FOLDER=/.yarn
 COPY generators/typescript/sdk/cli/browser-docker/cache_heavy_dependencies.sh /
 RUN /cache_heavy_dependencies.sh && rm /cache_heavy_dependencies.sh
 
+COPY generators/typescript/asIs/ /assets/asIs
 COPY generators/typescript/utils/core-utilities/fetcher/src/ /assets/fetcher
 COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/callback-queue
 COPY generators/typescript/utils/core-utilities/auth/src/ /assets/auth

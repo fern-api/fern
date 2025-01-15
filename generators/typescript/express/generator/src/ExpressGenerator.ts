@@ -38,6 +38,7 @@ import { ExpressInlinedRequestBodyDeclarationReferencer } from "./declaration-re
 import { ExpressRegisterDeclarationReferencer } from "./declaration-referencers/ExpressRegisterDeclarationReferencer";
 import { ExpressServiceDeclarationReferencer } from "./declaration-referencers/ExpressServiceDeclarationReferencer";
 import { GenericAPIExpressErrorDeclarationReferencer } from "./declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
+import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 
 const FILE_HEADER = `/**
@@ -97,6 +98,7 @@ export class ExpressGenerator {
     private expressRegisterDeclarationReferencer: ExpressRegisterDeclarationReferencer;
     private genericApiExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
     private expressErrorDeclarationReferencer: ExpressErrorDeclarationReferencer;
+    private jsonDeclarationReferencer: JsonDeclarationReferencer;
     private expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
@@ -182,6 +184,10 @@ export class ExpressGenerator {
             namespaceExport
         });
         this.expressErrorSchemaDeclarationReferencer = new ExpressErrorDeclarationReferencer({
+            containingDirectory: schemaDirectory,
+            namespaceExport
+        });
+        this.jsonDeclarationReferencer = new JsonDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport
         });
@@ -554,6 +560,7 @@ export class ExpressGenerator {
             expressServiceGenerator: this.expressServiceGenerator,
             expressErrorGenerator: this.expressErrorGenerator,
             errorDeclarationReferencer: this.expressErrorDeclarationReferencer,
+            jsonDeclarationReferencer: this.jsonDeclarationReferencer,
             errorResolver: this.errorResolver,
             genericAPIExpressErrorDeclarationReferencer: this.genericApiExpressErrorDeclarationReferencer,
             genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
