@@ -41,15 +41,13 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
  * schema utils are defined in one file to resolve issues with circular imports
  */
 
-export function nullable<Raw, Parsed>(
-    schema: BaseSchema<Raw, Parsed>,
-): Schema<Raw | null, Parsed | null> {
+export function nullable<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<Raw | null, Parsed | null> {
     const baseSchema: BaseSchema<Raw | null, Parsed | null> = {
         parse: (raw, opts) => {
             if (raw == null) {
                 return {
                     ok: true,
-                    value: null,
+                    value: null
                 };
             }
             return schema.parse(raw, opts);
@@ -58,17 +56,17 @@ export function nullable<Raw, Parsed>(
             if (parsed == null) {
                 return {
                     ok: true,
-                    value: null,
+                    value: null
                 };
             }
             return schema.json(parsed, opts);
         },
-        getType: () => SchemaType.NULLABLE,
+        getType: () => SchemaType.NULLABLE
     };
 
     return {
         ...baseSchema,
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }
 
