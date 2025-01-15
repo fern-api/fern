@@ -53,7 +53,7 @@ export class Events {
         requestOptions?: Events.RequestOptions,
     ): Promise<SeedMixedFileDirectory.user.Event[]> {
         const { limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }

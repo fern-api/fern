@@ -333,8 +333,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             case "inlinedRequestBody":
                 return false;
             case "reference": {
-                const resolvedType = context.type.resolveTypeReference(requestBody.requestBodyType);
-                return resolvedType.type === "container" && resolvedType.container.type === "optional";
+                return (
+                    context.type.isOptional(requestBody.requestBodyType) ||
+                    context.type.isNullable(requestBody.requestBodyType)
+                );
             }
             default:
                 assertNever(requestBody);

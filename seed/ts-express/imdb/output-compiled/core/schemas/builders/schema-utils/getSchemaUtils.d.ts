@@ -1,5 +1,6 @@
 import { BaseSchema, Schema, SchemaOptions } from "../../Schema";
 export interface SchemaUtils<Raw, Parsed> {
+    nullable: () => Schema<Raw | null, Parsed | null>;
     optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
     transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
     parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed;
@@ -13,5 +14,6 @@ export declare function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Pars
 /**
  * schema utils are defined in one file to resolve issues with circular imports
  */
+export declare function nullable<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<Raw | null, Parsed | null>;
 export declare function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<Raw | null | undefined, Parsed | undefined>;
 export declare function transform<Raw, Parsed, Transformed>(schema: BaseSchema<Raw, Parsed>, transformer: SchemaTransformer<Parsed, Transformed>): Schema<Raw, Transformed>;

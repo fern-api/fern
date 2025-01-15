@@ -35,4 +35,6 @@ export interface TypeContext {
     getGeneratedType: (typeName: DeclaredTypeName, typeNameOverride?: string) => GeneratedType;
     getGeneratedTypeById: (typeId: TypeId) => GeneratedType;
     getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
+    isNullable: (typeReference: TypeReference) => boolean;
+    isOptional: (typeReference: TypeReference) => boolean;
 }

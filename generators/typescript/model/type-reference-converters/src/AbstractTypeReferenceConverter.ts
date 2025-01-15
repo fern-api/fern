@@ -132,6 +132,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             list: (type) => this.list(type, setGenericIn(params, genericIn.List)),
             set: (type) => this.set(type, setGenericIn(params, genericIn.Set)),
             optional: (type) => this.optional(type, params),
+            nullable: (type) => this.nullable(type, params),
             literal: (type) => this.literal(type, params),
             _other: () => {
                 throw new Error("Unexpected container type: " + container.type);
@@ -149,6 +150,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract list(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
     protected abstract set(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
     protected abstract optional(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
+    protected abstract nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
     protected abstract literal(literal: Literal, params: ConvertTypeReferenceParams): T;
     protected abstract unknown(): T;
     protected abstract any(): T;
@@ -195,6 +197,14 @@ export abstract class AbstractTypeReferenceConverter<T> {
             return true;
         }
         return false;
+    }
+
+    public isTypeReferenceOptional(typeReference: TypeReference): boolean {
+        return this.context.type.isOptional(typeReference);
+    }
+
+    public isTypeReferenceNullable(typeReference: TypeReference): boolean {
+        return this.context.type.isNullable(typeReference);
     }
 
     protected generateNonOptionalTypeReferenceNode(typeNode: ts.TypeNode): TypeReferenceNode {

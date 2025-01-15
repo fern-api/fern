@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.47.0] - 2025-01-14
+
+- Feature: Add support for `nullable` properties. Users can now specify explicit `null` values
+  for types that specify `nullable` properties like so:
+
+  ```typescript
+  await client.users.update({ username: "john.doe", metadata: null });
+  ```
+
 ## [0.46.11] - 2025-01-14
 
 - Fix: Don't double check whether an optional string literal alias (see example below) is a string when using serializer to build query string parameters.

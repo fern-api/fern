@@ -45,7 +45,7 @@ export class QueryParam {
         requestOptions?: QueryParam.RequestOptions,
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
         if (maybeOperand != null) {
             _queryParams["maybeOperand"] = serializers.Operand.jsonOrThrow(maybeOperand, {
@@ -132,7 +132,7 @@ export class QueryParam {
         requestOptions?: QueryParam.RequestOptions,
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(operand)) {
             _queryParams["operand"] = operand.map((item) =>
                 serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),

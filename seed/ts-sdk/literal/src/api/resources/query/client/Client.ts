@@ -68,7 +68,7 @@ export class Query {
             aliasStream,
             aliasOptionalStream,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["prompt"] = prompt;
         if (optionalPrompt != null) {
             _queryParams["optional_prompt"] = optionalPrompt;

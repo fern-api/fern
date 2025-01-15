@@ -1,4 +1,11 @@
 - changelogEntry:
+    - summary: |
+        The CLI is capable of migrating the latest TypeScript generator to IRv55.
+      type: internal
+  irVersion: 55
+  version: 0.50.0
+
+- changelogEntry:
   - summary: |
       The OpenAPI v2 parser now supports `x-fern-global-headers` and fixes an issue with generating webhook content.
     type: fix

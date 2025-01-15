@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v55
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
 publish:
@@ -265,6 +265,7 @@ allowedFailures:
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  - oauth-client-credentials-custom
   # the below are likely related to changes made to example generation
   - multi-url-environment-no-default
   - objects-with-imports

@@ -22,24 +22,25 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     public convertWithNullCheckIfOptional(
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        const type = params.typeReference;
-        const isNullable = TypeReference._visit(type, {
-            named: (typeName) => {
-                const resolvedType = this.context.type.resolveTypeName(typeName);
-                return resolvedType.type === "container" && resolvedType.container.type === "optional";
-            },
-            container: (container) => container.type === "optional",
-            primitive: () => false,
-            unknown: () => true,
-            _other: () => {
-                throw new Error("Unknown TypeReference: " + type.type);
-            }
-        });
-
-        if (!isNullable) {
+        const isNullable = this.isTypeReferenceNullable(params.typeReference);
+        const isOptional = this.isTypeReferenceOptional(params.typeReference);
+        if (!isNullable && !isOptional) {
             return this.convert(params);
         }
-
+        if (isNullable) {
+            return (reference) =>
+                ts.factory.createConditionalExpression(
+                    ts.factory.createBinaryExpression(
+                        reference,
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                        ts.factory.createIdentifier("undefined")
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    this.convert(params)(reference),
+                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                    ts.factory.createIdentifier("undefined")
+                );
+        }
         return (reference) =>
             ts.factory.createConditionalExpression(
                 ts.factory.createBinaryExpression(
@@ -79,6 +80,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                             ContainerType._visit(containerType, {
                                 list: () => this.jsonStringify(mapExpression),
                                 optional: (optional) => getStringify(this.context.type.resolveTypeReference(optional)),
+                                nullable: (nullable) => getStringify(this.context.type.resolveTypeReference(nullable)),
                                 set: () => this.jsonStringify(mapExpression),
                                 map: () => this.jsonStringify(mapExpression),
                                 literal: (literal) => {
@@ -114,6 +116,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             container: (containerType) =>
                 ContainerType._visit(containerType, {
                     list: this.list.bind(this),
+                    nullable: (nullableType) => this.nullable(nullableType, params),
                     optional: (optionalType) => this.optional(optionalType, params),
                     set: this.set.bind(this),
                     map: (mapType) => this.map(mapType, params),
@@ -195,6 +198,13 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 );
         }
         return (reference) => reference;
+    }
+
+    protected override nullable(
+        itemType: TypeReference,
+        params: ConvertTypeReferenceParams
+    ): (reference: ts.Expression) => ts.Expression {
+        return (reference) => this.convert({ ...params, typeReference: itemType })(reference);
     }
 
     protected override optional(

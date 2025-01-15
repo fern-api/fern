@@ -3,6 +3,7 @@ import { JsonError } from "./JsonError";
 import { ParseError } from "./ParseError";
 
 export interface SchemaUtils<Raw, Parsed> {
+    nullable: () => Schema<Raw | null, Parsed | null>;
     optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
     transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
     parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed;
@@ -16,6 +17,7 @@ export interface SchemaTransformer<Parsed, Transformed> {
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
     return {
+        nullable: () => nullable(schema),
         optional: () => optional(schema),
         transform: (transformer) => transform(schema, transformer),
         parseOrThrow: (raw, opts) => {
@@ -38,6 +40,35 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
 /**
  * schema utils are defined in one file to resolve issues with circular imports
  */
+
+export function nullable<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<Raw | null, Parsed | null> {
+    const baseSchema: BaseSchema<Raw | null, Parsed | null> = {
+        parse: (raw, opts) => {
+            if (raw == null) {
+                return {
+                    ok: true,
+                    value: null
+                };
+            }
+            return schema.parse(raw, opts);
+        },
+        json: (parsed, opts) => {
+            if (parsed == null) {
+                return {
+                    ok: true,
+                    value: null
+                };
+            }
+            return schema.json(parsed, opts);
+        },
+        getType: () => SchemaType.NULLABLE
+    };
+
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema)
+    };
+}
 
 export function optional<Raw, Parsed>(
     schema: BaseSchema<Raw, Parsed>
