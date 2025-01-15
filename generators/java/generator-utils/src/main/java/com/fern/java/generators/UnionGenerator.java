@@ -57,14 +57,16 @@ public final class UnionGenerator extends AbstractTypeGenerator {
 
     @Override
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
-        PoetTypeNameMapper poetTypeNameMapper =
-                generatorContext.getCustomConfig().inlinePathParameters()
-                        ? overriddenTypeNameMapper(className, generatorContext, overriddenTypeDeclarations)
-                        : generatorContext.getPoetTypeNameMapper();
+        PoetTypeNameMapper poetTypeNameMapper;
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            poetTypeNameMapper = overriddenTypeNameMapper(className, generatorContext, overriddenTypeDeclarations);
+        } else {
+            poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
+        }
         List<ModelUnionSubTypes> unionSubTypes = unionTypeDeclaration.getTypes().stream()
                 .map(singleUnionType -> new ModelUnionSubTypes(className, singleUnionType, poetTypeNameMapper))
                 .collect(Collectors.toList());
-        ModelUnionUnknownSubType unknownSubType = new ModelUnionUnknownSubType(className);
+        ModelUnionUnknownSubType unknownSubType = new ModelUnionUnknownSubType(className, poetTypeNameMapper);
         ModelUnionTypeSpecGenerator unionTypeSpecGenerator = new ModelUnionTypeSpecGenerator(
                 className,
                 unionSubTypes,
@@ -97,7 +99,7 @@ public final class UnionGenerator extends AbstractTypeGenerator {
             AbstractGeneratorContext<?, ?> generatorContext,
             UnionTypeDeclaration unionTypeDeclaration,
             Set<String> reservedTypeNames) {
-        if (!generatorContext.getCustomConfig().inlinePathParameters()) {
+        if (!generatorContext.getCustomConfig().enableInlineTypes()) {
             return Map.of();
         }
 
@@ -147,7 +149,7 @@ public final class UnionGenerator extends AbstractTypeGenerator {
             TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
 
             // Don't override non-inline types
-            if (rawTypeDeclaration.getInline().orElse(false)) {
+            if (!rawTypeDeclaration.getInline().orElse(false)) {
                 continue;
             }
 
@@ -206,20 +208,18 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         }
     }
 
-    private final class ModelUnionSubTypes extends UnionSubType {
+    private static final class ModelUnionSubTypes extends UnionSubType {
 
         private final SingleUnionType singleUnionType;
         private final Optional<TypeName> unionSubTypeTypeName;
         private final Optional<FieldSpec> valueFieldSpec;
-        private final PoetTypeNameMapper poetTypeNameMapper;
 
         private ModelUnionSubTypes(
                 ClassName unionClassName, SingleUnionType singleUnionType, PoetTypeNameMapper poetTypeNameMapper) {
-            super(unionClassName);
+            super(unionClassName, poetTypeNameMapper);
             this.singleUnionType = singleUnionType;
             this.valueFieldSpec = getValueField();
             this.unionSubTypeTypeName = valueFieldSpec.map(fieldSpec -> fieldSpec.type);
-            this.poetTypeNameMapper = poetTypeNameMapper;
         }
 
         @Override
@@ -430,8 +430,8 @@ public final class UnionGenerator extends AbstractTypeGenerator {
 
     private static final class ModelUnionUnknownSubType extends UnionSubType {
 
-        private ModelUnionUnknownSubType(ClassName unionClassName) {
-            super(unionClassName);
+        private ModelUnionUnknownSubType(ClassName unionClassName, PoetTypeNameMapper poetTypeNameMapper) {
+            super(unionClassName, poetTypeNameMapper);
         }
 
         @Override
