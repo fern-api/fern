@@ -1,0 +1,31 @@
+```typescript
+import { SeedNullableClient } from "@fern/nullable";
+
+const client = new SeedNullableClient({ environment: "YOUR_BASE_URL" });
+await client.nullable.getUsers({
+  usernames: "usernames",
+  avatar: "avatar",
+  activated: true,
+});
+
+```
+
+
+```typescript
+import { SeedNullableClient } from "@fern/nullable";
+
+const client = new SeedNullableClient({ environment: "YOUR_BASE_URL" });
+await client.nullable.createUser({
+  username: "username",
+  tags: ["tags", "tags"],
+  metadata: {
+    createdAt: "2024-01-15T09:30:00Z",
+    updatedAt: "2024-01-15T09:30:00Z",
+    avatar: "avatar",
+    activated: true,
+  },
+});
+
+```
+
+
