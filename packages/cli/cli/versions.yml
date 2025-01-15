@@ -6,6 +6,13 @@
   version: 0.50.0
 
 - changelogEntry:
+  - summary: |
+      The OpenAPI v2 parser now supports `x-fern-global-headers` and fixes an issue with generating webhook content.
+    type: fix
+  irVersion: 55
+  version: 0.49.1
+
+- changelogEntry:
     - summary: |
         The OpenAPI importer now supports respecting nullable properties in schemas. When enabled, nullable properties will
         be preserved in the gnerated SDK. By default (without this setting), nullable properties are treated as `optional`.
