@@ -209,7 +209,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                             context.getPoetClassNameFactory().getApiVersionClassName(),
                             context,
                             enumTypeDeclaration.build(),
-                            Set.of());
+                            Set.of(context.getPoetClassNameFactory()
+                                    .getApiVersionClassName()
+                                    .simpleName()),
+                            true);
                     GeneratedJavaFile generatedApiVersions = apiVersionsGenerator.generateFile();
                     this.addGeneratedFile(generatedApiVersions);
                 });

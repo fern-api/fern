@@ -44,7 +44,8 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
     @Override
     public Optional<AbstractTypeGenerator> visitAlias(AliasTypeDeclaration value) {
         if (generatorContext.getCustomConfig().wrappedAliases() || fromErrorDeclaration) {
-            AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, value, Set.of());
+            AliasGenerator aliasGenerator =
+                    new AliasGenerator(className, generatorContext, value, reservedTypeNamesInScope, true);
             return Optional.of(aliasGenerator);
         }
         return Optional.empty();
@@ -52,7 +53,8 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
 
     @Override
     public Optional<AbstractTypeGenerator> visitEnum(EnumTypeDeclaration value) {
-        EnumGenerator forwardCompatibleEnumGenerator = new EnumGenerator(className, generatorContext, value, Set.of());
+        EnumGenerator forwardCompatibleEnumGenerator =
+                new EnumGenerator(className, generatorContext, value, reservedTypeNamesInScope, true);
         return Optional.of(forwardCompatibleEnumGenerator);
     }
 
@@ -69,21 +71,23 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
                 generatorContext,
                 allGeneratedInterfaces,
                 className,
-                reservedTypeNamesInScope);
+                reservedTypeNamesInScope,
+                true);
         return Optional.of(objectGenerator);
     }
 
     @Override
     public Optional<AbstractTypeGenerator> visitUnion(UnionTypeDeclaration value) {
-        UnionGenerator unionGenerator = new UnionGenerator(className, generatorContext, value, Set.of());
+        UnionGenerator unionGenerator =
+                new UnionGenerator(className, generatorContext, value, reservedTypeNamesInScope, true);
         return Optional.of(unionGenerator);
     }
 
     @Override
     public Optional<AbstractTypeGenerator> visitUndiscriminatedUnion(
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-        UndiscriminatedUnionGenerator unionGenerator =
-                new UndiscriminatedUnionGenerator(className, generatorContext, undiscriminatedUnion, Set.of());
+        UndiscriminatedUnionGenerator unionGenerator = new UndiscriminatedUnionGenerator(
+                className, generatorContext, undiscriminatedUnion, reservedTypeNamesInScope, true);
         return Optional.of(unionGenerator);
     }
 

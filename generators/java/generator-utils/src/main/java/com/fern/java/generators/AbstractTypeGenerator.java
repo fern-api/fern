@@ -17,11 +17,16 @@ import java.util.Set;
 
 public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
     protected Set<String> reservedTypeNames;
+    protected boolean isTopLevelClass;
 
     public AbstractTypeGenerator(
-            ClassName className, AbstractGeneratorContext<?, ?> generatorContext, Set<String> reservedTypeNames) {
+            ClassName className,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
         super(className, generatorContext);
         this.reservedTypeNames = reservedTypeNames;
+        this.isTopLevelClass = isTopLevelClass;
     }
 
     public abstract List<TypeDeclaration> getInlineTypeDeclarations();

@@ -33,8 +33,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             UnionTypeDeclaration unionTypeDeclaration,
-            Set<String> reservedTypeNames) {
-        super(className, generatorContext, reservedTypeNames);
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.unionTypeDeclaration = unionTypeDeclaration;
     }
 

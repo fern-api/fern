@@ -29,8 +29,9 @@ public final class AliasGenerator extends AbstractTypeGenerator {
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             AliasTypeDeclaration aliasTypeDeclaration,
-            Set<String> reservedTypeNames) {
-        super(className, generatorContext, reservedTypeNames);
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
     }
 

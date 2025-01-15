@@ -71,7 +71,8 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
                 generatorContext,
                 allGeneratedInterfaces,
                 className,
-                Set.of());
+                Set.of(className.simpleName()),
+                true);
         return objectGenerator.generateObject();
     }
 }

@@ -39,8 +39,9 @@ public final class EnumGenerator extends AbstractTypeGenerator {
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             EnumTypeDeclaration enumTypeDeclaration,
-            Set<String> reservedTypeNames) {
-        super(className, generatorContext, reservedTypeNames);
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.enumTypeDeclaration = enumTypeDeclaration;
     }
 
@@ -53,7 +54,7 @@ public final class EnumGenerator extends AbstractTypeGenerator {
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
         if (generatorContext.getCustomConfig().enableForwardCompatibleEnum()) {
             ForwardCompatibleEnumGenerator forwardCompatibleEnumGenerator = new ForwardCompatibleEnumGenerator(
-                    className, generatorContext, enumTypeDeclaration, reservedTypeNames);
+                    className, generatorContext, enumTypeDeclaration, reservedTypeNames, isTopLevelClass);
             return forwardCompatibleEnumGenerator.getTypeSpecWithoutInlineTypes();
         } else {
             TypeSpec.Builder enumTypeSpecBuilder = TypeSpec.enumBuilder(className);

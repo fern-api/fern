@@ -59,8 +59,9 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             AbstractGeneratorContext<?, ?> generatorContext,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             ClassName className,
-            Set<String> reservedTypeNames) {
-        super(className, generatorContext, reservedTypeNames);
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
 
         List<GeneratedJavaInterface> allExtendedInterfaces = new ArrayList<>();
         selfInterface.ifPresent(allExtendedInterfaces::add);

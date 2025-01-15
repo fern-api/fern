@@ -45,8 +45,9 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             EnumTypeDeclaration enumTypeDeclaration,
-            Set<String> reservedTypeNames) {
-        super(className, generatorContext, reservedTypeNames);
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.enumTypeDeclaration = enumTypeDeclaration;
         this.valueFieldClassName = this.className.nestedClass(VALUE_TYPE_NAME);
     }

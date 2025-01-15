@@ -78,8 +78,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
-            Set<String> reservedTypeNames) {
-        super(className, generatorContext, reservedTypeNames);
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.undiscriminatedUnion = undiscriminatedUnion;
         this.memberTypeNames = undiscriminatedUnion.getMembers().stream()
                 .collect(Collectors.toMap(
