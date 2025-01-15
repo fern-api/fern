@@ -4,12 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.constants.Constants;
 import com.fern.ir.model.types.*;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.generators.union.UnionSubType;
 import com.fern.java.generators.union.UnionTypeSpecGenerator;
+import com.fern.java.utils.NamedTypeId;
+import com.fern.java.utils.NamedTypeIdResolver;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -19,7 +22,10 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,7 +47,120 @@ public final class UnionGenerator extends AbstractTypeGenerator {
 
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
-        return List.of();
+        return new ArrayList<>(overriddenTypeDeclarations(generatorContext, unionTypeDeclaration, reservedTypeNames)
+                .values());
+    }
+
+    private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
+            AbstractGeneratorContext<?, ?> generatorContext,
+            UnionTypeDeclaration unionTypeDeclaration,
+            Set<String> reservedTypeNames) {
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
+        Set<String> propertyNames = new HashSet<>();
+        Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
+
+        List<ObjectProperty> objectProperties = unionTypeDeclaration.getBaseProperties();
+
+        for (ObjectProperty objectProperty : objectProperties) {
+            propertyNames.add(objectProperty.getName().getName().getPascalCase().getSafeName());
+        }
+
+        List<SingleUnionType> variants = unionTypeDeclaration.getTypes();
+
+        for (SingleUnionType variant : variants) {
+            propertyNames.add(
+                    variant.getDiscriminantValue().getName().getPascalCase().getSafeName());
+        }
+
+        List<NamedTypeId> allResolvedIds = new ArrayList<>();
+
+        for (ObjectProperty objectProperty : objectProperties) {
+            List<NamedTypeId> resolvedIds = objectProperty
+                    .getValueType()
+                    .visit(new NamedTypeIdResolver(
+                            objectProperty.getName().getName().getPascalCase().getSafeName(),
+                            objectProperty.getValueType()));
+            allResolvedIds.addAll(resolvedIds);
+        }
+
+        for (SingleUnionType variant : variants) {
+            List<NamedTypeId> resolvedIds = variant.getShape().visit(new SingleUnionTypeProperties.Visitor<>() {
+                @Override
+                public List<NamedTypeId> visitSamePropertiesAsObject(DeclaredTypeName declaredTypeName) {
+                    Optional<TypeDeclaration> maybeExisting = Optional.ofNullable(
+                            generatorContext.getTypeDeclarations().get(declaredTypeName.getTypeId()));
+                    if (maybeExisting.isEmpty()) {
+                        return List.of();
+                    }
+
+                    return List.of(NamedTypeId.builder()
+                            .name(variant.getDiscriminantValue()
+                                    .getName()
+                                    .getPascalCase()
+                                    .getSafeName())
+                            .typeId(maybeExisting.get().getName().getTypeId())
+                            .build());
+                }
+
+                @Override
+                public List<NamedTypeId> visitSingleProperty(SingleUnionTypeProperty singleUnionTypeProperty) {
+                    return singleUnionTypeProperty
+                            .getType()
+                            .visit(new NamedTypeIdResolver(
+                                    variant.getDiscriminantValue()
+                                            .getName()
+                                            .getPascalCase()
+                                            .getSafeName(),
+                                    singleUnionTypeProperty.getType()));
+                }
+
+                @Override
+                public List<NamedTypeId> visitNoProperties() {
+                    return List.of();
+                }
+
+                @Override
+                public List<NamedTypeId> _visitUnknown(Object o) {
+                    return List.of();
+                }
+            });
+            allResolvedIds.addAll(resolvedIds);
+        }
+
+        for (NamedTypeId resolvedId : allResolvedIds) {
+            String name = resolvedId.name();
+            Optional<TypeDeclaration> maybeRawTypeDeclaration =
+                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(resolvedId.typeId()));
+
+            if (maybeRawTypeDeclaration.isEmpty()) {
+                continue;
+            }
+
+            TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
+
+            // Don't override non-inline types
+            if (rawTypeDeclaration.getInline().orElse(false)) {
+                continue;
+            }
+
+            boolean valid;
+            do {
+                // Prevent something like "Bar_" generated from resolution on a property name called "bar"
+                // colliding with "Bar_" generated from a property name called "bar_"
+                boolean newNameCollides = propertyNames.contains(name) && !name.equals(resolvedId.name());
+                valid = !allReservedTypeNames.contains(name) && !newNameCollides;
+
+                if (!valid) {
+                    name += "_";
+                }
+            } while (!valid);
+
+            allReservedTypeNames.add(name);
+            TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
+            overriddenTypeDeclarations.put(resolvedId.typeId(), overriddenTypeDeclaration);
+        }
+
+        return overriddenTypeDeclarations;
     }
 
     @Override

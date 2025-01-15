@@ -38,12 +38,8 @@ public class NamedTypeIdResolver
 
     @Override
     public List<NamedTypeId> visitNamed(NamedType namedType) {
-        return List.of(NamedTypeId.builder()
-                .name(name)
-                .typeId(namedType.getTypeId())
-                .type(namedType)
-                .sourceReference(visitedReference)
-                .build());
+        return List.of(
+                NamedTypeId.builder().name(name).typeId(namedType.getTypeId()).build());
     }
 
     @Override
