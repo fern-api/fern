@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The Fern CLI is updated to create the organization if it doesn't exist when `fern token` is called.
+      type: fix
+  irVersion: 55
+  version: 0.50.5
+
+
+- changelogEntry:
+    - summary: |
         The preview server is updated such that local previews of both OpenRPC and OpenAPI (legacy parser)
         are now possible. 
       type: fix
