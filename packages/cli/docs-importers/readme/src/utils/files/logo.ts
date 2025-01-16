@@ -2,8 +2,14 @@ import type { Element, Root as HastRoot } from "hast";
 import { Browser } from "puppeteer";
 import { visit } from "unist-util-visit";
 
+import { docsYml } from "@fern-api/configuration";
+import { stripLeadingSlash } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { htmlToHast } from "../htmlToHast.js";
 import { downloadImage } from "./images.js";
+
+const LOGO_DEFAULT_HEIGHT = 28;
 
 function findReadmeLogoNodes(root: HastRoot): Array<Element> | undefined {
     const elements: Array<Element> = [];
@@ -12,8 +18,9 @@ function findReadmeLogoNodes(root: HastRoot): Array<Element> | undefined {
             node.tagName === "img" &&
             Array.isArray(node.properties.className) &&
             node.properties.className.includes("rm-Logo-img")
-        )
-            {elements.push(node);}
+        ) {
+            elements.push(node);
+        }
     });
     return elements.length ? elements : undefined;
 }
@@ -43,14 +50,16 @@ async function findLogosFromHtml(
     }
 
     filepaths.forEach((filepath, index) => {
-        if (!filepath) {filepaths.splice(index, 1);}
+        if (!filepath) {
+            filepaths.splice(index, 1);
+        }
     });
 }
 
 export async function downloadLogos(
     url: string | URL,
     browser: Browser | undefined
-): Promise<string | { light: string; dark: string } | undefined> {
+): Promise<docsYml.RawSchemas.LogoConfiguration | undefined> {
     url = new URL(url);
     const filepaths: Array<string> = [];
 
@@ -76,12 +85,28 @@ export async function downloadLogos(
     }
     const uniqueFilepaths = [...new Set(filepaths).values()];
 
-    return uniqueFilepaths.length === 1
-        ? uniqueFilepaths[0]
-        : uniqueFilepaths.length > 1
-          ? {
-                light: uniqueFilepaths[0] as string,
-                dark: uniqueFilepaths[1] as string
-            }
-          : undefined;
+    if (uniqueFilepaths.length === 0) {
+        return undefined;
+    }
+
+    if (uniqueFilepaths.length === 1 && uniqueFilepaths[0] != null) {
+        const relativeFilepath = RelativeFilePath.of(stripLeadingSlash(uniqueFilepaths[0]));
+        return {
+            light: relativeFilepath,
+            dark: relativeFilepath,
+            height: LOGO_DEFAULT_HEIGHT
+        };
+    }
+
+    if (uniqueFilepaths[0] != null && uniqueFilepaths[1] != null) {
+        const relativeFilepathToLight = RelativeFilePath.of(stripLeadingSlash(uniqueFilepaths[0]));
+        const relativeFilepathToDark = RelativeFilePath.of(stripLeadingSlash(uniqueFilepaths[1]));
+        return {
+            light: relativeFilepathToLight,
+            dark: relativeFilepathToDark,
+            height: LOGO_DEFAULT_HEIGHT
+        };
+    }
+
+    return undefined;
 }

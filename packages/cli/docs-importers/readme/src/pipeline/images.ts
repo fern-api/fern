@@ -1,6 +1,6 @@
 import type { Root as MdastRoot } from "mdast";
 import type { MdxJsxAttribute } from "mdast-util-mdx-jsx";
-import { CONTINUE, EXIT, visit } from "unist-util-visit";
+import { CONTINUE, visit } from "unist-util-visit";
 
 import type { Result } from "../types/result.js";
 import { downloadImage } from "../utils/files/images";
@@ -22,13 +22,15 @@ export async function downloadImagesFromFile(
             )?.value as string | undefined;
         }
 
-        if (!imageUrl) {return CONTINUE;}
+        if (!imageUrl) {
+            return CONTINUE;
+        }
 
         if (imageUrl.startsWith("/")) {
             imageUrl = new URL(imageUrl, url.origin).toString();
         }
         imageUrls.push(imageUrl);
-        return EXIT;
+        return CONTINUE;
     });
 
     const imageResults = await Promise.all(imageUrls.map(async (imageUrl) => await downloadImage(imageUrl)));
@@ -44,17 +46,21 @@ export async function downloadImagesFromFile(
             } else {
                 node.url = imagePathsMap.get(node.url) ?? node.url;
             }
-            if (parent && typeof index === "number") {parent.children[index] = node;}
+            if (parent && typeof index === "number") {
+                parent.children[index] = node;
+            }
         } else if (node.type === "mdxJsxFlowElement") {
             const urlAttr = (node.attributes as Array<MdxJsxAttribute>).find(
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 (attr) => attr.type === "mdxJsxAttribute" && (attr.name === "src" || attr.name === "img")
             );
-            if (!urlAttr) {return CONTINUE;}
+            if (!urlAttr) {
+                return CONTINUE;
+            }
 
             urlAttr.value = imagePathsMap.get(urlAttr.value as string) ?? urlAttr.value;
-            if (parent && typeof index === "number") {parent.children[index] = node;}
-            return EXIT;
+            if (parent && typeof index === "number") {
+                parent.children[index] = node;
+            }
         }
         return CONTINUE;
     });

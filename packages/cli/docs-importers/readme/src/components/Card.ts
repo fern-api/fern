@@ -2,7 +2,7 @@ import type { Element, ElementContent } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
 import { assertIsDefined } from "../assert";
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hast";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 import { turnChildrenIntoMdx } from "../utils/children";
 import { findTitle } from "../utils/title.js";
 

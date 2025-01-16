@@ -2,7 +2,7 @@ import type { Element } from "hast";
 import { CONTINUE, visit } from "unist-util-visit";
 
 import { assertIsDefined, assertIsNumber } from "../assert";
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hast";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 
 export function scrapeEmbed(node: HastNode, index: HastNodeIndex, parent: HastNodeParent): Element | undefined {
     if (
@@ -22,9 +22,13 @@ export function scrapeEmbed(node: HastNode, index: HastNodeIndex, parent: HastNo
 
     let embedSrc: string | undefined;
     visit(node, "element", function (child) {
-        if (child.tagName !== "iframe") {return CONTINUE;}
+        if (child.tagName !== "iframe") {
+            return CONTINUE;
+        }
         const src = child.properties.src as string;
-        if (!src) {return CONTINUE;}
+        if (!src) {
+            return CONTINUE;
+        }
 
         const urlMatch = src.match(/src=([^&]+)/);
         if (urlMatch?.[1]) {
@@ -35,7 +39,9 @@ export function scrapeEmbed(node: HastNode, index: HastNodeIndex, parent: HastNo
         return CONTINUE;
     });
 
-    if (!embedSrc) {return undefined;}
+    if (!embedSrc) {
+        return undefined;
+    }
 
     const newNode: Element = {
         type: "element",

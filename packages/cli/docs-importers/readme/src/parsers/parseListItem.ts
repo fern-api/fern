@@ -2,7 +2,6 @@ import type { Element } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
 import { scrapedNavigationEntry } from "../types/scrapedNavigation";
-import { dedupedAppend } from "../utils/append";
 import { findFirstChild } from "../utils/firstChild";
 import { removeTrailingSlash } from "../utils/strings";
 import { getText } from "../utils/text";
@@ -20,7 +19,9 @@ export function parseListItem({
     title?: string;
 }): scrapedNavigationEntry | undefined {
     const link = findFirstChild({ node, tagName: "a" });
-    if (!link) {return undefined;}
+    if (!link) {
+        return undefined;
+    }
 
     let linkHref: string | undefined = undefined;
     linkHref = link.properties.href as string | undefined;
@@ -60,7 +61,7 @@ export function parseListItem({
         groupTitle = getText(link) || getText(sectionHeader) || "";
     }
 
-    let childEntries = parseNavItems(childList);
+    const childEntries = parseNavItems(childList);
     const newLink =
         linkHref !== "#" && childEntries.find((child) => typeof child === "string" && child.startsWith(linkHref))
             ? removeTrailingSlash(linkHref) + "/overview"
@@ -74,7 +75,9 @@ export function parseListItem({
                 }
             });
         }
-        childEntries = dedupedAppend(newLink, childEntries, true);
+        if (!childEntries.includes(newLink)) {
+            childEntries.unshift(newLink);
+        }
     }
 
     return { group: groupTitle, pages: childEntries };

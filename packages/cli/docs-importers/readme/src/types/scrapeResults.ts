@@ -1,5 +1,5 @@
-import { scrapedColors } from "./scrapedColors";
-import { scrapedLogo } from "./scrapedLogo";
+import { docsYml } from "@fern-api/configuration";
+
 import { scrapedNavigation } from "./scrapedNavigation";
 import { scrapedTab } from "./scrapedTab";
 
@@ -8,10 +8,10 @@ export interface ScrapeResult {
     message?: string;
     data?: {
         name: string;
-        logo: scrapedLogo;
+        logo: docsYml.RawSchemas.LogoConfiguration | undefined;
         navigation: scrapedNavigation;
         tabs: Array<scrapedTab>;
         favicon: string;
-        colors: scrapedColors;
+        colors: docsYml.RawSchemas.ColorsConfiguration;
     };
 }

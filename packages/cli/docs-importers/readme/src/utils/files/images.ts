@@ -3,9 +3,7 @@ import { dirname, join } from "node:path";
 
 import { SUPPORTED_MEDIA_EXTENSIONS } from "../../constants";
 import type { Result } from "../../types/result";
-import { getErrorMessage } from "../error";
 import { fetchImage } from "../network";
-import { getFileExtension } from "./extension";
 import { write } from "./file";
 
 export async function downloadImage(src: string): Promise<Result<[string, string]>> {
@@ -44,15 +42,20 @@ async function writeImageToFile(src: string, rootPath: string): Promise<string> 
         write(imagePath, imageData);
         return imagePath;
     } catch (error) {
-        throw new Error(`Failed to download file from source: ${getErrorMessage(error)}`);
+        throw new Error(`${imagePath}: failed to download file from source`);
     }
 }
 
-export function isValidImageSrc(src: string) {
+export function isValidImageSrc(src: string): boolean {
     if (!src) {
         return false;
     }
-    const ext = getFileExtension(src);
+    const extBeginsIndex = src.lastIndexOf(".") + 1;
+    const extRaw = src.substring(extBeginsIndex);
+    if (src === extRaw) {
+        return false;
+    }
+    const ext = extRaw.toLowerCase();
     if (ext && !SUPPORTED_MEDIA_EXTENSIONS.includes(ext)) {
         return false;
     }

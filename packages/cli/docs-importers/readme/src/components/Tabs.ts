@@ -1,7 +1,7 @@
 import type { Element, ElementContent } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hast";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 import { turnChildrenIntoMdx } from "../utils/children";
 
 export function scrapeTabs(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {
@@ -16,14 +16,18 @@ export function scrapeTabs(node: HastNode, _: HastNodeIndex, __: HastNodeParent)
         return undefined;
     }
 
-    if (!node.children[0] || !node.children[1]) {return undefined;}
+    if (!node.children[0] || !node.children[1]) {
+        return undefined;
+    }
 
     const titles: Array<string> = [];
     const tabContents: Array<Element> = [];
 
     if (node.children.length !== 2) {
         visit(node, "element", function (subNode) {
-            if (subNode.tagName !== "label" && subNode.tagName !== "button") {return CONTINUE;}
+            if (subNode.tagName !== "label" && subNode.tagName !== "button") {
+                return CONTINUE;
+            }
 
             let title = "";
             visit(subNode, "text", function (textNode) {
@@ -43,8 +47,9 @@ export function scrapeTabs(node: HastNode, _: HastNodeIndex, __: HastNodeParent)
                         subNode.properties.className.includes("Tab") ||
                         subNode.properties.className.includes("tabbed-content") ||
                         subNode.properties.className.includes("tab-content"))
-                )
-                    {return true;}
+                ) {
+                    return true;
+                }
                 return false;
             }) as Array<Element>)
         );
@@ -66,7 +71,9 @@ export function scrapeTabs(node: HastNode, _: HastNodeIndex, __: HastNodeParent)
 
     const tabChildren: Array<ElementContent> = [];
     tabContents.forEach((tab, index) => {
-        if (!titles[index]) {return;}
+        if (!titles[index]) {
+            return;
+        }
         const children = turnChildrenIntoMdx([tab]) as Array<ElementContent>;
         tabChildren.push({
             type: "element",

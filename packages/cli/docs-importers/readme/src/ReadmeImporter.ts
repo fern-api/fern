@@ -2,20 +2,18 @@ import type { Root as HastRoot } from "hast";
 import { join } from "path";
 import traverse from "traverse";
 
+import { docsYml } from "@fern-api/configuration";
 import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { assertIsReadme } from "./assertIsReadme";
 import { defaultColors } from "./constants";
-import { convertColors } from "./converters/convertColors";
-import { convertLogo } from "./converters/convertLogo";
 import { convertNavigationItem } from "./converters/convertNavigationItem";
 import { parseNavItems } from "./parsers/parseNavItems";
 import { parsePageGroup } from "./parsers/parsePageGroup";
 import { retrieveRootNavElement } from "./parsers/parseRootNav";
 import { parseTabLinks } from "./parsers/parseTabs";
 import { ScrapeResult } from "./types/scrapeResults";
-import { scrapedColors } from "./types/scrapedColors";
 import { scrapedNavigation, scrapedNavigationGroup } from "./types/scrapedNavigation";
 import type { scrapedTab } from "./types/scrapedTab";
 import { TabInfo } from "./types/tabInfo";
@@ -24,7 +22,7 @@ import { downloadFavicon } from "./utils/favicon";
 import { downloadLogos } from "./utils/files/logo";
 import { getTabForNavigationItem } from "./utils/getNavigationTab";
 import { htmlToHast } from "./utils/htmlToHast";
-import { iterateOverNavItems } from "./utils/nav/iterate";
+import { iterateOverNavItems } from "./utils/iterate";
 import { fetchPageHtml, startPuppeteer } from "./utils/network";
 import { GROUP_NAMES, iterateThroughReservedNames } from "./utils/reservedNames";
 import { removeLeadingSlash, removeTrailingSlash } from "./utils/strings";
@@ -60,17 +58,15 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         }
         this.context.logger.info("Successfully scraped site tabs");
 
-        const logo = convertLogo({ logo: scrapeData.logo });
-        if (logo) {
-            builder.setLogo({ logo });
+        if (scrapeData.logo) {
+            builder.setLogo({ logo: scrapeData.logo });
         }
 
         const relativePathToFavicon = RelativeFilePath.of(scrapeData.favicon.substring(1));
         builder.setFavicon({ favicon: relativePathToFavicon });
 
-        const colors = convertColors(scrapeData.colors);
-        if (colors != null) {
-            builder.setColors({ colors });
+        if (scrapeData.colors != null) {
+            builder.setColors({ colors: scrapeData.colors });
         }
 
         for (const tab of scrapeData.tabs ?? []) {
@@ -108,8 +104,9 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         const hast = htmlToHast(html);
 
         const links = parseTabLinks(hast);
-        if (!links || !links.length || (links.length === 1 && links[0] && links[0].url === urlObj.pathname))
-            {return this.scrapeSite(html, urlObj, { hast });}
+        if (!links || !links.length || (links.length === 1 && links[0] && links[0].url === urlObj.pathname)) {
+            return this.scrapeSite(html, urlObj, { hast });
+        }
 
         if (!links.find((link) => urlObj.pathname.startsWith(link.url))) {
             links.push({
@@ -133,16 +130,24 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         const navigation: scrapedNavigation = [];
         const tabs: Array<scrapedTab> = [];
+        let colors: docsYml.RawSchemas.ColorsConfiguration = defaultColors;
         let favicon = "/favicon.svg";
-        let colors: scrapedColors = defaultColors;
 
         const successes = results.filter((result) => result.success);
         successes.forEach((result) => {
-            if (!result.data) {return;}
+            if (!result.data) {
+                return;
+            }
             navigation.push(...result.data.navigation);
-            if (result.data.tabs) {tabs.push(...result.data.tabs);}
-            if (result.data.favicon !== "/favicon.svg") {favicon = result.data.favicon;}
-            if (result.data.colors !== defaultColors) {colors = result.data.colors;}
+            if (result.data.tabs) {
+                tabs.push(...result.data.tabs);
+            }
+            if (result.data.favicon !== "/favicon.svg") {
+                favicon = result.data.favicon;
+            }
+            if (result.data.colors !== defaultColors) {
+                colors = result.data.colors;
+            }
         });
 
         const failures = results.filter((result) => !result.success);
@@ -153,7 +158,9 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         const browser = await startPuppeteer();
         const logo = await downloadLogos(urlObj, browser);
         const name = await downloadTitle(hast);
-        if (browser) {await browser.close();}
+        if (browser) {
+            await browser.close();
+        }
 
         return {
             success: true,
@@ -183,7 +190,9 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         const origin = urlObj.origin;
 
         const sidebar = retrieveRootNavElement(siteHast);
-        if (!sidebar) {return { success: false, message: `${url.toString()}: Failed to find sidebar element` };}
+        if (!sidebar) {
+            return { success: false, message: `${url.toString()}: Failed to find sidebar element` };
+        }
 
         const navItems = parseNavItems(sidebar);
 
@@ -250,7 +259,9 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
             });
 
             navItems.forEach((navItem, index) => {
-                if (typeof navItem !== "string") {return;}
+                if (typeof navItem !== "string") {
+                    return;
+                }
                 const lastItemInPath = navItem.split("/").pop() || navItem;
                 const name = lastItemInPath
                     .split(/[-_]/)

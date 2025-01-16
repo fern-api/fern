@@ -2,8 +2,6 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { join } from "path";
 
-import { getErrorMessage } from "../error";
-
 export function createFilename(
     rootPath: string = process.cwd(),
     filename: string | URL,
@@ -28,7 +26,6 @@ export function createFilename(
 }
 
 export function toFilename(title: string) {
-    // <3 Ricardo
     return title
         .replace(/[^a-z0-9]/gi, " ")
         .trim()
@@ -49,7 +46,9 @@ export function writePage(
 ): void {
     const rootPath = join(process.cwd(), "fern");
     const writePath = createFilename(rootPath, filename, title);
-    if (!writePath) {return;}
+    if (!writePath) {
+        return;
+    }
 
     const cleanedWritePath = writePath.replace(rootPath, ".");
 
@@ -57,8 +56,7 @@ export function writePage(
         mkdirSync(dirname(writePath), { recursive: true });
         write(writePath, formatPageWithFrontmatter(title, description, markdown, url));
     } catch (error) {
-        const errorMessage = getErrorMessage(error);
-        throw new Error(`${cleanedWritePath} couldn't download to disk${errorMessage}`);
+        throw new Error(`${cleanedWritePath}: failed to download to disk`);
     }
 }
 

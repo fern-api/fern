@@ -1,7 +1,7 @@
 import type { Element, ElementContent } from "hast";
 
 import { assertIsStringArray } from "../assert";
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hast";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 import { turnChildrenIntoMdx } from "../utils/children";
 
 export function scrapeCallout(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {

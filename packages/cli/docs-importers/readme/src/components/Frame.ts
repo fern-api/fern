@@ -1,6 +1,6 @@
 import type { Element } from "hast";
 
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hast";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 import { findTitle } from "../utils/title.js";
 
 export function scrapeFrame(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {
@@ -8,8 +8,9 @@ export function scrapeFrame(node: HastNode, _: HastNodeIndex, __: HastNodeParent
         (node.tagName === "figure" &&
             node.children.find((subNode) => subNode.type === "element" && subNode.tagName === "picture")) ||
         (node.tagName !== "picture" && node.tagName !== "figure")
-    )
-        {return undefined;}
+    ) {
+        return undefined;
+    }
 
     const imgNode = node.children.find(
         (child): child is Element =>
@@ -19,7 +20,9 @@ export function scrapeFrame(node: HastNode, _: HastNodeIndex, __: HastNodeParent
                     child.children.some((c) => c.type === "element" && c.tagName === "img")))
     );
 
-    if (!imgNode) {return undefined;}
+    if (!imgNode) {
+        return undefined;
+    }
 
     const imgSrc =
         imgNode.tagName === "img"
@@ -27,7 +30,9 @@ export function scrapeFrame(node: HastNode, _: HastNodeIndex, __: HastNodeParent
             : ((imgNode.children.find((c) => c.type === "element" && c.tagName === "img") as Element)?.properties
                   ?.src as string);
 
-    if (!imgSrc) {return undefined;}
+    if (!imgSrc) {
+        return undefined;
+    }
 
     const caption = findTitle(node);
 

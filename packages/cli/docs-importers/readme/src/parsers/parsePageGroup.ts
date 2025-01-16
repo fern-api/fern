@@ -1,5 +1,4 @@
 import type { Result } from "../types/result.js";
-import { getErrorMessage } from "../utils/error";
 import { fetchPageHtml } from "../utils/network";
 import { parsePage } from "./parsePage";
 
@@ -38,11 +37,9 @@ export async function parsePageGroup(
                     });
                     return res;
                 } catch (error) {
-                    const errorMessage = getErrorMessage(error);
                     return {
                         success: false,
-                        message: `We encountered an error when scraping ${url}${errorMessage}`,
-                        data: [url.toString(), ""] as [string, string]
+                        data: undefined
                     };
                 }
             })

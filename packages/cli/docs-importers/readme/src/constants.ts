@@ -14,9 +14,14 @@ export const SUPPORTED_MEDIA_EXTENSIONS = [
 ];
 
 export const defaultColors = {
-    primary: "#0D9373",
-    light: "#55D799",
-    dark: "#0D9373"
+    accentPrimary: {
+        dark: "#0D9373",
+        light: "#55D799"
+    },
+    background: {
+        dark: undefined,
+        light: undefined
+    }
 };
 
 export const ESCAPED_COMPONENTS = [
