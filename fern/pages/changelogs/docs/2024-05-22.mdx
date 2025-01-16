@@ -1,0 +1,33 @@
+## Advanced Redirects
+Implemented a powerful redirects system supporting pattern matching and parameter preservation. Teams can now manage documentation URL structure while maintaining backwards compatibility.
+
+```yaml
+redirects:
+  - source: /v1/api/*
+    destination: /v2/api/:splat
+    permanent: true
+  - source: /guides/:name
+    destination: /tutorials/:name
+```
+
+## Sitemap Optimization
+Improved sitemap generation with direct file access and customizable update frequencies. Search engines can now better understand and index your documentation structure.
+
+```typescript
+const sitemapOptions = {
+  changefreq: 'weekly',
+  priority: 0.8,
+  lastmodISO: true
+}
+```
+
+## API Authorization Handling
+Enhanced API authorization handling in the documentation platform. Developers can now test authenticated endpoints more easily with improved token management.
+
+```typescript
+const authConfig = {
+  methods: ['bearer', 'apiKey'],
+  persistence: 'session',
+  autoRefresh: true
+}
+```
