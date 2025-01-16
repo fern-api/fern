@@ -1,0 +1,363 @@
+service:
+  base-path: /root
+  auth: false
+  endpoints:
+    getRoot:
+      path: /root
+      method: POST
+      request:
+        body:
+          properties:
+            bar: RequestTypeInlineType1
+            foo: string
+        content-type: application/json
+        name: PostRootRequest
+      response: RootType1
+    getDiscriminatedUnion:
+      path: /discriminated-union
+      method: POST
+      request:
+        body:
+          properties:
+            bar: DiscriminatedUnion1
+            foo: string
+        content-type: application/json
+        name: GetDiscriminatedUnionRequest
+    getUndiscriminatedUnion:
+      path: /undiscriminated-union
+      method: POST
+      request:
+        body:
+          properties:
+            bar: UndiscriminatedUnion1
+            foo: string
+        content-type: application/json
+        name: GetUndiscriminatedUnionRequest
+
+types:
+  # this is also the type that would be produced by
+  AliasMapInline: map<string, AliasInlineValue>
+  AliasSetInline: set<AliasInlineValue>
+  AliasListInline: list<AliasInlineValue>
+
+  AliasInlineValue:
+    inline: true
+    properties:
+      foo: string
+      bar: string
+
+  RequestTypeInlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+
+  RootType1:
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: RootType1InlineType1
+        docs: lorem ipsum
+      fooMap:
+        type: map<string, RootType1FooMapValue>
+        docs: lorem ipsum
+      fooList:
+        type: list<RootType1FooListItem>
+        docs: lorem ipsum
+      fooSet:
+        type: set<RootType1FooSetItem>
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1FooMapValue:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1FooListItem:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1FooSetItem:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1InlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: RootType1InlineType1NestedInlineType1
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  RootType1InlineType1NestedInlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: string
+        docs: lorem ipsum
+      myEnum:
+        type: InlineEnum1
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  DiscriminatedUnion1:
+    inline: true
+    docs: lorem ipsum
+    union:
+      type1:
+        type: DiscriminatedUnion1InlineType1
+        docs: lorem ipsum
+      type2:
+        type: DiscriminatedUnion1InlineType2
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  DiscriminatedUnion1InlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: DiscriminatedUnion1InlineType1InlineType1
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  DiscriminatedUnion1InlineType1InlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  DiscriminatedUnion1InlineType2:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      baz:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1:
+    inline: true
+    docs: lorem ipsum
+    discriminated: false
+    union:
+      - type: UndiscriminatedUnion1InlineType1
+        docs: lorem ipsum
+      - type: UndiscriminatedUnion1InlineType2
+        docs: lorem ipsum
+      - type: UndiscriminatedUnion1DiscriminatedUnion1
+        docs: lorem ipsum
+      - type: UndiscriminatedUnion1InlineEnum1
+        docs: lorem ipsum
+      - type: UserId
+        docs: lorem ipsum
+      - type: list<UndiscriminatedUnion1InlineListItem1>
+        docs: lorem ipsum
+      - type: set<UndiscriminatedUnion1InlineSetItem1>
+        docs: lorem ipsum
+      - type: map<string, UndiscriminatedUnion1InlineMapItem1>
+        docs: lorem ipsum
+      - type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1InlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: UndiscriminatedUnion1InlineType1InlineType1
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1InlineType1InlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1InlineType2:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      baz:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  InlineEnum1:
+    inline: true
+    docs: lorem ipsum
+    enum:
+      - SUNNY
+      - CLOUDY
+      - RAINING
+      - SNOWING
+
+  UndiscriminatedUnion1DiscriminatedUnion1:
+    inline: true
+    docs: lorem ipsum
+    union:
+      type1:
+        type: UndiscriminatedUnion1DiscriminatedUnion1InlineType1
+        docs: lorem ipsum
+      type2:
+        type: UndiscriminatedUnion1DiscriminatedUnion1InlineType2
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1DiscriminatedUnion1InlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      bar:
+        type: UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1DiscriminatedUnion1InlineType2:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      baz:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1InlineEnum1:
+    inline: true
+    docs: lorem ipsum
+    enum:
+      - SUNNY
+      - CLOUDY
+      - RAINING
+      - SNOWING
+
+  UserId:
+    type: string
+    docs: lorem ipsum
+
+  UndiscriminatedUnion1InlineListItem1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1InlineSetItem1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  UndiscriminatedUnion1InlineMapItem1:
+    inline: true
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
+      ref:
+        type: ReferenceType
+        docs: lorem ipsum
+
+  ReferenceType:
+    docs: lorem ipsum
+    properties:
+      foo:
+        type: string
+        docs: lorem ipsum
