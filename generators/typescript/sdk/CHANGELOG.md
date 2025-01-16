@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.48.2] - 2025-01-16
+
+- Fix: This updates the retrier logic to stop retrying on HTTP conflict (409). This was an
+  oversight that we've meant to remove for a while (similar to other Fern SDKs).
+
 ## [0.48.1] - 2025-01-16
 
 - Fix: Record types with `null` values are now correctly serialized.
