@@ -551,6 +551,52 @@
         }
       ]
     },
+    "docs.FeatureFlag": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "string"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "match": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "flag"
+      ],
+      "additionalProperties": false
+    },
     "docs.ChangelogFolderRelativePath": {
       "type": "string"
     },
@@ -571,6 +617,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
             },
             {
               "type": "null"
@@ -678,6 +737,19 @@
             }
           ]
         },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "display-name": {
           "type": "string"
         },
@@ -728,6 +800,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
             },
             {
               "type": "null"
@@ -794,6 +879,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
             },
             {
               "type": "null"
@@ -1049,6 +1147,19 @@
             }
           ]
         },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "title": {
           "oneOf": [
             {
@@ -1171,6 +1282,19 @@
             }
           ]
         },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "section": {
           "type": "string"
         },
@@ -1283,6 +1407,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
             },
             {
               "type": "null"
@@ -1418,6 +1555,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
             },
             {
               "type": "null"
@@ -1606,6 +1756,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.FeatureFlag"
+              }
             },
             {
               "type": "null"
