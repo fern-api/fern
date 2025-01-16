@@ -11,11 +11,11 @@ export const WithFeatureFlags: core.serialization.ObjectSchema<
     serializers.WithFeatureFlags.Raw,
     FernDocsConfig.WithFeatureFlags
 > = core.serialization.object({
-    feature: FeatureFlag,
+    featureFlags: core.serialization.property("feature-flags", core.serialization.list(FeatureFlag).optional()),
 });
 
 export declare namespace WithFeatureFlags {
     export interface Raw {
-        feature: FeatureFlag.Raw;
+        "feature-flags"?: FeatureFlag.Raw[] | null;
     }
 }

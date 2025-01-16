@@ -465,7 +465,7 @@ types:
 
   WithFeatureFlags:
     properties:
-      feature: FeatureFlag
+      feature-flags: optional<list<FeatureFlag>>
 
   FontConfig:
     properties:

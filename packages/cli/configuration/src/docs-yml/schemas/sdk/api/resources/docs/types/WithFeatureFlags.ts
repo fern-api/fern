@@ -5,5 +5,5 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface WithFeatureFlags {
-    feature: FernDocsConfig.FeatureFlag;
+    featureFlags?: FernDocsConfig.FeatureFlag[];
 }
