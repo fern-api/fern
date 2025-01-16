@@ -1,19 +1,11 @@
-# October 2024
-
 ## JWT API Key Integration
 Implemented automatic API key extraction from JWT tokens in the documentation playground. Users can now test authenticated endpoints more easily with automatic credential handling.
 
-```typescript
-const jwtConfig = {
-  extractApiKey: true,
-  tokenLocation: 'header',
-  autoRefresh: true,
-  schema: {
-    apiKeyPath: 'payload.api_key',
-    rolePath: 'payload.permissions'
-  }
-}
-```
+<Card
+  title="Contact us to learn more"
+  variant="bordered"
+  href="/learn/home#get-support"
+/>
 
 ## Query Parameter Enhancement
 Improved handling of query parameters in documentation middleware. Complex query parameters are now properly handled and displayed in the documentation.
