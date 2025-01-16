@@ -419,7 +419,8 @@ export class DocsDefinitionResolver {
             authed: undefined,
             viewers: undefined,
             orphaned: undefined,
-            roles: this.parsedDocsConfig.roles?.map((role) => FernNavigation.RoleId(role))
+            roles: this.parsedDocsConfig.roles?.map((role) => FernNavigation.RoleId(role)),
+            featureFlags: undefined,
         };
     }
 
@@ -461,7 +462,8 @@ export class DocsDefinitionResolver {
             orphaned: landingPageConfig.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined
+            noindex: undefined,
+            featureFlags: landingPageConfig.featureFlags,
         };
     }
 
@@ -529,7 +531,8 @@ export class DocsDefinitionResolver {
             viewers: version.viewers,
             orphaned: version.orphaned,
             icon: undefined,
-            pointsTo: undefined
+            pointsTo: undefined,
+            featureFlags: version.featureFlags,
         };
     }
 
@@ -733,7 +736,8 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined
+            noindex: undefined,
+            featureFlags: item.featureFlags,
         };
     }
 
@@ -766,7 +770,8 @@ export class DocsDefinitionResolver {
             children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
             authed: undefined,
             pointsTo: undefined,
-            noindex: undefined
+            noindex: undefined,
+            featureFlags: item.featureFlags,
         };
     }
 
@@ -848,7 +853,8 @@ export class DocsDefinitionResolver {
             viewers: item.viewers,
             orphaned: item.orphaned,
             pointsTo: undefined,
-            child: await this.toSidebarRootNode(id, layout, slug)
+            child: await this.toSidebarRootNode(id, layout, slug),
+            featureFlags: item.featureFlags,
         };
     }
 

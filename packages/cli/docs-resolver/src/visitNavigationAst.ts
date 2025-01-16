@@ -94,6 +94,7 @@ async function visitNavigationItem({
         flattened: noop,
         path: noop,
         page: noop,
+        featureFlags: noop,
         contents: async (items: docsYml.RawSchemas.NavigationItem[] | undefined): Promise<void> => {
             if (items == null) {
                 return;
