@@ -4,7 +4,8 @@ import { ParseError } from "./ParseError";
 
 export interface SchemaUtils<Raw, Parsed> {
     nullable: () => Schema<Raw | null, Parsed | null>;
-    optional: () => Schema<Raw | null | undefined, Parsed | null | undefined>;
+    nullableOptional: () => Schema<Raw | null | undefined, Parsed | null | undefined>;
+    optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
     transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
     parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed;
     jsonOrThrow: (raw: unknown, opts?: SchemaOptions) => Raw;
@@ -18,6 +19,7 @@ export interface SchemaTransformer<Parsed, Transformed> {
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
     return {
         nullable: () => nullable(schema),
+        nullableOptional: () => nullableOptional(schema),
         optional: () => optional(schema),
         transform: (transformer) => transform(schema, transformer),
         parseOrThrow: (raw, opts) => {
@@ -70,9 +72,7 @@ export function nullable<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<R
     };
 }
 
-export function optional<Raw, Parsed>(
-    schema: BaseSchema<Raw, Parsed>
-): Schema<Raw | null | undefined, Parsed | null | undefined> {
+export function nullableOptional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<Raw | null | undefined, Parsed | null | undefined> {
     const baseSchema: BaseSchema<Raw | null | undefined, Parsed | null | undefined> = {
         parse: (raw, opts) => {
             if (raw === undefined) {
@@ -82,15 +82,40 @@ export function optional<Raw, Parsed>(
                 };
             }
             if (raw == null) {
-                if (opts?.omitUndefined) {
-                    return {
-                        ok: true,
-                        value: undefined
-                    };
-                }
                 return {
                     ok: true,
                     value: null
+                };
+            }
+            return schema.parse(raw, opts);
+        },
+        json: (parsed, opts) => {
+            if (parsed == null) {
+                return {
+                    ok: true,
+                    value: null
+                };
+            }
+            return schema.json(parsed, opts);
+        },
+        getType: () => SchemaType.NULLABLE
+    };
+
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema)
+    };
+}
+
+export function optional<Raw, Parsed>(
+    schema: BaseSchema<Raw, Parsed>
+): Schema<Raw | null | undefined, Parsed | undefined> {
+    const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
+        parse: (raw, opts) => {
+            if (raw == null) {
+                return {
+                    ok: true,
+                    value: undefined
                 };
             }
             return schema.parse(raw, opts);
