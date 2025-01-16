@@ -130,8 +130,7 @@ export class TypeLiteral extends AstNode {
                     return;
                 }
                 writer.write(`"${this.internalType.value.toString()}"`);
-                    return;
-                }
+                return;
                 break;
             }
             case "datetime": {
