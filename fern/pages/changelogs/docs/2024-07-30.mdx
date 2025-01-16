@@ -9,16 +9,3 @@ og:type: documentation
 twitter:card: summary_large_image
 twitter:image: /assets/twitter-card.png
 ```
-
-## Type-Safe Components
-Implemented strict TypeScript checking for documentation components. This ensures more reliable documentation rendering and easier maintenance.
-
-```typescript
-interface CodeBlockProps {
-  language: SupportedLanguage;
-  fileName?: string;
-  showLineNumbers: boolean;
-  highlight?: number[];
-  maxHeight?: number;
-}
-```
