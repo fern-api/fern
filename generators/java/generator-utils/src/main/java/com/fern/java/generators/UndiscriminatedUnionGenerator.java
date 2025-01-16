@@ -23,6 +23,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -37,6 +39,7 @@ import com.fern.java.utils.NamedTypeId;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
 import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
+import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -48,6 +51,7 @@ import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -57,6 +61,8 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
+    private static final String VISITOR_CLASS_NAME = "Visitor";
+    private static final String VISITOR_CLASS_NAME_UNDERSCORE = "Visitor_";
 
     private static final String TYPE_COMMENT = "If %d, value is of type %s";
     private static final String TYPE_FIELD_NAME = "type";
@@ -79,6 +85,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     private final ClassName visitorClassName;
     private final ClassName deserializerClassName;
     private final String undiscriminatedUnionPrefix;
+    private final String visitorName;
 
     public UndiscriminatedUnionGenerator(
             ClassName className,
@@ -95,11 +102,33 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                         member -> generatorContext.getPoetTypeNameMapper().convertToTypeName(true, member.getType()))));
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
             typeNames.putAll(overrideMemberTypeNames(
-                    className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix));
+                    className, generatorContext, undiscriminatedUnion, reservedTypeNames, undiscriminatedUnionPrefix));
         }
         this.memberTypeNames = typeNames;
         this.duplicatedOuterContainerTypes = getDuplicatedOuterContainerTypes(undiscriminatedUnion);
-        this.visitorClassName = className.nestedClass("Visitor");
+        this.visitorName = visitorName(
+                // We need to take into consideration all ancestor types as well as all sibling types so that
+                // to prevent naming the visitor "Visitor" if we already have a variant or property called that.
+                ImmutableSet.<String>builder()
+                        .addAll(reservedTypeNames)
+                        .addAll(
+                                generatorContext.getCustomConfig().enableInlineTypes()
+                                        ? overriddenTypeDeclarations(
+                                                        className,
+                                                        generatorContext,
+                                                        undiscriminatedUnion,
+                                                        reservedTypeNames,
+                                                        undiscriminatedUnionPrefix)
+                                                .values()
+                                                .stream()
+                                                .map(TypeDeclaration::getName)
+                                                .map(DeclaredTypeName::getName)
+                                                .map(Name::getPascalCase)
+                                                .map(SafeAndUnsafeString::getSafeName)
+                                                .collect(Collectors.toList())
+                                        : List.of())
+                        .build());
+        this.visitorClassName = className.nestedClass(visitorName);
         this.deserializerClassName = className.nestedClass("Deserializer");
         this.undiscriminatedUnionPrefix = undiscriminatedUnionPrefix;
     }
@@ -120,7 +149,11 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
         return new ArrayList<>(overriddenTypeDeclarations(
-                        className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix)
+                        className,
+                        generatorContext,
+                        undiscriminatedUnion,
+                        reservedTypeNames,
+                        undiscriminatedUnionPrefix)
                 .values());
     }
 
@@ -128,6 +161,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
+            Set<String> reservedTypeNames,
             String undiscriminatedUnionPrefix) {
         Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
 
@@ -149,6 +183,8 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                     continue;
                 }
 
+                Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
+
                 String name =
                         rawTypeDeclaration.getName().getName().getPascalCase().getSafeName();
 
@@ -156,6 +192,17 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 if (name.startsWith(undiscriminatedUnionPrefix) && !name.equals(undiscriminatedUnionPrefix)) {
                     name = name.substring(undiscriminatedUnionPrefix.length());
                 }
+
+                boolean valid;
+                do {
+                    valid = !allReservedTypeNames.contains(name);
+
+                    if (!valid) {
+                        name += "_";
+                    }
+                } while (!valid);
+
+                allReservedTypeNames.add(name);
 
                 TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
                 overriddenTypeDeclarations.put(resolvedId.typeId(), overriddenTypeDeclaration);
@@ -169,9 +216,10 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
+            Set<String> reservedTypeNames,
             String undiscriminatedUnionPrefix) {
         Map<TypeId, TypeDeclaration> overriddenDeclarations = overriddenTypeDeclarations(
-                className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix);
+                className, generatorContext, undiscriminatedUnion, reservedTypeNames, undiscriminatedUnionPrefix);
         Map<DeclaredTypeName, ClassName> mapperEnclosingClasses = new HashMap<>();
 
         for (TypeDeclaration override : overriddenDeclarations.values()) {
@@ -402,5 +450,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                             .isContainer();
         }
         return false;
+    }
+
+    private static String visitorName(Set<String> reservedTypeNames) {
+        return reservedTypeNames.contains(VISITOR_CLASS_NAME) ? VISITOR_CLASS_NAME_UNDERSCORE : VISITOR_CLASS_NAME;
     }
 }
