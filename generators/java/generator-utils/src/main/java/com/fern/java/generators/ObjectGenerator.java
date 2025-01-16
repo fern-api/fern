@@ -240,7 +240,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
 
         for (EnrichedObjectProperty prop : enrichedObjectProperties) {
             TypeName typeName = overriddenMapper.convertToTypeName(
-                    false, prop.objectProperty().getValueType());
+                    true, prop.objectProperty().getValueType());
             EnrichedObjectProperty overridden = EnrichedObjectProperty.builder()
                     .camelCaseKey(prop.camelCaseKey())
                     .pascalCaseKey(prop.pascalCaseKey())

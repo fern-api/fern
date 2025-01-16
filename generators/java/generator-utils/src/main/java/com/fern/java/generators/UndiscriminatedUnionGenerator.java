@@ -239,7 +239,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 mapperEnclosingClasses);
 
         for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
-            TypeName typeName = overriddenMapper.convertToTypeName(false, member.getType());
+            TypeName typeName = overriddenMapper.convertToTypeName(true, member.getType());
             result.put(member, typeName);
         }
 
