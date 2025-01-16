@@ -8,18 +8,17 @@
         ```yml docs.yml
         navigation:
           - page: Page 1
-            feature-flags:
-              flag: my-feature-flag-a
+            feature-flag: my-feature-flag-a # single boolean flag
           - page: Page 2
-            feature:
+            feature: # multiple boolean flags
               - flag: my-feature-flag-a
               - flag: my-feature-flag-b
           - section: Section Title
             viewers: role-a
-            feature-flags:
+            feature-flag: # configurable match
               flag: my-feature-flag-a
-              default: true
-              match: false
+              default: "ga"
+              match: "beta"
             layout: []
         ```
       type: internal
