@@ -1,0 +1,21 @@
+## Sidebar Navigation Enhancement
+Improved sidebar padding and visual hierarchy with refined spacing and typography. The documentation navigation now provides clearer visual structure and better readability.
+
+```css
+.sidebar-section {
+  padding: theme('spacing.4');
+  border-left: 2px solid transparent;
+  &.active {
+    border-left-color: theme('colors.primary.500');
+  }
+}
+```
+
+## Base Path Configuration
+Added flexible base path configuration for documentation routing. Organizations can now host documentation under custom paths while maintaining proper navigation.
+
+```yaml docs.yml
+instances:
+  - url: your-site.docs.buildwithfern.com
+    custom-domain: your-site.com/docs
+```
