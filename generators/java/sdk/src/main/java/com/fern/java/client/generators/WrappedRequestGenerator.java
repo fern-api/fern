@@ -39,6 +39,7 @@ import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
 import com.fern.java.client.GeneratedWrappedRequest.RequestBodyGetter;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;
+import com.fern.java.generators.object.ObjectTypeSpecGenerator;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
@@ -146,7 +147,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 .addAllProperties(queryParameterObjectProperties)
                 .addAllProperties(objectProperties)
                 .build();
-        ObjectGenerator objectGenerator = new ObjectGenerator(
+        ObjectTypeSpecGenerator objectTypeSpecGenerator = new ObjectTypeSpecGenerator(
                 objectTypeDeclaration,
                 Optional.empty(),
                 extendedInterfaces.stream()
@@ -156,6 +157,12 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 generatorContext,
                 allGeneratedInterfaces,
                 className);
+        ObjectGenerator objectGenerator = new ObjectGenerator(
+                generatorContext,
+                className,
+                objectTypeSpecGenerator.generate(),
+                objectTypeSpecGenerator.objectPropertyGetters(),
+                objectTypeSpecGenerator.extendedPropertyGetters());
         GeneratedObject generatedObject = objectGenerator.generateFile();
         RequestBodyGetterFactory requestBodyGetterFactory =
                 new RequestBodyGetterFactory(objectProperties, generatedObject);

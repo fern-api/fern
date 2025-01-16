@@ -3,11 +3,18 @@ package com.fern.java.generators.object;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ICustomConfig;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
+import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.PoetTypeWithClassName;
 import com.fern.java.generators.ObjectMappersGenerator;
+import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -16,9 +23,14 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
@@ -33,31 +45,83 @@ public final class ObjectTypeSpecGenerator {
     private final boolean supportAdditionalProperties;
     private final boolean disableRequiredPropertyBuilderChecks;
     private final boolean builderNotNullChecks;
+    private final Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
+    private final List<EnrichedObjectProperty> extendedPropertyGetters = new ArrayList<>();
 
     public ObjectTypeSpecGenerator(
-            ClassName objectClassName,
-            ClassName generatedObjectMapperClassName,
-            List<EnrichedObjectProperty> enrichedObjectProperties,
-            List<ImplementsInterface> interfaces,
-            boolean isSerialized,
-            boolean publicConstructorsEnabled,
-            boolean supportAdditionalProperties,
-            ICustomConfig.JsonInclude jsonInclude,
-            Boolean disableRequiredPropertyBuilderChecks,
-            boolean builderNotNullChecks) {
-        this.objectClassName = objectClassName;
-        this.generatedObjectMapperClassName = generatedObjectMapperClassName;
-        this.interfaces = interfaces;
-        this.jsonInclude = jsonInclude;
-        this.builderNotNullChecks = builderNotNullChecks;
+            ObjectTypeDeclaration objectTypeDeclaration,
+            Optional<GeneratedJavaInterface> selfInterface,
+            List<GeneratedJavaInterface> extendedInterfaces,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
+            ClassName className) {
+        selfInterface.ifPresent(extendedInterfaces::add);
+        PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
+        List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
+        if (selfInterface.isEmpty()) {
+            enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
+                    .map(objectProperty -> {
+                        EnrichedObjectProperty enrichedObjectProperty = EnrichedObjectProperty.of(
+                                objectProperty,
+                                false,
+                                poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
+                        this.objectPropertyGetters.put(objectProperty, enrichedObjectProperty);
+                        return enrichedObjectProperty;
+                    })
+                    .collect(Collectors.toList());
+        }
+        List<ImplementsInterface> implementsInterfaces = new ArrayList<>();
+        Set<GeneratedJavaInterface> visited = new HashSet<>();
+        extendedInterfaces.stream()
+                .map(generatedInterface -> {
+                    List<EnrichedObjectProperty> enrichedProperties = new ArrayList<>();
+                    Queue<GeneratedJavaInterface> interfaceQueue = new LinkedList<>();
+                    interfaceQueue.add(generatedInterface);
+                    while (!interfaceQueue.isEmpty()) {
+                        GeneratedJavaInterface generatedJavaInterface = interfaceQueue.poll();
+                        if (visited.contains(generatedJavaInterface)) {
+                            continue;
+                        }
+                        interfaceQueue.addAll(generatedJavaInterface.extendedInterfaces().stream()
+                                .map(DeclaredTypeName::getTypeId)
+                                .map(allGeneratedInterfaces::get)
+                                .collect(Collectors.toList()));
+                        enrichedProperties.addAll(
+                                getEnrichedObjectProperties(generatedJavaInterface, objectPropertyGetters));
+                        visited.add(generatedJavaInterface);
+                    }
+                    return ImplementsInterface.builder()
+                            .interfaceClassName(generatedInterface.getClassName())
+                            .addAllInterfaceProperties(enrichedProperties)
+                            .build();
+                })
+                .forEach(implementsInterface -> {
+                    this.extendedPropertyGetters.addAll(implementsInterface.interfaceProperties());
+                    implementsInterfaces.add(implementsInterface);
+                });
+        this.objectClassName = className;
+        this.generatedObjectMapperClassName =
+                generatorContext.getPoetClassNameFactory().getObjectMapperClassName();
+        this.interfaces = implementsInterfaces;
+        this.jsonInclude = generatorContext.getCustomConfig().jsonInclude();
+        this.builderNotNullChecks = generatorContext.builderNotNullChecks();
         for (ImplementsInterface implementsInterface : interfaces) {
             allEnrichedProperties.addAll(implementsInterface.interfaceProperties());
         }
         allEnrichedProperties.addAll(enrichedObjectProperties);
-        this.isSerialized = isSerialized;
-        this.publicConstructorsEnabled = publicConstructorsEnabled;
-        this.supportAdditionalProperties = supportAdditionalProperties;
-        this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
+        this.isSerialized = true;
+        this.publicConstructorsEnabled = generatorContext.getCustomConfig().enablePublicConstructors();
+        this.supportAdditionalProperties = generatorContext.deserializeWithAdditionalProperties();
+        this.disableRequiredPropertyBuilderChecks =
+                generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks();
+    }
+
+    public Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters() {
+        return this.objectPropertyGetters;
+    }
+
+    public List<EnrichedObjectProperty> extendedPropertyGetters() {
+        return this.extendedPropertyGetters;
     }
 
     public TypeSpec generate() {
@@ -205,5 +269,18 @@ public final class ObjectTypeSpecGenerator {
                 disableRequiredPropertyBuilderChecks,
                 builderNotNullChecks);
         return builderGenerator.generate();
+    }
+
+    private static List<EnrichedObjectProperty> getEnrichedObjectProperties(
+            GeneratedJavaInterface generatedJavaInterface,
+            Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters) {
+        return generatedJavaInterface.propertyMethodSpecs().stream()
+                .map(propertyMethodSpec -> {
+                    EnrichedObjectProperty enrichedObjectProperty = EnrichedObjectProperty.of(
+                            propertyMethodSpec.objectProperty(), true, propertyMethodSpec.methodSpec().returnType);
+                    objectPropertyGetters.put(propertyMethodSpec.objectProperty(), enrichedObjectProperty);
+                    return enrichedObjectProperty;
+                })
+                .collect(Collectors.toList());
     }
 }
