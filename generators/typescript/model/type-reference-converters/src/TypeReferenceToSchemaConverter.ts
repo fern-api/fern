@@ -56,19 +56,17 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
     }
 
     protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
-        const converted = this.convert({ ...params, typeReference: itemType });
-        if (converted.isOptional) {
-            return converted.optionalNullable();
+        if (itemType.type === "container" && itemType.container.type === "optional") {
+            return this.convert({ ...params, typeReference: itemType.container.optional }).optionalNullable();
         }
-        return converted.nullable();
+        return this.convert({ ...params, typeReference: itemType }).nullable();
     }
 
     protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
-        const converted = this.convert({ ...params, typeReference: itemType });
-        if (converted.isNullable) {
-            return converted.optionalNullable();
+        if (itemType.type === "container" && itemType.container.type === "nullable") {
+            return this.convert({ ...params, typeReference: itemType.container.nullable }).optionalNullable();
         }
-        return converted.optional();
+        return this.convert({ ...params, typeReference: itemType }).optional();
     }
 
     protected override unknown(): Zurg.Schema {
