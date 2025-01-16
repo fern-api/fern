@@ -18,7 +18,7 @@ tabs:
   home:
     display-name: Home
     icon: fa-regular fa-home
-    slug: home
+    slug: /
   api-definition:
     display-name: API Definition
     icon: fa-regular fa-book
@@ -39,6 +39,8 @@ tabs:
 css: ./assets/styles.css
 
 redirects:
+  - source: /learn/home
+    destination: /learn
   - source: /learn/api-definition/fern/api-yml-reference
     destination: /learn/api-definition/fern/api-yml/overview
   - source: /learn/docs/api-references/api-playground/:slug
