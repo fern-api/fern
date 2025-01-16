@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithPermissions } from "./WithPermissions";
+import { WithFeatureFlags } from "./WithFeatureFlags";
 
 export const SectionConfiguration: core.serialization.ObjectSchema<
     serializers.SectionConfiguration.Raw,
@@ -21,10 +22,11 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
     })
-    .extend(WithPermissions);
+    .extend(WithPermissions)
+    .extend(WithFeatureFlags);
 
 export declare namespace SectionConfiguration {
-    export interface Raw extends WithPermissions.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         section: string;
         path?: string | null;
         contents: serializers.NavigationItem.Raw[];

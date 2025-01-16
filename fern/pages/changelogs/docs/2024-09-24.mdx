@@ -10,15 +10,3 @@ servers:
   - url: https://sandbox.example.com
     x-fern-server-name: Sandbox
 ```
-
-## Server Upload Validation
-Improved file upload handling with better validation in documentation examples. Users can now better understand and test file upload endpoints.
-
-```typescript
-const uploadConfig = {
-  maxSize: '10MB',
-  allowedTypes: ['image/*', 'application/pdf'],
-  validateBeforeUpload: true,
-  showProgress: true
-}
-```

@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { PlaygroundSettings } from "./PlaygroundSettings";
 import { WithPermissions } from "./WithPermissions";
+import { WithFeatureFlags } from "./WithFeatureFlags";
 
 export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
     serializers.ApiReferenceSectionConfiguration.Raw,
@@ -26,10 +27,11 @@ export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         playground: PlaygroundSettings.optional(),
     })
-    .extend(WithPermissions);
+    .extend(WithPermissions)
+    .extend(WithFeatureFlags);
 
 export declare namespace ApiReferenceSectionConfiguration {
-    export interface Raw extends WithPermissions.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         section: string;
         "referenced-packages"?: string[] | null;
         summary?: string | null;

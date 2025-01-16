@@ -1,5 +1,40 @@
 - changelogEntry:
     - summary: |
+        The preview server is updated such that local previews of both OpenRPC and OpenAPI (legacy parser)
+        are now possible. 
+      type: fix
+  irVersion: 55
+  version: 0.50.4
+
+- changelogEntry:
+    - summary: |
+        The docs.yml now supports a separate configurtation for `feature-flags` which allows Fern to render 
+        pieces of content depending on whether or not certain feature flags are enabled for particular user. 
+
+        This feature is in alpha stage; please contact support@buildwithfern.com to learn more!
+
+        ```yml docs.yml
+        navigation:
+          - page: Page 1
+            feature-flag: my-feature-flag-a # single boolean flag
+          - page: Page 2
+            feature: # multiple boolean flags
+              - flag: my-feature-flag-a
+              - flag: my-feature-flag-b
+          - section: Section Title
+            viewers: role-a
+            feature-flag: # configurable match
+              flag: my-feature-flag-a
+              fallback-value: "ga"
+              match: "beta"
+            layout: []
+        ```
+      type: internal
+  irVersion: 55
+  version: 0.50.4
+
+- changelogEntry:
+    - summary: |
         Fixes an issue where optional, nullable properties resulted in a double optional in the
         IRv55 -> IRv54 migration.
       type: internal

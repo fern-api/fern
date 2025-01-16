@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { PlaygroundSettings } from "./PlaygroundSettings";
 import { WithPermissions } from "./WithPermissions";
+import { WithFeatureFlags } from "./WithFeatureFlags";
 
 export const ApiReferenceEndpointConfiguration: core.serialization.ObjectSchema<
     serializers.ApiReferenceEndpointConfiguration.Raw,
@@ -20,10 +21,11 @@ export const ApiReferenceEndpointConfiguration: core.serialization.ObjectSchema<
         hidden: core.serialization.boolean().optional(),
         playground: PlaygroundSettings.optional(),
     })
-    .extend(WithPermissions);
+    .extend(WithPermissions)
+    .extend(WithFeatureFlags);
 
 export declare namespace ApiReferenceEndpointConfiguration {
-    export interface Raw extends WithPermissions.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         endpoint: string;
         title?: string | null;
         slug?: string | null;
