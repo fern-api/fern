@@ -18,7 +18,9 @@ export const toJson = (
     replacer?: (this: unknown, key: string, value: unknown) => unknown,
     space?: string | number
 ): string => {
-    if (!data) {return JSON.stringify(data, replacer, space);}
+    if (!data) {
+        return JSON.stringify(data, replacer, space);
+    }
 
     const bigInts = /([[:])?"(-?\d+)n"([,}]])/g;
     const preliminaryJSON = JSON.stringify(
@@ -70,11 +72,13 @@ export function fromJson<T = unknown>(
     json: string,
     reviver?: (this: unknown, key: string, value: unknown) => unknown
 ): T {
-    if (!json) {return JSON.parse(json, reviver);}
+    if (!json) {
+        return JSON.parse(json, reviver);
+    }
 
     const numbersBiggerThanMaxInt =
         /(?<=[^\\]":\n*\s*[[]?|[^\\]":\n*\s*\[.*[^.\d*]\n*\s*|(?<![^\\]"\n*\s*:\n*\s*[^\\]".*),\n*\s*)(-?\d{17,}|-?(?:[9](?:[1-9]07199254740991|0[1-9]7199254740991|00[8-9]199254740991|007[2-9]99254740991|007199[3-9]54740991|0071992[6-9]4740991|00719925[5-9]740991|007199254[8-9]40991|0071992547[5-9]0991|00719925474[1-9]991|00719925474099[2-9])))(?=,(?!.*[^\\]"(\n*\s*\}|\n*\s*\]))|\n*\s*\}[^"]?|\n*\s*\][^"])/g;
-    const serializedData = json.replace(numbersBiggerThanMaxInt, "\"$1n\"");
+    const serializedData = json.replace(numbersBiggerThanMaxInt, '"$1n"');
 
     return JSON.parse(serializedData, (key, value) => {
         const isCustomFormatBigInt = typeof value === "string" && Boolean(value.match(/^-?\d+n$/));

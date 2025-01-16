@@ -325,7 +325,10 @@ export class SdkGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             noOptionalProperties: config.noOptionalProperties
         });
-        this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
+        this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator({
+            includeSerdeLayer: config.includeSerdeLayer,
+            useBigInt: config.useBigInt
+        });
         this.sdkErrorGenerator = new SdkErrorGenerator({
             neverThrowErrors: config.neverThrowErrors
         });

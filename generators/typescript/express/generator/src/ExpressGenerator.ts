@@ -205,7 +205,10 @@ export class ExpressGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             noOptionalProperties: config.noOptionalProperties
         });
-        this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
+        this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator({
+            useBigInt: config.useBigInt,
+            includeSerdeLayer: config.includeSerdeLayer
+        });
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator({
             includeSerdeLayer: config.includeSerdeLayer,

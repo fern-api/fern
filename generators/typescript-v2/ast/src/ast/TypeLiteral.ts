@@ -103,13 +103,15 @@ export class TypeLiteral extends AstNode {
     }
 
     public write(writer: Writer): void {
+        const noSerdeLayer = !!writer.customConfig?.noSerdeLayer;
+        const useBigInt = !!writer.customConfig?.useBigInt;
         switch (this.internalType.type) {
             case "array": {
                 this.writeIterable({ writer, iterable: this.internalType });
                 break;
             }
             case "blob": {
-                if (writer.customConfig?.noSerdeLayer) {
+                if (noSerdeLayer) {
                     writer.writeNode(TypeLiteral.string(this.internalType.value));
                     return;
                 }
@@ -123,15 +125,17 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "bigint": {
-                if (writer.customConfig?.noSerdeLayer) {
-                    writer.writeNode(TypeLiteral.string(this.internalType.value.toString()));
+                if (useBigInt === true) {
+                    writer.write(`BigInt(${this.internalType.value.toString()})`);
+                    return;
+                } else {
+                    writer.write(`"${this.internalType.value.toString()}"`);
                     return;
                 }
-                writer.write(`BigInt(${this.internalType.value.toString()})`);
                 break;
             }
             case "datetime": {
-                if (writer.customConfig?.noSerdeLayer) {
+                if (noSerdeLayer) {
                     writer.writeNode(TypeLiteral.string(this.internalType.value));
                     return;
                 }
@@ -157,7 +161,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "set": {
-                if (writer.customConfig?.noSerdeLayer || this.isSetOfObjects()) {
+                if (noSerdeLayer || this.isSetOfObjects()) {
                     writer.writeNode(TypeLiteral.array({ values: this.internalType.values }));
                     return;
                 }
