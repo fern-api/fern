@@ -418,7 +418,7 @@ export class SdkGenerator {
 
     public async generate(): Promise<TypescriptProject> {
         this.context.logger.debug("Copying as-is files");
-        this.copyAsIsFiles();
+        await this.copyAsIsFiles();
         this.generateTypeDeclarations();
         this.context.logger.debug("Generated types");
         this.generateErrorDeclarations();
@@ -577,8 +577,8 @@ export class SdkGenerator {
               });
     }
 
-    private copyAsIsFiles() {
-        this.asIsManager.AddToTsProject({ project: this.project });
+    private async copyAsIsFiles() {
+        await this.asIsManager.AddToTsProject({ project: this.project });
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
