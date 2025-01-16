@@ -392,28 +392,34 @@ async function getNavigationConfiguration({
     throw new Error("Unexpected. Docs have neither navigation or versions defined.");
 }
 
-function convertFeatureFlag(flag: docsYml.RawSchemas.FeatureFlagConfiguration | undefined): CjsFdrSdk.navigation.latest.FeatureFlagOptions[] | undefined {
+function convertFeatureFlag(
+    flag: docsYml.RawSchemas.FeatureFlagConfiguration | undefined
+): CjsFdrSdk.navigation.latest.FeatureFlagOptions[] | undefined {
     if (flag == null) {
         return undefined;
     }
     if (typeof flag === "string") {
-        return [{
-            flag,
-            match: true,
-            fallbackValue: undefined
-        }];
+        return [
+            {
+                flag,
+                match: true,
+                fallbackValue: undefined
+            }
+        ];
     } else if (Array.isArray(flag)) {
         return flag.map((flagItem) => ({
             flag: flagItem.flag,
             match: flagItem.match,
-            fallbackValue: flagItem.fallbackValue,
+            fallbackValue: flagItem.fallbackValue
         }));
     } else {
-        return [{
-            flag: flag.flag,
-            match: flag.match ?? true,
-            fallbackValue: flag.fallbackValue,
-        }];
+        return [
+            {
+                flag: flag.flag,
+                match: flag.match ?? true,
+                fallbackValue: flag.fallbackValue
+            }
+        ];
     }
 }
 
