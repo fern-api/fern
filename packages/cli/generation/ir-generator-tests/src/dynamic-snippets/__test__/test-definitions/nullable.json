@@ -632,6 +632,40 @@
                                 }
                             }
                         }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "extra",
+                                "camelCase": {
+                                    "unsafeName": "extra",
+                                    "safeName": "extra"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "extra",
+                                    "safeName": "extra"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EXTRA",
+                                    "safeName": "EXTRA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Extra",
+                                    "safeName": "Extra"
+                                }
+                            },
+                            "wireValue": "extra"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "BOOLEAN"
+                                }
+                            }
+                        }
                     }
                 ],
                 "headers": [],

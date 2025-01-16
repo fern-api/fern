@@ -36,7 +36,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         const resolvedType = this.context.type.resolveTypeName(typeName);
         const isOptional = ResolvedTypeReference._visit<boolean>(resolvedType, {
             container: (container) => this.container(container, params).isOptional,
-            primitive: (primitive) => this.primitive(primitive).isOptional,
+            primitive: (primitive) => this.primitive(primitive, params).isOptional,
             named: () => false,
             unknown: () => this.unknown().isOptional,
             _other: () => {

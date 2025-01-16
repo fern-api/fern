@@ -24,6 +24,18 @@ await client.nullable.createUser({
     avatar: "avatar",
     activated: true,
   },
+  avatar: "avatar",
+});
+
+```
+
+
+```typescript
+import { SeedNullableClient } from "@fern/nullable";
+
+const client = new SeedNullableClient({ environment: "YOUR_BASE_URL" });
+await client.nullable.deleteUser({
+  username: "xy",
 });
 
 ```

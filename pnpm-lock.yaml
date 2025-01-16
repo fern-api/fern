@@ -5109,6 +5109,9 @@ importers:
       '@fern-api/ui-core-utils':
         specifier: 0.127.5-c465d2cf0
         version: 0.127.5-c465d2cf0
+      '@open-rpc/meta-schema':
+        specifier: ^1.14.9
+        version: 1.14.9
       dayjs:
         specifier: ^1.11.11
         version: 1.11.11

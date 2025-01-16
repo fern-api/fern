@@ -32,6 +32,7 @@ service:
           tags:
             type: optional<nullable<string>>
             allow-multiple: true
+          extra: optional<nullable<boolean>>
       response: list<User>
 
     createUser:

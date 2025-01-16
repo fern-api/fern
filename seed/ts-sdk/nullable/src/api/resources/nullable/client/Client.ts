@@ -39,14 +39,15 @@ export class Nullable {
      *         usernames: "usernames",
      *         avatar: "avatar",
      *         activated: true,
-     *         tags: null
+     *         tags: null,
+     *         extra: null
      *     })
      */
     public async getUsers(
         request: SeedNullable.GetUsersRequest = {},
         requestOptions?: Nullable.RequestOptions,
     ): Promise<SeedNullable.User[]> {
-        const { usernames, avatar, activated, tags } = request;
+        const { usernames, avatar, activated, tags, extra } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (usernames != null) {
             if (Array.isArray(usernames)) {
@@ -74,6 +75,10 @@ export class Nullable {
             } else {
                 _queryParams["tags"] = tags;
             }
+        }
+
+        if (extra !== undefined) {
+            _queryParams["extra"] = extra?.toString() ?? null;
         }
 
         const _response = await core.fetcher({
@@ -143,7 +148,8 @@ export class Nullable {
      *             updatedAt: "2024-01-15T09:30:00Z",
      *             avatar: "avatar",
      *             activated: true
-     *         }
+     *         },
+     *         avatar: "avatar"
      *     })
      */
     public async createUser(
@@ -197,6 +203,73 @@ export class Nullable {
                 });
             case "timeout":
                 throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling POST /users.");
+            case "unknown":
+                throw new errors.SeedNullableError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedNullable.DeleteUserRequest} request
+     * @param {Nullable.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.nullable.deleteUser({
+     *         username: "xy"
+     *     })
+     */
+    public async deleteUser(
+        request: SeedNullable.DeleteUserRequest = {},
+        requestOptions?: Nullable.RequestOptions,
+    ): Promise<boolean> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users",
+            ),
+            method: "DELETE",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/nullable",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/nullable/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.DeleteUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.nullable.deleteUser.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedNullableError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedNullableError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling DELETE /users.");
             case "unknown":
                 throw new errors.SeedNullableError({
                     message: _response.error.errorMessage,

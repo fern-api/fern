@@ -32,6 +32,7 @@ await client.nullable.createUser({
         avatar: "avatar",
         activated: true,
     },
+    avatar: "avatar",
 });
 ```
 

@@ -7,5 +7,5 @@ import * as SeedNullable from "../../../index";
 export interface User {
     name: string;
     tags?: string[];
-    metadata?: SeedNullable.Metadata | undefined;
+    metadata?: SeedNullable.Metadata;
 }

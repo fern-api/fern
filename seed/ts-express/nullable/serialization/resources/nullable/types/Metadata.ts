@@ -11,7 +11,7 @@ export const Metadata: core.serialization.ObjectSchema<serializers.Metadata.Raw,
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
         avatar: core.serialization.string().optional(),
-        activated: core.serialization.boolean().optional().optional(),
+        activated: core.serialization.boolean().optional(),
     });
 
 export declare namespace Metadata {
@@ -19,6 +19,6 @@ export declare namespace Metadata {
         createdAt: string;
         updatedAt: string;
         avatar?: string | null;
-        activated?: (boolean | null | undefined) | null;
+        activated?: boolean | null;
     }
 }

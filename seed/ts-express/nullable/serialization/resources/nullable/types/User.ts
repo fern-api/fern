@@ -10,10 +10,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedNul
     {
         name: core.serialization.string(),
         tags: core.serialization.list(core.serialization.string()).optional(),
-        metadata: core.serialization
-            .lazyObject(() => serializers.Metadata)
-            .optional()
-            .optional(),
+        metadata: core.serialization.lazyObject(() => serializers.Metadata).optional(),
     },
 );
 
@@ -21,6 +18,6 @@ export declare namespace User {
     export interface Raw {
         name: string;
         tags?: string[] | null;
-        metadata?: (serializers.Metadata.Raw | null | undefined) | null;
+        metadata?: serializers.Metadata.Raw | null;
     }
 }
