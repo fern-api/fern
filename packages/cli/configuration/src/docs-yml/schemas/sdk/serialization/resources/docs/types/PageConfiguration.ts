@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithPermissions } from "./WithPermissions";
+import { WithFeatureFlags } from "./WithFeatureFlags";
 
 export const PageConfiguration: core.serialization.ObjectSchema<
     serializers.PageConfiguration.Raw,
@@ -18,10 +19,11 @@ export const PageConfiguration: core.serialization.ObjectSchema<
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
     })
-    .extend(WithPermissions);
+    .extend(WithPermissions)
+    .extend(WithFeatureFlags);
 
 export declare namespace PageConfiguration {
-    export interface Raw extends WithPermissions.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         page: string;
         path: string;
         slug?: string | null;

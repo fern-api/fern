@@ -6,6 +6,7 @@ import * as core from "../../../../core";
 import * as fs from "fs";
 import { Blob } from "buffer";
 import * as SeedFileUpload from "../../../index";
+import { toJson } from "../../../../core/json";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
@@ -79,13 +80,13 @@ export class Service {
         }
 
         for (const _item of request.list_of_objects) {
-            _request.append("list_of_objects", JSON.stringify(_item));
+            _request.append("list_of_objects", toJson(_item));
         }
 
         if (request.optional_metadata != null) {
             if (Array.isArray(request.optional_metadata) || request.optional_metadata instanceof Set)
                 for (const _item of request.optional_metadata) {
-                    _request.append("optional_metadata", typeof _item === "string" ? _item : JSON.stringify(_item));
+                    _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
                 }
         }
 
@@ -307,9 +308,9 @@ export class Service {
         const _request = await core.newFormData();
         await _request.appendFile("file", file);
         _request.append("foo", request.foo);
-        _request.append("bar", JSON.stringify(request.bar));
+        _request.append("bar", toJson(request.bar));
         if (request.foo_bar != null) {
-            _request.append("foo_bar", JSON.stringify(request.foo_bar));
+            _request.append("foo_bar", toJson(request.foo_bar));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();

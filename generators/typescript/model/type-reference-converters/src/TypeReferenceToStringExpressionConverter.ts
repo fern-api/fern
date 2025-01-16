@@ -226,15 +226,12 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     /**
      * Example:
      * ```ts
-     * JSON.stringify(REFERENCE)
+     * toJson(REFERENCE)
      * ```
      */
     private jsonStringify(reference: ts.Expression): ts.Expression {
         return ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier("JSON"),
-                ts.factory.createIdentifier("stringify")
-            ),
+            this.context.jsonContext.getReferenceToToJson().getExpression(),
             undefined,
             [reference]
         );
@@ -243,7 +240,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     /**
      * Example:
      * ```ts
-     * typeof REFERENCE === "string" ? REFERENCE : JSON.stringify(REFERENCE)
+     * typeof REFERENCE === "string" ? REFERENCE : toJson(REFERENCE)
      * ```
      */
     private jsonStringifyIfNotString(reference: ts.Expression): ts.Expression {
@@ -265,7 +262,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
      * ```ts
      * (() => {
      *   const mapped = REFERENCE;
-     *   return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+     *   return typeof mapped === "string" ? mapped : toJson(mapped);
      * })()
      * ```
      */

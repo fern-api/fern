@@ -11,6 +11,7 @@ import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreU
 import {
     EnvironmentsContext,
     GenericAPISdkErrorContext,
+    JsonContext,
     SdkClientClassContext,
     SdkContext,
     SdkInlinedRequestBodySchemaContext,
@@ -40,6 +41,7 @@ import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
+import { JsonDeclarationReferencer } from "../declaration-referencers/JsonDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "../declaration-referencers/SdkClientClassDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
@@ -51,6 +53,7 @@ import { VersionGenerator } from "../version/VersionGenerator";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
 import { EnvironmentsContextImpl } from "./environments/EnvironmentsContextImpl";
 import { GenericAPISdkErrorContextImpl } from "./generic-api-sdk-error/GenericAPISdkErrorContextImpl";
+import { JsonContextImpl } from "./json/JsonContextImpl";
 import { RequestWrapperContextImpl } from "./request-wrapper/RequestWrapperContextImpl";
 import { SdkClientClassContextImpl } from "./sdk-client-class/SdkClientClassContextImpl";
 import { SdkEndpointTypeSchemasContextImpl } from "./sdk-endpoint-type-schemas/SdkEndpointTypeSchemasContextImpl";
@@ -78,6 +81,7 @@ export declare namespace SdkContextImpl {
         intermediateRepresentation: IntermediateRepresentation;
         versionGenerator: VersionGenerator;
         versionDeclarationReferencer: VersionDeclarationReferencer;
+        jsonDeclarationReferencer: JsonDeclarationReferencer;
         typeGenerator: TypeGenerator;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
@@ -141,6 +145,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
 
     public readonly versionContext: VersionContextImpl;
+    public readonly jsonContext: JsonContext;
     public readonly sdkError: SdkErrorContextImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextImpl;
@@ -169,6 +174,7 @@ export class SdkContextImpl implements SdkContext {
         intermediateRepresentation,
         versionGenerator,
         versionDeclarationReferencer,
+        jsonDeclarationReferencer,
         typeGenerator,
         typeResolver,
         typeDeclarationReferencer,
@@ -248,6 +254,11 @@ export class SdkContextImpl implements SdkContext {
             versionDeclarationReferencer,
             importsManager,
             sourceFile
+        });
+        this.jsonContext = new JsonContextImpl({
+            sourceFile,
+            importsManager,
+            jsonDeclarationReferencer
         });
         this.type = new TypeContextImpl({
             npmPackage,

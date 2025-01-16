@@ -29,6 +29,7 @@ RUN yarn add \
   webpack@^5.97.1 \
   fetch-mock-jest@^1.5.1
 
+COPY generators/typescript/asIs/ /assets/asIs
 COPY generators/typescript/utils/core-utilities/fetcher/src/ /assets/fetcher
 COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/callback-queue
 COPY generators/typescript/utils/core-utilities/auth/src/ /assets/auth

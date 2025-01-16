@@ -5,9 +5,58 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.47.2] - 2025-01-15
+## [0.48.1] - 2025-01-16
 
 - Fix: Record types with `null` values are now correctly serialized.
+
+## [0.48.0] - 2025-01-16
+
+- Feat: When `useBigInt` SDK configuration is set to `true`, a customized JSON serializer & deserializer is used that will preserve the precision of `bigint`'s, as opposed to the native `JSON.stringify` and `JSON.parse` function which converts `bigint`'s to `number`'s losing precision.
+
+  When combining `useBigInt` with our serialization layer (`no-serde: false` (default)), both the request and response properties that are marked as `long` and `bigint` in OpenAPI/Fern spec, will consistently be `bigint`'s.
+  However, when disabling the serialization layer (`no-serde: true`), they will be typed as `number | bigint`.
+
+  Here's an overview of what to expect from the generated types when combining `useBigInt` and `noSerde` with the following Fern definition:
+
+  **Fern definition**
+  ```yml
+  types:
+    ObjectWithOptionalField:
+      properties:
+        longProp: long
+        bigIntProp: bigint
+  ```
+
+  **TypeScript output**
+  ```typescript
+  // useBigInt: true
+  // noSerde: false
+  interface ObjectWithLongAndBigInt {
+    longProp: bigint;
+    bigIntProp: bigint;
+  }
+
+  // useBigInt: true
+  // noSerde: true
+  interface ObjectWithLongAndBigInt {
+    longProp: bigint | number;
+    bigIntProp: bigint | number;
+  }
+
+  // useBigInt: false
+  // noSerde: false
+  interface ObjectWithLongAndBigInt {
+    longProp: number;
+    bigIntProp: string;
+  }
+
+  // useBigInt: false
+  // noSerde: true
+  interface ObjectWithLongAndBigInt {
+    longProp: number;
+    bigIntProp: string;
+  }
+  ```
 
 ## [0.47.1] - 2025-01-15
 

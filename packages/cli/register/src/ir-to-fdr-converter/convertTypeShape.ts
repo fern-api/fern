@@ -248,6 +248,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     base64: () => {
                         return {
                             type: "base64",
+                            mimeType: undefined,
                             default: undefined
                         };
                     },

@@ -15,6 +15,7 @@ import {
     getFullPathForEndpoint,
     getTextOfTsNode
 } from "@fern-typescript/commons";
+import { AsIsManager } from "@fern-typescript/commons/src/asIs/AsIsManager";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
@@ -57,6 +58,7 @@ import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
+import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer";
@@ -173,6 +175,7 @@ export class SdkGenerator {
     private environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
     private genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
     private timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
+    private jsonDeclarationReferencer: JsonDeclarationReferencer;
 
     private versionGenerator: VersionGenerator;
     private typeGenerator: TypeGenerator;
@@ -193,6 +196,7 @@ export class SdkGenerator {
     private referenceConfigBuilder: ReferenceConfigBuilder;
     private generatorAgent: TypeScriptGeneratorAgent;
     private FdrClient: FdrSnippetTemplateClient | undefined;
+    private readonly asIsManager: AsIsManager;
 
     constructor({
         namespaceExport,
@@ -298,6 +302,14 @@ export class SdkGenerator {
             containingDirectory: [],
             namespaceExport
         });
+        this.jsonDeclarationReferencer = new JsonDeclarationReferencer({
+            containingDirectory: [
+                {
+                    nameOnDisk: "core"
+                }
+            ],
+            namespaceExport: "json"
+        });
 
         this.versionGenerator = new VersionGenerator();
         this.typeGenerator = new TypeGenerator({
@@ -313,7 +325,10 @@ export class SdkGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             noOptionalProperties: config.noOptionalProperties
         });
-        this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
+        this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator({
+            includeSerdeLayer: config.includeSerdeLayer,
+            useBigInt: config.useBigInt
+        });
         this.sdkErrorGenerator = new SdkErrorGenerator({
             neverThrowErrors: config.neverThrowErrors
         });
@@ -395,9 +410,15 @@ export class SdkGenerator {
                               : FdrSnippetTemplateEnvironment.Prod
                   })
                 : undefined;
+
+        this.asIsManager = new AsIsManager({
+            useBigInt: config.useBigInt
+        });
     }
 
     public async generate(): Promise<TypescriptProject> {
+        this.context.logger.debug("Copying as-is files");
+        await this.copyAsIsFiles();
         this.generateTypeDeclarations();
         this.context.logger.debug("Generated types");
         this.generateErrorDeclarations();
@@ -554,6 +575,10 @@ export class SdkGenerator {
                   exportSerde,
                   useLegacyExports: this.config.useLegacyExports
               });
+    }
+
+    private async copyAsIsFiles() {
+        await this.asIsManager.AddToTsProject({ project: this.project });
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
@@ -1276,6 +1301,7 @@ export class SdkGenerator {
             importsManager,
             versionGenerator: this.versionGenerator,
             versionDeclarationReferencer: this.versionDeclarationReferencer,
+            jsonDeclarationReferencer: this.jsonDeclarationReferencer,
             typeResolver: this.typeResolver,
             typeDeclarationReferencer: this.typeDeclarationReferencer,
             typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,

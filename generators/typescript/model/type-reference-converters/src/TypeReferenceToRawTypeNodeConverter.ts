@@ -43,12 +43,20 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
     }
 
     protected override bigInteger(): TypeReferenceNode {
-        return this.string();
+        if (this.useBigInt) {
+            return this.generateNonOptionalTypeReferenceNode(
+                ts.factory.createUnionTypeNode([
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
+                ])
+            );
+        }
+        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
     }
 
     protected override long(): TypeReferenceNode {
         if (this.useBigInt) {
-            return this.string();
+            return this.bigInteger();
         }
         return this.number();
     }
