@@ -17,7 +17,7 @@ export const TypeReferenceDeclarationWithContentTypeSchema: core.serialization.O
     .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace TypeReferenceDeclarationWithContentTypeSchema {
-    interface Raw extends TypeReferenceDeclarationWithName.Raw {
+    export interface Raw extends TypeReferenceDeclarationWithName.Raw {
         "content-type"?: string | null;
     }
 }

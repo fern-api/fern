@@ -116,7 +116,7 @@ export class SeedValidationClient {
         requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const { decimal, even, name } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["decimal"] = decimal.toString();
         _queryParams["even"] = even.toString();
         _queryParams["name"] = name;

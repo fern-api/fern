@@ -43,40 +43,40 @@ class ServiceClient
     {
         $body = new MultipartFormData();
         if ($request->maybeString != null) {
-            $body->add(name: 'maybeString', value: $request->maybeString);
+            $body->add(name: 'maybe_string', value: $request->maybeString);
         }
         $body->add(name: 'integer', value: $request->integer);
         $body->addPart($request->file->toMultipartFormDataPart('file'));
         foreach ($request->fileList as $file) {
-            $body->addPart($file->toMultipartFormDataPart('fileList'));
+            $body->addPart($file->toMultipartFormDataPart('file_list'));
         }
         if ($request->maybeFile != null) {
-            $body->addPart($request->maybeFile->toMultipartFormDataPart('maybeFile'));
+            $body->addPart($request->maybeFile->toMultipartFormDataPart('maybe_file'));
         }
         if ($request->maybeFileList != null) {
             foreach ($request->maybeFileList as $file) {
-                $body->addPart($file->toMultipartFormDataPart('maybeFileList'));
+                $body->addPart($file->toMultipartFormDataPart('maybe_file_list'));
             }
         }
         if ($request->maybeInteger != null) {
-            $body->add(name: 'maybeInteger', value: $request->maybeInteger);
+            $body->add(name: 'maybe_integer', value: $request->maybeInteger);
         }
         if ($request->optionalListOfStrings != null) {
             foreach ($request->optionalListOfStrings as $element) {
-                $body->add(name: 'optionalListOfStrings', value: $element);
+                $body->add(name: 'optional_list_of_strings', value: $element);
             }
         }
         foreach ($request->listOfObjects as $element) {
-            $body->add(name: 'listOfObjects', value: $element->toJson());
+            $body->add(name: 'list_of_objects', value: $element->toJson());
         }
         if ($request->optionalMetadata != null) {
-            $body->add(name: 'optionalMetadata', value: JsonEncoder::encode($request->optionalMetadata));
+            $body->add(name: 'optional_metadata', value: JsonEncoder::encode($request->optionalMetadata));
         }
         if ($request->optionalObjectType != null) {
-            $body->add(name: 'optionalObjectType', value: $request->optionalObjectType);
+            $body->add(name: 'optional_object_type', value: $request->optionalObjectType);
         }
         if ($request->optionalId != null) {
-            $body->add(name: 'optionalId', value: $request->optionalId);
+            $body->add(name: 'optional_id', value: $request->optionalId);
         }
         try {
             $response = $this->client->sendRequest(
@@ -207,10 +207,10 @@ class ServiceClient
             value: $request->bar->toJson(),
             contentType: 'application/json',
         );
-        if ($request->foobar != null) {
+        if ($request->fooBar != null) {
             $body->add(
-                name: 'foobar',
-                value: $request->foobar->toJson(),
+                name: 'foo_bar',
+                value: $request->fooBar->toJson(),
                 contentType: 'application/json',
             );
         }

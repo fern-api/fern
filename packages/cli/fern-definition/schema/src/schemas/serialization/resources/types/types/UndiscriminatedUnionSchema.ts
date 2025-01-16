@@ -19,7 +19,7 @@ export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
     .extend(BaseTypeDeclarationSchema);
 
 export declare namespace UndiscriminatedUnionSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw {
+    export interface Raw extends BaseTypeDeclarationSchema.Raw {
         discriminated: false;
         union: SingleUndiscriminatedUnionTypeSchema.Raw[];
     }

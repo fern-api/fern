@@ -10,6 +10,7 @@ export const FernContainerRegex = {
     LIST: /^list<\s*(.*)\s*>$/,
     SET: /^set<\s*(.*)\s*>$/,
     OPTIONAL: /^optional<\s*(.*)\s*>$/,
+    NULLABLE: /^nullable<\s*(.*)\s*>$/,
     LITERAL: /^literal<\s*(?:"(.*)"|(true|false))\s*>$/
 };
 
@@ -19,6 +20,7 @@ export interface RawTypeReferenceVisitor<R> {
     list: (valueType: string) => R;
     set: (valueType: string) => R;
     optional: (valueType: string) => R;
+    nullable: (valueType: string) => R;
     literal: (literal: Literal) => R;
     named: (named: string) => R;
     unknown: () => R;
@@ -173,6 +175,11 @@ export function visitRawTypeReference<R>({
     const optionalMatch = type.match(FernContainerRegex.OPTIONAL);
     if (optionalMatch?.[1] != null) {
         return visitor.optional(optionalMatch[1]);
+    }
+
+    const nullableMatch = type.match(FernContainerRegex.NULLABLE);
+    if (nullableMatch?.[1] != null) {
+        return visitor.nullable(nullableMatch[1]);
     }
 
     const literalMatch = type.match(FernContainerRegex.LITERAL);

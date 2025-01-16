@@ -41,6 +41,9 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         importsManager: ImportsManager;
+        includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -59,6 +62,9 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         ir,
@@ -70,7 +76,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         targetRuntime,
         retainOriginalCasing,
         inlineFileProperties,
-        importsManager
+        importsManager,
+        includeSerdeLayer,
+        allowExtraFields,
+        omitUndefined
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -81,6 +90,9 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.importsManager = importsManager;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
+        this.omitUndefined = omitUndefined;
         if (
             this.inlineFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
@@ -285,7 +297,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                     ),
                     wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
-                    requestParameter: this.requestParameter
+                    requestParameter: this.requestParameter,
+                    includeSerdeLayer: this.includeSerdeLayer,
+                    allowExtraFields: this.allowExtraFields,
+                    omitUndefined: this.omitUndefined
                 })
             );
         }

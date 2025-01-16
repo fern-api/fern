@@ -46,7 +46,7 @@ export class Metadata {
         requestOptions?: Metadata.RequestOptions,
     ): Promise<SeedMixedFileDirectory.user.events.Metadata> {
         const { id } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["id"] = id;
         const _response = await core.fetcher({
             url: urlJoin(

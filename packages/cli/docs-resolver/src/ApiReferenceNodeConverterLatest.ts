@@ -58,7 +58,7 @@ export class ApiReferenceNodeConverterLatest {
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: FdrAPI.api.latest.ApiDefinition,
         parentSlug: FernNavigation.V1.SlugGenerator,
-        private workspace: OSSWorkspace,
+        private workspace: OSSWorkspace | undefined,
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
@@ -104,7 +104,7 @@ export class ApiReferenceNodeConverterLatest {
         const pointsTo = FernNavigation.V1.followRedirects(this.#children);
         const changelogNodeConverter = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
-            this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
+            this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
         ).orUndefined();
@@ -715,7 +715,7 @@ export class ApiReferenceNodeConverterLatest {
                 orphaned: undefined
             };
             if (webSocket.namespace != null && webSocket.namespace.length > 0) {
-                const firstNamespacePart = webSocket.namespace[0];
+                const firstNamespacePart = camelCase(webSocket.namespace[0]);
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {
@@ -788,7 +788,7 @@ export class ApiReferenceNodeConverterLatest {
             };
 
             if (webhook.namespace != null && webhook.namespace.length > 0) {
-                const firstNamespacePart = webhook.namespace[0];
+                const firstNamespacePart = camelCase(webhook.namespace[0]);
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {

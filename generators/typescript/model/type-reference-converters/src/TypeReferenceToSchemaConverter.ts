@@ -55,6 +55,10 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.date();
     }
 
+    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+        return this.convert({ ...params, typeReference: itemType }).nullable();
+    }
+
     protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
         return this.convert({ ...params, typeReference: itemType }).optional();
     }

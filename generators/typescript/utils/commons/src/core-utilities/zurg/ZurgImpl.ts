@@ -463,6 +463,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
 
     private getSchemaUtils(baseSchema: Zurg.BaseSchema): Zurg.SchemaUtils {
         return {
+            nullable: () => this.nullable(baseSchema),
             optional: () => this.optional(baseSchema),
             parse: (raw, opts) =>
                 ts.factory.createCallExpression(
@@ -563,6 +564,26 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         } else {
             return [];
         }
+    }
+
+    private nullable(schema: Zurg.BaseSchema): Zurg.Schema {
+        const baseSchema: Zurg.BaseSchema = {
+            isOptional: false,
+            toExpression: () =>
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        schema.toExpression(),
+                        ts.factory.createIdentifier("nullable")
+                    ),
+                    undefined,
+                    []
+                )
+        };
+
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema)
+        };
     }
 
     private optional(schema: Zurg.BaseSchema): Zurg.Schema {

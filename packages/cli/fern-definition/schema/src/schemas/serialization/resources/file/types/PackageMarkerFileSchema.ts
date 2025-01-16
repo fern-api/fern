@@ -20,7 +20,7 @@ export const PackageMarkerFileSchema: core.serialization.ObjectSchema<
     .extend(DefinitionFileSchema);
 
 export declare namespace PackageMarkerFileSchema {
-    interface Raw extends DefinitionFileSchema.Raw {
+    export interface Raw extends DefinitionFileSchema.Raw {
         navigation?: Navigation.Raw | null;
         export?: Export.Raw | null;
     }

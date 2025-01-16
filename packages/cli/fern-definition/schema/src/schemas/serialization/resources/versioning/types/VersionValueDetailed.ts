@@ -19,7 +19,7 @@ export const VersionValueDetailed: core.serialization.ObjectSchema<
     .extend(WithName);
 
 export declare namespace VersionValueDetailed {
-    interface Raw extends WithDocsSchema.Raw, WithName.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithName.Raw {
         value: string;
     }
 }

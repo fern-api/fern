@@ -111,6 +111,23 @@ function filterExampleTypeReference({
                           }
                         : undefined;
                 },
+                nullable: (n) => {
+                    const filteredNullableTypReference =
+                        n.nullable != null
+                            ? filterExampleTypeReference({ filteredIr, exampleTypeReference: n.nullable })
+                            : undefined;
+                    return filteredNullableTypReference != null
+                        ? {
+                              ...exampleTypeReference,
+                              shape: ExampleTypeReferenceShape.container(
+                                  ExampleContainer.nullable({
+                                      nullable: filteredNullableTypReference,
+                                      valueType: n.valueType
+                                  })
+                              )
+                          }
+                        : undefined;
+                },
                 map: (m) => ({
                     ...exampleTypeReference,
                     shape: ExampleTypeReferenceShape.container(

@@ -12,5 +12,5 @@ export const ExampleTypeReferenceSchema: core.serialization.Schema<
 > = core.serialization.unknown();
 
 export declare namespace ExampleTypeReferenceSchema {
-    type Raw = unknown;
+    export type Raw = unknown;
 }

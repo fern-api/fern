@@ -5,6 +5,70 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.47.1] - 2025-01-15
+
+- Fix: Resolves an issue where nullable query parameters were not null-safe in their method invocations. The
+  generated code now appropriately guard against `null` values like so:
+
+  ```typescript
+  const _queryParams: Record< ... >;
+  if (value !== undefined) {
+      _queryParams["value"] = value?.toString() ?? null;
+  }
+  ```
+
+## [0.47.0] - 2025-01-14
+
+- Feature: Add support for `nullable` properties. Users can now specify explicit `null` values
+  for types that specify `nullable` properties like so:
+
+  ```typescript
+  await client.users.update({ username: "john.doe", metadata: null });
+  ```
+
+## [0.46.11] - 2025-01-14
+
+- Fix: Don't double check whether an optional string literal alias (see example below) is a string when using serializer to build query string parameters.
+
+  ```yml
+  types:
+    LiteralAliasExample: literal<"MyLiteralValue">
+
+  service:
+    endpoints:
+      foo:
+        path: /bar
+        method: POST
+        request:
+          name: FooBarRequest
+          query-parameters:
+            optional_alias_literal: optional<LiteralAliasExample>
+  ```
+
+  ```ts
+  // before
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = typeof serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) === "string" ? serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) : JSON.stringify(serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }));
+  }
+
+  // after
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      });
+  }
+  ```
+
+## [0.46.10] - 2025-01-14
+
+- Fix: Use serialization layer to convert types to JSON strings when enabled.
+
 ## [0.46.9] - 2025-01-13
 
 - Fix: Expose `baseUrl` as a default Client constructor option and construct URL correctly.

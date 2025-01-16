@@ -16,7 +16,7 @@ export const OAuthAccessTokenResponsePropertiesSchema: core.serialization.Object
 });
 
 export declare namespace OAuthAccessTokenResponsePropertiesSchema {
-    interface Raw {
+    export interface Raw {
         "access-token"?: string | null;
         "expires-in"?: string | null;
         "refresh-token"?: string | null;

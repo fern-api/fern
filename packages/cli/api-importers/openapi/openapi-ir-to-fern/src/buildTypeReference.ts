@@ -1,6 +1,3 @@
-import { camelCase } from "lodash-es";
-
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
@@ -10,6 +7,7 @@ import {
     IntSchema,
     LiteralSchema,
     MapSchema,
+    NullableSchema,
     ObjectSchema,
     OneOfSchema,
     OptionalSchema,
@@ -17,7 +15,6 @@ import {
     PrimitiveSchemaValue,
     ReferencedSchema,
     Schema,
-    SdkGroupName,
     StringSchema
 } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
@@ -97,8 +94,16 @@ export function buildTypeReference({
         case "unknown":
             return buildUnknownTypeReference();
         case "optional":
-        case "nullable":
             return buildOptionalTypeReference({
+                schema,
+                fileContainingReference,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth
+            });
+        case "nullable":
+            return buildNullableTypeReference({
                 schema,
                 fileContainingReference,
                 context,
@@ -552,6 +557,81 @@ export function buildMapTypeReference({
     return result;
 }
 
+export function buildNullableTypeReference({
+    schema,
+    fileContainingReference,
+    declarationFile,
+    context,
+    namespace,
+    declarationDepth
+}: {
+    schema: NullableSchema;
+    fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
+    context: OpenApiIrConverterContext;
+    namespace: string | undefined;
+    declarationDepth: number;
+}): RawSchemas.TypeReferenceSchema {
+    if (!context.respectNullableSchemas) {
+        return buildOptionalTypeReference({
+            schema,
+            fileContainingReference,
+            context,
+            declarationFile,
+            namespace,
+            declarationDepth
+        });
+    }
+
+    const itemTypeReference = buildTypeReference({
+        schema: schema.value,
+        fileContainingReference,
+        declarationFile,
+        context,
+        namespace,
+        declarationDepth
+    });
+    const itemType = getTypeFromTypeReference(itemTypeReference);
+    const itemDocs = getDocsFromTypeReference(itemTypeReference);
+    const itemDefault = getDefaultFromTypeReference(itemTypeReference);
+    const itemValidation = getValidationFromTypeReference(itemTypeReference);
+    const type = itemType.startsWith("nullable<") ? itemType : `nullable<${itemType}>`;
+    if (
+        schema.availability == null &&
+        schema.description == null &&
+        itemDocs == null &&
+        itemDefault == null &&
+        itemValidation == null &&
+        schema.title == null
+    ) {
+        return wrapOptionalIfNotAlready({
+            typeReference: type,
+            itemType
+        });
+    }
+    const result: RawSchemas.TypeReferenceSchema = {
+        type
+    };
+    if (schema.description != null || itemDocs != null) {
+        result.docs = schema.description ?? itemDocs;
+    }
+    if (itemDefault != null) {
+        result.default = itemDefault;
+    }
+    if (itemValidation != null) {
+        result.validation = itemValidation;
+    }
+    if (schema.availability != null) {
+        result.availability = convertAvailability(schema.availability);
+    }
+
+    // Nullable schemas are always treated as optional.
+    return wrapOptionalIfNotAlready({
+        typeReference: result,
+        itemType
+    });
+}
+
 export function buildOptionalTypeReference({
     schema,
     fileContainingReference,
@@ -805,4 +885,23 @@ function getDisplayName(schema: Schema): string | undefined {
         unknown: (s) => undefined,
         _other: () => undefined
     });
+}
+
+function wrapOptionalIfNotAlready({
+    typeReference,
+    itemType
+}: {
+    typeReference: RawSchemas.TypeReferenceSchema;
+    itemType: string;
+}): RawSchemas.TypeReferenceSchema {
+    if (itemType.startsWith("optional<")) {
+        return typeReference;
+    }
+    if (typeof typeReference === "string") {
+        return `optional<${typeReference}>`;
+    }
+    return {
+        ...typeReference,
+        type: `optional<${typeReference.type}>`
+    };
 }

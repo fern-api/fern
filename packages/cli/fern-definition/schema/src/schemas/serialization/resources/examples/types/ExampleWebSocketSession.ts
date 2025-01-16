@@ -28,7 +28,7 @@ export const ExampleWebSocketSession: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace ExampleWebSocketSession {
-    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
+    export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
         "path-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
         "query-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
         headers?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;

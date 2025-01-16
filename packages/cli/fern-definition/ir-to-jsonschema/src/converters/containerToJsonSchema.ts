@@ -31,6 +31,13 @@ export function convertContainerToJsonSchema({
                     { type: "null" }
                 ]
             };
+        case "nullable":
+            return {
+                oneOf: [
+                    convertTypeReferenceToJsonSchema({ typeReference: container.nullable, context }),
+                    { type: "null" }
+                ]
+            };
         case "set":
             return {
                 type: "array",

@@ -11,5 +11,5 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
     core.serialization.undiscriminatedUnion([PaginationSchema, core.serialization.boolean()]);
 
 export declare namespace Pagination {
-    type Raw = PaginationSchema.Raw | boolean;
+    export type Raw = PaginationSchema.Raw | boolean;
 }

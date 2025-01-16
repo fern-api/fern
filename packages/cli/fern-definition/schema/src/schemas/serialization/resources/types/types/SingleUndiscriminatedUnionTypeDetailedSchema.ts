@@ -19,7 +19,7 @@ export const SingleUndiscriminatedUnionTypeDetailedSchema: core.serialization.Ob
     .extend(WithDisplayName);
 
 export declare namespace SingleUndiscriminatedUnionTypeDetailedSchema {
-    interface Raw extends WithDocsSchema.Raw, WithDisplayName.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithDisplayName.Raw {
         type: string;
     }
 }

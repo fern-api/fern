@@ -11,5 +11,5 @@ export const EnumValue: core.serialization.Schema<serializers.EnumValue.Raw, Fer
     core.serialization.undiscriminatedUnion([core.serialization.string(), EnumValueSchema]);
 
 export declare namespace EnumValue {
-    type Raw = string | EnumValueSchema.Raw;
+    export type Raw = string | EnumValueSchema.Raw;
 }

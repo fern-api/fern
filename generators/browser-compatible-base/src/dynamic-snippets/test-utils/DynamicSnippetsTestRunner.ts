@@ -361,7 +361,7 @@ export class DynamicSnippetsTestRunner {
                         headers: undefined,
                         requestBody: {
                             file: "Hello, world!",
-                            fileList: ["First", "Second"]
+                            file_list: ["First", "Second"]
                         }
                     }
                 },

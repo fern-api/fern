@@ -11,5 +11,5 @@ export const ResponseError: core.serialization.Schema<serializers.ResponseError.
     core.serialization.undiscriminatedUnion([core.serialization.string(), ResponseErrorWithDocsSchema]);
 
 export declare namespace ResponseError {
-    type Raw = string | ResponseErrorWithDocsSchema.Raw;
+    export type Raw = string | ResponseErrorWithDocsSchema.Raw;
 }

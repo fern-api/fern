@@ -23,7 +23,7 @@ export const BaseTypeReferenceSchema: core.serialization.ObjectSchema<
     .extend(WithAvailability);
 
 export declare namespace BaseTypeReferenceSchema {
-    interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw {
         default?: unknown | null;
         encoding?: EncodingSchema.Raw | null;
         validation?: ValidationSchema.Raw | null;

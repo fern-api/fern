@@ -53,7 +53,7 @@ export class User {
             excludeUser,
             filter,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["limit"] = limit.toString();
         _queryParams["id"] = id;
         _queryParams["date"] = date;

@@ -181,6 +181,19 @@ export class TypeResolverImpl implements TypeResolver {
                               )
                           }
                         : undefined,
+                nullable: (itemType) =>
+                    itemType != null
+                        ? {
+                              _type: "container",
+                              container: {
+                                  _type: "nullable",
+                                  itemType
+                              },
+                              originalTypeReference: TypeReference.container(
+                                  ContainerType.nullable(itemType.originalTypeReference)
+                              )
+                          }
+                        : undefined,
                 set: (itemType) =>
                     itemType != null
                         ? {

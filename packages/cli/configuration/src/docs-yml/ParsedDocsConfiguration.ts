@@ -220,6 +220,7 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | undefined;
         apiName: string | undefined;
+        openrpc: string | undefined;
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;

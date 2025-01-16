@@ -172,7 +172,7 @@ export class Organizations {
         requestOptions?: Organizations.RequestOptions,
     ): Promise<SeedPathParameters.Organization[]> {
         const { limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }

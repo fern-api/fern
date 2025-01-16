@@ -13,5 +13,5 @@ export const SingleUnionTypeSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), SingleUnionTypeDetailedSchema]);
 
 export declare namespace SingleUnionTypeSchema {
-    type Raw = string | SingleUnionTypeDetailedSchema.Raw;
+    export type Raw = string | SingleUnionTypeDetailedSchema.Raw;
 }

@@ -19,5 +19,5 @@ export const ExampleResponseSchema: core.serialization.Schema<
 ]);
 
 export declare namespace ExampleResponseSchema {
-    type Raw = ExampleBodyResponseSchema.Raw | ExampleStreamResponseSchema.Raw | ExampleSseResponseSchema.Raw;
+    export type Raw = ExampleBodyResponseSchema.Raw | ExampleStreamResponseSchema.Raw | ExampleSseResponseSchema.Raw;
 }

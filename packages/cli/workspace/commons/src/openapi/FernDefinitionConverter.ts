@@ -31,6 +31,7 @@ export class FernDefinitionConverter {
                 overrides: {
                     ...settings,
                     respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.args.respectReadonlySchemas,
+                    respectNullableSchemas: settings?.respectNullableSchemas ?? this.args.respectNullableSchemas,
                     onlyIncludeReferencedSchemas:
                         settings?.onlyIncludeReferencedSchemas ?? this.args.onlyIncludeReferencedSchemas,
                     inlinePathParameters: settings?.inlinePathParameters ?? this.args.inlinePathParameters,

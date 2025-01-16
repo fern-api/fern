@@ -218,6 +218,7 @@ function generateTypeVisitor<TOut>(
                 map: visitor.map,
                 set: visitor.set,
                 optional: (typeReference) => generateTypeVisitor(typeReference, visitor),
+                nullable: (typeReference) => generateTypeVisitor(typeReference, visitor),
                 _other: visitor.other
             }),
         _other: visitor.other
@@ -230,6 +231,8 @@ function getNamedType(typeReference: TypeReference): NamedType | undefined {
             return typeReference;
         case "container":
             switch (typeReference.container.type) {
+                case "nullable":
+                    return getNamedType(typeReference.container.nullable);
                 case "optional":
                     return getNamedType(typeReference.container.optional);
                 case "list":

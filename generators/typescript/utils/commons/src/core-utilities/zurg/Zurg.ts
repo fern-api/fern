@@ -69,6 +69,7 @@ export declare namespace Zurg {
         json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
         parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
         jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
         optional: () => Zurg.Schema;
         transform: (args: {
             newShape: ts.TypeNode | undefined;

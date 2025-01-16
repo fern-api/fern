@@ -17,7 +17,7 @@ export const SingleUnionTypeKeySchema: core.serialization.ObjectSchema<
     .extend(WithName);
 
 export declare namespace SingleUnionTypeKeySchema {
-    interface Raw extends WithName.Raw {
+    export interface Raw extends WithName.Raw {
         value: string;
     }
 }

@@ -20,7 +20,7 @@ export const ExampleTypeSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace ExampleTypeSchema {
-    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
+    export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
         value?: ExampleTypeValueSchema.Raw;
     }
 }

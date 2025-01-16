@@ -13,5 +13,5 @@ export const ExampleEndpointCallArraySchema: core.serialization.Schema<
 > = core.serialization.list(ExampleEndpointCallSchema);
 
 export declare namespace ExampleEndpointCallArraySchema {
-    type Raw = ExampleEndpointCallSchema.Raw[];
+    export type Raw = ExampleEndpointCallSchema.Raw[];
 }

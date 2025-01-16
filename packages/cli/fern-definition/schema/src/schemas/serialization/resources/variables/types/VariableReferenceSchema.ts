@@ -19,7 +19,7 @@ export const VariableReferenceSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace VariableReferenceSchema {
-    interface Raw extends WithAvailability.Raw, WithDocsSchema.Raw {
+    export interface Raw extends WithAvailability.Raw, WithDocsSchema.Raw {
         variable: string;
     }
 }

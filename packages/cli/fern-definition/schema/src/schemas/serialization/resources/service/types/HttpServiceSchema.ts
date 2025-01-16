@@ -31,7 +31,7 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
     .extend(WithDisplayName);
 
 export declare namespace HttpServiceSchema {
-    interface Raw extends DeclarationWithoutDocsSchema.Raw, WithDisplayName.Raw {
+    export interface Raw extends DeclarationWithoutDocsSchema.Raw, WithDisplayName.Raw {
         auth: boolean;
         url?: string | null;
         "base-path": string;
