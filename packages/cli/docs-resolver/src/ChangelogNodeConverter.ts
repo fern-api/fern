@@ -94,7 +94,8 @@ export class ChangelogNodeConverter {
                 noindex: undefined,
                 authed: undefined,
                 viewers: undefined,
-                orphaned: undefined
+                orphaned: undefined,
+                featureFlags: undefined,
             };
         });
 
@@ -116,7 +117,8 @@ export class ChangelogNodeConverter {
             noindex: undefined,
             authed: undefined,
             viewers: opts.viewers,
-            orphaned: opts.orphaned
+            orphaned: opts.orphaned,
+            featureFlags: undefined,
         };
     }
 
@@ -151,7 +153,8 @@ export class ChangelogNodeConverter {
                     children: this.groupByMonth(id, entries, parentSlug),
                     authed: undefined,
                     viewers: undefined,
-                    orphaned: undefined
+                    orphaned: undefined,
+                    featureFlags: undefined,
                 };
             }),
             "year",
@@ -185,7 +188,8 @@ export class ChangelogNodeConverter {
                     children: entries,
                     authed: undefined,
                     viewers: undefined,
-                    orphaned: undefined
+                    orphaned: undefined,
+                    featureFlags: undefined,
                 };
             }),
             "month",
