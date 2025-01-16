@@ -7,6 +7,7 @@ import { Logger } from "@fern-api/logger";
 import { Constants } from "@fern-fern/ir-sdk/api";
 
 import { TypeContext, TypeSchemaContext } from "../model-context";
+import { JsonContext } from "./json";
 
 export interface BaseContext {
     logger: Logger;
@@ -17,4 +18,5 @@ export interface BaseContext {
     type: TypeContext;
     typeSchema: TypeSchemaContext;
     includeSerdeLayer: boolean;
+    jsonContext: JsonContext;
 }
