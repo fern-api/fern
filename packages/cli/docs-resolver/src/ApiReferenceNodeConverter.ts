@@ -116,7 +116,7 @@ export class ApiReferenceNodeConverter {
             authed: undefined,
             viewers: this.apiSection.viewers,
             orphaned: this.apiSection.orphaned,
-            featureFlags: this.apiSection.featureFlags,
+            featureFlags: this.apiSection.featureFlags
         };
     }
 
@@ -222,7 +222,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
-                featureFlags: pkg.featureFlags,
+                featureFlags: pkg.featureFlags
             };
         } else {
             this.taskContext.logger.warn(
@@ -252,7 +252,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
-                featureFlags: pkg.featureFlags,
+                featureFlags: pkg.featureFlags
             };
         }
     }
@@ -320,7 +320,7 @@ export class ApiReferenceNodeConverter {
             authed: undefined,
             viewers: section.viewers,
             orphaned: section.orphaned,
-            featureFlags: section.featureFlags, 
+            featureFlags: section.featureFlags
         };
     }
 
@@ -366,7 +366,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
-                featureFlags: undefined,
+                featureFlags: undefined
             };
         }
 
@@ -382,7 +382,7 @@ export class ApiReferenceNodeConverter {
                 playground: undefined,
                 viewers: undefined,
                 orphaned: undefined,
-                featureFlags: undefined,
+                featureFlags: undefined
             },
             apiDefinitionPackageId,
             parentSlug
@@ -427,7 +427,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: endpointItem.viewers,
                 orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags,
+                featureFlags: endpointItem.featureFlags
             };
         }
 
@@ -464,7 +464,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: endpointItem.viewers,
                 orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags,
+                featureFlags: endpointItem.featureFlags
             };
         }
 
@@ -501,7 +501,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: endpointItem.viewers,
                 orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags,
+                featureFlags: endpointItem.featureFlags
             };
         }
 
@@ -570,7 +570,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
-                featureFlags: undefined,
+                featureFlags: undefined
             });
         });
 
@@ -596,7 +596,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
-                featureFlags: undefined,
+                featureFlags: undefined
             });
         });
 
@@ -622,7 +622,7 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
-                featureFlags: undefined,
+                featureFlags: undefined
             });
         });
 
@@ -659,7 +659,7 @@ export class ApiReferenceNodeConverter {
                     authed: undefined,
                     viewers: undefined,
                     orphaned: undefined,
-                    featureFlags: undefined,
+                    featureFlags: undefined
                 });
             }
         });

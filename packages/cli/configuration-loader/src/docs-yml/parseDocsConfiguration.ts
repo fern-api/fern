@@ -381,7 +381,7 @@ async function getNavigationConfiguration({
                 slug: version.slug,
                 viewers: parseRoles(version.viewers),
                 orphaned: version.orphaned,
-                featureFlags: version.featureFlags?.map((flag) => convertFeatureFlag(flag)),
+                featureFlags: version.featureFlags?.map((flag) => convertFeatureFlag(flag))
             });
         }
         return {
@@ -399,7 +399,6 @@ function convertFeatureFlag(flag: docsYml.RawSchemas.FeatureFlag): CjsFdrSdk.nav
         fallbackValue: flag.default
     };
 }
-
 
 async function convertTypographyConfiguration({
     rawTypography,
@@ -558,7 +557,7 @@ async function convertNavigationTabConfiguration({
                 href: tab.href
             },
             viewers: parseRoles(tab.viewers),
-            orphaned: tab.orphaned, 
+            orphaned: tab.orphaned,
             featureFlags: tab.featureFlags?.map((flag) => convertFeatureFlag(flag))
         };
     }
@@ -656,7 +655,7 @@ async function convertNavigationItem({
             skipUrlSlug: rawConfig.skipSlug ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned, 
+            orphaned: rawConfig.orphaned,
             featureFlags: rawConfig.featureFlags?.map((flag) => convertFeatureFlag(flag))
         };
     }
@@ -685,7 +684,7 @@ async function convertNavigationItem({
             paginated: rawConfig.paginated ?? false,
             playground: rawConfig.playground,
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned, 
+            orphaned: rawConfig.orphaned,
             featureFlags: rawConfig.featureFlags?.map((flag) => convertFeatureFlag(flag))
         };
     }
@@ -706,7 +705,7 @@ async function convertNavigationItem({
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned, 
+            orphaned: rawConfig.orphaned,
             featureFlags: rawConfig.featureFlags?.map((flag) => convertFeatureFlag(flag))
         };
     }
@@ -738,7 +737,7 @@ function parsePageConfig(
         // TODO: implement noindex
         noindex: undefined,
         viewers: parseRoles(item.viewers),
-        orphaned: item.orphaned, 
+        orphaned: item.orphaned,
         featureFlags: item.featureFlags?.map((flag) => convertFeatureFlag(flag))
     };
 }
@@ -778,7 +777,7 @@ function parseApiReferenceLayoutItem(
                 icon: item.icon,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
-                orphaned: item.orphaned, 
+                orphaned: item.orphaned,
                 featureFlags: item.featureFlags?.map((flag) => convertFeatureFlag(flag))
             }
         ];
@@ -793,7 +792,7 @@ function parseApiReferenceLayoutItem(
                 hidden: item.hidden,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
-                orphaned: item.orphaned, 
+                orphaned: item.orphaned,
                 featureFlags: item.featureFlags?.map((flag) => convertFeatureFlag(flag))
             }
         ];
@@ -813,7 +812,7 @@ function parseApiReferenceLayoutItem(
                 icon: value.icon,
                 playground: value.playground,
                 viewers: parseRoles(value.viewers),
-                orphaned: value.orphaned, 
+                orphaned: value.orphaned,
                 featureFlags: value.featureFlags?.map((flag) => convertFeatureFlag(flag))
             };
         }
@@ -829,7 +828,7 @@ function parseApiReferenceLayoutItem(
             icon: undefined,
             playground: undefined,
             viewers: undefined,
-            orphaned: undefined, 
+            orphaned: undefined,
             featureFlags: undefined
         };
     });

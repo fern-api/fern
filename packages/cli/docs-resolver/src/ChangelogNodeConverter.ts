@@ -95,7 +95,7 @@ export class ChangelogNodeConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
-                featureFlags: undefined,
+                featureFlags: undefined
             };
         });
 
@@ -118,7 +118,7 @@ export class ChangelogNodeConverter {
             authed: undefined,
             viewers: opts.viewers,
             orphaned: opts.orphaned,
-            featureFlags: undefined,
+            featureFlags: undefined
         };
     }
 
@@ -154,7 +154,7 @@ export class ChangelogNodeConverter {
                     authed: undefined,
                     viewers: undefined,
                     orphaned: undefined,
-                    featureFlags: undefined,
+                    featureFlags: undefined
                 };
             }),
             "year",
@@ -189,7 +189,7 @@ export class ChangelogNodeConverter {
                     authed: undefined,
                     viewers: undefined,
                     orphaned: undefined,
-                    featureFlags: undefined,
+                    featureFlags: undefined
                 };
             }),
             "month",

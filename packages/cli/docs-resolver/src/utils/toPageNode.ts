@@ -37,7 +37,7 @@ export function toPageNode({
         noindex: page.noindex,
         authed: undefined,
         viewers: page.viewers,
-        orphaned: page.orphaned, 
-        featureFlags: page.featureFlags,
+        orphaned: page.orphaned,
+        featureFlags: page.featureFlags
     };
 }
