@@ -4952,9 +4952,6 @@ importers:
 
   packages/cli/docs-preview:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
       '@fern-api/docs-resolver':
         specifier: workspace:*
         version: link:../docs-resolver
@@ -4967,9 +4964,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
-      '@fern-api/lazy-fern-workspace':
-        specifier: workspace:*
-        version: link:../workspace/lazy-fern-workspace
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../logger
