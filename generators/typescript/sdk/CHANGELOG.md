@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.48.1] - 2025-01-16
+
+- Fix: Record types with `null` values are now correctly serialized.
+
 ## [0.48.0] - 2025-01-16
 
 - Feat: When `useBigInt` SDK configuration is set to `true`, a customized JSON serializer & deserializer is used that will preserve the precision of `bigint`'s, as opposed to the native `JSON.stringify` and `JSON.parse` function which converts `bigint`'s to `number`'s losing precision.

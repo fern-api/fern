@@ -358,6 +358,7 @@ function isSchemaOptional(schema: Schema<any, any>): boolean {
         case SchemaType.ANY:
         case SchemaType.UNKNOWN:
         case SchemaType.OPTIONAL:
+        case SchemaType.OPTIONAL_NULLABLE:
             return true;
         default:
             return false;
