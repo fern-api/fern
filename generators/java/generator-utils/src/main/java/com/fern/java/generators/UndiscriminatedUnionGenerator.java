@@ -32,8 +32,8 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeNameMapper;
+import com.fern.java.utils.InlineTypeIdResolver;
 import com.fern.java.utils.NamedTypeId;
-import com.fern.java.utils.NamedTypeIdResolver;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
 import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
@@ -124,7 +124,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
         Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
 
         for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
-            List<NamedTypeId> resolvedIds = member.getType().visit(new NamedTypeIdResolver("", member.getType()));
+            List<NamedTypeId> resolvedIds = member.getType().visit(new InlineTypeIdResolver("", member.getType()));
             for (NamedTypeId resolvedId : resolvedIds) {
                 Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
                         generatorContext.getTypeDeclarations().get(resolvedId.typeId()));

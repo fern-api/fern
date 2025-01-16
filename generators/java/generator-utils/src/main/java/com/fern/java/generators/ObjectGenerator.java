@@ -28,8 +28,8 @@ import com.fern.java.generators.object.ObjectTypeSpecGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
+import com.fern.java.utils.InlineTypeIdResolver;
 import com.fern.java.utils.NamedTypeId;
-import com.fern.java.utils.NamedTypeIdResolver;
 import com.google.common.collect.ImmutableMap;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
@@ -175,7 +175,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
         for (EnrichedObjectProperty prop : enrichedObjectProperties) {
             List<NamedTypeId> resolvedIds = prop.objectProperty()
                     .getValueType()
-                    .visit(new NamedTypeIdResolver(
+                    .visit(new InlineTypeIdResolver(
                             prop.pascalCaseKey(), prop.objectProperty().getValueType()));
 
             // See if the names require further resolution

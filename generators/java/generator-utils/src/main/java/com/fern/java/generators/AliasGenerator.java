@@ -11,15 +11,14 @@ import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.PoetTypeNameMapper;
+import com.fern.java.utils.InlineTypeIdResolver;
 import com.fern.java.utils.NamedTypeId;
-import com.fern.java.utils.NamedTypeIdResolver;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +56,7 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
         List<NamedTypeId> resolvedIds = aliasTypeDeclaration
                 .getAliasOf()
-                .visit(new NamedTypeIdResolver(VALUE_FIELD_NAME_PASCAL, aliasTypeDeclaration.getAliasOf()));
+                .visit(new InlineTypeIdResolver(VALUE_FIELD_NAME_PASCAL, aliasTypeDeclaration.getAliasOf()));
         for (NamedTypeId resolvedId : resolvedIds) {
             String name = resolvedId.name();
             Optional<TypeDeclaration> maybeRawTypeDeclaration =

@@ -12,8 +12,8 @@ import com.fern.java.FernJavaAnnotations;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.union.UnionSubType;
 import com.fern.java.generators.union.UnionTypeSpecGenerator;
+import com.fern.java.utils.InlineTypeIdResolver;
 import com.fern.java.utils.NamedTypeId;
-import com.fern.java.utils.NamedTypeIdResolver;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -125,7 +125,7 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         for (ObjectProperty objectProperty : objectProperties) {
             List<NamedTypeId> resolvedIds = objectProperty
                     .getValueType()
-                    .visit(new NamedTypeIdResolver(
+                    .visit(new InlineTypeIdResolver(
                             objectProperty.getName().getName().getPascalCase().getSafeName(),
                             objectProperty.getValueType()));
             allResolvedIds.addAll(resolvedIds);
@@ -530,7 +530,7 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         public List<NamedTypeId> visitSingleProperty(SingleUnionTypeProperty singleUnionTypeProperty) {
             return singleUnionTypeProperty
                     .getType()
-                    .visit(new NamedTypeIdResolver(
+                    .visit(new InlineTypeIdResolver(
                             variant.getDiscriminantValue()
                                     .getName()
                                     .getPascalCase()
