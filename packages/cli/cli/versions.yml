@@ -17,7 +17,7 @@
             viewers: role-a
             feature-flag: # configurable match
               flag: my-feature-flag-a
-              default: "ga"
+              fallback-value: "ga"
               match: "beta"
             layout: []
         ```
