@@ -5,6 +5,7 @@
 import * as core from "../../../../core";
 import * as SeedLiteral from "../../../index";
 import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
@@ -89,11 +90,11 @@ export class Query {
             _queryParams["optional_stream"] = optionalStream.toString();
         }
 
-        _queryParams["alias_stream"] = JSON.stringify(
+        _queryParams["alias_stream"] = toJson(
             serializers.AliasToStream.jsonOrThrow(aliasStream, { unrecognizedObjectKeys: "strip" }),
         );
         if (aliasOptionalStream != null) {
-            _queryParams["alias_optional_stream"] = JSON.stringify(
+            _queryParams["alias_optional_stream"] = toJson(
                 serializers.AliasToStream.jsonOrThrow(aliasOptionalStream, { unrecognizedObjectKeys: "strip" }),
             );
         }

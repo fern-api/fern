@@ -5,6 +5,7 @@
 import * as core from "../../../../core";
 import * as SeedEnum from "../../../index";
 import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
@@ -55,14 +56,14 @@ export class QueryParam {
 
         _queryParams["operandOrColor"] = (() => {
             const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, { unrecognizedObjectKeys: "strip" });
-            return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+            return typeof mapped === "string" ? mapped : toJson(mapped);
         })();
         if (maybeOperandOrColor != null) {
             _queryParams["maybeOperandOrColor"] = (() => {
                 const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
                     unrecognizedObjectKeys: "strip",
                 });
-                return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+                return typeof mapped === "string" ? mapped : toJson(mapped);
             })();
         }
 
@@ -157,7 +158,7 @@ export class QueryParam {
             _queryParams["operandOrColor"] = operandOrColor.map((item) =>
                 (() => {
                     const mapped = serializers.ColorOrOperand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" });
-                    return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+                    return typeof mapped === "string" ? mapped : toJson(mapped);
                 })(),
             );
         } else {
@@ -165,7 +166,7 @@ export class QueryParam {
                 const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
                     unrecognizedObjectKeys: "strip",
                 });
-                return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+                return typeof mapped === "string" ? mapped : toJson(mapped);
             })();
         }
 
@@ -176,7 +177,7 @@ export class QueryParam {
                         const mapped = serializers.ColorOrOperand.jsonOrThrow(item, {
                             unrecognizedObjectKeys: "strip",
                         });
-                        return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+                        return typeof mapped === "string" ? mapped : toJson(mapped);
                     })(),
                 );
             } else {
@@ -184,7 +185,7 @@ export class QueryParam {
                     const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
                         unrecognizedObjectKeys: "strip",
                     });
-                    return typeof mapped === "string" ? mapped : JSON.stringify(mapped);
+                    return typeof mapped === "string" ? mapped : toJson(mapped);
                 })();
             }
         }
