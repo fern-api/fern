@@ -125,11 +125,11 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "bigint": {
-                if (useBigInt === true) {
+                if (useBigInt) {
                     writer.write(`BigInt(${this.internalType.value.toString()})`);
                     return;
-                } else {
-                    writer.write(`"${this.internalType.value.toString()}"`);
+                }
+                writer.write(`"${this.internalType.value.toString()}"`);
                     return;
                 }
                 break;
