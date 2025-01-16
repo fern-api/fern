@@ -24,20 +24,22 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.UndiscriminatedUnionMember;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
-import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.PoetTypeNameMapper;
+import com.fern.java.utils.InlineTypeIdResolver;
+import com.fern.java.utils.NamedTypeId;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
 import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -45,6 +47,7 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,7 +56,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
+public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     private static final String TYPE_COMMENT = "If %d, value is of type %s";
     private static final String TYPE_FIELD_NAME = "type";
@@ -75,20 +78,30 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
 
     private final ClassName visitorClassName;
     private final ClassName deserializerClassName;
+    private final String undiscriminatedUnionPrefix;
 
     public UndiscriminatedUnionGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-        super(className, generatorContext);
+            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass,
+            String undiscriminatedUnionPrefix) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.undiscriminatedUnion = undiscriminatedUnion;
-        this.memberTypeNames = undiscriminatedUnion.getMembers().stream()
+        Map<UndiscriminatedUnionMember, TypeName> typeNames = new HashMap<>(undiscriminatedUnion.getMembers().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        member -> generatorContext.getPoetTypeNameMapper().convertToTypeName(true, member.getType())));
+                        member -> generatorContext.getPoetTypeNameMapper().convertToTypeName(true, member.getType()))));
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            typeNames.putAll(overrideMemberTypeNames(
+                    className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix));
+        }
+        this.memberTypeNames = typeNames;
         this.duplicatedOuterContainerTypes = getDuplicatedOuterContainerTypes(undiscriminatedUnion);
         this.visitorClassName = className.nestedClass("Visitor");
         this.deserializerClassName = className.nestedClass("Deserializer");
+        this.undiscriminatedUnionPrefix = undiscriminatedUnionPrefix;
     }
 
     public static Set<ContainerTypeEnum> getDuplicatedOuterContainerTypes(
@@ -105,7 +118,88 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedJavaFile generateFile() {
+    public List<TypeDeclaration> getInlineTypeDeclarations() {
+        return new ArrayList<>(overriddenTypeDeclarations(
+                        className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix)
+                .values());
+    }
+
+    private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
+            ClassName className,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
+            String undiscriminatedUnionPrefix) {
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
+
+        for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
+            // We're not going to use the name we resolve here for anything os it's okay to pass an empty string
+            List<NamedTypeId> resolvedIds = member.getType().visit(new InlineTypeIdResolver("", member.getType()));
+            for (NamedTypeId resolvedId : resolvedIds) {
+                Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
+                        generatorContext.getTypeDeclarations().get(resolvedId.typeId()));
+
+                if (maybeRawTypeDeclaration.isEmpty()) {
+                    continue;
+                }
+
+                TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
+
+                // Don't override non-inline types
+                if (!rawTypeDeclaration.getInline().orElse(false)) {
+                    continue;
+                }
+
+                String name =
+                        rawTypeDeclaration.getName().getName().getPascalCase().getSafeName();
+
+                // Omit the prefix from type names that start with it, for better style
+                if (name.startsWith(undiscriminatedUnionPrefix) && !name.equals(undiscriminatedUnionPrefix)) {
+                    name = name.substring(undiscriminatedUnionPrefix.length());
+                }
+
+                TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
+                overriddenTypeDeclarations.put(resolvedId.typeId(), overriddenTypeDeclaration);
+            }
+        }
+
+        return overriddenTypeDeclarations;
+    }
+
+    private static Map<UndiscriminatedUnionMember, TypeName> overrideMemberTypeNames(
+            ClassName className,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
+            String undiscriminatedUnionPrefix) {
+        Map<TypeId, TypeDeclaration> overriddenDeclarations = overriddenTypeDeclarations(
+                className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix);
+        Map<DeclaredTypeName, ClassName> mapperEnclosingClasses = new HashMap<>();
+
+        for (TypeDeclaration override : overriddenDeclarations.values()) {
+            mapperEnclosingClasses.put(override.getName(), className);
+        }
+
+        Map<TypeId, TypeDeclaration> typeDeclarationsWithOverrides =
+                new HashMap<>(generatorContext.getTypeDeclarations());
+        typeDeclarationsWithOverrides.putAll(overriddenDeclarations);
+
+        Map<UndiscriminatedUnionMember, TypeName> result = new HashMap<>();
+
+        PoetTypeNameMapper overriddenMapper = new PoetTypeNameMapper(
+                generatorContext.getPoetClassNameFactory(),
+                generatorContext.getCustomConfig(),
+                typeDeclarationsWithOverrides,
+                mapperEnclosingClasses);
+
+        for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
+            TypeName typeName = overriddenMapper.convertToTypeName(false, member.getType());
+            result.put(member, typeName);
+        }
+
+        return result;
+    }
+
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
         EqualsMethod equalsMethod = generateEqualsMethod();
 
         TypeSpec.Builder unionTypeSpec = TypeSpec.classBuilder(className)
@@ -134,12 +228,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                 .addMethods(getStaticFactories())
                 .addType(getVisitor())
                 .addType(getDeserializer());
-        JavaFile javaFile =
-                JavaFile.builder(className.packageName(), unionTypeSpec.build()).build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(javaFile)
-                .build();
+        return unionTypeSpec.build();
     }
 
     private MethodSpec getRetriever() {
@@ -250,9 +339,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(
                         "$T $L = $L.readValueAs($T.class)", Object.class, VALUE_FIELD_SPEC.name, "p", Object.class);
-        for (int i = 0; i < undiscriminatedUnion.getMembers().size(); ++i) {
-            UndiscriminatedUnionMember member =
-                    undiscriminatedUnion.getMembers().get(i);
+        for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
             TypeName typeName = memberTypeNames.get(member);
             if (typeName.isPrimitive() || typeName.isBoxedPrimitive()) {
                 deserializeMethod
@@ -292,6 +379,11 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
         return deserializerBuilder.addMethod(deserializeMethod.build()).build();
     }
 
+    /**
+     * Container types need to be deserialized with Type References so that information about type parameters gets
+     * preserved. Otherwise, we run the risk of running into a ClassCastException when deserializing.
+     * https://fasterxml.github.io/jackson-core/javadoc/2.2.0/com/fasterxml/jackson/core/type/TypeReference.html
+     */
     private boolean shouldDeserializeWithTypeReference(UndiscriminatedUnionMember member) {
         if (member.getType().isContainer()) {
             return true;

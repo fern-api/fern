@@ -23,14 +23,24 @@ public final class PoetTypeNameMapper {
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
     private final ICustomConfig customConfig;
     private final Map<TypeId, TypeDeclaration> typeDefinitionsByName;
+    private final Map<DeclaredTypeName, ClassName> enclosingClasses;
+
+    public PoetTypeNameMapper(
+            AbstractPoetClassNameFactory poetClassNameFactory,
+            ICustomConfig customConfig,
+            Map<TypeId, TypeDeclaration> typeDefinitionsByName,
+            Map<DeclaredTypeName, ClassName> enclosingClasses) {
+        this.poetClassNameFactory = poetClassNameFactory;
+        this.customConfig = customConfig;
+        this.typeDefinitionsByName = typeDefinitionsByName;
+        this.enclosingClasses = enclosingClasses;
+    }
 
     public PoetTypeNameMapper(
             AbstractPoetClassNameFactory poetClassNameFactory,
             ICustomConfig customConfig,
             Map<TypeId, TypeDeclaration> typeDefinitionsByName) {
-        this.poetClassNameFactory = poetClassNameFactory;
-        this.customConfig = customConfig;
-        this.typeDefinitionsByName = typeDefinitionsByName;
+        this(poetClassNameFactory, customConfig, typeDefinitionsByName, Map.of());
     }
 
     public TypeName convertToTypeName(boolean primitiveAllowed, TypeReference typeReference) {
@@ -46,10 +56,20 @@ public final class PoetTypeNameMapper {
             this.primitiveAllowed = primitiveAllowed;
         }
 
+        private ClassName applyEnclosing(DeclaredTypeName name, ClassName raw) {
+            Optional<ClassName> enclosingClass = Optional.ofNullable(enclosingClasses.get(name));
+
+            if (enclosingClass.isPresent() && !enclosingClass.get().equals(raw)) {
+                return enclosingClass.get().nestedClass(raw.simpleName());
+            }
+
+            return raw;
+        }
+
         @Override
         public TypeName visitNamed(NamedType named) {
+            TypeDeclaration typeDeclaration = typeDefinitionsByName.get(named.getTypeId());
             if (!customConfig.wrappedAliases()) {
-                TypeDeclaration typeDeclaration = typeDefinitionsByName.get(named.getTypeId());
                 boolean isAlias = typeDeclaration.getShape().isAlias();
                 if (isAlias) {
                     AliasTypeDeclaration aliasTypeDeclaration =
@@ -57,16 +77,18 @@ public final class PoetTypeNameMapper {
                     return aliasTypeDeclaration.getResolvedType().visit(this);
                 }
             }
-            return poetClassNameFactory.getTypeClassName(DeclaredTypeName.builder()
-                    .typeId(named.getTypeId())
-                    .fernFilepath(named.getFernFilepath())
-                    .name(named.getName())
-                    .build());
+            return applyEnclosing(
+                    typeDeclaration.getName(),
+                    poetClassNameFactory.getTypeClassName(DeclaredTypeName.builder()
+                            .typeId(named.getTypeId())
+                            .fernFilepath(named.getFernFilepath())
+                            .name(typeDeclaration.getName().getName())
+                            .build()));
         }
 
         @Override
         public TypeName visitNamed(ResolvedNamedType named) {
-            return poetClassNameFactory.getTypeClassName(named.getName());
+            return applyEnclosing(named.getName(), poetClassNameFactory.getTypeClassName(named.getName()));
         }
 
         @Override

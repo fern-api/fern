@@ -47,6 +47,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class WrappedRequestGenerator extends AbstractFileGenerator {
@@ -155,8 +156,10 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                         .collect(Collectors.toList()),
                 generatorContext,
                 allGeneratedInterfaces,
-                className);
-        GeneratedObject generatedObject = objectGenerator.generateFile();
+                className,
+                Set.of(className.simpleName()),
+                true);
+        GeneratedObject generatedObject = objectGenerator.generateObject();
         RequestBodyGetterFactory requestBodyGetterFactory =
                 new RequestBodyGetterFactory(objectProperties, generatedObject);
         return GeneratedWrappedRequest.builder()

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonDeserialize(
     builder = NestedType.Builder.class
 )
-public final class NestedType implements IJson {
+public final class NestedType implements IJson, IDocs {
   private final String raw;
 
   private final String docs;
