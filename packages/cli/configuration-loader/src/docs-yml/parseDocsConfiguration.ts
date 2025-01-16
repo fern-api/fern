@@ -381,7 +381,7 @@ async function getNavigationConfiguration({
                 slug: version.slug,
                 viewers: parseRoles(version.viewers),
                 orphaned: version.orphaned,
-                featureFlags: version.featureFlags?.map((flag) => convertFeatureFlag(flag))
+                featureFlags: convertFeatureFlag(version.featureFlag)
             });
         }
         return {
@@ -392,12 +392,29 @@ async function getNavigationConfiguration({
     throw new Error("Unexpected. Docs have neither navigation or versions defined.");
 }
 
-function convertFeatureFlag(flag: docsYml.RawSchemas.FeatureFlag): CjsFdrSdk.navigation.latest.FeatureFlagOptions {
-    return {
-        flag: flag.flag,
-        match: flag.match,
-        fallbackValue: flag.default
-    };
+function convertFeatureFlag(flag: docsYml.RawSchemas.FeatureFlagConfiguration | undefined): CjsFdrSdk.navigation.latest.FeatureFlagOptions[] | undefined {
+    if (flag == null) {
+        return undefined;
+    }
+    if (typeof flag === "string") {
+        return [{
+            flag,
+            match: true,
+            fallbackValue: undefined
+        }];
+    } else if (Array.isArray(flag)) {
+        return flag.map((flagItem) => ({
+            flag: flagItem.flag,
+            match: flagItem.match,
+            fallbackValue: flagItem.fallbackValue,
+        }));
+    } else {
+        return [{
+            flag: flag.flag,
+            match: flag.match ?? true,
+            fallbackValue: flag.fallbackValue,
+        }];
+    }
 }
 
 async function convertTypographyConfiguration({
@@ -541,7 +558,7 @@ async function convertNavigationTabConfiguration({
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
-            featureFlags: tab.featureFlags?.map((flag) => convertFeatureFlag(flag))
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -558,7 +575,7 @@ async function convertNavigationTabConfiguration({
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
-            featureFlags: tab.featureFlags?.map((flag) => convertFeatureFlag(flag))
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -575,7 +592,7 @@ async function convertNavigationTabConfiguration({
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
-            featureFlags: tab.featureFlags?.map((flag) => convertFeatureFlag(flag))
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -656,7 +673,7 @@ async function convertNavigationItem({
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
-            featureFlags: rawConfig.featureFlags?.map((flag) => convertFeatureFlag(flag))
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -685,7 +702,7 @@ async function convertNavigationItem({
             playground: rawConfig.playground,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
-            featureFlags: rawConfig.featureFlags?.map((flag) => convertFeatureFlag(flag))
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -706,7 +723,7 @@ async function convertNavigationItem({
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
-            featureFlags: rawConfig.featureFlags?.map((flag) => convertFeatureFlag(flag))
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     assertNever(rawConfig);
@@ -738,7 +755,7 @@ function parsePageConfig(
         noindex: undefined,
         viewers: parseRoles(item.viewers),
         orphaned: item.orphaned,
-        featureFlags: item.featureFlags?.map((flag) => convertFeatureFlag(flag))
+        featureFlags: convertFeatureFlag(item.featureFlag)
     };
 }
 
@@ -778,7 +795,7 @@ function parseApiReferenceLayoutItem(
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
-                featureFlags: item.featureFlags?.map((flag) => convertFeatureFlag(flag))
+                featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
     } else if (isRawApiRefEndpointConfiguration(item)) {
@@ -793,7 +810,7 @@ function parseApiReferenceLayoutItem(
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
-                featureFlags: item.featureFlags?.map((flag) => convertFeatureFlag(flag))
+                featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
     }
@@ -813,7 +830,7 @@ function parseApiReferenceLayoutItem(
                 playground: value.playground,
                 viewers: parseRoles(value.viewers),
                 orphaned: value.orphaned,
-                featureFlags: value.featureFlags?.map((flag) => convertFeatureFlag(flag))
+                featureFlags: convertFeatureFlag(value.featureFlag)
             };
         }
         return {

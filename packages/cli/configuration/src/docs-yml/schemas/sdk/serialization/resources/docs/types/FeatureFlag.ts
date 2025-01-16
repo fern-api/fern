@@ -9,14 +9,14 @@ import * as core from "../../../../core";
 export const FeatureFlag: core.serialization.ObjectSchema<serializers.FeatureFlag.Raw, FernDocsConfig.FeatureFlag> =
     core.serialization.object({
         flag: core.serialization.string(),
-        default: core.serialization.unknown().optional(),
+        fallbackValue: core.serialization.property("fallback-value", core.serialization.unknown().optional()),
         match: core.serialization.unknown().optional(),
     });
 
 export declare namespace FeatureFlag {
     export interface Raw {
         flag: string;
-        default?: unknown | null;
+        "fallback-value"?: unknown | null;
         match?: unknown | null;
     }
 }

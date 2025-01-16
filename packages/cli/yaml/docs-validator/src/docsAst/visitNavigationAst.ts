@@ -115,7 +115,7 @@ async function visitNavigationItem({
         paginated: noop,
         playground: noop,
         flattened: noop,
-        featureFlags: noop,
+        featureFlag: noop,
         path: async (path: string | undefined): Promise<void> => {
             if (path == null) {
                 return;

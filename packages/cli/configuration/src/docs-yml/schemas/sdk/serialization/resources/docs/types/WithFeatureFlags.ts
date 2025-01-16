@@ -5,17 +5,17 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
-import { FeatureFlag } from "./FeatureFlag";
+import { FeatureFlagConfiguration } from "./FeatureFlagConfiguration";
 
 export const WithFeatureFlags: core.serialization.ObjectSchema<
     serializers.WithFeatureFlags.Raw,
     FernDocsConfig.WithFeatureFlags
 > = core.serialization.object({
-    featureFlags: core.serialization.property("feature-flags", core.serialization.list(FeatureFlag).optional()),
+    featureFlag: core.serialization.property("feature-flag", FeatureFlagConfiguration.optional()),
 });
 
 export declare namespace WithFeatureFlags {
     export interface Raw {
-        "feature-flags"?: FeatureFlag.Raw[] | null;
+        "feature-flag"?: FeatureFlagConfiguration.Raw | null;
     }
 }

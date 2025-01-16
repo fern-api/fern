@@ -557,7 +557,7 @@
         "flag": {
           "type": "string"
         },
-        "default": {
+        "fallback-value": {
           "oneOf": [
             {
               "type": [
@@ -597,6 +597,25 @@
       ],
       "additionalProperties": false
     },
+    "docs.FeatureFlagConfiguration": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "The name of the feature flag, We assume that it is a boolean feature flag that needs to be evaluated to true."
+        },
+        {
+          "$ref": "#/definitions/docs.FeatureFlag",
+          "description": "A single feature flag with a configurable name, fallback value, and match value. Especially useful for non boolean feature flags."
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.FeatureFlag"
+          },
+          "description": "A list of feature flags. If any of the feature flags are satisifed, we will show all content."
+        }
+      ]
+    },
     "docs.ChangelogFolderRelativePath": {
       "type": "string"
     },
@@ -623,13 +642,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -737,13 +753,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -806,13 +819,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -885,13 +895,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -1147,13 +1154,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -1282,13 +1286,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -1413,13 +1414,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -1561,13 +1559,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -1762,13 +1757,10 @@
             }
           ]
         },
-        "feature-flags": {
+        "feature-flag": {
           "oneOf": [
             {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.FeatureFlag"
-              }
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"

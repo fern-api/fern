@@ -36,6 +36,7 @@ export * from "./RoleId";
 export * from "./Role";
 export * from "./WithPermissions";
 export * from "./FeatureFlag";
+export * from "./FeatureFlagConfiguration";
 export * from "./WithFeatureFlags";
 export * from "./FontConfig";
 export * from "./FontWeight";

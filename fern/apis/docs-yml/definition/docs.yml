@@ -456,16 +456,26 @@ types:
       flag:
         type: string
         docs: The name of the feature flag to check.
-      default:
+      fallback-value:
         type: optional<unknown>
         docs: The default value to use if the feature flag is not set. If not specified, defaults to false.
       match:
         type: optional<unknown>
         docs: The value that the feature flag should match for the content to be shown. If not specified, content is shown when the flag is true.
+  
+  FeatureFlagConfiguration:
+    discriminated: false
+    union: 
+      - type: string
+        docs: The name of the feature flag, We assume that it is a boolean feature flag that needs to be evaluated to true. 
+      - type: FeatureFlag
+        docs: A single feature flag with a configurable name, fallback value, and match value. Especially useful for non boolean feature flags. 
+      - type: list<FeatureFlag>
+        docs: A list of feature flags. If any of the feature flags are satisifed, we will show all content. 
 
   WithFeatureFlags:
     properties:
-      feature-flags: optional<list<FeatureFlag>>
+      feature-flag: optional<FeatureFlagConfiguration>
 
   FontConfig:
     properties:
