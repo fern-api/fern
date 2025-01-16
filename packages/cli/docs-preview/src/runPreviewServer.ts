@@ -22,6 +22,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     files: {},
     filesV2: {},
     config: {
+        hideNavLinks: undefined,
         navigation: undefined,
         root: undefined,
         title: undefined,
