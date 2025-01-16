@@ -96,7 +96,7 @@ function optionalNullable(schema) {
                     value: undefined,
                 };
             }
-            if (raw == null) {
+            if (raw === null) {
                 return {
                     ok: true,
                     value: null,
@@ -111,7 +111,7 @@ function optionalNullable(schema) {
                     value: undefined,
                 };
             }
-            if (parsed == null) {
+            if (parsed === null) {
                 return {
                     ok: true,
                     value: null,
