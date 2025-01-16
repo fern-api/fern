@@ -156,21 +156,21 @@ public final class GetUndiscriminatedUnionRequest {
 
         public <T> T visit(Visitor<T> visitor) {
             if (this.type == 0) {
-                return visitor.visit((UndiscriminatedUnion1InlineType1) this.value);
+                return visitor.visit((InlineType1) this.value);
             } else if (this.type == 1) {
-                return visitor.visit((UndiscriminatedUnion1InlineType2) this.value);
+                return visitor.visit((InlineType2) this.value);
             } else if (this.type == 2) {
-                return visitor.visit((UndiscriminatedUnion1DiscriminatedUnion1) this.value);
+                return visitor.visit((DiscriminatedUnion1) this.value);
             } else if (this.type == 3) {
-                return visitor.visit((UndiscriminatedUnion1InlineEnum1) this.value);
+                return visitor.visit((InlineEnum1) this.value);
             } else if (this.type == 4) {
                 return visitor.visit((String) this.value);
             } else if (this.type == 5) {
-                return visitor.visit((List<UndiscriminatedUnion1InlineListItem1>) this.value);
+                return visitor.visit((List<InlineListItem1>) this.value);
             } else if (this.type == 6) {
-                return visitor.visit((Set<UndiscriminatedUnion1InlineSetItem1>) this.value);
+                return visitor.visit((Set<InlineSetItem1>) this.value);
             } else if (this.type == 7) {
-                return visitor.visit((Map<String, UndiscriminatedUnion1InlineMapItem1>) this.value);
+                return visitor.visit((Map<String, InlineMapItem1>) this.value);
             } else if (this.type == 8) {
                 return visitor.visit((ReferenceType) this.value);
             }
@@ -197,19 +197,19 @@ public final class GetUndiscriminatedUnionRequest {
             return this.value.toString();
         }
 
-        public static Bar of(UndiscriminatedUnion1InlineType1 value) {
+        public static Bar of(InlineType1 value) {
             return new Bar(value, 0);
         }
 
-        public static Bar of(UndiscriminatedUnion1InlineType2 value) {
+        public static Bar of(InlineType2 value) {
             return new Bar(value, 1);
         }
 
-        public static Bar of(UndiscriminatedUnion1DiscriminatedUnion1 value) {
+        public static Bar of(DiscriminatedUnion1 value) {
             return new Bar(value, 2);
         }
 
-        public static Bar of(UndiscriminatedUnion1InlineEnum1 value) {
+        public static Bar of(InlineEnum1 value) {
             return new Bar(value, 3);
         }
 
@@ -217,15 +217,15 @@ public final class GetUndiscriminatedUnionRequest {
             return new Bar(value, 4);
         }
 
-        public static Bar of(List<UndiscriminatedUnion1InlineListItem1> value) {
+        public static Bar of(List<InlineListItem1> value) {
             return new Bar(value, 5);
         }
 
-        public static Bar of(Set<UndiscriminatedUnion1InlineSetItem1> value) {
+        public static Bar of(Set<InlineSetItem1> value) {
             return new Bar(value, 6);
         }
 
-        public static Bar of(Map<String, UndiscriminatedUnion1InlineMapItem1> value) {
+        public static Bar of(Map<String, InlineMapItem1> value) {
             return new Bar(value, 7);
         }
 
@@ -234,21 +234,21 @@ public final class GetUndiscriminatedUnionRequest {
         }
 
         public interface Visitor<T> {
-            T visit(UndiscriminatedUnion1InlineType1 value);
+            T visit(InlineType1 value);
 
-            T visit(UndiscriminatedUnion1InlineType2 value);
+            T visit(InlineType2 value);
 
-            T visit(UndiscriminatedUnion1DiscriminatedUnion1 value);
+            T visit(DiscriminatedUnion1 value);
 
-            T visit(UndiscriminatedUnion1InlineEnum1 value);
+            T visit(InlineEnum1 value);
 
             T visit(String value);
 
-            T visit(List<UndiscriminatedUnion1InlineListItem1> value);
+            T visit(List<InlineListItem1> value);
 
-            T visit(Set<UndiscriminatedUnion1InlineSetItem1> value);
+            T visit(Set<InlineSetItem1> value);
 
-            T visit(Map<String, UndiscriminatedUnion1InlineMapItem1> value);
+            T visit(Map<String, InlineMapItem1> value);
 
             T visit(ReferenceType value);
         }
@@ -262,20 +262,19 @@ public final class GetUndiscriminatedUnionRequest {
             public Bar deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
                 Object value = p.readValueAs(Object.class);
                 try {
-                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType1.class));
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, InlineType1.class));
                 } catch (IllegalArgumentException e) {
                 }
                 try {
-                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType2.class));
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, InlineType2.class));
                 } catch (IllegalArgumentException e) {
                 }
                 try {
-                    return of(ObjectMappers.JSON_MAPPER.convertValue(
-                            value, UndiscriminatedUnion1DiscriminatedUnion1.class));
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, DiscriminatedUnion1.class));
                 } catch (IllegalArgumentException e) {
                 }
                 try {
-                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineEnum1.class));
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, InlineEnum1.class));
                 } catch (IllegalArgumentException e) {
                 }
                 try {
@@ -284,17 +283,17 @@ public final class GetUndiscriminatedUnionRequest {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(
-                            value, new TypeReference<List<UndiscriminatedUnion1InlineListItem1>>() {}));
+                            value, new TypeReference<List<InlineListItem1>>() {}));
+                } catch (IllegalArgumentException e) {
+                }
+                try {
+                    return of(
+                            ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<InlineSetItem1>>() {}));
                 } catch (IllegalArgumentException e) {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(
-                            value, new TypeReference<Set<UndiscriminatedUnion1InlineSetItem1>>() {}));
-                } catch (IllegalArgumentException e) {
-                }
-                try {
-                    return of(ObjectMappers.JSON_MAPPER.convertValue(
-                            value, new TypeReference<Map<String, UndiscriminatedUnion1InlineMapItem1>>() {}));
+                            value, new TypeReference<Map<String, InlineMapItem1>>() {}));
                 } catch (IllegalArgumentException e) {
                 }
                 try {
@@ -306,8 +305,8 @@ public final class GetUndiscriminatedUnionRequest {
         }
 
         @JsonInclude(JsonInclude.Include.NON_ABSENT)
-        @JsonDeserialize(builder = UndiscriminatedUnion1InlineType1.Builder.class)
-        public static final class UndiscriminatedUnion1InlineType1 {
+        @JsonDeserialize(builder = InlineType1.Builder.class)
+        public static final class InlineType1 {
             private final String foo;
 
             private final Bar_ bar;
@@ -316,8 +315,7 @@ public final class GetUndiscriminatedUnionRequest {
 
             private final Map<String, Object> additionalProperties;
 
-            private UndiscriminatedUnion1InlineType1(
-                    String foo, Bar_ bar, ReferenceType ref, Map<String, Object> additionalProperties) {
+            private InlineType1(String foo, Bar_ bar, ReferenceType ref, Map<String, Object> additionalProperties) {
                 this.foo = foo;
                 this.bar = bar;
                 this.ref = ref;
@@ -351,8 +349,7 @@ public final class GetUndiscriminatedUnionRequest {
             @java.lang.Override
             public boolean equals(Object other) {
                 if (this == other) return true;
-                return other instanceof UndiscriminatedUnion1InlineType1
-                        && equalTo((UndiscriminatedUnion1InlineType1) other);
+                return other instanceof InlineType1 && equalTo((InlineType1) other);
             }
 
             @JsonAnyGetter
@@ -360,7 +357,7 @@ public final class GetUndiscriminatedUnionRequest {
                 return this.additionalProperties;
             }
 
-            private boolean equalTo(UndiscriminatedUnion1InlineType1 other) {
+            private boolean equalTo(InlineType1 other) {
                 return foo.equals(other.foo) && bar.equals(other.bar) && ref.equals(other.ref);
             }
 
@@ -381,7 +378,7 @@ public final class GetUndiscriminatedUnionRequest {
             public interface FooStage {
                 BarStage foo(@NotNull String foo);
 
-                Builder from(UndiscriminatedUnion1InlineType1 other);
+                Builder from(InlineType1 other);
             }
 
             public interface BarStage {
@@ -393,7 +390,7 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface _FinalStage {
-                UndiscriminatedUnion1InlineType1 build();
+                InlineType1 build();
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -410,7 +407,7 @@ public final class GetUndiscriminatedUnionRequest {
                 private Builder() {}
 
                 @java.lang.Override
-                public Builder from(UndiscriminatedUnion1InlineType1 other) {
+                public Builder from(InlineType1 other) {
                     foo(other.getFoo());
                     bar(other.getBar());
                     ref(other.getRef());
@@ -451,8 +448,8 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 @java.lang.Override
-                public UndiscriminatedUnion1InlineType1 build() {
-                    return new UndiscriminatedUnion1InlineType1(foo, bar, ref, additionalProperties);
+                public InlineType1 build() {
+                    return new InlineType1(foo, bar, ref, additionalProperties);
                 }
             }
 
@@ -578,11 +575,11 @@ public final class GetUndiscriminatedUnionRequest {
             }
         }
 
-        public static final class UndiscriminatedUnion1DiscriminatedUnion1 {
+        public static final class DiscriminatedUnion1 {
             private final Value value;
 
             @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-            private UndiscriminatedUnion1DiscriminatedUnion1(Value value) {
+            private DiscriminatedUnion1(Value value) {
                 this.value = value;
             }
 
@@ -590,16 +587,16 @@ public final class GetUndiscriminatedUnionRequest {
                 return value.visit(visitor);
             }
 
-            public static UndiscriminatedUnion1DiscriminatedUnion1 type1(Type1 value) {
-                return new UndiscriminatedUnion1DiscriminatedUnion1(new Type1Value(value));
+            public static DiscriminatedUnion1 type1(Type1 value) {
+                return new DiscriminatedUnion1(new Type1Value(value));
             }
 
-            public static UndiscriminatedUnion1DiscriminatedUnion1 type2(Type2 value) {
-                return new UndiscriminatedUnion1DiscriminatedUnion1(new Type2Value(value));
+            public static DiscriminatedUnion1 type2(Type2 value) {
+                return new DiscriminatedUnion1(new Type2Value(value));
             }
 
-            public static UndiscriminatedUnion1DiscriminatedUnion1 ref(ReferenceType value) {
-                return new UndiscriminatedUnion1DiscriminatedUnion1(new RefValue(value));
+            public static DiscriminatedUnion1 ref(ReferenceType value) {
+                return new DiscriminatedUnion1(new RefValue(value));
             }
 
             public boolean isType1() {
@@ -710,7 +707,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 @java.lang.Override
                 public String toString() {
-                    return "Bar.UndiscriminatedUnion1DiscriminatedUnion1{" + "value: " + value + "}";
+                    return "Bar.DiscriminatedUnion1{" + "value: " + value + "}";
                 }
             }
 
@@ -748,7 +745,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 @java.lang.Override
                 public String toString() {
-                    return "Bar.UndiscriminatedUnion1DiscriminatedUnion1{" + "value: " + value + "}";
+                    return "Bar.DiscriminatedUnion1{" + "value: " + value + "}";
                 }
             }
 
@@ -786,7 +783,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 @java.lang.Override
                 public String toString() {
-                    return "Bar.UndiscriminatedUnion1DiscriminatedUnion1{" + "value: " + value + "}";
+                    return "Bar.DiscriminatedUnion1{" + "value: " + value + "}";
                 }
             }
 
@@ -821,8 +818,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 @java.lang.Override
                 public String toString() {
-                    return "Bar.UndiscriminatedUnion1DiscriminatedUnion1{" + "type: " + type + ", value: " + value
-                            + "}";
+                    return "Bar.DiscriminatedUnion1{" + "type: " + type + ", value: " + value + "}";
                 }
             }
 
@@ -1220,16 +1216,15 @@ public final class GetUndiscriminatedUnionRequest {
         }
 
         @JsonInclude(JsonInclude.Include.NON_ABSENT)
-        @JsonDeserialize(builder = UndiscriminatedUnion1InlineType2.Builder.class)
-        public static final class UndiscriminatedUnion1InlineType2 {
+        @JsonDeserialize(builder = InlineType2.Builder.class)
+        public static final class InlineType2 {
             private final String baz;
 
             private final ReferenceType ref;
 
             private final Map<String, Object> additionalProperties;
 
-            private UndiscriminatedUnion1InlineType2(
-                    String baz, ReferenceType ref, Map<String, Object> additionalProperties) {
+            private InlineType2(String baz, ReferenceType ref, Map<String, Object> additionalProperties) {
                 this.baz = baz;
                 this.ref = ref;
                 this.additionalProperties = additionalProperties;
@@ -1254,8 +1249,7 @@ public final class GetUndiscriminatedUnionRequest {
             @java.lang.Override
             public boolean equals(Object other) {
                 if (this == other) return true;
-                return other instanceof UndiscriminatedUnion1InlineType2
-                        && equalTo((UndiscriminatedUnion1InlineType2) other);
+                return other instanceof InlineType2 && equalTo((InlineType2) other);
             }
 
             @JsonAnyGetter
@@ -1263,7 +1257,7 @@ public final class GetUndiscriminatedUnionRequest {
                 return this.additionalProperties;
             }
 
-            private boolean equalTo(UndiscriminatedUnion1InlineType2 other) {
+            private boolean equalTo(InlineType2 other) {
                 return baz.equals(other.baz) && ref.equals(other.ref);
             }
 
@@ -1284,7 +1278,7 @@ public final class GetUndiscriminatedUnionRequest {
             public interface BazStage {
                 RefStage baz(@NotNull String baz);
 
-                Builder from(UndiscriminatedUnion1InlineType2 other);
+                Builder from(InlineType2 other);
             }
 
             public interface RefStage {
@@ -1292,7 +1286,7 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface _FinalStage {
-                UndiscriminatedUnion1InlineType2 build();
+                InlineType2 build();
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -1307,7 +1301,7 @@ public final class GetUndiscriminatedUnionRequest {
                 private Builder() {}
 
                 @java.lang.Override
-                public Builder from(UndiscriminatedUnion1InlineType2 other) {
+                public Builder from(InlineType2 other) {
                     baz(other.getBaz());
                     ref(other.getRef());
                     return this;
@@ -1336,13 +1330,13 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 @java.lang.Override
-                public UndiscriminatedUnion1InlineType2 build() {
-                    return new UndiscriminatedUnion1InlineType2(baz, ref, additionalProperties);
+                public InlineType2 build() {
+                    return new InlineType2(baz, ref, additionalProperties);
                 }
             }
         }
 
-        public enum UndiscriminatedUnion1InlineEnum1 {
+        public enum InlineEnum1 {
             SUNNY("SUNNY"),
 
             CLOUDY("CLOUDY"),
@@ -1353,7 +1347,7 @@ public final class GetUndiscriminatedUnionRequest {
 
             private final String value;
 
-            UndiscriminatedUnion1InlineEnum1(String value) {
+            InlineEnum1(String value) {
                 this.value = value;
             }
 
@@ -1365,16 +1359,15 @@ public final class GetUndiscriminatedUnionRequest {
         }
 
         @JsonInclude(JsonInclude.Include.NON_ABSENT)
-        @JsonDeserialize(builder = UndiscriminatedUnion1InlineSetItem1.Builder.class)
-        public static final class UndiscriminatedUnion1InlineSetItem1 {
+        @JsonDeserialize(builder = InlineSetItem1.Builder.class)
+        public static final class InlineSetItem1 {
             private final String foo;
 
             private final ReferenceType ref;
 
             private final Map<String, Object> additionalProperties;
 
-            private UndiscriminatedUnion1InlineSetItem1(
-                    String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
+            private InlineSetItem1(String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
                 this.foo = foo;
                 this.ref = ref;
                 this.additionalProperties = additionalProperties;
@@ -1399,8 +1392,7 @@ public final class GetUndiscriminatedUnionRequest {
             @java.lang.Override
             public boolean equals(Object other) {
                 if (this == other) return true;
-                return other instanceof UndiscriminatedUnion1InlineSetItem1
-                        && equalTo((UndiscriminatedUnion1InlineSetItem1) other);
+                return other instanceof InlineSetItem1 && equalTo((InlineSetItem1) other);
             }
 
             @JsonAnyGetter
@@ -1408,7 +1400,7 @@ public final class GetUndiscriminatedUnionRequest {
                 return this.additionalProperties;
             }
 
-            private boolean equalTo(UndiscriminatedUnion1InlineSetItem1 other) {
+            private boolean equalTo(InlineSetItem1 other) {
                 return foo.equals(other.foo) && ref.equals(other.ref);
             }
 
@@ -1429,7 +1421,7 @@ public final class GetUndiscriminatedUnionRequest {
             public interface FooStage {
                 RefStage foo(@NotNull String foo);
 
-                Builder from(UndiscriminatedUnion1InlineSetItem1 other);
+                Builder from(InlineSetItem1 other);
             }
 
             public interface RefStage {
@@ -1437,7 +1429,7 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface _FinalStage {
-                UndiscriminatedUnion1InlineSetItem1 build();
+                InlineSetItem1 build();
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -1452,7 +1444,7 @@ public final class GetUndiscriminatedUnionRequest {
                 private Builder() {}
 
                 @java.lang.Override
-                public Builder from(UndiscriminatedUnion1InlineSetItem1 other) {
+                public Builder from(InlineSetItem1 other) {
                     foo(other.getFoo());
                     ref(other.getRef());
                     return this;
@@ -1481,23 +1473,22 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 @java.lang.Override
-                public UndiscriminatedUnion1InlineSetItem1 build() {
-                    return new UndiscriminatedUnion1InlineSetItem1(foo, ref, additionalProperties);
+                public InlineSetItem1 build() {
+                    return new InlineSetItem1(foo, ref, additionalProperties);
                 }
             }
         }
 
         @JsonInclude(JsonInclude.Include.NON_ABSENT)
-        @JsonDeserialize(builder = UndiscriminatedUnion1InlineMapItem1.Builder.class)
-        public static final class UndiscriminatedUnion1InlineMapItem1 {
+        @JsonDeserialize(builder = InlineMapItem1.Builder.class)
+        public static final class InlineMapItem1 {
             private final String foo;
 
             private final ReferenceType ref;
 
             private final Map<String, Object> additionalProperties;
 
-            private UndiscriminatedUnion1InlineMapItem1(
-                    String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
+            private InlineMapItem1(String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
                 this.foo = foo;
                 this.ref = ref;
                 this.additionalProperties = additionalProperties;
@@ -1522,8 +1513,7 @@ public final class GetUndiscriminatedUnionRequest {
             @java.lang.Override
             public boolean equals(Object other) {
                 if (this == other) return true;
-                return other instanceof UndiscriminatedUnion1InlineMapItem1
-                        && equalTo((UndiscriminatedUnion1InlineMapItem1) other);
+                return other instanceof InlineMapItem1 && equalTo((InlineMapItem1) other);
             }
 
             @JsonAnyGetter
@@ -1531,7 +1521,7 @@ public final class GetUndiscriminatedUnionRequest {
                 return this.additionalProperties;
             }
 
-            private boolean equalTo(UndiscriminatedUnion1InlineMapItem1 other) {
+            private boolean equalTo(InlineMapItem1 other) {
                 return foo.equals(other.foo) && ref.equals(other.ref);
             }
 
@@ -1552,7 +1542,7 @@ public final class GetUndiscriminatedUnionRequest {
             public interface FooStage {
                 RefStage foo(@NotNull String foo);
 
-                Builder from(UndiscriminatedUnion1InlineMapItem1 other);
+                Builder from(InlineMapItem1 other);
             }
 
             public interface RefStage {
@@ -1560,7 +1550,7 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface _FinalStage {
-                UndiscriminatedUnion1InlineMapItem1 build();
+                InlineMapItem1 build();
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -1575,7 +1565,7 @@ public final class GetUndiscriminatedUnionRequest {
                 private Builder() {}
 
                 @java.lang.Override
-                public Builder from(UndiscriminatedUnion1InlineMapItem1 other) {
+                public Builder from(InlineMapItem1 other) {
                     foo(other.getFoo());
                     ref(other.getRef());
                     return this;
@@ -1604,23 +1594,22 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 @java.lang.Override
-                public UndiscriminatedUnion1InlineMapItem1 build() {
-                    return new UndiscriminatedUnion1InlineMapItem1(foo, ref, additionalProperties);
+                public InlineMapItem1 build() {
+                    return new InlineMapItem1(foo, ref, additionalProperties);
                 }
             }
         }
 
         @JsonInclude(JsonInclude.Include.NON_ABSENT)
-        @JsonDeserialize(builder = UndiscriminatedUnion1InlineListItem1.Builder.class)
-        public static final class UndiscriminatedUnion1InlineListItem1 {
+        @JsonDeserialize(builder = InlineListItem1.Builder.class)
+        public static final class InlineListItem1 {
             private final String foo;
 
             private final ReferenceType ref;
 
             private final Map<String, Object> additionalProperties;
 
-            private UndiscriminatedUnion1InlineListItem1(
-                    String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
+            private InlineListItem1(String foo, ReferenceType ref, Map<String, Object> additionalProperties) {
                 this.foo = foo;
                 this.ref = ref;
                 this.additionalProperties = additionalProperties;
@@ -1645,8 +1634,7 @@ public final class GetUndiscriminatedUnionRequest {
             @java.lang.Override
             public boolean equals(Object other) {
                 if (this == other) return true;
-                return other instanceof UndiscriminatedUnion1InlineListItem1
-                        && equalTo((UndiscriminatedUnion1InlineListItem1) other);
+                return other instanceof InlineListItem1 && equalTo((InlineListItem1) other);
             }
 
             @JsonAnyGetter
@@ -1654,7 +1642,7 @@ public final class GetUndiscriminatedUnionRequest {
                 return this.additionalProperties;
             }
 
-            private boolean equalTo(UndiscriminatedUnion1InlineListItem1 other) {
+            private boolean equalTo(InlineListItem1 other) {
                 return foo.equals(other.foo) && ref.equals(other.ref);
             }
 
@@ -1675,7 +1663,7 @@ public final class GetUndiscriminatedUnionRequest {
             public interface FooStage {
                 RefStage foo(@NotNull String foo);
 
-                Builder from(UndiscriminatedUnion1InlineListItem1 other);
+                Builder from(InlineListItem1 other);
             }
 
             public interface RefStage {
@@ -1683,7 +1671,7 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface _FinalStage {
-                UndiscriminatedUnion1InlineListItem1 build();
+                InlineListItem1 build();
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -1698,7 +1686,7 @@ public final class GetUndiscriminatedUnionRequest {
                 private Builder() {}
 
                 @java.lang.Override
-                public Builder from(UndiscriminatedUnion1InlineListItem1 other) {
+                public Builder from(InlineListItem1 other) {
                     foo(other.getFoo());
                     ref(other.getRef());
                     return this;
@@ -1727,8 +1715,8 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 @java.lang.Override
-                public UndiscriminatedUnion1InlineListItem1 build() {
-                    return new UndiscriminatedUnion1InlineListItem1(foo, ref, additionalProperties);
+                public InlineListItem1 build() {
+                    return new InlineListItem1(foo, ref, additionalProperties);
                 }
             }
         }

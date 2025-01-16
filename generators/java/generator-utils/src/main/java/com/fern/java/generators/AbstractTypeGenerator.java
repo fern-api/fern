@@ -65,6 +65,7 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
                             false,
                             ImmutableSet.<String>builder()
                                     .addAll(reservedTypeNames)
+                                    .add(className.simpleName())
                                     .add(name)
                                     .build(),
                             false));

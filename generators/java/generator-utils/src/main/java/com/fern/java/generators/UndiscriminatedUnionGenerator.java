@@ -78,13 +78,15 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     private final ClassName visitorClassName;
     private final ClassName deserializerClassName;
+    private final String undiscriminatedUnionPrefix;
 
     public UndiscriminatedUnionGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
             Set<String> reservedTypeNames,
-            boolean isTopLevelClass) {
+            boolean isTopLevelClass,
+            String undiscriminatedUnionPrefix) {
         super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.undiscriminatedUnion = undiscriminatedUnion;
         Map<UndiscriminatedUnionMember, TypeName> typeNames = new HashMap<>(undiscriminatedUnion.getMembers().stream()
@@ -92,12 +94,14 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                         Function.identity(),
                         member -> generatorContext.getPoetTypeNameMapper().convertToTypeName(true, member.getType()))));
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
-            typeNames.putAll(overrideMemberTypeNames(className, generatorContext, undiscriminatedUnion));
+            typeNames.putAll(overrideMemberTypeNames(
+                    className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix));
         }
         this.memberTypeNames = typeNames;
         this.duplicatedOuterContainerTypes = getDuplicatedOuterContainerTypes(undiscriminatedUnion);
         this.visitorClassName = className.nestedClass("Visitor");
         this.deserializerClassName = className.nestedClass("Deserializer");
+        this.undiscriminatedUnionPrefix = undiscriminatedUnionPrefix;
     }
 
     public static Set<ContainerTypeEnum> getDuplicatedOuterContainerTypes(
@@ -115,15 +119,20 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
-        return new ArrayList<>(overriddenTypeDeclarations(generatorContext, undiscriminatedUnion)
+        return new ArrayList<>(overriddenTypeDeclarations(
+                        className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix)
                 .values());
     }
 
     private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
-            AbstractGeneratorContext<?, ?> generatorContext, UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+            ClassName className,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
+            String undiscriminatedUnionPrefix) {
         Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
 
         for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
+            // We're not going to use the name we resolve here for anything os it's okay to pass an empty string
             List<NamedTypeId> resolvedIds = member.getType().visit(new InlineTypeIdResolver("", member.getType()));
             for (NamedTypeId resolvedId : resolvedIds) {
                 Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
@@ -140,8 +149,16 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                     continue;
                 }
 
-                // We're not changing the name, but we need to track it as inline and enclosed
-                overriddenTypeDeclarations.put(resolvedId.typeId(), rawTypeDeclaration);
+                String name =
+                        rawTypeDeclaration.getName().getName().getPascalCase().getSafeName();
+
+                // Omit the prefix from type names that start with it, for better style
+                if (name.startsWith(undiscriminatedUnionPrefix) && !name.equals(undiscriminatedUnionPrefix)) {
+                    name = name.substring(undiscriminatedUnionPrefix.length());
+                }
+
+                TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
+                overriddenTypeDeclarations.put(resolvedId.typeId(), overriddenTypeDeclaration);
             }
         }
 
@@ -151,9 +168,10 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     private static Map<UndiscriminatedUnionMember, TypeName> overrideMemberTypeNames(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-        Map<TypeId, TypeDeclaration> overriddenDeclarations =
-                overriddenTypeDeclarations(generatorContext, undiscriminatedUnion);
+            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion,
+            String undiscriminatedUnionPrefix) {
+        Map<TypeId, TypeDeclaration> overriddenDeclarations = overriddenTypeDeclarations(
+                className, generatorContext, undiscriminatedUnion, undiscriminatedUnionPrefix);
         Map<DeclaredTypeName, ClassName> mapperEnclosingClasses = new HashMap<>();
 
         for (TypeDeclaration override : overriddenDeclarations.values()) {

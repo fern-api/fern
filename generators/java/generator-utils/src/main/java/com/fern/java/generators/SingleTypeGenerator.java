@@ -6,6 +6,7 @@ import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
@@ -89,8 +90,23 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
     @Override
     public Optional<AbstractTypeGenerator> visitUndiscriminatedUnion(
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+        Optional<TypeDeclaration> originalTypeDeclaration =
+                Optional.ofNullable(generatorContext.getTypeDeclarations().get(declaredTypeName.getTypeId()));
+        if (originalTypeDeclaration.isEmpty()) {
+            return Optional.empty();
+        }
         UndiscriminatedUnionGenerator unionGenerator = new UndiscriminatedUnionGenerator(
-                className, generatorContext, undiscriminatedUnion, reservedTypeNamesInScope, isTopLevelClass);
+                className,
+                generatorContext,
+                undiscriminatedUnion,
+                reservedTypeNamesInScope,
+                isTopLevelClass,
+                originalTypeDeclaration
+                        .get()
+                        .getName()
+                        .getName()
+                        .getPascalCase()
+                        .getSafeName());
         return Optional.of(unionGenerator);
     }
 
