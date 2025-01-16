@@ -35,6 +35,8 @@ export * from "./AudienceId";
 export * from "./RoleId";
 export * from "./Role";
 export * from "./WithPermissions";
+export * from "./FeatureFlag";
+export * from "./WithFeatureFlags";
 export * from "./FontConfig";
 export * from "./FontWeight";
 export * from "./FontStyle";

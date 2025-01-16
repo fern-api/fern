@@ -141,7 +141,7 @@ export interface VersionedDocsNavigation {
     versions: VersionInfo[];
 }
 
-export interface VersionInfo extends CjsFdrSdk.navigation.v1.WithPermissions {
+export interface VersionInfo extends CjsFdrSdk.navigation.v1.WithPermissions, CjsFdrSdk.navigation.v1.WithNodeMetadata {
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
