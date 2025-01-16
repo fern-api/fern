@@ -22,16 +22,3 @@ interface CodeBlockProps {
   maxHeight?: number;
 }
 ```
-
-## Base Path Handling
-Improved handling of base paths for search records and navigation. 
-
-```typescript
-const pathConfig = {
-  stripBasePath: true,
-  rewriteRules: [
-    { from: '/api/', to: '/reference/' },
-    { from: '/v1/', to: '/v2/' }
-  ]
-}
-```
