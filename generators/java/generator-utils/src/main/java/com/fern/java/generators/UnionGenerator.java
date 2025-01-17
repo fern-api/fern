@@ -3,7 +3,9 @@ package com.fern.java.generators;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.constants.Constants;
 import com.fern.ir.model.types.*;
@@ -14,6 +16,7 @@ import com.fern.java.generators.union.UnionSubType;
 import com.fern.java.generators.union.UnionTypeSpecGenerator;
 import com.fern.java.utils.InlineTypeIdResolver;
 import com.fern.java.utils.NamedTypeId;
+import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -46,13 +49,14 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.unionTypeDeclaration = unionTypeDeclaration;
         this.overriddenTypeDeclarations =
-                overriddenTypeDeclarations(generatorContext, unionTypeDeclaration, reservedTypeNames);
+                overriddenTypeDeclarations(className, generatorContext, unionTypeDeclaration, reservedTypeNames);
     }
 
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
-        return new ArrayList<>(overriddenTypeDeclarations(generatorContext, unionTypeDeclaration, reservedTypeNames)
-                .values());
+        return new ArrayList<>(
+                overriddenTypeDeclarations(className, generatorContext, unionTypeDeclaration, reservedTypeNames)
+                        .values());
     }
 
     @Override
@@ -96,6 +100,7 @@ public final class UnionGenerator extends AbstractTypeGenerator {
     }
 
     private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
+            ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
             UnionTypeDeclaration unionTypeDeclaration,
             Set<String> reservedTypeNames) {
@@ -186,7 +191,21 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                     unionSubType,
                     fernConstants,
                     true,
-                    unionTypeDeclaration.getDiscriminant().getWireValue());
+                    unionTypeDeclaration.getDiscriminant().getWireValue(),
+                    // We need to take into consideration all ancestor types as well as all sibling types so that
+                    // to prevent naming the visitor "Visitor" if we already have a variant or property called that.
+                    ImmutableSet.<String>builder()
+                            .addAll(reservedTypeNames)
+                            .addAll(
+                                    generatorContext.getCustomConfig().enableInlineTypes()
+                                            ? overriddenTypeDeclarations.values().stream()
+                                                    .map(TypeDeclaration::getName)
+                                                    .map(DeclaredTypeName::getName)
+                                                    .map(Name::getPascalCase)
+                                                    .map(SafeAndUnsafeString::getSafeName)
+                                                    .collect(Collectors.toList())
+                                            : List.of())
+                            .build());
         }
 
         @Override

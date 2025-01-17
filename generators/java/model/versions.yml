@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix union inline type name conflict resolution.
+      type: fix
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.1
+- changelogEntry:
+    - summary: |
         Support inline types in the Java generator.
       type: feat
   createdAt: '2025-01-16'
