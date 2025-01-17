@@ -36,7 +36,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         const resolvedType = this.context.type.resolveTypeName(typeName);
         const isOptional = ResolvedTypeReference._visit<boolean>(resolvedType, {
             container: (container) => this.container(container, params).isOptional,
-            primitive: (primitive) => this.primitive(primitive).isOptional,
+            primitive: (primitive) => this.primitive(primitive, params).isOptional,
             named: () => false,
             unknown: () => this.unknown().isOptional,
             _other: () => {
@@ -144,21 +144,43 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override long(): TypeReferenceNode {
-        if (this.includeSerdeLayer && this.useBigInt) {
+        if (this.useBigInt) {
+            if (this.includeSerdeLayer) {
+                return this.generateNonOptionalTypeReferenceNode(
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                );
+            }
             return this.generateNonOptionalTypeReferenceNode(
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                ts.factory.createUnionTypeNode([
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                ])
             );
         }
         return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
     }
 
     protected override bigInteger(): TypeReferenceNode {
-        if (this.includeSerdeLayer && this.useBigInt) {
+        if (this.useBigInt) {
+            if (this.includeSerdeLayer) {
+                return this.generateNonOptionalTypeReferenceNode(
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                );
+            }
             return this.generateNonOptionalTypeReferenceNode(
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                ts.factory.createUnionTypeNode([
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                ])
             );
         }
         return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
+    }
+
+    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        return this.generateNonOptionalTypeReferenceNode(
+            this.addNullToTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode)
+        );
     }
 
     protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
@@ -168,6 +190,10 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             typeNode: this.addUndefinedToTypeNode(referencedToValueType),
             typeNodeWithoutUndefined: referencedToValueType
         };
+    }
+
+    private addNullToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {
+        return ts.factory.createUnionTypeNode([typeNode, ts.factory.createLiteralTypeNode(ts.factory.createNull())]);
     }
 
     private addUndefinedToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {

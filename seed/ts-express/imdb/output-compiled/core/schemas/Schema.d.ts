@@ -24,7 +24,9 @@ export declare const SchemaType: {
     readonly SET: "set";
     readonly UNION: "union";
     readonly UNDISCRIMINATED_UNION: "undiscriminatedUnion";
+    readonly NULLABLE: "nullable";
     readonly OPTIONAL: "optional";
+    readonly OPTIONAL_NULLABLE: "optionalNullable";
 };
 export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType];
 export type MaybeValid<T> = Valid<T> | Invalid;

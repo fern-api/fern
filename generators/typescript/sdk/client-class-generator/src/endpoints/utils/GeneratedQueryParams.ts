@@ -44,7 +44,8 @@ export class GeneratedQueryParams {
                                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword),
                                             ts.factory.createArrayTypeNode(
                                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword)
-                                            )
+                                            ),
+                                            ts.factory.createLiteralTypeNode(ts.factory.createNull())
                                         ])
                                     ]),
                                     ts.factory.createObjectLiteralExpression([], false)

@@ -58,7 +58,7 @@ export class ApiReferenceNodeConverterLatest {
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: FdrAPI.api.latest.ApiDefinition,
         parentSlug: FernNavigation.V1.SlugGenerator,
-        private workspace: OSSWorkspace,
+        private workspace: OSSWorkspace | undefined,
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
@@ -104,7 +104,7 @@ export class ApiReferenceNodeConverterLatest {
         const pointsTo = FernNavigation.V1.followRedirects(this.#children);
         const changelogNodeConverter = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
-            this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
+            this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
         ).orUndefined();
@@ -131,7 +131,8 @@ export class ApiReferenceNodeConverterLatest {
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
             authed: undefined,
             viewers: this.apiSection.viewers,
-            orphaned: this.apiSection.orphaned
+            orphaned: this.apiSection.orphaned,
+            featureFlags: this.apiSection.featureFlags
         };
     }
 
@@ -266,7 +267,8 @@ export class ApiReferenceNodeConverterLatest {
                 playground: this.#convertPlaygroundSettings(pkg.playground),
                 authed: undefined,
                 viewers: pkg.viewers,
-                orphaned: pkg.orphaned
+                orphaned: pkg.orphaned,
+                featureFlags: pkg.featureFlags
             };
 
             this.#topLevelSubpackages.set(subpackage.id, subpackageNode);
@@ -298,7 +300,8 @@ export class ApiReferenceNodeConverterLatest {
                 playground: this.#convertPlaygroundSettings(pkg.playground),
                 authed: undefined,
                 viewers: pkg.viewers,
-                orphaned: pkg.orphaned
+                orphaned: pkg.orphaned,
+                featureFlags: pkg.featureFlags
             };
 
             this.#topLevelSubpackages.set(pkg.package, sectionNode);
@@ -369,7 +372,8 @@ export class ApiReferenceNodeConverterLatest {
             playground: this.#convertPlaygroundSettings(section.playground),
             authed: undefined,
             viewers: section.viewers,
-            orphaned: section.orphaned
+            orphaned: section.orphaned,
+            featureFlags: section.featureFlags
         };
     }
 
@@ -415,7 +419,8 @@ export class ApiReferenceNodeConverterLatest {
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
-                orphaned: undefined
+                orphaned: undefined,
+                featureFlags: undefined
             };
 
             this.#topLevelSubpackages.set(subpackageId, subpackageNode);
@@ -433,7 +438,8 @@ export class ApiReferenceNodeConverterLatest {
                 hidden: undefined,
                 playground: undefined,
                 viewers: undefined,
-                orphaned: undefined
+                orphaned: undefined,
+                featureFlags: undefined
             },
             parentSlug
         );
@@ -472,7 +478,8 @@ export class ApiReferenceNodeConverterLatest {
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
                 authed: undefined,
                 viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned
+                orphaned: endpointItem.orphaned,
+                featureFlags: endpointItem.featureFlags
             };
         }
 
@@ -504,7 +511,8 @@ export class ApiReferenceNodeConverterLatest {
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
                 authed: undefined,
                 viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned
+                orphaned: endpointItem.orphaned,
+                featureFlags: endpointItem.featureFlags
             };
         }
 
@@ -534,7 +542,8 @@ export class ApiReferenceNodeConverterLatest {
                 availability: undefined,
                 authed: undefined,
                 viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned
+                orphaned: endpointItem.orphaned,
+                featureFlags: endpointItem.featureFlags
             };
         }
 
@@ -601,7 +610,8 @@ export class ApiReferenceNodeConverterLatest {
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
-                orphaned: undefined
+                orphaned: undefined,
+                featureFlags: undefined
             };
             this.#topLevelSubpackages.set(subpackageId, subpackageNode);
             additionalChildren.push(subpackageNode);
@@ -634,7 +644,8 @@ export class ApiReferenceNodeConverterLatest {
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
-                orphaned: undefined
+                orphaned: undefined,
+                featureFlags: undefined
             };
 
             if (endpoint.namespace != null && endpoint.namespace.length > 0) {
@@ -673,7 +684,8 @@ export class ApiReferenceNodeConverterLatest {
                                 playground: undefined,
                                 authed: undefined,
                                 viewers: undefined,
-                                orphaned: undefined
+                                orphaned: undefined,
+                                featureFlags: undefined
                             };
                         }
                         if (newSubpackageCursor != null && newSubpackageCursor.type === "apiPackage") {
@@ -712,10 +724,11 @@ export class ApiReferenceNodeConverterLatest {
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
-                orphaned: undefined
+                orphaned: undefined,
+                featureFlags: undefined
             };
             if (webSocket.namespace != null && webSocket.namespace.length > 0) {
-                const firstNamespacePart = webSocket.namespace[0];
+                const firstNamespacePart = camelCase(webSocket.namespace[0]);
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {
@@ -746,7 +759,8 @@ export class ApiReferenceNodeConverterLatest {
                                 playground: undefined,
                                 authed: undefined,
                                 viewers: undefined,
-                                orphaned: undefined
+                                orphaned: undefined,
+                                featureFlags: undefined
                             };
                         }
                         if (newSubpackageCursor != null && newSubpackageCursor.type === "apiPackage") {
@@ -784,11 +798,12 @@ export class ApiReferenceNodeConverterLatest {
                 availability: undefined,
                 authed: undefined,
                 viewers: undefined,
-                orphaned: undefined
+                orphaned: undefined,
+                featureFlags: undefined
             };
 
             if (webhook.namespace != null && webhook.namespace.length > 0) {
-                const firstNamespacePart = webhook.namespace[0];
+                const firstNamespacePart = camelCase(webhook.namespace[0]);
                 if (firstNamespacePart != null) {
                     let subpackageCursor = this.#topLevelSubpackages.get(firstNamespacePart);
                     if (subpackageCursor == null) {
@@ -819,7 +834,8 @@ export class ApiReferenceNodeConverterLatest {
                                 playground: undefined,
                                 authed: undefined,
                                 viewers: undefined,
-                                orphaned: undefined
+                                orphaned: undefined,
+                                featureFlags: undefined
                             };
                         }
                         if (newSubpackageCursor != null && newSubpackageCursor.type === "apiPackage") {

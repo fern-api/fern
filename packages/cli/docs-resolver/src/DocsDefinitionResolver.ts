@@ -14,13 +14,13 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Read, APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, RelativeFilePath, listFiles, relative, resolve } from "@fern-api/fs-utils";
+import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, listFiles, relative, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
@@ -29,6 +29,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
+import { generateFdrFromOpenrpc } from "./utils/generateFdrFromOpenrpc";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
@@ -296,6 +297,7 @@ export class DocsDefinitionResolver {
     private async convertDocsConfiguration(): Promise<DocsV1Write.DocsConfig> {
         const root = await this.toRootNode();
         const config: DocsV1Write.DocsConfig = {
+            hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
             logoHref: this.parsedDocsConfig.logo?.href ? DocsV1Write.Url(this.parsedDocsConfig.logo?.href) : undefined,
@@ -417,7 +419,8 @@ export class DocsDefinitionResolver {
             authed: undefined,
             viewers: undefined,
             orphaned: undefined,
-            roles: this.parsedDocsConfig.roles?.map((role) => FernNavigation.RoleId(role))
+            roles: this.parsedDocsConfig.roles?.map((role) => FernNavigation.RoleId(role)),
+            featureFlags: undefined
         };
     }
 
@@ -459,7 +462,8 @@ export class DocsDefinitionResolver {
             orphaned: landingPageConfig.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined
+            noindex: undefined,
+            featureFlags: landingPageConfig.featureFlags
         };
     }
 
@@ -527,7 +531,8 @@ export class DocsDefinitionResolver {
             viewers: version.viewers,
             orphaned: version.orphaned,
             icon: undefined,
-            pointsTo: undefined
+            pointsTo: undefined,
+            featureFlags: version.featureFlags
         };
     }
 
@@ -593,6 +598,35 @@ export class DocsDefinitionResolver {
         item: docsYml.DocsNavigationItem.ApiSection,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
+        if (item.openrpc != null) {
+            const absoluteFilepathToOpenrpc = resolve(
+                this.docsWorkspace.absoluteFilePath,
+                RelativeFilePath.of(item.openrpc)
+            );
+            if (!(await doesPathExist(absoluteFilepathToOpenrpc))) {
+                throw new Error(`OpenRPC file does not exist at path: ${absoluteFilepathToOpenrpc}`);
+            }
+            const api = await generateFdrFromOpenrpc(absoluteFilepathToOpenrpc, this.taskContext);
+            if (api == null) {
+                throw new Error("Failed to generate API Definition from OpenRPC document");
+            }
+            await this.registerApiV2({
+                api,
+                apiName: item.apiName
+            });
+            const node = new ApiReferenceNodeConverterLatest(
+                item,
+                api,
+                parentSlug,
+                undefined,
+                this.docsWorkspace,
+                this.taskContext,
+                this.markdownFilesToFullSlugs,
+                this.#idgen
+            );
+            return node.get();
+        }
+
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
             const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
@@ -702,7 +736,8 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pageId,
             authed: undefined,
-            noindex: undefined
+            noindex: undefined,
+            featureFlags: item.featureFlags
         };
     }
 
@@ -735,7 +770,8 @@ export class DocsDefinitionResolver {
             children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
             authed: undefined,
             pointsTo: undefined,
-            noindex: undefined
+            noindex: undefined,
+            featureFlags: item.featureFlags
         };
     }
 
@@ -817,7 +853,8 @@ export class DocsDefinitionResolver {
             viewers: item.viewers,
             orphaned: item.orphaned,
             pointsTo: undefined,
-            child: await this.toSidebarRootNode(id, layout, slug)
+            child: await this.toSidebarRootNode(id, layout, slug),
+            featureFlags: item.featureFlags
         };
     }
 

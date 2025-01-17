@@ -5,6 +5,7 @@ types:
       email: nullable<string>
       createdAt: optional<string>
       updatedAt: optional<string>
+      metadata: optional<nullable<unknown>>
 
 service:
   auth: false

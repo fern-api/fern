@@ -5,7 +5,125 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.46.10] - 2025-01-13
+## [0.48.2] - 2025-01-16
+
+- Fix: This updates the retrier logic to stop retrying on HTTP conflict (409). This was an
+  oversight that we've meant to remove for a while (similar to other Fern SDKs).
+
+## [0.48.1] - 2025-01-16
+
+- Fix: Record types with `null` values are now correctly serialized.
+
+## [0.48.0] - 2025-01-16
+
+- Feat: When `useBigInt` SDK configuration is set to `true`, a customized JSON serializer & deserializer is used that will preserve the precision of `bigint`'s, as opposed to the native `JSON.stringify` and `JSON.parse` function which converts `bigint`'s to `number`'s losing precision.
+
+  When combining `useBigInt` with our serialization layer (`no-serde: false` (default)), both the request and response properties that are marked as `long` and `bigint` in OpenAPI/Fern spec, will consistently be `bigint`'s.
+  However, when disabling the serialization layer (`no-serde: true`), they will be typed as `number | bigint`.
+
+  Here's an overview of what to expect from the generated types when combining `useBigInt` and `noSerde` with the following Fern definition:
+
+  **Fern definition**
+  ```yml
+  types:
+    ObjectWithOptionalField:
+      properties:
+        longProp: long
+        bigIntProp: bigint
+  ```
+
+  **TypeScript output**
+  ```typescript
+  // useBigInt: true
+  // noSerde: false
+  interface ObjectWithLongAndBigInt {
+    longProp: bigint;
+    bigIntProp: bigint;
+  }
+
+  // useBigInt: true
+  // noSerde: true
+  interface ObjectWithLongAndBigInt {
+    longProp: bigint | number;
+    bigIntProp: bigint | number;
+  }
+
+  // useBigInt: false
+  // noSerde: false
+  interface ObjectWithLongAndBigInt {
+    longProp: number;
+    bigIntProp: string;
+  }
+
+  // useBigInt: false
+  // noSerde: true
+  interface ObjectWithLongAndBigInt {
+    longProp: number;
+    bigIntProp: string;
+  }
+  ```
+
+## [0.47.1] - 2025-01-15
+
+- Fix: Resolves an issue where nullable query parameters were not null-safe in their method invocations. The
+  generated code now appropriately guard against `null` values like so:
+
+  ```typescript
+  const _queryParams: Record< ... >;
+  if (value !== undefined) {
+      _queryParams["value"] = value?.toString() ?? null;
+  }
+  ```
+
+## [0.47.0] - 2025-01-14
+
+- Feature: Add support for `nullable` properties. Users can now specify explicit `null` values
+  for types that specify `nullable` properties like so:
+
+  ```typescript
+  await client.users.update({ username: "john.doe", metadata: null });
+  ```
+
+## [0.46.11] - 2025-01-14
+
+- Fix: Don't double check whether an optional string literal alias (see example below) is a string when using serializer to build query string parameters.
+
+  ```yml
+  types:
+    LiteralAliasExample: literal<"MyLiteralValue">
+
+  service:
+    endpoints:
+      foo:
+        path: /bar
+        method: POST
+        request:
+          name: FooBarRequest
+          query-parameters:
+            optional_alias_literal: optional<LiteralAliasExample>
+  ```
+
+  ```ts
+  // before
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = typeof serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) === "string" ? serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) : JSON.stringify(serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }));
+  }
+
+  // after
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      });
+  }
+  ```
+
+## [0.46.10] - 2025-01-14
 
 - Fix: Use serialization layer to convert types to JSON strings when enabled.
 

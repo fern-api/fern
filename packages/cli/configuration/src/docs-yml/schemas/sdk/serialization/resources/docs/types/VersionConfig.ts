@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { VersionAvailability } from "./VersionAvailability";
 import { WithPermissions } from "./WithPermissions";
+import { WithFeatureFlags } from "./WithFeatureFlags";
 
 export const VersionConfig: core.serialization.ObjectSchema<
     serializers.VersionConfig.Raw,
@@ -18,10 +19,11 @@ export const VersionConfig: core.serialization.ObjectSchema<
         slug: core.serialization.string().optional(),
         availability: VersionAvailability.optional(),
     })
-    .extend(WithPermissions);
+    .extend(WithPermissions)
+    .extend(WithFeatureFlags);
 
 export declare namespace VersionConfig {
-    export interface Raw extends WithPermissions.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         "display-name": string;
         path: string;
         slug?: string | null;

@@ -8,30 +8,30 @@ const schema_utils_1 = require("../schema-utils");
 function bigint() {
     const baseSchema = {
         parse: (raw, { breadcrumbsPrefix = [] } = {}) => {
-            if (typeof raw !== "string") {
+            if (typeof raw === "bigint") {
                 return {
-                    ok: false,
-                    errors: [
-                        {
-                            path: breadcrumbsPrefix,
-                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(raw, "string"),
-                        },
-                    ],
+                    ok: true,
+                    value: raw,
+                };
+            }
+            if (typeof raw === "number") {
+                return {
+                    ok: true,
+                    value: BigInt(raw),
                 };
             }
             return {
-                ok: true,
-                value: BigInt(raw),
+                ok: false,
+                errors: [
+                    {
+                        path: breadcrumbsPrefix,
+                        message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(raw, "bigint | number"),
+                    },
+                ],
             };
         },
         json: (bigint, { breadcrumbsPrefix = [] } = {}) => {
-            if (typeof bigint === "bigint") {
-                return {
-                    ok: true,
-                    value: bigint.toString(),
-                };
-            }
-            else {
+            if (typeof bigint !== "bigint") {
                 return {
                     ok: false,
                     errors: [
@@ -42,6 +42,10 @@ function bigint() {
                     ],
                 };
             }
+            return {
+                ok: true,
+                value: bigint,
+            };
         },
         getType: () => Schema_1.SchemaType.BIGINT,
     };

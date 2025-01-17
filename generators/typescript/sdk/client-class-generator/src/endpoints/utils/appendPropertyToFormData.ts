@@ -207,6 +207,7 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
                 set: () => true,
                 map: () => false,
                 literal: () => false,
+                nullable: (itemType) => isMaybeIterable(itemType, context),
                 optional: (itemType) => isMaybeIterable(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
@@ -245,6 +246,7 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
                 literal: () => {
                     throw new Error("Literal is not iterable.");
                 },
+                nullable: (itemType) => stringifyIterableItemType(value, itemType, context),
                 optional: (itemType) => stringifyIterableItemType(value, itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
@@ -288,6 +290,7 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
                 set: () => true,
                 map: () => false,
                 literal: () => false,
+                nullable: () => false,
                 optional: (itemType) => isDefinitelyIterable(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
@@ -323,6 +326,7 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
                 set: () => false,
                 map: () => false,
                 literal: () => false,
+                nullable: () => false,
                 optional: (itemType) => isMaybeList(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
@@ -357,6 +361,7 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
                 set: () => true,
                 map: () => false,
                 literal: () => false,
+                nullable: () => false,
                 optional: (itemType) => isMaybeSet(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);

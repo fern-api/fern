@@ -551,6 +551,71 @@
         }
       ]
     },
+    "docs.FeatureFlag": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "string"
+        },
+        "fallback-value": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "match": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "flag"
+      ],
+      "additionalProperties": false
+    },
+    "docs.FeatureFlagConfiguration": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "The name of the feature flag, We assume that it is a boolean feature flag that needs to be evaluated to true."
+        },
+        {
+          "$ref": "#/definitions/docs.FeatureFlag",
+          "description": "A single feature flag with a configurable name, fallback value, and match value. Especially useful for non boolean feature flags."
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.FeatureFlag"
+          },
+          "description": "A list of feature flags. If any of the feature flags are satisifed, we will show all content."
+        }
+      ]
+    },
     "docs.ChangelogFolderRelativePath": {
       "type": "string"
     },
@@ -571,6 +636,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -678,6 +753,16 @@
             }
           ]
         },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "display-name": {
           "type": "string"
         },
@@ -728,6 +813,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -794,6 +889,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -1049,6 +1154,16 @@
             }
           ]
         },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "title": {
           "oneOf": [
             {
@@ -1171,6 +1286,16 @@
             }
           ]
         },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "section": {
           "type": "string"
         },
@@ -1283,6 +1408,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"
@@ -1424,10 +1559,30 @@
             }
           ]
         },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "api": {
           "type": "string"
         },
         "api-name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "openrpc": {
           "oneOf": [
             {
               "type": "string"
@@ -1596,6 +1751,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
             },
             {
               "type": "null"

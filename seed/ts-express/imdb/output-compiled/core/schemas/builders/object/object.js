@@ -253,6 +253,7 @@ function isSchemaOptional(schema) {
         case Schema_1.SchemaType.ANY:
         case Schema_1.SchemaType.UNKNOWN:
         case Schema_1.SchemaType.OPTIONAL:
+        case Schema_1.SchemaType.OPTIONAL_NULLABLE:
             return true;
         default:
             return false;

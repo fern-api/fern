@@ -63,7 +63,7 @@ public final class MyRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("maybeString")
+    @JsonProperty("maybe_string")
     public Optional<String> getMaybeString() {
         return maybeString;
     }
@@ -73,32 +73,32 @@ public final class MyRequest {
         return integer;
     }
 
-    @JsonProperty("maybeInteger")
+    @JsonProperty("maybe_integer")
     public Optional<Integer> getMaybeInteger() {
         return maybeInteger;
     }
 
-    @JsonProperty("optionalListOfStrings")
+    @JsonProperty("optional_list_of_strings")
     public Optional<List<String>> getOptionalListOfStrings() {
         return optionalListOfStrings;
     }
 
-    @JsonProperty("listOfObjects")
+    @JsonProperty("list_of_objects")
     public List<MyObject> getListOfObjects() {
         return listOfObjects;
     }
 
-    @JsonProperty("optionalMetadata")
+    @JsonProperty("optional_metadata")
     public Optional<Object> getOptionalMetadata() {
         return optionalMetadata;
     }
 
-    @JsonProperty("optionalObjectType")
+    @JsonProperty("optional_object_type")
     public Optional<ObjectType> getOptionalObjectType() {
         return optionalObjectType;
     }
 
-    @JsonProperty("optionalId")
+    @JsonProperty("optional_id")
     public Optional<String> getOptionalId() {
         return optionalId;
     }
@@ -237,7 +237,7 @@ public final class MyRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "optionalId", nulls = Nulls.SKIP)
+        @JsonSetter(value = "optional_id", nulls = Nulls.SKIP)
         public _FinalStage optionalId(Optional<String> optionalId) {
             this.optionalId = optionalId;
             return this;
@@ -250,7 +250,7 @@ public final class MyRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "optionalObjectType", nulls = Nulls.SKIP)
+        @JsonSetter(value = "optional_object_type", nulls = Nulls.SKIP)
         public _FinalStage optionalObjectType(Optional<ObjectType> optionalObjectType) {
             this.optionalObjectType = optionalObjectType;
             return this;
@@ -263,7 +263,7 @@ public final class MyRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "optionalMetadata", nulls = Nulls.SKIP)
+        @JsonSetter(value = "optional_metadata", nulls = Nulls.SKIP)
         public _FinalStage optionalMetadata(Optional<Object> optionalMetadata) {
             this.optionalMetadata = optionalMetadata;
             return this;
@@ -282,7 +282,7 @@ public final class MyRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "listOfObjects", nulls = Nulls.SKIP)
+        @JsonSetter(value = "list_of_objects", nulls = Nulls.SKIP)
         public _FinalStage listOfObjects(List<MyObject> listOfObjects) {
             this.listOfObjects.clear();
             this.listOfObjects.addAll(listOfObjects);
@@ -296,7 +296,7 @@ public final class MyRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "optionalListOfStrings", nulls = Nulls.SKIP)
+        @JsonSetter(value = "optional_list_of_strings", nulls = Nulls.SKIP)
         public _FinalStage optionalListOfStrings(Optional<List<String>> optionalListOfStrings) {
             this.optionalListOfStrings = optionalListOfStrings;
             return this;
@@ -309,7 +309,7 @@ public final class MyRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "maybeInteger", nulls = Nulls.SKIP)
+        @JsonSetter(value = "maybe_integer", nulls = Nulls.SKIP)
         public _FinalStage maybeInteger(Optional<Integer> maybeInteger) {
             this.maybeInteger = maybeInteger;
             return this;
@@ -322,7 +322,7 @@ public final class MyRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "maybeString", nulls = Nulls.SKIP)
+        @JsonSetter(value = "maybe_string", nulls = Nulls.SKIP)
         public _FinalStage maybeString(Optional<String> maybeString) {
             this.maybeString = maybeString;
             return this;

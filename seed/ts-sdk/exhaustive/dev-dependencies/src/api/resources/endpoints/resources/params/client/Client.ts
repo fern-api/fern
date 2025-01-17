@@ -157,7 +157,7 @@ export class Params {
         requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithQuery.Error>> {
         const { query, number: number_ } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
         _queryParams["number"] = number_.toString();
         const _response = await core.fetcher({
@@ -214,7 +214,7 @@ export class Params {
         requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>> {
         const { query, numer } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
             _queryParams["query"] = query.map((item) => item);
         } else {
@@ -282,7 +282,7 @@ export class Params {
         requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithPathAndQuery.Error>> {
         const { query } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -339,7 +339,7 @@ export class Params {
         requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>> {
         const { query } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
             url: urlJoin(

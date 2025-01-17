@@ -7,6 +7,7 @@ import * as fs from "fs";
 import { Blob } from "buffer";
 import * as SeedFileUpload from "../../../index";
 import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
@@ -82,14 +83,14 @@ export class Service {
         for (const _item of request.listOfObjects) {
             _request.append(
                 "list_of_objects",
-                JSON.stringify(serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" })),
+                toJson(serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" })),
             );
         }
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
                 for (const _item of request.optionalMetadata) {
-                    _request.append("optional_metadata", typeof _item === "string" ? _item : JSON.stringify(_item));
+                    _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
                 }
         }
 
@@ -224,7 +225,7 @@ export class Service {
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
         requestOptions?: Service.RequestOptions,
     ): Promise<void> {
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (request.maybeString != null) {
             _queryParams["maybeString"] = request.maybeString;
         }
@@ -319,12 +320,12 @@ export class Service {
         _request.append("foo", request.foo);
         _request.append(
             "bar",
-            JSON.stringify(serializers.MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip" })),
+            toJson(serializers.MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip" })),
         );
         if (request.fooBar != null) {
             _request.append(
                 "foo_bar",
-                JSON.stringify(serializers.MyObject.jsonOrThrow(request.fooBar, { unrecognizedObjectKeys: "strip" })),
+                toJson(serializers.MyObject.jsonOrThrow(request.fooBar, { unrecognizedObjectKeys: "strip" })),
             );
         }
 

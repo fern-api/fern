@@ -109,7 +109,7 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<SeedMixedCase.Resource[]> {
         const { page_limit: pageLimit, beforeDate } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["page_limit"] = pageLimit.toString();
         _queryParams["beforeDate"] = beforeDate;
         const _response = await core.fetcher({

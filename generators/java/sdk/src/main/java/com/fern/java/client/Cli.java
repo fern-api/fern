@@ -56,6 +56,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -207,7 +208,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     EnumGenerator apiVersionsGenerator = new EnumGenerator(
                             context.getPoetClassNameFactory().getApiVersionClassName(),
                             context,
-                            enumTypeDeclaration.build());
+                            enumTypeDeclaration.build(),
+                            Set.of(context.getPoetClassNameFactory()
+                                    .getApiVersionClassName()
+                                    .simpleName()),
+                            true);
                     GeneratedJavaFile generatedApiVersions = apiVersionsGenerator.generateFile();
                     this.addGeneratedFile(generatedApiVersions);
                 });

@@ -4,10 +4,12 @@
 
 import * as FernDocsConfig from "../../../index";
 
-export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermissions {
+export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
     api: string;
     /** Name of API that we are referencing */
     apiName?: string;
+    /** Path to an openrpc spec. */
+    openrpc?: string;
     audiences?: FernDocsConfig.AudienceId[];
     /** Defaults to false */
     displayErrors?: boolean;

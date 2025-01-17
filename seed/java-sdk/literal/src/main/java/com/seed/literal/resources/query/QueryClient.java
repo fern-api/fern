@@ -35,8 +35,27 @@ public class QueryClient {
                 .newBuilder()
                 .addPathSegments("query");
         httpUrl.addQueryParameter("prompt", request.getPrompt());
+        if (request.getOptionalPrompt().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "optional_prompt", request.getOptionalPrompt().get());
+        }
+        httpUrl.addQueryParameter("alias_prompt", request.getAliasPrompt());
+        if (request.getAliasOptionalPrompt().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "alias_optional_prompt", request.getAliasOptionalPrompt().get());
+        }
         httpUrl.addQueryParameter("query", request.getQuery());
         httpUrl.addQueryParameter("stream", request.getStream().toString());
+        if (request.getOptionalStream().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "optional_stream", request.getOptionalStream().get().toString());
+        }
+        httpUrl.addQueryParameter("alias_stream", request.getAliasStream().toString());
+        if (request.getAliasOptionalStream().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "alias_optional_stream",
+                    request.getAliasOptionalStream().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))

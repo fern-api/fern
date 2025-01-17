@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v55
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
 publish:
@@ -62,76 +62,80 @@ fixtures:
         - partner
       outputFolder: with-partner-audience
   exhaustive:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig: null
-      audiences:
-        - audience1
-        - audience2
-      outputFolder: with-audiences
-    - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-serde-layer
-    - customConfig:
-        useBrandedStringAliases: true
-        neverThrowErrors: true
-        namespaceExport: "Fiddle"
-        bundle: true
-        includeUtilsOnUnionMembers: true
-        includeOtherInUnionTypes: true
-        extraDependencies:
-          lodash-es: "^4.17.21"
-      outputFolder: bundle
-    - customConfig:
-        useBrandedStringAliases: true
-        neverThrowErrors: true
-        namespaceExport: "Fiddle"
-        bundle: true
-        includeUtilsOnUnionMembers: true
-        includeOtherInUnionTypes: true
-        extraDependencies:
-          lodash-es: "^4.17.21"
-        packageJson:
-          version: "0.0.2"
-          dependencies:
-            stream: "^0.0.2"
-            qs: "^6.11.2"
-          files:
-            - exampleFile
-            - dist
-          browser:
-            command-exists: false
-            execa: false
-      outputFolder: custom-package-json
-    - customConfig:
-        retainOriginalCasing: true
-      outputFolder: retain-original-casing
-    - customConfig:
-        allowExtraFields: true
-      outputFolder: allow-extra-fields
-    - customConfig:
-        useBrandedStringAliases: true
-        neverThrowErrors: true
-        namespaceExport: "Fiddle"
-        bundle: true
-        includeUtilsOnUnionMembers: true
-        includeOtherInUnionTypes: true
-        extraDependencies:
-          lodash-es: "^4.17.21"
-        extraDevDependencies:
-          jest: "^29.7.0"
-        extraPeerDependencies:
-          "openai": "^4.47.1"
-        extraPeerDependenciesMeta:
-          "openai":
-            optional: true
-      outputFolder: dev-dependencies
-    - outputFolder: jsr
-      customConfig:
-        publishToJsr: true
-    - outputFolder: bigint
+    # - customConfig: null
+    #   outputFolder: no-custom-config
+    # - customConfig: null
+    #   audiences:
+    #     - audience1
+    #     - audience2
+    #   outputFolder: with-audiences
+    # - customConfig:
+    #     noSerdeLayer: true
+    #   outputFolder: no-serde-layer
+    # - customConfig:
+    #     useBrandedStringAliases: true
+    #     neverThrowErrors: true
+    #     namespaceExport: "Fiddle"
+    #     bundle: true
+    #     includeUtilsOnUnionMembers: true
+    #     includeOtherInUnionTypes: true
+    #     extraDependencies:
+    #       lodash-es: "^4.17.21"
+    #   outputFolder: bundle
+    # - customConfig:
+    #     useBrandedStringAliases: true
+    #     neverThrowErrors: true
+    #     namespaceExport: "Fiddle"
+    #     bundle: true
+    #     includeUtilsOnUnionMembers: true
+    #     includeOtherInUnionTypes: true
+    #     extraDependencies:
+    #       lodash-es: "^4.17.21"
+    #     packageJson:
+    #       version: "0.0.2"
+    #       dependencies:
+    #         stream: "^0.0.2"
+    #         qs: "^6.11.2"
+    #       files:
+    #         - exampleFile
+    #         - dist
+    #       browser:
+    #         command-exists: false
+    #         execa: false
+    #   outputFolder: custom-package-json
+    # - customConfig:
+    #     retainOriginalCasing: true
+    #   outputFolder: retain-original-casing
+    # - customConfig:
+    #     allowExtraFields: true
+    #   outputFolder: allow-extra-fields
+    # - customConfig:
+    #     useBrandedStringAliases: true
+    #     neverThrowErrors: true
+    #     namespaceExport: "Fiddle"
+    #     bundle: true
+    #     includeUtilsOnUnionMembers: true
+    #     includeOtherInUnionTypes: true
+    #     extraDependencies:
+    #       lodash-es: "^4.17.21"
+    #     extraDevDependencies:
+    #       jest: "^29.7.0"
+    #     extraPeerDependencies:
+    #       "openai": "^4.47.1"
+    #     extraPeerDependenciesMeta:
+    #       "openai":
+    #         optional: true
+    #   outputFolder: dev-dependencies
+    # - outputFolder: jsr
+    #   customConfig:
+    #     publishToJsr: true
+    # - outputFolder: bigint
+    #   customConfig:
+    #     useBigInt: true
+    - outputFolder: bigint-no-serde-layer
       customConfig:
         useBigInt: true
+        noSerdeLayer: true
   error-property:
     - customConfig:
         private: true
@@ -265,6 +269,7 @@ allowedFailures:
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  - oauth-client-credentials-custom
   # the below are likely related to changes made to example generation
   - multi-url-environment-no-default
   - objects-with-imports

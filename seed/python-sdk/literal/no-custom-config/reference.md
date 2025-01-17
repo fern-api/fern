@@ -244,6 +244,38 @@ client.query.send(
 <dl>
 <dd>
 
+**optional_prompt:** `typing.Optional[typing.Literal["You are a helpful assistant"]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_optional_prompt:** `typing.Optional[AliasToPrompt]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_stream:** `typing.Optional[typing.Literal[False]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_optional_stream:** `typing.Optional[AliasToStream]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>

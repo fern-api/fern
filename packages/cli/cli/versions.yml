@@ -1,5 +1,102 @@
 - changelogEntry:
     - summary: |
+        The broken link checker is updated to reduce false positives. 
+      type: fix
+  irVersion: 55
+  version: 0.50.6
+
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI is updated to create the organization if it doesn't exist when `fern token` is called.
+      type: fix
+  irVersion: 55
+  version: 0.50.5
+
+
+- changelogEntry:
+    - summary: |
+        The preview server is updated such that local previews of both OpenRPC and OpenAPI (legacy parser)
+        are now possible. 
+      type: fix
+  irVersion: 55
+  version: 0.50.4
+
+- changelogEntry:
+    - summary: |
+        The docs.yml now supports a separate configurtation for `feature-flags` which allows Fern to render 
+        pieces of content depending on whether or not certain feature flags are enabled for particular user. 
+
+        This feature is in alpha stage; please contact support@buildwithfern.com to learn more!
+
+        ```yml docs.yml
+        navigation:
+          - page: Page 1
+            feature-flag: my-feature-flag-a # single boolean flag
+          - page: Page 2
+            feature: # multiple boolean flags
+              - flag: my-feature-flag-a
+              - flag: my-feature-flag-b
+          - section: Section Title
+            viewers: role-a
+            feature-flag: # configurable match
+              flag: my-feature-flag-a
+              fallback-value: "ga"
+              match: "beta"
+            layout: []
+        ```
+      type: internal
+  irVersion: 55
+  version: 0.50.4
+
+- changelogEntry:
+    - summary: |
+        Fixes an issue where optional, nullable properties resulted in a double optional in the
+        IRv55 -> IRv54 migration.
+      type: internal
+  irVersion: 55
+  version: 0.50.3
+
+- changelogEntry:
+    - summary: |
+        The docs now includes alpha support for parsing openrpc specs. To leverage this feature, 
+        simply define an API section in your docs.yml and point at an openrpc spec. 
+
+        ```yml docs.yml
+        navigation: 
+          - api: API Reference
+            openrpc: <path to openrpc file>
+        ```
+      type: fix
+  irVersion: 55
+  version: 0.50.2
+
+- changelogEntry:
+    - summary: |
+        Fixes an issue where nullable schemas were not coerced into optional values.
+      type: fix
+    - summary: |
+        Fixes an issue where `fern check` would fail for optional, nullable properties.
+      type: fix
+  irVersion: 55
+  version: 0.50.1
+
+- changelogEntry:
+    - summary: |
+        The CLI is capable of migrating the latest TypeScript generator to IRv55.
+      type: internal
+  irVersion: 55
+  version: 0.50.0
+
+- changelogEntry:
+  - summary: |
+      The OpenAPI v2 parser now supports `x-fern-global-headers` and fixes an issue with generating webhook content.
+    type: fix
+  irVersion: 55
+  version: 0.49.1
+
+- changelogEntry:
+    - summary: |
         The OpenAPI importer now supports respecting nullable properties in schemas. When enabled, nullable properties will
         be preserved in the gnerated SDK. By default (without this setting), nullable properties are treated as `optional`.
         To enable this, configure the setting in your `generators.yml`:

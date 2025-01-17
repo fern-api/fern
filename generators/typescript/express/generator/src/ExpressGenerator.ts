@@ -38,6 +38,7 @@ import { ExpressInlinedRequestBodyDeclarationReferencer } from "./declaration-re
 import { ExpressRegisterDeclarationReferencer } from "./declaration-referencers/ExpressRegisterDeclarationReferencer";
 import { ExpressServiceDeclarationReferencer } from "./declaration-referencers/ExpressServiceDeclarationReferencer";
 import { GenericAPIExpressErrorDeclarationReferencer } from "./declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
+import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 
 const FILE_HEADER = `/**
@@ -97,6 +98,7 @@ export class ExpressGenerator {
     private expressRegisterDeclarationReferencer: ExpressRegisterDeclarationReferencer;
     private genericApiExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
     private expressErrorDeclarationReferencer: ExpressErrorDeclarationReferencer;
+    private jsonDeclarationReferencer: JsonDeclarationReferencer;
     private expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
@@ -185,6 +187,10 @@ export class ExpressGenerator {
             containingDirectory: schemaDirectory,
             namespaceExport
         });
+        this.jsonDeclarationReferencer = new JsonDeclarationReferencer({
+            containingDirectory: schemaDirectory,
+            namespaceExport
+        });
 
         this.typeGenerator = new TypeGenerator({
             useBrandedStringAliases: config.shouldUseBrandedStringAliases,
@@ -199,7 +205,10 @@ export class ExpressGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             noOptionalProperties: config.noOptionalProperties
         });
-        this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
+        this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator({
+            useBigInt: config.useBigInt,
+            includeSerdeLayer: config.includeSerdeLayer
+        });
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
@@ -554,6 +563,7 @@ export class ExpressGenerator {
             expressServiceGenerator: this.expressServiceGenerator,
             expressErrorGenerator: this.expressErrorGenerator,
             errorDeclarationReferencer: this.expressErrorDeclarationReferencer,
+            jsonDeclarationReferencer: this.jsonDeclarationReferencer,
             errorResolver: this.errorResolver,
             genericAPIExpressErrorDeclarationReferencer: this.genericApiExpressErrorDeclarationReferencer,
             genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
