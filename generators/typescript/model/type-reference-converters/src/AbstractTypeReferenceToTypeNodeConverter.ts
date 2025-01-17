@@ -144,18 +144,34 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override long(): TypeReferenceNode {
-        if (this.includeSerdeLayer && this.useBigInt) {
+        if (this.useBigInt) {
+            if (this.includeSerdeLayer) {
+                return this.generateNonOptionalTypeReferenceNode(
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                );
+            }
             return this.generateNonOptionalTypeReferenceNode(
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                ts.factory.createUnionTypeNode([
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                ])
             );
         }
         return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
     }
 
     protected override bigInteger(): TypeReferenceNode {
-        if (this.includeSerdeLayer && this.useBigInt) {
+        if (this.useBigInt) {
+            if (this.includeSerdeLayer) {
+                return this.generateNonOptionalTypeReferenceNode(
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                );
+            }
             return this.generateNonOptionalTypeReferenceNode(
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                ts.factory.createUnionTypeNode([
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+                ])
             );
         }
         return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));

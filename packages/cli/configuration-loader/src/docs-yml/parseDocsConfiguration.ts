@@ -380,7 +380,8 @@ async function getNavigationConfiguration({
                 availability: version.availability,
                 slug: version.slug,
                 viewers: parseRoles(version.viewers),
-                orphaned: version.orphaned
+                orphaned: version.orphaned,
+                featureFlags: convertFeatureFlag(version.featureFlag)
             });
         }
         return {
@@ -389,6 +390,37 @@ async function getNavigationConfiguration({
         };
     }
     throw new Error("Unexpected. Docs have neither navigation or versions defined.");
+}
+
+function convertFeatureFlag(
+    flag: docsYml.RawSchemas.FeatureFlagConfiguration | undefined
+): CjsFdrSdk.navigation.latest.FeatureFlagOptions[] | undefined {
+    if (flag == null) {
+        return undefined;
+    }
+    if (typeof flag === "string") {
+        return [
+            {
+                flag,
+                match: true,
+                fallbackValue: undefined
+            }
+        ];
+    } else if (Array.isArray(flag)) {
+        return flag.map((flagItem) => ({
+            flag: flagItem.flag,
+            match: flagItem.match,
+            fallbackValue: flagItem.fallbackValue
+        }));
+    } else {
+        return [
+            {
+                flag: flag.flag,
+                match: flag.match ?? true,
+                fallbackValue: flag.fallbackValue
+            }
+        ];
+    }
 }
 
 async function convertTypographyConfiguration({
@@ -531,7 +563,8 @@ async function convertNavigationTabConfiguration({
                 layout
             },
             viewers: parseRoles(tab.viewers),
-            orphaned: tab.orphaned
+            orphaned: tab.orphaned,
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -547,7 +580,8 @@ async function convertNavigationTabConfiguration({
                 href: tab.href
             },
             viewers: parseRoles(tab.viewers),
-            orphaned: tab.orphaned
+            orphaned: tab.orphaned,
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -563,7 +597,8 @@ async function convertNavigationTabConfiguration({
                 changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
             },
             viewers: parseRoles(tab.viewers),
-            orphaned: tab.orphaned
+            orphaned: tab.orphaned,
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -643,7 +678,8 @@ async function convertNavigationItem({
             skipUrlSlug: rawConfig.skipSlug ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -671,7 +707,8 @@ async function convertNavigationItem({
             paginated: rawConfig.paginated ?? false,
             playground: rawConfig.playground,
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -691,7 +728,8 @@ async function convertNavigationItem({
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     assertNever(rawConfig);
@@ -722,7 +760,8 @@ function parsePageConfig(
         // TODO: implement noindex
         noindex: undefined,
         viewers: parseRoles(item.viewers),
-        orphaned: item.orphaned
+        orphaned: item.orphaned,
+        featureFlags: convertFeatureFlag(item.featureFlag)
     };
 }
 
@@ -761,7 +800,8 @@ function parseApiReferenceLayoutItem(
                 icon: item.icon,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
-                orphaned: item.orphaned
+                orphaned: item.orphaned,
+                featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
     } else if (isRawApiRefEndpointConfiguration(item)) {
@@ -775,7 +815,8 @@ function parseApiReferenceLayoutItem(
                 hidden: item.hidden,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
-                orphaned: item.orphaned
+                orphaned: item.orphaned,
+                featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
     }
@@ -794,7 +835,8 @@ function parseApiReferenceLayoutItem(
                 icon: value.icon,
                 playground: value.playground,
                 viewers: parseRoles(value.viewers),
-                orphaned: value.orphaned
+                orphaned: value.orphaned,
+                featureFlags: convertFeatureFlag(value.featureFlag)
             };
         }
         return {
@@ -809,7 +851,8 @@ function parseApiReferenceLayoutItem(
             icon: undefined,
             playground: undefined,
             viewers: undefined,
-            orphaned: undefined
+            orphaned: undefined,
+            featureFlags: undefined
         };
     });
 }

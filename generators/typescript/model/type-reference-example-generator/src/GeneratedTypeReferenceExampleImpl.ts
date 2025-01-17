@@ -14,14 +14,20 @@ import {
 export declare namespace GeneratedTypeReferenceExampleImpl {
     export interface Init {
         example: ExampleTypeReference;
+        useBigInt: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
 export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReferenceExample {
     private example: ExampleTypeReference;
+    private useBigInt: boolean;
+    private includeSerdeLayer: boolean;
 
-    constructor({ example }: GeneratedTypeReferenceExampleImpl.Init) {
+    constructor({ example, useBigInt, includeSerdeLayer }: GeneratedTypeReferenceExampleImpl.Init) {
         this.example = example;
+        this.useBigInt = useBigInt;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public build(context: BaseContext, opts: GetReferenceOpts): ts.Expression {
@@ -47,7 +53,12 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
                     uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
                     float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
-                    bigInteger: (bigIntegerExample) => ts.factory.createStringLiteral(bigIntegerExample),
+                    bigInteger: (bigIntegerExample) => {
+                        if (this.useBigInt) {
+                            return ts.factory.createBigIntLiteral(bigIntegerExample);
+                        }
+                        return ts.factory.createStringLiteral(bigIntegerExample);
+                    },
                     base64: (base64Example) => ts.factory.createStringLiteral(base64Example),
                     boolean: (booleanExample) => (booleanExample ? ts.factory.createTrue() : ts.factory.createFalse()),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),

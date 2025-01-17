@@ -9,6 +9,7 @@ import { AudienceId } from "./AudienceId";
 import { SnippetsConfiguration } from "./SnippetsConfiguration";
 import { PlaygroundSettings } from "./PlaygroundSettings";
 import { WithPermissions } from "./WithPermissions";
+import { WithFeatureFlags } from "./WithFeatureFlags";
 
 export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
     serializers.ApiReferenceConfiguration.Raw,
@@ -32,10 +33,11 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         paginated: core.serialization.boolean().optional(),
         playground: PlaygroundSettings.optional(),
     })
-    .extend(WithPermissions);
+    .extend(WithPermissions)
+    .extend(WithFeatureFlags);
 
 export declare namespace ApiReferenceConfiguration {
-    export interface Raw extends WithPermissions.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         api: string;
         "api-name"?: string | null;
         openrpc?: string | null;

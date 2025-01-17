@@ -11,7 +11,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedNul
     {
         name: core.serialization.string(),
         tags: core.serialization.list(core.serialization.string()).nullable(),
-        metadata: Metadata.nullable().optional(),
+        metadata: Metadata.optionalNullable(),
     },
 );
 

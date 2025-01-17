@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { isNonNullish } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
@@ -16,7 +15,6 @@ import {
 } from "@fern-api/fdr-sdk";
 import { convertToFernHostAbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
@@ -96,8 +94,8 @@ export async function getPreviewDocsDefinition({
     });
 
     return {
-        apis: parsedDocsConfig.experimental?.openapiParserV2 ? {} : apiCollector.getAPIsForDefinition(),
-        apisV2: parsedDocsConfig.experimental?.openapiParserV2 ? apiCollectorV2.getAPIsForDefinition() : {},
+        apis: apiCollector.getAPIsForDefinition(),
+        apisV2: apiCollectorV2.getAPIsForDefinition(),
         config: readDocsConfig,
         files: {},
         filesV2,

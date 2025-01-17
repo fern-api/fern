@@ -20,4 +20,5 @@ exports.SchemaType = {
     UNDISCRIMINATED_UNION: "undiscriminatedUnion",
     NULLABLE: "nullable",
     OPTIONAL: "optional",
+    OPTIONAL_NULLABLE: "optionalNullable",
 };

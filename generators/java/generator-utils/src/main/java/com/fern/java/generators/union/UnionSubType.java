@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
+import com.fern.java.PoetTypeNameMapper;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -26,10 +27,13 @@ public abstract class UnionSubType {
     private final ClassName unionClassName;
     private final ParameterizedTypeName visitorInterfaceClassName;
 
-    public UnionSubType(ClassName unionClassName) {
+    protected final PoetTypeNameMapper poetTypeNameMapper;
+
+    public UnionSubType(ClassName unionClassName, PoetTypeNameMapper poetTypeNameMapper) {
         this.unionClassName = unionClassName;
         this.visitorInterfaceClassName =
                 ParameterizedTypeName.get(unionClassName.nestedClass(VISITOR_CLASS_NAME), VISITOR_RETURN_TYPE);
+        this.poetTypeNameMapper = poetTypeNameMapper;
     }
 
     public final ClassName getUnionClassName() {

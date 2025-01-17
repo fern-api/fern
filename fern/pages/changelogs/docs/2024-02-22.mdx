@@ -1,0 +1,32 @@
+## WebSocket Support in API Playground
+Added real-time WebSocket testing capabilities to the API playground, enabling developers to test streaming and real-time endpoints directly in the documentation. WebSocket connections can now be established, tested, and debugged without leaving the docs.
+
+## Enhanced Code Highlighting
+Implemented a new code highlighting system using Shiki for improved syntax highlighting accuracy and performance. The system now supports more languages and provides better dark mode compatibility.
+
+## Feedback System
+Introduced a new feedback collection system using Radix UI components for improved accessibility. Users can now provide structured feedback about documentation quality and usefulness directly within the interface.
+
+## Layout Configuration System
+Implemented a flexible layout configuration system that allows for custom header, footer, and sidebar arrangements. Documentation can now be customized to match your brand and preferences.
+
+```yaml
+layout: 
+  page-width: full
+  tabs-placement: header
+  searchbar-placement: header
+```
+
+## Custom Styling Support
+Added support for custom CSS and scripts, enabling deep customization of documentation appearance and behavior. Organizations can now apply their branding consistently across their documentation.
+
+```yaml docs.yml
+  css: ./assets/styles.css
+```
+
+```css styles.css
+/* Custom styles */
+.custom-class {
+  background-color: #f0f0f0;
+}
+```

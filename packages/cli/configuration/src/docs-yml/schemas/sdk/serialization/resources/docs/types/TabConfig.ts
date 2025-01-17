@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { ChangelogFolderRelativePath } from "./ChangelogFolderRelativePath";
 import { WithPermissions } from "./WithPermissions";
+import { WithFeatureFlags } from "./WithFeatureFlags";
 
 export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Raw, FernDocsConfig.TabConfig> =
     core.serialization
@@ -19,10 +20,11 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
             href: core.serialization.string().optional(),
             changelog: ChangelogFolderRelativePath.optional(),
         })
-        .extend(WithPermissions);
+        .extend(WithPermissions)
+        .extend(WithFeatureFlags);
 
 export declare namespace TabConfig {
-    export interface Raw extends WithPermissions.Raw {
+    export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         "display-name": string;
         icon?: string | null;
         slug?: string | null;

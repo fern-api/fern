@@ -3,26 +3,26 @@ package com.fern.java.generators;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.EnumValue;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.VisitorFactory;
 import com.fern.java.VisitorFactory.GeneratedVisitor;
-import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator {
+public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator {
 
     private static final String VALUE_TYPE_NAME = "Value";
     private static final String VALUE_FIELD_NAME = "value";
@@ -44,17 +44,24 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
     public ForwardCompatibleEnumGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            EnumTypeDeclaration enumTypeDeclaration) {
-        super(className, generatorContext);
+            EnumTypeDeclaration enumTypeDeclaration,
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.enumTypeDeclaration = enumTypeDeclaration;
         this.valueFieldClassName = this.className.nestedClass(VALUE_TYPE_NAME);
     }
 
     @Override
-    public GeneratedJavaFile generateFile() {
+    public List<TypeDeclaration> getInlineTypeDeclarations() {
+        return List.of();
+    }
+
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
         Map<EnumValue, FieldSpec> enumConstants = getConstants();
         VisitorFactory.GeneratedVisitor<EnumValue> generatedVisitor = getVisitor();
-        TypeSpec enumTypeSpec = TypeSpec.classBuilder(className)
+        return TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addFields(enumConstants.values())
                 .addFields(getPrivateMembers())
@@ -67,12 +74,6 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
                 .addMethod(getValueOfMethod(enumConstants))
                 .addType(getNestedValueEnum())
                 .addType(generatedVisitor.typeSpec())
-                .build();
-        JavaFile enumFile =
-                JavaFile.builder(className.packageName(), enumTypeSpec).build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(enumFile)
                 .build();
     }
 

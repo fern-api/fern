@@ -26,15 +26,15 @@ public final class WithContentTypeRequest {
 
     private final MyObject bar;
 
-    private final Optional<MyObject> foobar;
+    private final Optional<MyObject> fooBar;
 
     private final Map<String, Object> additionalProperties;
 
     private WithContentTypeRequest(
-            String foo, MyObject bar, Optional<MyObject> foobar, Map<String, Object> additionalProperties) {
+            String foo, MyObject bar, Optional<MyObject> fooBar, Map<String, Object> additionalProperties) {
         this.foo = foo;
         this.bar = bar;
-        this.foobar = foobar;
+        this.fooBar = fooBar;
         this.additionalProperties = additionalProperties;
     }
 
@@ -48,9 +48,9 @@ public final class WithContentTypeRequest {
         return bar;
     }
 
-    @JsonProperty("foobar")
-    public Optional<MyObject> getFoobar() {
-        return foobar;
+    @JsonProperty("foo_bar")
+    public Optional<MyObject> getFooBar() {
+        return fooBar;
     }
 
     @java.lang.Override
@@ -65,12 +65,12 @@ public final class WithContentTypeRequest {
     }
 
     private boolean equalTo(WithContentTypeRequest other) {
-        return foo.equals(other.foo) && bar.equals(other.bar) && foobar.equals(other.foobar);
+        return foo.equals(other.foo) && bar.equals(other.bar) && fooBar.equals(other.fooBar);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.foo, this.bar, this.foobar);
+        return Objects.hash(this.foo, this.bar, this.fooBar);
     }
 
     @java.lang.Override
@@ -95,9 +95,9 @@ public final class WithContentTypeRequest {
     public interface _FinalStage {
         WithContentTypeRequest build();
 
-        _FinalStage foobar(Optional<MyObject> foobar);
+        _FinalStage fooBar(Optional<MyObject> fooBar);
 
-        _FinalStage foobar(MyObject foobar);
+        _FinalStage fooBar(MyObject fooBar);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -106,7 +106,7 @@ public final class WithContentTypeRequest {
 
         private MyObject bar;
 
-        private Optional<MyObject> foobar = Optional.empty();
+        private Optional<MyObject> fooBar = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -117,7 +117,7 @@ public final class WithContentTypeRequest {
         public Builder from(WithContentTypeRequest other) {
             foo(other.getFoo());
             bar(other.getBar());
-            foobar(other.getFoobar());
+            fooBar(other.getFooBar());
             return this;
         }
 
@@ -136,21 +136,21 @@ public final class WithContentTypeRequest {
         }
 
         @java.lang.Override
-        public _FinalStage foobar(MyObject foobar) {
-            this.foobar = Optional.ofNullable(foobar);
+        public _FinalStage fooBar(MyObject fooBar) {
+            this.fooBar = Optional.ofNullable(fooBar);
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter(value = "foobar", nulls = Nulls.SKIP)
-        public _FinalStage foobar(Optional<MyObject> foobar) {
-            this.foobar = foobar;
+        @JsonSetter(value = "foo_bar", nulls = Nulls.SKIP)
+        public _FinalStage fooBar(Optional<MyObject> fooBar) {
+            this.fooBar = fooBar;
             return this;
         }
 
         @java.lang.Override
         public WithContentTypeRequest build() {
-            return new WithContentTypeRequest(foo, bar, foobar, additionalProperties);
+            return new WithContentTypeRequest(foo, bar, fooBar, additionalProperties);
         }
     }
 }
