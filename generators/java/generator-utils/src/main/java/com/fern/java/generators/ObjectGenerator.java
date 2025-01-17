@@ -176,8 +176,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
         for (EnrichedObjectProperty prop : enrichedObjectProperties) {
             List<NamedTypeId> resolvedIds = prop.objectProperty()
                     .getValueType()
-                    .visit(new InlineTypeIdResolver(
-                            prop.pascalCaseKey(), prop.objectProperty().getValueType()));
+                    .visit(new InlineTypeIdResolver(prop.pascalCaseKey(), generatorContext));
 
             // See if the names require further resolution
             for (NamedTypeId resolvedId : resolvedIds) {

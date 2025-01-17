@@ -88,7 +88,10 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitNamed(ResolvedNamedType named) {
-            return applyEnclosing(named.getName(), poetClassNameFactory.getTypeClassName(named.getName()));
+            TypeDeclaration typeDeclaration =
+                    typeDefinitionsByName.get(named.getName().getTypeId());
+            return applyEnclosing(
+                    typeDeclaration.getName(), poetClassNameFactory.getTypeClassName(typeDeclaration.getName()));
         }
 
         @Override

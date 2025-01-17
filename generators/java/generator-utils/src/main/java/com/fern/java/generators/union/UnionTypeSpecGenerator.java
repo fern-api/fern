@@ -26,6 +26,8 @@ public abstract class UnionTypeSpecGenerator {
 
     private static final String VISITOR_CLASS_NAME = "Visitor";
     private static final String VISITOR_CLASS_NAME_UNDERSCORE = "Visitor_";
+    private static final String VALUE_CLASS_NAME = "Value";
+    private static final String VALUE_CLASS_NAME_UNDERSCORE = "Value_";
     private static final TypeVariableName VISITOR_RETURN_TYPE = TypeVariableName.get("T");
 
     private final ClassName unionClassName;
@@ -50,7 +52,7 @@ public abstract class UnionTypeSpecGenerator {
         this.subTypes = subTypes;
         this.unknownSubType = unknownSubType;
         this.fernConstants = fernConstants;
-        this.valueInterfaceClassName = unionClassName.nestedClass("Value");
+        this.valueInterfaceClassName = unionClassName.nestedClass(valueName(reservedTypeNames));
         this.visitorName = visitorName(reservedTypeNames);
         this.visitorInterfaceClassName =
                 ParameterizedTypeName.get(unionClassName.nestedClass(visitorName), VISITOR_RETURN_TYPE);
@@ -228,5 +230,9 @@ public abstract class UnionTypeSpecGenerator {
 
     private static String visitorName(Set<String> reservedTypeNames) {
         return reservedTypeNames.contains(VISITOR_CLASS_NAME) ? VISITOR_CLASS_NAME_UNDERSCORE : VISITOR_CLASS_NAME;
+    }
+
+    private static String valueName(Set<String> reservedTypeNames) {
+        return reservedTypeNames.contains(VALUE_CLASS_NAME) ? VALUE_CLASS_NAME_UNDERSCORE : VALUE_CLASS_NAME;
     }
 }
