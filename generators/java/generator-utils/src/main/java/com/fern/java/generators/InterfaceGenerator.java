@@ -22,6 +22,7 @@ import com.fern.ir.model.types.MapType;
 import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -32,6 +33,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
@@ -50,6 +52,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedJavaInterface generateFile() {
         List<PropertyMethodSpec> methodSpecsByProperties = getPropertyGetters();
+        List<PropertyMethodSpec> renderedSpecsByProperties = getRenderedPropertyGetters();
         List<ClassName> superInterfaces = objectTypeDeclaration.getExtends().stream()
                 .map(declaredTypeName ->
                         generatorContext.getPoetClassNameFactory().getInterfaceClassName(declaredTypeName))
@@ -57,7 +60,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
                 .addSuperinterfaces(superInterfaces)
-                .addMethods(methodSpecsByProperties.stream()
+                .addMethods(renderedSpecsByProperties.stream()
                         .map(PropertyMethodSpec::methodSpec)
                         .collect(Collectors.toList()))
                 .build();
@@ -73,12 +76,35 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
 
     private List<PropertyMethodSpec> getPropertyGetters() {
         return objectTypeDeclaration.getProperties().stream()
+                .map(objectProperty -> {
+                    TypeName poetTypeName = generatorContext
+                            .getPoetTypeNameMapper()
+                            .convertToTypeName(true, objectProperty.getValueType());
+                    MethodSpec getter = MethodSpec.methodBuilder("get"
+                                    + objectProperty
+                                            .getName()
+                                            .getName()
+                                            .getPascalCase()
+                                            .getSafeName())
+                            .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                            .returns(poetTypeName)
+                            .build();
+                    return PropertyMethodSpec.builder()
+                            .objectProperty(objectProperty)
+                            .methodSpec(getter)
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
+
+    private List<PropertyMethodSpec> getRenderedPropertyGetters() {
+        return objectTypeDeclaration.getProperties().stream()
                 // Omit any types we're going to inline
                 .filter(objectProperty -> {
                     if (!generatorContext.getCustomConfig().enableInlineTypes()) {
                         return true;
                     }
-                    return !objectProperty.getValueType().visit(new InlinedVisitor());
+                    return !objectProperty.getValueType().visit(new InlinedVisitor(generatorContext));
                 })
                 .map(objectProperty -> {
                     TypeName poetTypeName = generatorContext
@@ -103,6 +129,13 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
 
     private static final class InlinedVisitor
             implements TypeReference.Visitor<Boolean>, ContainerType.Visitor<Boolean> {
+
+        private final AbstractGeneratorContext<?, ?> generatorContext;
+
+        private InlinedVisitor(AbstractGeneratorContext<?, ?> generatorContext) {
+            this.generatorContext = generatorContext;
+        }
+
         // Handle main types
 
         @Override
@@ -112,7 +145,12 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
 
         @Override
         public Boolean visitNamed(NamedType namedType) {
-            return namedType.getInline().orElse(false);
+            // TODO(ajgateno): Tracking in FER-4050 that we can't just get inline from namedType.getInline()
+            Optional<TypeDeclaration> existingTypeDeclaration =
+                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(namedType.getTypeId()));
+            return existingTypeDeclaration
+                    .map(declaration -> declaration.getInline().orElse(false))
+                    .orElse(false);
         }
 
         @Override
