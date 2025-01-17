@@ -2,7 +2,6 @@ import type { Element, ElementContent } from "hast";
 
 import { assertIsStringArray } from "../assert";
 import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
-import { turnChildrenIntoMdx } from "../utils/children";
 
 export function scrapeCallout(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {
     if (
@@ -13,8 +12,6 @@ export function scrapeCallout(node: HastNode, _: HastNodeIndex, __: HastNodePare
     ) {
         return undefined;
     }
-
-    node.children.shift();
 
     assertIsStringArray(node.properties.className);
     const calloutClassNames = node.properties.className.filter((className) => className.includes("callout_"));
@@ -38,11 +35,43 @@ export function scrapeCallout(node: HastNode, _: HastNodeIndex, __: HastNodePare
             break;
     }
 
+    let icon: string | undefined;
+    for (const child of node.children) {
+        if (
+            child.type === "element" &&
+            child.tagName === "h2" &&
+            Array.isArray(child.properties?.className) &&
+            child.properties?.className.includes("callout-heading")
+        ) {
+            const iconSpan = child.children?.find(
+                (c) =>
+                    c.type === "element" &&
+                    c.tagName === "span" &&
+                    Array.isArray(c.properties?.className) &&
+                    c.properties?.className.includes("callout-icon")
+            );
+            if (iconSpan && iconSpan.type === "element" && iconSpan.children?.[0] && "value" in iconSpan.children[0]) {
+                icon = String(iconSpan.children[0].value);
+            }
+            break;
+        }
+    }
+
     const newNode: Element = {
         type: "element",
         tagName,
-        properties: {},
-        children: turnChildrenIntoMdx(node.children) as Array<ElementContent>
+        properties: {
+            ...(icon && { icon })
+        },
+        children: node.children.filter(
+            (child) =>
+                !(
+                    child.type === "element" &&
+                    child.tagName === "h2" &&
+                    Array.isArray(child.properties?.className) &&
+                    child.properties?.className.includes("callout-heading")
+                )
+        ) as Array<ElementContent>
     };
 
     return newNode;

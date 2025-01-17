@@ -1,4 +1,8 @@
-export type scrapedNavigation = scrapedNavigationGroup[];
+export type scrapedNavigationSection = {
+    group: string;
+    pages: scrapedNavigationEntry[];
+};
+export type scrapedNavigation = scrapedNavigationSection[];
 export type scrapedNavigationGroup = {
     group: string;
     pages: scrapedNavigationEntry[];

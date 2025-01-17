@@ -1,8 +1,8 @@
 import type { Element, ElementContent } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
+import { convertHastChildrenToMdast } from "../customComponents/children";
 import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
-import { turnChildrenIntoMdx } from "../utils/children";
 
 export function scrapeTabs(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {
     if (
@@ -74,7 +74,7 @@ export function scrapeTabs(node: HastNode, _: HastNodeIndex, __: HastNodeParent)
         if (!titles[index]) {
             return;
         }
-        const children = turnChildrenIntoMdx([tab]) as Array<ElementContent>;
+        const children = convertHastChildrenToMdast([tab]) as Array<ElementContent>;
         tabChildren.push({
             type: "element",
             tagName: "Tab",

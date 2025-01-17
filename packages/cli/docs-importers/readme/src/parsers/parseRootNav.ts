@@ -5,10 +5,10 @@ export function retrieveRootNavElement(rootNode: HastRoot): Element | undefined 
     let element: Element | undefined = undefined;
     visit(rootNode, "element", function (node) {
         if (
-            node.tagName === "nav" &&
+            node.tagName === "div" &&
             node.properties.className &&
             Array.isArray(node.properties.className) &&
-            node.properties.className.includes("rm-Sidebar")
+            node.properties.className.includes("hub-sidebar-content")
         ) {
             element = node;
             return EXIT;

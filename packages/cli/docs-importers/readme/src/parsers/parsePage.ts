@@ -5,6 +5,8 @@ import remarkMdx from "remark-mdx";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 
+import { TaskContext } from "@fern-api/task-context";
+
 import { unifiedRemoveBreaks } from "../cleaners/breaks";
 import { unifiedRemoveClassNames } from "../cleaners/className";
 import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis";
@@ -37,10 +39,11 @@ import type { Result } from "../types/result";
 import { writePage } from "../utils/files/file";
 import { htmlToHast } from "../utils/htmlToHast";
 import { retrieveRootContent } from "../utils/root";
-import { removeLeadingSlash, removeTrailingSlash } from "../utils/strings";
+import { normalizePath, removeTrailingSlash } from "../utils/strings";
 import { getDescriptionFromRoot, getTitleFromHeading } from "../utils/title";
 
 export async function parsePage(
+    context: TaskContext,
     html: string,
     url: string | URL,
     opts: {
@@ -62,9 +65,10 @@ export async function parsePage(
 
     const urlStr = urlObj.toString();
     const content = retrieveRootContent(hast);
-    // console.log("content", JSON.stringify(content, null, 2));
 
-    if (!content) {return { success: false, data: undefined };}
+    if (!content) {
+        return { success: false, data: undefined };
+    }
 
     const contentAsRoot: HastRoot = {
         type: "root",
@@ -105,9 +109,8 @@ export async function parsePage(
     const description = getDescriptionFromRoot(mdastTree);
 
     try {
-        const result = unified().use(remarkMdx).use(remarkGfm).use(remarkStringify).stringify(mdastTree);
-
-        const resultStr = String(result).replace(/\n{3,}/g, "\n\n");
+        const mdxContent = unified().use(remarkMdx).use(remarkGfm).use(remarkStringify).stringify(mdastTree);
+        const resultStr = String(mdxContent).replace(/\n{3,}/g, "\n\n");
 
         if (opts.rootPath) {
             urlObj = new URL(opts.rootPath, urlObj.origin);
@@ -118,9 +121,7 @@ export async function parsePage(
         writePage(url, title, description, resultStr);
         return {
             success: true,
-            data: opts.rootPath
-                ? [removeLeadingSlash(removeTrailingSlash(new URL(urlStr).pathname)), opts.rootPath]
-                : undefined
+            data: opts.rootPath ? [normalizePath(new URL(urlStr).pathname), opts.rootPath] : undefined
         };
     } catch (error) {
         return {

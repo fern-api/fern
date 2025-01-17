@@ -1,15 +1,20 @@
+import { TaskContext } from "@fern-api/task-context";
+
 import type { Result } from "../types/result.js";
 import { fetchPageHtml } from "../utils/network";
 import { parsePage } from "./parsePage";
 
-export function* intoChunks<T>(values: T[], chunkSize = 16) {
-    for (let i = 0; i < values.length; i += chunkSize) {
-        const chunk = values.slice(i, i + chunkSize);
-        yield chunk;
+export function* chunkIterator<T>(array: T[], size = 16) {
+    let position = 0;
+    while (position < array.length) {
+        const segment = array.slice(position, position + size);
+        yield segment;
+        position += size;
     }
 }
 
 export async function parsePageGroup(
+    context: TaskContext,
     navGroup: Array<URL>,
     opts: {
         externalLinks: boolean;
@@ -17,34 +22,27 @@ export async function parsePageGroup(
     } = { externalLinks: false }
 ): Promise<Array<Result<[string, string]>>> {
     const allResults: Array<Result<[string, string]>> = [];
-    for (const chunk of intoChunks(navGroup)) {
-        const res = await Promise.all(
+    for (const chunk of chunkIterator(navGroup)) {
+        const result = await Promise.all(
             chunk.map(async (url, index) => {
                 try {
                     if (opts.externalLinks) {
-                        const res = parsePage(`external-link-${index}`, url, { externalLink: true });
-                        return res;
+                        context.logger.info(`Scraping external link with URL: ${url}...`);
+                        return parsePage(context, `external-link-${index}`, url, { externalLink: true });
+                    } else {
+                        const html = await fetchPageHtml({ url });
+                        context.logger.info(`Scraping internal link with URL: ${url}...`);
+                        return parsePage(context, html, url, {
+                            externalLink: false,
+                            rootPath: opts.rootPaths ? opts.rootPaths[index] : undefined
+                        });
                     }
-
-                    if (url.toString().endsWith("/overview")) {
-                        url = new URL(url.toString().replace("/overview", ""));
-                    }
-
-                    const html = await fetchPageHtml({ url });
-                    const res = parsePage(html, url, {
-                        externalLink: false,
-                        rootPath: opts.rootPaths ? opts.rootPaths[index] : undefined
-                    });
-                    return res;
                 } catch (error) {
-                    return {
-                        success: false,
-                        data: undefined
-                    };
+                    return { success: false, data: undefined };
                 }
             })
         );
-        allResults.push(...res);
+        allResults.push(...result);
     }
     return allResults;
 }

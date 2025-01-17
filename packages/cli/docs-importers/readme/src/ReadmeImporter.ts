@@ -9,9 +9,9 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { assertIsReadme } from "./assertIsReadme";
 import { defaultColors } from "./constants";
 import { convertNavigationItem } from "./converters/convertNavigationItem";
-import { parseNavItems } from "./parsers/parseNavItems";
 import { parsePageGroup } from "./parsers/parsePageGroup";
 import { retrieveRootNavElement } from "./parsers/parseRootNav";
+import { parseSidebar } from "./parsers/parseSidebar";
 import { parseTabLinks } from "./parsers/parseTabs";
 import { ScrapeResult } from "./types/scrapeResults";
 import { scrapedNavigation, scrapedNavigationGroup } from "./types/scrapedNavigation";
@@ -25,7 +25,7 @@ import { htmlToHast } from "./utils/htmlToHast";
 import { iterateOverNavItems } from "./utils/iterate";
 import { fetchPageHtml, startPuppeteer } from "./utils/network";
 import { GROUP_NAMES, iterateThroughReservedNames } from "./utils/reservedNames";
-import { removeLeadingSlash, removeTrailingSlash } from "./utils/strings";
+import { normalizePath, removeLeadingSlash, removeTrailingSlash } from "./utils/strings";
 import { downloadTitle, getTitleFromLink } from "./utils/title";
 
 export declare namespace ReadmeImporter {
@@ -56,7 +56,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
             this.context.logger.error("Failed to scrape site tabs");
             return;
         }
-        this.context.logger.info("Successfully scraped site tabs");
+        this.context.logger.info("Successfully scraped all site tabs");
 
         if (scrapeData.logo) {
             builder.setLogo({ logo: scrapeData.logo });
@@ -117,6 +117,9 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         const results = await Promise.all(
             links.map(async (tabEntry) => {
+                if (tabEntry.url.startsWith("/reference")) {
+                    return { success: false, data: undefined };
+                }
                 const newUrl = new URL(url);
                 newUrl.pathname = tabEntry.url;
                 try {
@@ -152,7 +155,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         const failures = results.filter((result) => !result.success);
         failures.forEach((result) => {
-            this.context.logger.info("Failed to scrape tab" + result.message);
+            this.context.logger.info(`Failed to scrape tab: ${result.message}`);
         });
 
         const browser = await startPuppeteer();
@@ -193,27 +196,29 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         if (!sidebar) {
             return { success: false, message: `${url.toString()}: Failed to find sidebar element` };
         }
-
-        const navItems = parseNavItems(sidebar);
-
+        const navItems = parseSidebar(sidebar);
         if (origin === "") {
             return { success: false, message: `invalid URL provided to scrape site: ${url}` };
         }
 
-        const listOfLinks = iterateOverNavItems(navItems, origin);
+        const flatNavItems = navItems.flatMap((section) => section.pages);
+        const listOfLinks = iterateOverNavItems(flatNavItems, origin);
         if (listOfLinks.length === 0) {
             return { success: false, message: `no navigation links were able to be found: ${url}` };
         }
 
-        const externalLinks = listOfLinks.filter((url) => url.origin !== origin);
+        const externalLinks = listOfLinks.filter((url: URL) => url.origin !== origin);
         const internalLinks = listOfLinks.filter(
-            (url) => url.origin === origin && removeTrailingSlash(url.toString()) !== origin
+            (url: URL) => url.origin === origin && removeTrailingSlash(url.toString()) !== origin
         );
         const rootLinks = listOfLinks.filter(
-            (url) => url.origin === origin && removeTrailingSlash(url.toString()) === origin
+            (url: URL) => url.origin === origin && removeTrailingSlash(url.toString()) === origin
         );
 
-        const allPathnames = [...internalLinks.map((url) => url.toString()), ...rootLinks.map((url) => url.toString())];
+        const allPathnames = [
+            ...internalLinks.map((url: URL) => url.toString()),
+            ...rootLinks.map((url: URL) => url.toString())
+        ];
 
         const rootPaths = rootLinks.map(() => {
             const name = iterateThroughReservedNames(GROUP_NAMES, allPathnames);
@@ -222,31 +227,38 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         });
 
         try {
-            const externalResults = await parsePageGroup(externalLinks, { externalLinks: true });
-            const internalResults = await parsePageGroup(internalLinks);
-            const rootResults = await parsePageGroup(rootLinks, { externalLinks: false, rootPaths });
+            const externalResults = await parsePageGroup(this.context, externalLinks, { externalLinks: true });
+            const internalResults = await parsePageGroup(this.context, internalLinks);
+            const rootResults = await parsePageGroup(this.context, rootLinks, { externalLinks: false, rootPaths });
 
-            const externalLinkReplaceMap = new Map<string, string>(
-                externalResults.filter((result) => result.success).map((result) => result.data as [string, string])
+            const externalLinkReplaceMap = new Map(
+                externalResults.filter((r) => r.success).map((r) => r.data as [string, string])
+            );
+            const rootPathReplaceMap = new Map(
+                rootResults.filter((r) => r.success).map((r) => r.data as [string, string])
             );
 
-            const rootPathReplaceMap = new Map<string, string>(
-                rootResults.filter((result) => result.success).map((result) => result.data as [string, string])
-            );
+            const replaceLinks = (value: any, map: Map<string, string>) => {
+                if (typeof value === "string") {
+                    return map.get(value) ?? value;
+                }
+                if (Array.isArray(value)) {
+                    return value.map((item) => map.get(item) ?? item);
+                }
+                return value;
+            };
 
             traverse(navItems).forEach(function (value) {
-                if (typeof value === "string") {
-                    if (externalLinkReplaceMap.has(value)) {
-                        this.update(externalLinkReplaceMap.get(value) ?? value);
-                    } else if (rootPathReplaceMap.has(value)) {
-                        this.update(rootPathReplaceMap.get(value) ?? value);
-                    }
-                } else if (Array.isArray(value)) {
-                    if (value.find((item) => externalLinkReplaceMap.has(item))) {
-                        this.update(value.map((item) => externalLinkReplaceMap.get(item) ?? item));
-                    } else if (value.find((item) => rootPathReplaceMap.has(item))) {
-                        this.update(value.map((item) => rootPathReplaceMap.get(item) ?? item));
-                    }
+                if (
+                    externalLinkReplaceMap.has(value) ||
+                    (Array.isArray(value) && value.some((item) => externalLinkReplaceMap.has(item)))
+                ) {
+                    this.update(replaceLinks(value, externalLinkReplaceMap));
+                } else if (
+                    rootPathReplaceMap.has(value) ||
+                    (Array.isArray(value) && value.some((item) => rootPathReplaceMap.has(item)))
+                ) {
+                    this.update(replaceLinks(value, rootPathReplaceMap));
                 }
             });
 
@@ -258,87 +270,40 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                 }
             });
 
-            navItems.forEach((navItem, index) => {
-                if (typeof navItem !== "string") {
-                    return;
-                }
-                const lastItemInPath = navItem.split("/").pop() || navItem;
-                const name = lastItemInPath
-                    .split(/[-_]/)
-                    .map((str) => (str[0] ? `${str[0].toUpperCase()}${str.substring(1)}` : str))
-                    .join(" ");
+            const failedPaths = [...externalResults, ...internalResults, ...rootResults]
+                .filter((r) => !r.success)
+                .map((r) => r.data?.[0])
+                .filter(Boolean)
+                .map((url) => normalizePath(new URL(url as string).pathname));
 
-                navItems[index] = {
-                    group: name,
-                    pages: [navItem]
-                };
-            });
-
-            const allErrors = [
-                ...externalResults.filter((result) => !result.success),
-                ...internalResults.filter((result) => !result.success),
-                ...rootResults.filter((result) => !result.success)
-            ];
-
-            const allErroredPaths = allErrors
-                .map((result) => {
-                    if (result.data) {
-                        const url = new URL(result.data[0]);
-                        const pathname = url.pathname;
-                        const normalizedPathname = removeLeadingSlash(removeTrailingSlash(pathname));
-                        return normalizedPathname;
-                    } else {
-                        return "";
+            const cleanNavigation = (items: any[]) => {
+                traverse(items).forEach(function (value) {
+                    if (typeof value === "string" && failedPaths.includes(value)) {
+                        this.remove();
+                    } else if (Array.isArray(value)) {
+                        this.update(value.filter((item) => !(typeof item === "string" && failedPaths.includes(item))));
                     }
-                })
-                .filter(Boolean);
 
-            traverse(navItems).forEach(function (value) {
-                if (typeof value === "string" && allErroredPaths.includes(value)) {
-                    this.remove();
-                } else if (Array.isArray(value)) {
-                    this.update(
-                        value
-                            .filter((item) =>
-                                typeof item === "string" && allErroredPaths.includes(item) ? undefined : item
-                            )
-                            .filter(Boolean)
-                    );
-                }
-            });
-
-            let shouldContinue = true;
-            while (shouldContinue) {
-                shouldContinue = false;
-                traverse(navItems).forEach(function (value) {
-                    if (Array.isArray(value) && value.filter(Boolean).length === 0) {
-                        shouldContinue = true;
-                        if (this.parent) {
-                            this.parent.remove();
-                        } else {
-                            this.remove();
-                        }
+                    if (typeof value === "string" && /^https?:\/\//.test(value)) {
+                        this.remove();
+                    } else if (Array.isArray(value)) {
+                        this.update(value.filter((item) => !(typeof item === "string" && /^https?:\/\//.test(item))));
                     }
                 });
-            }
 
-            traverse(navItems).forEach(function (value) {
-                if (typeof value === "string" && (value.startsWith("https://") || value.startsWith("http://"))) {
-                    this.remove();
-                } else if (
-                    Array.isArray(value) &&
-                    value.find(
-                        (val) => typeof val === "string" && (val.startsWith("https://") || val.startsWith("http://"))
-                    )
-                ) {
-                    this.update(
-                        value.filter(
-                            (val) =>
-                                !(typeof val === "string" && (val.startsWith("https://") || val.startsWith("http://")))
-                        )
-                    );
-                }
-            });
+                // let hasEmptyGroups = true;
+                // while (hasEmptyGroups) {
+                //     hasEmptyGroups = false;
+                //     traverse(items).forEach(function(value) {
+                //         if (Array.isArray(value) && value.filter(Boolean).length === 0) {
+                //             hasEmptyGroups = true;
+                //             this.parent ? this.parent.remove() : this.remove();
+                //         }
+                //     });
+                // }
+            };
+
+            cleanNavigation(navItems);
 
             const browser = await startPuppeteer();
             const favicon = await downloadFavicon(siteHast);
