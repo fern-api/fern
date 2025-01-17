@@ -13,6 +13,12 @@ types:
     properties:
       myLiteral: literal<"How super cool">
 
+  UndiscriminatedLiteral:
+    discriminated: false
+    union:
+      - string
+      - literal<"$ending">
+
 service:
   auth: false
   base-path: ""
