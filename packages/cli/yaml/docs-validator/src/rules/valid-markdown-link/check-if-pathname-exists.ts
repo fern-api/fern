@@ -42,7 +42,7 @@ export async function checkIfPathnameExists({
 }): Promise<true | string[]> {
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
 
-    // base case: empty pathname is valid 
+    // base case: empty pathname is valid
     if (pathname.trim() === "") {
         return true;
     }
@@ -51,7 +51,7 @@ export async function checkIfPathnameExists({
     if (pathname.startsWith("/")) {
         // only check slugs if the file is expected to be a markdown file
         const redirectedPath = withRedirects(pathname, baseUrl, redirects);
-        
+
         if (markdown && pageSlugs.has(removeLeadingSlash(redirectedPath))) {
             return true;
         }
