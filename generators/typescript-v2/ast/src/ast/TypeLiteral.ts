@@ -136,7 +136,6 @@ export class TypeLiteral extends AstNode {
                 }
                 writer.write(`"${this.internalType.value.toString()}"`);
                 return;
-                break;
             }
             case "datetime": {
                 if (noSerdeLayer) {

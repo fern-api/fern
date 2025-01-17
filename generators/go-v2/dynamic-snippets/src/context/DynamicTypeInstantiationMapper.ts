@@ -42,6 +42,10 @@ export class DynamicTypeInstantiationMapper {
                 }
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
+            case "nullable":
+                return go.TypeInstantiation.optional(
+                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                );
             case "optional":
                 return go.TypeInstantiation.optional(
                     this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })

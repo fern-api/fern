@@ -88,7 +88,13 @@ export abstract class AbstractGoGeneratorContext<
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "optional";
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return true;
+                    case "nullable":
+                        return this.isOptional(typeReference.container.nullable);
+                }
+                return false;
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
@@ -106,11 +112,17 @@ export abstract class AbstractGoGeneratorContext<
     public isNullable(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "nullable";
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return true;
+                    case "optional":
+                        return this.isNullable(typeReference.container.optional);
+                }
+                return false;
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
-                    return this.isOptional(typeDeclaration.shape.aliasOf);
+                    return this.isNullable(typeDeclaration.shape.aliasOf);
                 }
                 return false;
             }
@@ -124,8 +136,11 @@ export abstract class AbstractGoGeneratorContext<
     public isEnum(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isEnum(typeReference.container.optional);
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.isEnum(typeReference.container.optional);
+                    case "nullable":
+                        return this.isEnum(typeReference.container.nullable);
                 }
                 return false;
             case "named": {
@@ -165,14 +180,17 @@ export abstract class AbstractGoGeneratorContext<
     }): boolean {
         switch (typeReference.type) {
             case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isDate(typeReference.container.optional);
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.isPrimitive({ typeReference: typeReference.container.optional, primitive });
+                    case "nullable":
+                        return this.isPrimitive({ typeReference: typeReference.container.nullable, primitive });
                 }
                 return false;
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
-                    return this.isDate(declaration.shape.aliasOf);
+                    return this.isPrimitive({ typeReference: declaration.shape.aliasOf, primitive });
                 }
                 return false;
             }

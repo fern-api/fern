@@ -413,6 +413,26 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return value;
     }
 
+    public isOptional(typeReference: FernIr.dynamic.TypeReference): boolean {
+        switch (typeReference.type) {
+            case "nullable":
+                return this.isOptional(typeReference.value);
+            case "optional":
+                return true;
+            case "named": {
+                const resolvedType = this.resolveNamedType({ typeId: typeReference.value });
+                if (resolvedType == null) {
+                    return false;
+                }
+                if (resolvedType.type === "alias") {
+                    return this.isNullable(resolvedType.typeReference);
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
     public isNullable(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
             case "nullable":
@@ -429,10 +449,8 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
                 }
                 return false;
             }
-            case "unknown":
-            case "primitive":
-                return false;
         }
+        return false;
     }
 
     public newAuthMismatchError({
