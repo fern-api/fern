@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The broken link checker is updated to reduce false positives. 
+      type: fix
+  irVersion: 55
+  version: 0.50.6
+
+
+- changelogEntry:
+    - summary: |
         The Fern CLI is updated to create the organization if it doesn't exist when `fern token` is called.
       type: fix
   irVersion: 55
