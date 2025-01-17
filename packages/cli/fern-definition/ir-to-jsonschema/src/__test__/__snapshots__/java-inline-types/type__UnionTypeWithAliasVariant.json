@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "aliasVariant",
+        "nonAliasVariant"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "aliasVariant"
+        },
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "prop"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "nonAliasVariant"
+        },
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "prop"
+      ]
+    }
+  ],
+  "definitions": {}
+}

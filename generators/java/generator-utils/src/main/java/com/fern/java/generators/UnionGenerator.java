@@ -37,6 +37,9 @@ import javax.lang.model.element.Modifier;
 
 public final class UnionGenerator extends AbstractTypeGenerator {
 
+    private static final String VALUE_CLASS_NAME = "Value";
+    private static final String VALUE_CLASS_NAME_UNDERSCORE = "Value_";
+
     private final UnionTypeDeclaration unionTypeDeclaration;
     private final Map<TypeId, TypeDeclaration> overriddenTypeDeclarations;
 
@@ -68,7 +71,24 @@ public final class UnionGenerator extends AbstractTypeGenerator {
             poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
         }
         List<ModelUnionSubTypes> unionSubTypes = unionTypeDeclaration.getTypes().stream()
-                .map(singleUnionType -> new ModelUnionSubTypes(className, singleUnionType, poetTypeNameMapper))
+                .map(singleUnionType -> new ModelUnionSubTypes(
+                        className,
+                        singleUnionType,
+                        poetTypeNameMapper,
+                        // We need to take into consideration all ancestor types as well as all sibling types so that
+                        // to prevent naming the visitor "Visitor" if we already have a variant or property called that.
+                        ImmutableSet.<String>builder()
+                                .addAll(reservedTypeNames)
+                                .addAll(
+                                        generatorContext.getCustomConfig().enableInlineTypes()
+                                                ? overriddenTypeDeclarations.values().stream()
+                                                        .map(TypeDeclaration::getName)
+                                                        .map(DeclaredTypeName::getName)
+                                                        .map(Name::getPascalCase)
+                                                        .map(SafeAndUnsafeString::getSafeName)
+                                                        .collect(Collectors.toList())
+                                                : List.of())
+                                .build()))
                 .collect(Collectors.toList());
         ModelUnionUnknownSubType unknownSubType = new ModelUnionUnknownSubType(className, poetTypeNameMapper);
         ModelUnionTypeSpecGenerator unionTypeSpecGenerator = new ModelUnionTypeSpecGenerator(
@@ -112,11 +132,13 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         Set<String> propertyNames = new HashSet<>();
         Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
 
-        List<ObjectProperty> objectProperties = unionTypeDeclaration.getBaseProperties();
+        // TODO(ajgateno): Uncommment when the Java generators support base properties
 
-        for (ObjectProperty objectProperty : objectProperties) {
-            propertyNames.add(objectProperty.getName().getName().getPascalCase().getSafeName());
-        }
+        //        List<ObjectProperty> objectProperties = unionTypeDeclaration.getBaseProperties();
+        //
+        //        for (ObjectProperty objectProperty : objectProperties) {
+        //            propertyNames.add(objectProperty.getName().getName().getPascalCase().getSafeName());
+        //        }
 
         List<SingleUnionType> variants = unionTypeDeclaration.getTypes();
 
@@ -127,14 +149,16 @@ public final class UnionGenerator extends AbstractTypeGenerator {
 
         List<NamedTypeId> allResolvedIds = new ArrayList<>();
 
-        for (ObjectProperty objectProperty : objectProperties) {
-            List<NamedTypeId> resolvedIds = objectProperty
-                    .getValueType()
-                    .visit(new InlineTypeIdResolver(
-                            objectProperty.getName().getName().getPascalCase().getSafeName(),
-                            objectProperty.getValueType()));
-            allResolvedIds.addAll(resolvedIds);
-        }
+        // TODO(ajgateno): Uncommment when the Java generators support base properties
+
+        //        for (ObjectProperty objectProperty : objectProperties) {
+        //            List<NamedTypeId> resolvedIds = objectProperty
+        //                    .getValueType()
+        //                    .visit(new InlineTypeIdResolver(
+        //                            objectProperty.getName().getName().getPascalCase().getSafeName(),
+        // generatorContext));
+        //            allResolvedIds.addAll(resolvedIds);
+        //        }
 
         for (SingleUnionType variant : variants) {
             List<NamedTypeId> resolvedIds =
@@ -227,16 +251,27 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         }
     }
 
+    private static String valueClassName(String name, Set<String> reservedTypeNames) {
+        return reservedTypeNames.contains(name + VALUE_CLASS_NAME)
+                ? name + VALUE_CLASS_NAME_UNDERSCORE
+                : name + VALUE_CLASS_NAME;
+    }
+
     private static final class ModelUnionSubTypes extends UnionSubType {
 
         private final SingleUnionType singleUnionType;
         private final Optional<TypeName> unionSubTypeTypeName;
         private final Optional<FieldSpec> valueFieldSpec;
+        private final Set<String> reservedTypeNames;
 
         private ModelUnionSubTypes(
-                ClassName unionClassName, SingleUnionType singleUnionType, PoetTypeNameMapper poetTypeNameMapper) {
+                ClassName unionClassName,
+                SingleUnionType singleUnionType,
+                PoetTypeNameMapper poetTypeNameMapper,
+                Set<String> reservedTypeNames) {
             super(unionClassName, poetTypeNameMapper);
             this.singleUnionType = singleUnionType;
+            this.reservedTypeNames = reservedTypeNames;
             this.valueFieldSpec = getValueField();
             this.unionSubTypeTypeName = valueFieldSpec.map(fieldSpec -> fieldSpec.type);
         }
@@ -293,11 +328,13 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         @Override
         public ClassName getUnionSubTypeWrapperClass() {
             return getUnionClassName()
-                    .nestedClass(singleUnionType
+                    .nestedClass(valueClassName(
+                            singleUnionType
                                     .getDiscriminantValue()
                                     .getName()
                                     .getPascalCase()
-                                    .getSafeName() + "Value");
+                                    .getSafeName(),
+                            reservedTypeNames));
         }
 
         @Override
@@ -536,6 +573,22 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                 return List.of();
             }
 
+            TypeDeclaration existing = maybeExisting.get();
+
+            if (!generatorContext.getCustomConfig().wrappedAliases()
+                    && existing.getShape().getAlias().isPresent()) {
+                return existing.getShape()
+                        .getAlias()
+                        .get()
+                        .getResolvedType()
+                        .visit(new InlineTypeIdResolver(
+                                variant.getDiscriminantValue()
+                                        .getName()
+                                        .getPascalCase()
+                                        .getSafeName(),
+                                generatorContext));
+            }
+
             return List.of(NamedTypeId.builder()
                     .name(variant.getDiscriminantValue()
                             .getName()
@@ -554,7 +607,7 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                                     .getName()
                                     .getPascalCase()
                                     .getSafeName(),
-                            singleUnionTypeProperty.getType()));
+                            generatorContext));
         }
 
         @Override

@@ -940,6 +940,489 @@
           }
         ]
       }
+    },
+    "type_:UnionTypeWithAliasVariant": {
+      "name": "UnionTypeWithAliasVariant",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "aliasVariant",
+            "additionalProperties": {
+              "extends": [
+                "type_:AliasVariantType"
+              ],
+              "properties": [
+                {
+                  "key": "prop",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:AliasProperty"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "nonAliasVariant",
+            "additionalProperties": {
+              "extends": [
+                "type_:NonAliasVariant"
+              ],
+              "properties": [
+                {
+                  "key": "prop",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:AliasProperty"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_:UnionTypeWithAliasMapVariant": {
+      "name": "UnionTypeWithAliasMapVariant",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "aliasVariant",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "id",
+                      "value": "type_:AliasVariant"
+                    },
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_:OtherAliasVariant"
+                    }
+                  }
+                },
+                {
+                  "key": "prop",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:AliasProperty"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_:UnionTypeWithAliasListVariant": {
+      "name": "UnionTypeWithAliasListVariant",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "aliasVariant",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:AliasVariant"
+                    }
+                  }
+                },
+                {
+                  "key": "prop",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:AliasProperty"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_:UnionTypeWithAliasSetVariant": {
+      "name": "UnionTypeWithAliasSetVariant",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "aliasVariant",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "set",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:AliasVariant"
+                    }
+                  }
+                },
+                {
+                  "key": "prop",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:AliasProperty"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_:UndiscriminatedUnionTypeWithAliasVariant": {
+      "name": "UndiscriminatedUnionTypeWithAliasVariant",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "AliasVariant",
+            "type": {
+              "type": "id",
+              "value": "type_:AliasVariant"
+            }
+          },
+          {
+            "typeName": "NonAliasVariant",
+            "type": {
+              "type": "id",
+              "value": "type_:NonAliasVariant"
+            }
+          }
+        ]
+      }
+    },
+    "type_:UndiscriminatedUnionTypeWithAliasMapVariant": {
+      "name": "UndiscriminatedUnionTypeWithAliasMapVariant",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "map",
+              "keyType": {
+                "type": "id",
+                "value": "type_:AliasVariant"
+              },
+              "valueType": {
+                "type": "id",
+                "value": "type_:OtherAliasVariant"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:UndiscriminatedUnionTypeWithAliasListVariant": {
+      "name": "UndiscriminatedUnionTypeWithAliasListVariant",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_:AliasVariant"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:UndiscriminatedUnionTypeWithAliasSetVariant": {
+      "name": "UndiscriminatedUnionTypeWithAliasSetVariant",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "set",
+              "itemType": {
+                "type": "id",
+                "value": "type_:AliasVariant"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:ObjectTypeWithAliasType": {
+      "name": "ObjectTypeWithAliasType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "id",
+              "value": "type_:AliasProperty"
+            }
+          }
+        ]
+      }
+    },
+    "type_:ObjectTypeWithMapAliasTypeValue": {
+      "name": "ObjectTypeWithMapAliasTypeValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "id",
+                "value": "type_:AliasProperty"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:ObjectTypeWithMapAliasTypeKey": {
+      "name": "ObjectTypeWithMapAliasTypeKey",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "map",
+              "keyType": {
+                "type": "id",
+                "value": "type_:AliasProperty"
+              },
+              "valueType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:ObjectTypeWithMapAliasTypeBoth": {
+      "name": "ObjectTypeWithMapAliasTypeBoth",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "map",
+              "keyType": {
+                "type": "id",
+                "value": "type_:AliasProperty"
+              },
+              "valueType": {
+                "type": "id",
+                "value": "type_:OtherAliasProperty"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:ObjectTypeWithListAliasType": {
+      "name": "ObjectTypeWithListAliasType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_:AliasProperty"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:ObjectTypeWithSetAliasType": {
+      "name": "ObjectTypeWithSetAliasType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "set",
+              "itemType": {
+                "type": "id",
+                "value": "type_:AliasProperty"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:AliasVariant": {
+      "name": "AliasVariant",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "value": "type_:AliasVariantType"
+        }
+      }
+    },
+    "type_:OtherAliasVariant": {
+      "name": "OtherAliasVariant",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "value": "type_:OtherAliasVariantType"
+        }
+      }
+    },
+    "type_:AliasProperty": {
+      "name": "AliasProperty",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "value": "type_:AliasPropertyType"
+        }
+      }
+    },
+    "type_:OtherAliasProperty": {
+      "name": "OtherAliasProperty",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "value": "type_:OtherAliasPropertyType"
+        }
+      }
+    },
+    "type_:AliasVariantType": {
+      "name": "AliasVariantType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:OtherAliasVariantType": {
+      "name": "OtherAliasVariantType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:AliasPropertyType": {
+      "name": "AliasPropertyType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:OtherAliasPropertyType": {
+      "name": "OtherAliasPropertyType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:NonAliasVariant": {
+      "name": "NonAliasVariant",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "prop",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {},
@@ -1356,7 +1839,30 @@
       "type_:UndiscriminatedUnion1InlineListItem1",
       "type_:UndiscriminatedUnion1InlineSetItem1",
       "type_:UndiscriminatedUnion1InlineMapItem1",
-      "type_:ReferenceType"
+      "type_:ReferenceType",
+      "type_:UnionTypeWithAliasVariant",
+      "type_:UnionTypeWithAliasMapVariant",
+      "type_:UnionTypeWithAliasListVariant",
+      "type_:UnionTypeWithAliasSetVariant",
+      "type_:UndiscriminatedUnionTypeWithAliasVariant",
+      "type_:UndiscriminatedUnionTypeWithAliasMapVariant",
+      "type_:UndiscriminatedUnionTypeWithAliasListVariant",
+      "type_:UndiscriminatedUnionTypeWithAliasSetVariant",
+      "type_:ObjectTypeWithAliasType",
+      "type_:ObjectTypeWithMapAliasTypeValue",
+      "type_:ObjectTypeWithMapAliasTypeKey",
+      "type_:ObjectTypeWithMapAliasTypeBoth",
+      "type_:ObjectTypeWithListAliasType",
+      "type_:ObjectTypeWithSetAliasType",
+      "type_:AliasVariant",
+      "type_:OtherAliasVariant",
+      "type_:AliasProperty",
+      "type_:OtherAliasProperty",
+      "type_:AliasVariantType",
+      "type_:OtherAliasVariantType",
+      "type_:AliasPropertyType",
+      "type_:OtherAliasPropertyType",
+      "type_:NonAliasVariant"
     ],
     "subpackages": []
   },
