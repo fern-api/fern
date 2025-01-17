@@ -50,16 +50,15 @@ export async function checkIfPathnameExists({
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
     if (pathname.startsWith("/")) {
         // only check slugs if the file is expected to be a markdown file
-        if (markdown && pageSlugs.has(removeLeadingSlash(withRedirects(pathname, baseUrl, redirects)))) {
+        const redirectedPath = withRedirects(pathname, baseUrl, redirects);
+
+        if (markdown && pageSlugs.has(removeLeadingSlash(redirectedPath))) {
             return true;
         }
 
-        if (
-            await doesPathExist(
-                join(workspaceAbsoluteFilePath, RelativeFilePath.of(removeLeadingSlash(pathname))),
-                "file"
-            )
-        ) {
+        const absolutePath = join(workspaceAbsoluteFilePath, RelativeFilePath.of(removeLeadingSlash(pathname)));
+
+        if (await doesPathExist(absolutePath, "file")) {
             return true;
         }
 
@@ -82,13 +81,11 @@ export async function checkIfPathnameExists({
     }
 
     // if that fails, we need to check if the path exists against all of the slugs for the current file
-
     const brokenSlugs: string[] = [];
     for (const slug of slugs) {
         const url = new URL(`/${slug}`, wrapWithHttps(baseUrl.domain));
         const targetSlug = withRedirects(new URL(pathname, url).pathname, baseUrl, redirects);
-
-        if (!pageSlugs.has(targetSlug)) {
+        if (!pageSlugs.has(removeLeadingSlash(targetSlug))) {
             brokenSlugs.push(slug);
         }
     }
