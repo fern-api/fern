@@ -18,7 +18,7 @@ tabs:
   home:
     display-name: Home
     icon: fa-regular fa-home
-    slug: home
+    skip-slug: true
   api-definition:
     display-name: API Definition
     icon: fa-regular fa-book
@@ -64,7 +64,7 @@ navigation:
   - tab: home
     layout:
       - page: Welcome
-        path: pages/welcome.mdx
+        path: ./pages/welcome.mdx
   - tab: api-definition
     layout:
       - section: Introduction

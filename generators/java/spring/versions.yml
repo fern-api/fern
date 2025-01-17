@@ -1,6 +1,6 @@
 - changelogEntry:
     - summary: |
-        Fix union inline type name conflit resolution.
+        Fix union inline type name conflict resolution.
       type: fix
   createdAt: '2025-01-16'
   irVersion: 53
