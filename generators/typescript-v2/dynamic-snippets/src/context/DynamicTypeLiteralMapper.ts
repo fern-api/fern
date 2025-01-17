@@ -46,6 +46,8 @@ export class DynamicTypeLiteralMapper {
             }
             case "optional":
                 return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+            case "nullable":
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":

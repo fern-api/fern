@@ -16,6 +16,7 @@ type InternalTypeLiteral =
     | String_
     | Tuple
     | Unkonwn_
+    | Null_
     | Nop;
 
 interface Array_ {
@@ -91,6 +92,10 @@ interface Tuple {
 interface Unkonwn_ {
     type: "unknown";
     value: unknown;
+}
+
+interface Null_ {
+    type: "null";
 }
 
 interface Nop {
@@ -183,6 +188,10 @@ export class TypeLiteral extends AstNode {
             }
             case "unknown": {
                 this.writeUnknown({ writer, value: this.internalType.value });
+                break;
+            }
+            case "null": {
+                writer.write("null");
                 break;
             }
             case "nop":
@@ -354,6 +363,10 @@ export class TypeLiteral extends AstNode {
 
     public static unknown(value: unknown): TypeLiteral {
         return new this({ type: "unknown", value });
+    }
+
+    public static null(): TypeLiteral {
+        return new this({ type: "null" });
     }
 
     public static nop(): TypeLiteral {
