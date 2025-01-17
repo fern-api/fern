@@ -15,25 +15,18 @@
  */
 package com.fern.java.generators;
 
-import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.Literal;
-import com.fern.ir.model.types.MapType;
-import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
-import com.fern.ir.model.types.PrimitiveType;
-import com.fern.ir.model.types.TypeDeclaration;
-import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedJavaInterface.PropertyMethodSpec;
+import com.fern.java.utils.TypeReferenceInlineChecker;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
@@ -104,7 +97,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
                     if (!generatorContext.getCustomConfig().enableInlineTypes()) {
                         return true;
                     }
-                    return !objectProperty.getValueType().visit(new InlinedVisitor(generatorContext));
+                    return !objectProperty.getValueType().visit(new TypeReferenceInlineChecker(generatorContext));
                 })
                 .map(objectProperty -> {
                     TypeName poetTypeName = generatorContext
@@ -125,76 +118,5 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
                             .build();
                 })
                 .collect(Collectors.toList());
-    }
-
-    private static final class InlinedVisitor
-            implements TypeReference.Visitor<Boolean>, ContainerType.Visitor<Boolean> {
-
-        private final AbstractGeneratorContext<?, ?> generatorContext;
-
-        private InlinedVisitor(AbstractGeneratorContext<?, ?> generatorContext) {
-            this.generatorContext = generatorContext;
-        }
-
-        // Handle main types
-
-        @Override
-        public Boolean visitContainer(ContainerType containerType) {
-            return containerType.visit(this);
-        }
-
-        @Override
-        public Boolean visitNamed(NamedType namedType) {
-            // TODO(ajgateno): Tracking in FER-4050 that we can't just get inline from namedType.getInline()
-            Optional<TypeDeclaration> existingTypeDeclaration =
-                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(namedType.getTypeId()));
-            return existingTypeDeclaration
-                    .map(declaration -> declaration.getInline().orElse(false))
-                    .orElse(false);
-        }
-
-        @Override
-        public Boolean visitPrimitive(PrimitiveType primitiveType) {
-            return false;
-        }
-
-        @Override
-        public Boolean visitUnknown() {
-            return false;
-        }
-
-        // Handle container types
-
-        @Override
-        public Boolean visitList(TypeReference typeReference) {
-            return typeReference.visit(this);
-        }
-
-        @Override
-        public Boolean visitMap(MapType mapType) {
-            return mapType.getKeyType().visit(this) || mapType.getValueType().visit(this);
-        }
-
-        @Override
-        public Boolean visitOptional(TypeReference typeReference) {
-            return typeReference.visit(this);
-        }
-
-        @Override
-        public Boolean visitSet(TypeReference typeReference) {
-            return typeReference.visit(this);
-        }
-
-        @Override
-        public Boolean visitLiteral(Literal literal) {
-            return false;
-        }
-
-        // Unknown
-
-        @Override
-        public Boolean _visitUnknown(Object o) {
-            return false;
-        }
     }
 }

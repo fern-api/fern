@@ -30,6 +30,7 @@ import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.fern.java.utils.InlineTypeIdResolver;
 import com.fern.java.utils.NamedTypeId;
+import com.fern.java.utils.TypeReferenceInlineChecker;
 import com.google.common.collect.ImmutableMap;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
@@ -71,8 +72,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 getUniqueAncestorsInLevelOrder(allExtendedInterfaces, allGeneratedInterfaces);
 
         List<EnrichedObjectProperty> enriched = enrichedObjectProperties(
-                selfInterface, objectTypeDeclaration, generatorContext.getPoetTypeNameMapper());
-        List<ImplementsInterface> implemented = implementsInterfaces(ancestors);
+                generatorContext, selfInterface, objectTypeDeclaration, generatorContext.getPoetTypeNameMapper());
+        List<ImplementsInterface> implemented = implementsInterfaces(generatorContext, ancestors);
 
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
             List<EnrichedObjectProperty> allEnrichedProperties = new ArrayList<>();
@@ -246,6 +247,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .pascalCaseKey(prop.pascalCaseKey())
                     .poetTypeName(typeName)
                     .fromInterface(prop.fromInterface())
+                    .inline(true)
                     .objectProperty(prop.objectProperty())
                     .wireKey(prop.wireKey())
                     .docs(prop.docs())
@@ -257,35 +259,51 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
         return result;
     }
 
-    private static List<ImplementsInterface> implementsInterfaces(List<GeneratedJavaInterface> ancestors) {
+    private static List<ImplementsInterface> implementsInterfaces(
+            AbstractGeneratorContext<?, ?> generatorContext, List<GeneratedJavaInterface> ancestors) {
         return ancestors.stream()
                 .map(generatedInterface -> ImplementsInterface.builder()
                         .interfaceClassName(generatedInterface.getClassName())
-                        .addAllInterfaceProperties(getEnrichedObjectProperties(generatedInterface))
+                        .addAllInterfaceProperties(getEnrichedObjectProperties(generatorContext, generatedInterface))
                         .build())
                 .collect(Collectors.toList());
     }
 
     private static List<EnrichedObjectProperty> enrichedObjectProperties(
+            AbstractGeneratorContext<?, ?> generatorContext,
             Optional<GeneratedJavaInterface> selfInterface,
             ObjectTypeDeclaration objectTypeDeclaration,
             PoetTypeNameMapper poetTypeNameMapper) {
         if (selfInterface.isEmpty()) {
             return objectTypeDeclaration.getProperties().stream()
-                    .map(objectProperty -> EnrichedObjectProperty.of(
-                            objectProperty,
-                            false,
-                            poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType())))
+                    .map(objectProperty -> {
+                        boolean inline =
+                                objectProperty.getValueType().visit(new TypeReferenceInlineChecker(generatorContext));
+                        return EnrichedObjectProperty.of(
+                                objectProperty,
+                                false,
+                                inline,
+                                poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
+                    })
                     .collect(Collectors.toList());
         }
         return List.of();
     }
 
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(
-            GeneratedJavaInterface generatedJavaInterface) {
+            AbstractGeneratorContext<?, ?> generatorContext, GeneratedJavaInterface generatedJavaInterface) {
         return generatedJavaInterface.propertyMethodSpecs().stream()
-                .map(propertyMethodSpec -> EnrichedObjectProperty.of(
-                        propertyMethodSpec.objectProperty(), true, propertyMethodSpec.methodSpec().returnType))
+                .map(propertyMethodSpec -> {
+                    boolean inline = propertyMethodSpec
+                            .objectProperty()
+                            .getValueType()
+                            .visit(new TypeReferenceInlineChecker(generatorContext));
+                    return EnrichedObjectProperty.of(
+                            propertyMethodSpec.objectProperty(),
+                            true,
+                            inline,
+                            propertyMethodSpec.methodSpec().returnType);
+                })
                 .collect(Collectors.toList());
     }
 
