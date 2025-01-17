@@ -65,7 +65,15 @@ export class GoTypeMapper {
             case "set":
                 return Type.slice(this.convert({ reference: container.set }));
             case "optional":
+                if (this.context.isNullable(container.optional)) {
+                    return this.convert({ reference: container.optional });
+                }
                 return Type.optional(this.convert({ reference: container.optional }));
+            case "nullable":
+                if (this.context.isOptional(container.nullable)) {
+                    return this.convert({ reference: container.nullable });
+                }
+                return Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:

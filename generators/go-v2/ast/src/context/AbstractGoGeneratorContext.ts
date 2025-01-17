@@ -103,6 +103,24 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
+    public isNullable(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "nullable";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isOptional(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
+    }
+
     public isEnum(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":

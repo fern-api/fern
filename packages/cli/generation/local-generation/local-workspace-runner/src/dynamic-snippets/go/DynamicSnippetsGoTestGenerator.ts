@@ -19,8 +19,7 @@ export class DynamicSnippetsGoTestGenerator {
         private readonly generatorConfig: FernGeneratorExec.GeneratorConfig
     ) {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // TODO: Remove the any cast once the dynamic IR is updated w/ nullable support.
-            ir: this.ir as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+            ir: this.ir,
             config: this.generatorConfig
         });
     }
