@@ -413,6 +413,28 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return value;
     }
 
+    public isNullable(typeReference: FernIr.dynamic.TypeReference): boolean {
+        switch (typeReference.type) {
+            case "nullable":
+                return true;
+            case "optional":
+                return this.isNullable(typeReference.value);
+            case "named": {
+                const resolvedType = this.resolveNamedType({ typeId: typeReference.value });
+                if (resolvedType == null) {
+                    return false;
+                }
+                if (resolvedType.type === "alias") {
+                    return this.isNullable(resolvedType.typeReference);
+                }
+                return false;
+            }
+            case "unknown":
+            case "primitive":
+                return false;
+        }
+    }
+
     public newAuthMismatchError({
         auth,
         values
