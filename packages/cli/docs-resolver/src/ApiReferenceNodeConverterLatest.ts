@@ -54,6 +54,9 @@ export class ApiReferenceNodeConverterLatest {
     #idgen: NodeIdGenerator;
     #topLevelSubpackages: Map<string, FdrAPI.navigation.v1.ApiPackageNode> = new Map();
     private disableEndpointPairs;
+    #endpointBySubpackageId: Map<string, FdrAPI.api.latest.endpoint.EndpointDefinition> = new Map();
+    #webSocketBySubpackageId: Map<string, FdrAPI.api.latest.websocket.WebSocketChannel> = new Map();
+    #webhookBySubpackageId: Map<string, FdrAPI.api.latest.webhook.WebhookDefinition> = new Map();
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: FdrAPI.api.latest.ApiDefinition,
