@@ -18,8 +18,12 @@ export async function downloadFavicon(hast: HastRoot): Promise<string> {
     }
 
     const res = await downloadImage(src);
-    if (!res.success) {return "/favicon.svg";}
-    if (!res.data) {return "/favicon.svg";}
+    if (!res.success) {
+        return "/favicon.svg";
+    }
+    if (!res.data) {
+        return "/favicon.svg";
+    }
 
     return res.data[1];
 }

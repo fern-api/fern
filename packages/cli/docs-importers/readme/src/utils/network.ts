@@ -87,7 +87,9 @@ export async function fetchPageHtml({ url, browser }: { url: string | URL; brows
         } else {
             res = await exponentialBackoff(() => fetchPageResponse(url));
         }
-        if (res) {return res;}
+        if (res) {
+            return res;
+        }
         throw new Error("An unknown error occured.");
     } catch (error) {
         throw new Error("Error retrieving HTML for ${url.toString()}");

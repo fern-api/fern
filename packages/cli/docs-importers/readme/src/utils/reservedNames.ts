@@ -6,7 +6,9 @@ export const GROUP_NAMES = ["Home", "Introduction", "Getting Started", "Get Star
 
 export function iterateThroughReservedNames(namesToUse: Array<string>, namesInUse: Array<string>): string {
     for (const name of namesToUse) {
-        if (namesInUse.includes(name)) {continue;}
+        if (namesInUse.includes(name)) {
+            continue;
+        }
         return name;
     }
     return "";

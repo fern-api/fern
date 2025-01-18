@@ -11,7 +11,9 @@ export function findTitle(
     }
 ): string {
     let title = "";
-    if (!node) {return title;}
+    if (!node) {
+        return title;
+    }
 
     visit(node, opts.nodeType ? opts.nodeType : node, function (subNode) {
         if (opts.tagName && subNode.type === "element" && subNode.tagName !== opts.tagName) {
@@ -50,7 +52,9 @@ export function getTitleFromHeading(root: MdastRoot): string {
 export function getDescriptionFromRoot(root: MdastRoot): string {
     let descriptionElement: BlockContent | undefined = undefined;
     visit(root, "paragraph", function (subNode, index, parent) {
-        if (typeof index !== "number" || index !== 0 || !parent || parent.type !== "root") {return EXIT;}
+        if (typeof index !== "number" || index !== 0 || !parent || parent.type !== "root") {
+            return EXIT;
+        }
 
         descriptionElement = subNode;
         if (typeof index === "number") {
@@ -79,7 +83,9 @@ export async function downloadTitle(hast: HastRoot): Promise<string> {
     let text: string | undefined = undefined as string | undefined;
 
     visit(hast, "element", function (node) {
-        if (node.tagName !== "title") {return CONTINUE;}
+        if (node.tagName !== "title") {
+            return CONTINUE;
+        }
 
         visit(node, "text", function (subNode) {
             text = subNode.value;
@@ -92,7 +98,9 @@ export async function downloadTitle(hast: HastRoot): Promise<string> {
         return CONTINUE;
     });
 
-    if (!text) {return defaultTitle;}
+    if (!text) {
+        return defaultTitle;
+    }
 
     const title = text as string;
     let siteGroupTitle = "";

@@ -67,14 +67,22 @@ export function removeMetadataFromImageSrc(src: string): string {
         src = new URL(src).pathname;
     }
     const parts = src.split("#");
-    if (parts.length === 0) {return "image";}
+    if (parts.length === 0) {
+        return "image";
+    }
     const beforeHash = parts[0];
-    if (!beforeHash) {return "image";}
+    if (!beforeHash) {
+        return "image";
+    }
 
     const queryParts = beforeHash.split("?");
-    if (queryParts.length === 0) {return "image";}
+    if (queryParts.length === 0) {
+        return "image";
+    }
     const beforeQuery = queryParts[0];
-    if (!beforeQuery) {return "image";}
+    if (!beforeQuery) {
+        return "image";
+    }
 
     return (
         decodeURIComponent(beforeQuery.replace(/[/]{2,}/g, "/")).replace(/(?:_{2,}|[\s%#&{}\\<>*?$!'":@+`|=])/g, "-") ||

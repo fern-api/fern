@@ -19,7 +19,9 @@ export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined
         return CONTINUE;
     });
 
-    if (!element) {return undefined;}
+    if (!element) {
+        return undefined;
+    }
 
     const links: Array<scrapedTab> = [];
     visit(element as Element, "element", function (node) {
