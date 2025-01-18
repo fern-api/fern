@@ -15,7 +15,9 @@ function rgbToHex(color: string): string | undefined {
         [r, g, b] = color.split(/\s+/).map(Number);
     } else {
         const values = color.match(/^rgba?\((\d+),(\d+),(\d+)(?:,([0-9.]+))?\)$/);
-        if (!values) {return undefined;}
+        if (!values) {
+            return undefined;
+        }
         [, r, g, b] = values.map(Number);
     }
     if (!r || !g || !b || r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
