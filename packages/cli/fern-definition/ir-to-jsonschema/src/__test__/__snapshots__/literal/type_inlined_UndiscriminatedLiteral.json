@@ -1,0 +1,11 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "const": "$ending"
+    }
+  ],
+  "definitions": {}
+}

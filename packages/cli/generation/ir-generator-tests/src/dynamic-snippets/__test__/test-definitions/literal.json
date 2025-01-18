@@ -390,6 +390,86 @@
                 }
             ]
         },
+        "type_inlined:UndiscriminatedLiteral": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "UndiscriminatedLiteral",
+                    "camelCase": {
+                        "unsafeName": "undiscriminatedLiteral",
+                        "safeName": "undiscriminatedLiteral"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "undiscriminated_literal",
+                        "safeName": "undiscriminated_literal"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNDISCRIMINATED_LITERAL",
+                        "safeName": "UNDISCRIMINATED_LITERAL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UndiscriminatedLiteral",
+                        "safeName": "UndiscriminatedLiteral"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "inlined",
+                            "camelCase": {
+                                "unsafeName": "inlined",
+                                "safeName": "inlined"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "inlined",
+                                "safeName": "inlined"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INLINED",
+                                "safeName": "INLINED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Inlined",
+                                "safeName": "Inlined"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "inlined",
+                        "camelCase": {
+                            "unsafeName": "inlined",
+                            "safeName": "inlined"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "inlined",
+                            "safeName": "inlined"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INLINED",
+                            "safeName": "INLINED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Inlined",
+                            "safeName": "Inlined"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                {
+                    "type": "literal",
+                    "value": {
+                        "type": "string",
+                        "value": "$ending"
+                    }
+                }
+            ]
+        },
         "type_query:AliasToPrompt": {
             "type": "alias",
             "declaration": {
@@ -692,6 +772,37 @@
                         "value": {
                             "type": "boolean",
                             "value": false
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "ending",
+                            "camelCase": {
+                                "unsafeName": "ending",
+                                "safeName": "ending"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ending",
+                                "safeName": "ending"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDING",
+                                "safeName": "ENDING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ending",
+                                "safeName": "Ending"
+                            }
+                        },
+                        "wireValue": "ending"
+                    },
+                    "typeReference": {
+                        "type": "literal",
+                        "value": {
+                            "type": "string",
+                            "value": "$ending"
                         }
                     }
                 },

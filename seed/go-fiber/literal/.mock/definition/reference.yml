@@ -7,6 +7,7 @@ types:
       prompt: literal<"You are a helpful assistant">
       query: string
       stream: literal<false>
+      ending: literal<"$ending">
       context: SomeLiteral
       maybeContext: optional<SomeLiteral>
       containerObject: ContainerObject

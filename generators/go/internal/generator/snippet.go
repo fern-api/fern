@@ -16,6 +16,7 @@ type SnippetWriter struct {
 	baseImportPath string
 	unionVersion   UnionVersion
 	types          map[ir.TypeId]*ir.TypeDeclaration
+	writer         *fileWriter
 }
 
 // NewSnippetWriter constructs a new *SnippetWriter.
@@ -23,11 +24,13 @@ func NewSnippetWriter(
 	baseImportPath string,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
+	writer *fileWriter,
 ) *SnippetWriter {
 	return &SnippetWriter{
 		baseImportPath: baseImportPath,
 		unionVersion:   unionVersion,
 		types:          types,
+		writer:         writer,
 	}
 }
 
@@ -221,7 +224,8 @@ func (s *SnippetWriter) getSnippetForExampleUndiscriminatedUnionType(
 	if member == nil {
 		return nil
 	}
-	field := typeReferenceToUndiscriminatedUnionField(member.Type, s.types)
+	scope := s.writer.scope.Child()
+	field := typeReferenceToUndiscriminatedUnionField(member.Type, s.types, scope)
 	if isTypeReferenceLiteral(member.Type) {
 		// Union literal constructors don't require any arguments.
 		return &ast.CallExpr{
@@ -620,7 +624,10 @@ func maybePrimitiveExampleTypeReferenceShape(
 		return exampleTypeReferenceShape.Primitive
 	case "container":
 		if exampleTypeReferenceShape.Container.Optional != nil {
-			return maybePrimitiveExampleTypeReferenceShape(exampleTypeReferenceShape.Container.Optional.Optional.Shape)
+			if exampleTypeReferenceShape.Container.Optional.Optional != nil {
+				return maybePrimitiveExampleTypeReferenceShape(exampleTypeReferenceShape.Container.Optional.Optional.Shape)
+			}
+			return nil
 		}
 	case "named":
 		if exampleTypeReferenceShape.Named.Shape.Alias != nil {
