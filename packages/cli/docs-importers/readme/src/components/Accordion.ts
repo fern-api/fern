@@ -2,8 +2,8 @@ import type { Element, ElementContent } from "hast";
 
 import { assertIsDefined, assertIsNumber } from "../assert";
 import { convertHastChildrenToMdast } from "../customComponents/children";
+import { findTitle } from "../extract/title";
 import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
-import { findTitle } from "../utils/title.js";
 
 export function scrapeAccordion(node: HastNode, index: HastNodeIndex, parent: HastNodeParent): Element | undefined {
     if (

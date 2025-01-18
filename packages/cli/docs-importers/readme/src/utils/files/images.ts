@@ -1,10 +1,24 @@
 import { existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { SUPPORTED_MEDIA_EXTENSIONS } from "../../constants";
 import type { Result } from "../../types/result";
 import { fetchImage } from "../network";
 import { write } from "./file";
+
+export const SUPPORTED_MEDIA_EXTENSIONS = [
+    "png",
+    "jpeg",
+    "jpg",
+    "webp",
+    "avif",
+    "svg",
+    "ico",
+    "jfif",
+    "pjpeg",
+    "pjp",
+    "svgz",
+    "bmp"
+];
 
 export async function downloadImage(src: string): Promise<Result<[string, string]>> {
     if (src.startsWith("data:image/")) {

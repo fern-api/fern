@@ -32,13 +32,13 @@ import {
 } from "../customComponents/create";
 import { rehypeToRemarkCustomComponents } from "../customComponents/plugin";
 import { selectiveRehypeRemark } from "../customComponents/selective";
-import { downloadImagesFromFile } from "../pipeline/images";
+import { downloadImagesFromFile } from "../extract/images";
+import { findSourceElement } from "../extract/source";
+import { getDescriptionFromRoot, getTitleFromHeading } from "../extract/title";
 import type { Result } from "../types/result";
 import { writePage } from "../utils/files/file";
-import { htmlToHast } from "../utils/htmlToHast";
-import { findSourceElement } from "../utils/root";
+import { htmlToHast } from "../utils/hast";
 import { normalizePath, removeTrailingSlash } from "../utils/strings";
-import { getDescriptionFromRoot, getTitleFromHeading } from "../utils/title";
 
 export async function parsePage(
     html: string,

@@ -2,8 +2,8 @@ import type { Element, ElementContent } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
 import { assertIsDefined } from "../assert";
+import { findTitle } from "../extract/title";
 import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
-import { findTitle } from "../utils/title.js";
 
 export function scrapeCard(node: HastNode, _: HastNodeIndex, parent: HastNodeParent): Element | undefined {
     if (

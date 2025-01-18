@@ -4,7 +4,7 @@ export const INDEX_NAMES = ["home", "introduction", "getting-started", "get-star
 
 export const GROUP_NAMES = ["Home", "Introduction", "Getting Started", "Get Started", "Welcome", "Start", "Docs"];
 
-export function iterateThroughReservedNames(namesToUse: Array<string>, namesInUse: Array<string>): string {
+export function getReservedName(namesToUse: Array<string>, namesInUse: Array<string>): string {
     for (const name of namesToUse) {
         if (namesInUse.includes(name)) {
             continue;

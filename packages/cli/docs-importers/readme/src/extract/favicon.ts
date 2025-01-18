@@ -1,9 +1,9 @@
 import type { Root as HastRoot } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-import { downloadImage } from "./files/images";
+import { downloadImage } from "../utils/files/images";
 
-export async function downloadFavicon(hast: HastRoot): Promise<string> {
+export async function getFavicon(hast: HastRoot): Promise<string> {
     let src: string = "";
     visit(hast, "element", function (node) {
         if (node.tagName === "link" && Array.isArray(node.properties.rel) && node.properties.rel.includes("icon")) {
@@ -17,13 +17,10 @@ export async function downloadFavicon(hast: HastRoot): Promise<string> {
         return "/favicon.svg";
     }
 
-    const res = await downloadImage(src);
-    if (!res.success) {
-        return "/favicon.svg";
-    }
-    if (!res.data) {
+    const result = await downloadImage(src);
+    if (!result.success || !result.data) {
         return "/favicon.svg";
     }
 
-    return res.data[1];
+    return result.data[1];
 }

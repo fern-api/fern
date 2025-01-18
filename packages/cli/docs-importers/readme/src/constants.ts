@@ -1,18 +1,3 @@
-export const SUPPORTED_MEDIA_EXTENSIONS = [
-    "png",
-    "jpeg",
-    "jpg",
-    "webp",
-    "avif",
-    "svg",
-    "ico",
-    "jfif",
-    "pjpeg",
-    "pjp",
-    "svgz",
-    "bmp"
-];
-
 export const defaultColors = {
     accentPrimary: {
         dark: "#0D9373",

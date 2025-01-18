@@ -1,11 +1,11 @@
 import type { Element } from "hast";
 import { CONTINUE, EXIT, SKIP, visit } from "unist-util-visit";
 
+import { getFirstChild } from "../extract/firstChild";
+import { getText } from "../extract/text";
+import { findTitle } from "../extract/title";
 import { scrapedNavigationEntry, scrapedNavigationSection } from "../types/scrapedNavigation";
-import { findFirstChild } from "../utils/firstChild";
 import { removeTrailingSlash } from "../utils/strings";
-import { getText } from "../utils/text";
-import { findTitle } from "../utils/title";
 
 export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection> {
     const result: Array<scrapedNavigationSection> = [];
@@ -17,7 +17,7 @@ export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection>
             Array.isArray(node.properties.className) &&
             node.properties.className.includes("rm-Sidebar-section")
         ) {
-            const heading = findFirstChild({ node, tagName: "h2" });
+            const heading = getFirstChild({ node, tagName: "h2" });
             const headingText = heading ? getText(heading) : "";
             const items = parseNavItems(node);
 
@@ -110,7 +110,7 @@ export function parseListItem({
     childListTagName: string;
     title?: string;
 }): scrapedNavigationEntry | undefined {
-    const link = findFirstChild({ node, tagName: "a" });
+    const link = getFirstChild({ node, tagName: "a" });
     if (!link) {
         return undefined;
     }
@@ -142,8 +142,8 @@ export function parseListItem({
         linkHref = linkHref.substring(1);
     }
 
-    const sectionHeader = findFirstChild({ node, tagName: sectionTagName });
-    const childList = findFirstChild({ node, tagName: childListTagName });
+    const sectionHeader = getFirstChild({ node, tagName: sectionTagName });
+    const childList = getFirstChild({ node, tagName: childListTagName });
     if (!childList) {
         return linkHref;
     }

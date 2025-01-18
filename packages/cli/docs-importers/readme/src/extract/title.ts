@@ -19,7 +19,6 @@ export function findTitle(
         if (opts.tagName && subNode.type === "element" && subNode.tagName !== opts.tagName) {
             return CONTINUE;
         }
-
         visit(subNode, "text", function (textNode, index, parent) {
             title += textNode.value;
             if (opts.delete && parent && typeof index === "number") {
@@ -29,11 +28,10 @@ export function findTitle(
         return EXIT;
     });
 
-    title = title.trim();
     if (opts.escaped) {
-        return title.replace(/"/g, '\\"');
+        return title.trim().replace(/"/g, '\\"');
     } else {
-        return title;
+        return title.trim();
     }
 }
 
@@ -78,7 +76,7 @@ export function getTitleFromLink(url: string): string {
     return dashSplitPathname.join(" ");
 }
 
-export async function downloadTitle(hast: HastRoot): Promise<string> {
+export async function getTitle(hast: HastRoot): Promise<string> {
     const defaultTitle = "ENTER TITLE HERE";
     let text: string | undefined = undefined as string | undefined;
 

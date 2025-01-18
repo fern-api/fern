@@ -5,84 +5,48 @@ import { docsYml } from "@fern-api/configuration";
 
 import { defaultColors } from "../constants";
 
-function toHex(value: number) {
-    Math.round(value).toString(16).padStart(2, "0");
-}
-
-function checkValidHex(str: string | undefined): boolean {
-    if (!str) {
-        return false;
-    }
-    return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(str);
-}
-
-function checkRgbBounds(...numbers: Array<number>): boolean {
-    for (const num of numbers) {
-        if (num < 0 || num > 255) {
-            return false;
-        }
-    }
-    return true;
-}
-
 function rgbToHex(color: string): string | undefined {
-    if (checkValidHex(color)) {
+    if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
         return color;
     }
     color = color.trim().toLowerCase();
-
     let r: number | undefined, g: number | undefined, b: number | undefined;
-
     if (/^\d+\s+\d+\s+\d+(\s+[0-9.]+)?$/.test(color)) {
         [r, g, b] = color.split(/\s+/).map(Number);
     } else {
         const values = color.match(/^rgba?\((\d+),(\d+),(\d+)(?:,([0-9.]+))?\)$/);
-
-        if (!values) {
-            return undefined;
-        }
-
+        if (!values) {return undefined;}
         [, r, g, b] = values.map(Number);
     }
-
-    if (!r || !g || !b) {
+    if (!r || !g || !b || r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
         return undefined;
     }
-
-    if (!checkRgbBounds(r, g, b)) {
-        return undefined;
-    }
-
+    const toHex = (n: number) => Math.round(n).toString(16).padStart(2, "0");
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
 }
 
-function getCssValue(cssString: string, key: string): string | undefined {
-    const regex = new RegExp(`${key}\\s*[:|,]\\s*([^;)]+)`, "i");
-    const match = cssString.match(regex);
-    return match && match[1] ? match[1].trim() : undefined;
-}
+export async function getColors(hast: HastRoot): Promise<docsYml.RawSchemas.ColorsConfiguration> {
+    let primaryHexCode: string | undefined;
+    let lightHexCode: string | undefined;
 
-export async function downloadColors(hast: HastRoot): Promise<docsYml.RawSchemas.ColorsConfiguration> {
-    let primaryHexCode: string | undefined = undefined;
-    let lightHexCode: string | undefined = undefined;
     visit(hast, "element", function (node) {
-        if (node.tagName !== "style") {
-            return CONTINUE;
-        }
-        if (node.properties.title !== "rm-custom-css") {
-            return CONTINUE;
-        }
-
-        if (node.children.length !== 1 || !node.children[0] || node.children[0].type !== "text") {
+        if (
+            node.tagName !== "style" ||
+            node.properties.title !== "rm-custom-css" ||
+            node.children.length !== 1 ||
+            !node.children[0] ||
+            node.children[0].type !== "text"
+        ) {
             return CONTINUE;
         }
 
         const cssStr = node.children[0].value;
-        const primaryColorKey = "--color-link-primary";
-        const lightColorKey = "--color-link-primary";
+        const colorKey = "--color-link-primary";
+        const regex = new RegExp(`${colorKey}\\s*[:|,]\\s*([^;)]+)`, "i");
 
-        const primaryCssColorValue = getCssValue(cssStr, primaryColorKey);
-        const lightCssColorValue = getCssValue(cssStr, lightColorKey);
+        const primaryCssColorValue = cssStr.match(regex)?.[1]?.trim();
+        const lightCssColorValue = cssStr.match(regex)?.[1]?.trim();
+
         if (!primaryCssColorValue || !lightCssColorValue) {
             return CONTINUE;
         }
@@ -92,10 +56,7 @@ export async function downloadColors(hast: HastRoot): Promise<docsYml.RawSchemas
         return CONTINUE;
     });
 
-    const isPrimaryValid = checkValidHex(primaryHexCode);
-    const isLightValid = checkValidHex(lightHexCode);
-
-    if (isPrimaryValid && isLightValid && primaryHexCode && lightHexCode) {
+    if (primaryHexCode && lightHexCode) {
         return {
             accentPrimary: {
                 dark: primaryHexCode,
@@ -106,7 +67,7 @@ export async function downloadColors(hast: HastRoot): Promise<docsYml.RawSchemas
                 light: undefined
             }
         };
-    } else if (isPrimaryValid && primaryHexCode) {
+    } else if (primaryHexCode) {
         return {
             accentPrimary: {
                 dark: primaryHexCode,
@@ -117,7 +78,6 @@ export async function downloadColors(hast: HastRoot): Promise<docsYml.RawSchemas
                 light: undefined
             }
         };
-    } else {
-        return defaultColors;
     }
+    return defaultColors;
 }

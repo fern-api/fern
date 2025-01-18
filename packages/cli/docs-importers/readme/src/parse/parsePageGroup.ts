@@ -1,8 +1,8 @@
 import { TaskContext } from "@fern-api/task-context";
 
 import type { Result } from "../types/result.js";
-import { fetchPageHtml } from "../utils/network";
-import { parsePage } from "./parsePage";
+import { fetchPageHtml } from "../utils/network.js";
+import { parsePage } from "./parsePage.js";
 
 export function* chunkIterator<T>(array: T[], size = 16): Generator<T[]> {
     let position = 0;

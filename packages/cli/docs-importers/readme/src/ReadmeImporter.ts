@@ -6,32 +6,37 @@ import { docsYml } from "@fern-api/configuration";
 import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { assertIsReadme } from "./assertIsReadme";
+import { isReadmeDeployment } from "./assert";
 import { defaultColors } from "./constants";
 import { convertNavigationItem } from "./converters/convertNavigationItem";
-import { parsePageGroup } from "./parsers/parsePageGroup";
-import { retrieveRootNavElement } from "./parsers/parseRootNav";
-import { parseSidebar } from "./parsers/parseSidebar";
-import { parseTabLinks } from "./parsers/parseTabs";
+import { getFavicon } from "./extract/favicon";
+import { getFirstTabFromNavigationGroup } from "./extract/navGroup";
+import { getTitle, getTitleFromLink } from "./extract/title";
+import { parsePageGroup } from "./parse/parsePageGroup";
+import { retrieveRootNavElement } from "./parse/parseRootNav";
+import { parseSidebar } from "./parse/parseSidebar";
+import { parseTabLinks } from "./parse/parseTabs";
 import { ScrapeResult } from "./types/scrapeResults";
 import { scrapedNavigation, scrapedNavigationGroup } from "./types/scrapedNavigation";
 import type { scrapedTab } from "./types/scrapedTab";
-import { TabInfo } from "./types/tabInfo";
-import { downloadColors } from "./utils/colors";
-import { downloadFavicon } from "./utils/favicon";
-import { downloadLogos } from "./utils/files/logo";
-import { getTabForNavigationItem } from "./utils/getNavigationTab";
-import { htmlToHast } from "./utils/htmlToHast";
+import { getColors } from "./utils/colors";
+import { getLogos } from "./utils/files/logo";
+import { htmlToHast } from "./utils/hast";
 import { iterateOverNavItems } from "./utils/iterate";
 import { fetchPageHtml, startPuppeteer } from "./utils/network";
-import { GROUP_NAMES, iterateThroughReservedNames } from "./utils/reservedNames";
+import { GROUP_NAMES, getReservedName } from "./utils/reserved";
 import { normalizePath, removeLeadingSlash, removeTrailingSlash } from "./utils/strings";
-import { downloadTitle, getTitleFromLink } from "./utils/title";
 
 export declare namespace ReadmeImporter {
     interface Args {
         readmeUrl: string;
     }
+}
+
+export interface TabInfo {
+    name: string;
+    url: string;
+    navigationBuilder: FernDocsNavigationBuilder;
 }
 
 export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
@@ -45,7 +50,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         this.context.logger.debug("Successfully fetched HTML from Readme Docs Site");
 
         const hast = htmlToHast(html);
-        const isReadme = assertIsReadme(hast);
+        const isReadme = isReadmeDeployment(hast);
         if (!isReadme) {
             this.context.logger.error("The provided URL is not a Readme Docs Site");
             return;
@@ -159,8 +164,8 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         });
 
         const browser = await startPuppeteer();
-        const logo = await downloadLogos(urlObj, browser);
-        const name = await downloadTitle(hast);
+        const logo = await getLogos(urlObj, browser);
+        const name = await getTitle(hast);
         if (browser) {
             await browser.close();
         }
@@ -221,7 +226,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         ];
 
         const rootPaths = rootLinks.map(() => {
-            const name = iterateThroughReservedNames(GROUP_NAMES, allPathnames);
+            const name = getReservedName(GROUP_NAMES, allPathnames);
             allPathnames.push(name);
             return name;
         });
@@ -306,10 +311,10 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
             cleanNavigation(navItems);
 
             const browser = await startPuppeteer();
-            const favicon = await downloadFavicon(siteHast);
-            const colors = await downloadColors(siteHast);
-            const logo = await downloadLogos(url, browser);
-            const name = await downloadTitle(siteHast);
+            const favicon = await getFavicon(siteHast);
+            const colors = await getColors(siteHast);
+            const logo = await getLogos(url, browser);
+            const name = await getTitle(siteHast);
 
             return {
                 success: true,
@@ -341,7 +346,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         builder: FernDocsBuilder;
     }): Promise<FernDocsNavigationBuilder> {
         if (Object.keys(this.tabUrlToInfo).length > 0) {
-            const tabUrl = getTabForNavigationItem({ navItem });
+            const tabUrl = getFirstTabFromNavigationGroup({ navItem });
             if (tabUrl === "reference") {
                 return builder.getNavigationBuilder();
             }

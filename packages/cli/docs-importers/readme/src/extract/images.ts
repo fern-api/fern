@@ -3,7 +3,7 @@ import type { MdxJsxAttribute } from "mdast-util-mdx-jsx";
 import { CONTINUE, visit } from "unist-util-visit";
 
 import type { Result } from "../types/result.js";
-import { downloadImage } from "../utils/files/images";
+import { downloadImage } from "../utils/files/images.js";
 
 export async function downloadImagesFromFile(
     root: MdastRoot,
