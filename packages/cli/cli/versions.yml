@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The OpenRPC parser now respects method names as well as tags for 
+        orienting the navigation.
+      type: fix
+  irVersion: 55
+  version: 0.50.7
+
+- changelogEntry:
+    - summary: |
         The broken link checker is updated to reduce false positives. 
       type: fix
   irVersion: 55
