@@ -95,10 +95,10 @@ export async function downloadColors(hast: HastRoot): Promise<docsYml.RawSchemas
     const isPrimaryValid = checkValidHex(primaryHexCode);
     const isLightValid = checkValidHex(lightHexCode);
 
-    if (isPrimaryValid && isLightValid) {
+    if (isPrimaryValid && isLightValid && primaryHexCode && lightHexCode) {
         return {
             accentPrimary: {
-                dark: primaryHexCode!,
+                dark: primaryHexCode,
                 light: lightHexCode
             },
             background: {
@@ -106,10 +106,10 @@ export async function downloadColors(hast: HastRoot): Promise<docsYml.RawSchemas
                 light: undefined
             }
         };
-    } else if (isPrimaryValid) {
+    } else if (isPrimaryValid && primaryHexCode) {
         return {
             accentPrimary: {
-                dark: primaryHexCode!,
+                dark: primaryHexCode,
                 light: primaryHexCode
             },
             background: {

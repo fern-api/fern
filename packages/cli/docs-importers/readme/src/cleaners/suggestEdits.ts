@@ -1,13 +1,13 @@
 import type { Element } from "hast";
 import { visit } from "unist-util-visit";
 
-export function unifiedRemoveSuggestEdits() {
-    return function (node: Element) {
+export function unifiedRemoveSuggestEdits(): (node: Element) => void {
+    return function (node: Element): void {
         return removeSuggestEdits(node);
     };
 }
 
-export function removeSuggestEdits(node: Element) {
+export function removeSuggestEdits(node: Element): void {
     return visit(node, "element", function (subNode, index, parent) {
         if (
             subNode.tagName === "a" &&

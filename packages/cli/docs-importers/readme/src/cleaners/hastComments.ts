@@ -11,7 +11,7 @@ export function removeHastComments(root: HastRoot): void {
     });
 }
 
-export function rehypeRemoveHastComments() {
+export function rehypeRemoveHastComments(): (root: HastRoot) => void {
     return function (root: HastRoot) {
         return removeHastComments(root);
     };

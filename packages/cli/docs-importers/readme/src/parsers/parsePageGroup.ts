@@ -4,7 +4,7 @@ import type { Result } from "../types/result.js";
 import { fetchPageHtml } from "../utils/network";
 import { parsePage } from "./parsePage";
 
-export function* chunkIterator<T>(array: T[], size = 16) {
+export function* chunkIterator<T>(array: T[], size = 16): Generator<T[]> {
     let position = 0;
     while (position < array.length) {
         const segment = array.slice(position, position + size);
@@ -14,7 +14,7 @@ export function* chunkIterator<T>(array: T[], size = 16) {
 }
 
 export async function parsePageGroup(
-    context: TaskContext,
+    taskContext: TaskContext,
     navGroup: Array<URL>,
     opts: {
         externalLinks: boolean;
@@ -27,12 +27,12 @@ export async function parsePageGroup(
             chunk.map(async (url, index) => {
                 try {
                     if (opts.externalLinks) {
-                        context.logger.info(`Scraping external link with URL: ${url}...`);
-                        return parsePage(context, `external-link-${index}`, url, { externalLink: true });
+                        taskContext.logger.debug(`Scraping external link with URL: ${url}...`);
+                        return parsePage(`external-link-${index}`, url, { externalLink: true });
                     } else {
                         const html = await fetchPageHtml({ url });
-                        context.logger.info(`Scraping internal link with URL: ${url}...`);
-                        return parsePage(context, html, url, {
+                        taskContext.logger.debug(`Scraping internal link with URL: ${url}...`);
+                        return parsePage(html, url, {
                             externalLink: false,
                             rootPath: opts.rootPaths ? opts.rootPaths[index] : undefined
                         });

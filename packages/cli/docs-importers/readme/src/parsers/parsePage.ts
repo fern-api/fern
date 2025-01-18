@@ -5,8 +5,6 @@ import remarkMdx from "remark-mdx";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 
-import { TaskContext } from "@fern-api/task-context";
-
 import { unifiedRemoveBreaks } from "../cleaners/breaks";
 import { unifiedRemoveClassNames } from "../cleaners/className";
 import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis";
@@ -38,12 +36,11 @@ import { downloadImagesFromFile } from "../pipeline/images";
 import type { Result } from "../types/result";
 import { writePage } from "../utils/files/file";
 import { htmlToHast } from "../utils/htmlToHast";
-import { retrieveRootContent } from "../utils/root";
+import { findSourceElement } from "../utils/root";
 import { normalizePath, removeTrailingSlash } from "../utils/strings";
 import { getDescriptionFromRoot, getTitleFromHeading } from "../utils/title";
 
 export async function parsePage(
-    context: TaskContext,
     html: string,
     url: string | URL,
     opts: {
@@ -64,15 +61,15 @@ export async function parsePage(
     removeHastComments(hast);
 
     const urlStr = urlObj.toString();
-    const content = retrieveRootContent(hast);
+    const source = findSourceElement(hast);
 
-    if (!content) {
+    if (!source) {
         return { success: false, data: undefined };
     }
 
     const contentAsRoot: HastRoot = {
         type: "root",
-        children: [content]
+        children: [source]
     };
 
     const mdastTree: MdastRoot = unified()
@@ -100,7 +97,6 @@ export async function parsePage(
         .use(remarkRemoveEmptyEmphases)
         .use(remarkProperlyFormatEmphasis)
         .use(remarkRemoveCodeBlocksInCells)
-        // @ts-expect-error
         .runSync(contentAsRoot) as MdastRoot;
 
     await downloadImagesFromFile(mdastTree, url);

@@ -6,8 +6,8 @@ import { visit } from "unist-util-visit";
 import { ESCAPED_COMPONENTS } from "../constants";
 import type { EscapedComponent } from "../types/components";
 
-export function rehypeToRemarkCustomComponents() {
-    return function (tree: HastRoot) {
+export function rehypeToRemarkCustomComponents(): (tree: HastRoot) => HastRoot {
+    return function (tree: HastRoot): HastRoot {
         visit(tree, "element", function (node: Element, index, parent) {
             if (ESCAPED_COMPONENTS.includes(node.tagName as unknown as EscapedComponent)) {
                 const newNode: MdxJsxFlowElement = {

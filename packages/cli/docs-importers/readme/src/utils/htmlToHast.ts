@@ -17,19 +17,19 @@ export function removeHastComments(root: HastRoot): void {
     });
 }
 
-export function rehypeRemoveHastComments() {
-    return function (root: HastRoot) {
+export function rehypeRemoveHastComments(): (root: HastRoot) => void {
+    return function (root: HastRoot): void {
         return removeHastComments(root);
     };
 }
 
-export function unifiedRemovePositions() {
-    return function (node: HastRoot) {
+export function unifiedRemovePositions(): (node: HastRoot) => void {
+    return function (node: HastRoot): void {
         return removePositions(node);
     };
 }
 
-function removePositions(node: HastRoot) {
+function removePositions(node: HastRoot): void {
     return visit(node, function (subNode) {
         delete subNode.position;
     });

@@ -19,14 +19,14 @@ export function mdxJsxFlowElementHandler(_: State, node: Element): MdxJsxFlowEle
     };
 }
 
-export function selectiveRehypeRemark() {
+export function selectiveRehypeRemark(): (tree: HastRoot) => MdastRoot {
     const handlers: Record<string, Handle> = { ...defaultHandlers };
     ESCAPED_COMPONENTS.forEach((tagName) => {
         handlers[tagName] = mdxJsxFlowElementHandler;
     });
     handlers.mdxJsxFlowElement = mdxJsxFlowElementHandler;
 
-    return function (tree: HastRoot) {
+    return function (tree: HastRoot): MdastRoot {
         const newTree = toMdast(tree, {
             handlers
         }) as MdastRoot;

@@ -1,13 +1,13 @@
 import type { Root as MdastRoot } from "mdast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-export function remarkRemoveUpdatedAt() {
-    return function (root: MdastRoot) {
+export function remarkRemoveUpdatedAt(): (root: MdastRoot) => void {
+    return function (root: MdastRoot): void {
         return removeUpdatedAt(root);
     };
 }
 
-function removeUpdatedAt(root: MdastRoot) {
+function removeUpdatedAt(root: MdastRoot): void {
     visit(root, "paragraph", function (node) {
         visit(node, "text", function (subNode, index, parent) {
             if (

@@ -15,11 +15,15 @@ import type { ScrapeFuncType } from "../types/scrapeFunc";
 function createComponent(scrapeFunc: ScrapeFuncType) {
     return function (tree: HastRoot) {
         return visit(tree, "element", function (node, index, parent) {
-            if (node.tagName === "code" || node.tagName === "pre") {return SKIP;}
+            if (node.tagName === "code" || node.tagName === "pre") {
+                return SKIP;
+            }
             let result: Element | undefined = undefined;
 
             result = scrapeFunc(node, index, parent);
-            if (!result) {return CONTINUE;}
+            if (!result) {
+                return CONTINUE;
+            }
 
             if (parent && typeof index === "number") {
                 parent.children[index] = result;
@@ -30,30 +34,30 @@ function createComponent(scrapeFunc: ScrapeFuncType) {
     };
 }
 
-export function createCard() {
+export function createCard(): (tree: HastRoot) => void {
     return createComponent(scrapeCard);
 }
-export function createEmbed() {
+export function createEmbed(): (tree: HastRoot) => void {
     return createComponent(scrapeEmbed);
 }
-export function createAccordion() {
+export function createAccordion(): (tree: HastRoot) => void {
     return createComponent(scrapeAccordion);
 }
-export function createAccordionGroup() {
+export function createAccordionGroup(): (tree: HastRoot) => void {
     return createComponent(scrapeAccordionGroup);
 }
-export function createFrame() {
+export function createFrame(): (tree: HastRoot) => void {
     return createComponent(scrapeFrame);
 }
-export function createCodeGroup() {
+export function createCodeGroup(): (tree: HastRoot) => void {
     return createComponent(scrapeCodeGroup);
 }
-export function createTabs() {
+export function createTabs(): (tree: HastRoot) => void {
     return createComponent(scrapeTabs);
 }
-export function createCallout() {
+export function createCallout(): (tree: HastRoot) => void {
     return createComponent(scrapeCallout);
 }
-export function createCardGroup() {
+export function createCardGroup(): (tree: HastRoot) => void {
     return createComponent(scrapeCardGroup);
 }

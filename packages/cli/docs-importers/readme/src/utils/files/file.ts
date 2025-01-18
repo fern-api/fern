@@ -25,7 +25,7 @@ export function createFilename(
     return join(rootPath, outFileName);
 }
 
-export function toFilename(title: string) {
+export function toFilename(title: string): string {
     return title
         .replace(/[^a-z0-9]/gi, " ")
         .trim()
@@ -33,7 +33,7 @@ export function toFilename(title: string) {
         .toLowerCase();
 }
 
-export function write(filename: string, data: string | NodeJS.TypedArray) {
+export function write(filename: string, data: string | NodeJS.TypedArray): void {
     writeFileSync(filename, data);
 }
 
@@ -65,7 +65,7 @@ export function formatPageWithFrontmatter(
     description: string = "",
     markdown: string = "",
     url: string = ""
-) {
+): string {
     const optionalTitle = title ? `\ntitle: "${title}"` : "";
     const optionalDescription = description ? `\ndescription: "${description}"` : "";
     const optionalUrl = url ? `\nurl: "${url}"` : "";

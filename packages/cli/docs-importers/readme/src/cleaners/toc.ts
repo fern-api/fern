@@ -1,13 +1,13 @@
 import type { Element } from "hast";
 import { visit } from "unist-util-visit";
 
-export function unifiedRemoveTableOfContents() {
-    return function (node: Element) {
+export function unifiedRemoveTableOfContents(): (node: Element) => void {
+    return function (node: Element): void {
         return removeTableOfContents(node);
     };
 }
 
-export function removeTableOfContents(node: Element) {
+export function removeTableOfContents(node: Element): void {
     return visit(node, "element", function (subNode, index, parent) {
         if (
             subNode.tagName === "section" &&

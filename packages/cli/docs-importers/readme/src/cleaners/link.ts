@@ -1,7 +1,7 @@
 import type { Root as MdastRoot } from "mdast";
 import { visit } from "unist-util-visit";
 
-export function convertHeaderLinksToText() {
+export function convertHeaderLinksToText(): (tree: MdastRoot) => MdastRoot {
     return function (tree: MdastRoot) {
         visit(tree, "heading", function (node) {
             visit(node, "link", function (subNode, index, parent) {

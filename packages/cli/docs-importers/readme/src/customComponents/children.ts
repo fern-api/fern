@@ -20,11 +20,14 @@ export function convertHastChildrenToMdast(
 
     if (options.preserveJsxImages) {
         customHandlers["img"] = function (state: State, node: Element) {
+            const newProperties: Record<string, string | number | boolean | (string | number)[] | null | undefined> =
+                {};
             Object.keys(node.properties).forEach((key) => {
-                if (key !== "src") {
-                    delete node.properties[key];
+                if (key === "src") {
+                    newProperties[key] = node.properties[key] as string;
                 }
             });
+            node.properties = newProperties;
             return mdxJsxFlowElementHandler(state, node);
         };
     }

@@ -1,8 +1,8 @@
 import type { Root as MdastRoot } from "mdast";
 import { CONTINUE, visit } from "unist-util-visit";
 
-export function remarkProperlyFormatEmphasis() {
-    return function (root: MdastRoot) {
+export function remarkProperlyFormatEmphasis(): (root: MdastRoot) => void {
+    return function (root: MdastRoot): void {
         return properlyFormatEmphasis(root);
     };
 }
@@ -12,7 +12,7 @@ const spaceNode = {
     value: " "
 };
 
-function properlyFormatEmphasis(root: MdastRoot) {
+function properlyFormatEmphasis(root: MdastRoot): void {
     visit(root, ["emphasis", "strong"], function (node, index, parent) {
         if (node.type !== "emphasis" && node.type !== "strong") {
             return CONTINUE;

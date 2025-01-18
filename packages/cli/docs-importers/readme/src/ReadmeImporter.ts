@@ -42,7 +42,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         const urlObj = new URL(args.readmeUrl);
         const html = await fetchPageHtml({ url: urlObj });
         const absolutePathToOutput: AbsoluteFilePath = AbsoluteFilePath.of(join(process.cwd(), "fern"));
-        this.context.logger.info("Successfully fetched HTML from Readme Docs Site");
+        this.context.logger.debug("Successfully fetched HTML from Readme Docs Site");
 
         const hast = htmlToHast(html);
         const isReadme = assertIsReadme(hast);
@@ -56,7 +56,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
             this.context.logger.error("Failed to scrape site tabs");
             return;
         }
-        this.context.logger.info("Successfully scraped all site tabs");
+        this.context.logger.debug("Successfully scraped all site tabs");
 
         if (scrapeData.logo) {
             builder.setLogo({ logo: scrapeData.logo });
@@ -99,7 +99,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
     }
 
     private async scrapeAllSiteTabs(html: string, url: string | URL): Promise<ScrapeResult> {
-        this.context.logger.info(`Initializing site scraper from URL: ${url}`);
+        this.context.logger.debug(`Initializing site scraper from URL: ${url}`);
         const urlObj = new URL(url);
         const hast = htmlToHast(html);
 
@@ -183,7 +183,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         url: string | URL,
         opts: { hast?: HastRoot; tabs?: Array<scrapedTab> } = {}
     ): Promise<ScrapeResult> {
-        this.context.logger.info(`Scraping site with URL: ${url}`);
+        this.context.logger.debug(`Scraping site with URL: ${url}`);
         let siteHast = opts.hast;
         if (!siteHast) {
             siteHast = htmlToHast(html);
@@ -227,18 +227,18 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
         });
 
         try {
-            const externalResults = await parsePageGroup(this.context, externalLinks, { externalLinks: true });
-            const internalResults = await parsePageGroup(this.context, internalLinks);
+            const extResults = await parsePageGroup(this.context, externalLinks, { externalLinks: true });
+            const intResults = await parsePageGroup(this.context, internalLinks);
             const rootResults = await parsePageGroup(this.context, rootLinks, { externalLinks: false, rootPaths });
 
             const externalLinkReplaceMap = new Map(
-                externalResults.filter((r) => r.success).map((r) => r.data as [string, string])
+                extResults.filter((r) => r.success).map((r) => r.data as [string, string])
             );
             const rootPathReplaceMap = new Map(
                 rootResults.filter((r) => r.success).map((r) => r.data as [string, string])
             );
 
-            const replaceLinks = (value: any, map: Map<string, string>) => {
+            const replaceLinks = (value: string | string[], map: Map<string, string>) => {
                 if (typeof value === "string") {
                     return map.get(value) ?? value;
                 }
@@ -270,13 +270,13 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                 }
             });
 
-            const failedPaths = [...externalResults, ...internalResults, ...rootResults]
+            const failedPaths = [...extResults, ...intResults, ...rootResults]
                 .filter((r) => !r.success)
                 .map((r) => r.data?.[0])
                 .filter(Boolean)
                 .map((url) => normalizePath(new URL(url as string).pathname));
 
-            const cleanNavigation = (items: any[]) => {
+            const cleanNavigation = (items: scrapedNavigationGroup[]) => {
                 traverse(items).forEach(function (value) {
                     if (typeof value === "string" && failedPaths.includes(value)) {
                         this.remove();
@@ -291,16 +291,16 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                     }
                 });
 
-                // let hasEmptyGroups = true;
-                // while (hasEmptyGroups) {
-                //     hasEmptyGroups = false;
-                //     traverse(items).forEach(function(value) {
-                //         if (Array.isArray(value) && value.filter(Boolean).length === 0) {
-                //             hasEmptyGroups = true;
-                //             this.parent ? this.parent.remove() : this.remove();
-                //         }
-                //     });
-                // }
+                let hasEmptyGroups = true;
+                while (hasEmptyGroups) {
+                    hasEmptyGroups = false;
+                    traverse(items).forEach(function (value) {
+                        if (Array.isArray(value) && value.filter(Boolean).length === 0) {
+                            hasEmptyGroups = true;
+                            this.parent ? this.parent.remove() : this.remove();
+                        }
+                    });
+                }
             };
 
             cleanNavigation(navItems);
