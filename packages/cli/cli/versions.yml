@@ -1,7 +1,15 @@
 - changelogEntry:
     - summary: |
+        An additional fix to the OpenRPC parser for respecting tags when 
+        organizing methods in the API Reference.
+      type: fix
+  irVersion: 55
+  version: 0.50.8
+
+- changelogEntry:
+    - summary: |
         The OpenRPC parser now respects method names as well as tags for 
-        orienting the navigation.
+        organization the navigation.
       type: fix
   irVersion: 55
   version: 0.50.7
