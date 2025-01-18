@@ -5074,8 +5074,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/docs-parsers':
-        specifier: ^0.0.38
-        version: 0.0.38(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@5.7.2)
+        specifier: ^0.0.40
+        version: 0.0.40(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@5.7.2)
       '@fern-api/fdr-sdk':
         specifier: 0.128.0-8c361ea2b
         version: 0.128.0-8c361ea2b(typescript@5.7.2)
@@ -8746,8 +8746,8 @@ packages:
   '@fern-api/core-utils@0.4.24-rc1':
     resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
 
-  '@fern-api/docs-parsers@0.0.38':
-    resolution: {integrity: sha512-eOV1ph/XxlrYbmkDwZnbZnszbRKxDi++En4OcfWPEMiFUsSxgVY8v54CP+xXElOs2e1zqLvohZdTywkCaGRa5g==}
+  '@fern-api/docs-parsers@0.0.40':
+    resolution: {integrity: sha512-ShL6adu7tCNCEtlMTSCMhdy6bSbAwFOzkSwyz4Zr9hCE/UkItyFvQuBMfhH729ymfLM2yMByUdujYhiSbz3WPQ==}
 
   '@fern-api/dynamic-ir-sdk@53.24.0':
     resolution: {integrity: sha512-4XvzvSsh7lNZz5oYN0LH+FRpFGxg9TjfdipSJMpgHvPShe85m/tcfbOzbS0DHBpQGlKb/gHQtQRPAoBR1wdDAw==}
@@ -15630,7 +15630,7 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.0
 
-  '@fern-api/docs-parsers@0.0.38(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@5.7.2)':
+  '@fern-api/docs-parsers@0.0.40(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)(typescript@5.7.2)':
     dependencies:
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
