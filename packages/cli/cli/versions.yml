@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fixes a bug where `--log-level debug` does not include trace logs.
+      type: fix
+  irVersion: 55
+  version: 0.50.13
+
+- changelogEntry:
+    - summary: |
         Increase undici timeouts to make sure that `fern generate --docs` completes. 
       type: fix
   irVersion: 55
