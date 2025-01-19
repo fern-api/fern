@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Increase undici timeouts to make sure that `fern generate --docs` completes. 
+      type: fix
+  irVersion: 55
+  version: 0.50.12
+
+- changelogEntry:
+    - summary: |
         The CLI now supports a `--log-level trace` option to filter out noise from the 
         debug log level. 
       type: fix
