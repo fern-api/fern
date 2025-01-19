@@ -7,7 +7,7 @@
   version: 0.50.11
 
 - changelogEntry:
-    - summary: |
+    - summary: 
         An addition to the broken link checker to further reduce false positives.
       type: fix
   irVersion: 55
