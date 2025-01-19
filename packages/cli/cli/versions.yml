@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        An addition to the broken link checker to further reduce false positives.
+      type: fix
+  irVersion: 55
+  version: 0.50.10
+
+- changelogEntry:
+    - summary: |
         The Fern CLI no longer logs the full API request when finishing docs registration, 
         reducing unnecessary log output.
       type: fix
