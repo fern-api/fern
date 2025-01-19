@@ -231,7 +231,7 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    context.logger.debug("Calling registerDocs... ", JSON.stringify(docsDefinition, undefined, 4));
+    context.logger.debug("Finishing docs registration...");
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {

@@ -1,6 +1,7 @@
 - changelogEntry:
     - summary: |
-        The broken slugs is updated to further reduce false positives.
+        The Fern CLI no longer logs the full API request when finishing docs registration, 
+        reducing unnecessary log output.
       type: fix
   irVersion: 55
   version: 0.50.9
