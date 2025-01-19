@@ -2,7 +2,7 @@ import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils";
 
 import { getRedirectForPath } from "./redirect-for-path";
-import { addLeadingSlash, removeLeadingSlash } from "./url-utils";
+import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils";
 
 /**
  * Checks if the given path exists in the docs.
@@ -40,6 +40,7 @@ export async function checkIfPathnameExists({
         basePath?: string;
     };
 }): Promise<true | string[]> {
+    pathname = removeTrailingSlash(pathname);
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
 
     // base case: empty pathname is valid
