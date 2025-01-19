@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The CLI now supports a `--log-level trace` option to filter out noise from the 
+        debug log level. 
+      type: fix
+  irVersion: 55
+  version: 0.50.11
+
+- changelogEntry:
+    - summary: |
         An addition to the broken link checker to further reduce false positives.
       type: fix
   irVersion: 55
