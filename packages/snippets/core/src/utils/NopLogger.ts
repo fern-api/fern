@@ -9,6 +9,10 @@ export class NopLogger {
         // no-op
     }
 
+    public trace(...args: string[]): void {
+        // no-op
+    }
+
     public debug(...args: string[]): void {
         // no-op
     }
