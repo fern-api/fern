@@ -38,6 +38,9 @@ export class TaskContextFactory {
                             case "info":
                                 CONSOLE_LOGGER.info(`[${prefixWithColor}]: `, part);
                                 break;
+                            case "trace":
+                                CONSOLE_LOGGER.trace(`[${prefixWithColor}]: `, part);
+                                break;
                             default:
                                 assertNever(log.level);
                         }

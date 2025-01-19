@@ -168,6 +168,7 @@ function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }
         case LogLevel.Warn:
             return chalk.hex("FFA500")(content);
         case LogLevel.Debug:
+        case LogLevel.Trace:
         case LogLevel.Info:
             return content;
     }
@@ -188,6 +189,8 @@ function getLogLevelAsString(logLevel: LogLevel) {
             return "WARN";
         case LogLevel.Error:
             return "ERROR";
+        case LogLevel.Trace:
+            return "TRACE";
         default:
             assertNever(logLevel);
     }

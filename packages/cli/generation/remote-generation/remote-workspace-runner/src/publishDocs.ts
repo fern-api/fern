@@ -236,6 +236,9 @@ export async function publishDocs({
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition
+        },
+        {
+            timeoutInSeconds: 600
         }
     );
 
