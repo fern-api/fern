@@ -3,11 +3,11 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 
-import { Rule, RuleVisitors } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+import { ValidationViolation } from "@fern-api/validation-utils";
 import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst";
 import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules";
 import { getAllRules } from "./getAllRules";
+import { Rule, RuleVisitors } from "./Rule";
 
 export async function validateGeneratorsWorkspace(
     workspace: FernWorkspace,

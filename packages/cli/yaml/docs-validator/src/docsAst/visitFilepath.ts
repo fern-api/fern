@@ -1,5 +1,5 @@
-import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { NodePath } from "@fern-api/validation-utils";
 
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 

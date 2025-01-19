@@ -1,8 +1,10 @@
 import { Rule } from "../../Rule";
 import { validateVersionConfigFileSchema } from "../../docsAst/validateVersionConfig";
 
+const RULE_NAME = "validate-version-file";
+
 export const ValidateVersionFileRule: Rule = {
-    name: "validate-version-file",
+    name: RULE_NAME,
     create: () => {
         return {
             versionFile: async ({ path, content }) => {
@@ -12,6 +14,7 @@ export const ValidateVersionFileRule: Rule = {
                 }
                 return [
                     {
+                        name: RULE_NAME,
                         severity: "fatal",
                         message: `Failed to parse ${path}: ${parseResult.message}`
                     }

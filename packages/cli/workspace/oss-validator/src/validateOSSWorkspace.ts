@@ -1,10 +1,9 @@
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
+import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 
-import { Rule } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+import { ValidationViolation } from "@fern-api/validation-utils";
 import { getAllRules } from "./getAllRules";
+import { Rule } from "./Rule";
 
 export async function validateOSSWorkspace(
     workspace: OSSWorkspace,

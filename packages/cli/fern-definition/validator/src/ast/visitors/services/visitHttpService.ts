@@ -1,11 +1,11 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import {
-    NodePath,
     RawSchemas,
     isInlineRequestBody,
     isVariablePathParameter,
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
 import { RootApiFileAstVisitor } from "../../RootApiFileAstVisitor";

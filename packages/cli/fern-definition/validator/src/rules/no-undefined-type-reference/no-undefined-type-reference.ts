@@ -3,7 +3,6 @@ import { mapValues } from "lodash-es";
 
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import {
-    NodePath,
     isRawTextType,
     parseGeneric,
     parseRawBytesType,
@@ -12,6 +11,7 @@ import {
 } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
+import { NodePath } from "@fern-api/validation-utils";
 
 import { Rule, RuleViolation } from "../../Rule";
 import { TypeReferenceLocation, visitDefinitionFileYamlAst } from "../../ast";

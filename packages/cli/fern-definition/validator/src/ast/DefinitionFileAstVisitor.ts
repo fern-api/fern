@@ -1,5 +1,6 @@
 import { Values } from "@fern-api/core-utils";
-import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 export type DefinitionFileAstVisitor<R = void | void> = {
     [K in keyof DefinitionFileAstNodeTypes]: DefinitionFileAstNodeVisitor<K, R>;

@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
-import { NodePath } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 import { GeneratorsYmlFileAstVisitor } from "../GeneratorsYmlAstVisitor";
 

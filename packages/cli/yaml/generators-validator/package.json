@@ -38,6 +38,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/validation-utils": "workspace:*",
     "strip-ansi": "^7.1.0"
   },
   "devDependencies": {

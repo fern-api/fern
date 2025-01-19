@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation";
+import { ValidationViolation } from "@fern-api/validation-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoObjectSinglePropertyKeyRule } from "../no-missing-union-variant-key";
 

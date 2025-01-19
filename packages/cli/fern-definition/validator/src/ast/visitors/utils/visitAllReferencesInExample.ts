@@ -1,5 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { EXAMPLE_REFERENCE_PREFIX, NodePath } from "@fern-api/fern-definition-schema";
+import { EXAMPLE_REFERENCE_PREFIX } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
 

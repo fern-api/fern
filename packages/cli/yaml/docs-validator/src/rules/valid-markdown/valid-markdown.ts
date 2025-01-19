@@ -19,6 +19,7 @@ export const ValidMarkdownRule: Rule = {
                 } catch (err) {
                     return [
                         {
+                            name: ValidMarkdownRule.name,
                             severity: "error",
                             message: `Markdown file does not have a valid extension: ${String(err)}`
                         }
@@ -32,6 +33,7 @@ export const ValidMarkdownRule: Rule = {
                             : "Markdown failed to parse";
                     return [
                         {
+                            name: ValidMarkdownRule.name,
                             severity: "fatal",
                             message
                         }

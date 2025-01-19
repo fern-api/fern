@@ -4341,6 +4341,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      '@fern-api/validation-utils':
+        specifier: workspace:*
+        version: link:../../commons/validation-utils
       '@fern-api/venus-api-sdk':
         specifier: 0.10.2
         version: 0.10.2
@@ -5514,6 +5517,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/validation-utils':
+        specifier: workspace:*
+        version: link:../../../commons/validation-utils
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -7067,6 +7073,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/validation-utils':
+        specifier: workspace:*
+        version: link:../../../commons/validation-utils
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../loader
@@ -7140,6 +7149,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/validation-utils':
+        specifier: workspace:*
+        version: link:../../../commons/validation-utils
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace/loader
@@ -7264,6 +7276,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/validation-utils':
+        specifier: workspace:*
+        version: link:../../../commons/validation-utils
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace/loader
@@ -7503,6 +7518,43 @@ importers:
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.8(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/commons/validation-utils:
+    dependencies:
+      '@fern-api/cli-logger':
+        specifier: workspace:*
+        version: link:../../cli/cli-logger
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../cli/logger
+    devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3

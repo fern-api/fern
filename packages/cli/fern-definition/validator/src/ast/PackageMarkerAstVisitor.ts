@@ -1,4 +1,4 @@
-import { NodePath } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 export type PackageMarkerAstVisitor<R = void | void> = {
     [K in keyof PackageMarkerAstNodeTypes]: PackageMarkerAstNodeVisitor<K, R>;
