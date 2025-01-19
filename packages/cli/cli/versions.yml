@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The broken slugs is updated to further reduce false positives.
+      type: fix
+  irVersion: 55
+  version: 0.50.9
+
+- changelogEntry:
+    - summary: |
         An additional fix to the OpenRPC parser for respecting tags when 
         organizing methods in the API Reference.
       type: fix
