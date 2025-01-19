@@ -40,7 +40,7 @@ export class TaskContextFactory {
                                 break;
                             case "trace":
                                 CONSOLE_LOGGER.trace(`[${prefixWithColor}]: `, part);
-                                break;                                
+                                break;
                             default:
                                 assertNever(log.level);
                         }

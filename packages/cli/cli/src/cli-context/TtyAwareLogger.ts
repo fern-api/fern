@@ -190,7 +190,7 @@ function getLogLevelAsString(logLevel: LogLevel) {
         case LogLevel.Error:
             return "ERROR";
         case LogLevel.Trace:
-            return "TRACE";            
+            return "TRACE";
         default:
             assertNever(logLevel);
     }
