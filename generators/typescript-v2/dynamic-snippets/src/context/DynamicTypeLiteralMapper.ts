@@ -27,7 +27,7 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): ts.TypeLiteral {
-        if (this.context.isNullable(args.typeReference) && args.value == null) {
+        if (this.context.isNullable(args.typeReference) && args.value === null) {
             return ts.TypeLiteral.null();
         }
         if (args.value == null) {
