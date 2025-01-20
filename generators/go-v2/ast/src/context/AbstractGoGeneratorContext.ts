@@ -3,6 +3,7 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import {
@@ -102,10 +103,11 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 return false;
             }
+            case "primitive":
             case "unknown":
                 return false;
-            case "primitive":
-                return false;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -126,10 +128,11 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 return false;
             }
+            case "primitive":
             case "unknown":
                 return false;
-            case "primitive":
-                return false;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -147,12 +150,11 @@ export abstract class AbstractGoGeneratorContext<
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 return this.typeDeclarationIsEnum(declaration);
             }
-            case "primitive": {
+            case "primitive":
+            case "unknown":
                 return false;
-            }
-            case "unknown": {
-                return false;
-            }
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -203,6 +205,8 @@ export abstract class AbstractGoGeneratorContext<
             case "unknown": {
                 return false;
             }
+            default:
+                assertNever(typeReference);
         }
     }
 

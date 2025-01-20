@@ -382,6 +382,7 @@ export class DynamicTypeInstantiationMapper {
             case "optional":
                 return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
             case "nullable":
+                // In Go, nullable is equivalent to optional.
                 return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
             case "primitive":
                 return this.getUndiscriminatedUnionFieldNameForPrimitive({ primitive: typeReference.value });
