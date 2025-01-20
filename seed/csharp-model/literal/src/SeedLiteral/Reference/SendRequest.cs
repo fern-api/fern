@@ -16,6 +16,9 @@ public record SendRequest
     [JsonPropertyName("stream")]
     public required bool Stream { get; set; }
 
+    [JsonPropertyName("ending")]
+    public required string Ending { get; set; }
+
     [JsonPropertyName("context")]
     public required string Context { get; set; }
 
