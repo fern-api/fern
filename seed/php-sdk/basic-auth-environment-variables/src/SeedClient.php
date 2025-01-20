@@ -30,7 +30,7 @@ class SeedClient
 
     /**
      * @param ?string $username The username to use for authentication.
-     * @param ?string $password The username to use for authentication.
+     * @param ?string $accessToken The username to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -39,11 +39,11 @@ class SeedClient
      */
     public function __construct(
         ?string $username = null,
-        ?string $password = null,
+        ?string $accessToken = null,
         ?array $options = null,
     ) {
         $username ??= $this->getFromEnvOrThrow('USERNAME', 'Please pass in username or set the environment variable USERNAME.');
-        $password ??= $this->getFromEnvOrThrow('PASSWORD', 'Please pass in password or set the environment variable PASSWORD.');
+        $accessToken ??= $this->getFromEnvOrThrow('PASSWORD', 'Please pass in accessToken or set the environment variable PASSWORD.');
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',

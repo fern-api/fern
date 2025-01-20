@@ -85,6 +85,31 @@
         ]
       }
     },
+    "type_inlined:UndiscriminatedLiteral": {
+      "name": "UndiscriminatedLiteral",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "$ending"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_query:AliasToPrompt": {
       "name": "AliasToPrompt",
       "shape": {
@@ -143,6 +168,16 @@
               "value": {
                 "type": "booleanLiteral",
                 "value": false
+              }
+            }
+          },
+          {
+            "key": "ending",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "$ending"
               }
             }
           },
@@ -553,7 +588,8 @@
       "types": [
         "type_inlined:SomeAliasedLiteral",
         "type_inlined:ATopLevelLiteral",
-        "type_inlined:ANestedLiteral"
+        "type_inlined:ANestedLiteral",
+        "type_inlined:UndiscriminatedLiteral"
       ],
       "subpackages": []
     },

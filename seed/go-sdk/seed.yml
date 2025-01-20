@@ -98,6 +98,5 @@ allowedFailures:
   - exhaustive
   - mixed-case
   - reserved-keywords
-  - server-sent-events
   - streaming-parameter
   - trace

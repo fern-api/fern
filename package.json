@@ -75,7 +75,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-tailwindcss": "^3.17.5",
     "execa": "^5.1.1",
-    "fern-api": "^0.48.1",
+    "fern-api": "^0.50.12",
     "husky": "^9.1.7",
     "immer": "^10.1.1",
     "is-ci": "^4.1.0",

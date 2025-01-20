@@ -1,5 +1,19 @@
 - changelogEntry:
     - summary: |
+        Fix potential NPE initializing client options with default version
+      type: fix
+  createdAt: '2025-01-19'
+  irVersion: 53
+  version: 2.10.4
+- changelogEntry:
+    - summary: |
+        Fix inlining unwrapped alias types.
+      type: fix
+  createdAt: '2025-01-17'
+  irVersion: 53
+  version: 2.10.3
+- changelogEntry:
+    - summary: |
         Omit methods with inlined types from interface definitions.
       type: fix
   createdAt: '2025-01-16'

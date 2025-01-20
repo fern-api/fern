@@ -87,7 +87,7 @@ func newFileWriter(
 	scope.AddImport(path.Join(baseImportPath, "internal"))
 	scope.AddImport(path.Join(baseImportPath, "option"))
 
-	return &fileWriter{
+	f := &fileWriter{
 		filename:                     filename,
 		packageName:                  packageName,
 		baseImportPath:               baseImportPath,
@@ -100,9 +100,10 @@ func newFileWriter(
 		types:                        types,
 		errors:                       errors,
 		coordinator:                  coordinator,
-		snippetWriter:                NewSnippetWriter(baseImportPath, unionVersion, types),
 		buffer:                       new(bytes.Buffer),
 	}
+	f.snippetWriter = NewSnippetWriter(baseImportPath, unionVersion, types, f)
+	return f
 }
 
 // P writes the given element into a single line, concluding with a newline.

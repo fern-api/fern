@@ -131,6 +131,7 @@ type SendRequest struct {
 	ContainerObject *ContainerObject `json:"containerObject,omitempty" url:"containerObject,omitempty"`
 	prompt          string
 	stream          bool
+	ending          string
 
 	extraProperties map[string]interface{}
 }
@@ -157,6 +158,10 @@ func (s *SendRequest) Stream() bool {
 	return s.stream
 }
 
+func (s *SendRequest) Ending() string {
+	return s.ending
+}
+
 func (s *SendRequest) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -167,6 +172,7 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 		embed
 		Prompt string `json:"prompt"`
 		Stream bool   `json:"stream"`
+		Ending string `json:"ending"`
 	}{
 		embed: embed(*s),
 	}
@@ -182,7 +188,11 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, false, unmarshaler.Stream)
 	}
 	s.stream = unmarshaler.Stream
-	extraProperties, err := internal.ExtractExtraProperties(data, *s, "prompt", "stream")
+	if unmarshaler.Ending != "$ending" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "$ending", unmarshaler.Ending)
+	}
+	s.ending = unmarshaler.Ending
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "prompt", "stream", "ending")
 	if err != nil {
 		return err
 	}
@@ -196,10 +206,12 @@ func (s *SendRequest) MarshalJSON() ([]byte, error) {
 		embed
 		Prompt string `json:"prompt"`
 		Stream bool   `json:"stream"`
+		Ending string `json:"ending"`
 	}{
 		embed:  embed(*s),
 		Prompt: "You are a helpful assistant",
 		Stream: false,
+		Ending: "$ending",
 	}
 	return json.Marshal(marshaler)
 }

@@ -11,7 +11,7 @@ export declare namespace SeedBasicAuthEnvironmentVariablesClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
-        password?: core.Supplier<string | undefined>;
+        accessToken?: core.Supplier<string | undefined>;
     }
 
     export interface RequestOptions {

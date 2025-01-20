@@ -342,6 +342,12 @@ components:
           const: How super cool
       required:
         - myLiteral
+    UndiscriminatedLiteral:
+      title: UndiscriminatedLiteral
+      oneOf:
+        - type: string
+        - type: string
+          const: $ending
     AliasToPrompt:
       title: AliasToPrompt
       type: string
@@ -363,6 +369,9 @@ components:
         stream:
           type: boolean
           const: false
+        ending:
+          type: string
+          const: $ending
         context:
           $ref: '#/components/schemas/SomeLiteral'
         maybeContext:
@@ -374,6 +383,7 @@ components:
         - prompt
         - query
         - stream
+        - ending
         - context
         - containerObject
     ContainerObject:

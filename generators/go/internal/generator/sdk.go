@@ -339,8 +339,8 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(authScheme.Bearer.Token.PascalCase.UnsafeName, " string")
 		}
 		if authScheme.Basic != nil {
-			f.P("Username string")
-			f.P("Password string")
+			f.P(authScheme.Basic.Username.PascalCase.UnsafeName, " string")
+			f.P(authScheme.Basic.Password.PascalCase.UnsafeName, " string")
 		}
 		if authScheme.Header != nil {
 			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
@@ -408,8 +408,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
-			f.P(`if r.Username != "" && r.Password != "" {`)
-			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.Username + ": " + r.Password)))`)
+			var (
+				username = authScheme.Basic.Username.PascalCase.UnsafeName
+				password = authScheme.Basic.Password.PascalCase.UnsafeName
+			)
+			f.P(`if r.`, username, ` != "" && r.`, password, ` != "" {`)
+			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ": " + r.`, password, `)))`)
 			f.P("}")
 		}
 		if header := authScheme.Header; header != nil {
@@ -541,18 +545,22 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 			}
 			if authScheme.Basic != nil {
+				var (
+					username = authScheme.Basic.Username.PascalCase.UnsafeName
+					password = authScheme.Basic.Password.PascalCase.UnsafeName
+				)
 				// The basic auth option requires special care because it requires
 				// two parameters.
 				f.P("// BasicAuthOption implements the RequestOption interface.")
 				f.P("type BasicAuthOption struct {")
-				f.P("Username string")
-				f.P("Password string")
+				f.P(username, " string")
+				f.P(password, " string")
 				f.P("}")
 				f.P()
 
 				f.P("func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {")
-				f.P("opts.Username = b.Username")
-				f.P("opts.Password = b.Password")
+				f.P("opts.", username, " = b.", username)
+				f.P("opts.", password, " = b.", password)
 				f.P("}")
 				f.P()
 			}
@@ -785,8 +793,8 @@ func (f *fileWriter) WriteRequestOptions(
 						importPath,
 					),
 					[]ast.Expr{
-						ast.NewBasicLit(`"<YOUR_USERNAME>"`),
-						ast.NewBasicLit(`"<YOUR_PASSWORD>"`),
+						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Username.ScreamingSnakeCase.UnsafeName)),
+						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Password.ScreamingSnakeCase.UnsafeName)),
 					},
 				)
 				if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
@@ -800,10 +808,10 @@ func (f *fileWriter) WriteRequestOptions(
 				f.WriteDocs(auth.Docs)
 			}
 			typeName := "core.BasicAuthOption"
-			f.P("func WithBasicAuth(username, password string) *", typeName, " {")
+			f.P("func WithBasicAuth(", authScheme.Basic.Username.CamelCase.SafeName, ", ", authScheme.Basic.Password.CamelCase.SafeName, " string) *", typeName, " {")
 			f.P("return &", typeName, "{")
-			f.P("Username: username,")
-			f.P("Password: password,")
+			f.P(fmt.Sprintf("%s: %s,", authScheme.Basic.Username.PascalCase.UnsafeName, authScheme.Basic.Username.CamelCase.SafeName))
+			f.P(fmt.Sprintf("%s: %s,", authScheme.Basic.Password.PascalCase.UnsafeName, authScheme.Basic.Password.CamelCase.SafeName))
 			f.P("}")
 			f.P("}")
 			f.P()

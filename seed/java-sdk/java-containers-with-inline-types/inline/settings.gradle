@@ -1,0 +1,3 @@
+rootProject.name = 'java-containers-with-inline-types'
+
+include 'sample-app'

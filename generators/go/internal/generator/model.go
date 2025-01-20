@@ -723,7 +723,10 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 }
 
 func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTypeDeclaration) error {
-	receiver := typeNameToReceiver(t.typeName)
+	var (
+		receiver = typeNameToReceiver(t.typeName)
+		scope    = t.writer.scope.Child()
+	)
 
 	// member represents a single undiscriminated union member.
 	//
@@ -751,7 +754,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	var members []*member
 	var hasLiteral bool
 	for _, unionMember := range union.Members {
-		field := typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types)
+		field := typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types, scope)
 		var typeName string
 		if unionMember.Type.Named != nil {
 			typeName = unionMember.Type.Named.TypeId
@@ -827,18 +830,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	}
 
 	// Write getters for literal values, if any.
-	typeFields := t.getTypeFieldsForUndiscriminatedUnion(union)
+	typeFields := t.getTypeFieldsForUndiscriminatedUnion(union, scope)
 	for _, typeField := range typeFields {
 		t.writeGetterMethod(receiver, typeField)
-	}
-	for _, member := range members {
-		if !member.isLiteral {
-			continue
-		}
-		t.writer.P("func (", receiver, " *", t.typeName, ") ", strings.Title(member.field), "() ", member.value, "{")
-		t.writer.P("return ", receiver, ".", member.field)
-		t.writer.P("}")
-		t.writer.P()
 	}
 
 	// Implement the json.Unmarshaler interface.
@@ -937,13 +931,14 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 type undiscriminatedUnionTypeReferenceVisitor struct {
 	value string
 	types map[ir.TypeId]*ir.TypeDeclaration
+	scope *gospec.Scope
 }
 
 // Compile-time assertion.
 var _ ir.TypeReferenceVisitor = (*undiscriminatedUnionTypeReferenceVisitor)(nil)
 
 func (u *undiscriminatedUnionTypeReferenceVisitor) VisitContainer(container *ir.ContainerType) error {
-	u.value = containerToUndiscriminatedUnionField(container, u.types)
+	u.value = containerToUndiscriminatedUnionField(container, u.types, u.scope)
 	return nil
 }
 
@@ -966,6 +961,7 @@ func (u *undiscriminatedUnionTypeReferenceVisitor) VisitUnknown(unknown any) err
 // (e.g. lists, maps, etc).
 type undiscriminatedUnionContainerTypeVisitor struct {
 	value string
+	scope *gospec.Scope
 	types map[ir.TypeId]*ir.TypeDeclaration
 }
 
@@ -973,31 +969,31 @@ type undiscriminatedUnionContainerTypeVisitor struct {
 var _ ir.ContainerTypeVisitor = (*undiscriminatedUnionContainerTypeVisitor)(nil)
 
 func (u *undiscriminatedUnionContainerTypeVisitor) VisitList(list *ir.TypeReference) error {
-	u.value = fmt.Sprintf("%sList", typeReferenceToUndiscriminatedUnionField(list, u.types))
+	u.value = fmt.Sprintf("%sList", typeReferenceToUndiscriminatedUnionField(list, u.types, u.scope))
 	return nil
 }
 
 func (u *undiscriminatedUnionContainerTypeVisitor) VisitMap(mapType *ir.MapType) error {
 	u.value = fmt.Sprintf(
 		"%s%sMap",
-		typeReferenceToUndiscriminatedUnionField(mapType.KeyType, u.types),
-		typeReferenceToUndiscriminatedUnionField(mapType.ValueType, u.types),
+		typeReferenceToUndiscriminatedUnionField(mapType.KeyType, u.types, u.scope),
+		typeReferenceToUndiscriminatedUnionField(mapType.ValueType, u.types, u.scope),
 	)
 	return nil
 }
 
 func (u *undiscriminatedUnionContainerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
-	u.value = fmt.Sprintf("%sOptional", typeReferenceToUndiscriminatedUnionField(optional, u.types))
+	u.value = fmt.Sprintf("%sOptional", typeReferenceToUndiscriminatedUnionField(optional, u.types, u.scope))
 	return nil
 }
 
 func (u *undiscriminatedUnionContainerTypeVisitor) VisitSet(set *ir.TypeReference) error {
-	u.value = fmt.Sprintf("%sSet", typeReferenceToUndiscriminatedUnionField(set, u.types))
+	u.value = fmt.Sprintf("%sSet", typeReferenceToUndiscriminatedUnionField(set, u.types, u.scope))
 	return nil
 }
 
 func (u *undiscriminatedUnionContainerTypeVisitor) VisitLiteral(literal *ir.Literal) error {
-	u.value = fmt.Sprintf("%sLiteral", literalToUndiscriminatedUnionField(literal))
+	u.value = fmt.Sprintf("%sLiteral", literalToUndiscriminatedUnionField(u.scope, literal))
 	return nil
 }
 
@@ -1166,14 +1162,14 @@ func (t *typeVisitor) typeFieldForSingleUnionType(singleUnionType *ir.SingleUnio
 	}
 }
 
-func (t *typeVisitor) getTypeFieldsForUndiscriminatedUnion(undiscriminatedUnion *ir.UndiscriminatedUnionTypeDeclaration) []*typeField {
+func (t *typeVisitor) getTypeFieldsForUndiscriminatedUnion(undiscriminatedUnion *ir.UndiscriminatedUnionTypeDeclaration, scope *gospec.Scope) []*typeField {
 	var typeFields []*typeField
 	for _, member := range undiscriminatedUnion.Members {
 		if isLiteralType(member.Type, t.writer.types) {
 			continue
 		}
 		typeFields = append(typeFields, &typeField{
-			Name:      typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types),
+			Name:      typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types, scope),
 			GoType:    typeReferenceToGoType(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
 			ZeroValue: zeroValueForTypeReference(member.Type, t.writer.types),
 		})
@@ -1531,9 +1527,10 @@ func writeExtractExtraProperties(
 
 // typeReferenceToUndiscriminatedUnionField maps Fern's type references to the field name used in an
 // undiscriminated union.
-func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
 	visitor := &undiscriminatedUnionTypeReferenceVisitor{
 		types: types,
+		scope: scope,
 	}
 	_ = typeReference.Accept(visitor)
 	return visitor.value
@@ -1541,9 +1538,10 @@ func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, t
 
 // containerToUndiscriminatedUnionField maps Fern's container types to the field name used in an
 // undiscriminated union.
-func containerToUndiscriminatedUnionField(container *ir.ContainerType, types map[ir.TypeId]*ir.TypeDeclaration) string {
+func containerToUndiscriminatedUnionField(container *ir.ContainerType, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
 	visitor := &undiscriminatedUnionContainerTypeVisitor{
 		types: types,
+		scope: scope,
 	}
 	_ = container.Accept(visitor)
 	return visitor.value
@@ -1758,12 +1756,15 @@ func unknownToGoType(_ any) string {
 
 // literalToUndiscriminatedUnionField maps Fern's literal types to the field name used in an
 // undiscriminated union.
-func literalToUndiscriminatedUnionField(literal *ir.Literal) string {
+func literalToUndiscriminatedUnionField(scope *gospec.Scope, literal *ir.Literal) string {
 	switch literal.Type {
 	case "boolean":
-		return fmt.Sprintf("%vBool", literal.Boolean)
+		if literal.Boolean {
+			return "True"
+		}
+		return "False"
 	case "string":
-		return fmt.Sprintf("%sString", literal.String)
+		return fmt.Sprintf("%sString", reserveValidIdentifierForLiteral(scope, literal))
 	default:
 		return "unknown"
 	}
@@ -2046,4 +2047,18 @@ func defaultValueForPrimitiveType(primitiveType *ir.PrimitiveType) string {
 		return `""`
 	}
 	return "nil"
+}
+
+// reserveValidIdentifierForLiteral reserves a valid identifier for the given literal,
+// ensuring that it does not conflict with any existing identifiers in the given scope.
+func reserveValidIdentifierForLiteral(scope *gospec.Scope, literal *ir.Literal) string {
+	return capitalizeFirstLetter(scope.Add(literalToValue(literal)))
+}
+
+// capitalizeFirstLetter capitalizes the first letter of the given string.
+func capitalizeFirstLetter(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return strings.ToUpper(s[:1]) + s[1:]
 }

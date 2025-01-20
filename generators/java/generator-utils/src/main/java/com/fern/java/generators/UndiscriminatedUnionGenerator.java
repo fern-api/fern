@@ -167,7 +167,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
         for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
             // We're not going to use the name we resolve here for anything os it's okay to pass an empty string
-            List<NamedTypeId> resolvedIds = member.getType().visit(new InlineTypeIdResolver("", member.getType()));
+            List<NamedTypeId> resolvedIds = member.getType().visit(new InlineTypeIdResolver("", generatorContext));
             for (NamedTypeId resolvedId : resolvedIds) {
                 Optional<TypeDeclaration> maybeRawTypeDeclaration = Optional.ofNullable(
                         generatorContext.getTypeDeclarations().get(resolvedId.typeId()));

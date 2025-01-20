@@ -1,5 +1,58 @@
 - changelogEntry:
     - summary: |
+        Fixes a bug where `--log-level debug` does not include trace logs.
+      type: fix
+  irVersion: 55
+  version: 0.50.13
+
+- changelogEntry:
+    - summary: |
+        Increase undici timeouts to make sure that `fern generate --docs` completes. 
+      type: fix
+  irVersion: 55
+  version: 0.50.12
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports a `--log-level trace` option to filter out noise from the 
+        debug log level. 
+      type: fix
+  irVersion: 55
+  version: 0.50.11
+
+- changelogEntry:
+    - summary: 
+        An addition to the broken link checker to further reduce false positives.
+      type: fix
+  irVersion: 55
+  version: 0.50.10
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI no longer logs the full API request when finishing docs registration, 
+        reducing unnecessary log output.
+      type: fix
+  irVersion: 55
+  version: 0.50.9
+
+- changelogEntry:
+    - summary: |
+        An additional fix to the OpenRPC parser for respecting tags when 
+        organizing methods in the API Reference.
+      type: fix
+  irVersion: 55
+  version: 0.50.8
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now respects method names as well as tags for 
+        organization the navigation.
+      type: fix
+  irVersion: 55
+  version: 0.50.7
+
+- changelogEntry:
+    - summary: |
         The broken link checker is updated to reduce false positives. 
       type: fix
   irVersion: 55
