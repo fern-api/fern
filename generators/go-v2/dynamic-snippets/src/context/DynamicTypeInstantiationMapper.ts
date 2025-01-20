@@ -380,13 +380,17 @@ export class DynamicTypeInstantiationMapper {
                 return this.context.getTypeName(named.declaration.name);
             }
             case "optional":
-                return this.getUndiscriminatedUnionFieldNameForOptional({ optional: typeReference });
+                return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
+            case "nullable":
+                return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
             case "primitive":
                 return this.getUndiscriminatedUnionFieldNameForPrimitive({ primitive: typeReference.value });
             case "set":
                 return this.getUndiscriminatedUnionFieldNameForSet({ set: typeReference });
             case "unknown":
                 return "Unknown";
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -415,11 +419,11 @@ export class DynamicTypeInstantiationMapper {
     }
 
     private getUndiscriminatedUnionFieldNameForOptional({
-        optional
+        typeReference
     }: {
-        optional: FernIr.dynamic.TypeReference.Optional;
+        typeReference: FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: optional });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference });
         if (fieldName == null) {
             return undefined;
         }

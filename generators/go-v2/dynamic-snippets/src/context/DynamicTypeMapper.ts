@@ -37,9 +37,8 @@ export class DynamicTypeMapper {
             }
             case "optional":
                 return go.Type.optional(this.convert({ typeReference: args.typeReference.value }));
-            case "nullable": {
+            case "nullable":
                 return go.Type.optional(this.convert({ typeReference: args.typeReference.value }));
-            }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
