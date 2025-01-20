@@ -19,6 +19,7 @@ jobs:
         with:
           generator-name: ruby-model
           generator-path: generators/ruby
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -42,6 +43,7 @@ jobs:
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -65,6 +67,7 @@ jobs:
         with:
           generator-name: pydantic
           generator-path: generators/python
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -88,6 +91,7 @@ jobs:
         with:
           generator-name: python-sdk
           generator-path: generators/python
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -111,6 +115,7 @@ jobs:
         with:
           generator-name: fastapi
           generator-path: generators/python
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -134,6 +139,7 @@ jobs:
         with:
           generator-name: openapi
           generator-path: generators/openapi
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -157,6 +163,7 @@ jobs:
         with:
           generator-name: postman
           generator-path: generators/postman
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -180,6 +187,7 @@ jobs:
         with:
           generator-name: java-sdk
           generator-path: generators/java
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -203,6 +211,7 @@ jobs:
         with:
           generator-name: java-model
           generator-path: generators/java
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -226,6 +235,7 @@ jobs:
         with:
           generator-name: java-spring
           generator-path: generators/java
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -249,6 +259,7 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -272,6 +283,7 @@ jobs:
         with:
           generator-name: ts-express
           generator-path: generators/typescript
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -295,6 +307,7 @@ jobs:
         with:
           generator-name: go-fiber
           generator-path: generators/go
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -318,6 +331,7 @@ jobs:
         with:
           generator-name: go-model
           generator-path: generators/go
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -341,6 +355,7 @@ jobs:
         with:
           generator-name: go-sdk
           generator-path: generators/go
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -364,6 +379,7 @@ jobs:
         with:
           generator-name: csharp-model
           generator-path: generators/csharp
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -387,6 +403,7 @@ jobs:
         with:
           generator-name: csharp-sdk
           generator-path: generators/csharp
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -410,6 +427,7 @@ jobs:
         with:
           generator-name: php-model
           generator-path: generators/php
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -433,6 +451,7 @@ jobs:
         with:
           generator-name: php-sdk
           generator-path: generators/php
+          validate-git-diff: false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
