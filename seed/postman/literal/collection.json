@@ -769,7 +769,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"query\": \"query\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"containerObject\": {\n        \"nestedObjects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            },\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            }\n        ]\n    }\n}",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"query\": \"query\",\n    \"stream\": false,\n    \"ending\": \"$ending\",\n    \"context\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"containerObject\": {\n        \"nestedObjects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            },\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            }\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
