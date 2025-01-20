@@ -5,7 +5,7 @@ export const LogLevel = {
     Debug: "debug",
     Info: "info",
     Warn: "warn",
-    Error: "error",
+    Error: "error"
 } as const;
 
 export type LogLevel = Values<typeof LogLevel>;

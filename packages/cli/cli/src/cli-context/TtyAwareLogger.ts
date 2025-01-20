@@ -167,7 +167,7 @@ function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }
             return chalk.red(content);
         case LogLevel.Warn:
             return chalk.hex("FFA500")(content);
-        case LogLevel.Trace:            
+        case LogLevel.Trace:
         case LogLevel.Debug:
         case LogLevel.Info:
             return content;

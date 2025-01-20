@@ -12,7 +12,7 @@ Commands:
 Options:
   --help       Show help                                               [boolean]
   --log-level
-          [choices: "debug", "info", "warn", "error", "trace"] [default: "info"]"
+          [choices: "trace", "debug", "info", "warn", "error"] [default: "info"]"
 `;
 
 exports[`fern generator upgrade > fern generator help commands 2`] = `
@@ -23,7 +23,7 @@ Upgrades the specified generator in generators.yml to the latest stable version.
 Options:
   --help           Show help                                           [boolean]
   --log-level
-          [choices: "debug", "info", "warn", "error", "trace"] [default: "info"]
+          [choices: "trace", "debug", "info", "warn", "error"] [default: "info"]
   --generator      The type of generator to upgrade, ex:
                    \`fern-typescript-node-sdk\`.                          [string]
   --group          The group in which the generator is located, if group is not
