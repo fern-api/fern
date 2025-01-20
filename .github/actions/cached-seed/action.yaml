@@ -12,6 +12,14 @@ inputs:
     description: Whether to validate that no git-tracked files were changed
     required: false
     default: 'true'
+  skip-scripts:
+    description: Whether to skip running scripts during seed generation
+    required: false
+    default: 'false'
+  allow-unexpected-failures:
+    description: Whether to allow unexpected failures during seed generation
+    required: false
+    default: 'false'
 
 runs:
   using: "composite"
@@ -62,7 +70,11 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
-        pnpm seed:local test --generator ${{ inputs.generator-name }} --parallel 16
+        pnpm seed:local test \
+          --generator ${{ inputs.generator-name }} \
+          --parallel 16 \
+          ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
+          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
     - name: Validate results
       if: inputs.validate-git-diff == 'true'
