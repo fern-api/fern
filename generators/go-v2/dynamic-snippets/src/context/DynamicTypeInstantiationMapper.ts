@@ -449,7 +449,10 @@ export class DynamicTypeInstantiationMapper {
     }): string | undefined {
         switch (literal.type) {
             case "boolean":
-                return `${literal.value}BoolLiteral`;
+                if (literal.value) {
+                    return `TrueLiteral`;
+                }
+                return `FalseLiteral`;
             case "string":
                 return `${literal.value}StringLiteral`;
             default:
