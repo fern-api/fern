@@ -1,0 +1,387 @@
+name: Update Seed
+
+on:
+  schedule:
+    - cron: "0 * * * *" # Run every hour
+  workflow_dispatch:
+
+jobs:
+  ruby-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ruby-model
+          generator-path: generators/ruby
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(ruby): update ruby-model seed"
+          title: "chore(ruby): update ruby-model seed"
+          branch: update-ruby-model-seed
+          delete-branch: true
+
+  ruby-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ruby-sdk
+          generator-path: generators/ruby
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(ruby): update ruby-sdk seed"
+          title: "chore(ruby): update ruby-sdk seed"
+          branch: update-ruby-sdk-seed
+          delete-branch: true
+
+  pydantic-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: pydantic
+          generator-path: generators/python
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(python): update pydantic seed"
+          title: "chore(python): update pydantic seed"
+          branch: update-pydantic-seed
+          delete-branch: true
+
+  python-sdk:
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: python-sdk
+          generator-path: generators/python
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(python): update python-sdk seed"
+          title: "chore(python): update python-sdk seed"
+          branch: update-python-sdk-seed
+          delete-branch: true
+
+  fastapi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: fastapi
+          generator-path: generators/python
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(python): update fastapi seed"
+          title: "chore(python): update fastapi seed"
+          branch: update-fastapi-seed
+          delete-branch: true
+
+  openapi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: openapi
+          generator-path: generators/openapi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(openapi): update openapi seed"
+          title: "chore(openapi): update openapi seed"
+          branch: update-openapi-seed
+          delete-branch: true
+
+  postman:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: postman
+          generator-path: generators/postman
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(postman): update postman seed"
+          title: "chore(postman): update postman seed"
+          branch: update-postman-seed
+          delete-branch: true
+
+  java-sdk:
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: java-sdk
+          generator-path: generators/java
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(java): update java-sdk seed"
+          title: "chore(java): update java-sdk seed"
+          branch: update-java-sdk-seed
+          delete-branch: true
+
+  java-model:
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: java-model
+          generator-path: generators/java
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(java): update java-model seed"
+          title: "chore(java): update java-model seed"
+          branch: update-java-model-seed
+          delete-branch: true
+
+  java-spring:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: java-spring
+          generator-path: generators/java
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(java): update java-spring seed"
+          title: "chore(java): update java-spring seed"
+          branch: update-java-spring-seed
+          delete-branch: true
+
+  typescript-sdk:
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ts-sdk
+          generator-path: generators/typescript
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(typescript): update typescript-sdk seed"
+          title: "chore(typescript): update typescript-sdk seed"
+          branch: update-typescript-sdk-seed
+          delete-branch: true
+
+  typescript-express:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ts-express
+          generator-path: generators/typescript
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(typescript): update typescript-express seed"
+          title: "chore(typescript): update typescript-express seed"
+          branch: update-typescript-express-seed
+          delete-branch: true
+
+  go-fiber:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: go-fiber
+          generator-path: generators/go
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(go): update go-fiber seed"
+          title: "chore(go): update go-fiber seed"
+          branch: update-go-fiber-seed
+          delete-branch: true
+
+  go-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: go-model
+          generator-path: generators/go
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(go): update go-model seed"
+          title: "chore(go): update go-model seed"
+          branch: update-go-model-seed
+          delete-branch: true
+
+  go-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: go-sdk
+          generator-path: generators/go
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(go): update go-sdk seed"
+          title: "chore(go): update go-sdk seed"
+          branch: update-go-sdk-seed
+          delete-branch: true
+
+  csharp-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: csharp-model
+          generator-path: generators/csharp
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(csharp): update csharp-model seed"
+          title: "chore(csharp): update csharp-model seed"
+          branch: update-csharp-model-seed
+          delete-branch: true
+
+  csharp-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: csharp-sdk
+          generator-path: generators/csharp
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(csharp): update csharp-sdk seed"
+          title: "chore(csharp): update csharp-sdk seed"
+          branch: update-csharp-sdk-seed
+          delete-branch: true
+
+  php-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: php-model
+          generator-path: generators/php
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(php): update php-model seed"
+          title: "chore(php): update php-model seed"
+          branch: update-php-model-seed
+          delete-branch: true
+
+  php-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: php-sdk
+          generator-path: generators/php
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(php): update php-sdk seed"
+          title: "chore(php): update php-sdk seed"
+          branch: update-php-sdk-seed
+          delete-branch: true
