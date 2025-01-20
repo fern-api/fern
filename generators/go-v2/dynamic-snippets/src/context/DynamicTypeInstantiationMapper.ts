@@ -25,10 +25,11 @@ export class DynamicTypeInstantiationMapper {
     }
 
     public convert(args: DynamicTypeInstantiationMapper.Args): go.TypeInstantiation {
+        // eslint-disable-next-line eqeqeq
         if (args.value === null && !this.context.isNullable(args.typeReference)) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected non-null value, but got null`
+                message: "Expected non-null value, but got null"
             });
         }
         if (args.value == null) {
@@ -456,9 +457,9 @@ export class DynamicTypeInstantiationMapper {
         switch (literal.type) {
             case "boolean":
                 if (literal.value) {
-                    return `TrueLiteral`;
+                    return "TrueLiteral";
                 }
-                return `FalseLiteral`;
+                return "FalseLiteral";
             case "string":
                 return `${literal.value}StringLiteral`;
             default:

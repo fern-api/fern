@@ -27,13 +27,14 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): ts.TypeLiteral {
+        // eslint-disable-next-line eqeqeq
         if (args.value === null) {
             if (this.context.isNullable(args.typeReference)) {
                 return ts.TypeLiteral.null();
             }
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected non-null value, but got null`
+                message: "Expected non-null value, but got null"
             });
             return ts.TypeLiteral.nop();
         }
