@@ -54,6 +54,11 @@ public final class SendRequest {
     return false;
   }
 
+  @JsonProperty("ending")
+  public String getEnding() {
+    return "$ending";
+  }
+
   @JsonProperty("context")
   public SomeLiteral getContext() {
     return context;
