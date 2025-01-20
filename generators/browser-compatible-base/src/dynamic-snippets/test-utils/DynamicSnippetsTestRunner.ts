@@ -639,6 +639,24 @@ export class DynamicSnippetsTestRunner {
                             avatar: null
                         }
                     }
+                },
+                {
+                    description: "Invalid null value",
+                    giveRequest: {
+                        endpoint: {
+                            method: "POST",
+                            path: "/users"
+                        },
+                        auth: undefined,
+                        baseURL: "https://api.example.com",
+                        environment: undefined,
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: undefined,
+                        requestBody: {
+                            username: null
+                        }
+                    }
                 }
             ]
         });

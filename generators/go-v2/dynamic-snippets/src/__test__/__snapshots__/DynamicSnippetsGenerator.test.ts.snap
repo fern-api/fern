@@ -604,6 +604,18 @@ func do() {
 "
 `;
 
+exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 "package example
 
@@ -1337,6 +1349,18 @@ func do() {
 	)
 }
 "
+`;
+
+exports[`snippets (exportedClientName) > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
 `;
 
 exports[`snippets (exportedClientName) > nullable > 'Query parameters' 1`] = `

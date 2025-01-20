@@ -25,6 +25,12 @@ export class DynamicTypeInstantiationMapper {
     }
 
     public convert(args: DynamicTypeInstantiationMapper.Args): go.TypeInstantiation {
+        if (args.value === null && !this.context.isNullable(args.typeReference)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected non-null value, but got null`
+            });
+        }
         if (args.value == null) {
             return go.TypeInstantiation.nop();
         }
@@ -382,7 +388,6 @@ export class DynamicTypeInstantiationMapper {
             case "optional":
                 return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
             case "nullable":
-                // In Go, nullable is equivalent to optional.
                 return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
             case "primitive":
                 return this.getUndiscriminatedUnionFieldNameForPrimitive({ primitive: typeReference.value });
