@@ -167,8 +167,8 @@ function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }
             return chalk.red(content);
         case LogLevel.Warn:
             return chalk.hex("FFA500")(content);
-        case LogLevel.Debug:
         case LogLevel.Trace:
+        case LogLevel.Debug:
         case LogLevel.Info:
             return content;
     }
@@ -181,6 +181,8 @@ function getDebugPrefix(log: Log) {
 
 function getLogLevelAsString(logLevel: LogLevel) {
     switch (logLevel) {
+        case LogLevel.Trace:
+            return "TRACE";
         case LogLevel.Debug:
             return "DEBUG";
         case LogLevel.Info:
@@ -189,8 +191,6 @@ function getLogLevelAsString(logLevel: LogLevel) {
             return "WARN";
         case LogLevel.Error:
             return "ERROR";
-        case LogLevel.Trace:
-            return "TRACE";
         default:
             assertNever(logLevel);
     }
