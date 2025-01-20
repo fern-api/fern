@@ -639,7 +639,7 @@ export class DynamicSnippetsTestRunner {
                             avatar: null
                         }
                     }
-                },
+                }
             ]
         });
     }

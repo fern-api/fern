@@ -390,7 +390,10 @@ async function main() {
         metadata: {
             createdAt: new Date("1980-01-01T00:00:00Z"),
             updatedAt: new Date("1980-01-01T00:00:00Z"),
+            avatar: null,
+            activated: null,
         },
+        avatar: null,
     });
 }
 main();
@@ -409,7 +412,10 @@ async function main() {
             "john.doe",
             "jane.doe",
         ],
-        tags: [],
+        tags: [
+            null,
+        ],
+        extra: null,
     });
 }
 main();
