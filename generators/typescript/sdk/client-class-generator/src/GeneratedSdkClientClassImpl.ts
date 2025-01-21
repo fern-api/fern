@@ -1619,7 +1619,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     ts.factory.createThrowStatement(
                                         context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
                                             message: ts.factory.createStringLiteral(
-                                                `Please specify ${this.bearerAuthScheme.tokenEnvVar} when instantiating the client.`
+                                                `Please specify a ${BEARER_TOKEN_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.bearerAuthScheme.tokenEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
                                             responseBody: undefined
@@ -1797,7 +1797,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     ts.factory.createThrowStatement(
                                         context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
                                             message: ts.factory.createStringLiteral(
-                                                `Please specify ${this.basicAuthScheme.usernameEnvVar} when instantiating the client.`
+                                                `Please specify a ${USERNAME_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.usernameEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
                                             responseBody: undefined
@@ -1835,7 +1835,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     ts.factory.createThrowStatement(
                                         context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
                                             message: ts.factory.createStringLiteral(
-                                                `Please specify ${this.basicAuthScheme.passwordEnvVar} when instantiating the client.`
+                                                `Please specify a ${PASSWORD_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.passwordEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
                                             responseBody: undefined
