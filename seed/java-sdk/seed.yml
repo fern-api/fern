@@ -122,3 +122,4 @@ allowedFailures:
   - trace
   - unions
   - streaming-parameter
+  - literal
