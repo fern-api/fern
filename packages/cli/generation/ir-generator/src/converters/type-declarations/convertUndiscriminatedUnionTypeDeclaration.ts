@@ -13,17 +13,15 @@ export function convertUndiscriminatedUnionTypeDeclaration({
     // Filter out duplicate members from the union by comparing their types
     const uniqueMembers = union.union.filter((currentMember, currentIndex) => {
         // Get the type, handling both string and object member formats
-        const currentMemberTypeReference = typeof currentMember === "string" 
-            ? currentMember 
-            : currentMember.type;
+        const currentMemberTypeReference = typeof currentMember === "string" ? currentMember : currentMember.type;
 
         // Keep this member only if it's the first occurrence of its type
-        return union.union.findIndex(otherMember => {
-            const otherMemberType = typeof otherMember === "string"
-                ? otherMember
-                : otherMember.type;
-            return otherMemberType === currentMemberTypeReference;
-        }) === currentIndex;
+        return (
+            union.union.findIndex((otherMember) => {
+                const otherMemberType = typeof otherMember === "string" ? otherMember : otherMember.type;
+                return otherMemberType === currentMemberTypeReference;
+            }) === currentIndex
+        );
     });
 
     return Type.undiscriminatedUnion({
