@@ -69,6 +69,22 @@ Read the [Introduction](/learn/overview/introduction).
 
 You can use locally stored images or URLs to include images in your Markdown pages. Use either [Markdown syntax](https://www.markdownguide.org/basic-syntax/#images-1) or the [`<img>` HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) to insert the image.
 
+## Embedding local assets
+
+You can embed local assets in your Markdown pages using the `<embed>` tag. This is useful for displaying PDFs, images, videos, and other assets into your docs.
+
+```mdx
+<embed src="./path/to/asset.pdf" type="application/pdf" />
+<embed src="./path/to/asset.mp4" type="video/mp4" />
+<embed src="./path/to/asset.png" type="image/png" />
+```
+
+<embed src="../../../../fern/assets/changelogs/docs/embed-fern-waving.mp4" type="video/mp4" width="640px" height="360px" />
+<br/>
+<br/>
+<embed src="../../../../fern/assets/changelogs/docs/embed-fern-species.pdf" type="application/pdf" width="480px" height="679px" />
+
+
 ## LaTeX
 
 Fern supports [LaTeX](https://www.latex-project.org/) math equations. To use LaTeX, wrap your inline math equations in `$`. For example, `$(x^2 + y^2 = z^2)$` will render $x^2 + y^2 = z^2$.
