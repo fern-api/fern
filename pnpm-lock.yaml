@@ -4456,8 +4456,8 @@ importers:
         specifier: 5.7.2
         version: 5.7.2
       undici:
-        specifier: ^6.20.1
-        version: 6.20.1
+        specifier: ^6.21.1
+        version: 6.21.1
       validate-npm-package-name:
         specifier: ^5.0.1
         version: 5.0.1
@@ -14563,8 +14563,8 @@ packages:
   unbzip2-stream@1.4.3:
     resolution: {integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==}
 
-  undici@6.20.1:
-    resolution: {integrity: sha512-AjQF1QsmqfJys+LXfGTNum+qw4S88CojRInG/6t31W/1fk6G59s92bnAvGz5Cmur+kQv2SURXEvvudLmbrE8QA==}
+  undici@6.21.1:
+    resolution: {integrity: sha512-q/1rj5D0/zayJB2FraXdaWxbhWiNKDvu8naDT2dl1yTlvJp4BLtOcp2a5BvgGNQpYYJzau7tf1WgKv3b+7mqpQ==}
     engines: {node: '>=18.17'}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
@@ -23452,7 +23452,7 @@ snapshots:
       buffer: 5.7.1
       through: 2.3.8
 
-  undici@6.20.1: {}
+  undici@6.21.1: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 

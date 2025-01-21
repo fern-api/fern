@@ -30,7 +30,7 @@ export async function generateAndSnapshotDynamicIR({
         audiences,
         keywords: undefined,
         smartCasing: true,
-        disableExamples: false,
+        exampleGeneration: { disabled: false },
         readme: undefined,
         version: undefined,
         packageName: undefined,

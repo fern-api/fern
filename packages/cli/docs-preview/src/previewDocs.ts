@@ -19,8 +19,6 @@ import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
-import { parseDocsConfiguration } from "../../configuration-loader/src/docs-yml/parseDocsConfiguration";
-
 export async function getPreviewDocsDefinition({
     domain,
     project,
@@ -52,13 +50,6 @@ export async function getPreviewDocsDefinition({
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
-
-    const parsedDocsConfig = await parseDocsConfiguration({
-        rawDocsConfiguration: docsWorkspace.config,
-        context,
-        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
-    });
 
     const resolver = new DocsDefinitionResolver(
         domain,
