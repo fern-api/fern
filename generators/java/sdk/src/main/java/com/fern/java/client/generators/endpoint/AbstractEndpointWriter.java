@@ -1604,11 +1604,15 @@ public abstract class AbstractEndpointWriter {
 
             @Override
             public Optional<String> visitStreaming(StreamingResponse streamingResponse) {
+                // TODO: At some point it may be necessary to apply text/event-stream, application/x-ndjson or others
+                //  although it's best to wait for the IR change.
                 return Optional.empty();
             }
 
             @Override
             public Optional<String> visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                // TODO: At some point it may be necessary to apply text/event-stream, application/x-ndjson or others
+                //  although it's best to wait for the IR change.
                 return Optional.empty();
             }
 
