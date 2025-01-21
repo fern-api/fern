@@ -13,10 +13,6 @@
       "description": "lorem ipsum"
     },
     {
-      "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1",
-      "description": "lorem ipsum"
-    },
-    {
       "$ref": "#/definitions/UndiscriminatedUnion1InlineEnum1",
       "description": "lorem ipsum"
     },
