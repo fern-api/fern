@@ -4,25 +4,16 @@ description: 'Push any content inside the Aside component to the right of the pa
 icon: 'align-right'
 ---
 
-## Basic Usage
+The Aside component creates a sticky container that floats content to the right of your page. Use it to showcase code examples, API snippets, or any supplementary content that should stay visible as users scroll.
 
-The Aside component creates a sticky container that positions content to the right of the main content area.
+<CodeBlock title="Markdown">
+```jsx
+<Aside>
+    <EndpointRequestSnippet endpoint='POST /snippets' />
+</Aside>
+```
+</CodeBlock>
 
-<Tabs>
-  <Tab title="Example">
-    <Aside>
-      <EndpointRequestSnippet endpoint='POST /snippets' />
-    </Aside>
-  </Tab>
-  <Tab title="Markdown">
-    ```jsx
-    <Aside>
-      <EndpointRequestSnippet endpoint='POST /snippets' />
-    </Aside>
-    ```
-  </Tab>
-</Tabs>
-
-<Note>
-  Asides are commonly used for code examples, API snippets, or supplementary information that should remain visible while scrolling.
-</Note>
+<Aside>
+    <EndpointRequestSnippet endpoint='POST /snippets' />
+</Aside>
