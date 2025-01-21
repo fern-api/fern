@@ -168,11 +168,11 @@ export async function runPreviewServer({
         debounce: 100,
         renameDetection: true
     });
-    
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
-        
+
         // Don't schedule another reload if one is in progress
         if (isReloading) {
             return;
@@ -184,23 +184,25 @@ export async function runPreviewServer({
         }
 
         // Set up new timer
-        reloadTimer = setTimeout(async () => {
-            isReloading = true;
-            sendData({
-                version: 1,
-                type: "startReload"
-            });
-            
-            const reloadedDocsDefinition = await reloadDocsDefinition();
-            if (reloadedDocsDefinition != null) {
-                docsDefinition = reloadedDocsDefinition;
-            }
-            
-            sendData({
-                version: 1,
-                type: "finishReload"
-            });
-            isReloading = false;
+        reloadTimer = setTimeout(() => {
+            void (async () => {
+                isReloading = true;
+                sendData({
+                    version: 1,
+                    type: "startReload"
+                });
+
+                const reloadedDocsDefinition = await reloadDocsDefinition();
+                if (reloadedDocsDefinition != null) {
+                    docsDefinition = reloadedDocsDefinition;
+                }
+
+                sendData({
+                    version: 1,
+                    type: "finishReload"
+                });
+                isReloading = false;
+            })();
         }, RELOAD_DEBOUNCE_MS);
     });
 
