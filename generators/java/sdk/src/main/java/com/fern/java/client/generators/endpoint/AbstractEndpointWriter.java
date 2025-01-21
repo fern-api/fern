@@ -68,6 +68,7 @@ import okhttp3.ResponseBody;
 public abstract class AbstractEndpointWriter {
 
     public static final String CONTENT_TYPE_HEADER = "Content-Type";
+    public static final String ACCEPT_HEADER = "Accept";
     public static final String APPLICATION_JSON_HEADER = "application/json";
     public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
@@ -1570,5 +1571,55 @@ public abstract class AbstractEndpointWriter {
         public Boolean _visitUnknown(Object unknownType) {
             return false;
         }
+    }
+
+    public static Optional<String> responseContentType(Optional<HttpResponse> response) {
+        if (response.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Optional<HttpResponseBody> body = response.get().getBody();
+
+        if (body.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return body.get().visit(new HttpResponseBody.Visitor<Optional<String>>() {
+            @Override
+            public Optional<String> visitJson(JsonResponse jsonResponse) {
+                return Optional.of(APPLICATION_JSON_HEADER);
+            }
+
+            @Override
+            public Optional<String> visitFileDownload(FileDownloadResponse fileDownloadResponse) {
+                // TODO: We'll probably need to get this from the IR if we want accepts here
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<String> visitText(TextResponse textResponse) {
+                // TODO: Figure out if the right thing to do is text/plain here or if we want something more granular
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<String> visitStreaming(StreamingResponse streamingResponse) {
+                // TODO: At some point it may be necessary to apply text/event-stream, application/x-ndjson or others
+                //  although it's best to wait for the IR change.
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<String> visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                // TODO: At some point it may be necessary to apply text/event-stream, application/x-ndjson or others
+                //  although it's best to wait for the IR change.
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<String> _visitUnknown(Object o) {
+                return Optional.empty();
+            }
+        });
     }
 }
