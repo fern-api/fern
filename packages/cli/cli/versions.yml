@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Fixes a bug where duplicate types in undiscriminated unions (`oneOf` in OpenAPI) 
+        were not being deduped, which could lead to invalid generated code.
+      type: fix
+  irVersion: 55
+  version: 0.50.14
+
+- changelogEntry:
+    - summary: |
         Fixes a bug where `--log-level debug` does not include trace logs.
       type: fix
   irVersion: 55
