@@ -11,6 +11,7 @@ async function main() {
     const config = {
         entry: ['src/**/*.ts', '!src/__test__'],
         target: "es2017",
+        minify: true,
         dts: true,
         esbuildPlugins: [
             NodeModulesPolyfillPlugin(),
