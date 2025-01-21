@@ -260,8 +260,6 @@ allowedFailures:
   - alias
   - api-wide-base-path
   - cross-package-type-names
-  - auth-environment-variables
-  - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences:no-custom-config
