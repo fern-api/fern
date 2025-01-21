@@ -136,7 +136,7 @@ export const ValidMarkdownLinks: Rule = {
                     generationLanguage: undefined,
                     keywords: undefined,
                     smartCasing: false,
-                    disableExamples: false,
+                    exampleGeneration: { disabled: false },
                     readme: undefined,
                     version: undefined,
                     packageName: undefined,
