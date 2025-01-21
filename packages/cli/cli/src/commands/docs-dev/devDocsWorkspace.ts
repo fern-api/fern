@@ -1,9 +1,10 @@
 import { runPreviewServer } from "@fern-api/docs-preview";
 import { Project } from "@fern-api/project-loader";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { CliContext } from "../../cli-context/CliContext";
+import { validateAPIWorkspaceWithoutExiting } from "../validate/validateAPIWorkspaceAndLogIssues";
+import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function previewDocsWorkspace({
     loadProject,
@@ -50,16 +51,16 @@ export async function previewDocsWorkspace({
                     fernWorkspaces,
                     ossWorkspaces: await filterOssWorkspaces(project)
                 });
-                // for (const fernWorkspace of fernWorkspaces) {
-                //     await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {
-                //         await validateAPIWorkspaceWithoutExiting({
-                //             workspace: fernWorkspace,
-                //             context: apiWorkspaceContext,
-                //             logWarnings: false,
-                //             logSummary: false
-                //         });
-                //     });
-                // }
+                for (const fernWorkspace of fernWorkspaces) {
+                    await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {
+                        await validateAPIWorkspaceWithoutExiting({
+                            workspace: fernWorkspace,
+                            context: apiWorkspaceContext,
+                            logWarnings: false,
+                            logSummary: false
+                        });
+                    });
+                }
             },
             context,
             port,
