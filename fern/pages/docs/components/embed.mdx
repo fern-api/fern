@@ -32,7 +32,7 @@ The Embed component accepts the following props:
 <Tabs>
     <Tab title="Example">
         <embed 
-            src="./guide-about-ferns.pdf" 
+            src="./all-about-ferns.pdf" 
             type="application/pdf"
             width="100%"
             height="500px"
@@ -41,7 +41,7 @@ The Embed component accepts the following props:
     <Tab title="Markdown">
         ```jsx
         <embed 
-            src="./guide-about-ferns.pdf" 
+            src="./all-about-ferns.pdf" 
             type="application/pdf"
             width="100%"
             height="500px"
@@ -72,6 +72,10 @@ The Embed component accepts the following props:
         ```
     </Tab>
 </Tabs>
+
+<Note>
+    Videos with audio will automatically play when the page loads. If you want to prevent this behavior, consider using the `<video>` component instead, which provides more control over playback.
+</Note>
 
 ## Common MIME Types
 
