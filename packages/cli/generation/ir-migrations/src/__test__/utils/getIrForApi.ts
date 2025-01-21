@@ -23,7 +23,7 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
         audiences: { type: "all" },
         keywords: undefined,
         smartCasing: true, // Verify the special casing convention in tests.
-        disableExamples: false,
+        exampleGeneration: { disabled: false },
         readme: undefined,
         version: undefined,
         packageName: undefined,
