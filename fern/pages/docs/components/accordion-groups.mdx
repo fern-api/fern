@@ -1,52 +1,95 @@
 ---
 title: 'Accordion Groups'
-description: Display expandable/collapsible options that can reveal more information
+description: 'Display expandable/collapsible options that reveal more information with improved search functionality'
 icon: 'table-rows'
 ---
+
+Accordion Groups allow you to organize content into collapsible sections, making it easier for users to navigate through information. With recent updates, our Accordion component now supports improved search functionality using the browser's built-in search feature.
+
 <AccordionGroup>
-  <Accordion title="Option 1">
-    You can put other components inside Accordions.
+  <Accordion title="Basic Usage">
+    Accordion Groups can contain multiple Accordion items. Each item has a title and content that can be expanded or collapsed.
 
-    ```ts index.ts
-    export function generateRandomNumber() {
-      return Math.random();
-    }   
+    ```jsx
+    <AccordionGroup>
+      <Accordion title="Section 1">
+        Content for section 1
+      </Accordion>
+      <Accordion title="Section 2">
+        Content for section 2
+      </Accordion>
+    </AccordionGroup>
     ```
-
   </Accordion>
 
-  <Accordion title="Option 2">
-    This is a second option.
+  <Accordion title="Searchable Content">
+    The updated Accordion component now uses HTML5 `<details>` and `<summary>` elements, enabling browser search (Cmd+F / Ctrl+F) to find content within collapsed sections.
   </Accordion>
-  
-  <Accordion title="Option 3">
-    This is a third option.
+
+  <Accordion title="Accessibility">
+    Our Accordion component is built with accessibility in mind, supporting keyboard navigation and screen readers.
   </Accordion>
 </AccordionGroup>
 
+### Enhanced Search Functionality
+
+The recent update to our Accordion component improves content discoverability by allowing users to search through all content, including collapsed sections, using the browser's search function (Cmd+F / Ctrl+F).
+
 <Aside>
-<CodeBlock title="Markdown">
+<CodeBlock title="Implementation Details">
 ````jsx
 <AccordionGroup>
-  <Accordion title="Option 1">
-    You can put other components inside Accordions.
+  <Accordion title="Simple Text Content">
+    This is a basic example with text content.
+  </Accordion>
 
-    ```ts
-    export function generateRandomNumber() {
-      return Math.random();
-    }   
+  <Accordion title="With Code Snippets">
+    You can include code snippets within Accordions:
+
+    ```javascript
+    function greet(name) {
+      console.log(`Hello, ${name}!`);
+    }
     ```
-
   </Accordion>
 
-  <Accordion title="Option 2">
-    This is a second option.
-  </Accordion>
-  
-  <Accordion title="Option 3">
-    This is a third option.
+  <Accordion title="Nested Components">
+    Accordions can contain other components:
+
+    <Frame caption="Sample image">
+      <img src="https://images.pexels.com/photos/1867601/pexels-photo-1867601.jpeg" alt="A sample image" />
+    </Frame>
   </Accordion>
 </AccordionGroup>
 ````
 </CodeBlock>
 </Aside>
+
+### Usage Examples
+
+Here are some examples of how to use the Accordion Group component:
+
+<AccordionGroup>
+  <Accordion title="Simple Text Content">
+    This is a basic example with text content.
+  </Accordion>
+
+  <Accordion title="With Code Snippets">
+    You can include code snippets within Accordions:
+
+    ```javascript
+    function greet(name) {
+      console.log(`Hello, ${name}!`);
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Nested Components">
+    Accordions can contain other components:
+
+    <Frame caption="Sample image">
+      <img src="https://images.pexels.com/photos/1867601/pexels-photo-1867601.jpeg" alt="A sample image" />
+    </Frame>
+  </Accordion>
+</AccordionGroup>
+
