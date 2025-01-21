@@ -93,7 +93,7 @@ export class ExampleEndpointFactory {
             }
 
             if (required && requestExamples.length === 0) {
-                this.logger.warn(
+                this.logger.trace(
                     `Failed to generate required request example for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );
                 return [];
@@ -165,7 +165,7 @@ export class ExampleEndpointFactory {
             }
 
             if (required && responseExamples.length === 0) {
-                this.logger.warn(
+                this.logger.trace(
                     `Failed to generate required response example for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );
                 return [];

@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Move example generation failure logs to trace level since they are not relevant 
+        for users and add noise to debug logs.
+      type: fix
+  irVersion: 55
+  version: 0.50.15
+
+- changelogEntry:
+    - summary: |
         Fixes a bug where duplicate types in undiscriminated unions (`oneOf` in OpenAPI) 
         were not being deduped, which could lead to invalid generated code.
       type: fix
