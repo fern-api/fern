@@ -5,7 +5,7 @@ import { mergeApiExamples } from "../utils/mergeApiExamples";
 describe("mergeApiExamples", () => {
     it("merges code examples from Fern API into OpenAPI examples", () => {
         const fernApi: FdrAPI.api.v1.read.ApiDefinition = {
-            id: "test" as any,
+            id: "test" as never,
             types: {},
             auth: undefined,
             hasMultipleBaseUrls: false,
@@ -22,10 +22,10 @@ describe("mergeApiExamples", () => {
                         authed: false,
                         defaultEnvironment: undefined,
                         environments: [],
-                        id: "listUsers" as any,
+                        id: "listUsers" as never,
                         method: "GET",
                         path: { parts: [], pathParameters: [] },
-                        originalEndpointId: "listUsers" as any,
+                        originalEndpointId: "listUsers" as never,
                         urlSlug: "users",
                         migratedFromUrlSlugs: [],
                         name: "List users",
@@ -74,9 +74,9 @@ describe("mergeApiExamples", () => {
             subpackages: {}
         };
 
-        const endpointId = "listUsers" as any;
+        const endpointId = "listUsers" as never;
         const api: FdrAPI.api.latest.ApiDefinition = {
-            id: "test" as any,
+            id: "test" as never,
             endpoints: {
                 [endpointId]: {
                     id: endpointId,

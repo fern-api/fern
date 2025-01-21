@@ -375,6 +375,65 @@ exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
 ]"
 `;
 
+exports[`snippets > nullable > 'Body properties' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: "https://api.example.com",
+    });
+    await client.nullable.createUser({
+        username: "john.doe",
+        tags: [
+            "admin",
+        ],
+        metadata: {
+            createdAt: new Date("1980-01-01T00:00:00Z"),
+            updatedAt: new Date("1980-01-01T00:00:00Z"),
+            avatar: null,
+            activated: null,
+        },
+        avatar: null,
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets > nullable > 'Query parameters' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: "https://api.example.com",
+    });
+    await client.nullable.getUsers({
+        usernames: [
+            "john.doe",
+            "jane.doe",
+        ],
+        tags: [
+            null,
+        ],
+        extra: null,
+    });
+}
+main();
+"
+`;
+
 exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
 "import { AcmeClient, AcmeEnvironments } from "acme";
 

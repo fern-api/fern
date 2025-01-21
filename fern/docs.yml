@@ -448,6 +448,10 @@ navigation:
                 path: ./pages/docs/components/code-blocks.mdx
                 slug: code-blocks
                 icon: fa-regular fa-code
+              - page: Embed
+                path: ./pages/docs/components/embed.mdx
+                icon: fa-regular fa-window-maximize
+                slug: embed
               - page: Steps
                 path: ./pages/docs/components/steps.mdx
                 icon: fa-regular fa-list-ol

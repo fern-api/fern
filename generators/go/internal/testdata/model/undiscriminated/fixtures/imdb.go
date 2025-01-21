@@ -11,7 +11,7 @@ import (
 
 type AnotherUnion struct {
 	String            string
-	fernStringLiteral string
+	FernStringLiteral string
 	Foo               *Foo
 
 	typ string
@@ -22,7 +22,7 @@ func NewAnotherUnionFromString(value string) *AnotherUnion {
 }
 
 func NewAnotherUnionWithFernStringLiteral() *AnotherUnion {
-	return &AnotherUnion{typ: "fernStringLiteral", fernStringLiteral: "fern"}
+	return &AnotherUnion{typ: "FernStringLiteral", FernStringLiteral: "fern"}
 }
 
 func NewAnotherUnionFromFoo(value *Foo) *AnotherUnion {
@@ -43,10 +43,6 @@ func (a *AnotherUnion) GetFoo() *Foo {
 	return a.Foo
 }
 
-func (a *AnotherUnion) FernStringLiteral() string {
-	return a.fernStringLiteral
-}
-
 func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
@@ -56,9 +52,9 @@ func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 	}
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		a.typ = "fernStringLiteral"
-		a.fernStringLiteral = valueFernStringLiteral
-		if a.fernStringLiteral != "fern" {
+		a.typ = "FernStringLiteral"
+		a.FernStringLiteral = valueFernStringLiteral
+		if a.FernStringLiteral != "fern" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "fern", valueFernStringLiteral)
 		}
 		return nil
@@ -76,7 +72,7 @@ func (a AnotherUnion) MarshalJSON() ([]byte, error) {
 	if a.typ == "String" || a.String != "" {
 		return json.Marshal(a.String)
 	}
-	if a.typ == "fernStringLiteral" || a.fernStringLiteral != "" {
+	if a.typ == "FernStringLiteral" || a.FernStringLiteral != "" {
 		return json.Marshal("fern")
 	}
 	if a.typ == "Foo" || a.Foo != nil {
@@ -95,8 +91,8 @@ func (a *AnotherUnion) Accept(visitor AnotherUnionVisitor) error {
 	if a.typ == "String" || a.String != "" {
 		return visitor.VisitString(a.String)
 	}
-	if a.typ == "fernStringLiteral" || a.fernStringLiteral != "" {
-		return visitor.VisitFernStringLiteral(a.fernStringLiteral)
+	if a.typ == "FernStringLiteral" || a.FernStringLiteral != "" {
+		return visitor.VisitFernStringLiteral(a.FernStringLiteral)
 	}
 	if a.typ == "Foo" || a.Foo != nil {
 		return visitor.VisitFoo(a.Foo)
@@ -231,8 +227,8 @@ type Union struct {
 	StringList           []string
 	StringListList       [][]string
 	DoubleSet            []float64
-	fernStringLiteral    string
-	anotherStringLiteral string
+	FernStringLiteral    string
+	AnotherStringLiteral string
 
 	typ string
 }
@@ -274,11 +270,11 @@ func NewUnionFromDoubleSet(value []float64) *Union {
 }
 
 func NewUnionWithFernStringLiteral() *Union {
-	return &Union{typ: "fernStringLiteral", fernStringLiteral: "fern"}
+	return &Union{typ: "FernStringLiteral", FernStringLiteral: "fern"}
 }
 
 func NewUnionWithAnotherStringLiteral() *Union {
-	return &Union{typ: "anotherStringLiteral", anotherStringLiteral: "another"}
+	return &Union{typ: "AnotherStringLiteral", AnotherStringLiteral: "another"}
 }
 
 func (u *Union) GetFoo() *Foo {
@@ -344,14 +340,6 @@ func (u *Union) GetDoubleSet() []float64 {
 	return u.DoubleSet
 }
 
-func (u *Union) FernStringLiteral() string {
-	return u.fernStringLiteral
-}
-
-func (u *Union) AnotherStringLiteral() string {
-	return u.anotherStringLiteral
-}
-
 func (u *Union) UnmarshalJSON(data []byte) error {
 	valueFoo := new(Foo)
 	if err := json.Unmarshal(data, &valueFoo); err == nil {
@@ -409,18 +397,18 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 	}
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		u.typ = "fernStringLiteral"
-		u.fernStringLiteral = valueFernStringLiteral
-		if u.fernStringLiteral != "fern" {
+		u.typ = "FernStringLiteral"
+		u.FernStringLiteral = valueFernStringLiteral
+		if u.FernStringLiteral != "fern" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueFernStringLiteral)
 		}
 		return nil
 	}
 	var valueAnotherStringLiteral string
 	if err := json.Unmarshal(data, &valueAnotherStringLiteral); err == nil {
-		u.typ = "anotherStringLiteral"
-		u.anotherStringLiteral = valueAnotherStringLiteral
-		if u.anotherStringLiteral != "another" {
+		u.typ = "AnotherStringLiteral"
+		u.AnotherStringLiteral = valueAnotherStringLiteral
+		if u.AnotherStringLiteral != "another" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "another", valueAnotherStringLiteral)
 		}
 		return nil
@@ -456,10 +444,10 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	if u.typ == "DoubleSet" || u.DoubleSet != nil {
 		return json.Marshal(u.DoubleSet)
 	}
-	if u.typ == "fernStringLiteral" || u.fernStringLiteral != "" {
+	if u.typ == "FernStringLiteral" || u.FernStringLiteral != "" {
 		return json.Marshal("fern")
 	}
-	if u.typ == "anotherStringLiteral" || u.anotherStringLiteral != "" {
+	if u.typ == "AnotherStringLiteral" || u.AnotherStringLiteral != "" {
 		return json.Marshal("another")
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
@@ -507,24 +495,24 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 	if u.typ == "DoubleSet" || u.DoubleSet != nil {
 		return visitor.VisitDoubleSet(u.DoubleSet)
 	}
-	if u.typ == "fernStringLiteral" || u.fernStringLiteral != "" {
-		return visitor.VisitFernStringLiteral(u.fernStringLiteral)
+	if u.typ == "FernStringLiteral" || u.FernStringLiteral != "" {
+		return visitor.VisitFernStringLiteral(u.FernStringLiteral)
 	}
-	if u.typ == "anotherStringLiteral" || u.anotherStringLiteral != "" {
-		return visitor.VisitAnotherStringLiteral(u.anotherStringLiteral)
+	if u.typ == "AnotherStringLiteral" || u.AnotherStringLiteral != "" {
+		return visitor.VisitAnotherStringLiteral(u.AnotherStringLiteral)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
 type UnionWithLiteral struct {
-	fernStringLiteral string
+	FernStringLiteral string
 	String            string
 
 	typ string
 }
 
 func NewUnionWithLiteralWithFernStringLiteral() *UnionWithLiteral {
-	return &UnionWithLiteral{typ: "fernStringLiteral", fernStringLiteral: "fern"}
+	return &UnionWithLiteral{typ: "FernStringLiteral", FernStringLiteral: "fern"}
 }
 
 func NewUnionWithLiteralFromString(value string) *UnionWithLiteral {
@@ -538,16 +526,12 @@ func (u *UnionWithLiteral) GetString() string {
 	return u.String
 }
 
-func (u *UnionWithLiteral) FernStringLiteral() string {
-	return u.fernStringLiteral
-}
-
 func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		u.typ = "fernStringLiteral"
-		u.fernStringLiteral = valueFernStringLiteral
-		if u.fernStringLiteral != "fern" {
+		u.typ = "FernStringLiteral"
+		u.FernStringLiteral = valueFernStringLiteral
+		if u.FernStringLiteral != "fern" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueFernStringLiteral)
 		}
 		return nil
@@ -562,7 +546,7 @@ func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
-	if u.typ == "fernStringLiteral" || u.fernStringLiteral != "" {
+	if u.typ == "FernStringLiteral" || u.FernStringLiteral != "" {
 		return json.Marshal("fern")
 	}
 	if u.typ == "String" || u.String != "" {
@@ -577,8 +561,8 @@ type UnionWithLiteralVisitor interface {
 }
 
 func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
-	if u.typ == "fernStringLiteral" || u.fernStringLiteral != "" {
-		return visitor.VisitFernStringLiteral(u.fernStringLiteral)
+	if u.typ == "FernStringLiteral" || u.FernStringLiteral != "" {
+		return visitor.VisitFernStringLiteral(u.FernStringLiteral)
 	}
 	if u.typ == "String" || u.String != "" {
 		return visitor.VisitString(u.String)

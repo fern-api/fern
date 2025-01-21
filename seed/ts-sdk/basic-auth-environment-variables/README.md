@@ -25,7 +25,7 @@ import { SeedBasicAuthEnvironmentVariablesClient } from "@fern/basic-auth-enviro
 const client = new SeedBasicAuthEnvironmentVariablesClient({
     environment: "YOUR_BASE_URL",
     username: "YOUR_USERNAME",
-    password: "YOUR_PASSWORD",
+    accessToken: "YOUR_ACCESS_TOKEN",
 });
 await client.basicAuth.postWithBasicAuth({
     key: "value",

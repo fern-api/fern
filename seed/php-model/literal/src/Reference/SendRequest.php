@@ -26,6 +26,12 @@ class SendRequest extends JsonSerializableType
     public bool $stream;
 
     /**
+     * @var string $ending
+     */
+    #[JsonProperty('ending')]
+    public string $ending;
+
+    /**
      * @var string $context
      */
     #[JsonProperty('context')]
@@ -48,6 +54,7 @@ class SendRequest extends JsonSerializableType
      *   prompt: string,
      *   query: string,
      *   stream: bool,
+     *   ending: string,
      *   context: string,
      *   maybeContext?: ?string,
      *   containerObject: ContainerObject,
@@ -59,6 +66,7 @@ class SendRequest extends JsonSerializableType
         $this->prompt = $values['prompt'];
         $this->query = $values['query'];
         $this->stream = $values['stream'];
+        $this->ending = $values['ending'];
         $this->context = $values['context'];
         $this->maybeContext = $values['maybeContext'] ?? null;
         $this->containerObject = $values['containerObject'];

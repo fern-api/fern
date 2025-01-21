@@ -35,6 +35,9 @@
     },
     {
       "path": "../docs-importers/mintlify"
+    },
+    {
+      "path": "../docs-importers/readme"
     }
   ]
 }

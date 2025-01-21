@@ -14,7 +14,7 @@ export declare namespace BasicAuth {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
-        password?: core.Supplier<string | undefined>;
+        accessToken?: core.Supplier<string | undefined>;
     }
 
     export interface RequestOptions {
@@ -200,7 +200,7 @@ export class BasicAuth {
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
         return core.BasicAuth.toAuthorizationHeader({
             username: (await core.Supplier.get(this._options.username)) ?? process?.env["USERNAME"],
-            password: (await core.Supplier.get(this._options.password)) ?? process?.env["PASSWORD"],
+            password: (await core.Supplier.get(this._options.accessToken)) ?? process?.env["PASSWORD"],
         });
     }
 }

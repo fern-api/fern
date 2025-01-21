@@ -16,6 +16,7 @@ type InternalTypeLiteral =
     | String_
     | Tuple
     | Unkonwn_
+    | Null_
     | Nop;
 
 interface Array_ {
@@ -93,6 +94,10 @@ interface Unkonwn_ {
     value: unknown;
 }
 
+interface Null_ {
+    type: "null";
+}
+
 interface Nop {
     type: "nop";
 }
@@ -131,7 +136,6 @@ export class TypeLiteral extends AstNode {
                 }
                 writer.write(`"${this.internalType.value.toString()}"`);
                 return;
-                break;
             }
             case "datetime": {
                 if (noSerdeLayer) {
@@ -183,6 +187,10 @@ export class TypeLiteral extends AstNode {
             }
             case "unknown": {
                 this.writeUnknown({ writer, value: this.internalType.value });
+                break;
+            }
+            case "null": {
+                writer.write("null");
                 break;
             }
             case "nop":
@@ -354,6 +362,10 @@ export class TypeLiteral extends AstNode {
 
     public static unknown(value: unknown): TypeLiteral {
         return new this({ type: "unknown", value });
+    }
+
+    public static null(): TypeLiteral {
+        return new this({ type: "null" });
     }
 
     public static nop(): TypeLiteral {

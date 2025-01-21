@@ -1,0 +1,93 @@
+---
+title: 'Embed'
+description: 'Embed local assets like PDFs, videos, and more in your documentation'
+icon: 'file-import'
+---
+
+The Embed component allows you to include local assets directly in your documentation. This is useful for displaying PDFs, images, videos, and other media files.
+
+## Basic Usage
+
+Use the `embed` tag with a `src` attribute pointing to your local asset:
+
+```jsx
+<embed src="./path/to/asset.pdf" type="application/pdf" />
+```
+
+## Configuration
+
+The Embed component accepts the following props:
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `src` | string | Yes | Path to your local asset (relative to current MDX file) |
+| `type` | string | Recommended | MIME type of the asset |
+| `width` | string \| number | No | Width of the embedded content |
+| `height` | string \| number | No | Height of the embedded content |
+
+## Examples
+
+### Video File
+
+<Tabs>
+    <Tab title="Example">
+        <embed 
+            src="./growing-fern.mp4" 
+            type="video/mp4"
+            width="640"
+            height="360"
+        />
+    </Tab>
+    <Tab title="Markdown">
+        ```jsx
+        <embed 
+            src="./growing-fern.mp4" 
+            type="video/mp4"
+            width="640"
+            height="360"
+        />
+        ```
+    </Tab>
+</Tabs>
+
+<Note>
+    Videos with audio will automatically play when the page loads. If you want to prevent this behavior, consider using the `<video>` component instead, which provides more control over playback.
+</Note>
+
+### PDF Document
+
+<Tabs>
+    <Tab title="Example">
+        <embed 
+            src="./all-about-ferns.pdf" 
+            type="application/pdf"
+            width="100%"
+            height="500px"
+        />
+    </Tab>
+    <Tab title="Markdown">
+        ```jsx
+        <embed 
+            src="./all-about-ferns.pdf" 
+            type="application/pdf"
+            width="100%"
+            height="500px"
+        />
+        ```
+    </Tab>
+</Tabs>
+
+## Common MIME Types
+
+| File Type | MIME Type |
+|-----------|-----------|
+| PDF | `application/pdf` |
+| MP4 Video | `video/mp4` |
+| WebM Video | `video/webm` |
+| SVG Image | `image/svg+xml` |
+| PNG Image | `image/png` |
+| JPEG Image | `image/jpeg` |
+
+<Note>
+    The supported file types and behavior may vary depending on the browser and the type of content being embedded. For video files, consider using MP4 format for maximum compatibility.
+</Note>

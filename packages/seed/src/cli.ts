@@ -3,7 +3,7 @@ import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { CONSOLE_LOGGER, LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin } from "@fern-api/login";
 
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
@@ -101,6 +101,12 @@ function addTestCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
+                })
+                .option("allow-unexpected-failures", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Allow unexpected test failures without failing the command"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -159,8 +165,8 @@ function addTestCommand(cli: Argv) {
                 await scriptRunner.stop();
             }
 
-            // If any of the tests failed, exit with a non-zero status code
-            if (results.includes(false)) {
+            // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
+            if (results.includes(false) && !argv["allow-unexpected-failures"]) {
                 process.exit(1);
             }
         }

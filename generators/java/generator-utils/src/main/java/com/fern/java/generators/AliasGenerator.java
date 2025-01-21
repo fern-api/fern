@@ -56,7 +56,7 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
         List<NamedTypeId> resolvedIds = aliasTypeDeclaration
                 .getAliasOf()
-                .visit(new InlineTypeIdResolver(VALUE_FIELD_NAME_PASCAL, aliasTypeDeclaration.getAliasOf()));
+                .visit(new InlineTypeIdResolver(VALUE_FIELD_NAME_PASCAL, generatorContext));
         for (NamedTypeId resolvedId : resolvedIds) {
             String name = resolvedId.name();
             Optional<TypeDeclaration> maybeRawTypeDeclaration =

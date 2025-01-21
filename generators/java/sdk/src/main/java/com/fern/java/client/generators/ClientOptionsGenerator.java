@@ -429,6 +429,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                                         .getApiVersionClassName()),
                                         apiVersionField.name,
                                         Modifier.PRIVATE)
+                                .initializer(CodeBlock.of("$T.empty()", Optional.class))
                                 .build());
                         builder.addMethod(getOptionalVersionBuilder(
                                 headerApiVersionScheme.getHeader().getName().getWireValue()));
