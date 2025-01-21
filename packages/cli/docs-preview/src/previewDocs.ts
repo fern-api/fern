@@ -19,7 +19,6 @@ import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
-
 export async function getPreviewDocsDefinition({
     domain,
     project,

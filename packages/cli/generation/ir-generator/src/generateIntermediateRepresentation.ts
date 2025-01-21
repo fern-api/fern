@@ -57,7 +57,7 @@ import { parseErrorName } from "./utils/parseErrorName";
 
 export declare namespace generateIntermediateRepresentation {
     interface ExampleGenerationArgs {
-        disabled: boolean; 
+        disabled: boolean;
         includeOptionalRequestPropertyExamples?: boolean;
         skipAutogenerationIfManualExamplesExist?: boolean;
     }
