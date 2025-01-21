@@ -41,6 +41,7 @@ public class MigrationClient {
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
+                .addHeader("Accept", "application/json")
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         _requestBuilder.addHeader("admin-key-header", request.getAdminKeyHeader());
