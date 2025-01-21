@@ -39,23 +39,23 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return;
                 }
+                const fernWorkspaces = await Promise.all(
+                    project.apiWorkspaces.map(async (workspace) => {
+                        return workspace.toFernWorkspace({ context });
+                    })
+                );
                 await validateDocsWorkspaceWithoutExiting({
                     workspace: docsWorkspace,
                     context,
                     logWarnings: true,
                     logSummary: false,
-                    fernWorkspaces: await Promise.all(
-                        project.apiWorkspaces.map(async (workspace) => {
-                            return workspace.toFernWorkspace({ context });
-                        })
-                    ),
+                    fernWorkspaces,
                     ossWorkspaces: await filterOssWorkspaces(project)
                 });
-                for (const apiWorkspace of project.apiWorkspaces) {
-                    await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {
-                        const workspace = await apiWorkspace.toFernWorkspace({ context }, { preserveSchemaIds: true });
+                for (const fernWorkspace of fernWorkspaces) {
+                    await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {
                         await validateAPIWorkspaceWithoutExiting({
-                            workspace,
+                            workspace: fernWorkspace,
                             context: apiWorkspaceContext,
                             logWarnings: false,
                             logSummary: false
