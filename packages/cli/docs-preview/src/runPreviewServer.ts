@@ -122,6 +122,10 @@ export async function runPreviewServer({
     let project = initialProject;
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
 
+    let reloadTimer: NodeJS.Timeout | null = null;
+    let isReloading = false;
+    const RELOAD_DEBOUNCE_MS = 1000;
+
     const reloadDocsDefinition = async () => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
@@ -161,25 +165,43 @@ export async function runPreviewServer({
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
-        debounce: 1000,
+        debounce: 100,
         renameDetection: true
     });
+    
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
-        sendData({
-            version: 1,
-            type: "startReload"
-        });
-        // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
-        const reloadedDocsDefinition = await reloadDocsDefinition();
-        if (reloadedDocsDefinition != null) {
-            docsDefinition = reloadedDocsDefinition;
+        
+        // Don't schedule another reload if one is in progress
+        if (isReloading) {
+            return;
         }
-        sendData({
-            version: 1,
-            type: "finishReload"
-        });
+
+        // Clear any existing timer
+        if (reloadTimer != null) {
+            clearTimeout(reloadTimer);
+        }
+
+        // Set up new timer
+        reloadTimer = setTimeout(async () => {
+            isReloading = true;
+            sendData({
+                version: 1,
+                type: "startReload"
+            });
+            
+            const reloadedDocsDefinition = await reloadDocsDefinition();
+            if (reloadedDocsDefinition != null) {
+                docsDefinition = reloadedDocsDefinition;
+            }
+            
+            sendData({
+                version: 1,
+                type: "finishReload"
+            });
+            isReloading = false;
+        }, RELOAD_DEBOUNCE_MS);
     });
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
