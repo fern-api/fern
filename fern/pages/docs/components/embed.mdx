@@ -16,12 +16,14 @@ Use the `embed` tag with a `src` attribute pointing to your local asset:
 
 ## Configuration
 
-The Embed component supports standard HTML embed attributes:
+The Embed component accepts the following props:
 
-- `src` - Path to your local asset (required)
-- `type` - MIME type of the asset (recommended)
-- `width` - Width of the embedded content
-- `height` - Height of the embedded content
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `src` | string | Yes | Path to your local asset (relative to current MDX file) |
+| `type` | string | Recommended | MIME type of the asset |
+| `width` | string \| number | No | Width of the embedded content |
+| `height` | string \| number | No | Height of the embedded content |
 
 ## Examples
 
@@ -73,15 +75,15 @@ The Embed component supports standard HTML embed attributes:
 
 ## Common MIME Types
 
-Here are some common MIME types you might use with the Embed component:
-
-- PDF: `application/pdf`
-- MP4 Video: `video/mp4`
-- WebM Video: `video/webm`
-- SVG Image: `image/svg+xml`
-- PNG Image: `image/png`
-- JPEG Image: `image/jpeg`
+| File Type | MIME Type |
+|-----------|-----------|
+| PDF | `application/pdf` |
+| MP4 Video | `video/mp4` |
+| WebM Video | `video/webm` |
+| SVG Image | `image/svg+xml` |
+| PNG Image | `image/png` |
+| JPEG Image | `image/jpeg` |
 
 <Note>
-    The supported file types and behavior may vary depending on the browser and the type of content being embedded.
+    The supported file types and behavior may vary depending on the browser and the type of content being embedded. For video files, consider using MP4 format for maximum compatibility.
 </Note>
