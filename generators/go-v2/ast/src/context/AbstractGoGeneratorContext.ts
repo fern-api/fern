@@ -3,6 +3,7 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import {
@@ -88,7 +89,13 @@ export abstract class AbstractGoGeneratorContext<
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "optional";
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return true;
+                    case "nullable":
+                        return this.isOptional(typeReference.container.nullable);
+                }
+                return false;
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
@@ -96,30 +103,58 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 return false;
             }
+            case "primitive":
             case "unknown":
                 return false;
-            case "primitive":
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    public isNullable(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return true;
+                    case "optional":
+                        return this.isNullable(typeReference.container.optional);
+                }
                 return false;
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isNullable(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
         }
     }
 
     public isEnum(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isEnum(typeReference.container.optional);
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.isEnum(typeReference.container.optional);
+                    case "nullable":
+                        return this.isEnum(typeReference.container.nullable);
                 }
                 return false;
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 return this.typeDeclarationIsEnum(declaration);
             }
-            case "primitive": {
+            case "primitive":
+            case "unknown":
                 return false;
-            }
-            case "unknown": {
-                return false;
-            }
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -147,14 +182,17 @@ export abstract class AbstractGoGeneratorContext<
     }): boolean {
         switch (typeReference.type) {
             case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isDate(typeReference.container.optional);
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.isPrimitive({ typeReference: typeReference.container.optional, primitive });
+                    case "nullable":
+                        return this.isPrimitive({ typeReference: typeReference.container.nullable, primitive });
                 }
                 return false;
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
-                    return this.isDate(declaration.shape.aliasOf);
+                    return this.isPrimitive({ typeReference: declaration.shape.aliasOf, primitive });
                 }
                 return false;
             }
@@ -167,6 +205,8 @@ export abstract class AbstractGoGeneratorContext<
             case "unknown": {
                 return false;
             }
+            default:
+                assertNever(typeReference);
         }
     }
 

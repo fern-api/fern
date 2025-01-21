@@ -37,6 +37,7 @@ export class DynamicSnippetsTestRunner {
         this.runFileUploadTests(args);
         this.runImdbTests(args);
         this.runMultiUrlEnvironmentTests(args);
+        this.runNullableTests(args);
         this.runSingleUrlEnvironmentDefaultTests(args);
     }
 
@@ -578,6 +579,82 @@ export class DynamicSnippetsTestRunner {
                         headers: undefined,
                         requestBody: {
                             s3Key: "xyz"
+                        }
+                    }
+                }
+            ]
+        });
+    }
+
+    private runNullableTests(args: DynamicSnippetsTestRunner.Args): void {
+        const generator = args.buildGenerator({
+            irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "nullable.json"))
+        });
+        this.runDynamicSnippetTests({
+            fixture: "nullable",
+            generator,
+            testCases: [
+                {
+                    description: "Query parameters",
+                    giveRequest: {
+                        endpoint: {
+                            method: "GET",
+                            path: "/users"
+                        },
+                        auth: undefined,
+                        baseURL: "https://api.example.com",
+                        environment: undefined,
+                        pathParameters: undefined,
+                        queryParameters: {
+                            usernames: ["john.doe", "jane.doe"],
+                            tags: [null],
+                            extra: null
+                        },
+                        headers: undefined,
+                        requestBody: undefined
+                    }
+                },
+                {
+                    description: "Body properties",
+                    giveRequest: {
+                        endpoint: {
+                            method: "POST",
+                            path: "/users"
+                        },
+                        auth: undefined,
+                        baseURL: "https://api.example.com",
+                        environment: undefined,
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: undefined,
+                        requestBody: {
+                            username: "john.doe",
+                            tags: ["admin"],
+                            metadata: {
+                                createdAt: "1980-01-01T00:00:00Z",
+                                updatedAt: "1980-01-01T00:00:00Z",
+                                avatar: null,
+                                activated: null
+                            },
+                            avatar: null
+                        }
+                    }
+                },
+                {
+                    description: "Invalid null value",
+                    giveRequest: {
+                        endpoint: {
+                            method: "POST",
+                            path: "/users"
+                        },
+                        auth: undefined,
+                        baseURL: "https://api.example.com",
+                        environment: undefined,
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: undefined,
+                        requestBody: {
+                            username: null
                         }
                     }
                 }

@@ -217,8 +217,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 54.0.0
-        version: 54.0.0
+        specifier: 55.0.0
+        version: 55.0.0
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../packages/cli/fern-definition/schema
@@ -456,8 +456,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
-        specifier: ^53.24.0
-        version: 53.24.0
+        specifier: ^55.0.0
+        version: 55.0.0
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -553,8 +553,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^53.24.0
-        version: 53.24.0
+        specifier: ^55.0.0
+        version: 55.0.0
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
@@ -1500,8 +1500,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.24.0
-        version: 53.24.0
+        specifier: 55.0.0
+        version: 55.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1623,8 +1623,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^53.24.0
-        version: 53.24.0
+        specifier: ^55.0.0
+        version: 55.0.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -8843,11 +8843,8 @@ packages:
   '@fern-api/docs-parsers@0.0.41':
     resolution: {integrity: sha512-PUJOEDJ8RzxfNEnjM8eKfmUJ2kw/thABbEUZcj60uifNW9xPiJEGDtA7TyhQ7Gfr27Aj8FIFoeeSw2LIyLMUmQ==}
 
-  '@fern-api/dynamic-ir-sdk@53.24.0':
-    resolution: {integrity: sha512-4XvzvSsh7lNZz5oYN0LH+FRpFGxg9TjfdipSJMpgHvPShe85m/tcfbOzbS0DHBpQGlKb/gHQtQRPAoBR1wdDAw==}
-
-  '@fern-api/dynamic-ir-sdk@54.0.0':
-    resolution: {integrity: sha512-5ewX7042AGuw697jA6ubulCIQbfTM2HC8UbHxTakE0px871HJTRwHNT2Y9o2kjMbsRXTzyYdb5lOVr+85sc/KQ==}
+  '@fern-api/dynamic-ir-sdk@55.0.0':
+    resolution: {integrity: sha512-VQDqR99oQRHT/FiZJbBJ1edtvLg6nGwm3Ft/AkL0Kg5mZ3pHRvmIjiSqwj0ItSybisPHTFoZwvnkb4g0cmBn3A==}
 
   '@fern-api/fdr-sdk@0.128.0-8c361ea2b':
     resolution: {integrity: sha512-9PRrG7Qy7+FpnifT7MwqmKrrQkSvlw9GzA+Kav/th8o3JcIDuxALkhH+Ra4L60BdGl4V6en+zeUnHexqNzsTUA==}
@@ -16122,9 +16119,7 @@ snapshots:
       - terser
       - typescript
 
-  '@fern-api/dynamic-ir-sdk@53.24.0': {}
-
-  '@fern-api/dynamic-ir-sdk@54.0.0': {}
+  '@fern-api/dynamic-ir-sdk@55.0.0': {}
 
   '@fern-api/fdr-sdk@0.128.0-8c361ea2b(typescript@5.7.2)':
     dependencies:
