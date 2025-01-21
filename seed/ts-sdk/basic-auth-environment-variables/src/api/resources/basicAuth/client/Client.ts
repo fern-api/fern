@@ -198,9 +198,23 @@ export class BasicAuth {
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
+        const username = (await core.Supplier.get(this._options.username)) ?? process?.env["USERNAME"];
+        if (username == null) {
+            throw new errors.SeedBasicAuthEnvironmentVariablesError({
+                message: "Please specify USERNAME when instantiating the client.",
+            });
+        }
+
+        const accessToken = (await core.Supplier.get(this._options.accessToken)) ?? process?.env["PASSWORD"];
+        if (accessToken == null) {
+            throw new errors.SeedBasicAuthEnvironmentVariablesError({
+                message: "Please specify PASSWORD when instantiating the client.",
+            });
+        }
+
         return core.BasicAuth.toAuthorizationHeader({
-            username: (await core.Supplier.get(this._options.username)) ?? process?.env["USERNAME"],
-            password: (await core.Supplier.get(this._options.accessToken)) ?? process?.env["PASSWORD"],
+            username,
+            password: accessToken,
         });
     }
 }
