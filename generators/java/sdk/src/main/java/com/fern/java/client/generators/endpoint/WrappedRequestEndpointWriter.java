@@ -232,6 +232,12 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 header.poetTypeName()));
             }
         }
+        AbstractEndpointWriter.responseContentType(httpEndpoint.getResponse())
+                .ifPresent(responseContentType -> requestBodyCodeBlock.addStatement(
+                        "$L.addHeader($S, $L)",
+                        AbstractEndpointWriter.REQUEST_BUILDER_NAME,
+                        AbstractEndpointWriter.ACCEPT_HEADER,
+                        contentType));
         requestBodyCodeBlock.addStatement(
                 "$T $L = $L.build()", Request.class, getOkhttpRequestName(), REQUEST_BUILDER_NAME);
         return requestBodyCodeBlock.build();

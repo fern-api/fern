@@ -111,6 +111,12 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
         if (sendContentType) {
             builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         }
+        AbstractEndpointWriter.responseContentType(httpEndpoint.getResponse())
+                .ifPresent(responseContentType -> builder.add(
+                        "$L.addHeader($S, $L)",
+                        AbstractEndpointWriter.REQUEST_BUILDER_NAME,
+                        AbstractEndpointWriter.ACCEPT_HEADER,
+                        contentType));
         return builder.add(".build();\n").unindent().build();
     }
 }
