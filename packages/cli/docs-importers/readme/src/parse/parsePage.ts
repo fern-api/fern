@@ -5,6 +5,8 @@ import remarkMdx from "remark-mdx";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 
+import { TaskContext } from "@fern-api/task-context";
+
 import { unifiedRemoveBreaks } from "../cleaners/breaks";
 import { unifiedRemoveClassNames } from "../cleaners/className";
 import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis";
@@ -41,6 +43,7 @@ import { htmlToHast } from "../utils/hast";
 import { normalizePath, removeTrailingSlash } from "../utils/strings";
 
 export async function parsePage(
+    context: TaskContext,
     html: string,
     url: string | URL,
     opts: {
@@ -115,14 +118,13 @@ export async function parsePage(
         }
 
         writePage(url, title, description, resultStr);
+        context.logger.debug(`Successfully parsed page ${urlStr}`);
         return {
             success: true,
             data: opts.rootPath ? [normalizePath(new URL(urlStr).pathname), opts.rootPath] : undefined
         };
     } catch (error) {
-        return {
-            success: false,
-            data: [urlStr, ""]
-        };
+        context.logger.debug(`Error parsing page ${urlStr}: ${error}`);
+        return { success: false, data: [urlStr, ""] };
     }
 }

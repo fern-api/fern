@@ -196,20 +196,18 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         const urlObj = new URL(url);
         const origin = urlObj.origin;
-
+        if (origin === "") {
+            return { success: false, message: `Invalid URL: ${url}` };
+        }
         const sidebar = retrieveRootNavElement(siteHast);
         if (!sidebar) {
             return { success: false, message: `${url.toString()}: Failed to find sidebar element` };
         }
         const navItems = parseSidebar(sidebar);
-        if (origin === "") {
-            return { success: false, message: `invalid URL provided to scrape site: ${url}` };
-        }
-
         const flatNavItems = navItems.flatMap((section) => section.pages);
         const listOfLinks = iterateOverNavItems(flatNavItems, origin);
         if (listOfLinks.length === 0) {
-            return { success: false, message: `no navigation links were able to be found: ${url}` };
+            return { success: false, message: `No navigation items found for URL: ${url}` };
         }
 
         const externalLinks = listOfLinks.filter((url: URL) => url.origin !== origin);
@@ -253,27 +251,33 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                 return value;
             };
 
-            traverse(navItems).forEach(function (value) {
-                if (
-                    externalLinkReplaceMap.has(value) ||
-                    (Array.isArray(value) && value.some((item) => externalLinkReplaceMap.has(item)))
-                ) {
-                    this.update(replaceLinks(value, externalLinkReplaceMap));
-                } else if (
-                    rootPathReplaceMap.has(value) ||
-                    (Array.isArray(value) && value.some((item) => rootPathReplaceMap.has(item)))
-                ) {
-                    this.update(replaceLinks(value, rootPathReplaceMap));
-                }
-            });
+            for (const section of navItems) {
+                traverse(section.pages).forEach(function (value) {
+                    if (
+                        externalLinkReplaceMap.has(value) ||
+                        (Array.isArray(value) && value.some((item) => externalLinkReplaceMap.has(item)))
+                    ) {
+                        this.update(replaceLinks(value, externalLinkReplaceMap));
+                    } else if (
+                        rootPathReplaceMap.has(value) ||
+                        (Array.isArray(value) && value.some((item) => rootPathReplaceMap.has(item)))
+                    ) {
+                        this.update(replaceLinks(value, rootPathReplaceMap));
+                    }
+                });
+            }
 
-            traverse(navItems).forEach(function (value) {
-                if (typeof value === "string") {
-                    this.update(value.replace("/overview", ""));
-                } else if (Array.isArray(value)) {
-                    this.update(value.map((item) => (typeof item === "string" ? item.replace("/overview", "") : item)));
-                }
-            });
+            for (const section of navItems) {
+                traverse(section.pages).forEach(function (value) {
+                    if (typeof value === "string") {
+                        this.update(value.replace("/overview", ""));
+                    } else if (Array.isArray(value)) {
+                        this.update(
+                            value.map((item) => (typeof item === "string" ? item.replace("/overview", "") : item))
+                        );
+                    }
+                });
+            }
 
             const failedPaths = [...extResults, ...intResults, ...rootResults]
                 .filter((r) => !r.success)
