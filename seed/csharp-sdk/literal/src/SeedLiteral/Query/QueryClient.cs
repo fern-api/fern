@@ -44,8 +44,8 @@ public partial class QueryClient
         _query["prompt"] = request.Prompt.ToString();
         _query["alias_prompt"] = request.AliasPrompt.ToString();
         _query["query"] = request.Query;
-        _query["stream"] = request.Stream.ToString();
-        _query["alias_stream"] = request.AliasStream.ToString();
+        _query["stream"] = JsonUtils.Serialize(request.Stream);
+        _query["alias_stream"] = JsonUtils.Serialize(request.AliasStream);
         if (request.OptionalPrompt != null)
         {
             _query["optional_prompt"] = request.OptionalPrompt.ToString();
@@ -56,11 +56,13 @@ public partial class QueryClient
         }
         if (request.OptionalStream != null)
         {
-            _query["optional_stream"] = request.OptionalStream.ToString();
+            _query["optional_stream"] = JsonUtils.Serialize(request.OptionalStream.Value);
         }
         if (request.AliasOptionalStream != null)
         {
-            _query["alias_optional_stream"] = request.AliasOptionalStream.ToString();
+            _query["alias_optional_stream"] = JsonUtils.Serialize(
+                request.AliasOptionalStream.Value
+            );
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

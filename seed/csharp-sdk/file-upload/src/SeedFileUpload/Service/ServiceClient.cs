@@ -88,7 +88,7 @@ public partial class ServiceClient
         }
         if (request.MaybeInteger != null)
         {
-            _query["maybeInteger"] = request.MaybeInteger.ToString();
+            _query["maybeInteger"] = request.MaybeInteger.Value.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

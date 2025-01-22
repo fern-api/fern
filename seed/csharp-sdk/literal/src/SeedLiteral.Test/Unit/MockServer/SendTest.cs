@@ -20,6 +20,7 @@ public class SendTest : BaseMockServerTest
               "prompt": "You are a helpful assistant",
               "query": "query",
               "stream": false,
+              "ending": "$ending",
               "context": "You're super wise",
               "maybeContext": "You're super wise",
               "containerObject": {
@@ -68,6 +69,7 @@ public class SendTest : BaseMockServerTest
                 Prompt = "You are a helpful assistant",
                 Query = "query",
                 Stream = false,
+                Ending = "$ending",
                 Context = "You're super wise",
                 MaybeContext = "You're super wise",
                 ContainerObject = new ContainerObject
