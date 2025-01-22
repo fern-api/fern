@@ -452,6 +452,14 @@ navigation:
                 path: ./pages/docs/components/embed.mdx
                 icon: fa-regular fa-window-maximize
                 slug: embed
+              - page: Endpoint Request Snippet
+                path: ./pages/docs/components/endpoint-request-snippet.mdx
+                icon: fa-regular fa-arrow-up-right-from-square
+                slug: request-snippet
+              - page: Endpoint Response Snippet
+                path: ./pages/docs/components/endpoint-response-snippet.mdx
+                icon: fa-regular fa-arrow-down
+                slug: response-snippet
               - page: Frames
                 path: ./pages/docs/components/frames.mdx
                 icon: fa-regular fa-border-all
@@ -468,14 +476,6 @@ navigation:
                 path: ./pages/docs/components/tabs.mdx
                 icon: fa-regular fa-window-restore
                 slug: tabs
-              - page: Endpoint Request Snippet
-                path: ./pages/docs/components/endpoint-request-snippet.mdx
-                icon: fa-regular fa-arrow-up-right-from-square
-                slug: request-snippet
-              - page: Endpoint Response Snippet
-                path: ./pages/docs/components/endpoint-response-snippet.mdx
-                icon: fa-regular fa-arrow-down
-                slug: response-snippet
           - page: Frontmatter
             icon: fa-regular fa-sliders
             path: ./pages/fern-docs/content/frontmatter.mdx

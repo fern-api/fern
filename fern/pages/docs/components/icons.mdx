@@ -1,145 +1,80 @@
 ---
 title: 'Icons'
-description: 'Use icons in your MDX files'
-icon: 'icons'
+description: 'Use Font Awesome icons in your documentation'
 ---
 
-The `Icon` component allows you to include [Font Awesome](https://fontawesome.com/icons) icons directly in your documentation. Icons can be customized with different styles, colors, and sizes.
+Add Font Awesome icons to your docs with customizable styles, colors and sizes using the `Icon` component. All Font Awesome Pro styles are supported.
 
-## Basic Usage
-
-Use the `Icon` component with a `name` prop to display an icon:
+## Examples 
 
 <Tabs>
   <Tab title="Example">
-    <Icon name="rocket" /> Launch
-    <br/>
-    <Icon name="check" color="#22C55E" /> Success
-    <br/>
-    <Icon name="warning" size="lg" /> Warning
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+      <div><Icon icon="rocket" /> Basic icon</div>
+      <div><Icon icon="check" color="#22C55E" /> Colored icon</div>
+      <div><Icon icon="warning" size="7" /> Large icon</div>
+    </div>
   </Tab>
   <Tab title="Markdown">
     ```jsx
-    <Icon name="rocket" /> Launch
-    <Icon name="check" color="#22C55E" /> Success
-    <Icon name="warning" size="lg" /> Warning
+    <Icon icon="rocket" /> Basic icon
+    <Icon icon="check" color="#22C55E" /> Colored icon
+    <Icon icon="warning" size="7" /> Large icon
     ```
   </Tab>
 </Tabs>
 
-## Configuration
+## Properties
 
-The Icon component accepts the following props:
+<ParamField path="icon" type="string" required={true}>
+  Name of the Font Awesome icon (e.g., "heart" or "fa-solid fa-heart")
+</ParamField>
 
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `name` | string | Yes | Name of the Font Awesome icon |
-| `color` | string | No | Custom color (hex, RGB, or color name) |
-| `size` | string | No | Size variant ('xs', 'sm', 'lg', 'xl', '2x', etc.) |
-| `style` | string | No | Icon style ('regular', 'solid', 'brands') |
+<ParamField path="color" type="string">
+  Icon color (hex, RGB, or color name)
+</ParamField>
 
-## Examples
+<ParamField path="size" type="number">
+  Size in 0.25rem increments (e.g., 4 = 1rem)
+</ParamField>
 
-### Icon Styles
+## Font Awesome Styles
 
-Font Awesome provides different style variants for icons:
+You can use any Font Awesome style by using either:
+- Short syntax: `icon="heart"` (defaults to solid)
+- Full syntax: `icon="fa-regular fa-heart"` (specific style)
 
-<Tabs>
-  <Tab title="Example">
-    <Icon name="heart" style="regular" /> Regular
-    <br/>
-    <Icon name="heart" style="solid" /> Solid
-    <br/>
-    <Icon name="github" style="brands" /> Brand
-  </Tab>
-  <Tab title="Markdown">
-    ```jsx
-    <Icon name="heart" style="regular" /> Regular
-    <Icon name="heart" style="solid" /> Solid
-    <Icon name="github" style="brands" /> Brand
-    ```
-  </Tab>
-</Tabs>
-
-### Colors
-
-Customize icon colors using hex codes, RGB values, or color names:
+<br />
 
 <Tabs>
   <Tab title="Example">
-    <Icon name="circle-check" color="#22C55E" /> Success
-    <br/>
-    <Icon name="circle-xmark" color="#EF4444" /> Error
-    <br/>
-    <Icon name="circle-exclamation" color="#F59E0B" /> Warning
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+      <div><Icon icon="heart" /> Default (Solid)</div>
+      <div><Icon icon="fa-regular fa-heart" /> Regular</div>
+      <div><Icon icon="fa-light fa-heart" /> Light</div>
+      <div><Icon icon="fa-thin fa-heart" /> Thin</div>
+      <div><Icon icon="fa-duotone fa-heart" /> Duotone</div>
+      <div><Icon icon="fa-sharp fa-solid fa-heart" /> Sharp Solid</div>
+      <div><Icon icon="fa-brands fa-github" /> Brands</div>
+    </div>
   </Tab>
   <Tab title="Markdown">
     ```jsx
-    <Icon name="circle-check" color="#22C55E" /> Success
-    <Icon name="circle-xmark" color="#EF4444" /> Error
-    <Icon name="circle-exclamation" color="#F59E0B" /> Warning
+    <Icon icon="heart" /> Default (Solid)
+    <Icon icon="fa-regular fa-heart" /> Regular
+    <Icon icon="fa-light fa-heart" /> Light
+    <Icon icon="fa-thin fa-heart" /> Thin
+    <Icon icon="fa-duotone fa-heart" /> Duotone
+    <Icon icon="fa-sharp fa-solid fa-heart" /> Sharp Solid
+    <Icon icon="fa-brands fa-github" /> Brands
     ```
   </Tab>
 </Tabs>
-
-### Sizes
-
-Control icon size using predefined size variants:
-
-<Tabs>
-  <Tab title="Example">
-    <Icon name="star" size="xs" /> Extra Small
-    <br/>
-    <Icon name="star" size="sm" /> Small
-    <br/>
-    <Icon name="star" /> Regular
-    <br/>
-    <Icon name="star" size="lg" /> Large
-    <br/>
-    <Icon name="star" size="2x" /> 2x
-  </Tab>
-  <Tab title="Markdown">
-    ```jsx
-    <Icon name="star" size="xs" /> Extra Small
-    <Icon name="star" size="sm" /> Small
-    <Icon name="star" /> Regular
-    <Icon name="star" size="lg" /> Large
-    <Icon name="star" size="2x" /> 2x
-    ```
-  </Tab>
-</Tabs>
-
-### Common Use Cases
-
-Here are some common icon combinations used in documentation:
-
-<Tabs>
-  <Tab title="Example">
-    <Icon name="circle-info" style="regular" /> Information
-    <br/>
-    <Icon name="lightbulb" style="regular" /> Tip
-    <br/>
-    <Icon name="code" /> Code Example
-    <br/>
-    <Icon name="link" /> External Link
-  </Tab>
-  <Tab title="Markdown">
-    ```jsx
-    <Icon name="circle-info" style="regular" /> Information
-    <Icon name="lightbulb" style="regular" /> Tip
-    <Icon name="code" /> Code Example
-    <Icon name="link" /> External Link
-    ```
-  </Tab>
-</Tabs>
-
-<Note>
-  Visit the [Font Awesome icon library](https://fontawesome.com/icons) to browse all available icons. Make sure to use the exact icon name as shown in the Font Awesome documentation.
-</Note>
 
 ## Best Practices
 
 - Use icons consistently throughout your documentation
-- Choose appropriate sizes that match your content's scale
-- Ensure icon colors maintain sufficient contrast with the background
-- Consider using regular (outlined) style for less emphasis and solid style for more emphasis
+- Keep icon sizes appropriate for their context (16-24px for inline, larger for featured items)
+- Ensure sufficient color contrast for accessibility
+- Use semantic icons that reinforce your message (e.g., warning icon for cautions)
+- Avoid using too many different icons which can create visual noise
