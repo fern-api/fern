@@ -452,18 +452,6 @@ navigation:
                 path: ./pages/docs/components/embed.mdx
                 icon: fa-regular fa-window-maximize
                 slug: embed
-              - page: Steps
-                path: ./pages/docs/components/steps.mdx
-                icon: fa-regular fa-list-ol
-                slug: steps
-              - page: Frames
-                path: ./pages/docs/components/frames.mdx
-                icon: fa-regular fa-border-all
-                slug: frames
-              - page: Tabs
-                path: ./pages/docs/components/tabs.mdx
-                icon: fa-regular fa-window-restore
-                slug: tabs
               - page: Endpoint Request Snippet
                 path: ./pages/docs/components/endpoint-request-snippet.mdx
                 icon: fa-regular fa-arrow-up-right-from-square
@@ -472,6 +460,22 @@ navigation:
                 path: ./pages/docs/components/endpoint-response-snippet.mdx
                 icon: fa-regular fa-arrow-down
                 slug: response-snippet
+              - page: Frames
+                path: ./pages/docs/components/frames.mdx
+                icon: fa-regular fa-border-all
+                slug: frames
+              - page: Icons
+                path: ./pages/docs/components/icons.mdx
+                icon: fa-regular fa-icons
+                slug: icons
+              - page: Steps
+                path: ./pages/docs/components/steps.mdx
+                icon: fa-regular fa-list-ol
+                slug: steps
+              - page: Tabs
+                path: ./pages/docs/components/tabs.mdx
+                icon: fa-regular fa-window-restore
+                slug: tabs
           - page: Frontmatter
             icon: fa-regular fa-sliders
             path: ./pages/fern-docs/content/frontmatter.mdx
