@@ -126,7 +126,7 @@ export async function runPreviewServer({
     let isReloading = false;
     const RELOAD_DEBOUNCE_MS = 1000;
 
-    const reloadDocsDefinition = async () => {
+    const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
         try {
@@ -136,7 +136,9 @@ export async function runPreviewServer({
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
-                context
+                context,
+                previousDocsDefinition: docsDefinition,
+                editedAbsoluteFilepaths
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;
@@ -169,6 +171,8 @@ export async function runPreviewServer({
         renameDetection: true
     });
 
+    const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
@@ -177,6 +181,8 @@ export async function runPreviewServer({
         if (isReloading) {
             return;
         }
+
+        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
 
         // Clear any existing timer
         if (reloadTimer != null) {
@@ -192,10 +198,12 @@ export async function runPreviewServer({
                     type: "startReload"
                 });
 
-                const reloadedDocsDefinition = await reloadDocsDefinition();
+                const reloadedDocsDefinition = await reloadDocsDefinition(editedAbsoluteFilepaths);
                 if (reloadedDocsDefinition != null) {
                     docsDefinition = reloadedDocsDefinition;
                 }
+
+                editedAbsoluteFilepaths.length = 0;
 
                 sendData({
                     version: 1,
