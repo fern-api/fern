@@ -72,7 +72,7 @@ async function main() {
                     imdb: 7.6,
                 },
             },
-            revenue: BigInt(1000000),
+            revenue: BigInt("1000000"),
         },
     });
 }
@@ -120,7 +120,7 @@ async function main() {
                 imdb: 7.6,
             },
         },
-        revenue: BigInt(1000000),
+        revenue: BigInt("1000000"),
     });
 }
 main();
@@ -137,7 +137,7 @@ async function main() {
     await client.endpoints.object.getAndReturnWithOptionalField({
         string: "string",
         integer: 1,
-        long: BigInt(1000000),
+        long: BigInt("1000000"),
         double: 1.1,
         bool: true,
         datetime: new Date("2024-01-15T09:30:00Z"),
@@ -154,7 +154,7 @@ async function main() {
         map: {
             1: "map",
         },
-        bigint: BigInt(1000000),
+        bigint: BigInt("1000000"),
     });
 }
 main();
