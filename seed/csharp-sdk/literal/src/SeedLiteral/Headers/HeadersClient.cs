@@ -38,7 +38,7 @@ public partial class HeadersClient
             new Dictionary<string, string>()
             {
                 { "X-Endpoint-Version", request.EndpointVersion.ToString() },
-                { "X-Async", request.Async.ToString() },
+                { "X-Async", JsonUtils.Serialize(request.Async) },
             }
         );
         var requestBody = new Dictionary<string, object>() { { "query", request.Query } };

@@ -10,7 +10,7 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
 
     public SeedBasicAuthEnvironmentVariablesClient(
         string? username = null,
-        string? password = null,
+        string? accessToken = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -18,9 +18,9 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
             "USERNAME",
             "Please pass in username or set the environment variable USERNAME."
         );
-        password ??= GetFromEnvironmentOrThrow(
+        accessToken ??= GetFromEnvironmentOrThrow(
             "PASSWORD",
-            "Please pass in password or set the environment variable PASSWORD."
+            "Please pass in accessToken or set the environment variable PASSWORD."
         );
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
