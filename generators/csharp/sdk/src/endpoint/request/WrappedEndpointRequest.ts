@@ -210,6 +210,16 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.addNamespace(this.context.getCoreNamespace());
                 writer.write(`${parameter}${maybeDotValue}.Stringify()`);
             });
+        } else if (this.shouldJsonSerialize({ typeReference: reference })) {
+            return csharp.codeblock((writer) => {
+                writer.writeNode(
+                    csharp.invokeMethod({
+                        on: this.context.getJsonUtilsClassReference(),
+                        method: "Serialize",
+                        arguments_: [csharp.codeblock(`${parameter}${maybeDotValue}`)]
+                    })
+                );
+            });
         } else {
             return csharp.codeblock(`${parameter}.ToString()`);
         }
@@ -366,5 +376,48 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
         }
+    }
+
+    private shouldJsonSerialize({ typeReference }: { typeReference: TypeReference }): boolean {
+        return typeReference._visit({
+            container: (container) => {
+                return container._visit({
+                    list: () => true,
+                    map: () => true,
+                    set: () => true,
+                    literal: (literal) => {
+                        return literal._visit({
+                            string: () => false,
+                            boolean: () => true,
+                            _other: () => false
+                        });
+                    },
+                    optional: (optional) => {
+                        return this.shouldJsonSerialize({ typeReference: optional });
+                    },
+                    _other: () => false
+                });
+            },
+            named: (named) => {
+                const declaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+                return declaration.shape._visit({
+                    alias: (alias) => this.shouldJsonSerialize({ typeReference: alias.aliasOf }),
+                    object: () => true,
+                    undiscriminatedUnion: () => true,
+                    union: () => true,
+                    enum: () => false,
+                    _other: () => false
+                });
+            },
+            primitive: (primitive) => {
+                const isBoolean = primitive.v2?.type === "boolean" || primitive.v1 === "BOOLEAN";
+                if (isBoolean) {
+                    return true;
+                }
+                return false;
+            },
+            unknown: () => true,
+            _other: () => false
+        });
     }
 }

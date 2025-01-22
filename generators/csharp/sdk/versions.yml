@@ -6,6 +6,16 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.12
+  createdAt: "2025-01-22"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Change serialization logic for headers and querystring parameters:
+        - Strings, enums, dates, times, and date times are serialized as before.
+        - Booleans are now serialized as `true` and `false` instead of `True` and `False`.
+        - Objects, lists, maps, dictionaries, undiscriminated, and discriminated unions are serialized to JSON.
+  irVersion: 53
 - version: 1.9.11
   createdAt: "2024-11-25"
   changelogEntry:
