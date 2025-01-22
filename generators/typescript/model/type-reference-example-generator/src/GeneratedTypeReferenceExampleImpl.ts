@@ -49,13 +49,18 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
-                    long: (longExample) => ts.factory.createNumericLiteral(longExample),
+                    long: (longExample) => {
+                        if (this.useBigInt) {
+                            return createBigIntLiteral(longExample);
+                        }
+                        return ts.factory.createNumericLiteral(longExample);
+                    },
                     uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
                     uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
                     float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
                     bigInteger: (bigIntegerExample) => {
                         if (this.useBigInt) {
-                            return ts.factory.createBigIntLiteral(bigIntegerExample);
+                            return createBigIntLiteral(bigIntegerExample);
                         }
                         return ts.factory.createStringLiteral(bigIntegerExample);
                     },
@@ -256,4 +261,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
             }
         });
     }
+}
+
+function createBigIntLiteral(value: string | number): ts.Expression {
+    return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
+        ts.factory.createStringLiteral(value.toString())
+    ]);
 }
