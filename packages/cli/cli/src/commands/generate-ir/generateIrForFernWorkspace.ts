@@ -32,7 +32,7 @@ export async function generateIrForFernWorkspace({
         generationLanguage,
         keywords,
         smartCasing,
-        disableExamples,
+        exampleGeneration: { disabled: disableExamples },
         audiences,
         readme,
         version: undefined,

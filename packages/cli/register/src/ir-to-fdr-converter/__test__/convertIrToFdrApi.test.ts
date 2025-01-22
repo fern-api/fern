@@ -59,7 +59,7 @@ describe("fdr", async () => {
                 audiences: { type: "all" },
                 keywords: undefined,
                 smartCasing: true,
-                disableExamples: false,
+                exampleGeneration: { disabled: false },
                 readme: undefined,
                 version: undefined,
                 packageName: undefined,

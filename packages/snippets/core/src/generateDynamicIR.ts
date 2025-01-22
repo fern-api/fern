@@ -32,7 +32,7 @@ export function generateDynamicIR({
         keywords,
         sourceResolver: new NopSourceResolver(),
         smartCasing: smartCasing ?? false,
-        disableExamples: true,
+        exampleGeneration: { disabled: true },
         version: undefined,
         packageName: undefined,
         readme: undefined

@@ -657,7 +657,7 @@ export class DocsDefinitionResolver {
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false,
-            disableExamples: false,
+            exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
             readme: undefined,
             version: undefined,
             packageName: undefined,

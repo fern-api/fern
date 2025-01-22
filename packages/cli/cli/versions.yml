@@ -1,5 +1,22 @@
 - changelogEntry:
     - summary: |
+        Improve performance of `fern docs dev` by debouncing across edits to multiple files, 
+        reducing unnecessary recomputation.
+      type: fix
+  irVersion: 55
+  version: 0.50.16
+
+- changelogEntry:
+    - summary: |
+        This PR improves the performance of `fern docs dev`: 
+          - Fern does not generate examples if the user has provided them to us
+          - Temporarily comment out broken link checker until we make it faster
+      type: fix
+  irVersion: 55
+  version: 0.50.16
+
+- changelogEntry:
+    - summary: |
         Move example generation failure logs to trace level since they are not relevant 
         for users and add noise to debug logs.
       type: fix
