@@ -5,7 +5,6 @@ import { getFirstChild } from "../extract/firstChild";
 import { getText } from "../extract/text";
 import { findTitle } from "../extract/title";
 import { scrapedNavigationEntry, scrapedNavigationSection } from "../types/scrapedNavigation";
-import { removeTrailingSlash } from "../utils/strings";
 
 export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection> {
     const result: Array<scrapedNavigationSection> = [];
@@ -154,10 +153,7 @@ export function parseListItem({
     }
 
     const childEntries = parseNavItems(childList);
-    const newLink =
-        linkHref !== "#" && childEntries.find((child) => typeof child === "string" && child.startsWith(linkHref))
-            ? removeTrailingSlash(linkHref) + "/overview"
-            : linkHref;
+    const newLink = linkHref;
 
     if (linkHref !== "#") {
         if (childEntries.includes(linkHref)) {

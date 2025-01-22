@@ -1,11 +1,25 @@
 - changelogEntry:
     - summary: |
+        The CLI now supports a --readme flag pointing to the URL of a Readme generated docs site and
+        migrates existing documentation to a fern-compatible repository.
+
+        To use this feature:
+        ```bash
+        fern init --readme https://url-to-readme-docs.com
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.51.0
+
+- changelogEntry:
+    - summary: |
         Improve performance of `fern docs dev` by only reloading the markdown content when 
         only markdown files are changed, avoiding unnecessary recompilation of the full docs.
 
       type: fix
   irVersion: 55
   version: 0.50.17
+
 
 - changelogEntry:
     - summary: |
