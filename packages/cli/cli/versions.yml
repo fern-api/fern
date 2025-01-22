@@ -1,5 +1,14 @@
 - changelogEntry:
     - summary: |
+        Improve performance of `fern docs dev` by only reloading the markdown content when 
+        only markdown files are changed, avoiding unnecessary recompilation of the full docs.
+
+      type: fix
+  irVersion: 55
+  version: 0.50.17
+
+- changelogEntry:
+    - summary: |
         Improve performance of `fern docs dev` by debouncing across edits to multiple files, 
         reducing unnecessary recomputation.
       type: fix
