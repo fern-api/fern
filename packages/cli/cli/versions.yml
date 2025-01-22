@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Fixed x-fern-resolutions to properly handle escaped forward slashes ("~1") in schema references, 
+        correctly converting them to "/" when resolving references.
+      type: fix
+  irVersion: 55
+  version: 0.51.1
+
+- changelogEntry:
+    - summary: |
         The CLI now supports a --readme flag pointing to the URL of a Readme generated docs site and
         migrates existing documentation to a fern-compatible repository.
 
