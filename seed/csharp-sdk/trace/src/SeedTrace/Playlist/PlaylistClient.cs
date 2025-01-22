@@ -116,7 +116,7 @@ public partial class PlaylistClient
         _query["multipleField"] = request.MultipleField;
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.ToString();
+            _query["limit"] = request.Limit.Value.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
