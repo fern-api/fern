@@ -98,9 +98,6 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
-      fern-api:
-        specifier: ^0.50.12
-        version: 0.50.12
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -11305,10 +11302,6 @@ packages:
       picomatch:
         optional: true
 
-  fern-api@0.50.12:
-    resolution: {integrity: sha512-W7HZ3pfnEhovuR/F74VjZzohN5HlM6zEDdhlPjFJ8QVL6kS/hUj+QlBGYIVq36eB55GTGibc72h+x+Tlfnxxsg==}
-    hasBin: true
-
   file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -19275,8 +19268,6 @@ snapshots:
   fdir@6.4.2(picomatch@4.0.2):
     optionalDependencies:
       picomatch: 4.0.2
-
-  fern-api@0.50.12: {}
 
   file-entry-cache@6.0.1:
     dependencies:
