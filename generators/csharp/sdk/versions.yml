@@ -15,6 +15,9 @@
         - Strings, enums, dates, times, and date times are serialized as before.
         - Booleans are now serialized as `true` and `false` instead of `True` and `False`.
         - Objects, lists, maps, dictionaries, undiscriminated, and discriminated unions are serialized to JSON.
+    - type: fix
+      summary: |
+        Only use `.Value` on nullable structs when serializing parameters to headers and querystring parameters.
   irVersion: 53
 - version: 1.9.11
   createdAt: "2024-11-25"

@@ -3,8 +3,8 @@ import { csharp } from "@fern-api/csharp-codegen";
 import {
     HttpEndpoint,
     HttpHeader,
-    HttpService,
     Name,
+    PrimitiveTypeV1,
     QueryParameter,
     SdkRequest,
     SdkRequestWrapper,
@@ -189,7 +189,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
         allowOptionals?: boolean;
     }): csharp.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
-        const maybeDotValue = this.isOptional({ typeReference: reference }) && (allowOptionals ?? true) ? ".Value" : "";
+        const maybeDotValue =
+            this.isOptional({ typeReference: reference }) &&
+            this.isStruct({ typeReference: reference }) &&
+            (allowOptionals ?? true)
+                ? ".Value"
+                : "";
         if (this.isString(reference)) {
             return csharp.codeblock(`${parameter}`);
         } else if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
@@ -221,7 +226,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 );
             });
         } else {
-            return csharp.codeblock(`${parameter}.ToString()`);
+            return csharp.codeblock(`${parameter}${maybeDotValue}.ToString()`);
         }
     }
 
@@ -320,6 +325,84 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
         }
+    }
+
+    /**
+     * Whether is a struct in .NET
+     */
+    private isStruct({ typeReference }: { typeReference: TypeReference }): boolean {
+        return typeReference._visit<boolean>({
+            container: (container) => {
+                return container._visit<boolean>({
+                    list: () => false,
+                    map: () => false,
+                    set: () => false,
+                    literal: (literal) => {
+                        return literal._visit({
+                            string: () => false,
+                            boolean: () => true,
+                            _other: () => false
+                        });
+                    },
+                    optional: (optional) => this.isStruct({ typeReference: optional }),
+                    _other: () => false
+                });
+            },
+            named: (named) => {
+                const declaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+                return declaration.shape._visit<boolean>({
+                    alias: (alias) => this.isStruct({ typeReference: alias.aliasOf }),
+                    object: () => false,
+                    undiscriminatedUnion: () => false,
+                    union: () => false,
+                    // this won't be true for forward compatible enums
+                    enum: () => true,
+                    _other: () => false
+                });
+            },
+            primitive: (primitive) => {
+                return (
+                    primitive.v2?._visit<boolean | undefined>({
+                        integer: () => true,
+                        long: () => true,
+                        uint: () => true,
+                        uint64: () => true,
+                        float: () => true,
+                        double: () => true,
+                        boolean: () => true,
+                        date: () => true,
+                        dateTime: () => true,
+                        uuid: () => true,
+                        bigInteger: () => true,
+                        string: () => false,
+                        // if typed as bytes, it's a struct
+                        // if typed as a string, it's not
+                        base64: () => false,
+                        _other: () => undefined
+                    }) ??
+                    PrimitiveTypeV1._visit<boolean>(primitive.v1, {
+                        integer: () => true,
+                        long: () => true,
+                        uint: () => true,
+                        uint64: () => true,
+                        float: () => true,
+                        double: () => true,
+                        boolean: () => true,
+                        date: () => true,
+                        dateTime: () => true,
+                        uuid: () => true,
+                        bigInteger: () => true,
+                        string: () => false,
+                        // if typed as bytes, it's a struct
+                        // if typed as a string, it's not
+                        base64: () => false,
+                        _other: () => false
+                    })
+                );
+            },
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     private isDateOrDateTime({

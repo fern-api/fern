@@ -38,7 +38,7 @@ public partial class QueryParamClient
         }
         if (request.MaybeOperandOrColor != null)
         {
-            _query["maybeOperandOrColor"] = JsonUtils.Serialize(request.MaybeOperandOrColor.Value);
+            _query["maybeOperandOrColor"] = JsonUtils.Serialize(request.MaybeOperandOrColor);
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

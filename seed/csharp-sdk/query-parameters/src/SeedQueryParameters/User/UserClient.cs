@@ -48,7 +48,7 @@ public partial class UserClient
         }
         if (request.OptionalUser != null)
         {
-            _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser.Value);
+            _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
