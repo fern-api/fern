@@ -138,7 +138,7 @@ export async function runPreviewServer({
                 project,
                 context,
                 previousDocsDefinition: docsDefinition,
-                editedAbsoluteFilepaths: editedAbsoluteFilepaths,
+                editedAbsoluteFilepaths: editedAbsoluteFilepaths
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;

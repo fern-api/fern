@@ -1,24 +1,25 @@
+import { readFile } from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
-    convertAPIDefinitionToDb,
-    convertDbAPIDefinitionToRead,
-    convertDbDocsConfigToRead,
-    convertDocsDefinitionToDb,
     DocsV1Read,
     FdrAPI,
     FernNavigation,
     SDKSnippetHolder,
+    convertAPIDefinitionToDb,
+    convertDbAPIDefinitionToRead,
+    convertDbDocsConfigToRead,
+    convertDocsDefinitionToDb
 } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { readFile } from "fs/promises";
+
 import { replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
 
 export async function getPreviewDocsDefinition({
@@ -34,7 +35,6 @@ export async function getPreviewDocsDefinition({
     previousDocsDefinition?: DocsV1Read.DocsDefinition;
     editedAbsoluteFilepaths?: AbsoluteFilePath[];
 }): Promise<DocsV1Read.DocsDefinition> {
-
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
@@ -43,7 +43,7 @@ export async function getPreviewDocsDefinition({
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
-            (filepath) => filepath.endsWith('.mdx') || filepath.endsWith('.md')
+            (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
@@ -52,9 +52,9 @@ export async function getPreviewDocsDefinition({
                 markdown,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath,
-                context,
+                context
             });
-            
+
             const previousValue = previousDocsDefinition.pages[FdrAPI.PageId(relativePath)];
             if (previousValue == null) {
                 continue;
@@ -62,8 +62,8 @@ export async function getPreviewDocsDefinition({
 
             previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
                 markdown: processedMarkdown,
-                editThisPageUrl: previousValue.editThisPageUrl,
-            }
+                editThisPageUrl: previousValue.editThisPageUrl
+            };
         }
 
         if (allMarkdownFiles) {
