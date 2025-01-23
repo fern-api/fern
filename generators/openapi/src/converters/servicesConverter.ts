@@ -393,7 +393,7 @@ function convertResponse({
             convertedResponse.examples = openapiExamples;
         }
 
-        responseByStatusCode["200"] = {
+        responseByStatusCode[String(httpResponse.statusCode ?? 200)] = {
             description: httpResponse.body.value.docs ?? "",
             content: {
                 "application/json": convertedResponse
