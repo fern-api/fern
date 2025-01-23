@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Improved error messages when docs.yml doesn't match schema by showing more specific 
+        validation errors and including the path where the error occurred.
+      type: fix
+  irVersion: 55
+  version: 0.51.2
+
+- changelogEntry:
+    - summary: |
         Fixed x-fern-resolutions to properly handle escaped forward slashes ("~1") in schema references, 
         correctly converting them to "/" when resolving references.
       type: fix
