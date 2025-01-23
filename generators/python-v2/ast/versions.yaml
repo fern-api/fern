@@ -1,3 +1,9 @@
+- version: 0.0.21
+  createdAt: '2025-01-23'
+  changelogEntry:
+    - type: internal
+      summary: Fix block str support in class __doc__.
+  irVersion: 33
 - version: 0.0.20
   createdAt: '2024-12-26'
   changelogEntry:
