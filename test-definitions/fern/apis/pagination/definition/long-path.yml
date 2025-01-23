@@ -1,0 +1,36 @@
+types:
+  D:
+    properties:
+      starting_after: optional<string>
+  C:
+    properties:
+      d: optional<D>
+  B:
+    properties:
+      c: C
+  A:
+    properties:
+      b: optional<B>
+  Response:
+    properties:
+      starting_after: optional<string>
+      results: list<int>
+service:
+  auth: false
+  base-path: ''
+  display-name: Long Path
+  endpoints:
+    do-thing:
+      display-name: Do Thing
+      method: POST
+      pagination:
+        cursor: $request.b.c.d.starting_after
+        next_cursor: $response.starting_after
+        results: $response.results
+      path: /
+      request:
+        body:
+          type: A
+        content-type: application/json
+      response:
+        type: Response
