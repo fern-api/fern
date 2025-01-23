@@ -1,5 +1,6 @@
 import { docsYml } from "@fern-api/configuration-loader";
 import { validateAgainstJsonSchema } from "@fern-api/core-utils";
+
 import * as DocsYmlJsonSchema from "./versions-yml.schema.json";
 
 export type VersionParseResult = VersionFileSuccessParseResult | VersionFileFailureParseResult;
@@ -24,7 +25,7 @@ export async function validateVersionConfigFileSchema({ value }: { value: unknow
         };
     }
 
-    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : '';
+    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : "";
     return {
         type: "failure",
         message: `${result.error?.message ?? "Failed to parse because JSON schema validation failed"}${path}`

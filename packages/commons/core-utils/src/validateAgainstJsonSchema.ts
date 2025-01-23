@@ -47,8 +47,10 @@ export function validateAgainstJsonSchema(
                     mostGranularError = error;
                 }
                 // If both are oneOf or both are non-oneOf, use the longer path
-                else if (currentIsOneOf === existingIsOneOf && 
-                         error.instancePath.length > mostGranularError.instancePath.length) {
+                else if (
+                    currentIsOneOf === existingIsOneOf &&
+                    error.instancePath.length > mostGranularError.instancePath.length
+                ) {
                     mostGranularError = error;
                 }
             }

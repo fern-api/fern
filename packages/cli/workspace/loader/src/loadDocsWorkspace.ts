@@ -5,8 +5,8 @@ import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-lo
 import { validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import * as DocsYmlJsonSchema from "./docs-yml.schema.json";
 
+import * as DocsYmlJsonSchema from "./docs-yml.schema.json";
 import { DocsWorkspace } from "./types/Workspace";
 
 export async function loadDocsWorkspace({
@@ -74,5 +74,3 @@ export async function loadRawDocsConfiguration({
         throw new Error(`Failed to parse docs.yml because of ${result.error?.message ?? "Unknown error"}`);
     }
 }
-
-
