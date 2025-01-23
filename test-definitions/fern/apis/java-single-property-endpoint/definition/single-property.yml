@@ -3,7 +3,7 @@ service:
   base-path: /
   endpoints:
     doThing:
-      path: /
+      path: /{id}
       method: GET
       request:
         name: GetThingRequest
