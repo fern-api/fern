@@ -1,12 +1,12 @@
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import path from "path";
 
 import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
-import { addPrefixToString } from "@fern-api/core-utils";
+import { validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
+import * as DocsYmlJsonSchema from "./docs-yml.schema.json";
 import { DocsWorkspace } from "./types/Workspace";
 
 export async function loadDocsWorkspace({
@@ -66,38 +66,11 @@ export async function loadRawDocsConfiguration({
 }): Promise<docsYml.RawSchemas.DocsConfiguration> {
     const contentsStr = await readFile(absolutePathOfConfiguration);
     const contentsJson = yaml.load(contentsStr.toString());
-    return await validateSchema({
-        value: contentsJson,
-        context,
-        filepathBeingParsed: absolutePathOfConfiguration
-    });
-}
-
-export async function validateSchema({
-    value,
-    context,
-    filepathBeingParsed
-}: {
-    value: unknown;
-    context: TaskContext;
-    filepathBeingParsed: string;
-}): Promise<docsYml.RawSchemas.DocsConfiguration> {
-    const result = docsYml.RawSchemas.Serializer.DocsConfiguration.parse(value);
-    if (result.ok) {
-        return result.value;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = validateAgainstJsonSchema(contentsJson, DocsYmlJsonSchema as any);
+    if (result.success) {
+        return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(contentsJson);
+    } else {
+        throw new Error(`Failed to parse docs.yml because of ${result.error?.message ?? "Unknown error"}`);
     }
-
-    const issues: string[] = result.errors.map((issue) => {
-        const message = issue.path.length > 0 ? `${issue.message} at "${issue.path.join(" -> ")}"` : issue.message;
-        return addPrefixToString({
-            content: message,
-            prefix: "  - "
-        });
-    });
-
-    const errorMessage = [`Failed to parse file: ${path.relative(process.cwd(), filepathBeingParsed)}`, ...issues].join(
-        "\n"
-    );
-
-    return context.failAndThrow(errorMessage);
 }

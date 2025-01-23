@@ -13,7 +13,7 @@ export const ValidateVersionFileRule: Rule = {
                 return [
                     {
                         severity: "fatal",
-                        message: `Failed to parse ${path}: ${parseResult.message}`
+                        message: `${parseResult.message}`
                     }
                 ];
             }

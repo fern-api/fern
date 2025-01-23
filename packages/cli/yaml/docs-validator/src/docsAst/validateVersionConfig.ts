@@ -1,5 +1,7 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { addPrefixToString } from "@fern-api/core-utils";
+import { validateAgainstJsonSchema } from "@fern-api/core-utils";
+
+import * as DocsYmlJsonSchema from "./versions-yml.schema.json";
 
 export type VersionParseResult = VersionFileSuccessParseResult | VersionFileFailureParseResult;
 
@@ -14,24 +16,18 @@ interface VersionFileFailureParseResult {
 }
 
 export async function validateVersionConfigFileSchema({ value }: { value: unknown }): Promise<VersionParseResult> {
-    const result = docsYml.RawSchemas.Serializer.VersionFileConfig.parse(value);
-    if (result.ok) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = validateAgainstJsonSchema(value, DocsYmlJsonSchema as any);
+    if (result.success) {
         return {
             type: "success",
-            contents: result.value
+            contents: docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(value)
         };
     }
 
-    const issues: string[] = result.errors.map((issue) => {
-        const message = issue.path.length > 0 ? `${issue.message} at "${issue.path.join(" -> ")}"` : issue.message;
-        return addPrefixToString({
-            content: message,
-            prefix: "  - "
-        });
-    });
-
+    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : "";
     return {
         type: "failure",
-        message: issues.join("\n")
+        message: `${result.error?.message ?? "Failed to parse because JSON schema validation failed"}${path}`
     };
 }
