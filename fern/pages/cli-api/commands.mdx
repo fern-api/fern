@@ -87,7 +87,7 @@ Explore documentation for popular Fern CLI commands.
 
     <CodeBlock title="terminal">
         ```bash
-        fern generate [--group <group>] [--api <api>] [--version <version>] [--local] [--keepDocker]
+        fern generate [--group <group>] [--api <api>] [--version <version>] [--local] [--keepDocker] [--preview]
         ```
     </CodeBlock>
 
@@ -113,6 +113,14 @@ Explore documentation for popular Fern CLI commands.
 
     ```bash
     fern generate --version 2.11
+    ```
+
+    ### preview
+
+    Use `--preview` to preview updates to your SDKs before pushing changes to your GitHub repo or publishing to a package manager. The preview SDK will be generated into the `.preview/` folder.
+
+    ```bash
+    fern generate --preview
     ```
 
     ### local
@@ -276,6 +284,40 @@ Explore documentation for popular Fern CLI commands.
     ```
 
     To publish the API docs, run [`fern generate --docs`](/learn/cli-api/cli-reference/commands#fern-generate---docs).
+
+    ### mintlify
+
+    By adding `--mintlify PATH_TO_MINT_CONFIG`, the CLI will automatically convert your Mintlify docs folder into a Fern docs site, based on the `mint.json` file.
+
+    ```bash
+    fern init --mintlify PATH_TO_MINT_CONFIG
+    ```
+
+    The CLI will create a `fern/` folder with the following structure:
+
+    ```bash
+    fern/
+    ├─ fern.config.json # root-level configuration
+    ├─ docs.yml # docs configuration
+    └─ ... # any other files / pages needed in your docs
+    ```
+
+    ### readme
+
+    By adding `--readme URL_TO_README_DOCS_SITE`, the CLI will automatically convert the Readme generated docs site into a Fern docs site.
+
+    ```bash
+    fern init --readme URL_TO_README_DOCS_SITE
+    ```
+
+    The CLI will create a `fern/` folder with the following structure:
+
+    ```bash
+    fern/
+    ├─ fern.config.json # root-level configuration
+    ├─ docs.yml # docs configuration
+    └─ ... # any other files / pages needed in your docs
+    ```
 
     <Tip>
     For more information on getting started, check out our [Quickstart Guide](/learn/docs/getting-started/quickstart)

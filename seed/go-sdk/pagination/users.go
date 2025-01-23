@@ -38,6 +38,17 @@ type ListUsersCursorPaginationRequest struct {
 	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
 }
 
+type ListUsersDoubleOffsetPaginationRequest struct {
+	// Defaults to first page
+	Page *float64 `json:"-" url:"page,omitempty"`
+	// Defaults to per page
+	PerPage *float64 `json:"-" url:"per_page,omitempty"`
+	Order   *Order   `json:"-" url:"order,omitempty"`
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+}
+
 type ListUsersExtendedRequest struct {
 	Cursor *uuid.UUID `json:"-" url:"cursor,omitempty"`
 }

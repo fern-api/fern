@@ -38,6 +38,17 @@ type ListUsersCursorPaginationRequest struct {
 	StartingAfter *string `query:"starting_after"`
 }
 
+type ListUsersDoubleOffsetPaginationRequest struct {
+	// Defaults to first page
+	Page *float64 `query:"page"`
+	// Defaults to per page
+	PerPage *float64 `query:"per_page"`
+	Order   *Order   `query:"order"`
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	StartingAfter *string `query:"starting_after"`
+}
+
 type ListUsersExtendedRequest struct {
 	Cursor *uuid.UUID `query:"cursor"`
 }
