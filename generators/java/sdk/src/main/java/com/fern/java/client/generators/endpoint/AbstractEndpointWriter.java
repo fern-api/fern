@@ -777,10 +777,6 @@ public abstract class AbstractEndpointWriter {
                 httpEndpoint.getPagination().get().visit(new Visitor<Void>() {
                     @Override
                     public Void visitCursor(CursorPagination cursor) {
-                        if (cursor.getPage().getPropertyPath().isPresent()
-                                && !cursor.getPage().getPropertyPath().get().isEmpty()) {
-                            return null;
-                        }
                         SnippetAndResultType nextSnippet = getNestedPropertySnippet(
                                 cursor.getNext().getPropertyPath(),
                                 cursor.getNext().getProperty(),
