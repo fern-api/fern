@@ -1,0 +1,15 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    doThing:
+      path: /
+      method: GET
+      request:
+        name: GetThingRequest
+        headers:
+          X-Account-Token: string
+        path-parameters:
+          id: string
+        query-parameters:
+          include-remote-data: optional<boolean>
