@@ -15,6 +15,7 @@ export const GithubPushSchema: core.serialization.ObjectSchema<
     license: GithubLicenseSchema.optional(),
     mode: core.serialization.stringLiteral("push"),
     branch: core.serialization.string().optional(),
+    path: core.serialization.string().optional(),
 });
 
 export declare namespace GithubPushSchema {
@@ -23,5 +24,6 @@ export declare namespace GithubPushSchema {
         license?: GithubLicenseSchema.Raw | null;
         mode: "push";
         branch?: string | null;
+        path?: string | null;
     }
 }

@@ -10,4 +10,6 @@ export interface GithubPullRequestSchema {
     license?: FernDefinition.GithubLicenseSchema;
     mode: "pull-request";
     reviewers?: FernDefinition.ReviewersSchema;
+    /** The relative path in the GitHub repository where the generated code should be committed */
+    path?: string;
 }

@@ -8,4 +8,6 @@ export interface GithubCommitAndReleaseSchema {
     repository: string;
     license?: FernDefinition.GithubLicenseSchema;
     mode?: FernDefinition.GithubCommitAndReleaseMode;
+    /** The relative path in the GitHub repository where the generated code should be committed */
+    path?: string;
 }

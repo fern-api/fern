@@ -17,6 +17,7 @@ export const GithubPullRequestSchema: core.serialization.ObjectSchema<
     license: GithubLicenseSchema.optional(),
     mode: core.serialization.stringLiteral("pull-request"),
     reviewers: ReviewersSchema.optional(),
+    path: core.serialization.string().optional(),
 });
 
 export declare namespace GithubPullRequestSchema {
@@ -26,5 +27,6 @@ export declare namespace GithubPullRequestSchema {
         license?: GithubLicenseSchema.Raw | null;
         mode: "pull-request";
         reviewers?: ReviewersSchema.Raw | null;
+        path?: string | null;
     }
 }

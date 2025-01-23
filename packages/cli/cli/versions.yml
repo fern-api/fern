@@ -1,5 +1,21 @@
 - changelogEntry:
     - summary: |
+        Added support for specifying a subdirectory path in GitHub repositories via the `path` 
+        key under `github` configuration in generators.yml. This allows generating SDKs into specific subdirectories:
+
+        ```yml
+        generators:
+          - name: fernapi/fern-typescript-sdk
+            github:
+              repository: owner/repo
+              path: packages/typescript # SDK will be generated in this subdirectory
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.51.3
+
+- changelogEntry:
+    - summary: |
         Improved error messages when docs.yml doesn't match schema by showing more specific 
         validation errors and including the path where the error occurred.
       type: fix

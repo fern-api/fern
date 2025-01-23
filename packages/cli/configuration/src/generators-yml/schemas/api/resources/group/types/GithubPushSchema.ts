@@ -9,4 +9,6 @@ export interface GithubPushSchema {
     license?: FernDefinition.GithubLicenseSchema;
     mode: "push";
     branch?: string;
+    /** The relative path in the GitHub repository where the generated code should be committed */
+    path?: string;
 }

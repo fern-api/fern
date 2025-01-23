@@ -49,7 +49,7 @@
     "typescript": "5.7.2",
     "vitest": "^2.1.8",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.584",
+    "@fern-fern/fiddle-sdk": "0.0.610",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "@types/find-up": "^4.0.0",
