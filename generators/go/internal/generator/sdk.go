@@ -1401,7 +1401,11 @@ func (f *fileWriter) WriteClient(
 			case "offset":
 				pagerConstructor = "internal.NewOffsetPager"
 
-				f.P("next := 1")
+				if endpoint.PaginationInfo.PageIsInteger {
+					f.P("next := 1")
+				} else {
+					f.P("var next ", strings.TrimPrefix(endpoint.PaginationInfo.PageGoType, "*"), " = 1")
+				}
 				if len(endpoint.PaginationInfo.PageNilCheck) > 0 {
 					f.P(endpoint.PaginationInfo.PageNilCheck)
 					if endpoint.PaginationInfo.PageIsOptional {
@@ -1541,6 +1545,7 @@ type paginationInfo struct {
 	PageZeroValue             string
 	PageFirstRequestParameter string
 	PageIsOptional            bool
+	PageIsInteger             bool
 	SetPageRequestParameter   string
 	Results                   *ir.ResponseProperty
 	ResultsPropertyPath       string
@@ -1625,6 +1630,11 @@ func (f *fileWriter) getPaginationInfo(
 		if pageIsOptional {
 			pageFirstRequestParameter = "&next"
 		}
+		var pageIsInteger bool
+		primitive := maybePrimitive(valueType)
+		if primitive != nil {
+			pageIsInteger = isPrimitiveInteger(primitive)
+		}
 		return &paginationInfo{
 			Type:                      t,
 			PageName:                  nameAndWireValue.Name,
@@ -1633,6 +1643,7 @@ func (f *fileWriter) getPaginationInfo(
 			PageZeroValue:             valueTypeFormat.ZeroValue,
 			PageFirstRequestParameter: pageFirstRequestParameter,
 			PageIsOptional:            pageIsOptional,
+			PageIsInteger:             pageIsInteger,
 			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
 			Results:                   pagination.Offset.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Offset.Results.PropertyPath),
@@ -3449,6 +3460,11 @@ func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
 		return maybePrimitive(typeReference.Container.Optional)
 	}
 	return nil
+}
+
+// isPrimitiveInteger returns true if the given primitive type is an integer.
+func isPrimitiveInteger(primitive *ir.PrimitiveType) bool {
+	return primitive.V1 == ir.PrimitiveTypeV1Integer || primitive.V1 == ir.PrimitiveTypeV1Uint || primitive.V1 == ir.PrimitiveTypeV1Uint64 || primitive.V1 == ir.PrimitiveTypeV1Long
 }
 
 // maybeLiteral recurses into the given value type, returning its underlying literal
