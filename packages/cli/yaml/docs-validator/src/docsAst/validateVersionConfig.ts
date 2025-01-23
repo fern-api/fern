@@ -25,7 +25,7 @@ export async function validateVersionConfigFileSchema({ value }: { value: unknow
         };
     }
 
-    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : '';
+    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : "";
     return {
         type: "failure",
         message: `${result.error?.message ?? "Failed to parse because JSON schema validation failed"}${path}`
