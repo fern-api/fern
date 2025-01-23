@@ -41,7 +41,7 @@
     "definition-yml:jsonschema": "pnpm fern jsonschema fern.schema.json --api fern-definition --type file.DefinitionFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/fern.schema.json --api fern-definition --type file.DefinitionFileSchema",
     "api-yml:jsonschema": "pnpm fern jsonschema api-yml.schema.json --api fern-definition --type file.RootApiFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/api-yml.schema.json --api fern-definition --type file.RootApiFileSchema",
     "package-yml:jsonschema": "pnpm fern jsonschema package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema",
-    "docs-yml:jsonschema": "pnpm fern jsonschema docs-yml.schema.json --api docs-yml --type docs.DocsConfiguration && pnpm fern jsonschema packages/cli/workspace/loader/src/docs-yml.schema.json --api docs-yml --type docs.VersionFileConfig",
+    "docs-yml:jsonschema": "pnpm fern jsonschema docs-yml.schema.json --api docs-yml --type docs.DocsConfiguration && pnpm fern jsonschema packages/cli/workspace/loader/src/docs-yml.schema.json --api docs-yml --type docs.DocsConfiguration",
     "versions-yml:jsonschema": "pnpm fern jsonschema packages/cli/yaml/docs-validator/src/docsAst/versions-yml.schema.json --api docs-yml --type docs.VersionFileConfig",
     "generators-yml:jsonschema": "pnpm fern jsonschema generators-yml.schema.json --api generators-yml --type generators.GeneratorsConfigurationSchema",
     "check-cli-release-blockers": "pnpm fern-script check-cli-release-blockers",
