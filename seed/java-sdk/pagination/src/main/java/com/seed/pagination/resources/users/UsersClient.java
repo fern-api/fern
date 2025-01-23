@@ -112,16 +112,16 @@ public class UsersClient {
         }
     }
 
-    public void listWithBodyCursorPagination() {
-        listWithBodyCursorPagination(
+    public SyncPagingIterable<User> listWithBodyCursorPagination() {
+        return listWithBodyCursorPagination(
                 ListUsersBodyCursorPaginationRequest.builder().build());
     }
 
-    public void listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest request) {
-        listWithBodyCursorPagination(request, null);
+    public SyncPagingIterable<User> listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest request) {
+        return listWithBodyCursorPagination(request, null);
     }
 
-    public void listWithBodyCursorPagination(
+    public SyncPagingIterable<User> listWithBodyCursorPagination(
             ListUsersBodyCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -150,6 +150,17 @@ public class UsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                Optional<String> startingAfter =
+                        parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
+                ListUsersBodyCursorPaginationRequest nextRequest = ListUsersBodyCursorPaginationRequest.builder()
+                        .from(request)
+                        .cursor(startingAfter)
+                        .build();
+                List<User> result = parsedResponse.getData();
+                return new SyncPagingIterable<>(
+                        startingAfter.isPresent(),
+                        result,
+                        () -> listWithBodyCursorPagination(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiException(

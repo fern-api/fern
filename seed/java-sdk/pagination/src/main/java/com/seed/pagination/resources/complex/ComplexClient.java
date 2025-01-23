@@ -10,9 +10,15 @@ import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
+import com.seed.pagination.core.pagination.SyncPagingIterable;
+import com.seed.pagination.resources.complex.types.Conversation;
+import com.seed.pagination.resources.complex.types.CursorPages;
 import com.seed.pagination.resources.complex.types.PaginatedConversationResponse;
 import com.seed.pagination.resources.complex.types.SearchRequest;
+import com.seed.pagination.resources.complex.types.StartingAfterPaging;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -28,11 +34,11 @@ public class ComplexClient {
         this.clientOptions = clientOptions;
     }
 
-    public void search(SearchRequest request) {
-        search(request, null);
+    public SyncPagingIterable<Conversation> search(SearchRequest request) {
+        return search(request, null);
     }
 
-    public void search(SearchRequest request, RequestOptions requestOptions) {
+    public SyncPagingIterable<Conversation> search(SearchRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("conversations/search")
@@ -59,6 +65,17 @@ public class ComplexClient {
             if (response.isSuccessful()) {
                 PaginatedConversationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PaginatedConversationResponse.class);
+                Optional<String> startingAfter = parsedResponse
+                        .getPages()
+                        .flatMap(CursorPages::getNext)
+                        .flatMap(StartingAfterPaging::getStartingAfter);
+                SearchRequest nextRequest = SearchRequest.builder()
+                        .from(request)
+                        .startingAfter(startingAfter)
+                        .build();
+                List<Conversation> result = parsedResponse.getConversations();
+                return new SyncPagingIterable<>(
+                        startingAfter.isPresent(), result, () -> search(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiException(

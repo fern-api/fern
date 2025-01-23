@@ -10,8 +10,11 @@ import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
+import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.longpath.types.A;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -27,15 +30,15 @@ public class LongPathClient {
         this.clientOptions = clientOptions;
     }
 
-    public void doThing() {
-        doThing(A.builder().build());
+    public SyncPagingIterable<String> doThing() {
+        return doThing(A.builder().build());
     }
 
-    public void doThing(A request) {
-        doThing(request, null);
+    public SyncPagingIterable<String> doThing(A request) {
+        return doThing(request, null);
     }
 
-    public void doThing(A request, RequestOptions requestOptions) {
+    public SyncPagingIterable<String> doThing(A request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
@@ -62,6 +65,12 @@ public class LongPathClient {
                 com.seed.pagination.resources.longpath.types.Response parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), com.seed.pagination.resources.longpath.types.Response.class);
+                Optional<String> startingAfter = parsedResponse.getStartingAfter();
+                A nextRequest =
+                        A.builder().from(request).startingAfter(startingAfter).build();
+                List<String> result = parsedResponse.getResults();
+                return new SyncPagingIterable<>(
+                        startingAfter.isPresent(), result, () -> doThing(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiException(
