@@ -1422,7 +1422,7 @@ public abstract class AbstractEndpointWriter {
                         .allMatch(queryParameter ->
                                 queryParameter.getValueType().visit(new TypeReferenceIsOptional(false)));
             }
-            if (!httpEndpoint.getPathParameters().isEmpty() && isOptional) {
+            if (!httpEndpoint.getPathParameters().isEmpty() && inlinePathParams && isOptional) {
                 isOptional = httpEndpoint.getPathParameters().stream()
                         .allMatch(pathParameter ->
                                 pathParameter.getValueType().visit(new TypeReferenceIsOptional(false)));
