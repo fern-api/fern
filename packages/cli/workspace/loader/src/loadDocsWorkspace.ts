@@ -66,6 +66,7 @@ export async function loadRawDocsConfiguration({
 }): Promise<docsYml.RawSchemas.DocsConfiguration> {
     const contentsStr = await readFile(absolutePathOfConfiguration);
     const contentsJson = yaml.load(contentsStr.toString());
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result = validateAgainstJsonSchema(contentsJson, DocsYmlJsonSchema as any);
     if (result.success) {
         return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(contentsJson);
