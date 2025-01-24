@@ -24,7 +24,7 @@ func TestClient(t *testing.T) {
 				Body:   `{"title":"The Matrix","rating":8.7}`,
 			},
 			Response: &wiretest.Response{
-				Body: "xyz",
+				Body: `"movieId"`,
 			},
 		},
 	}
@@ -44,6 +44,8 @@ func TestClient(t *testing.T) {
 			require.NoError(t, err)
 
 			bytes, err := json.Marshal(response)
+			require.NoError(t, err)
+
 			assert.Equal(t, testCase.Response.Body, string(bytes))
 		})
 	}

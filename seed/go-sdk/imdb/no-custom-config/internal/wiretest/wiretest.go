@@ -1,6 +1,7 @@
 package wiretest
 
 import (
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -46,16 +47,18 @@ type Response struct {
 func NewServer(t *testing.T, testCase TestCase) (*httptest.Server, func()) {
 	var called bool
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, r.URL.Path, testCase.Request.Path)
-		require.Equal(t, r.Method, testCase.Request.Method)
+		require.Equal(t, r.URL.Path, testCase.Request.Path, "unexpected path")
+		require.Equal(t, r.Method, testCase.Request.Method, "unexpected method")
 		if testCase.Request.Query != "" {
-			assert.Equal(t, r.URL.RawQuery, testCase.Request.Query)
+			assert.Equal(t, r.URL.RawQuery, testCase.Request.Query, "unexpected query string")
 		}
 		for k, v := range testCase.Request.Headers {
-			assert.Equal(t, r.Header.Get(k), v)
+			assert.Equal(t, r.Header.Get(k), v, "unexpected header")
 		}
 		if testCase.Request.Body != "" {
-			assert.Equal(t, r.Body, testCase.Request.Body)
+			body, err := io.ReadAll(r.Body)
+			require.NoError(t, err)
+			assert.Equal(t, string(body), testCase.Request.Body, "unexpected request body")
 		}
 		for k, v := range testCase.Response.Headers {
 			w.Header().Set(k, v)
