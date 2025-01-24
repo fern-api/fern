@@ -682,6 +682,9 @@ importers:
       '@fern-api/go-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/path-utils
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898

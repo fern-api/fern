@@ -6,7 +6,7 @@ import { AbstractGoGeneratorContext, BaseGoCustomConfigSchema } from "@fern-api/
 import { loggingExeca } from "@fern-api/logging-execa";
 
 /**
- * In memory representation of a PHP project.
+ * In memory representation of a Go project.
  */
 export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGoCustomConfigSchema>> {
     private sourceFiles: File[] = [];

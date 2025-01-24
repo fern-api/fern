@@ -5,8 +5,11 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { GoProject } from "@fern-api/go-base";
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
+    public readonly project: GoProject;
+
     public constructor(
         public readonly ir: IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
@@ -14,10 +17,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
-    }
-
-    public getLocationForTypeId(typeId: TypeId): FileLocation {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return this.getFileLocation(typeDeclaration.name.fernFilepath);
+        this.project = new GoProject({ context: this });
     }
 }

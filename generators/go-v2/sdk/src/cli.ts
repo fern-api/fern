@@ -1,6 +1,8 @@
+import { SdkGeneratorCLI } from "./SdkGeneratorCli";
+
 void runCli();
 
 export async function runCli(): Promise<void> {
-    // eslint-disable-next-line no-console
-    console.log("no-op");
+    const cli = new SdkGeneratorCLI();
+    await cli.run();
 }

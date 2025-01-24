@@ -8,10 +8,12 @@ import { RelativeFilePath } from "@fern-api/path-utils";
 
 import {
     FernFilepath,
+    HttpService,
     IntermediateRepresentation,
     Literal,
     Name,
     PrimitiveTypeV1,
+    ServiceId,
     Subpackage,
     SubpackageId,
     TypeDeclaration,
@@ -48,6 +50,14 @@ export abstract class AbstractGoGeneratorContext<
             config: this.config,
             customConfig: this.customConfig
         });
+    }
+
+    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+        const service = this.ir.services[serviceId];
+        if (service == null) {
+            throw new Error(`Service with id ${serviceId} not found`);
+        }
+        return service;
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
@@ -229,7 +239,11 @@ export abstract class AbstractGoGeneratorContext<
         return this.ir.types[typeId];
     }
 
-    public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
+
+    public getLocationForTypeId(typeId: TypeId): FileLocation {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.getFileLocation(typeDeclaration.name.fernFilepath);
+    }
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
         let parts = filepath.packagePath.map((path) => path.pascalCase.safeName.toLowerCase());
