@@ -1,8 +1,8 @@
 - version: 0.1.7
   createdAt: '2025-01-24'
-  changeLogEntry:
+  changelogEntry:
     - type: fix
-      summary: |
+      summary: | 
         The generator now correctly handles different success response codes.
   irVersion: 53
 
