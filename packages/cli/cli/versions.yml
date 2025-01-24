@@ -4,7 +4,7 @@
         others (e.g. application/x-www-form-urlencoded).
       type: fix
   irVersion: 55
-  version: 0.52.0-rc0
+  version: 0.51.3
 
 - changelogEntry:
     - summary: |

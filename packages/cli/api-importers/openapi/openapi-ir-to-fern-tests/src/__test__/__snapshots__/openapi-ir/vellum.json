@@ -4126,23 +4126,130 @@
       "headers": [],
       "generatedRequestName": "DocumentsUploadRequest",
       "request": {
-        "schema": {
-          "generatedName": "DocumentsUploadRequest",
-          "schema": "UploadDocumentBodyRequest",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+        "name": "UploadDocumentBodyRequest",
+        "properties": [
+          {
+            "key": "add_to_index_names",
+            "schema": {
+              "value": {
+                "generatedName": "documentsUploadRequestAddToIndexNames",
+                "value": {
+                  "generatedName": "DocumentsUploadRequestAddToIndexNames",
+                  "value": {
+                    "generatedName": "DocumentsUploadRequestAddToIndexNames",
+                    "value": {
+                      "generatedName": "DocumentsUploadRequestAddToIndexNamesItem",
+                      "schema": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "groupName": [],
+                    "type": "array"
+                  },
+                  "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
           },
-          "type": "reference"
-        },
-        "contentType": "application/json",
-        "fullExamples": [],
-        "additionalProperties": false,
+          {
+            "key": "external_id",
+            "schema": {
+              "value": {
+                "generatedName": "documentsUploadRequestExternalId",
+                "value": {
+                  "generatedName": "DocumentsUploadRequestExternalId",
+                  "value": {
+                    "generatedName": "DocumentsUploadRequestExternalId",
+                    "schema": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          },
+          {
+            "key": "label",
+            "schema": {
+              "value": {
+                "generatedName": "DocumentsUploadRequestLabel",
+                "schema": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "description": "A human-friendly name for this document. Typically the filename.",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "type": "json"
+            }
+          },
+          {
+            "key": "contents",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "description": "The file contents of the document."
+          },
+          {
+            "key": "keywords",
+            "schema": {
+              "value": {
+                "generatedName": "documentsUploadRequestKeywords",
+                "value": {
+                  "generatedName": "DocumentsUploadRequestKeywords",
+                  "value": {
+                    "generatedName": "DocumentsUploadRequestKeywords",
+                    "value": {
+                      "generatedName": "DocumentsUploadRequestKeywordsItem",
+                      "schema": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "groupName": [],
+                    "type": "array"
+                  },
+                  "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          }
+        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "type": "json"
+        "type": "multipart"
       },
       "response": {
         "description": "",
@@ -4283,13 +4390,6 @@
               "label": {
                 "value": {
                   "value": "label",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "contents": {
-                "value": {
-                  "value": "contents",
                   "type": "string"
                 },
                 "type": "primitive"

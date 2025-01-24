@@ -4844,7 +4844,6 @@ Upload a document to be indexed and used for search.
               "examples": [
                 {
                   "request": {
-                    "contents": "contents",
                     "label": "label",
                   },
                   "response": {
@@ -4866,13 +4865,7 @@ Upload a document to be indexed and used for search.
                     },
                     "contents": {
                       "docs": "The file contents of the document.",
-                      "type": "string",
-                      "validation": {
-                        "format": "binary",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
+                      "type": "file",
                     },
                     "external_id": {
                       "docs": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
@@ -4900,7 +4893,7 @@ Upload a document to be indexed and used for search.
                     },
                   },
                 },
-                "content-type": "application/json",
+                "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "UploadDocumentBodyRequest",
                 "path-parameters": undefined,
@@ -5021,16 +5014,14 @@ service:
               validation:
                 minLength: 1
             contents:
-              type: string
+              type: file
               docs: The file contents of the document.
-              validation:
-                format: binary
             keywords:
               type: optional<list<string>>
               docs: >-
                 Optionally include a list of keywords that'll be associated with
                 this document. Used when performing keyword searches.
-        content-type: application/json
+        content-type: multipart/form-data
       response:
         docs: ''
         type: root.UploadDocumentResponse
@@ -5042,7 +5033,6 @@ service:
       examples:
         - request:
             label: label
-            contents: contents
           response:
             body:
               document_id: document_id

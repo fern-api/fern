@@ -104,49 +104,6 @@ export function convertRequest({
 
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
-    // Always prefer the JSON option, if supported.
-    if (jsonMediaObject != null) {
-        const requestSchema = convertSchema(
-            jsonMediaObject.schema,
-            false,
-            context,
-            requestBreadcrumbs,
-            source,
-            namespace,
-            true
-        );
-        return RequestWithExample.json({
-            description: undefined,
-            schema: requestSchema,
-            contentType: jsonMediaObject.contentType,
-            fullExamples: jsonMediaObject.examples,
-            additionalProperties:
-                !isReferenceObject(jsonMediaObject.schema) &&
-                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
-            source
-        });
-    }
-
-    // convert as application/x-www-form-urlencoded
-    if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
-        const convertedUrlEncodedSchema = convertSchema(
-            urlEncodedRequest.schema,
-            false,
-            context,
-            requestBreadcrumbs,
-            source,
-            namespace
-        );
-        return RequestWithExample.json({
-            schema: convertedUrlEncodedSchema,
-            description: resolvedRequestBody.description,
-            contentType: urlEncodedRequest.contentType,
-            source,
-            fullExamples: urlEncodedRequest.examples,
-            additionalProperties: false
-        });
-    }
-
     // convert as application/octet-stream
     if (isOctetStreamRequest(resolvedRequestBody)) {
         return RequestWithExample.octetStream({
@@ -261,6 +218,48 @@ export function convertRequest({
         });
     }
 
+    // convert as application/json
+    if (jsonMediaObject != null) {
+        const requestSchema = convertSchema(
+            jsonMediaObject.schema,
+            false,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace,
+            true
+        );
+        return RequestWithExample.json({
+            description: undefined,
+            schema: requestSchema,
+            contentType: jsonMediaObject.contentType,
+            fullExamples: jsonMediaObject.examples,
+            additionalProperties:
+                !isReferenceObject(jsonMediaObject.schema) &&
+                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
+            source
+        });
+    }
+
+    // convert as application/x-www-form-urlencoded
+    if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
+        const convertedUrlEncodedSchema = convertSchema(
+            urlEncodedRequest.schema,
+            false,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace
+        );
+        return RequestWithExample.json({
+            schema: convertedUrlEncodedSchema,
+            description: resolvedRequestBody.description,
+            contentType: urlEncodedRequest.contentType,
+            source,
+            fullExamples: urlEncodedRequest.examples,
+            additionalProperties: false
+        });
+    }
     return undefined;
 }
 
