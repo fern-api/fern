@@ -42,7 +42,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/typescript-dynamic-snippets": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.584",
+    "@fern-fern/fiddle-sdk": "0.0.610",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",

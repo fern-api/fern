@@ -545,6 +545,7 @@ async function convertOutputMode({
                   })
                 : undefined;
         const mode = generator.github.mode ?? "release";
+        const path = generator.github.path;
         switch (mode) {
             case "commit":
             case "release":
@@ -554,7 +555,8 @@ async function convertOutputMode({
                         repo,
                         license,
                         publishInfo,
-                        downloadSnippets
+                        downloadSnippets,
+                        directory: path
                     })
                 );
             case "pull-request": {
@@ -570,7 +572,8 @@ async function convertOutputMode({
                         license,
                         publishInfo,
                         downloadSnippets,
-                        reviewers
+                        reviewers,
+                        directory: path
                     })
                 );
             }
@@ -582,7 +585,8 @@ async function convertOutputMode({
                         branch: generator.github.mode === "push" ? generator.github.branch : undefined,
                         license,
                         publishInfo,
-                        downloadSnippets
+                        downloadSnippets,
+                        directory: path
                     })
                 );
             default:

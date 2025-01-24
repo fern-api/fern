@@ -15,6 +15,7 @@ export const GithubCommitAndReleaseSchema: core.serialization.ObjectSchema<
     repository: core.serialization.string(),
     license: GithubLicenseSchema.optional(),
     mode: GithubCommitAndReleaseMode.optional(),
+    path: core.serialization.string().optional(),
 });
 
 export declare namespace GithubCommitAndReleaseSchema {
@@ -22,5 +23,6 @@ export declare namespace GithubCommitAndReleaseSchema {
         repository: string;
         license?: GithubLicenseSchema.Raw | null;
         mode?: GithubCommitAndReleaseMode.Raw | null;
+        path?: string | null;
     }
 }

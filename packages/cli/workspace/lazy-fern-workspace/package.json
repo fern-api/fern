@@ -41,7 +41,7 @@
     "@fern-api/openapi-ir-parser": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.584",
+    "@fern-fern/fiddle-sdk": "0.0.610",
     "@redocly/openapi-core": "^1.4.1",
     "@types/uuid": "^9.0.8",
     "axios": "^1.7.7",

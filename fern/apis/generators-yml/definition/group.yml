@@ -86,6 +86,9 @@ types:
       repository: string
       license: optional<license.GithubLicenseSchema>
       mode: optional<GithubCommitAndReleaseMode>
+      path:
+        type: optional<string>
+        docs: The relative path in the GitHub repository where the generated code should be committed
       # Add properties for commit and release configuration
   
   GithubCommitAndReleaseMode:
@@ -100,6 +103,9 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"pull-request">
       reviewers: optional<reviewers.ReviewersSchema>
+      path:
+        type: optional<string>
+        docs: The relative path in the GitHub repository where the generated code should be committed
       # Add properties for pull request configuration
 
   GithubPushSchema:
@@ -108,6 +114,9 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"push">
       branch: optional<string>
+      path:
+        type: optional<string>
+        docs: The relative path in the GitHub repository where the generated code should be committed
       # Add properties for push configuration
   
   NpmOutputLocationSchema:
