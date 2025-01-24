@@ -82,6 +82,11 @@ export function parseAsyncAPI({
     const exampleFactory = new ExampleWebsocketSessionFactory(schemas, context);
 
     for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
+        const shouldIgnore = getExtension<boolean>(channel, FernAsyncAPIExtension.IGNORE);
+        if (shouldIgnore != null && shouldIgnore) {
+            context.logger.info(`Channel ${channelPath} is marked with x-fern-ignore. Skipping.`);
+            continue;
+        }
         if (channel.bindings?.ws == null) {
             context.logger.error(`Channel ${channelPath} does not have websocket bindings. Skipping.`);
             continue;
