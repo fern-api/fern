@@ -104,6 +104,29 @@ export function convertRequest({
 
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
+    // Always prefer the JSON option, if supported.
+    if (jsonMediaObject != null) {
+        const requestSchema = convertSchema(
+            jsonMediaObject.schema,
+            false,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace,
+            true
+        );
+        return RequestWithExample.json({
+            description: undefined,
+            schema: requestSchema,
+            contentType: jsonMediaObject.contentType,
+            fullExamples: jsonMediaObject.examples,
+            additionalProperties:
+                !isReferenceObject(jsonMediaObject.schema) &&
+                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
+            source
+        });
+    }
+
     // convert as application/x-www-form-urlencoded
     if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
         const convertedUrlEncodedSchema = convertSchema(
@@ -238,29 +261,7 @@ export function convertRequest({
         });
     }
 
-    // otherwise, convert as json request.
-    if (jsonMediaObject == null) {
-        return undefined;
-    }
-    const requestSchema = convertSchema(
-        jsonMediaObject.schema,
-        false,
-        context,
-        requestBreadcrumbs,
-        source,
-        namespace,
-        true
-    );
-    return RequestWithExample.json({
-        description: undefined,
-        schema: requestSchema,
-        contentType: jsonMediaObject.contentType,
-        fullExamples: jsonMediaObject.examples,
-        additionalProperties:
-            !isReferenceObject(jsonMediaObject.schema) &&
-            isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
-        source
-    });
+    return undefined;
 }
 
 interface ResolvedSchema {
