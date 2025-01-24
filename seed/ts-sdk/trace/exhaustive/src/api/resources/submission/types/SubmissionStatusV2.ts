@@ -9,24 +9,24 @@ export type SubmissionStatusV2 =
     | SeedTrace.SubmissionStatusV2.Workspace
     | SeedTrace.SubmissionStatusV2._Unknown;
 
-export declare namespace SubmissionStatusV2 {
-    interface Test extends SeedTrace.TestSubmissionStatusV2, _Utils {
+export namespace SubmissionStatusV2 {
+    export interface Test extends SeedTrace.TestSubmissionStatusV2, _Utils {
         type: "test";
     }
 
-    interface Workspace extends SeedTrace.WorkspaceSubmissionStatusV2, _Utils {
+    export interface Workspace extends SeedTrace.WorkspaceSubmissionStatusV2, _Utils {
         type: "workspace";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         test: (value: SeedTrace.TestSubmissionStatusV2) => _Result;
         workspace: (value: SeedTrace.WorkspaceSubmissionStatusV2) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -40,7 +40,7 @@ export const SubmissionStatusV2 = {
             type: "test",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusV2.Test,
-                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusV2._visit(this, visitor);
             },
@@ -53,7 +53,7 @@ export const SubmissionStatusV2 = {
             type: "workspace",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusV2.Workspace,
-                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusV2._visit(this, visitor);
             },
@@ -65,7 +65,7 @@ export const SubmissionStatusV2 = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionStatusV2._Unknown,
-                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>
+                visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionStatusV2._visit(this, visitor);
             },
@@ -74,7 +74,7 @@ export const SubmissionStatusV2 = {
 
     _visit: <_Result>(
         value: SeedTrace.SubmissionStatusV2,
-        visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>
+        visitor: SeedTrace.SubmissionStatusV2._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "test":

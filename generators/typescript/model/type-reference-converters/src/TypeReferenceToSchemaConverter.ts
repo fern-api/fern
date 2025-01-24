@@ -1,6 +1,8 @@
-import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { Zurg } from "@fern-typescript/commons";
-import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
+
+import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk/api";
+
+import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToSchemaConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
@@ -19,7 +21,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         this.zurg = zurg;
     }
 
-    protected override named(typeName: DeclaredTypeName): Zurg.Schema {
+    protected override named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): Zurg.Schema {
         return this.getSchemaOfNamedType(typeName);
     }
 
@@ -53,8 +55,18 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.date();
     }
 
-    protected override optional(itemType: TypeReference): Zurg.Schema {
-        return this.convert(itemType).optional();
+    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+        if (itemType.type === "container" && itemType.container.type === "optional") {
+            return this.convert({ ...params, typeReference: itemType.container.optional }).optionalNullable();
+        }
+        return this.convert({ ...params, typeReference: itemType }).nullable();
+    }
+
+    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+        if (itemType.type === "container" && itemType.container.type === "nullable") {
+            return this.convert({ ...params, typeReference: itemType.container.nullable }).optionalNullable();
+        }
+        return this.convert({ ...params, typeReference: itemType }).optional();
     }
 
     protected override unknown(): Zurg.Schema {
@@ -65,8 +77,8 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.any();
     }
 
-    protected override list(itemType: TypeReference): Zurg.Schema {
-        return this.zurg.list(this.convert(itemType));
+    protected override list(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+        return this.zurg.list(this.convert({ ...params, typeReference: itemType }));
     }
 
     protected override literal(literal: Literal): Zurg.Schema {
@@ -79,30 +91,33 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         });
     }
 
-    protected override mapWithEnumKeys(map: MapType): Zurg.Schema {
-        return this.mapWithOptionalValues(map);
+    protected override mapWithEnumKeys(map: MapType, params: ConvertTypeReferenceParams): Zurg.Schema {
+        return this.mapWithOptionalValues(map, params);
     }
 
-    protected override mapWithNonEnumKeys({ keyType, valueType }: MapType): Zurg.Schema {
+    protected override mapWithNonEnumKeys(
+        { keyType, valueType }: MapType,
+        params: ConvertTypeReferenceParams
+    ): Zurg.Schema {
         return this.zurg.record({
-            keySchema: this.convert(keyType),
-            valueSchema: this.convert(valueType)
+            keySchema: this.convert({ ...params, typeReference: keyType }),
+            valueSchema: this.convert({ ...params, typeReference: valueType })
         });
     }
 
-    protected mapWithOptionalValues({ keyType, valueType }: MapType): Zurg.Schema {
-        const valueSchema = this.convert(valueType);
+    protected mapWithOptionalValues({ keyType, valueType }: MapType, params: ConvertTypeReferenceParams): Zurg.Schema {
+        const valueSchema = this.convert({ ...params, typeReference: valueType });
         return this.zurg.record({
-            keySchema: this.convert(keyType),
+            keySchema: this.convert({ ...params, typeReference: keyType }),
             valueSchema: valueSchema.isOptional ? valueSchema : valueSchema.optional()
         });
     }
 
-    protected override set(itemType: TypeReference): Zurg.Schema {
+    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
         if (this.isTypeReferencePrimitive(itemType)) {
-            return this.zurg.set(this.convert(itemType));
+            return this.zurg.set(this.convert({ ...params, typeReference: itemType }));
         } else {
-            return this.list(itemType);
+            return this.list(itemType, params);
         }
     }
 }

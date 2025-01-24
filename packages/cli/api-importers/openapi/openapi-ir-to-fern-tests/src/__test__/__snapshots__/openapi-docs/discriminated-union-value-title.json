@@ -38,6 +38,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Request",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -57,6 +58,7 @@
           "Response": {
             "docs": "A generic response type used throughout the API.
 ",
+            "inline": undefined,
             "properties": {
               "value": {
                 "docs": "An optional numerical value.

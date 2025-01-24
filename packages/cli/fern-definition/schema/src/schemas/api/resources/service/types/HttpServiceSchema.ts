@@ -8,7 +8,7 @@ export interface HttpServiceSchema extends FernDefinition.DeclarationWithoutDocs
     auth: boolean;
     url?: string;
     "base-path": string;
-    "path-parameters"?: Record<string, string>;
+    "path-parameters"?: Record<string, FernDefinition.TypeReferenceSchema>;
     idempotent?: boolean;
     headers?: Record<string, FernDefinition.TypeReferenceSchema>;
     transport?: FernDefinition.ServiceTransport;

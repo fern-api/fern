@@ -12,5 +12,5 @@ export const EnvironmentBaseUrlId: core.serialization.Schema<
 > = core.serialization.string();
 
 export declare namespace EnvironmentBaseUrlId {
-    type Raw = string;
+    export type Raw = string;
 }

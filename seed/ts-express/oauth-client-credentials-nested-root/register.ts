@@ -11,7 +11,7 @@ export function register(
         auth: {
             _root: auth_RootService;
         };
-    }
+    },
 ): void {
     (expressApp as any).use("/", services.auth._root.toRouter());
 }

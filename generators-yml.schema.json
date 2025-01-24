@@ -386,6 +386,16 @@
             }
           ]
         },
+        "token-header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "get-token": {
           "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
         },
@@ -628,6 +638,36 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.MessageNamingSettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1242,6 +1282,67 @@
         }
       ]
     },
+    "generators.OpenAPIFilterSchema": {
+      "type": "object",
+      "properties": {
+        "endpoints": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "generators.RequestOrResponseExampleGenerationSchema": {
+      "type": "object",
+      "properties": {
+        "max-depth": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "generators.OpenAPIExampleGenerationSchema": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RequestOrResponseExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "response": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RequestOrResponseExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1269,6 +1370,86 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prefer-undiscriminated-unions-with-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "object-query-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-readonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filter": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIFilterSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "example-generation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIExampleGenerationSchema"
             },
             {
               "type": "null"
@@ -1354,6 +1535,16 @@
           ]
         },
         "coerce-enums-to-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-nullable-schemas": {
           "oneOf": [
             {
               "type": "boolean"

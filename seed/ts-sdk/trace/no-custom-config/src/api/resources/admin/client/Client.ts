@@ -10,14 +10,16 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Admin {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -26,6 +28,8 @@ export declare namespace Admin {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -45,14 +49,14 @@ export class Admin {
     public async updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionStatus,
-        requestOptions?: Admin.RequestOptions
+        requestOptions?: Admin.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status/${encodeURIComponent(
-                    serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-submission-status/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
             ),
             method: "POST",
             headers: {
@@ -67,6 +71,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -93,7 +98,9 @@ export class Admin {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-submission-status/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -118,14 +125,14 @@ export class Admin {
     public async sendTestSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionUpdate,
-        requestOptions?: Admin.RequestOptions
+        requestOptions?: Admin.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status-v2/${encodeURIComponent(
-                    serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-submission-status-v2/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
             ),
             method: "POST",
             headers: {
@@ -140,6 +147,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -166,7 +174,9 @@ export class Admin {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-submission-status-v2/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -187,14 +197,14 @@ export class Admin {
     public async updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionStatus,
-        requestOptions?: Admin.RequestOptions
+        requestOptions?: Admin.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status/${encodeURIComponent(
-                    serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-submission-status/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
             ),
             method: "POST",
             headers: {
@@ -209,6 +219,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -235,7 +246,9 @@ export class Admin {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-submission-status/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -260,14 +273,14 @@ export class Admin {
     public async sendWorkspaceSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionUpdate,
-        requestOptions?: Admin.RequestOptions
+        requestOptions?: Admin.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(
-                    serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
             ),
             method: "POST",
             headers: {
@@ -282,6 +295,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -308,7 +322,9 @@ export class Admin {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-submission-status-v2/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -416,14 +432,14 @@ export class Admin {
         submissionId: SeedTrace.SubmissionId,
         testCaseId: string,
         request: SeedTrace.StoreTracedTestCaseRequest,
-        requestOptions?: Admin.RequestOptions
+        requestOptions?: Admin.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace/submission/${encodeURIComponent(
-                    serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}/testCase/${encodeURIComponent(testCaseId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-trace/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}/testCase/${encodeURIComponent(testCaseId)}`,
             ),
             method: "POST",
             headers: {
@@ -438,6 +454,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -464,7 +481,9 @@ export class Admin {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -561,14 +580,14 @@ export class Admin {
         submissionId: SeedTrace.SubmissionId,
         testCaseId: SeedTrace.v2.TestCaseId,
         request: SeedTrace.TraceResponseV2[],
-        requestOptions?: Admin.RequestOptions
+        requestOptions?: Admin.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace-v2/submission/${encodeURIComponent(
-                    serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}/testCase/${encodeURIComponent(serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-trace-v2/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}/testCase/${encodeURIComponent(serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`,
             ),
             method: "POST",
             headers: {
@@ -583,6 +602,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -611,7 +631,9 @@ export class Admin {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -714,14 +736,14 @@ export class Admin {
     public async storeTracedWorkspace(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.StoreTracedWorkspaceRequest,
-        requestOptions?: Admin.RequestOptions
+        requestOptions?: Admin.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace/submission/${encodeURIComponent(
-                    serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-trace/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
             ),
             method: "POST",
             headers: {
@@ -736,6 +758,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -762,7 +785,9 @@ export class Admin {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-trace/submission/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -857,14 +882,14 @@ export class Admin {
     public async storeTracedWorkspaceV2(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TraceResponseV2[],
-        requestOptions?: Admin.RequestOptions
+        requestOptions?: Admin.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(
-                    serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId))}`,
             ),
             method: "POST",
             headers: {
@@ -879,6 +904,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -907,7 +933,9 @@ export class Admin {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-trace-v2/submission/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,

@@ -39,6 +39,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SendRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

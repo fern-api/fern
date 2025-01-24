@@ -13,9 +13,15 @@ public final class RequestOptions {
 
     private final TimeUnit timeoutTimeUnit;
 
-    private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+    /**
+     * version.get().toString() is sent as the "X-API-Version" header, overriding client options if present.
+     */
+    private final Optional<ApiVersion> version;
+
+    private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit, Optional<ApiVersion> version) {
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
+        this.version = version;
     }
 
     public Optional<Integer> getTimeout() {
@@ -26,8 +32,18 @@ public final class RequestOptions {
         return timeoutTimeUnit;
     }
 
+    /**
+     * version.get().toString() is sent as the "X-API-Version" header, overriding client options if present.
+     */
+    public Optional<ApiVersion> getVersion() {
+        return version;
+    }
+
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
+        if (this.version.isPresent()) {
+            headers.put("X-API-Version", this.version.get().toString());
+        }
         return headers;
     }
 
@@ -39,6 +55,16 @@ public final class RequestOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
+        private Optional<ApiVersion> version = Optional.empty();
+
+        /**
+         * version.get().toString() is sent as the "X-API-Version" header, overriding client options if present.
+         */
+        public Builder version(ApiVersion version) {
+            this.version = Optional.of(version);
+            return this;
+        }
 
         public Builder timeout(Integer timeout) {
             this.timeout = Optional.of(timeout);
@@ -52,7 +78,7 @@ public final class RequestOptions {
         }
 
         public RequestOptions build() {
-            return new RequestOptions(timeout, timeoutTimeUnit);
+            return new RequestOptions(timeout, timeoutTimeUnit, version);
         }
     }
 }

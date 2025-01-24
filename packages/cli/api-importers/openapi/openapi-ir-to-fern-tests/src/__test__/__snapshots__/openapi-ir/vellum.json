@@ -1309,7 +1309,8 @@
             "type": "object"
           },
           "response": {
-            "value": [
+            "sse": false,
+            "events": [
               {
                 "value": {
                   "value": {
@@ -2007,7 +2008,8 @@
             "type": "object"
           },
           "response": {
-            "value": [
+            "sse": false,
+            "events": [
               {
                 "properties": {
                   "delta": {
@@ -6993,6 +6995,7 @@
                       "type": "primitive"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "ModelVersionExecConfigParametersLogitBias",
@@ -7471,6 +7474,7 @@
                     "type": "primitive"
                   },
                   "groupName": [],
+                  "inline": true,
                   "type": "nullable"
                 },
                 "generatedName": "NormalizedTokenLogProbsTopLogprobs",
@@ -8707,6 +8711,7 @@
                       "type": "primitive"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "RegisterPromptModelParametersRequestLogitBias",

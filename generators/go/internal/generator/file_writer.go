@@ -33,7 +33,10 @@ type fileWriter struct {
 	baseImportPath               string
 	whitelabel                   bool
 	alwaysSendRequiredProperties bool
+	inlinePathParameters         bool
+	inlineFileProperties         bool
 	unionVersion                 UnionVersion
+	packageLayout                PackageLayout
 	scope                        *gospec.Scope
 	types                        map[ir.TypeId]*ir.TypeDeclaration
 	errors                       map[ir.ErrorId]*ir.ErrorDeclaration
@@ -49,6 +52,9 @@ func newFileWriter(
 	baseImportPath string,
 	whitelabel bool,
 	alwaysSendRequiredProperties bool,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+	packageLayout PackageLayout,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
@@ -80,22 +86,27 @@ func newFileWriter(
 	// Add an import to the core utilities package generated for
 	// the SDK.
 	scope.AddImport(path.Join(baseImportPath, "core"))
+	scope.AddImport(path.Join(baseImportPath, "internal"))
 	scope.AddImport(path.Join(baseImportPath, "option"))
 
-	return &fileWriter{
+	f := &fileWriter{
 		filename:                     filename,
 		packageName:                  packageName,
 		baseImportPath:               baseImportPath,
 		whitelabel:                   whitelabel,
 		alwaysSendRequiredProperties: alwaysSendRequiredProperties,
+		inlinePathParameters:         inlinePathParameters,
+		inlineFileProperties:         inlineFileProperties,
+		packageLayout:                packageLayout,
 		unionVersion:                 unionVersion,
 		scope:                        scope,
 		types:                        types,
 		errors:                       errors,
 		coordinator:                  coordinator,
-		snippetWriter:                NewSnippetWriter(baseImportPath, unionVersion, types),
 		buffer:                       new(bytes.Buffer),
 	}
+	f.snippetWriter = NewSnippetWriter(baseImportPath, unionVersion, types, f)
+	return f
 }
 
 // P writes the given element into a single line, concluding with a newline.
@@ -124,6 +135,7 @@ func (f *fileWriter) File() (*File, error) {
 
 	formatted, err := removeUnusedImports(f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
 	if err != nil {
+		fmt.Println(string(append(header.buffer.Bytes(), f.buffer.Bytes()...)))
 		return nil, err
 	}
 
@@ -162,6 +174,9 @@ func (f *fileWriter) clone() *fileWriter {
 		f.baseImportPath,
 		f.whitelabel,
 		f.alwaysSendRequiredProperties,
+		f.inlinePathParameters,
+		f.inlineFileProperties,
+		f.packageLayout,
 		f.unionVersion,
 		f.types,
 		f.errors,

@@ -1,3 +1,6 @@
+[project]
+name = "fern_auth-environment-variables"
+
 [tool.poetry]
 name = "fern_auth-environment-variables"
 version = "0.0.1"

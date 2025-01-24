@@ -17,6 +17,11 @@ public partial class DummyClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+    /// </code>
+    /// </example>
     public async Task GenerateStreamAsync(
         GenerateStreamRequest request,
         RequestOptions? options = null,

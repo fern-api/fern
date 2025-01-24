@@ -20,7 +20,7 @@ export const CustomCodeSampleSdk: core.serialization.ObjectSchema<
     .extend(WithDescription);
 
 export declare namespace CustomCodeSampleSdk {
-    interface Raw extends WithDescription.Raw {
+    export interface Raw extends WithDescription.Raw {
         name?: string | null;
         sdk: SupportedSdkLanguage.Raw;
         code: string;

@@ -326,8 +326,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "date",
-                      "default": "1970-01-01T00:00:00.000Z"
+                      "type": "date"
                     }
                   }
                 }
@@ -344,8 +343,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "datetime",
-                      "default": "1970-01-01T00:00:00.000Z"
+                      "type": "datetime"
                     }
                   }
                 }
@@ -373,8 +371,7 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "date",
-                        "default": "1970-01-01T00:00:00.000Z"
+                        "type": "date"
                       }
                     }
                   }
@@ -394,8 +391,7 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "datetime",
-                        "default": "1970-01-01T00:00:00.000Z"
+                        "type": "datetime"
                       }
                     }
                   }
@@ -439,10 +435,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Bar": {
@@ -460,10 +453,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_union:GetShapeRequest": {
@@ -481,10 +471,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_union:Shape": {
@@ -549,10 +536,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_union:Square": {
@@ -570,10 +554,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -717,8 +698,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }

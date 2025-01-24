@@ -46,6 +46,7 @@ types:
       clientIdEnvVar: optional<EnvironmentVariable>
       clientSecretEnvVar: optional<EnvironmentVariable>
       tokenPrefix: optional<string>
+      tokenHeader: optional<string>
       scopes: optional<list<string>>
       tokenEndpoint: OAuthTokenEndpoint
       refreshEndpoint: optional<OAuthRefreshEndpoint>
@@ -65,6 +66,7 @@ types:
       clientId: http.RequestProperty
       clientSecret: http.RequestProperty
       scopes: optional<http.RequestProperty>
+      customProperties: optional<list<http.RequestProperty>>
   OAuthAccessTokenResponseProperties:
     docs: The properties to map to the corresponding OAuth token primitive.
     properties:

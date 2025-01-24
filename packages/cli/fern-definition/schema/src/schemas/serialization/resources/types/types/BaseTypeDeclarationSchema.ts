@@ -20,15 +20,17 @@ export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
         examples: core.serialization.list(ExampleTypeSchema).optional(),
         encoding: EncodingSchema.optional(),
         source: SourceSchema.optional(),
+        inline: core.serialization.boolean().optional(),
     })
     .extend(WithDocsSchema)
     .extend(WithAvailability)
     .extend(WithAudiences);
 
 export declare namespace BaseTypeDeclarationSchema {
-    interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw, WithAudiences.Raw {
+    export interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw, WithAudiences.Raw {
         examples?: ExampleTypeSchema.Raw[] | null;
         encoding?: EncodingSchema.Raw | null;
         source?: SourceSchema.Raw | null;
+        inline?: boolean | null;
     }
 }

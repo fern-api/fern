@@ -32,17 +32,17 @@ export const Request: core.serialization.Schema<serializers.Request.Raw, FernOpe
     });
 
 export declare namespace Request {
-    type Raw = Request.OctetStream | Request.Multipart | Request.Json;
+    export type Raw = Request.OctetStream | Request.Multipart | Request.Json;
 
-    interface OctetStream extends OctetStreamRequest.Raw {
+    export interface OctetStream extends OctetStreamRequest.Raw {
         type: "octetStream";
     }
 
-    interface Multipart extends MultipartRequest.Raw {
+    export interface Multipart extends MultipartRequest.Raw {
         type: "multipart";
     }
 
-    interface Json extends JsonRequest.Raw {
+    export interface Json extends JsonRequest.Raw {
         type: "json";
     }
 }

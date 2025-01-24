@@ -10,17 +10,21 @@ import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Completions {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -29,10 +33,14 @@ export class Completions {
 
     public async stream(
         request: SeedServerSentEvents.StreamCompletionRequest,
-        requestOptions?: Completions.RequestOptions
+        requestOptions?: Completions.RequestOptions,
     ): Promise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
         const _response = await core.fetcher<stream.Readable>({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "stream"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -41,6 +49,7 @@ export class Completions {
                 "User-Agent": "@fern/server-sent-event-examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -83,7 +92,7 @@ export class Completions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedServerSentEventsTimeoutError();
+                throw new errors.SeedServerSentEventsTimeoutError("Timeout exceeded when calling POST /stream.");
             case "unknown":
                 throw new errors.SeedServerSentEventsError({
                     message: _response.error.errorMessage,

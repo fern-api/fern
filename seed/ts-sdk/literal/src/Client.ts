@@ -10,15 +10,17 @@ import { Query } from "./api/resources/query/client/Client";
 import { Reference } from "./api/resources/reference/client/Client";
 
 export declare namespace SeedLiteralClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -29,37 +31,35 @@ export declare namespace SeedLiteralClient {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedLiteralClient {
-    constructor(protected readonly _options: SeedLiteralClient.Options) {}
-
     protected _headers: Headers | undefined;
+    protected _inlined: Inlined | undefined;
+    protected _path: Path | undefined;
+    protected _query: Query | undefined;
+    protected _reference: Reference | undefined;
+
+    constructor(protected readonly _options: SeedLiteralClient.Options) {}
 
     public get headers(): Headers {
         return (this._headers ??= new Headers(this._options));
     }
 
-    protected _inlined: Inlined | undefined;
-
     public get inlined(): Inlined {
         return (this._inlined ??= new Inlined(this._options));
     }
-
-    protected _path: Path | undefined;
 
     public get path(): Path {
         return (this._path ??= new Path(this._options));
     }
 
-    protected _query: Query | undefined;
-
     public get query(): Query {
         return (this._query ??= new Query(this._options));
     }
-
-    protected _reference: Reference | undefined;
 
     public get reference(): Reference {
         return (this._reference ??= new Reference(this._options));

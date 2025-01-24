@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { JsonResponse } from "./JsonResponse";
 import { FileDownloadResponse } from "./FileDownloadResponse";
 import { TextResponse } from "./TextResponse";
+import { BytesResponse } from "./BytesResponse";
 
 export const NonStreamHttpResponseBody: core.serialization.Schema<
     serializers.NonStreamHttpResponseBody.Raw,
@@ -19,6 +20,7 @@ export const NonStreamHttpResponseBody: core.serialization.Schema<
         }),
         fileDownload: FileDownloadResponse,
         text: TextResponse,
+        bytes: BytesResponse,
     })
     .transform<FernIr.NonStreamHttpResponseBody>({
         transform: (value) => {
@@ -29,6 +31,8 @@ export const NonStreamHttpResponseBody: core.serialization.Schema<
                     return FernIr.NonStreamHttpResponseBody.fileDownload(value);
                 case "text":
                     return FernIr.NonStreamHttpResponseBody.text(value);
+                case "bytes":
+                    return FernIr.NonStreamHttpResponseBody.bytes(value);
                 default:
                     return value as FernIr.NonStreamHttpResponseBody;
             }
@@ -37,18 +41,26 @@ export const NonStreamHttpResponseBody: core.serialization.Schema<
     });
 
 export declare namespace NonStreamHttpResponseBody {
-    type Raw = NonStreamHttpResponseBody.Json | NonStreamHttpResponseBody.FileDownload | NonStreamHttpResponseBody.Text;
+    export type Raw =
+        | NonStreamHttpResponseBody.Json
+        | NonStreamHttpResponseBody.FileDownload
+        | NonStreamHttpResponseBody.Text
+        | NonStreamHttpResponseBody.Bytes;
 
-    interface Json {
+    export interface Json {
         type: "json";
         value: JsonResponse.Raw;
     }
 
-    interface FileDownload extends FileDownloadResponse.Raw {
+    export interface FileDownload extends FileDownloadResponse.Raw {
         type: "fileDownload";
     }
 
-    interface Text extends TextResponse.Raw {
+    export interface Text extends TextResponse.Raw {
         type: "text";
+    }
+
+    export interface Bytes extends BytesResponse.Raw {
+        type: "bytes";
     }
 }

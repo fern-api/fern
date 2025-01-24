@@ -12,6 +12,7 @@ import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const MapSchema: core.serialization.ObjectSchema<serializers.MapSchema.Raw, FernOpenapiIr.MapSchema> =
     core.serialization
@@ -24,16 +25,18 @@ export const MapSchema: core.serialization.ObjectSchema<serializers.MapSchema.Ra
         .extend(WithSdkGroupName)
         .extend(WithAvailability)
         .extend(WithEncoding)
-        .extend(WithTitle);
+        .extend(WithTitle)
+        .extend(WithInline);
 
 export declare namespace MapSchema {
-    interface Raw
+    export interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
             WithEncoding.Raw,
-            WithTitle.Raw {
+            WithTitle.Raw,
+            WithInline.Raw {
         key: PrimitiveSchema.Raw;
         value: serializers.Schema.Raw;
     }

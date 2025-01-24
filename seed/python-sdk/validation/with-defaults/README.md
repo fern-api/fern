@@ -26,9 +26,9 @@ client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
 )
 client.create(
-    decimal=1.1,
-    even=1,
-    name="name",
+    decimal=2.2,
+    even=100,
+    name="foo",
     shape="SQUARE",
 )
 ```
@@ -49,9 +49,9 @@ client = AsyncSeedValidation(
 
 async def main() -> None:
     await client.create(
-        decimal=1.1,
-        even=1,
-        name="name",
+        decimal=2.2,
+        even=100,
+        name="foo",
         shape="SQUARE",
     )
 

@@ -1,6 +1,8 @@
-import { Logger } from "@fern-api/logger";
 import { compact } from "lodash-es";
 import { z } from "zod";
+
+import { Logger } from "@fern-api/logger";
+
 import { OpenAPIExtension } from "./openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions";
 import { TypedExtensionId } from "./openapi/v3/extensions/id";

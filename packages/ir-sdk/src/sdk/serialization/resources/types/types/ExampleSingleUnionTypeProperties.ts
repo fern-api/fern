@@ -32,20 +32,20 @@ export const ExampleSingleUnionTypeProperties: core.serialization.Schema<
     });
 
 export declare namespace ExampleSingleUnionTypeProperties {
-    type Raw =
+    export type Raw =
         | ExampleSingleUnionTypeProperties.SamePropertiesAsObject
         | ExampleSingleUnionTypeProperties.SingleProperty
         | ExampleSingleUnionTypeProperties.NoProperties;
 
-    interface SamePropertiesAsObject extends serializers.ExampleObjectTypeWithTypeId.Raw {
+    export interface SamePropertiesAsObject extends serializers.ExampleObjectTypeWithTypeId.Raw {
         type: "samePropertiesAsObject";
     }
 
-    interface SingleProperty extends serializers.ExampleTypeReference.Raw {
+    export interface SingleProperty extends serializers.ExampleTypeReference.Raw {
         type: "singleProperty";
     }
 
-    interface NoProperties {
+    export interface NoProperties {
         type: "noProperties";
     }
 }

@@ -1,3 +1,8 @@
+import { GetReferenceOpts, NpmPackage, PackageId, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import { Project } from "ts-morph";
+
 import {
     ApiAuth,
     AuthScheme,
@@ -21,10 +26,6 @@ import {
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
 import { TemplateInput } from "@fern-fern/snippet-sdk/api";
 import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read";
-import { GetReferenceOpts, getTextOfTsNode, NpmPackage, PackageId } from "@fern-typescript/commons";
-import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
-import { Project } from "ts-morph";
 
 // Write this in the fern def to share between FE + BE
 const TEMPLATE_SENTINEL = "$FERN_INPUT";
@@ -40,6 +41,7 @@ export class TemplateGenerator {
     private endpoint: HttpEndpoint;
     private packageId: PackageId;
     private rootPackageId: PackageId;
+    private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
     private requireDefaultEnvironment: boolean;
@@ -53,6 +55,7 @@ export class TemplateGenerator {
         endpoint,
         packageId,
         rootPackageId,
+        includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
         requireDefaultEnvironment
@@ -65,6 +68,7 @@ export class TemplateGenerator {
         endpoint: HttpEndpoint;
         packageId: PackageId;
         rootPackageId: PackageId;
+        includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         requireDefaultEnvironment: boolean;
@@ -77,6 +81,7 @@ export class TemplateGenerator {
         this.endpoint = endpoint;
         this.packageId = packageId;
         this.rootPackageId = rootPackageId;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
@@ -85,7 +90,7 @@ export class TemplateGenerator {
     }
 
     private getPropertyKey(name: Name): string {
-        return this.retainOriginalCasing ? name.originalName : name.camelCase.unsafeName;
+        return !this.includeSerdeLayer || this.retainOriginalCasing ? name.originalName : name.camelCase.unsafeName;
     }
 
     // Get the dot access path to the object within the broader json object
@@ -210,6 +215,10 @@ export class TemplateGenerator {
                         FDRAPIV1Read.TypeReference.map({
                             keyType: this.convertIRTypeReferenceToFdrTypeReference(mapType.keyType),
                             valueType: this.convertIRTypeReferenceToFdrTypeReference(mapType.valueType)
+                        }),
+                    nullable: (nullableType) =>
+                        FDRAPIV1Read.TypeReference.optional({
+                            itemType: this.convertIRTypeReferenceToFdrTypeReference(nullableType)
                         }),
                     optional: (optionalType) =>
                         FDRAPIV1Read.TypeReference.optional({
@@ -633,6 +642,16 @@ export class TemplateGenerator {
                       })
                     : undefined;
             },
+            nullable: (nullableType) =>
+                this.getTemplateFromTypeReference({
+                    typeReference: nullableType,
+                    name,
+                    location,
+                    wireOrOriginalName,
+                    nameBreadcrumbs,
+                    indentationLevel,
+                    isObjectInlined
+                }),
             optional: (optionalType) =>
                 this.getTemplateFromTypeReference({
                     typeReference: optionalType,
@@ -797,12 +816,13 @@ export class TemplateGenerator {
     private getRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
         const isObjectInlined = false;
         const rp: FdrSnippetTemplate.TemplateInput[] = [];
-        this.endpoint.queryParameters.forEach((pathParameter) => {
+
+        this.endpoint.queryParameters.forEach((queryParameter) => {
             const pt = this.getTemplateInputFromTypeReference({
-                typeReference: pathParameter.valueType,
-                name: this.getPropertyKey(pathParameter.name.name),
+                typeReference: queryParameter.valueType,
+                name: this.getPropertyKey(queryParameter.name.name),
                 location: FdrSnippetTemplate.PayloadLocation.Query,
-                wireOrOriginalName: pathParameter.name.wireValue,
+                wireOrOriginalName: queryParameter.name.wireValue,
                 nameBreadcrumbs: undefined,
                 indentationLevel: 2,
                 isObjectInlined

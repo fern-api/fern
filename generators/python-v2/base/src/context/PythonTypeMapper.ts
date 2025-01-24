@@ -1,4 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
+import { python } from "@fern-api/python-ast";
+
 import {
     ContainerType,
     DeclaredTypeName,
@@ -9,9 +11,9 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
 import { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext";
-import { python } from "@fern-api/python-ast";
 
 export declare namespace PythonTypeMapper {
     interface Args {

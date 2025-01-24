@@ -5,8 +5,8 @@ client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
 client.headers.send(
 	query="What is the weather today"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -16,8 +16,8 @@ client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
 client.headers.send(
 	query="query"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -33,8 +33,8 @@ client.inlined.send(
 		)
 	)
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -50,8 +50,8 @@ client.inlined.send(
 		)
 	)
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -61,8 +61,8 @@ client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
 client.path.send(
 	
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -72,8 +72,8 @@ client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
 client.path.send(
 	
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -83,8 +83,8 @@ client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
 client.query.send(
 	query="What is the weather today"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -94,8 +94,8 @@ client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
 client.query.send(
 	query="query"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -113,8 +113,8 @@ client.reference.send(
 		]
 	)
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -135,7 +135,7 @@ client.reference.send(
 		]
 	)
 )
- 
-```                        
+
+```
 
 

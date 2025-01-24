@@ -1,5 +1,38 @@
+import { Plugin } from "@redocly/openapi-core/lib/config";
+import { NodeType } from "@redocly/openapi-core/lib/types";
+
 import { Values } from "@fern-api/core-utils";
+
 import { TypedExtensionId } from "./id";
+
+export const XFernStreaming: NodeType = {
+    properties: {
+        "stream-condition": { type: "string" },
+        response: "Schema",
+        "response-stream": "Schema"
+    },
+    required: ["stream-condition", "response", "response-stream"],
+    extensionsPrefix: "x-"
+};
+
+export const FERN_TYPE_EXTENSIONS: Plugin = {
+    id: "",
+    typeExtension: {
+        oas3: (types) => {
+            return {
+                ...types,
+                XFernStreaming,
+                Operation: {
+                    ...types.Operation,
+                    properties: {
+                        ...types.Operation?.properties,
+                        "x-fern-streaming": "XFernStreaming"
+                    }
+                }
+            };
+        }
+    }
+};
 
 export const FernOpenAPIExtension = {
     SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name"),

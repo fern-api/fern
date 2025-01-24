@@ -42,28 +42,28 @@ export const ExampleTypeReferenceShape: core.serialization.Schema<
     });
 
 export declare namespace ExampleTypeReferenceShape {
-    type Raw =
+    export type Raw =
         | ExampleTypeReferenceShape.Primitive
         | ExampleTypeReferenceShape.Container
         | ExampleTypeReferenceShape.Unknown
         | ExampleTypeReferenceShape.Named;
 
-    interface Primitive {
+    export interface Primitive {
         type: "primitive";
         primitive: ExamplePrimitive.Raw;
     }
 
-    interface Container {
+    export interface Container {
         type: "container";
         container: serializers.ExampleContainer.Raw;
     }
 
-    interface Unknown {
+    export interface Unknown {
         type: "unknown";
         unknown?: unknown;
     }
 
-    interface Named extends serializers.ExampleNamedType.Raw {
+    export interface Named extends serializers.ExampleNamedType.Raw {
         type: "named";
     }
 }

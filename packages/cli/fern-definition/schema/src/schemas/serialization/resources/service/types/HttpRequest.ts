@@ -11,5 +11,5 @@ export const HttpRequest: core.serialization.Schema<serializers.HttpRequest.Raw,
     core.serialization.undiscriminatedUnion([core.serialization.string(), HttpRequestSchema]);
 
 export declare namespace HttpRequest {
-    type Raw = string | HttpRequestSchema.Raw;
+    export type Raw = string | HttpRequestSchema.Raw;
 }

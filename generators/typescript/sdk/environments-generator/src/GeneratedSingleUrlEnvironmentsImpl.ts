@@ -1,12 +1,13 @@
+import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
+import { VariableDeclarationKind, ts } from "ts-morph";
+
 import {
     EnvironmentBaseUrlId,
     EnvironmentId,
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
 } from "@fern-fern/ir-sdk/api";
-import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
-import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedSingleUrlEnvironmentsImpl {
     export interface Init {

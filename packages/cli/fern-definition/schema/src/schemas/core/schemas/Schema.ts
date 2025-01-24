@@ -12,6 +12,7 @@ export interface BaseSchema<Raw, Parsed> {
 }
 
 export const SchemaType = {
+    BIGINT: "bigint",
     DATE: "date",
     ENUM: "enum",
     LIST: "list",
@@ -29,7 +30,7 @@ export const SchemaType = {
     UNDISCRIMINATED_UNION: "undiscriminatedUnion",
     OPTIONAL: "optional",
 } as const;
-export type SchemaType = typeof SchemaType[keyof typeof SchemaType];
+export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType];
 
 export type MaybeValid<T> = Valid<T> | Invalid;
 

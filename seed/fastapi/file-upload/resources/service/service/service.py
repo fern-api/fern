@@ -8,7 +8,6 @@ from ..types.object_type import ObjectType
 from ..types.id import Id
 import abc
 import inspect
-import typing_extensions
 from ....core.exceptions.fern_http_exception import FernHTTPException
 import logging
 import functools
@@ -60,7 +59,12 @@ class AbstractServiceService(AbstractFernService):
 
     @abc.abstractmethod
     def with_content_type(
-        self, *, file: fastapi.UploadFile, foo: str, bar: MyObject
+        self,
+        *,
+        file: fastapi.UploadFile,
+        foo: str,
+        bar: MyObject,
+        foo_bar: typing.Optional[MyObject] = None,
     ) -> None: ...
 
     """
@@ -85,66 +89,37 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="maybeString"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "integer":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "file_list":
                 new_parameters.append(
-                    parameter.replace(
-                        default=typing_extensions.Annotated[
-                            typing.List[fastapi.UploadFile],
-                            fastapi.File(alias="fileList"),
-                        ]
-                    )
+                    parameter.replace(default=typing.List[fastapi.UploadFile])
                 )
             elif parameter_name == "maybe_file":
                 new_parameters.append(
-                    parameter.replace(
-                        default=typing_extensions.Annotated[
-                            typing.Union[fastapi.UploadFile, None],
-                            fastapi.File(alias="maybeFile"),
-                        ]
-                    )
+                    parameter.replace(default=typing.Union[fastapi.UploadFile, None])
                 )
             elif parameter_name == "maybe_file_list":
                 new_parameters.append(
                     parameter.replace(
-                        default=typing_extensions.Annotated[
-                            typing.Optional[typing.List[fastapi.UploadFile]],
-                            fastapi.File(alias="maybeFileList"),
-                        ]
+                        default=typing.Optional[typing.List[fastapi.UploadFile]]
                     )
                 )
             elif parameter_name == "maybe_integer":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="maybeInteger"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_list_of_strings":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Body(alias="optionalListOfStrings")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "list_of_objects":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="listOfObjects"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_metadata":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="optionalMetadata"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_object_type":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="optionalObjectType"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_id":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="optionalId"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -307,6 +282,8 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "foo":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "bar":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "foo_bar":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)

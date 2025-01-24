@@ -1,9 +1,11 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { Name } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { BaseOptionsGenerator, BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, OptionArgs } from "./BaseOptionsGenerator";
+import { BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator";
 
 export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup";
@@ -29,7 +31,13 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         };
         class_.addField(this.getBaseUrlField());
         class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
-        class_.addField(this.baseOptionsGenerator.getHttpHeadersField());
+        class_.addField(
+            this.baseOptionsGenerator.getHttpHeadersField({
+                optional: false,
+                includeInitializer: true,
+                interfaceReference: undefined
+            })
+        );
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         if (this.context.hasGrpcEndpoints()) {
@@ -74,7 +82,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             });
         }
         const defaultEnvironmentName =
-            this.context.customConfig["pascal-case-environments"] ?? true
+            (this.context.customConfig["pascal-case-environments"] ?? true)
                 ? defaultEnvironment?.pascalCase.safeName
                 : defaultEnvironment?.screamingSnakeCase.safeName;
 
@@ -177,7 +185,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     MaxRetries = MaxRetries,
     Timeout = Timeout,
     Headers = new Headers(new Dictionary<string, HeaderValue>(Headers))
-};`
+}`
                 );
             }),
             isAsync: false,

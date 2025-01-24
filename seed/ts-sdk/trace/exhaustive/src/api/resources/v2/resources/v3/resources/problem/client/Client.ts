@@ -9,14 +9,16 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../../../../../serialization/index";
 
 export declare namespace Problem {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,6 +27,8 @@ export declare namespace Problem {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -40,7 +44,7 @@ export class Problem {
      *     await client.v2.v3.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<
         core.APIResponse<
             SeedTrace.v2.v3.LightweightProblemInfoV2[],
@@ -49,8 +53,10 @@ export class Problem {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/lightweight-problem-info"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/problems-v2/lightweight-problem-info",
             ),
             method: "GET",
             headers: {
@@ -65,6 +71,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -100,12 +107,14 @@ export class Problem {
      *     await client.v2.v3.problem.getProblems()
      */
     public async getProblems(
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/problem-info"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/problems-v2/problem-info",
             ),
             method: "GET",
             headers: {
@@ -120,6 +129,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -157,12 +167,14 @@ export class Problem {
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`,
             ),
             method: "GET",
             headers: {
@@ -177,6 +189,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -216,14 +229,14 @@ export class Problem {
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(
-                    serializers.ProblemId.jsonOrThrow(problemId)
-                )}/version/${encodeURIComponent(problemVersion)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}/version/${encodeURIComponent(problemVersion)}`,
             ),
             method: "GET",
             headers: {
@@ -238,6 +251,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",

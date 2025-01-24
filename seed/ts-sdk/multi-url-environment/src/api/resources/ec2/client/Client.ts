@@ -10,20 +10,24 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Ec2 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<
             environments.SeedMultiUrlEnvironmentEnvironment | environments.SeedMultiUrlEnvironmentEnvironmentUrls
         >;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -41,15 +45,16 @@ export class Ec2 {
      */
     public async bootInstance(
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
-        requestOptions?: Ec2.RequestOptions
+        requestOptions?: Ec2.RequestOptions,
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedMultiUrlEnvironmentEnvironment.Production
-                ).ec2,
-                "/ec2/boot"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedMultiUrlEnvironmentEnvironment.Production
+                    ).ec2,
+                "/ec2/boot",
             ),
             method: "POST",
             headers: {
@@ -60,6 +65,7 @@ export class Ec2 {
                 "User-Agent": "@fern/multi-url-environment/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -86,7 +92,7 @@ export class Ec2 {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedMultiUrlEnvironmentTimeoutError();
+                throw new errors.SeedMultiUrlEnvironmentTimeoutError("Timeout exceeded when calling POST /ec2/boot.");
             case "unknown":
                 throw new errors.SeedMultiUrlEnvironmentError({
                     message: _response.error.errorMessage,

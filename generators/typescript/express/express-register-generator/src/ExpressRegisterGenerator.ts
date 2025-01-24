@@ -1,6 +1,8 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
+
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedExpressRegisterImpl } from "./GeneratedExpressRegisterImpl";
 
 export declare namespace ExpressRegisterGenerator {

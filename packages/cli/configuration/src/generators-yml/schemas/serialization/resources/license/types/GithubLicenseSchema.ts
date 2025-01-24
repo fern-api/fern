@@ -14,5 +14,5 @@ export const GithubLicenseSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([GithubLicenseType, GithubLicenseCustomSchema]);
 
 export declare namespace GithubLicenseSchema {
-    type Raw = GithubLicenseType.Raw | GithubLicenseCustomSchema.Raw;
+    export type Raw = GithubLicenseType.Raw | GithubLicenseCustomSchema.Raw;
 }

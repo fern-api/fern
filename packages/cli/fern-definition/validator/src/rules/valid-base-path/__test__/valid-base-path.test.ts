@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidBasePathRule } from "../valid-base-path";
 
 describe("valid-base-path", () => {
@@ -19,7 +20,7 @@ describe("valid-base-path", () => {
                 message: "base-path must be empty or start with a slash.",
                 nodePath: ["service"],
                 relativeFilepath: RelativeFilePath.of("no-leading-slash.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 

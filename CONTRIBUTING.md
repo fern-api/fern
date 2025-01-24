@@ -1,6 +1,16 @@
 # Contributing
 
-Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition, the OpenAPI importer, as well as all of our generators.
+Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition,
+the OpenAPI importer, as well as all of our generators.
+
+Fern is open source, but many of the people working on it do so as their day job. As a potential contributor,
+your changes and ideas are welcome, but we can't guarantee that they will be prioritized nor reviewed in a
+timely manner (_if ever_). With that said, we generally encourage users to start with a GitHub issue to
+discuss a feature or fix before writing any code. You're still welcome to include a patch as a proof-of-concept,
+but please do not be offended if we rewrite your patch from scratch.
+
+Like all open-source projects, Fern's resources are limited. If your patch isn’t a top priority, it may not
+receive the attention you expect.
 
 <br>
 

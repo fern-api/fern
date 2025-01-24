@@ -5,13 +5,20 @@ package crosspackagetypenames
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/cross-package-type-names/fern/core"
+	internal "github.com/cross-package-type-names/fern/internal"
 )
 
 type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
 
 	extraProperties map[string]interface{}
+}
+
+func (i *ImportingType) GetImported() Imported {
+	if i == nil {
+		return ""
+	}
+	return i.Imported
 }
 
 func (i *ImportingType) GetExtraProperties() map[string]interface{} {
@@ -25,18 +32,16 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = ImportingType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
 	return nil
 }
 
 func (i *ImportingType) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)

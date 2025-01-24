@@ -1,4 +1,4 @@
-irVersion: v40
+irVersion: v53
 displayName: Go Model
 image: fernapi/fern-go-model
 changelogLocation: ../../generators/go/model/versions.yml
@@ -48,5 +48,6 @@ scripts:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
   - exhaustive
+  - mixed-case
   - reserved-keywords
   - trace

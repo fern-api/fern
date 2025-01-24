@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: literal
   version: ''
-  description: Test definition for literal schemas.
+  description: 'Test definition for literal schemas. '
 paths:
   /headers:
     post:
@@ -173,6 +173,36 @@ paths:
           examples:
             Example1:
               value: You are a helpful assistant
+        - name: optional_prompt
+          in: query
+          required: false
+          schema:
+            type: string
+            const: You are a helpful assistant
+            nullable: true
+          example: You are a helpful assistant
+          examples:
+            Example1:
+              value: You are a helpful assistant
+        - name: alias_prompt
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AliasToPrompt'
+          example: You are a helpful assistant
+          examples:
+            Example1:
+              value: You are a helpful assistant
+        - name: alias_optional_prompt
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/AliasToPrompt'
+            nullable: true
+          example: You are a helpful assistant
+          examples:
+            Example1:
+              value: You are a helpful assistant
         - name: query
           in: query
           required: true
@@ -188,6 +218,36 @@ paths:
           schema:
             type: boolean
             const: false
+          example: false
+          examples:
+            Example1:
+              value: false
+        - name: optional_stream
+          in: query
+          required: false
+          schema:
+            type: boolean
+            const: false
+            nullable: true
+          example: false
+          examples:
+            Example1:
+              value: false
+        - name: alias_stream
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AliasToStream'
+          example: false
+          examples:
+            Example1:
+              value: false
+        - name: alias_optional_stream
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/AliasToStream'
+            nullable: true
           example: false
           examples:
             Example1:
@@ -282,6 +342,20 @@ components:
           const: How super cool
       required:
         - myLiteral
+    UndiscriminatedLiteral:
+      title: UndiscriminatedLiteral
+      oneOf:
+        - type: string
+        - type: string
+          const: $ending
+    AliasToPrompt:
+      title: AliasToPrompt
+      type: string
+      const: You are a helpful assistant
+    AliasToStream:
+      title: AliasToStream
+      type: boolean
+      const: false
     SendRequest:
       title: SendRequest
       type: object
@@ -295,6 +369,9 @@ components:
         stream:
           type: boolean
           const: false
+        ending:
+          type: string
+          const: $ending
         context:
           $ref: '#/components/schemas/SomeLiteral'
         maybeContext:
@@ -306,6 +383,7 @@ components:
         - prompt
         - query
         - stream
+        - ending
         - context
         - containerObject
     ContainerObject:

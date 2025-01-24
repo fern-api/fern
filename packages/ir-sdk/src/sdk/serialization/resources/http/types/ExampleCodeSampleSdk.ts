@@ -21,7 +21,7 @@ export const ExampleCodeSampleSdk: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace ExampleCodeSampleSdk {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         name?: Name.Raw | null;
         sdk: SupportedSdkLanguage.Raw;
         code: string;

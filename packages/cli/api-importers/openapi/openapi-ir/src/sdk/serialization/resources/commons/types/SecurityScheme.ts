@@ -41,30 +41,30 @@ export const SecurityScheme: core.serialization.Schema<serializers.SecuritySchem
         });
 
 export declare namespace SecurityScheme {
-    type Raw =
+    export type Raw =
         | SecurityScheme.Basic
         | SecurityScheme.Bearer
         | SecurityScheme.Header
         | SecurityScheme.Query
         | SecurityScheme.Oauth;
 
-    interface Basic extends BasicSecurityScheme.Raw {
+    export interface Basic extends BasicSecurityScheme.Raw {
         type: "basic";
     }
 
-    interface Bearer extends BearerSecurityScheme.Raw {
+    export interface Bearer extends BearerSecurityScheme.Raw {
         type: "bearer";
     }
 
-    interface Header extends HeaderSecurityScheme.Raw {
+    export interface Header extends HeaderSecurityScheme.Raw {
         type: "header";
     }
 
-    interface Query extends QuerySecurityScheme.Raw {
+    export interface Query extends QuerySecurityScheme.Raw {
         type: "query";
     }
 
-    interface Oauth extends OauthSecurityScheme.Raw {
+    export interface Oauth extends OauthSecurityScheme.Raw {
         type: "oauth";
     }
 }

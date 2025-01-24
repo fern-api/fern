@@ -1,0 +1,39 @@
+types:
+  RecursiveResponse:
+    type: list<Node>
+  Node:
+    discriminated: false
+    union:
+      - type: Node
+      - type: Node
+      - type: Node
+      - type: Node
+      - type: Node
+      - type: Terminate
+  Terminate:
+    properties:
+      end: string
+
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    recursiveGet:
+      method: GET
+      path: /recursive
+      request:
+        name: RecursiveRequest
+        body:
+          properties:
+            query: string
+      response:
+        type: RecursiveResponse
+      examples:
+        - name: "Example Recursion"
+          request:
+            query: "foo"
+          response:
+            body:
+              - end: "bar"
+

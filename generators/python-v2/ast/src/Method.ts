@@ -1,10 +1,10 @@
+import { python } from ".";
+import { CodeBlock } from "./CodeBlock";
+import { Decorator } from "./Decorator";
+import { Parameter } from "./Parameter";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { CodeBlock } from "./CodeBlock";
-import { Parameter } from "./Parameter";
-import { python } from ".";
-import { Decorator } from "./Decorator";
 
 export enum ClassMethodType {
     STATIC,
@@ -50,6 +50,20 @@ export class Method extends AstNode {
         this.type = type;
         this.decorators = decorators ?? [];
         this.static_ = static_ ?? false;
+
+        this.parameters.forEach((parameter) => {
+            this.inheritReferences(parameter);
+        });
+
+        this.inheritReferences(this.return);
+
+        this.decorators.forEach((decorator) => {
+            this.inheritReferences(decorator);
+        });
+
+        this.statements.forEach((statements) => {
+            this.inheritReferences(statements);
+        });
     }
 
     public addStatement(statement: AstNode): void {

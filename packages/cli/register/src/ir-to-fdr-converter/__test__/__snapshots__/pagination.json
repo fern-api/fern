@@ -13,10 +13,7 @@
               "value": "type_:UsernamePage"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UsernamePage": {
@@ -49,10 +46,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:Order": {
@@ -87,10 +81,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:WithCursor": {
@@ -111,10 +102,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:UserListContainer": {
@@ -133,10 +121,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:UserPage": {
@@ -164,10 +149,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:UserOptionalListContainer": {
@@ -189,10 +171,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:UserOptionalListPage": {
@@ -220,10 +199,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:UsernameContainer": {
@@ -244,10 +220,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:ListUsersExtendedResponse": {
@@ -268,10 +241,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:ListUsersExtendedOptionalListResponse": {
@@ -292,10 +262,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:ListUsersPaginationResponse": {
@@ -311,8 +278,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -347,10 +313,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:Page": {
@@ -397,10 +360,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:NextPage": {
@@ -427,10 +387,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_users:User": {
@@ -457,10 +414,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -757,7 +711,8 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "integer",
+                    "default": 0
                   }
                 }
               }
@@ -771,6 +726,148 @@
                   "type": "primitive",
                   "value": {
                     "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_users:Order"
+                }
+              }
+            },
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithDoubleOffsetPagination",
+          "originalEndpointId": "endpoint_users.listWithDoubleOffsetPagination",
+          "name": "List With Double Offset Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Defaults to first page",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "default": 0
+                  }
+                }
+              }
+            },
+            {
+              "description": "Defaults to per page",
+              "key": "per_page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
                   }
                 }
               }

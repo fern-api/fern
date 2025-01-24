@@ -1,5 +1,7 @@
 import { php } from "@fern-api/php-codegen";
+
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";

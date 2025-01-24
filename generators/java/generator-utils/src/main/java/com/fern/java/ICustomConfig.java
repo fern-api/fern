@@ -18,6 +18,7 @@ package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Optional;
 import org.immutables.value.Value;
 
 public interface ICustomConfig {
@@ -57,6 +58,21 @@ public interface ICustomConfig {
     default Boolean disableRequiredPropertyBuilderChecks() {
         return false;
     }
+
+    @Value.Default
+    @JsonProperty("inline-path-parameters")
+    default Boolean inlinePathParameters() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("enable-inline-types")
+    default Boolean enableInlineTypes() {
+        return false;
+    }
+
+    @JsonProperty("package-prefix")
+    Optional<String> packagePrefix();
 
     enum JsonInclude {
         NON_EMPTY("non-empty"),

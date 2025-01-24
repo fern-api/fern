@@ -1,7 +1,8 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { readdir } from "fs/promises";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { readdir } from "fs/promises";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -28,7 +29,11 @@ describe("openapi-ir-to-fern", async () => {
                         `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
                     );
                 }
-                const definition = await workspace.workspace.getDefinition({ context });
+                const definition = await workspace.workspace.getDefinition({
+                    context,
+                    absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
+                });
+
                 // eslint-disable-next-line jest/no-standalone-expect
                 expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi/${fixture.name}.json`);
             },

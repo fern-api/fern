@@ -3,9 +3,15 @@
 package literal
 
 type SendLiteralsInQueryRequest struct {
-	Query  string `query:"query"`
-	prompt string
-	stream bool
+	OptionalPrompt      *string        `query:"optional_prompt"`
+	AliasPrompt         AliasToPrompt  `query:"alias_prompt"`
+	AliasOptionalPrompt *AliasToPrompt `query:"alias_optional_prompt"`
+	Query               string         `query:"query"`
+	OptionalStream      *bool          `query:"optional_stream"`
+	AliasStream         AliasToStream  `query:"alias_stream"`
+	AliasOptionalStream *AliasToStream `query:"alias_optional_stream"`
+	prompt              string
+	stream              bool
 }
 
 func (s *SendLiteralsInQueryRequest) Prompt() string {
@@ -15,3 +21,7 @@ func (s *SendLiteralsInQueryRequest) Prompt() string {
 func (s *SendLiteralsInQueryRequest) Stream() bool {
 	return s.stream
 }
+
+type AliasToPrompt = string
+
+type AliasToStream = bool

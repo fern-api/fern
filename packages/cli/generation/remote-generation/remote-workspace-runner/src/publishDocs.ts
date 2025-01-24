@@ -1,20 +1,23 @@
-import { FernToken } from "@fern-api/auth";
-import { docsYml } from "@fern-api/configuration";
-import { createFdrService } from "@fern-api/core";
-import { MediaType } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { convertToFernHostRelativeFilePath } from "@fern-api/fs-utils";
-import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
+
+import { FernToken } from "@fern-api/auth";
+import { docsYml } from "@fern-api/configuration";
+import { createFdrService } from "@fern-api/core";
+import { MediaType } from "@fern-api/core-utils";
+import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import { AbsoluteFilePath, RelativeFilePath, convertToFernHostRelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { convertIrToFdrApi } from "@fern-api/register";
+import { TaskContext } from "@fern-api/task-context";
+import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+
+import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -33,6 +36,7 @@ export async function publishDocs({
     domain,
     customDomains,
     fernWorkspaces,
+    ossWorkspaces,
     context,
     preview,
     editThisPage,
@@ -44,6 +48,7 @@ export async function publishDocs({
     domain: string;
     customDomains: string[];
     fernWorkspaces: FernWorkspace[];
+    ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
@@ -60,6 +65,7 @@ export async function publishDocs({
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
+        ossWorkspaces,
         fernWorkspaces,
         context,
         editThisPage,
@@ -154,11 +160,11 @@ export async function publishDocs({
         },
         async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
-            context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: apiDefinition
+                definition: apiDefinition,
+                definitionV2: undefined
             });
 
             if (response.ok) {
@@ -174,9 +180,45 @@ export async function publishDocs({
                     }
                     default:
                         if (apiName != null) {
-                            return context.failAndThrow(`Failed to register API ${apiName}`, response.error);
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                            );
                         } else {
-                            return context.failAndThrow("Failed to register API", response.error);
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                            );
+                        }
+                }
+            }
+        },
+        async ({ api, apiName }) => {
+            const response = await fdr.api.v1.register.registerApiDefinition({
+                orgId: CjsFdrSdk.OrgId(organization),
+                apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
+                definition: undefined,
+                definitionV2: api
+            });
+
+            if (response.ok) {
+                context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
+                return response.body.apiDefinitionId;
+            } else {
+                switch (response.error.error) {
+                    case "UnauthorizedError":
+                    case "UserNotInOrgError": {
+                        return context.failAndThrow(
+                            "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
+                        );
+                    }
+                    default:
+                        if (apiName != null) {
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                            );
+                        } else {
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                            );
                         }
                 }
             }
@@ -189,7 +231,7 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    context.logger.debug("Calling registerDocs... ", JSON.stringify(docsDefinition, undefined, 4));
+    context.logger.debug("Publishing docs...");
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {

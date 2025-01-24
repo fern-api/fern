@@ -2,11 +2,11 @@ import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { Parameter } from "./Parameter";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
 
 export enum MethodType {
     INSTANCE,
@@ -18,7 +18,7 @@ export declare namespace Method {
         /* The name of the method */
         name: string;
         /* The access of the method */
-        access: Access;
+        access?: Access;
         /* Whether the method is sync or async. Defaults to false. */
         isAsync?: boolean;
         /* The parameters of the method */
@@ -27,6 +27,8 @@ export declare namespace Method {
         override?: boolean;
         /* The return type of the method */
         return_?: Type;
+        /* If true, no method body will be written. This is for interface methods. */
+        noBody?: boolean;
         /* The body of the method */
         body?: CodeBlock;
         /* Summary for the method */
@@ -39,14 +41,17 @@ export declare namespace Method {
         annotations?: Annotation[];
         /* Any code example to add to the method */
         codeExample?: string;
+        /* If specified, use the interface name in front of the method name */
+        interfaceReference?: ClassReference;
     }
 }
 
 export class Method extends AstNode {
     public readonly name: string;
     public readonly isAsync: boolean;
-    public readonly access: Access;
+    public readonly access: Access | undefined;
     public readonly return: Type | undefined;
+    public readonly noBody: boolean;
     public readonly body: CodeBlock | undefined;
     public readonly summary: string | undefined;
     public readonly type: MethodType;
@@ -55,6 +60,7 @@ export class Method extends AstNode {
     private readonly parameters: Parameter[];
     private readonly annotations: Annotation[];
     private readonly codeExample: string | undefined;
+    private interfaceReference?: ClassReference;
 
     constructor({
         name,
@@ -63,12 +69,14 @@ export class Method extends AstNode {
         access,
         return_,
         body,
+        noBody,
         summary,
         type,
         classReference,
         parameters,
         annotations,
-        codeExample
+        codeExample,
+        interfaceReference
     }: Method.Args) {
         super();
         this.name = name;
@@ -76,6 +84,7 @@ export class Method extends AstNode {
         this.override = override ?? false;
         this.access = access;
         this.return = return_;
+        this.noBody = noBody ?? false;
         this.body = body;
         this.summary = summary;
         this.type = type ?? MethodType.INSTANCE;
@@ -83,6 +92,7 @@ export class Method extends AstNode {
         this.parameters = parameters;
         this.annotations = annotations ?? [];
         this.codeExample = codeExample;
+        this.interfaceReference = interfaceReference;
     }
 
     public addParameter(parameter: Parameter): void {
@@ -111,7 +121,9 @@ export class Method extends AstNode {
             writer.writeNewLineIfLastLineNot();
         }
 
-        writer.write(`${this.access} `);
+        if (this.access) {
+            writer.write(`${this.access} `);
+        }
         if (this.type === MethodType.STATIC) {
             writer.write("static ");
         }
@@ -143,7 +155,11 @@ export class Method extends AstNode {
             }
             writer.write(" ");
         }
-        writer.write(`${this.name}(`);
+        if (this.interfaceReference) {
+            writer.write(`${this.interfaceReference.name}.`);
+        }
+        writer.write(this.name);
+        writer.write("(");
         this.parameters.forEach((parameter, idx) => {
             parameter.write(writer);
             if (idx < this.parameters.length - 1) {
@@ -151,13 +167,17 @@ export class Method extends AstNode {
             }
         });
         writer.write(")");
-        writer.writeLine(" {");
+        if (this.noBody) {
+            writer.writeLine(";");
+        } else {
+            writer.writeLine(" {");
 
-        writer.indent();
-        this.body?.write(writer);
-        writer.dedent();
+            writer.indent();
+            this.body?.write(writer);
+            writer.dedent();
 
-        writer.writeLine("}");
+            writer.writeLine("}");
+        }
     }
 
     public getParameters(): Parameter[] {

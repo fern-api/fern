@@ -9,18 +9,22 @@ import * as errors from "../../../../../../errors/index";
 import * as SeedExhaustive from "../../../../../index";
 
 export declare namespace Container {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,10 +40,14 @@ export class Container {
      */
     public async getAndReturnListOfPrimitives(
         request: string[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<string[]> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-primitives"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/list-of-primitives",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -49,6 +57,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -84,7 +93,9 @@ export class Container {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/list-of-primitives.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -105,10 +116,14 @@ export class Container {
      */
     public async getAndReturnListOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithRequiredField[]> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/list-of-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -118,6 +133,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -153,7 +169,9 @@ export class Container {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/list-of-objects.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -170,10 +188,14 @@ export class Container {
      */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<Set<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-primitives"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/set-of-primitives",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -183,6 +205,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -218,7 +241,9 @@ export class Container {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/set-of-primitives.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -237,10 +262,14 @@ export class Container {
      */
     public async getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithRequiredField[]> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/set-of-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -250,6 +279,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -285,7 +315,9 @@ export class Container {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/set-of-objects.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -304,10 +336,14 @@ export class Container {
      */
     public async getAndReturnMapPrimToPrim(
         request: Record<string, string>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<Record<string, string>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-prim"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-prim",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -317,6 +353,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -352,7 +389,9 @@ export class Container {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/map-prim-to-prim.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -373,10 +412,14 @@ export class Container {
      */
     public async getAndReturnMapOfPrimToObject(
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-object"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-object",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -386,6 +429,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -421,7 +465,9 @@ export class Container {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/map-prim-to-object.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -440,10 +486,14 @@ export class Container {
      */
     public async getAndReturnOptional(
         request?: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/opt-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/opt-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -453,6 +503,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -491,7 +542,9 @@ export class Container {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/opt-objects.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,

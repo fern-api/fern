@@ -12,7 +12,7 @@ export const WithTitle: core.serialization.ObjectSchema<serializers.WithTitle.Ra
     });
 
 export declare namespace WithTitle {
-    interface Raw {
+    export interface Raw {
         title?: string | null;
     }
 }

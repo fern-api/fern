@@ -1,24 +1,28 @@
-import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
-import { dirname, doesPathExist, AbsoluteFilePath } from "@fern-api/fs-utils";
-import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
-import { WebSocketServer, type WebSocket } from "ws";
+import { type WebSocket, WebSocketServer } from "ws";
+
+import { wrapWithHttps } from "@fern-api/docs-resolver";
+import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
+
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
     apis: {},
+    apisV2: {},
     files: {},
     filesV2: {},
     config: {
+        hideNavLinks: undefined,
         navigation: undefined,
         root: undefined,
         title: undefined,
@@ -118,7 +122,11 @@ export async function runPreviewServer({
     let project = initialProject;
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
 
-    const reloadDocsDefinition = async () => {
+    let reloadTimer: NodeJS.Timeout | null = null;
+    let isReloading = false;
+    const RELOAD_DEBOUNCE_MS = 1000;
+
+    const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
         try {
@@ -128,7 +136,9 @@ export async function runPreviewServer({
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
-                context
+                context,
+                previousDocsDefinition: docsDefinition,
+                editedAbsoluteFilepaths
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;
@@ -139,8 +149,9 @@ export async function runPreviewServer({
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
             }
             if (err instanceof Error) {
+                context.logger.error(err.message);
                 if (err instanceof Error && err.stack) {
-                    context.logger.debug(`${err.message}\n${err.stack}`);
+                    context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
             return docsDefinition;
@@ -156,25 +167,51 @@ export async function runPreviewServer({
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
-        debounce: 1000,
+        debounce: 100,
         renameDetection: true
     });
+
+    const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
-        sendData({
-            version: 1,
-            type: "startReload"
-        });
-        // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
-        const reloadedDocsDefinition = await reloadDocsDefinition();
-        if (reloadedDocsDefinition != null) {
-            docsDefinition = reloadedDocsDefinition;
+
+        // Don't schedule another reload if one is in progress
+        if (isReloading) {
+            return;
         }
-        sendData({
-            version: 1,
-            type: "finishReload"
-        });
+
+        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
+
+        // Clear any existing timer
+        if (reloadTimer != null) {
+            clearTimeout(reloadTimer);
+        }
+
+        // Set up new timer
+        reloadTimer = setTimeout(() => {
+            void (async () => {
+                isReloading = true;
+                sendData({
+                    version: 1,
+                    type: "startReload"
+                });
+
+                const reloadedDocsDefinition = await reloadDocsDefinition(editedAbsoluteFilepaths);
+                if (reloadedDocsDefinition != null) {
+                    docsDefinition = reloadedDocsDefinition;
+                }
+
+                editedAbsoluteFilepaths.length = 0;
+
+                sendData({
+                    version: 1,
+                    type: "finishReload"
+                });
+                isReloading = false;
+            })();
+        }, RELOAD_DEBOUNCE_MS);
     });
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -188,7 +225,8 @@ export async function runPreviewServer({
                     basePath: instance.pathname
                 },
                 definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== "dark"
+                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
+                orgId: FernNavigation.OrgId(initialProject.config.organization)
             };
             res.send(response);
         } catch (error) {

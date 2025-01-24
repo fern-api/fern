@@ -1,21 +1,29 @@
+import { mapValues, pickBy } from "lodash-es";
+
+import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
-import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { isGeneric } from "@fern-api/fern-definition-schema";
 import {
     ExampleType,
     HttpEndpoint,
     IntermediateRepresentation,
     PathParameterLocation,
     ResponseErrors,
+    SdkConfig,
     ServiceId,
     ServiceTypeReferenceInfo,
     Type,
     TypeId,
     Webhook
 } from "@fern-api/ir-sdk";
+import { RelativeFilePath, dirname, join } from "@fern-api/path-utils";
+import { SourceResolver } from "@fern-api/source-resolver";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
-import { mapValues, pickBy } from "lodash-es";
+
+import { FernFileContext, constructFernFileContext, constructRootApiFileContext } from "./FernFileContext";
+import { IdGenerator } from "./IdGenerator";
+import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
@@ -30,54 +38,60 @@ import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
+import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
+import { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
 import { addExtendedPropertiesToIr } from "./extended-properties/addExtendedPropertiesToIr";
-import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
+import { filterEndpointExample, filterExampleType } from "./filterExamples";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
-import { filterEndpointExample, filterExampleType } from "./filterExamples";
 import { formatDocs } from "./formatDocs";
-import { IdGenerator } from "./IdGenerator";
-import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { EndpointResolverImpl } from "./resolvers/EndpointResolver";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { PropertyResolverImpl } from "./resolvers/PropertyResolver";
-import { SourceResolverImpl } from "./resolvers/SourceResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
-import { isGeneric } from "@fern-api/fern-definition-schema";
 import { parseErrorName } from "./utils/parseErrorName";
-import { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
 
-export async function generateIntermediateRepresentation({
-    fdrApiDefinitionId,
+export declare namespace generateIntermediateRepresentation {
+    interface ExampleGenerationArgs {
+        disabled: boolean;
+        includeOptionalRequestPropertyExamples?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
+    }
+
+    interface Args {
+        workspace: FernWorkspace;
+        generationLanguage: generatorsYml.GenerationLanguage | undefined;
+        keywords: string[] | undefined;
+        smartCasing: boolean;
+        exampleGeneration: ExampleGenerationArgs;
+        audiences: Audiences;
+        readme: generatorsYml.ReadmeSchema | undefined;
+        packageName: string | undefined;
+        version: string | undefined;
+        context: TaskContext;
+        sourceResolver: SourceResolver;
+        fdrApiDefinitionId?: string;
+    }
+}
+
+export function generateIntermediateRepresentation({
     workspace,
     generationLanguage,
     keywords,
     smartCasing,
-    disableExamples,
-    includeOptionalRequestPropertyExamples,
+    exampleGeneration,
     audiences,
     readme,
     packageName,
     version,
-    context
-}: {
-    fdrApiDefinitionId?: string;
-    workspace: FernWorkspace;
-    generationLanguage: generatorsYml.GenerationLanguage | undefined;
-    keywords: string[] | undefined;
-    smartCasing: boolean;
-    disableExamples: boolean;
-    includeOptionalRequestPropertyExamples?: boolean;
-    audiences: Audiences;
-    readme: generatorsYml.ReadmeSchema | undefined;
-    packageName: string | undefined;
-    version: string | undefined;
-    context: TaskContext;
-}): Promise<IntermediateRepresentation> {
+    context,
+    fdrApiDefinitionId,
+    sourceResolver
+}: generateIntermediateRepresentation.Args): IntermediateRepresentation {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
     const irGraph = new IrGraph(audiences);
@@ -102,18 +116,17 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
-    const sourceResolver = new SourceResolverImpl(context, workspace);
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         fdrApiDefinitionId,
-        apiVersion: await convertApiVersionScheme({
+        apiVersion: convertApiVersionScheme({
             file: rootApiFileContext,
             rawApiFileSchema: workspace.definition.rootApiFile.contents
         }),
         apiName: casingsGenerator.generateName(workspace.definition.rootApiFile.contents.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
-        apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
-        auth: await convertApiAuth({
+        apiDocs: formatDocs(workspace.definition.rootApiFile.contents.docs),
+        auth: convertApiAuth({
             rawApiFileSchema: workspace.definition.rootApiFile.contents,
             file: rootApiFileContext,
             propertyResolver,
@@ -121,18 +134,14 @@ export async function generateIntermediateRepresentation({
         }),
         headers:
             workspace.definition.rootApiFile.contents.headers != null
-                ? await Promise.all(
-                      Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
-                          convertHttpHeader({ headerKey, header, file: rootApiFileContext })
-                      )
+                ? Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
+                      convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
         idempotencyHeaders:
             workspace.definition.rootApiFile.contents["idempotency-headers"] != null
-                ? await Promise.all(
-                      Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
-                          ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
-                      )
+                ? Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
+                      ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
         types: {},
@@ -151,7 +160,7 @@ export async function generateIntermediateRepresentation({
             workspace.definition.rootApiFile.contents["base-path"] != null
                 ? constructHttpPath(workspace.definition.rootApiFile.contents["base-path"])
                 : undefined,
-        pathParameters: await convertPathParameters({
+        pathParameters: convertPathParameters({
             pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
             file: rootApiFileContext,
             location: PathParameterLocation.Root,
@@ -174,15 +183,16 @@ export async function generateIntermediateRepresentation({
         websocketChannels: {},
         readmeConfig: undefined,
         sourceConfig: undefined,
-        publishConfig: undefined
+        publishConfig: undefined,
+        dynamic: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
 
-    const visitDefinitionFile = async (file: FernFileContext) => {
+    const visitDefinitionFile = (file: FernFileContext) => {
         packageTreeGenerator.addSubpackage(file.fernFilepath);
 
-        await visitObject(file.definitionFile, {
+        visitObject(file.definitionFile, {
             imports: noop,
             docs: (docs) => {
                 if (docs != null) {
@@ -190,7 +200,7 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            types: async (types) => {
+            types: (types) => {
                 if (types == null) {
                     return;
                 }
@@ -203,7 +213,7 @@ export async function generateIntermediateRepresentation({
                         continue;
                     }
 
-                    const convertedTypeDeclarationWithFilepaths = await convertTypeDeclaration({
+                    const convertedTypeDeclarationWithFilepaths = convertTypeDeclaration({
                         typeName,
                         typeDeclaration,
                         file,
@@ -213,7 +223,7 @@ export async function generateIntermediateRepresentation({
                         workspace
                     });
                     const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
-                    if (disableExamples) {
+                    if (exampleGeneration.disabled) {
                         convertedTypeDeclaration.userProvidedExamples = [];
                         convertedTypeDeclaration.autogeneratedExamples = [];
                     }
@@ -260,12 +270,12 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            service: async (service) => {
+            service: (service) => {
                 if (service == null) {
                     return;
                 }
 
-                const convertedHttpService = await convertHttpService({
+                const convertedHttpService = convertHttpService({
                     rootDefaultUrl: file.defaultUrl ?? workspace.definition.rootApiFile.contents["default-url"],
                     rootPathParameters: intermediateRepresentation.pathParameters,
                     serviceDefinition: service,
@@ -286,7 +296,7 @@ export async function generateIntermediateRepresentation({
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                    if (disableExamples) {
+                    if (exampleGeneration.disabled) {
                         httpEndpoint.autogeneratedExamples = [];
                         httpEndpoint.userSpecifiedExamples = [];
                     }
@@ -312,12 +322,12 @@ export async function generateIntermediateRepresentation({
                     }
                 });
             },
-            webhooks: async (webhooks) => {
+            webhooks: (webhooks) => {
                 if (webhooks == null) {
                     return;
                 }
                 const webhookGroupId = IdGenerator.generateWebhookGroupId(file.fernFilepath);
-                const convertedWebhookGroup = await convertWebhookGroup({
+                const convertedWebhookGroup = convertWebhookGroup({
                     webhooks,
                     file,
                     typeResolver,
@@ -343,12 +353,12 @@ export async function generateIntermediateRepresentation({
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             },
-            channel: async (channel) => {
+            channel: (channel) => {
                 if (channel == null) {
                     return;
                 }
                 const websocketChannelId = IdGenerator.generateWebSocketChannelId(file.fernFilepath);
-                const websocketChannel = await convertChannel({
+                const websocketChannel = convertChannel({
                     channel,
                     file,
                     variableResolver,
@@ -356,6 +366,12 @@ export async function generateIntermediateRepresentation({
                     exampleResolver,
                     workspace
                 });
+
+                irGraph.addChannel(file, websocketChannelId, websocketChannel, channel);
+                if (channel.audiences != null) {
+                    irGraph.markChannelForAudiences(file, websocketChannelId, channel.audiences);
+                }
+
                 if (intermediateRepresentation.websocketChannels != null) {
                     intermediateRepresentation.websocketChannels[websocketChannelId] = websocketChannel;
                     packageTreeGenerator.addWebSocketChannel(websocketChannelId, file.fernFilepath);
@@ -364,8 +380,8 @@ export async function generateIntermediateRepresentation({
         });
     };
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file, metadata) => {
-        await visitDefinitionFile(
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file, metadata) => {
+        visitDefinitionFile(
             constructFernFileContext({
                 relativeFilepath,
                 definitionFile: file,
@@ -376,7 +392,7 @@ export async function generateIntermediateRepresentation({
         );
     });
 
-    await visitAllPackageMarkers(workspace, async (relativeFilepath, packageMarker) => {
+    visitAllPackageMarkers(workspace, (relativeFilepath, packageMarker) => {
         if (packageMarker.navigation == null) {
             return;
         }
@@ -417,9 +433,9 @@ export async function generateIntermediateRepresentation({
 
     intermediateRepresentation.serviceTypeReferenceInfo = computeServiceTypeReferenceInfo(irGraph);
 
-    const intermediateRepresentationWithGeneratedExamples = disableExamples
+    const intermediateRepresentationWithGeneratedExamples = exampleGeneration.disabled
         ? intermediateRepresentation
-        : injectAutogeneratedExamples(intermediateRepresentation, context, !includeOptionalRequestPropertyExamples);
+        : injectAutogeneratedExamples({ ir: intermediateRepresentation, context, exampleGeneration });
 
     const workspaceDefinitionRootApiFileContents = workspace.definition.rootApiFile.contents;
     const environments = convertEnvironments({
@@ -488,56 +504,72 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
 
+    const sdkConfig: SdkConfig = {
+        isAuthMandatory,
+        hasStreamingEndpoints,
+        hasPaginatedEndpoints,
+        hasFileDownloadEndpoints,
+        platformHeaders: {
+            language: "X-Fern-Language",
+            sdkName: "X-Fern-SDK-Name",
+            sdkVersion: "X-Fern-SDK-Version",
+            userAgent:
+                version != null && packageName != null
+                    ? {
+                          header: "User-Agent",
+                          value: `${packageName}/${version}`
+                      }
+                    : undefined
+        }
+    };
+
     const readmeConfig =
         readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
 
     const { types, services } = addExtendedPropertiesToIr(intermediateRepresentationForAudiences);
 
-    return {
+    const finalIR = {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
         types,
         services,
-        sdkConfig: {
-            isAuthMandatory,
-            hasStreamingEndpoints,
-            hasPaginatedEndpoints,
-            hasFileDownloadEndpoints,
-            platformHeaders: {
-                language: "X-Fern-Language",
-                sdkName: "X-Fern-SDK-Name",
-                sdkVersion: "X-Fern-SDK-Version",
-                userAgent:
-                    version != null && packageName != null
-                        ? {
-                              header: "User-Agent",
-                              value: `${packageName}/${version}`
-                          }
-                        : undefined
-            }
-        },
+        sdkConfig,
         readmeConfig
     };
-}
 
-function injectAutogeneratedExamples(
-    ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">,
-    context: TaskContext,
-    skipOptionalRequestProperties?: boolean
-): Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> {
+    return {
+        ...finalIR,
+        dynamic: convertIrToDynamicSnippetsIr(finalIR)
+    };
+}
+function injectAutogeneratedExamples({
+    ir,
+    context,
+    exampleGeneration
+}: {
+    ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
+    context: TaskContext;
+    exampleGeneration?: generateIntermediateRepresentation.ExampleGenerationArgs;
+}): Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> {
     for (const [_, service] of Object.entries(ir.services)) {
         for (const endpoint of service.endpoints) {
+            if (
+                endpoint.userSpecifiedExamples.length > 0 &&
+                exampleGeneration?.skipAutogenerationIfManualExamplesExist === true
+            ) {
+                continue;
+            }
             context.logger.debug(`Generating example for ${endpoint.id}`);
             const generatedExample = generateEndpointExample({
                 ir,
                 service,
                 endpoint,
                 typeDeclarations: ir.types,
-                skipOptionalRequestProperties: skipOptionalRequestProperties ?? true,
+                skipOptionalRequestProperties: exampleGeneration?.includeOptionalRequestPropertyExamples ? false : true,
                 generationResponse: { type: "success" }
             });
             if (generatedExample.type === "failure") {
-                context.logger.debug(`Failed to generate example for ${endpoint.id}. ${generatedExample.message}`);
+                context.logger.trace(`Failed to generate example for ${endpoint.id}. ${generatedExample.message}`);
                 continue;
             }
             const { example } = generatedExample;
@@ -554,6 +586,9 @@ function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReference
     for (const [typeId, serviceIds] of Object.entries(typesReferencedByService)) {
         if (serviceIds.size === 1) {
             const serviceId = serviceIds.values().next().value;
+            if (serviceId == null) {
+                break;
+            }
             if (typesReferencedOnlyByService[serviceId] === undefined) {
                 typesReferencedOnlyByService[serviceId] = [];
             }

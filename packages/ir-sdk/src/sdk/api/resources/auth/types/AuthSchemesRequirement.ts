@@ -3,7 +3,6 @@
  */
 
 export type AuthSchemesRequirement = "ALL" | "ANY";
-
 export const AuthSchemesRequirement = {
     All: "ALL",
     Any: "ANY",
@@ -19,8 +18,8 @@ export const AuthSchemesRequirement = {
     },
 } as const;
 
-export declare namespace AuthSchemesRequirement {
-    interface Visitor<R> {
+export namespace AuthSchemesRequirement {
+    export interface Visitor<R> {
         all: () => R;
         any: () => R;
         _other: () => R;

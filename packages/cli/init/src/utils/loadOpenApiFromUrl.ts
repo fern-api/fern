@@ -3,6 +3,7 @@ import { writeFile } from "fs/promises";
 import { dump } from "js-yaml";
 import { join } from "path";
 import tmp from "tmp-promise";
+
 import { Logger } from "../../../logger/src/Logger";
 
 export type LoadOpenAPIResult = SuccessLoadOpenAPI | FailedLoadOpenAPI;
@@ -23,9 +24,7 @@ export interface FailedLoadOpenAPI {
 
 export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<LoadOpenAPIResult> {
     try {
-        const response = await axios.get(url);
-        const jsonData = response.data;
-        const yamlData = dump(jsonData);
+        const yamlData = await fetchOpenAPIFromUrl({ url, logger });
         const tmpDir = await tmp.dir();
         const filePath = join(tmpDir.path, "openapi.yml");
         logger.debug("tmpDir", tmpDir.path);
@@ -43,4 +42,19 @@ export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger:
             errorMessage
         };
     }
+}
+
+async function fetchOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<string> {
+    const response = await axios.get(url);
+    const contentType = response.headers["content-type"] ?? "";
+    if (contentType.includes("json")) {
+        return dump(response.data);
+    }
+    if (contentType.includes("yaml")) {
+        return response.data;
+    }
+    logger.warn(
+        `Unrecognized Content-Type "${contentType}" from endpoint ${url}. Please ensure you're pointing to a URL that returns JSON or YAML and not HTML (e.g. Swagger UI webpage)`
+    );
+    return dump(response.data);
 }

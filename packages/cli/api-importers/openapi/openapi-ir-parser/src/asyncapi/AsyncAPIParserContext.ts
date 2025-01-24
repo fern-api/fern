@@ -1,10 +1,12 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { Logger } from "@fern-api/logger";
 import { Namespace, SdkGroup, SdkGroupName } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+
 import { ParseOpenAPIOptions } from "../options";
-import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
 import { SchemaParserContext } from "../schema/SchemaParserContext";
+import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2 } from "./v2";
 

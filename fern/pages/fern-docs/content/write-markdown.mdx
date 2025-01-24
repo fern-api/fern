@@ -69,6 +69,68 @@ Read the [Introduction](/learn/overview/introduction).
 
 You can use locally stored images or URLs to include images in your Markdown pages. Use either [Markdown syntax](https://www.markdownguide.org/basic-syntax/#images-1) or the [`<img>` HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) to insert the image.
 
+## Embedding local assets
+
+You can embed local assets in your Markdown pages using the [`<embed>` component](/learn/docs/content/components/embed). This is useful for displaying PDFs, images, videos, OpenAPI files, and other assets into your docs.
+
+For example, to embed a video, use the following Markdown:
+
+```mdx
+<embed src="./path/to/asset.mp4" type="video/mp4" />
+```
+
+<embed src="../../../../fern/assets/changelogs/docs/embed-fern-waving.mp4" type="video/mp4" width="640px" height="360px" />
+
+## Embedding videos
+
+You can embed videos in your documentation using the HTML `<video>` tag. This gives you control over video playback settings like autoplay, looping, and muting.
+
+```html
+<video 
+    src="path/to/your/video.mp4"
+    width="854"
+    height="480"
+    autoplay
+    loop
+    playsinline
+    muted
+>
+</video>
+```
+
+You can also wrap the video in a container div for additional styling:
+
+```html
+<div class="card-video">
+    <video 
+        src="path/to/your/video.mp4"
+        width="854"
+        height="480"
+        autoplay
+        loop
+        playsinline
+        muted
+    >
+    </video>
+</div>
+```
+
+Common video attributes:
+
+| Attribute | Description |
+| --------- | ----------- |
+| `src` | URL or path to the video file |
+| `width` and `height` | Dimensions of the video player |
+| `autoplay` | Video starts playing automatically |
+| `loop` | Video repeats when finished |
+| `playsinline` | Video plays inline on mobile devices instead of fullscreen |
+| `muted` | Video plays without sound |
+| `controls` | Shows video player controls (play/pause, volume, etc.) |
+
+<Note>
+For more details about the HTML video element and its attributes, see the [MDN documentation on the video element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video).
+</Note>
+
 ## LaTeX
 
 Fern supports [LaTeX](https://www.latex-project.org/) math equations. To use LaTeX, wrap your inline math equations in `$`. For example, `$(x^2 + y^2 = z^2)$` will render $x^2 + y^2 = z^2$.

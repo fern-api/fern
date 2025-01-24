@@ -31,14 +31,14 @@ export const SdkRequestShape: core.serialization.Schema<serializers.SdkRequestSh
         });
 
 export declare namespace SdkRequestShape {
-    type Raw = SdkRequestShape.JustRequestBody | SdkRequestShape.Wrapper;
+    export type Raw = SdkRequestShape.JustRequestBody | SdkRequestShape.Wrapper;
 
-    interface JustRequestBody {
+    export interface JustRequestBody {
         type: "justRequestBody";
         value: SdkRequestBodyType.Raw;
     }
 
-    interface Wrapper extends SdkRequestWrapper.Raw {
+    export interface Wrapper extends SdkRequestWrapper.Raw {
         type: "wrapper";
     }
 }

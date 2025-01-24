@@ -25,6 +25,14 @@ exports[`TypeInstantiation > dict > should correctly write a dict with reference
 "
 `;
 
+exports[`TypeInstantiation > dict > should support trailing comma 1`] = `
+"{
+    "one": 1,
+    "two": True,
+}
+"
+`;
+
 exports[`TypeInstantiation > float 1`] = `
 "3.14
 "
@@ -35,7 +43,7 @@ exports[`TypeInstantiation > int 1`] = `
 "
 `;
 
-exports[`TypeInstantiation > list 1`] = `
+exports[`TypeInstantiation > list > basic 1`] = `
 "[1, "two", True]
 "
 `;
@@ -45,18 +53,77 @@ exports[`TypeInstantiation > none 1`] = `
 "
 `;
 
-exports[`TypeInstantiation > set 1`] = `
+exports[`TypeInstantiation > set > basic 1`] = `
 "{1, "two", True}
 "
 `;
 
-exports[`TypeInstantiation > str 1`] = `
+exports[`TypeInstantiation > set > should support trailing comma 1`] = `
+"{
+    1,
+    "two",
+    True,
+}
+"
+`;
+
+exports[`TypeInstantiation > str > should render a basic string 1`] = `
 ""hello"
 "
 `;
 
-exports[`TypeInstantiation > tuple 1`] = `
+exports[`TypeInstantiation > str > should render a multiline string 1`] = `
+""""
+
+####
+
+"""
+"
+`;
+
+exports[`TypeInstantiation > str > should render a multiline string containing an escaped quote 1`] = `
+""""{{ chat_history[-1][\\"text\\"] }}"""
+"
+`;
+
+exports[`TypeInstantiation > str > should render a multiline string containing escaped quotes 1`] = `
+""""She said \\"Hi\\"
+He said \\"bye\\"
+She said \\"okay then\\" """
+"
+`;
+
+exports[`TypeInstantiation > str > should render a string containing escaped newline characters 1`] = `
+""\\n\\n####\\n\\n"
+"
+`;
+
+exports[`TypeInstantiation > str > should render a string containing escaped newline characters and quotes 1`] = `
+"'She said "Hi"\\nHe said "bye"\\nShe said "okay then"'
+"
+`;
+
+exports[`TypeInstantiation > str > should render a string containing quote 1`] = `
+"'She said "hello!"'
+"
+`;
+
+exports[`TypeInstantiation > tuple > basic 1`] = `
 "(1, "two", True)
+"
+`;
+
+exports[`TypeInstantiation > tuple > should handle single-element tuple 1`] = `
+"(1,)
+"
+`;
+
+exports[`TypeInstantiation > tuple > should support trailing comma 1`] = `
+"(
+    1,
+    "two",
+    True,
+)
 "
 `;
 

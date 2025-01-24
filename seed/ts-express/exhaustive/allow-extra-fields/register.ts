@@ -8,6 +8,7 @@ import { NoAuthService } from "./api/resources/noAuth/service/NoAuthService";
 import { NoReqBodyService } from "./api/resources/noReqBody/service/NoReqBodyService";
 import { ReqWithHeadersService } from "./api/resources/reqWithHeaders/service/ReqWithHeadersService";
 import { ContainerService as endpoints_ContainerService } from "./api/resources/endpoints/resources/container/service/ContainerService";
+import { ContentTypeService as endpoints_ContentTypeService } from "./api/resources/endpoints/resources/contentType/service/ContentTypeService";
 import { EnumService as endpoints_EnumService } from "./api/resources/endpoints/resources/enum/service/EnumService";
 import { HttpMethodsService as endpoints_HttpMethodsService } from "./api/resources/endpoints/resources/httpMethods/service/HttpMethodsService";
 import { ObjectService as endpoints_ObjectService } from "./api/resources/endpoints/resources/object/service/ObjectService";
@@ -24,6 +25,7 @@ export function register(
         reqWithHeaders: ReqWithHeadersService;
         endpoints: {
             container: endpoints_ContainerService;
+            contentType: endpoints_ContentTypeService;
             enum: endpoints_EnumService;
             httpMethods: endpoints_HttpMethodsService;
             object: endpoints_ObjectService;
@@ -31,9 +33,10 @@ export function register(
             primitive: endpoints_PrimitiveService;
             union: endpoints_UnionService;
         };
-    }
+    },
 ): void {
     (expressApp as any).use("/container", services.endpoints.container.toRouter());
+    (expressApp as any).use("/foo", services.endpoints.contentType.toRouter());
     (expressApp as any).use("/enum", services.endpoints.enum.toRouter());
     (expressApp as any).use("/http-methods", services.endpoints.httpMethods.toRouter());
     (expressApp as any).use("/object", services.endpoints.object.toRouter());

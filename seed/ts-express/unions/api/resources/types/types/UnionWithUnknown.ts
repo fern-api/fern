@@ -6,12 +6,12 @@ import * as SeedUnions from "../../../index";
 
 export type UnionWithUnknown = SeedUnions.UnionWithUnknown.Foo | SeedUnions.UnionWithUnknown.Unknown;
 
-export declare namespace UnionWithUnknown {
-    interface Foo extends SeedUnions.Foo {
+export namespace UnionWithUnknown {
+    export interface Foo extends SeedUnions.Foo {
         type: "foo";
     }
 
-    interface Unknown {
+    export interface Unknown {
         type: "unknown";
     }
 }

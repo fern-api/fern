@@ -14,7 +14,7 @@ export const WithDisplayName: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithDisplayName {
-    interface Raw {
+    export interface Raw {
         "display-name"?: string | null;
     }
 }

@@ -1,18 +1,23 @@
-import {
-    DEFAULT_GROUP_NAME,
-    DEFINITION_DIRECTORY,
-    generatorsYml,
-    GENERATORS_CONFIGURATION_FILENAME,
-    OPENAPI_DIRECTORY,
-    ROOT_API_FILENAME
-} from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
-import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { createReadStream } from "fs";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
+
+import {
+    DEFAULT_GROUP_NAME,
+    DEFINITION_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
+    GENERATOR_INVOCATIONS,
+    OPENAPI_DIRECTORY,
+    ROOT_API_FILENAME,
+    generatorsYml,
+    getLatestGeneratorVersion
+} from "@fern-api/configuration-loader";
+import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
+import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 
 export async function createFernWorkspace({
@@ -63,7 +68,7 @@ export async function createOpenAPIWorkspace({
     });
     const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     await mkdir(openapiDirectory);
-    const openAPIContents = await readFile(openAPIFilePath);
+    const openAPIContents = createReadStream(openAPIFilePath);
     await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
 }
 
@@ -77,10 +82,10 @@ async function getDefaultGeneratorsConfiguration({
     apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     const defaultGeneratorName = "fernapi/fern-typescript-node-sdk";
-    const fallbackInvocation = generatorsYml.GENERATOR_INVOCATIONS[defaultGeneratorName];
+    const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorName];
 
     let version = fallbackInvocation.version;
-    const versionFromDB = await generatorsYml.getLatestGeneratorVersion({
+    const versionFromDB = await getLatestGeneratorVersion({
         cliVersion,
         generatorName: defaultGeneratorName,
         channel: undefined
@@ -127,7 +132,8 @@ async function writeGeneratorsConfiguration({
 }): Promise<void> {
     await writeFile(
         filepath,
-        yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
+        "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
+            yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
     );
 }
 

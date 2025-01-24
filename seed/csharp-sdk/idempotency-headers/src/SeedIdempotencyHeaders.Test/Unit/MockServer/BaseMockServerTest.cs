@@ -17,6 +17,8 @@ public class BaseMockServerTest
 
     protected static RequestOptions RequestOptions { get; set; } = null!;
 
+    protected static IdempotentRequestOptions IdempotentRequestOptions { get; set; } = null!;
+
     [OneTimeSetUp]
     public void GlobalSetup()
     {
@@ -29,11 +31,13 @@ public class BaseMockServerTest
         Client = new SeedIdempotencyHeadersClient("TOKEN");
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        IdempotentRequestOptions = new IdempotentRequestOptions { BaseUrl = Server.Urls[0] };
     }
 
     [OneTimeTearDown]
     public void GlobalTeardown()
     {
         Server.Stop();
+        Server.Dispose();
     }
 }

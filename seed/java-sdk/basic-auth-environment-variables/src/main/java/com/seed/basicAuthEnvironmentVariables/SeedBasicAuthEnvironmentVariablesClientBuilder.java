@@ -12,13 +12,13 @@ public final class SeedBasicAuthEnvironmentVariablesClientBuilder {
 
     private String username = System.getenv("USERNAME");
 
-    private String password = System.getenv("PASSWORD");
+    private String accessToken = System.getenv("PASSWORD");
 
     private Environment environment;
 
-    public SeedBasicAuthEnvironmentVariablesClientBuilder credentials(String username, String password) {
+    public SeedBasicAuthEnvironmentVariablesClientBuilder credentials(String username, String accessToken) {
         this.username = username;
-        this.password = password;
+        this.accessToken = accessToken;
         return this;
     }
 
@@ -27,14 +27,22 @@ public final class SeedBasicAuthEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedBasicAuthEnvironmentVariablesClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedBasicAuthEnvironmentVariablesClient build() {
         if (this.username == null) {
             throw new RuntimeException("Please provide username or set the USERNAME environment variable.");
         }
-        if (this.password == null) {
-            throw new RuntimeException("Please provide password or set the PASSWORD environment variable.");
+        if (this.accessToken == null) {
+            throw new RuntimeException("Please provide accessToken or set the PASSWORD environment variable.");
         }
-        String unencodedToken = username + ":" + password;
+        String unencodedToken = username + ":" + accessToken;
         String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + encodedToken);
         clientOptionsBuilder.environment(this.environment);

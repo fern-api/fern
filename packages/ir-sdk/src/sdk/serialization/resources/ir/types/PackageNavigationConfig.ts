@@ -15,7 +15,7 @@ export const PackageNavigationConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace PackageNavigationConfig {
-    interface Raw {
+    export interface Raw {
         pointsTo: SubpackageId.Raw;
     }
 }

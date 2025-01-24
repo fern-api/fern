@@ -66,6 +66,17 @@ favicon: path/to/favicon.ico
   `layout` configuration [here](/learn/docs/getting-started/global-configuration#layout-configuration).
 </ParamField>
 
+<ParamField path="landing-page" type="object" required={false}>
+  Creates a landing page for your documentation website. Learn more about the 
+  `landing-page` configuration [here](/learn/docs/getting-started/global-configuration#landing-page-configuration).
+</ParamField>
+
+<ParamField path="default-language" type="string" required={false}>
+  Sets the default language displayed by code snippets in the API Reference. 
+  
+  Options include: `typescript`, `python`, `java`, `go`, `ruby`, `csharp`, `curl`
+</ParamField>
+
 ## Instances configuration
 
 An `instance` is the backend of a distinct docs website. Each instance is published to a unique domain using the `--instance` flag. It is most common to use instances to configure staging and production docs which publish to separate URLs.
@@ -390,3 +401,21 @@ Be sure the repository is set to **public** visibility.
 <ParamField path="github.branch" type="string" required={true}>
   The branch of the repository you would like the GitHub editor to open a PR to. Default is `main`. 
 </ParamField>
+
+## Landing page configuration
+```yaml docs.yml
+landing-page: 
+  page: Page Title
+  path: path/to/landing-page.mdx
+```
+
+<ParamField path="page" type="string" required={true}>
+  The name of the landing page. 
+</ParamField>
+
+<ParamField path="path" type="string" required={true}>
+  Relative filepath to the desired landing page Markdown file. 
+</ParamField>
+
+See [VapiAI's landing page live](https://docs.vapi.ai/welcome) and the associated [Markdown file](https://github.com/VapiAI/docs/blob/main/fern/welcome.mdx?plain=1).
+

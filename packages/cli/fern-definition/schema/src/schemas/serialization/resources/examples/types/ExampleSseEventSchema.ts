@@ -16,7 +16,7 @@ export const ExampleSseEventSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleSseEventSchema {
-    interface Raw {
+    export interface Raw {
         event: string;
         data?: (ExampleTypeReferenceSchema.Raw | undefined) | null;
     }

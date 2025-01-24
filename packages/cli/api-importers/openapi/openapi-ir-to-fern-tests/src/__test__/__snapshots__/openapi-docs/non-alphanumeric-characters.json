@@ -66,12 +66,14 @@
                 "value": "",
               },
             ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
           "Settings": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "separator": "optional<DocumentIdSeparators>",
             },

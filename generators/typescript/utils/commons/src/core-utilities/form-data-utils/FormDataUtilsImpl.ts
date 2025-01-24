@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { FormDataUtils } from "./FormDataUtils";
@@ -41,15 +43,10 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         value: ts.Expression;
     }): ts.Statement => {
         return ts.factory.createExpressionStatement(
-            ts.factory.createAwaitExpression(
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        referencetoFormData,
-                        ts.factory.createIdentifier("append")
-                    ),
-                    undefined,
-                    [ts.factory.createStringLiteral(key), value]
-                )
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("append")),
+                undefined,
+                [ts.factory.createStringLiteral(key), value]
             )
         );
     };

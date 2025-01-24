@@ -10,7 +10,8 @@ export interface EnumSchema
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithSource,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithInline {
     default: FernOpenapiIr.EnumValue | undefined;
     values: FernOpenapiIr.EnumValue[];
 }

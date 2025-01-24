@@ -9,23 +9,22 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Payment {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
-    }
-
-    interface IdempotentRequestOptions extends RequestOptions {
-        idempotencyKey: string;
-        idempotencyExpiration: number;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -44,10 +43,14 @@ export class Payment {
      */
     public async create(
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
-        requestOptions?: Payment.IdempotentRequestOptions
+        requestOptions?: Payment.IdempotentRequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/payment"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/payment",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -59,6 +62,7 @@ export class Payment {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey,
                 "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString(),
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -90,7 +94,7 @@ export class Payment {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedIdempotencyHeadersTimeoutError();
+                throw new errors.SeedIdempotencyHeadersTimeoutError("Timeout exceeded when calling POST /payment.");
             case "unknown":
                 throw new errors.SeedIdempotencyHeadersError({
                     message: _response.error.errorMessage,
@@ -108,8 +112,9 @@ export class Payment {
     public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/payment/${encodeURIComponent(paymentId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/payment/${encodeURIComponent(paymentId)}`,
             ),
             method: "DELETE",
             headers: {
@@ -120,6 +125,7 @@ export class Payment {
                 "User-Agent": "@fern/idempotency-headers/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -145,7 +151,9 @@ export class Payment {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedIdempotencyHeadersTimeoutError();
+                throw new errors.SeedIdempotencyHeadersTimeoutError(
+                    "Timeout exceeded when calling DELETE /payment/{paymentId}.",
+                );
             case "unknown":
                 throw new errors.SeedIdempotencyHeadersError({
                     message: _response.error.errorMessage,

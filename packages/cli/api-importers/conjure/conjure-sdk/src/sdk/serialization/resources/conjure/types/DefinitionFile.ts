@@ -18,7 +18,7 @@ export const DefinitionFile: core.serialization.ObjectSchema<
 });
 
 export declare namespace DefinitionFile {
-    interface Raw {
+    export interface Raw {
         types?: ConjureTypes.Raw | null;
         services?: Record<ConjureServiceName.Raw, ConjureService.Raw> | null;
     }

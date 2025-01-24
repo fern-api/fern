@@ -1,10 +1,15 @@
-import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { TaskContext } from "@fern-api/task-context";
+import {
+    AbstractAPIWorkspace,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/workspace-loader";
+
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
 export async function runLocalGenerationForWorkspace({
@@ -32,7 +37,7 @@ export async function runLocalGenerationForWorkspace({
                 } else {
                     const fernWorkspace = await workspace.toFernWorkspace(
                         { context },
-                        getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                        getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                     );
 
                     await writeFilesToDiskAndRunGenerator({

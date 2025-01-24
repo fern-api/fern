@@ -16,7 +16,7 @@ export const ExampleBodyResponseSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleBodyResponseSchema {
-    interface Raw {
+    export interface Raw {
         error?: string | null;
         body?: (ExampleTypeReferenceSchema.Raw | undefined) | null;
     }

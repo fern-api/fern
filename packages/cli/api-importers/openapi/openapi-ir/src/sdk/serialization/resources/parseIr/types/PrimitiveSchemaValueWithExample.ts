@@ -67,7 +67,7 @@ export const PrimitiveSchemaValueWithExample: core.serialization.Schema<
     });
 
 export declare namespace PrimitiveSchemaValueWithExample {
-    type Raw =
+    export type Raw =
         | PrimitiveSchemaValueWithExample.Int
         | PrimitiveSchemaValueWithExample.Int64
         | PrimitiveSchemaValueWithExample.Uint
@@ -80,47 +80,47 @@ export declare namespace PrimitiveSchemaValueWithExample {
         | PrimitiveSchemaValueWithExample.Base64
         | PrimitiveSchemaValueWithExample.Boolean;
 
-    interface Int extends IntWithExample.Raw {
+    export interface Int extends IntWithExample.Raw {
         type: "int";
     }
 
-    interface Int64 extends Int64WithExample.Raw {
+    export interface Int64 extends Int64WithExample.Raw {
         type: "int64";
     }
 
-    interface Uint extends UintWithExample.Raw {
+    export interface Uint extends UintWithExample.Raw {
         type: "uint";
     }
 
-    interface Uint64 extends Uint64WithExample.Raw {
+    export interface Uint64 extends Uint64WithExample.Raw {
         type: "uint64";
     }
 
-    interface Float extends FloatWithExample.Raw {
+    export interface Float extends FloatWithExample.Raw {
         type: "float";
     }
 
-    interface Double extends DoubleWithExample.Raw {
+    export interface Double extends DoubleWithExample.Raw {
         type: "double";
     }
 
-    interface String extends StringSchemaWithExample.Raw {
+    export interface String extends StringSchemaWithExample.Raw {
         type: "string";
     }
 
-    interface Datetime extends DatetimeWithExample.Raw {
+    export interface Datetime extends DatetimeWithExample.Raw {
         type: "datetime";
     }
 
-    interface Date extends DateWithExample.Raw {
+    export interface Date extends DateWithExample.Raw {
         type: "date";
     }
 
-    interface Base64 extends Base64WithExample.Raw {
+    export interface Base64 extends Base64WithExample.Raw {
         type: "base64";
     }
 
-    interface Boolean extends BooleanWithExample.Raw {
+    export interface Boolean extends BooleanWithExample.Raw {
         type: "boolean";
     }
 }

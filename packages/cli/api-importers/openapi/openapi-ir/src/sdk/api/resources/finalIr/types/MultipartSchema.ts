@@ -6,21 +6,21 @@ import * as FernOpenapiIr from "../../../index";
 
 export type MultipartSchema = FernOpenapiIr.MultipartSchema.File_ | FernOpenapiIr.MultipartSchema.Json;
 
-export declare namespace MultipartSchema {
-    interface File_ extends FernOpenapiIr.FileSchema, _Utils {
+export namespace MultipartSchema {
+    export interface File_ extends FernOpenapiIr.FileSchema, _Utils {
         type: "file";
     }
 
-    interface Json extends _Utils {
+    export interface Json extends _Utils {
         type: "json";
         value: FernOpenapiIr.Schema;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         file: (value: FernOpenapiIr.FileSchema) => _Result;
         json: (value: FernOpenapiIr.Schema) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -34,7 +34,7 @@ export const MultipartSchema = {
             type: "file",
             _visit: function <_Result>(
                 this: FernOpenapiIr.MultipartSchema.File_,
-                visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>
+                visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.MultipartSchema._visit(this, visitor);
             },
@@ -47,7 +47,7 @@ export const MultipartSchema = {
             type: "json",
             _visit: function <_Result>(
                 this: FernOpenapiIr.MultipartSchema.Json,
-                visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>
+                visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.MultipartSchema._visit(this, visitor);
             },
@@ -56,7 +56,7 @@ export const MultipartSchema = {
 
     _visit: <_Result>(
         value: FernOpenapiIr.MultipartSchema,
-        visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>
+        visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "file":

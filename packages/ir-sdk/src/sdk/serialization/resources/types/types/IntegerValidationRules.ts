@@ -18,7 +18,7 @@ export const IntegerValidationRules: core.serialization.ObjectSchema<
 });
 
 export declare namespace IntegerValidationRules {
-    interface Raw {
+    export interface Raw {
         min?: number | null;
         max?: number | null;
         exclusiveMin?: boolean | null;

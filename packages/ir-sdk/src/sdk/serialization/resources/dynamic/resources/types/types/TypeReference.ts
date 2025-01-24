@@ -13,7 +13,7 @@ export const TypeReference: core.serialization.Schema<
     serializers.dynamic.TypeReference.Raw,
     FernIr.dynamic.TypeReference
 > = core.serialization
-    .union(core.serialization.discriminant("type", "_type"), {
+    .union("type", {
         list: core.serialization.object({
             value: core.serialization.lazy(() => serializers.dynamic.TypeReference),
         }),
@@ -23,6 +23,9 @@ export const TypeReference: core.serialization.Schema<
         map: core.serialization.lazyObject(() => serializers.dynamic.MapType),
         named: core.serialization.object({
             value: TypeId,
+        }),
+        nullable: core.serialization.object({
+            value: core.serialization.lazy(() => serializers.dynamic.TypeReference),
         }),
         optional: core.serialization.object({
             value: core.serialization.lazy(() => serializers.dynamic.TypeReference),
@@ -46,6 +49,8 @@ export const TypeReference: core.serialization.Schema<
                     return FernIr.dynamic.TypeReference.map(value);
                 case "named":
                     return FernIr.dynamic.TypeReference.named(value.value);
+                case "nullable":
+                    return FernIr.dynamic.TypeReference.nullable(value.value);
                 case "optional":
                     return FernIr.dynamic.TypeReference.optional(value.value);
                 case "primitive":
@@ -62,51 +67,57 @@ export const TypeReference: core.serialization.Schema<
     });
 
 export declare namespace TypeReference {
-    type Raw =
+    export type Raw =
         | TypeReference.List
         | TypeReference.Literal
         | TypeReference.Map
         | TypeReference.Named
+        | TypeReference.Nullable
         | TypeReference.Optional
         | TypeReference.Primitive
         | TypeReference.Set
         | TypeReference.Unknown;
 
-    interface List {
-        _type: "list";
+    export interface List {
+        type: "list";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
-    interface Literal {
-        _type: "literal";
+    export interface Literal {
+        type: "literal";
         value: LiteralType.Raw;
     }
 
-    interface Map extends serializers.dynamic.MapType.Raw {
-        _type: "map";
+    export interface Map extends serializers.dynamic.MapType.Raw {
+        type: "map";
     }
 
-    interface Named {
-        _type: "named";
+    export interface Named {
+        type: "named";
         value: TypeId.Raw;
     }
 
-    interface Optional {
-        _type: "optional";
+    export interface Nullable {
+        type: "nullable";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
-    interface Primitive {
-        _type: "primitive";
+    export interface Optional {
+        type: "optional";
+        value: serializers.dynamic.TypeReference.Raw;
+    }
+
+    export interface Primitive {
+        type: "primitive";
         value: PrimitiveTypeV1.Raw;
     }
 
-    interface Set {
-        _type: "set";
+    export interface Set {
+        type: "set";
         value: serializers.dynamic.TypeReference.Raw;
     }
 
-    interface Unknown {
-        _type: "unknown";
+    export interface Unknown {
+        type: "unknown";
     }
 }

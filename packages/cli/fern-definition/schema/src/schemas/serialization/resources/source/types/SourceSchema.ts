@@ -12,5 +12,5 @@ export const SourceSchema: core.serialization.Schema<serializers.SourceSchema.Ra
     core.serialization.undiscriminatedUnion([OpenApiSourceSchema, ProtobufSourceSchema]);
 
 export declare namespace SourceSchema {
-    type Raw = OpenApiSourceSchema.Raw | ProtobufSourceSchema.Raw;
+    export type Raw = OpenApiSourceSchema.Raw | ProtobufSourceSchema.Raw;
 }

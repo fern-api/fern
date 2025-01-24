@@ -1,7 +1,9 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
+
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
@@ -22,6 +24,7 @@ export declare namespace SdkClientClassGenerator {
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 
@@ -51,6 +54,7 @@ export class SdkClientClassGenerator {
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
     private omitUndefined: boolean;
+    private allowExtraFields: boolean;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
     constructor({
@@ -69,7 +73,8 @@ export class SdkClientClassGenerator {
         retainOriginalCasing,
         inlineFileProperties,
         oauthTokenProviderGenerator,
-        omitUndefined
+        omitUndefined,
+        allowExtraFields
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -87,6 +92,7 @@ export class SdkClientClassGenerator {
         this.inlineFileProperties = inlineFileProperties;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitUndefined = omitUndefined;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public generateService({
@@ -115,7 +121,8 @@ export class SdkClientClassGenerator {
             retainOriginalCasing: this.retainOriginalCasing,
             inlineFileProperties: this.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            allowExtraFields: this.allowExtraFields
         });
     }
 }

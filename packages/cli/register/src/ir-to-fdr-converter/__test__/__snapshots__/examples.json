@@ -53,10 +53,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:BasicType": {
@@ -150,10 +147,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_commons/types:EventInfo": {
@@ -222,8 +216,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "base64",
-                      "default": "0"
+                      "type": "base64"
                     }
                   }
                 }
@@ -357,15 +350,11 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "long",
-                "default": 0
+                "type": "long"
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:CastMember": {
@@ -421,10 +410,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Actress": {
@@ -451,10 +437,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:StuntDouble": {
@@ -481,10 +464,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:ExtendedMovie": {
@@ -507,10 +487,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Moment": {
@@ -533,8 +510,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "date",
-                "default": "1970-01-01T00:00:00.000Z"
+                "type": "date"
               }
             }
           },
@@ -543,15 +519,11 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "datetime",
-                "default": "1970-01-01T00:00:00.000Z"
+                "type": "datetime"
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:File": {
@@ -578,10 +550,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Directory": {
@@ -625,10 +594,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Node": {
@@ -672,10 +638,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Tree": {
@@ -697,10 +660,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Metadata": {
@@ -864,10 +824,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:MigrationStatus": {
@@ -911,10 +868,7 @@
               "value": "type_types:MigrationStatus"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Request": {
@@ -929,10 +883,7 @@
               "type": "unknown"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Response": {
@@ -957,10 +908,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:ResponseType": {
@@ -976,10 +924,7 @@
               "value": "type_:Type"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Test": {
@@ -998,8 +943,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean",
-                      "default": false
+                      "type": "boolean"
                     }
                   }
                 }
@@ -1016,8 +960,7 @@
                   "valueType": {
                     "type": "primitive",
                     "value": {
-                      "type": "boolean",
-                      "default": false
+                      "type": "boolean"
                     }
                   }
                 }
@@ -1049,10 +992,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:BigEntity": {
@@ -1191,10 +1131,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -1588,8 +1525,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -1890,8 +1826,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                   }
                 }
               }

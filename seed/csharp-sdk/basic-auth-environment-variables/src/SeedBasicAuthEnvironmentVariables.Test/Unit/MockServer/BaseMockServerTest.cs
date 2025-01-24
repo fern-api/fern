@@ -26,7 +26,7 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedBasicAuthEnvironmentVariablesClient("USERNAME", "PASSWORD");
+        Client = new SeedBasicAuthEnvironmentVariablesClient("USERNAME", "ACCESS_TOKEN");
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }
@@ -35,5 +35,6 @@ public class BaseMockServerTest
     public void GlobalTeardown()
     {
         Server.Stop();
+        Server.Dispose();
     }
 }

@@ -12,5 +12,5 @@ export const WebSocketChannelId: core.serialization.Schema<
 > = core.serialization.string();
 
 export declare namespace WebSocketChannelId {
-    type Raw = string;
+    export type Raw = string;
 }

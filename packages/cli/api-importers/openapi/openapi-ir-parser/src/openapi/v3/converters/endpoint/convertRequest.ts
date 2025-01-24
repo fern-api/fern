@@ -1,14 +1,16 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { MediaType } from "@fern-api/core-utils";
 import {
     MultipartRequestProperty,
     MultipartSchema,
+    NamedFullExample,
     RequestWithExample,
-    Source,
-    NamedFullExample
+    Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
-import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
+import { SCHEMA_REFERENCE_PREFIX, convertSchema, getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getApplicationJsonSchemaMediaObject, getExamples } from "./getApplicationJsonSchema";
@@ -101,26 +103,6 @@ export function convertRequest({
     const urlEncodedRequest = getApplicationUrlFormEncodedRequest(resolvedRequestBody, context);
 
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
-
-    // convert as application/x-www-form-urlencoded
-    if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
-        const convertedUrlEncodedSchema = convertSchema(
-            urlEncodedRequest.schema,
-            false,
-            context,
-            requestBreadcrumbs,
-            source,
-            namespace
-        );
-        return RequestWithExample.json({
-            schema: convertedUrlEncodedSchema,
-            description: resolvedRequestBody.description,
-            contentType: urlEncodedRequest.contentType,
-            source,
-            fullExamples: urlEncodedRequest.examples,
-            additionalProperties: false
-        });
-    }
 
     // convert as application/octet-stream
     if (isOctetStreamRequest(resolvedRequestBody)) {
@@ -236,29 +218,49 @@ export function convertRequest({
         });
     }
 
-    // otherwise, convert as json request.
-    if (jsonMediaObject == null) {
-        return undefined;
+    // convert as application/json
+    if (jsonMediaObject != null) {
+        const requestSchema = convertSchema(
+            jsonMediaObject.schema,
+            false,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace,
+            true
+        );
+        return RequestWithExample.json({
+            description: undefined,
+            schema: requestSchema,
+            contentType: jsonMediaObject.contentType,
+            fullExamples: jsonMediaObject.examples,
+            additionalProperties:
+                !isReferenceObject(jsonMediaObject.schema) &&
+                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
+            source
+        });
     }
-    const requestSchema = convertSchema(
-        jsonMediaObject.schema,
-        false,
-        context,
-        requestBreadcrumbs,
-        source,
-        namespace,
-        true
-    );
-    return RequestWithExample.json({
-        description: undefined,
-        schema: requestSchema,
-        contentType: jsonMediaObject.contentType,
-        fullExamples: jsonMediaObject.examples,
-        additionalProperties:
-            !isReferenceObject(jsonMediaObject.schema) &&
-            isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
-        source
-    });
+
+    // convert as application/x-www-form-urlencoded
+    if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
+        const convertedUrlEncodedSchema = convertSchema(
+            urlEncodedRequest.schema,
+            false,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace
+        );
+        return RequestWithExample.json({
+            schema: convertedUrlEncodedSchema,
+            description: resolvedRequestBody.description,
+            contentType: urlEncodedRequest.contentType,
+            source,
+            fullExamples: urlEncodedRequest.examples,
+            additionalProperties: false
+        });
+    }
+    return undefined;
 }
 
 interface ResolvedSchema {

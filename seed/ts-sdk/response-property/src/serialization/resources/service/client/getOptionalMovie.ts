@@ -11,7 +11,7 @@ export const Request: core.serialization.Schema<serializers.service.getOptionalM
     core.serialization.string();
 
 export declare namespace Request {
-    type Raw = string;
+    export type Raw = string;
 }
 
 export const Response: core.serialization.Schema<
@@ -20,5 +20,5 @@ export const Response: core.serialization.Schema<
 > = Response.optional();
 
 export declare namespace Response {
-    type Raw = Response.Raw | null | undefined;
+    export type Raw = Response.Raw | null | undefined;
 }

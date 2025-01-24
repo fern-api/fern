@@ -26,6 +26,14 @@ public final class SeedPaginationClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedPaginationClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedPaginationClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         clientOptionsBuilder.environment(this.environment);

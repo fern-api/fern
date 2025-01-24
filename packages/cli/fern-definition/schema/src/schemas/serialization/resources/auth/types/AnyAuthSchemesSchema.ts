@@ -18,7 +18,7 @@ export const AnyAuthSchemesSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace AnyAuthSchemesSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         any: AnyAuthItem.Raw[];
     }
 }

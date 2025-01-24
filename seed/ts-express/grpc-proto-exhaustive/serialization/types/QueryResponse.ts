@@ -15,7 +15,7 @@ export const QueryResponse: core.serialization.ObjectSchema<serializers.QueryRes
     });
 
 export declare namespace QueryResponse {
-    interface Raw {
+    export interface Raw {
         results?: serializers.QueryResult.Raw[] | null;
         matches?: serializers.ScoredColumn.Raw[] | null;
         namespace?: string | null;

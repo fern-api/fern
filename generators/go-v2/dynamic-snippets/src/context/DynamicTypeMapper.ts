@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { go } from "@fern-api/go-codegen";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { go } from "@fern-api/go-ast";
+
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
-import { Severity } from "./ErrorReporter";
 
 export declare namespace DynamicTypeMapper {
     interface Args {
-        typeReference: DynamicSnippets.TypeReference;
+        typeReference: FernIr.dynamic.TypeReference;
     }
 }
 
@@ -37,6 +37,8 @@ export class DynamicTypeMapper {
             }
             case "optional":
                 return go.Type.optional(this.convert({ typeReference: args.typeReference.value }));
+            case "nullable":
+                return go.Type.optional(this.convert({ typeReference: args.typeReference.value }));
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
@@ -48,7 +50,7 @@ export class DynamicTypeMapper {
         }
     }
 
-    private convertLiteral({ literal }: { literal: DynamicSnippets.LiteralType }): go.Type {
+    private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): go.Type {
         switch (literal.type) {
             case "boolean":
                 return go.Type.bool();
@@ -57,7 +59,7 @@ export class DynamicTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: DynamicSnippets.NamedType }): go.Type {
+    private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): go.Type {
         const goTypeReference = go.Type.reference(
             go.typeReference({
                 name: this.context.getTypeName(named.declaration.name),
@@ -81,7 +83,7 @@ export class DynamicTypeMapper {
         return go.Type.any();
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveTypeV1 }): go.Type {
+    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): go.Type {
         switch (primitive) {
             case "INTEGER":
                 return go.Type.int();

@@ -5,8 +5,86 @@ package unions
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/unions/fern/core"
+	internal "github.com/unions/fern/internal"
 )
+
+type Circle struct {
+	Radius float64 `json:"radius" url:"radius"`
+
+	extraProperties map[string]interface{}
+}
+
+func (c *Circle) GetRadius() float64 {
+	if c == nil {
+		return 0
+	}
+	return c.Radius
+}
+
+func (c *Circle) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *Circle) UnmarshalJSON(data []byte) error {
+	type unmarshaler Circle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Circle(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	return nil
+}
+
+func (c *Circle) String() string {
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type GetShapeRequest struct {
+	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+}
+
+func (g *GetShapeRequest) GetId() string {
+	if g == nil {
+		return ""
+	}
+	return g.Id
+}
+
+func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetShapeRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetShapeRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	return nil
+}
+
+func (g *GetShapeRequest) String() string {
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
 
 type Shape struct {
 	Type   string
@@ -21,6 +99,34 @@ func NewShapeFromCircle(value *Circle) *Shape {
 
 func NewShapeFromSquare(value *Square) *Shape {
 	return &Shape{Type: "square", Square: value}
+}
+
+func (s *Shape) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *Shape) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *Shape) GetCircle() *Circle {
+	if s == nil {
+		return nil
+	}
+	return s.Circle
+}
+
+func (s *Shape) GetSquare() *Square {
+	if s == nil {
+		return nil
+	}
+	return s.Square
 }
 
 func (s *Shape) UnmarshalJSON(data []byte) error {
@@ -54,13 +160,16 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 }
 
 func (s Shape) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
 	switch s.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "circle":
-		return core.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
+		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
 	case "square":
-		return core.MarshalJSONWithExtraProperty(s.Square, "type", "square")
+		return internal.MarshalJSONWithExtraProperty(s.Square, "type", "square")
 	}
 }
 
@@ -78,4 +187,77 @@ func (s *Shape) Accept(visitor ShapeVisitor) error {
 	case "square":
 		return visitor.VisitSquare(s.Square)
 	}
+}
+
+func (s *Shape) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Circle != nil {
+		fields = append(fields, "circle")
+	}
+	if s.Square != nil {
+		fields = append(fields, "square")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
+}
+
+type Square struct {
+	Length float64 `json:"length" url:"length"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *Square) GetLength() float64 {
+	if s == nil {
+		return 0
+	}
+	return s.Length
+}
+
+func (s *Square) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *Square) UnmarshalJSON(data []byte) error {
+	type unmarshaler Square
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = Square(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	return nil
+}
+
+func (s *Square) String() string {
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }

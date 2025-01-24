@@ -8,36 +8,38 @@ import { FolderD } from "./api/resources/folderD/client/Client";
 import { Foo } from "./api/resources/foo/client/Client";
 
 export declare namespace SeedCrossPackageTypeNamesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedCrossPackageTypeNamesClient {
-    constructor(protected readonly _options: SeedCrossPackageTypeNamesClient.Options) {}
-
     protected _folderA: FolderA | undefined;
+    protected _folderD: FolderD | undefined;
+    protected _foo: Foo | undefined;
+
+    constructor(protected readonly _options: SeedCrossPackageTypeNamesClient.Options) {}
 
     public get folderA(): FolderA {
         return (this._folderA ??= new FolderA(this._options));
     }
 
-    protected _folderD: FolderD | undefined;
-
     public get folderD(): FolderD {
         return (this._folderD ??= new FolderD(this._options));
     }
-
-    protected _foo: Foo | undefined;
 
     public get foo(): Foo {
         return (this._foo ??= new Foo(this._options));

@@ -1,15 +1,12 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import {
-    ExampleEndpointCall,
-    ExampleTypeReference,
-    FernFilepath,
-    HttpEndpoint,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
+import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { SdkGeneratorContext, MOCK_SERVER_TEST_FOLDER } from "../../SdkGeneratorContext";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
+import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 
 export declare namespace TestClass {
     interface TestInput {
@@ -91,6 +88,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
+                const requestContentType = getContentTypeFromRequestBody(this.endpoint);
+                if (requestContentType) {
+                    writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
+                }
+
                 writer.write(
                     `.Using${
                         this.endpoint.method.charAt(0).toUpperCase() + this.endpoint.method.slice(1).toLowerCase()
@@ -115,41 +117,58 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 }
                 writer.newLine();
 
-                const endpointSnippet = this.endpointGenerator.generateHttpEndpointSnippet({
+                const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
                     example,
                     endpoint: this.endpoint,
                     clientVariableName: "Client",
                     serviceId: this.serviceId,
                     getResult: true,
-                    requestOptions: csharp.codeblock("RequestOptions"),
+                    requestOptions: this.endpoint.idempotent
+                        ? csharp.codeblock("IdempotentRequestOptions")
+                        : csharp.codeblock("RequestOptions"),
                     parseDatetimes: true
                 });
                 if (endpointSnippet == null) {
                     throw new Error("Endpoint snippet is null");
                 }
-                if (responseSupported) {
-                    writer.write("var response = ");
-                } else {
-                    writer.write("Assert.DoesNotThrowAsync(async () => ");
-                }
-                writer.writeNode(endpointSnippet);
-                if (!responseSupported) {
-                    writer.write(")");
-                }
-                writer.write(";");
-
-                if (responseSupported) {
+                if (this.endpoint.pagination) {
+                    writer.write("var pager = ");
+                    writer.writeNode(endpointSnippet);
+                    writer.write(";");
                     writer.newLine();
-                    if (responseBodyType === "json") {
-                        writer.addReference(this.context.getFluentAssetionsJsonClassReference());
-                        writer.writeNode(this.context.getJTokenClassReference());
-                        writer.write(".Parse(mockResponse).Should().BeEquivalentTo(");
-                        writer.writeNode(this.context.getJTokenClassReference());
-                        writer.write(".Parse(");
-                        writer.writeNode(this.context.getJsonUtilsClassReference());
-                        writer.writeTextStatement(".Serialize(response)))");
-                    } else if (responseBodyType === "text") {
-                        writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
+                    writer.write("await foreach (var item in pager)");
+                    writer.newLine();
+                    writer.write("{");
+                    writer.newLine();
+                    writer.indent();
+
+                    writer.writeTextStatement("Assert.That(item, Is.Not.Null)");
+                    writer.write("break; // Only check the first item");
+
+                    writer.dedent();
+                    writer.newLine();
+                    writer.write("}");
+                } else {
+                    if (responseSupported) {
+                        writer.write("var response = ");
+                        writer.writeNode(endpointSnippet);
+                        writer.write(";");
+                        writer.newLine();
+                        if (responseBodyType === "json") {
+                            writer.addReference(this.context.getFluentAssetionsJsonClassReference());
+                            writer.writeNode(this.context.getJTokenClassReference());
+                            writer.write(".Parse(mockResponse).Should().BeEquivalentTo(");
+                            writer.writeNode(this.context.getJTokenClassReference());
+                            writer.write(".Parse(");
+                            writer.writeNode(this.context.getJsonUtilsClassReference());
+                            writer.writeTextStatement(".Serialize(response)))");
+                        } else if (responseBodyType === "text") {
+                            writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
+                        }
+                    } else {
+                        writer.write("Assert.DoesNotThrowAsync(async () => ");
+                        writer.writeNode(endpointSnippet);
+                        writer.write(");");
                     }
                 }
             });

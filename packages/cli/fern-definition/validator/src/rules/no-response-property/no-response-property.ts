@@ -1,12 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas, parseRawFileType, parseRawTextType } from "@fern-api/fern-definition-schema";
 import {
-    constructFernFileContext,
     FernFileContext,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl
+    TypeResolverImpl,
+    constructFernFileContext
 } from "@fern-api/ir-generator";
-import { parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -62,14 +63,14 @@ function resultToRuleViolations(result: Result, responseProperty: string): RuleV
         case Result.DoesNotContainProperty:
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `Response does not have a property named ${responseProperty}.`
                 }
             ];
         case Result.IsNotObject:
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: "Response must be an object in order to return a property as a response."
                 }
             ];
@@ -84,7 +85,7 @@ function resolvedTypeHasProperty(
 ): Result {
     switch (resolvedType._type) {
         case "container":
-            if (resolvedType.container._type !== "optional") {
+            if (resolvedType.container._type !== "optional" && resolvedType.container._type !== "nullable") {
                 return Result.IsNotObject;
             }
             return resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);

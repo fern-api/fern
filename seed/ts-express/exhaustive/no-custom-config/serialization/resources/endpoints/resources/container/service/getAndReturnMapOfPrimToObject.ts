@@ -11,11 +11,11 @@ export const Request: core.serialization.Schema<
     Record<string, SeedExhaustive.types.ObjectWithRequiredField>
 > = core.serialization.record(
     core.serialization.string(),
-    core.serialization.lazyObject(() => serializers.types.ObjectWithRequiredField)
+    core.serialization.lazyObject(() => serializers.types.ObjectWithRequiredField),
 );
 
 export declare namespace Request {
-    type Raw = Record<string, serializers.types.ObjectWithRequiredField.Raw>;
+    export type Raw = Record<string, serializers.types.ObjectWithRequiredField.Raw>;
 }
 
 export const Response: core.serialization.Schema<
@@ -23,9 +23,9 @@ export const Response: core.serialization.Schema<
     Record<string, SeedExhaustive.types.ObjectWithRequiredField>
 > = core.serialization.record(
     core.serialization.string(),
-    core.serialization.lazyObject(() => serializers.types.ObjectWithRequiredField)
+    core.serialization.lazyObject(() => serializers.types.ObjectWithRequiredField),
 );
 
 export declare namespace Response {
-    type Raw = Record<string, serializers.types.ObjectWithRequiredField.Raw>;
+    export type Raw = Record<string, serializers.types.ObjectWithRequiredField.Raw>;
 }

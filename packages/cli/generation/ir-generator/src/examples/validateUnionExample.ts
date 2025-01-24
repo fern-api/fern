@@ -1,8 +1,9 @@
-import { isPlainObject } from "@fern-api/core-utils";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
-import { getUnionDiscriminant } from "../converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
+import { isPlainObject } from "@fern-api/core-utils";
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../FernFileContext";
+import { getUnionDiscriminant } from "../converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { ExampleViolation } from "./exampleViolation";
@@ -18,7 +19,8 @@ export function validateUnionExample({
     exampleResolver,
     file,
     workspace,
-    breadcrumbs
+    breadcrumbs,
+    depth
 }: {
     typeName: string;
     rawUnion: RawSchemas.DiscriminatedUnionSchema;
@@ -28,6 +30,7 @@ export function validateUnionExample({
     file: FernFileContext;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth: number;
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -78,7 +81,8 @@ export function validateUnionExample({
             typeResolver,
             exampleResolver,
             workspace,
-            breadcrumbs
+            breadcrumbs,
+            depth: depth + 1
         });
         if (basePropertyViolations.length > 0) {
             return basePropertyViolations;
@@ -117,7 +121,8 @@ export function validateUnionExample({
             typeResolver,
             exampleResolver,
             workspace,
-            breadcrumbs
+            breadcrumbs,
+            depth: depth + 1
         });
     }
 
@@ -147,7 +152,8 @@ export function validateUnionExample({
                 exampleResolver,
                 file,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth: depth + 1
             })
         );
     }
@@ -159,7 +165,7 @@ export function validateUnionExample({
 
 function getRuleViolationForExtraProperties(extraProperties: Record<string, unknown>): ExampleViolation[] {
     return Object.keys(extraProperties).map((key) => ({
-        severity: "error",
+        severity: "fatal",
         message: `Unexpected property "${key}"`
     }));
 }

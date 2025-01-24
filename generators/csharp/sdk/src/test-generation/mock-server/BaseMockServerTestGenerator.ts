@@ -1,8 +1,9 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { RootClientGenerator } from "../../root-client/RootClientGenerator";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { SdkGeneratorContext, MOCK_SERVER_TEST_FOLDER } from "../../SdkGeneratorContext";
+import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator";
 
 export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;
@@ -69,6 +70,20 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             })
         );
 
+        if (this.context.hasIdempotencyHeaders()) {
+            class_.addField(
+                csharp.field({
+                    access: csharp.Access.Protected,
+                    name: "IdempotentRequestOptions",
+                    static_: true,
+                    type: csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference()),
+                    get: true,
+                    initializer: csharp.codeblock("null!"),
+                    set: true
+                })
+            );
+        }
+
         class_.addMethod(
             csharp.method({
                 name: "GlobalSetup",
@@ -108,6 +123,16 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                             arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
                         })
                     );
+
+                    if (this.context.hasIdempotencyHeaders()) {
+                        writer.writeLine("IdempotentRequestOptions = ");
+                        writer.writeNodeStatement(
+                            new csharp.ClassInstantiation({
+                                classReference: this.context.getIdempotentRequestOptionsClassReference(),
+                                arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
+                            })
+                        );
+                    }
                 }),
                 isAsync: false,
                 parameters: [],
@@ -125,6 +150,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 access: csharp.Access.Public,
                 body: csharp.codeblock((writer) => {
                     writer.writeLine("Server.Stop();");
+                    writer.writeLine("Server.Dispose();");
                 }),
                 isAsync: false,
                 parameters: [],

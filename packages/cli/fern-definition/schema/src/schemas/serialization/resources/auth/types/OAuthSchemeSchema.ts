@@ -20,19 +20,21 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
         "client-id-env": core.serialization.string().optional(),
         "client-secret-env": core.serialization.string().optional(),
         "token-prefix": core.serialization.string().optional(),
+        "token-header": core.serialization.string().optional(),
         "get-token": OAuthGetTokenEndpointSchema,
         "refresh-token": OAuthRefreshTokenEndpointSchema.optional(),
     })
     .extend(WithDocsSchema);
 
 export declare namespace OAuthSchemeSchema {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         scheme: "oauth";
         type: "client-credentials";
         scopes?: string[] | null;
         "client-id-env"?: string | null;
         "client-secret-env"?: string | null;
         "token-prefix"?: string | null;
+        "token-header"?: string | null;
         "get-token": OAuthGetTokenEndpointSchema.Raw;
         "refresh-token"?: OAuthRefreshTokenEndpointSchema.Raw | null;
     }

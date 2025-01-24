@@ -10,7 +10,10 @@ import (
 )
 
 func do() () {
-    client := client.NewClient(
+    client := client.NewAcmeClient(
+        option.WithBaseURL(
+            "https://api.fern.com",
+        ),
         option.WithToken(
             "<token>",
         ),

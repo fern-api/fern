@@ -1,4 +1,8 @@
+import urlJoin from "url-join";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas, isVariablePathParameter } from "@fern-api/fern-definition-schema";
 import {
     Encoding,
     HttpEndpoint,
@@ -11,17 +15,16 @@ import {
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
-import urlJoin from "url-join";
+import { SourceResolver } from "@fern-api/source-resolver";
+
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { SourceResolver } from "../../resolvers/SourceResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertCodeSample } from "./convertCodeSamples";
@@ -32,9 +35,9 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
-import { getTransportForService, getTransportForEndpoint } from "./convertTransport";
+import { getTransportForEndpoint, getTransportForService } from "./convertTransport";
 
-export async function convertHttpService({
+export function convertHttpService({
     rootDefaultUrl,
     rootPathParameters,
     serviceDefinition,
@@ -60,15 +63,15 @@ export async function convertHttpService({
     sourceResolver: SourceResolver;
     globalErrors: ResponseErrors;
     workspace: FernWorkspace;
-}): Promise<HttpService> {
-    const servicePathParameters = await convertPathParameters({
+}): HttpService {
+    const servicePathParameters = convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
         location: PathParameterLocation.Service,
         file,
         variableResolver
     });
 
-    const transport = await getTransportForService({
+    const transport = getTransportForService({
         file,
         serviceDeclaration: serviceDefinition,
         sourceResolver
@@ -82,124 +85,116 @@ export async function convertHttpService({
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
-                ? await Promise.all(
-                      Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
-                          convertHttpHeader({ headerKey, header, file })
-                      )
+                ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
+                      convertHttpHeader({ headerKey, header, file })
                   )
                 : [],
         pathParameters: servicePathParameters,
         encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
-        endpoints: await Promise.all(
-            Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
-                const endpointPathParameters = await convertPathParameters({
-                    pathParameters: endpoint["path-parameters"],
-                    location: PathParameterLocation.Endpoint,
+        endpoints: Object.entries(serviceDefinition.endpoints).map(([endpointKey, endpoint]): HttpEndpoint => {
+            const endpointPathParameters = convertPathParameters({
+                pathParameters: getEndpointPathParameters(endpoint),
+                location: PathParameterLocation.Endpoint,
+                file,
+                variableResolver
+            });
+            const httpEndpoint: HttpEndpoint = {
+                ...convertDeclaration(endpoint),
+                id: "",
+                name: file.casingsGenerator.generateName(endpointKey),
+                displayName: endpoint["display-name"],
+                auth: endpoint.auth ?? serviceDefinition.auth,
+                idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
+                baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
+                method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
+                basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
+                path: constructHttpPath(endpoint.path),
+                fullPath: constructHttpPath(
+                    endpoint["base-path"] != null
+                        ? urlJoin(endpoint["base-path"], endpoint.path)
+                        : file.rootApiFile["base-path"] != null
+                          ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
+                          : urlJoin(serviceDefinition["base-path"], endpoint.path)
+                ),
+                pathParameters: endpointPathParameters,
+                allPathParameters:
+                    endpoint["base-path"] != null
+                        ? endpointPathParameters
+                        : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
+                queryParameters:
+                    typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
+                        ? Object.entries(endpoint.request["query-parameters"]).map(
+                              ([queryParameterKey, queryParameter]) => {
+                                  return convertQueryParameter({
+                                      file,
+                                      queryParameterKey,
+                                      queryParameter
+                                  });
+                              }
+                          )
+                        : [],
+                headers:
+                    typeof endpoint.request !== "string" && endpoint.request?.headers != null
+                        ? Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
+                              convertHttpHeader({ headerKey, header, file })
+                          )
+                        : [],
+                requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
+                sdkRequest: convertHttpSdkRequest({
+                    service: serviceDefinition,
+                    request: endpoint.request,
+                    endpoint,
+                    endpointKey,
                     file,
-                    variableResolver
-                });
-                const httpEndpoint: HttpEndpoint = {
-                    ...(await convertDeclaration(endpoint)),
-                    id: "",
-                    name: file.casingsGenerator.generateName(endpointKey),
-                    displayName: endpoint["display-name"],
-                    auth: endpoint.auth ?? serviceDefinition.auth,
-                    idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
-                    baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
-                    method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
-                    basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
-                    path: constructHttpPath(endpoint.path),
-                    fullPath: constructHttpPath(
-                        endpoint["base-path"] != null
-                            ? urlJoin(endpoint["base-path"], endpoint.path)
-                            : file.rootApiFile["base-path"] != null
-                            ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
-                            : urlJoin(serviceDefinition["base-path"], endpoint.path)
-                    ),
-                    pathParameters: endpointPathParameters,
-                    allPathParameters:
-                        endpoint["base-path"] != null
-                            ? endpointPathParameters
-                            : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
-                    queryParameters:
-                        typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
-                            ? await Promise.all(
-                                  Object.entries(endpoint.request["query-parameters"]).map(
-                                      async ([queryParameterKey, queryParameter]) => {
-                                          return await convertQueryParameter({
-                                              file,
-                                              queryParameterKey,
-                                              queryParameter
-                                          });
-                                      }
+                    typeResolver,
+                    propertyResolver
+                }),
+                response: convertHttpResponse({ endpoint, file, typeResolver }),
+                errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
+                userSpecifiedExamples:
+                    endpoint.examples != null
+                        ? endpoint.examples.map((example) => {
+                              return {
+                                  example: convertExampleEndpointCall({
+                                      service: serviceDefinition,
+                                      endpoint,
+                                      example,
+                                      typeResolver,
+                                      errorResolver,
+                                      exampleResolver,
+                                      variableResolver,
+                                      file,
+                                      workspace
+                                  }),
+                                  codeSamples: example["code-samples"]?.map((codeSample) =>
+                                      convertCodeSample({ codeSample, file })
                                   )
-                              )
-                            : [],
-                    headers:
-                        typeof endpoint.request !== "string" && endpoint.request?.headers != null
-                            ? await Promise.all(
-                                  Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
-                                      convertHttpHeader({ headerKey, header, file })
-                                  )
-                              )
-                            : [],
-                    requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
-                    sdkRequest: await convertHttpSdkRequest({
-                        service: serviceDefinition,
-                        request: endpoint.request,
-                        endpoint,
-                        endpointKey,
-                        file,
-                        typeResolver,
-                        propertyResolver
-                    }),
-                    response: await convertHttpResponse({ endpoint, file, typeResolver }),
-                    errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
-                    userSpecifiedExamples:
-                        endpoint.examples != null
-                            ? endpoint.examples.map((example) => {
-                                  return {
-                                      example: convertExampleEndpointCall({
-                                          service: serviceDefinition,
-                                          endpoint,
-                                          example,
-                                          typeResolver,
-                                          errorResolver,
-                                          exampleResolver,
-                                          variableResolver,
-                                          file,
-                                          workspace
-                                      }),
-                                      codeSamples: example["code-samples"]?.map((codeSample) =>
-                                          convertCodeSample({ codeSample, file })
-                                      )
-                                  };
-                              })
-                            : [],
-                    autogeneratedExamples: [], // gets filled in later on
-                    pagination: await convertPagination({
-                        propertyResolver,
-                        file,
-                        endpointName: endpointKey,
-                        endpointSchema: endpoint
-                    }),
-                    transport: await getTransportForEndpoint({
-                        file,
-                        serviceTransport: transport,
-                        endpointDeclaration: endpoint,
-                        sourceResolver
-                    })
-                };
-                httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
-                return httpEndpoint;
-            })
-        )
+                              };
+                          })
+                        : [],
+                autogeneratedExamples: [], // gets filled in later on
+                pagination: convertPagination({
+                    propertyResolver,
+                    file,
+                    endpointName: endpointKey,
+                    endpointSchema: endpoint
+                }),
+                transport: getTransportForEndpoint({
+                    file,
+                    serviceTransport: transport,
+                    endpointDeclaration: endpoint,
+                    sourceResolver
+                })
+            };
+            httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
+            return httpEndpoint;
+        })
     };
     return service;
 }
 
-export async function convertPathParameters({
+export function convertPathParameters({
     pathParameters,
     location,
     file,
@@ -209,24 +204,22 @@ export async function convertPathParameters({
     location: PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
-}): Promise<PathParameter[]> {
+}): PathParameter[] {
     if (pathParameters == null) {
         return [];
     }
-    return await Promise.all(
-        Object.entries(pathParameters).map(([parameterName, parameter]) =>
-            convertPathParameter({
-                parameterName,
-                parameter,
-                location,
-                file,
-                variableResolver
-            })
-        )
+    return Object.entries(pathParameters).map(([parameterName, parameter]) =>
+        convertPathParameter({
+            parameterName,
+            parameter,
+            location,
+            file,
+            variableResolver
+        })
     );
 }
 
-async function convertPathParameter({
+function convertPathParameter({
     parameterName,
     parameter,
     location,
@@ -238,9 +231,9 @@ async function convertPathParameter({
     location: PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
-}): Promise<PathParameter> {
+}): PathParameter {
     return {
-        ...(await convertDeclaration(parameter)),
+        ...convertDeclaration(parameter),
         name: file.casingsGenerator.generateName(parameterName),
         valueType: getPathParameterType({ parameter, variableResolver, file }),
         location,
@@ -338,7 +331,7 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
     }
 }
 
-export async function convertHttpHeader({
+export function convertHttpHeader({
     headerKey,
     header,
     file
@@ -346,10 +339,10 @@ export async function convertHttpHeader({
     headerKey: string;
     header: RawSchemas.HttpHeaderSchema;
     file: FernFileContext;
-}): Promise<HttpHeader> {
+}): HttpHeader {
     const { name } = getHeaderName({ headerKey, header });
     return {
-        ...(await convertDeclaration(header)),
+        ...convertDeclaration(header),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: headerKey,
             name

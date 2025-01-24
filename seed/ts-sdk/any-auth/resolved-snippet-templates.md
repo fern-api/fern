@@ -13,8 +13,8 @@ await client.auth.getToken({
   clientSecret: "client_secret",
   scope: "scope",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -28,7 +28,7 @@ const client = new SeedAnyAuthClient({
   clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.user.get();
- 
-```                        
+
+```
 
 

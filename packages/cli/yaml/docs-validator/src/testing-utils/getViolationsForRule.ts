@@ -1,10 +1,13 @@
+import stripAnsi from "strip-ansi";
+
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadProjectFromDirectory } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import stripAnsi from "strip-ansi";
+
 import { Rule } from "../Rule";
-import { runRulesOnDocsWorkspace } from "../validateDocsWorkspace";
 import { ValidationViolation } from "../ValidationViolation";
+import { runRulesOnDocsWorkspace } from "../validateDocsWorkspace";
 
 export declare namespace getViolationsForRule {
     export interface Args {
@@ -31,11 +34,21 @@ export async function getViolationsForRule({
         throw new Error("Expected docs workspace to be present, but found none");
     }
 
+    const fernWorkspaces = await Promise.all(
+        project.apiWorkspaces.map(async (workspace) => {
+            return workspace.toFernWorkspace(
+                { context },
+                { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+            );
+        })
+    );
+
     const violations = await runRulesOnDocsWorkspace({
         workspace: project.docsWorkspaces,
         context,
         rules: [rule],
-        loadApiWorkspace: project.loadAPIWorkspace
+        fernWorkspaces,
+        ossWorkspaces: await filterOssWorkspaces(project)
     });
 
     return violations.map((violation) => ({

@@ -1,5 +1,7 @@
-import { HttpMethod } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { HttpMethod } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
@@ -23,6 +25,10 @@ export function convertPathItem(
     };
 
     for (const operation of operations) {
+        if (context.filter.skipEndpoint({ method: operation.method, path })) {
+            context.logger.debug(`Skipping endpoint "${operation.method} ${path}"`);
+            continue;
+        }
         const convertToWebhook = isWebhook({ operation: operation.operation });
         const convertedOperation = convertOperation({
             context,
@@ -57,6 +63,10 @@ export function convertPathItemToWebhooks(
     };
 
     for (const operation of operations) {
+        if (context.filter.skipEndpoint({ method: operation.method, path })) {
+            context.logger.debug(`Skipping endpoint "${operation.method} ${path}"`);
+            continue;
+        }
         const convertedOperation = convertOperation({
             context,
             pathItemContext: {

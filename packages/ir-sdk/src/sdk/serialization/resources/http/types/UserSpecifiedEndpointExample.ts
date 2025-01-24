@@ -17,7 +17,7 @@ export const UserSpecifiedEndpointExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace UserSpecifiedEndpointExample {
-    interface Raw {
+    export interface Raw {
         codeSamples?: ExampleCodeSample.Raw[] | null;
         example?: ExampleEndpointCall.Raw | null;
     }

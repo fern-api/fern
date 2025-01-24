@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
+
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
 export interface PlaygroundConfig {
@@ -48,7 +49,9 @@ export function convertAuth(
                                   endpointId: FdrCjsSdk.EndpointId(
                                       scheme.configuration.tokenEndpoint.endpointReference.endpointId
                                   ),
-                                  accessTokenLocator: FdrCjsSdk.JqString(tokenPath)
+                                  accessTokenLocator: FdrCjsSdk.JqString(tokenPath),
+                                  headerName: scheme.configuration.tokenHeader,
+                                  tokenPrefix: scheme.configuration.tokenPrefix
                               }
                           }
                       }

@@ -5,7 +5,7 @@ package extraproperties
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/extra-properties/fern/core"
+	internal "github.com/extra-properties/fern/internal"
 )
 
 type CreateUserRequest struct {
@@ -34,12 +34,11 @@ func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 	c.type_ = "CreateUserRequest"
 	c.version = "v1"
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c, "_type", "_version")
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "_type", "_version")
 	if err != nil {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-
 	return nil
 }
 
@@ -54,7 +53,7 @@ func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
 		Type:    "CreateUserRequest",
 		Version: "v1",
 	}
-	return core.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
+	return internal.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
 }
 
 type User struct {
@@ -62,7 +61,14 @@ type User struct {
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
-	_rawJSON json.RawMessage
+	rawJSON json.RawMessage
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -80,14 +86,12 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(unmarshaler.embed)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.ExtraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -98,16 +102,16 @@ func (u *User) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return core.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
 }
 
 func (u *User) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

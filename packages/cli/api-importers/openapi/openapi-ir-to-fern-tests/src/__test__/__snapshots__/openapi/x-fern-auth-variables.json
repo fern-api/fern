@@ -71,6 +71,7 @@
         "types": {
           "UserGetAllResponseItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -88,6 +89,7 @@
           },
           "UserGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",

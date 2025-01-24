@@ -1,14 +1,21 @@
+import { writeFile } from "fs/promises";
+
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli, TestFileGenerator, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import {
-    generateModels,
     generateTests as generateModelTests,
-    generateWellKnownProtobufFiles,
-    generateVersion
+    generateModels,
+    generateVersion,
+    generateWellKnownProtobufFiles
 } from "@fern-api/fern-csharp-model";
-import { File, GeneratorNotificationService } from "@fern-api/generator-commons";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { writeFile } from "fs/promises";
+
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
@@ -16,18 +23,17 @@ import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { generateSdkTests } from "./generateSdkTests";
+import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
+import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator";
+import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
+import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
+import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
-import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { buildReference } from "./reference/buildReference";
-import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -137,8 +143,22 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const clientOptions = new ClientOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(clientOptions.generate());
 
+        const requestOptionsInterace = new RequestOptionsInterfaceGenerator(context, baseOptionsGenerator);
+        context.project.addSourceFiles(requestOptionsInterace.generate());
+
         const requestOptions = new RequestOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(requestOptions.generate());
+
+        if (context.hasIdempotencyHeaders()) {
+            const idempotentRequestOptionsInterface = new IdempotentRequestOptionsInterfaceGenerator(
+                context,
+                baseOptionsGenerator
+            );
+            context.project.addSourceFiles(idempotentRequestOptionsInterface.generate());
+
+            const idempotentRequestOptions = new IdempotentRequestOptionsGenerator(context, baseOptionsGenerator);
+            context.project.addSourceFiles(idempotentRequestOptions.generate());
+        }
 
         const baseException = new BaseExceptionGenerator(context);
         context.project.addSourceFiles(baseException.generate());

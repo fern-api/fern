@@ -1,3 +1,6 @@
+[project]
+name = "fern_query-parameters"
+
 [tool.poetry]
 name = "fern_query-parameters"
 version = "0.0.1"

@@ -14,7 +14,7 @@ export const OpenApiSource: core.serialization.ObjectSchema<
 });
 
 export declare namespace OpenApiSource {
-    interface Raw {
+    export interface Raw {
         file: string;
     }
 }

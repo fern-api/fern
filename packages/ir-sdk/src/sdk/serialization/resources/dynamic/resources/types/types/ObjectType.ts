@@ -17,7 +17,7 @@ export const ObjectType: core.serialization.ObjectSchema<
 });
 
 export declare namespace ObjectType {
-    interface Raw {
+    export interface Raw {
         declaration: Declaration.Raw;
         properties: NamedParameter.Raw[];
     }

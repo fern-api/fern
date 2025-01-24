@@ -19,7 +19,7 @@ paths:
             schema:
               type: object
               properties:
-                maybeString:
+                maybe_string:
                   type: string
                   nullable: true
                 integer:
@@ -27,33 +27,33 @@ paths:
                 file:
                   type: string
                   format: binary
-                fileList:
+                file_list:
                   type: string
                   format: binary
-                maybeFile:
+                maybe_file:
                   type: string
                   format: binary
-                maybeFileList:
+                maybe_file_list:
                   type: string
                   format: binary
-                maybeInteger:
+                maybe_integer:
                   type: integer
                   nullable: true
-                optionalListOfStrings:
+                optional_list_of_strings:
                   type: array
                   items:
                     type: string
                   nullable: true
-                listOfObjects:
+                list_of_objects:
                   type: array
                   items:
                     $ref: '#/components/schemas/MyObject'
-                optionalMetadata:
+                optional_metadata:
                   nullable: true
-                optionalObjectType:
+                optional_object_type:
                   $ref: '#/components/schemas/ObjectType'
                   nullable: true
-                optionalId:
+                optional_id:
                   $ref: '#/components/schemas/Id'
                   nullable: true
   /just-file:
@@ -149,6 +149,9 @@ paths:
                   type: string
                 bar:
                   $ref: '#/components/schemas/MyObject'
+                foo_bar:
+                  $ref: '#/components/schemas/MyObject'
+                  nullable: true
 components:
   schemas:
     Id:

@@ -2,6 +2,7 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 from .container.client import ContainerClient
+from .content_type.client import ContentTypeClient
 from .enum.client import EnumClient
 from .http_methods.client import HttpMethodsClient
 from .object.client import ObjectClient
@@ -10,6 +11,7 @@ from .primitive.client import PrimitiveClient
 from .union.client import UnionClient
 from ..core.client_wrapper import AsyncClientWrapper
 from .container.client import AsyncContainerClient
+from .content_type.client import AsyncContentTypeClient
 from .enum.client import AsyncEnumClient
 from .http_methods.client import AsyncHttpMethodsClient
 from .object.client import AsyncObjectClient
@@ -22,6 +24,7 @@ class EndpointsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.container = ContainerClient(client_wrapper=self._client_wrapper)
+        self.content_type = ContentTypeClient(client_wrapper=self._client_wrapper)
         self.enum = EnumClient(client_wrapper=self._client_wrapper)
         self.http_methods = HttpMethodsClient(client_wrapper=self._client_wrapper)
         self.object = ObjectClient(client_wrapper=self._client_wrapper)
@@ -34,6 +37,7 @@ class AsyncEndpointsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.container = AsyncContainerClient(client_wrapper=self._client_wrapper)
+        self.content_type = AsyncContentTypeClient(client_wrapper=self._client_wrapper)
         self.enum = AsyncEnumClient(client_wrapper=self._client_wrapper)
         self.http_methods = AsyncHttpMethodsClient(client_wrapper=self._client_wrapper)
         self.object = AsyncObjectClient(client_wrapper=self._client_wrapper)

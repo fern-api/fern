@@ -9,20 +9,20 @@ import * as FernIr from "../../../index";
  */
 export type Pagination = FernIr.Pagination.Cursor | FernIr.Pagination.Offset;
 
-export declare namespace Pagination {
-    interface Cursor extends FernIr.CursorPagination, _Utils {
+export namespace Pagination {
+    export interface Cursor extends FernIr.CursorPagination, _Utils {
         type: "cursor";
     }
 
-    interface Offset extends FernIr.OffsetPagination, _Utils {
+    export interface Offset extends FernIr.OffsetPagination, _Utils {
         type: "offset";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Pagination._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         cursor: (value: FernIr.CursorPagination) => _Result;
         offset: (value: FernIr.OffsetPagination) => _Result;
         _other: (value: { type: string }) => _Result;

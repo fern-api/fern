@@ -1,5 +1,7 @@
-import { PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
+
+import { PosthogEvent } from "@fern-api/task-context";
+
 import { PosthogManager } from "./PosthogManager";
 
 export class AccessTokenPosthogManager implements PosthogManager {

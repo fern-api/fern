@@ -9,18 +9,18 @@ export type UnionWithTime =
     | SeedUnions.UnionWithTime.Date_
     | SeedUnions.UnionWithTime.Datetime;
 
-export declare namespace UnionWithTime {
-    interface Value {
+export namespace UnionWithTime {
+    export interface Value {
         type: "value";
         value: number;
     }
 
-    interface Date_ {
+    export interface Date_ {
         type: "date";
         value: string;
     }
 
-    interface Datetime {
+    export interface Datetime {
         type: "datetime";
         value: Date;
     }

@@ -1,17 +1,19 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import {
     EndpointId,
     EndpointReference,
     ExampleRequestBody,
-    http,
     HttpEndpoint,
     HttpService,
     Name,
     OAuthScheme,
     ObjectProperty,
-    ResponseProperty
+    ResponseProperty,
+    http
 } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

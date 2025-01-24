@@ -1,10 +1,12 @@
-import { fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration";
-import { loggingExeca } from "@fern-api/logging-execa";
-import { isVersionAhead } from "@fern-api/semver-utils";
-import { runMigrations } from "@fern-api/cli-migrations";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
-import produce from "immer";
+import { produce } from "immer";
+
+import { runMigrations } from "@fern-api/cli-migrations";
+import { FERN_DIRECTORY, fernConfigJson, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
+import { loggingExeca } from "@fern-api/logging-execa";
+import { isVersionAhead } from "@fern-api/semver-utils";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersionOfCliExist";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
@@ -96,7 +98,7 @@ export async function upgrade({
             return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
         }
         const projectConfig = await cliContext.runTask((context) =>
-            fernConfigJson.loadProjectConfig({ directory: fernDirectory, context })
+            loadProjectConfig({ directory: fernDirectory, context })
         );
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = fernCliUpgradeInfo.latestVersion;

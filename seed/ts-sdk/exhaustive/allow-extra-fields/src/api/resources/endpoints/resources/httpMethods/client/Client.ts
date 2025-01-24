@@ -9,18 +9,22 @@ import * as errors from "../../../../../../errors/index";
 import * as SeedExhaustive from "../../../../../index";
 
 export declare namespace HttpMethods {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,7 +40,11 @@ export class HttpMethods {
      */
     public async testGet(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${encodeURIComponent(id)}`,
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -46,6 +54,7 @@ export class HttpMethods {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -76,7 +85,7 @@ export class HttpMethods {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /http-methods/{id}.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -95,10 +104,14 @@ export class HttpMethods {
      */
     public async testPost(
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/http-methods"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/http-methods",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -108,6 +121,7 @@ export class HttpMethods {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -143,7 +157,7 @@ export class HttpMethods {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /http-methods.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -164,10 +178,14 @@ export class HttpMethods {
     public async testPut(
         id: string,
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${encodeURIComponent(id)}`,
+            ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -177,6 +195,7 @@ export class HttpMethods {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -212,7 +231,7 @@ export class HttpMethods {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /http-methods/{id}.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -247,10 +266,14 @@ export class HttpMethods {
     public async testPatch(
         id: string,
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethods.RequestOptions
+        requestOptions?: HttpMethods.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${encodeURIComponent(id)}`,
+            ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -260,6 +283,7 @@ export class HttpMethods {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -295,7 +319,7 @@ export class HttpMethods {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PATCH /http-methods/{id}.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
@@ -312,7 +336,11 @@ export class HttpMethods {
      */
     public async testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/http-methods/${encodeURIComponent(id)}`,
+            ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -322,6 +350,7 @@ export class HttpMethods {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -352,7 +381,7 @@ export class HttpMethods {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling DELETE /http-methods/{id}.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,

@@ -9,7 +9,7 @@ export const Request: core.serialization.Schema<serializers.endpoints.primitive.
     core.serialization.boolean();
 
 export declare namespace Request {
-    type Raw = boolean;
+    export type Raw = boolean;
 }
 
 export const Response: core.serialization.Schema<
@@ -18,5 +18,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.boolean();
 
 export declare namespace Response {
-    type Raw = boolean;
+    export type Raw = boolean;
 }

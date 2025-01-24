@@ -22,8 +22,15 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_API_KEY" });
-await client.dataservice.foo();
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.dataservice.upload({
+    columns: [
+        {
+            id: "id",
+            values: [1.1],
+        },
+    ],
+});
 ```
 
 ## Request And Response Types
@@ -48,7 +55,7 @@ will be thrown.
 import { SeedApiError } from "@fern/grpc-proto-exhaustive";
 
 try {
-    await client.dataservice.foo(...);
+    await client.dataservice.upload(...);
 } catch (err) {
     if (err instanceof SeedApiError) {
         console.log(err.statusCode);
@@ -60,6 +67,18 @@ try {
 
 ## Advanced
 
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.dataservice.upload(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
@@ -68,14 +87,14 @@ retry limit (default: 2).
 
 A request is deemed retriable when any of the following HTTP status codes is returned:
 
--   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
--   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
--   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.dataservice.foo(..., {
+const response = await client.dataservice.upload(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -85,7 +104,7 @@ const response = await client.dataservice.foo(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.dataservice.foo(..., {
+const response = await client.dataservice.upload(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -96,7 +115,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.dataservice.foo(..., {
+const response = await client.dataservice.upload(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -107,12 +126,12 @@ controller.abort(); // aborts the request
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:
 
--   Node.js 18+
--   Vercel
--   Cloudflare Workers
--   Deno v1.25+
--   Bun 1.0+
--   React Native
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
 
 ### Customizing Fetch Client
 

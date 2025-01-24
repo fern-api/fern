@@ -26,7 +26,7 @@ export const InlinedRequestBody: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace InlinedRequestBody {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         name: Name.Raw;
         extends: DeclaredTypeName.Raw[];
         properties: InlinedRequestBodyProperty.Raw[];

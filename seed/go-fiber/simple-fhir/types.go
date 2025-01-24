@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/simple-fhir/fern/core"
+	internal "github.com/simple-fhir/fern/internal"
 )
 
 type Account struct {
@@ -20,12 +20,54 @@ type Account struct {
 	extraProperties map[string]interface{}
 }
 
-func (a *Account) GetExtraProperties() map[string]interface{} {
-	return a.extraProperties
+func (a *Account) GetId() string {
+	if a == nil {
+		return ""
+	}
+	return a.Id
+}
+
+func (a *Account) GetRelatedResources() []*ResourceList {
+	if a == nil {
+		return nil
+	}
+	return a.RelatedResources
+}
+
+func (a *Account) GetMemo() *Memo {
+	if a == nil {
+		return nil
+	}
+	return a.Memo
+}
+
+func (a *Account) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *Account) GetPatient() *Patient {
+	if a == nil {
+		return nil
+	}
+	return a.Patient
+}
+
+func (a *Account) GetPractitioner() *Practitioner {
+	if a == nil {
+		return nil
+	}
+	return a.Practitioner
 }
 
 func (a *Account) ResourceType() string {
 	return a.resourceType
+}
+
+func (a *Account) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
 }
 
 func (a *Account) UnmarshalJSON(data []byte) error {
@@ -44,13 +86,11 @@ func (a *Account) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "Account", unmarshaler.ResourceType)
 	}
 	a.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *a, "resource_type")
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -67,7 +107,7 @@ func (a *Account) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Account) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -81,6 +121,27 @@ type BaseResource struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *BaseResource) GetId() string {
+	if b == nil {
+		return ""
+	}
+	return b.Id
+}
+
+func (b *BaseResource) GetRelatedResources() []*ResourceList {
+	if b == nil {
+		return nil
+	}
+	return b.RelatedResources
+}
+
+func (b *BaseResource) GetMemo() *Memo {
+	if b == nil {
+		return nil
+	}
+	return b.Memo
+}
+
 func (b *BaseResource) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -92,18 +153,16 @@ func (b *BaseResource) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BaseResource(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 
 func (b *BaseResource) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -114,6 +173,20 @@ type Memo struct {
 	Account     *Account `json:"account,omitempty" url:"account,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (m *Memo) GetDescription() string {
+	if m == nil {
+		return ""
+	}
+	return m.Description
+}
+
+func (m *Memo) GetAccount() *Account {
+	if m == nil {
+		return nil
+	}
+	return m.Account
 }
 
 func (m *Memo) GetExtraProperties() map[string]interface{} {
@@ -127,18 +200,16 @@ func (m *Memo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Memo(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
 func (m *Memo) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -155,12 +226,47 @@ type Patient struct {
 	extraProperties map[string]interface{}
 }
 
-func (p *Patient) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
+func (p *Patient) GetId() string {
+	if p == nil {
+		return ""
+	}
+	return p.Id
+}
+
+func (p *Patient) GetRelatedResources() []*ResourceList {
+	if p == nil {
+		return nil
+	}
+	return p.RelatedResources
+}
+
+func (p *Patient) GetMemo() *Memo {
+	if p == nil {
+		return nil
+	}
+	return p.Memo
+}
+
+func (p *Patient) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
+}
+
+func (p *Patient) GetScripts() []*Script {
+	if p == nil {
+		return nil
+	}
+	return p.Scripts
 }
 
 func (p *Patient) ResourceType() string {
 	return p.resourceType
+}
+
+func (p *Patient) GetExtraProperties() map[string]interface{} {
+	return p.extraProperties
 }
 
 func (p *Patient) UnmarshalJSON(data []byte) error {
@@ -179,13 +285,11 @@ func (p *Patient) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Patient", unmarshaler.ResourceType)
 	}
 	p.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -202,7 +306,7 @@ func (p *Patient) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Patient) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -218,12 +322,40 @@ type Practitioner struct {
 	extraProperties map[string]interface{}
 }
 
-func (p *Practitioner) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
+func (p *Practitioner) GetId() string {
+	if p == nil {
+		return ""
+	}
+	return p.Id
+}
+
+func (p *Practitioner) GetRelatedResources() []*ResourceList {
+	if p == nil {
+		return nil
+	}
+	return p.RelatedResources
+}
+
+func (p *Practitioner) GetMemo() *Memo {
+	if p == nil {
+		return nil
+	}
+	return p.Memo
+}
+
+func (p *Practitioner) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
 }
 
 func (p *Practitioner) ResourceType() string {
 	return p.resourceType
+}
+
+func (p *Practitioner) GetExtraProperties() map[string]interface{} {
+	return p.extraProperties
 }
 
 func (p *Practitioner) UnmarshalJSON(data []byte) error {
@@ -242,13 +374,11 @@ func (p *Practitioner) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Practitioner", unmarshaler.ResourceType)
 	}
 	p.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -265,7 +395,7 @@ func (p *Practitioner) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Practitioner) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -294,6 +424,34 @@ func NewResourceListFromPractitioner(value *Practitioner) *ResourceList {
 
 func NewResourceListFromScript(value *Script) *ResourceList {
 	return &ResourceList{typ: "Script", Script: value}
+}
+
+func (r *ResourceList) GetAccount() *Account {
+	if r == nil {
+		return nil
+	}
+	return r.Account
+}
+
+func (r *ResourceList) GetPatient() *Patient {
+	if r == nil {
+		return nil
+	}
+	return r.Patient
+}
+
+func (r *ResourceList) GetPractitioner() *Practitioner {
+	if r == nil {
+		return nil
+	}
+	return r.Practitioner
+}
+
+func (r *ResourceList) GetScript() *Script {
+	if r == nil {
+		return nil
+	}
+	return r.Script
 }
 
 func (r *ResourceList) UnmarshalJSON(data []byte) error {
@@ -373,12 +531,40 @@ type Script struct {
 	extraProperties map[string]interface{}
 }
 
-func (s *Script) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
+func (s *Script) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *Script) GetRelatedResources() []*ResourceList {
+	if s == nil {
+		return nil
+	}
+	return s.RelatedResources
+}
+
+func (s *Script) GetMemo() *Memo {
+	if s == nil {
+		return nil
+	}
+	return s.Memo
+}
+
+func (s *Script) GetName() string {
+	if s == nil {
+		return ""
+	}
+	return s.Name
 }
 
 func (s *Script) ResourceType() string {
 	return s.resourceType
+}
+
+func (s *Script) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *Script) UnmarshalJSON(data []byte) error {
@@ -397,13 +583,11 @@ func (s *Script) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "Script", unmarshaler.ResourceType)
 	}
 	s.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "resource_type")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -420,7 +604,7 @@ func (s *Script) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Script) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

@@ -51,7 +51,7 @@
           "value": {
             "type": "string",
             "minLength": 2,
-            "maxLength": 2
+            "maxLength": 26
           }
         }
       }
@@ -65,7 +65,7 @@
           "value": {
             "type": "string",
             "minLength": 4,
-            "maxLength": 4
+            "maxLength": 256
           }
         }
       }
@@ -125,9 +125,10 @@
               "type": "primitive",
               "value": {
                 "type": "string",
+                "format": "custom",
                 "regex": "^[a-z]+$",
                 "minLength": 3,
-                "maxLength": 3,
+                "maxLength": 10,
                 "default": "fern"
               }
             }
@@ -139,10 +140,7 @@
               "value": "type_:Shape"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -208,9 +206,10 @@
                     "type": "primitive",
                     "value": {
                       "type": "string",
+                      "format": "custom",
                       "regex": "^[a-z]+$",
                       "minLength": 3,
-                      "maxLength": 3,
+                      "maxLength": 10,
                       "default": "fern"
                     }
                   }
@@ -243,33 +242,33 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "decimal": 1.1,
-                "even": 1,
-                "name": "name",
+                "decimal": 2.2,
+                "even": 100,
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "decimal": 1.1,
-                "even": 1,
-                "name": "name",
+                "decimal": 2.2,
+                "even": 100,
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },
@@ -327,9 +326,10 @@
               "type": "primitive",
               "value": {
                 "type": "string",
+                "format": "custom",
                 "regex": "^[a-z]+$",
                 "minLength": 3,
-                "maxLength": 3,
+                "maxLength": 10,
                 "default": "fern"
               }
             }
@@ -351,24 +351,24 @@
             "path": "",
             "pathParameters": {},
             "queryParameters": {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name"
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo"
             },
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "decimal": 1.1,
-                "even": 1,
-                "name": "name",
+                "decimal": 2.2,
+                "even": 100,
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },

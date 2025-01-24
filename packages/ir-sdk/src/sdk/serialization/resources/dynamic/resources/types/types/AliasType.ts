@@ -14,7 +14,7 @@ export const AliasType: core.serialization.ObjectSchema<serializers.dynamic.Alia
     });
 
 export declare namespace AliasType {
-    interface Raw {
+    export interface Raw {
         declaration: Declaration.Raw;
         typeReference: serializers.dynamic.TypeReference.Raw;
     }

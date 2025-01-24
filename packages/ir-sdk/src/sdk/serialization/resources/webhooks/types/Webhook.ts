@@ -26,7 +26,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
     .extend(Declaration);
 
 export declare namespace Webhook {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         id: WebhookId.Raw;
         name: WebhookName.Raw;
         displayName?: string | null;

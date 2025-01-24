@@ -1,17 +1,21 @@
-import { dynamic as DynamicSnippets, HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
-import { TaskContext } from "@fern-api/task-context";
 import path from "path";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
+import { dynamic } from "@fern-api/ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertDynamicEndpointSnippetRequest";
 
 export class DynamicSnippetsGoTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
     constructor(
         private readonly context: TaskContext,
-        private readonly ir: DynamicSnippets.DynamicIntermediateRepresentation,
+        private readonly ir: dynamic.DynamicIntermediateRepresentation,
         private readonly generatorConfig: FernGeneratorExec.GeneratorConfig
     ) {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -25,12 +29,14 @@ export class DynamicSnippetsGoTestGenerator {
         requests
     }: {
         outputDir: AbsoluteFilePath;
-        requests: DynamicSnippets.EndpointSnippetRequest[];
+        requests: dynamic.EndpointSnippetRequest[];
     }): Promise<void> {
         this.context.logger.debug("Generating dynamic snippet tests...");
         for (const [idx, request] of requests.entries()) {
             try {
-                const response = await this.dynamicSnippetsGenerator.generate(request);
+                const response = await this.dynamicSnippetsGenerator.generate(
+                    convertDynamicEndpointSnippetRequest(request)
+                );
                 const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
                 await writeFile(dynamicSnippetFilePath, response.snippet);

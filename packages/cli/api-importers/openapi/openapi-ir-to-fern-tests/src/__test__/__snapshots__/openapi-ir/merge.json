@@ -7570,13 +7570,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -10158,13 +10158,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "errors": {},
@@ -11720,13 +11720,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -13254,13 +13254,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -14858,13 +14858,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -16786,13 +16786,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -19501,13 +19501,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -21616,13 +21616,13 @@
           },
           "type": "reference"
         },
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {

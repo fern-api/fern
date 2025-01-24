@@ -20,8 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
-import * as core from "../src/core";
+import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.users.listWithBodyCursorPagination({
@@ -76,7 +75,49 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const response = await client.users.listWithCursorPagination({
+    page: 1,
+    perPage: 1,
+    order: "asc",
+    startingAfter: "starting_after",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+const page = await client.users.listWithCursorPagination({
+    page: 1,
+    perPage: 1,
+    order: "asc",
+    startingAfter: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
 ## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.users.listWithBodyCursorPagination(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
 
 ### Retries
 
@@ -86,9 +127,9 @@ retry limit (default: 2).
 
 A request is deemed retriable when any of the following HTTP status codes is returned:
 
--   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
--   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
--   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
 Use the `maxRetries` request option to configure this behavior.
 
@@ -125,12 +166,12 @@ controller.abort(); // aborts the request
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:
 
--   Node.js 18+
--   Vercel
--   Cloudflare Workers
--   Deno v1.25+
--   Bun 1.0+
--   React Native
+- Node.js 18+
+- Vercel
+- Cloudflare Workers
+- Deno v1.25+
+- Bun 1.0+
+- React Native
 
 ### Customizing Fetch Client
 

@@ -9,12 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.resources.service.types.MyObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -24,11 +26,15 @@ public final class WithContentTypeRequest {
 
     private final MyObject bar;
 
+    private final Optional<MyObject> fooBar;
+
     private final Map<String, Object> additionalProperties;
 
-    private WithContentTypeRequest(String foo, MyObject bar, Map<String, Object> additionalProperties) {
+    private WithContentTypeRequest(
+            String foo, MyObject bar, Optional<MyObject> fooBar, Map<String, Object> additionalProperties) {
         this.foo = foo;
         this.bar = bar;
+        this.fooBar = fooBar;
         this.additionalProperties = additionalProperties;
     }
 
@@ -40,6 +46,11 @@ public final class WithContentTypeRequest {
     @JsonProperty("bar")
     public MyObject getBar() {
         return bar;
+    }
+
+    @JsonProperty("foo_bar")
+    public Optional<MyObject> getFooBar() {
+        return fooBar;
     }
 
     @java.lang.Override
@@ -54,12 +65,12 @@ public final class WithContentTypeRequest {
     }
 
     private boolean equalTo(WithContentTypeRequest other) {
-        return foo.equals(other.foo) && bar.equals(other.bar);
+        return foo.equals(other.foo) && bar.equals(other.bar) && fooBar.equals(other.fooBar);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.foo, this.bar);
+        return Objects.hash(this.foo, this.bar, this.fooBar);
     }
 
     @java.lang.Override
@@ -83,6 +94,10 @@ public final class WithContentTypeRequest {
 
     public interface _FinalStage {
         WithContentTypeRequest build();
+
+        _FinalStage fooBar(Optional<MyObject> fooBar);
+
+        _FinalStage fooBar(MyObject fooBar);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -90,6 +105,8 @@ public final class WithContentTypeRequest {
         private String foo;
 
         private MyObject bar;
+
+        private Optional<MyObject> fooBar = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -100,6 +117,7 @@ public final class WithContentTypeRequest {
         public Builder from(WithContentTypeRequest other) {
             foo(other.getFoo());
             bar(other.getBar());
+            fooBar(other.getFooBar());
             return this;
         }
 
@@ -118,8 +136,21 @@ public final class WithContentTypeRequest {
         }
 
         @java.lang.Override
+        public _FinalStage fooBar(MyObject fooBar) {
+            this.fooBar = Optional.ofNullable(fooBar);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "foo_bar", nulls = Nulls.SKIP)
+        public _FinalStage fooBar(Optional<MyObject> fooBar) {
+            this.fooBar = fooBar;
+            return this;
+        }
+
+        @java.lang.Override
         public WithContentTypeRequest build() {
-            return new WithContentTypeRequest(foo, bar, additionalProperties);
+            return new WithContentTypeRequest(foo, bar, fooBar, additionalProperties);
         }
     }
 }

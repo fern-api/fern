@@ -1,6 +1,8 @@
-import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils";
 import {
@@ -51,7 +53,7 @@ export function validateTokenEndpoint({
         });
         if (clientIdViolations.length > 0) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid client-id, such as '${DEFAULT_CLIENT_ID}'.`
@@ -80,7 +82,7 @@ export function validateTokenEndpoint({
         });
         if (clientSecretViolations.length > 0) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid client-secret, such as '${DEFAULT_CLIENT_SECRET}'.`
@@ -104,7 +106,7 @@ export function validateTokenEndpoint({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         });
         return violations;
@@ -131,7 +133,7 @@ export function validateTokenEndpoint({
         });
         if (accessTokenViolations.length > 0) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid access-token, such as '${DEFAULT_ACCESS_TOKEN}'.`

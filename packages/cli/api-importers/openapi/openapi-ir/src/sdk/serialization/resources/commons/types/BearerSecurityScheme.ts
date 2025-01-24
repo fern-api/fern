@@ -15,7 +15,7 @@ export const BearerSecurityScheme: core.serialization.ObjectSchema<
 });
 
 export declare namespace BearerSecurityScheme {
-    interface Raw {
+    export interface Raw {
         tokenVariableName?: string | null;
         tokenEnvVar?: string | null;
     }

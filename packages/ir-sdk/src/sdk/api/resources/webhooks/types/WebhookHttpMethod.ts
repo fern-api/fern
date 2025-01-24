@@ -3,7 +3,6 @@
  */
 
 export type WebhookHttpMethod = "GET" | "POST";
-
 export const WebhookHttpMethod = {
     Get: "GET",
     Post: "POST",
@@ -19,8 +18,8 @@ export const WebhookHttpMethod = {
     },
 } as const;
 
-export declare namespace WebhookHttpMethod {
-    interface Visitor<R> {
+export namespace WebhookHttpMethod {
+    export interface Visitor<R> {
         get: () => R;
         post: () => R;
         _other: () => R;

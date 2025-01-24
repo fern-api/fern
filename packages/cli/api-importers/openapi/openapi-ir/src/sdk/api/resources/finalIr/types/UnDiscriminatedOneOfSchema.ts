@@ -11,6 +11,7 @@ export interface UnDiscriminatedOneOfSchema
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithEncoding,
         FernOpenapiIr.WithSource,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithInline {
     schemas: FernOpenapiIr.Schema[];
 }

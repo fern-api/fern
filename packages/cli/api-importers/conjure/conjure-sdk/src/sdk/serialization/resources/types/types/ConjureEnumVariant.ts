@@ -13,5 +13,5 @@ export const ConjureEnumVariant: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), ConjureEnumWithDocs]);
 
 export declare namespace ConjureEnumVariant {
-    type Raw = string | ConjureEnumWithDocs.Raw;
+    export type Raw = string | ConjureEnumWithDocs.Raw;
 }

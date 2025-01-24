@@ -1,3 +1,7 @@
+import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
+import { VariableDeclarationKind, ts } from "ts-morph";
+
 import {
     EnvironmentBaseUrlId,
     EnvironmentBaseUrlWithId,
@@ -5,9 +9,6 @@ import {
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments
 } from "@fern-fern/ir-sdk/api";
-import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
-import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedMultipleUrlsEnvironmentsImpl {
     export interface Init {

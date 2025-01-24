@@ -1,9 +1,12 @@
-import { docsYml, DOCS_CONFIGURATION_FILENAME, FERN_DIRECTORY } from "@fern-api/configuration";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder";
-import { mkdir, writeFile, cp } from "fs/promises";
+import { cp, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { DOCS_CONFIGURATION_FILENAME, FERN_DIRECTORY, docsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+
+import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder";
 
 interface MarkdownPage {
     frontmatter: CjsFdrSdk.docs.latest.Frontmatter;
@@ -129,7 +132,10 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
             absolutePathToFernDirectory,
             RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)
         );
-        await writeFile(absoluteFilePathToDocsYml, yaml.dump(this.docsYml));
+        await writeFile(
+            absoluteFilePathToDocsYml,
+            yaml.dump(docsYml.RawSchemas.Serializer.DocsConfiguration.jsonOrThrow(this.docsYml))
+        );
 
         await Promise.all(
             Object.entries(this.markdownPages).map(async ([filepath, page]) => {

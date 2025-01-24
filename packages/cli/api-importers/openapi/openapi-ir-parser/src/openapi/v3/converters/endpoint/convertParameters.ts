@@ -1,3 +1,5 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     HeaderWithExample,
     HttpMethod,
@@ -8,7 +10,7 @@ import {
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../../../../getExtension";
 import { convertAvailability } from "../../../../schema/convertAvailability";
 import { convertSchema } from "../../../../schema/convertSchemas";
@@ -63,7 +65,7 @@ export function convertParameters({
         const availability = convertAvailability(resolvedParameter);
 
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
-        const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
+        const generatedName = getGeneratedTypeName(parameterBreadcrumbs, context.options.preserveSchemaIds);
 
         let schema =
             resolvedParameter.schema != null
@@ -82,52 +84,53 @@ export function convertParameters({
                       })
                   )
                 : isRequired
-                ? SchemaWithExample.primitive({
-                      nameOverride: undefined,
-                      generatedName,
-                      title: undefined,
-                      schema: PrimitiveSchemaValueWithExample.string({
-                          default: undefined,
-                          pattern: undefined,
-                          format: undefined,
-                          minLength: undefined,
-                          maxLength: undefined,
-                          example: getExamplesString({
-                              schema: resolvedParameter,
-                              logger: context.logger
-                          })
-                      }),
-                      description: undefined,
-                      availability,
-                      groupName: undefined
-                  })
-                : SchemaWithExample.optional({
-                      nameOverride: undefined,
-                      generatedName,
-                      title: undefined,
-                      value: SchemaWithExample.primitive({
-                          nameOverride: undefined,
-                          generatedName,
-                          title: undefined,
-                          schema: PrimitiveSchemaValueWithExample.string({
-                              default: undefined,
-                              pattern: undefined,
-                              format: undefined,
-                              minLength: undefined,
-                              maxLength: undefined,
-                              example: getExamplesString({
-                                  schema: resolvedParameter,
-                                  logger: context.logger
-                              })
-                          }),
-                          description: undefined,
-                          availability: undefined,
-                          groupName: undefined
-                      }),
-                      description: undefined,
-                      availability,
-                      groupName: undefined
-                  });
+                  ? SchemaWithExample.primitive({
+                        nameOverride: undefined,
+                        generatedName,
+                        title: undefined,
+                        schema: PrimitiveSchemaValueWithExample.string({
+                            default: undefined,
+                            pattern: undefined,
+                            format: undefined,
+                            minLength: undefined,
+                            maxLength: undefined,
+                            example: getExamplesString({
+                                schema: resolvedParameter,
+                                logger: context.logger
+                            })
+                        }),
+                        description: undefined,
+                        availability,
+                        groupName: undefined
+                    })
+                  : SchemaWithExample.optional({
+                        nameOverride: undefined,
+                        generatedName,
+                        title: undefined,
+                        value: SchemaWithExample.primitive({
+                            nameOverride: undefined,
+                            generatedName,
+                            title: undefined,
+                            schema: PrimitiveSchemaValueWithExample.string({
+                                default: undefined,
+                                pattern: undefined,
+                                format: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
+                                example: getExamplesString({
+                                    schema: resolvedParameter,
+                                    logger: context.logger
+                                })
+                            }),
+                            description: undefined,
+                            availability: undefined,
+                            groupName: undefined
+                        }),
+                        description: undefined,
+                        availability,
+                        groupName: undefined,
+                        inline: undefined
+                    });
         if (
             resolvedParameter.in === "header" &&
             resolvedParameter.schema != null &&

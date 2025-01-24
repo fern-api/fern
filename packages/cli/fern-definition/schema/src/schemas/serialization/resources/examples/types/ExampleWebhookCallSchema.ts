@@ -21,7 +21,7 @@ export const ExampleWebhookCallSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace ExampleWebhookCallSchema {
-    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
+    export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
         id?: string | null;
         payload?: ExampleTypeReferenceSchema.Raw;
     }

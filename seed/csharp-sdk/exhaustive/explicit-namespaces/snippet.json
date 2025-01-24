@@ -88,6 +88,30 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExhaustive.Types.Object;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExhaustive.Types.Object;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/enum",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/enum.getAndReturnEnum"
@@ -244,6 +268,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExhaustive.Endpoints.Params;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAsync(\"param\", new GetWithInlinePath());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/params",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithQuery"
@@ -280,6 +316,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExhaustive.Endpoints.Params;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAndQueryAsync(\n    \"param\",\n    new GetWithInlinePathAndQuery { Query = \"query\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/params/path/{param}",
                 "method": "PUT",
                 "identifier_override": "endpoint_endpoints/params.modifyWithPath"
@@ -287,6 +335,18 @@
             "snippet": {
                 "type": "typescript",
                 "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithPathAsync(\"param\", \"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExhaustive.Endpoints.Params;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    \"param\",\n    new ModifyResourceAtInlinedPath { Body = \"string\" }\n);\n"
             }
         },
         {

@@ -15,10 +15,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -55,8 +52,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -131,8 +127,7 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "boolean",
-                  "default": false
+                  "type": "boolean"
                 }
               }
             }
@@ -211,7 +206,7 @@
   },
   "auth": {
     "type": "basicAuth",
-    "passwordName": "password",
+    "passwordName": "accessToken",
     "usernameName": "username"
   },
   "snippetsConfiguration": {},

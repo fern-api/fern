@@ -1,5 +1,7 @@
 import { runPreviewServer } from "@fern-api/docs-preview";
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { validateAPIWorkspaceWithoutExiting } from "../validate/validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
@@ -37,17 +39,23 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return;
                 }
+                const fernWorkspaces = await Promise.all(
+                    project.apiWorkspaces.map(async (workspace) => {
+                        return workspace.toFernWorkspace({ context });
+                    })
+                );
                 await validateDocsWorkspaceWithoutExiting({
                     workspace: docsWorkspace,
                     context,
                     logWarnings: true,
                     logSummary: false,
-                    loadAPIWorkspace: project.loadAPIWorkspace
+                    fernWorkspaces,
+                    ossWorkspaces: await filterOssWorkspaces(project)
                 });
-                for (const apiWorkspace of project.apiWorkspaces) {
-                    await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {
+                for (const fernWorkspace of fernWorkspaces) {
+                    await cliContext.runTaskForWorkspace(fernWorkspace, async (apiWorkspaceContext) => {
                         await validateAPIWorkspaceWithoutExiting({
-                            workspace: await apiWorkspace.toFernWorkspace({ context }),
+                            workspace: fernWorkspace,
                             context: apiWorkspaceContext,
                             logWarnings: false,
                             logSummary: false

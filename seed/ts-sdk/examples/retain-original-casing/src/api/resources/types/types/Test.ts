@@ -19,13 +19,13 @@ import * as SeedExamples from "../../../index";
  */
 export type Test = SeedExamples.Test.And | SeedExamples.Test.Or;
 
-export declare namespace Test {
-    interface And {
+export namespace Test {
+    export interface And {
         type: "and";
         value: boolean;
     }
 
-    interface Or {
+    export interface Or {
         type: "or";
         value: boolean;
     }

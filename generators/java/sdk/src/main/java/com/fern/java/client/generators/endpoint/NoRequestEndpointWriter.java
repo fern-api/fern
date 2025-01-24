@@ -17,10 +17,7 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.commons.ErrorId;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpMethod;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.SdkRequest;
+import com.fern.ir.model.http.*;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -86,6 +83,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint httpEndpoint,
+            String contentType,
             GeneratedObjectMapper generatedObjectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
@@ -111,11 +109,11 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 ClientOptionsGenerator.HEADERS_METHOD_NAME,
                 REQUEST_OPTIONS_PARAMETER_NAME);
         if (sendContentType) {
-            builder.add(
-                    ".addHeader($S, $S)\n",
-                    AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                    AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+            builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         }
+        AbstractEndpointWriter.responseContentType(httpEndpoint.getResponse())
+                .ifPresent(responseContentType ->
+                        builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.ACCEPT_HEADER, contentType));
         return builder.add(".build();\n").unindent().build();
     }
 }

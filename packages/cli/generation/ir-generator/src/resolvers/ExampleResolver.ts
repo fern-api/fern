@@ -1,5 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { EXAMPLE_REFERENCE_PREFIX } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../FernFileContext";
 import { TypeResolver } from "./TypeResolver";
 

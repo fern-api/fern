@@ -14,5 +14,5 @@ export const UserId: core.serialization.Schema<serializers.UserId.Raw, SeedTrace
     });
 
 export declare namespace UserId {
-    type Raw = string;
+    export type Raw = string;
 }

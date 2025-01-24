@@ -108,6 +108,7 @@ types:
       - commons.WithDescription
       - commons.WithSource
     properties:
+      audiences: list<string>
       path: string
       groupName: commons.SdkGroupName
       summary: optional<string>
@@ -295,8 +296,13 @@ types:
   EndpointResponseExample:
     docs: An example that has either a list of streaming examples or a single non-streaming example.
     union:
-      withStreaming: list<example.FullExample>
+      withStreaming: StreamingResponseExample
       withoutStreaming: example.FullExample
+  
+  StreamingResponseExample: 
+    properties: 
+      sse: boolean
+      events: list<example.FullExample>
 
   PathParameterExample:
     properties:
@@ -572,6 +578,7 @@ types:
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
@@ -622,6 +629,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: Schema
 
@@ -633,6 +641,7 @@ types:
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithTitle
+      - commons.WithInline
     properties:
       key: PrimitiveSchema
       value: Schema
@@ -644,6 +653,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: Schema
 
@@ -654,6 +664,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithInline
     properties:
       value: Schema
 
@@ -665,6 +676,7 @@ types:
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
@@ -717,6 +729,7 @@ types:
       - commons.WithEncoding
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -736,5 +749,6 @@ types:
       - commons.WithEncoding
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithInline
     properties:
       schemas: list<Schema>

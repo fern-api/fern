@@ -15,10 +15,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_service:User": {
@@ -66,10 +63,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_service:NestedUser": {
@@ -94,10 +88,7 @@
               "value": "type_service:User"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_service:ResourceStatus": {
@@ -287,8 +278,7 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "date",
-                  "default": "1970-01-01T00:00:00.000Z"
+                  "type": "date"
                 }
               }
             }

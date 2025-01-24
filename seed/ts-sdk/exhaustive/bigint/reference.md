@@ -171,7 +171,7 @@ await client.endpoints.container.getAndReturnSetOfObjects(
         {
             string: "string",
         },
-    ])
+    ]),
 );
 ```
 
@@ -349,6 +349,136 @@ await client.endpoints.container.getAndReturnOptional({
 <dd>
 
 **requestOptions:** `Container.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Endpoints ContentType
+
+<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.contentType.postJsonPatchContentType({
+    string: "string",
+    integer: 1,
+    long: BigInt("1000000"),
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: new Set(["set"]),
+    map: {
+        1: "map",
+    },
+    bigint: BigInt("1000000"),
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithOptionalField`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentType.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
+    string: "string",
+    integer: 1,
+    long: BigInt("1000000"),
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: new Set(["set"]),
+    map: {
+        1: "map",
+    },
+    bigint: BigInt("1000000"),
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithOptionalField`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentType.RequestOptions`
 
 </dd>
 </dl>
@@ -583,7 +713,7 @@ await client.endpoints.httpMethods.testPut("id", {
 await client.endpoints.httpMethods.testPatch("id", {
     string: "string",
     integer: 1,
-    long: 1000000,
+    long: BigInt("1000000"),
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -595,7 +725,7 @@ await client.endpoints.httpMethods.testPatch("id", {
     map: {
         1: "map",
     },
-    bigint: "1000000",
+    bigint: BigInt("1000000"),
 });
 ```
 
@@ -705,7 +835,7 @@ await client.endpoints.httpMethods.testDelete("id");
 await client.endpoints.object.getAndReturnWithOptionalField({
     string: "string",
     integer: 1,
-    long: 1000000,
+    long: BigInt("1000000"),
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -717,7 +847,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
     map: {
         1: "map",
     },
-    bigint: "1000000",
+    bigint: BigInt("1000000"),
 });
 ```
 
@@ -875,7 +1005,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
     nestedObject: {
         string: "string",
         integer: 1,
-        long: 1000000,
+        long: BigInt("1000000"),
         double: 1.1,
         bool: true,
         datetime: "2024-01-15T09:30:00Z",
@@ -887,7 +1017,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
         map: {
             1: "map",
         },
-        bigint: "1000000",
+        bigint: BigInt("1000000"),
     },
 });
 ```
@@ -924,7 +1054,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string_, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -942,7 +1072,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
     nestedObject: {
         string: "string",
         integer: 1,
-        long: 1000000,
+        long: BigInt("1000000"),
         double: 1.1,
         bool: true,
         datetime: "2024-01-15T09:30:00Z",
@@ -954,7 +1084,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
         map: {
             1: "map",
         },
-        bigint: "1000000",
+        bigint: BigInt("1000000"),
     },
 });
 ```
@@ -972,7 +1102,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**string:** `string`
+**string\_:** `string`
 
 </dd>
 </dl>
@@ -1018,7 +1148,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
         nestedObject: {
             string: "string",
             integer: 1,
-            long: 1000000,
+            long: BigInt("1000000"),
             double: 1.1,
             bool: true,
             datetime: "2024-01-15T09:30:00Z",
@@ -1030,7 +1160,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
             map: {
                 1: "map",
             },
-            bigint: "1000000",
+            bigint: BigInt("1000000"),
         },
     },
     {
@@ -1038,7 +1168,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
         nestedObject: {
             string: "string",
             integer: 1,
-            long: 1000000,
+            long: BigInt("1000000"),
             double: 1.1,
             bool: true,
             datetime: "2024-01-15T09:30:00Z",
@@ -1050,7 +1180,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
             map: {
                 1: "map",
             },
-            bigint: "1000000",
+            bigint: BigInt("1000000"),
         },
     },
 ]);
@@ -1135,6 +1265,77 @@ await client.endpoints.params.getWithPath("param");
 <dd>
 
 **param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.getWithInlinePath("param");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.GetWithInlinePath`
 
 </dd>
 </dl>
@@ -1358,6 +1559,79 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>(param, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.getWithInlinePathAndQuery("param", {
+    query: "query",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.GetWithInlinePathAndQuery`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>(param, { ...params }) -> string</code></summary>
 <dl>
 <dd>
@@ -1411,6 +1685,79 @@ await client.endpoints.params.modifyWithPath("param", "string");
 <dd>
 
 **request:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.modifyWithInlinePath("param", {
+    body: "string",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.ModifyResourceAtInlinedPath`
 
 </dd>
 </dl>
@@ -1540,7 +1887,7 @@ await client.endpoints.primitive.getAndReturnInt(1);
 <dd>
 
 ```typescript
-await client.endpoints.primitive.getAndReturnLong(1000000);
+await client.endpoints.primitive.getAndReturnLong(BigInt("1000000"));
 ```
 
 </dd>
@@ -1953,7 +2300,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
     nestedObject: {
         string: "string",
         integer: 1,
-        long: 1000000,
+        long: BigInt("1000000"),
         double: 1.1,
         bool: true,
         datetime: "2024-01-15T09:30:00Z",
@@ -1965,7 +2312,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
         map: {
             1: "map",
         },
-        bigint: "1000000",
+        bigint: BigInt("1000000"),
     },
 });
 ```

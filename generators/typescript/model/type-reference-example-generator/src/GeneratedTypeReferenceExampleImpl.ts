@@ -1,28 +1,36 @@
+import { GetReferenceOpts } from "@fern-typescript/commons";
+import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
+
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ExampleContainer,
     ExamplePrimitive,
     ExampleTypeReference,
     ExampleTypeReferenceShape
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedTypeReferenceExample, ModelContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
     export interface Init {
         example: ExampleTypeReference;
+        useBigInt: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
 export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReferenceExample {
     private example: ExampleTypeReference;
+    private useBigInt: boolean;
+    private includeSerdeLayer: boolean;
 
-    constructor({ example }: GeneratedTypeReferenceExampleImpl.Init) {
+    constructor({ example, useBigInt, includeSerdeLayer }: GeneratedTypeReferenceExampleImpl.Init) {
         this.example = example;
+        this.useBigInt = useBigInt;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
-    public build(context: ModelContext, opts: GetReferenceOpts): ts.Expression {
+    public build(context: BaseContext, opts: GetReferenceOpts): ts.Expression {
         return this.buildExample({ example: this.example, context, opts });
     }
 
@@ -32,7 +40,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         opts
     }: {
         example: ExampleTypeReference;
-        context: ModelContext;
+        context: BaseContext;
         opts: GetReferenceOpts;
     }): ts.Expression {
         return ExampleTypeReferenceShape._visit(example.shape, {
@@ -41,11 +49,21 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
-                    long: (longExample) => ts.factory.createNumericLiteral(longExample),
+                    long: (longExample) => {
+                        if (this.useBigInt) {
+                            return createBigIntLiteral(longExample);
+                        }
+                        return ts.factory.createNumericLiteral(longExample);
+                    },
                     uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
                     uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
                     float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
-                    bigInteger: (bigIntegerExample) => ts.factory.createStringLiteral(bigIntegerExample),
+                    bigInteger: (bigIntegerExample) => {
+                        if (this.useBigInt) {
+                            return createBigIntLiteral(bigIntegerExample);
+                        }
+                        return ts.factory.createStringLiteral(bigIntegerExample);
+                    },
                     base64: (base64Example) => ts.factory.createStringLiteral(base64Example),
                     boolean: (booleanExample) => (booleanExample ? ts.factory.createTrue() : ts.factory.createFalse()),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
@@ -89,6 +107,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                             ),
                             true
                         ),
+                    nullable: (exampleItem) =>
+                        exampleItem.nullable != null
+                            ? this.buildExample({ example: exampleItem.nullable, context, opts })
+                            : ts.factory.createIdentifier("null"),
                     optional: (exampleItem) =>
                         exampleItem.optional != null
                             ? this.buildExample({ example: exampleItem.optional, context, opts })
@@ -164,7 +186,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         opts
     }: {
         example: ExampleTypeReference;
-        context: ModelContext;
+        context: BaseContext;
         opts: GetReferenceOpts;
     }): ts.PropertyName {
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
@@ -239,4 +261,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
             }
         });
     }
+}
+
+function createBigIntLiteral(value: string | number): ts.Expression {
+    return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
+        ts.factory.createStringLiteral(value.toString())
+    ]);
 }

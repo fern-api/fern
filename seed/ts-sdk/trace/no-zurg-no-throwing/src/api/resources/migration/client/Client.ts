@@ -8,14 +8,16 @@ import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Migration {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -24,6 +26,8 @@ export declare namespace Migration {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -41,13 +45,15 @@ export class Migration {
      */
     public async getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
-        requestOptions?: Migration.RequestOptions
+        requestOptions?: Migration.RequestOptions,
     ): Promise<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>> {
         const { "admin-key-header": adminKeyHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/migration-info/all"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/migration-info/all",
             ),
             method: "GET",
             headers: {
@@ -63,6 +69,7 @@ export class Migration {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "admin-key-header": adminKeyHeader,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",

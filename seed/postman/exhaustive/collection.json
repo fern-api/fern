@@ -602,6 +602,173 @@
         {
           "_type": "container",
           "description": null,
+          "name": "Content Type",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Post Json Patch Content Type",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo/bar",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo",
+                    "bar"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/foo/bar",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "foo",
+                        "bar"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Post Json Patch Content With Charset Type",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo/baz",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo",
+                    "baz"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/foo/baz",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "foo",
+                        "baz"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
           "name": "Enum",
           "item": [
             {
@@ -1691,6 +1858,84 @@
             },
             {
               "_type": "endpoint",
+              "name": "Get With Inline Path",
+              "request": {
+                "description": "GET with path param",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with path param",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "param"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
               "name": "Get With Query",
               "request": {
                 "description": "GET with query param",
@@ -1949,7 +2194,191 @@
             },
             {
               "_type": "endpoint",
+              "name": "Get With Inline Path And Query",
+              "request": {
+                "description": "GET with path and query params",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path-query/:param?query=query",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path-query",
+                    ":param"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "description": null,
+                      "value": "query"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with path and query params",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path-query/:param?query=query",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path-query",
+                        ":param"
+                      ],
+                      "query": [
+                        {
+                          "key": "query",
+                          "description": null,
+                          "value": "query"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "param"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
               "name": "Modify With Path",
+              "request": {
+                "description": "PUT to update with path param",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"string\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "PUT to update with path param",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "param"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "PUT",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"string\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Modify With Inline Path",
               "request": {
                 "description": "PUT to update with path param",
                 "url": {

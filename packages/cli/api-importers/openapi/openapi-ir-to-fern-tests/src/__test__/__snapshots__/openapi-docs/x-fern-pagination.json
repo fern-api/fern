@@ -63,6 +63,7 @@
         "types": {
           "Meta": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "hasMore": "optional<boolean>",
             },
@@ -72,6 +73,7 @@
           },
           "User": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "age": "optional<integer>",
               "email": "optional<string>",
@@ -92,6 +94,7 @@
           },
           "UsersResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "meta": "optional<Meta>",
               "users": "optional<list<User>>",

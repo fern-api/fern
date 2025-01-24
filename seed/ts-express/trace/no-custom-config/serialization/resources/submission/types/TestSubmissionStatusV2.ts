@@ -17,7 +17,7 @@ export const TestSubmissionStatusV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestSubmissionStatusV2 {
-    interface Raw {
+    export interface Raw {
         updates: serializers.TestSubmissionUpdate.Raw[];
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;

@@ -19,7 +19,7 @@ export class ErrorWithEnumBody extends errors.SeedExhaustiveError {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
-            })
+            }),
         );
     }
 }

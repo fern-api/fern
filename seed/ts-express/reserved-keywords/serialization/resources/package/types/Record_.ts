@@ -13,7 +13,7 @@ export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, S
     });
 
 export declare namespace Record_ {
-    interface Raw {
+    export interface Raw {
         foo: Record<string, string>;
         "3d": number;
     }

@@ -5,9 +5,10 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { generatePrimitiveExample } from "./generatePrimitiveExample";
-import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample";
+
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample";
+import { generatePrimitiveExample } from "./generatePrimitiveExample";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 
 export declare namespace generateTypeReferenceExample {

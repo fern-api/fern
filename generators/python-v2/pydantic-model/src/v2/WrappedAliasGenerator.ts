@@ -1,9 +1,11 @@
-import { WriteablePythonFile, pydantic, core, dt } from "@fern-api/base-python-generator";
-import { python } from "@fern-api/python-ast";
-import { AliasTypeDeclaration, PrimitiveTypeV1, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
-import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { WriteablePythonFile, core, dt, pydantic } from "@fern-api/base-python-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { python } from "@fern-api/python-ast";
+
+import { AliasTypeDeclaration, PrimitiveTypeV1, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
+
+import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class WrappedAliasGenerator {
     private readonly className: string;
@@ -42,18 +44,14 @@ export class WrappedAliasGenerator {
 
         class_.add(this.getConfigClass());
 
-        const module = this.context.getModulePathForId(this.typeId);
+        const path = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
-        const file = python.file({
-            moduleName: module.join("."),
-            path: ["test"],
-            name: filename
-        });
+        const file = python.file({ path });
         file.addStatement(class_);
 
         return new WriteablePythonFile({
             contents: file,
-            directory: RelativeFilePath.of(module.join("/")),
+            directory: RelativeFilePath.of(path.join("/")),
             filename
         });
     }

@@ -22,7 +22,7 @@ export const WebSocketChannelMessageSchema: core.serialization.ObjectSchema<
     .extend(WithDisplayName);
 
 export declare namespace WebSocketChannelMessageSchema {
-    interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw {
+    export interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw {
         origin: WebSocketOrigin.Raw;
         body: WebSocketChannelMessageBodySchema.Raw;
     }

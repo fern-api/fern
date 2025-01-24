@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoUnusedGenericRule } from "../no-unused-generic";
 
@@ -18,13 +19,13 @@ describe("no-unused-generic", () => {
                 message: 'Generic "AnotherGenericUnusedType<T>" is declared but never used.',
                 nodePath: ["types", "AnotherGenericUnusedType<T>"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Generic "GenericUnusedType<T>" is declared but never used.',
                 nodePath: ["types", "GenericUnusedType<T>"],
                 relativeFilepath: RelativeFilePath.of("2.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

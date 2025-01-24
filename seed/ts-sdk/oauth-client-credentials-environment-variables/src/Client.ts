@@ -6,37 +6,42 @@ import * as core from "./core";
 import { Auth } from "./api/resources/auth/client/Client";
 
 export declare namespace SeedOauthClientCredentialsEnvironmentVariablesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         clientId?: core.Supplier<string>;
         clientSecret?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedOauthClientCredentialsEnvironmentVariablesClient {
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+    protected _auth: Auth | undefined;
 
     constructor(protected readonly _options: SeedOauthClientCredentialsEnvironmentVariablesClient.Options) {
         const clientId = this._options.clientId ?? process.env["CLIENT_ID"];
         if (clientId == null) {
             throw new Error(
-                "clientId is required; either pass it as an argument or set the CLIENT_ID environment variable"
+                "clientId is required; either pass it as an argument or set the CLIENT_ID environment variable",
             );
         }
 
         const clientSecret = this._options.clientSecret ?? process.env["CLIENT_SECRET"];
         if (clientSecret == null) {
             throw new Error(
-                "clientSecret is required; either pass it as an argument or set the CLIENT_SECRET environment variable"
+                "clientSecret is required; either pass it as an argument or set the CLIENT_SECRET environment variable",
             );
         }
 
@@ -48,8 +53,6 @@ export class SeedOauthClientCredentialsEnvironmentVariablesClient {
             }),
         });
     }
-
-    protected _auth: Auth | undefined;
 
     public get auth(): Auth {
         return (this._auth ??= new Auth({

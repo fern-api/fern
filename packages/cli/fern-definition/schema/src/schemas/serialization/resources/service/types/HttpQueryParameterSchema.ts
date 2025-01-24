@@ -13,5 +13,5 @@ export const HttpQueryParameterSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), QueryParameterTypeReferenceDetailed]);
 
 export declare namespace HttpQueryParameterSchema {
-    type Raw = string | QueryParameterTypeReferenceDetailed.Raw;
+    export type Raw = string | QueryParameterTypeReferenceDetailed.Raw;
 }

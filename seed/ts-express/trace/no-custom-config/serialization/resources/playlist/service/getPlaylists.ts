@@ -10,5 +10,5 @@ export const Response: core.serialization.Schema<serializers.playlist.getPlaylis
     core.serialization.list(core.serialization.lazyObject(() => serializers.Playlist));
 
 export declare namespace Response {
-    type Raw = serializers.Playlist.Raw[];
+    export type Raw = serializers.Playlist.Raw[];
 }

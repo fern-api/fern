@@ -12,5 +12,5 @@ export const HttpMethodSchema: core.serialization.Schema<
 > = core.serialization.enum_(["GET", "POST", "PUT", "PATCH", "DELETE"]);
 
 export declare namespace HttpMethodSchema {
-    type Raw = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+    export type Raw = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 }

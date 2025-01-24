@@ -19,7 +19,7 @@ export const JsonResponseBodyWithProperty: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace JsonResponseBodyWithProperty {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         responseBodyType: serializers.TypeReference.Raw;
         responseProperty?: ObjectProperty.Raw | null;
     }

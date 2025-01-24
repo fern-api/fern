@@ -1,4 +1,29 @@
-import { assertNever } from "@fern-api/core-utils";
+import {
+    ImportsManager,
+    JavaScriptRuntime,
+    NpmPackage,
+    PackageId,
+    getParameterNameForRootPathParameter,
+    getTextOfTsNode,
+    maybeAddDocsStructure
+} from "@fern-typescript/commons";
+import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
+import {
+    ClassDeclarationStructure,
+    InterfaceDeclarationStructure,
+    MethodDeclarationStructure,
+    ModuleDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
+    Scope,
+    StructureKind,
+    ts
+} from "ts-morph";
+import { code } from "ts-poet";
+
+import { SetRequired, assertNever } from "@fern-api/core-utils";
+
 import {
     AuthScheme,
     BasicAuthScheme,
@@ -15,32 +40,20 @@ import {
     VariableDeclaration,
     VariableId
 } from "@fern-fern/ir-sdk/api";
-import {
-    getTextOfTsNode,
-    ImportsManager,
-    JavaScriptRuntime,
-    maybeAddDocs,
-    NpmPackage,
-    PackageId
-} from "@fern-typescript/commons";
-import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
-import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
-import { code } from "ts-poet";
+
+import { GeneratedHeader } from "./GeneratedHeader";
+import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
-import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
-import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
-import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
+import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
+import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
+import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
-import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./endpoints/utils/requestOptionsParameter";
-import { GeneratedHeader } from "./GeneratedHeader";
-import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace GeneratedSdkClientClassImpl {
@@ -64,6 +77,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -76,6 +90,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "_options";
+    private static BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
@@ -99,7 +114,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private includeSerdeLayer: boolean;
     private omitUndefined: boolean;
+    private allowExtraFields: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -122,6 +139,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         retainOriginalCasing,
         inlineFileProperties,
         omitUndefined,
+        allowExtraFields,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -136,7 +154,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
+        this.allowExtraFields = allowExtraFields;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -175,7 +195,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            inlineFileProperties: this.inlineFileProperties
+                            inlineFileProperties: this.inlineFileProperties,
+                            includeSerdeLayer: this.includeSerdeLayer,
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: this.omitUndefined
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -301,6 +324,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response: HttpResponseBody.text(textResponse)
                         });
                     },
+                    bytes: (bytesResponse) => {
+                        throw new Error("Bytes response type is not supported yet");
+                    },
                     _other: () => {
                         throw new Error("Unknown Response type: " + endpoint.response?.body?.type);
                     }
@@ -425,23 +451,34 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public writeToFile(context: SdkContext): void {
-        const serviceModule = context.sourceFile.addModule({
+        const serviceModule: ModuleDeclarationStructure = {
+            kind: StructureKind.Module,
             name: this.serviceClassName,
             isExported: true,
             hasDeclareKeyword: true
-        });
+        };
 
-        const optionsInterface = serviceModule.addInterface(this.generateOptionsInterface(context));
-        serviceModule.addInterface(this.generateRequestOptionsInterface(context));
+        const optionsInterface = this.generateOptionsInterface(context);
+        serviceModule.statements = [optionsInterface, this.generateRequestOptionsInterface(context)];
+        context.sourceFile.addModule(serviceModule);
 
-        const serviceClass = context.sourceFile.addClass({
+        const serviceClass: SetRequired<
+            ClassDeclarationStructure,
+            "properties" | "ctors" | "methods" | "getAccessors"
+        > = {
+            kind: StructureKind.Class,
             name: this.serviceClassName,
-            isExported: true
-        });
-        maybeAddDocs(serviceClass, this.package_.docs);
+            isExported: true,
+            properties: [],
+            getAccessors: [],
+            ctors: [],
+            methods: []
+        };
+        maybeAddDocsStructure(serviceClass, this.package_.docs);
 
         if (this.isRoot && context.generateOAuthClients) {
-            serviceClass.addProperty({
+            serviceClass.properties.push({
+                kind: StructureKind.Property,
                 name: OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME,
                 type: getTextOfTsNode(context.coreUtilities.auth.OAuthTokenProvider._getReferenceToType()),
                 scope: Scope.Private,
@@ -494,6 +531,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                             GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME
                                         )
                                     )
+                                ),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier(
+                                        GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME
+                                    ),
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createThis(),
+                                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                                        ),
+                                        ts.factory.createIdentifier(
+                                            GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME
+                                        )
+                                    )
                                 )
                             ],
                             true
@@ -509,11 +560,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
-                                ts.factory.createIdentifier(serviceModule.getName()),
-                                ts.factory.createIdentifier(optionsInterface.getName())
+                                ts.factory.createIdentifier(serviceModule.name),
+                                ts.factory.createIdentifier(optionsInterface.name)
                             )
                         )
-                    )
+                    ),
+                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
+                        ? "{}"
+                        : undefined
                 }
             ];
             const readClientId =
@@ -567,12 +621,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }),
                 });
             `;
-            serviceClass.addConstructor({
+            serviceClass.ctors.push({
                 parameters,
                 statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
             });
         } else {
-            serviceClass.addConstructor({
+            serviceClass.ctors.push({
                 parameters: [
                     {
                         name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
@@ -581,12 +635,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         type: getTextOfTsNode(
                             ts.factory.createTypeReferenceNode(
                                 ts.factory.createQualifiedName(
-                                    ts.factory.createIdentifier(serviceModule.getName()),
-                                    ts.factory.createIdentifier(optionsInterface.getName())
+                                    ts.factory.createIdentifier(serviceModule.name),
+                                    ts.factory.createIdentifier(optionsInterface.name)
                                 )
                             )
                         ),
-                        initializer: optionsInterface.getProperties().every((property) => property.hasQuestionToken())
+                        initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
                             ? "{}"
                             : undefined
                     }
@@ -605,15 +659,19 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isIdempotent = true;
             }
 
-            const method = serviceClass.addMethod({
+            const statements = endpoint.getStatements(context);
+            // const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
+
+            const method: MethodDeclarationStructure = {
+                kind: StructureKind.Method,
                 name: endpoint.endpoint.name.camelCase.unsafeName,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
                     ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
                 ),
                 scope: Scope.Public,
-                isAsync: true,
-                statements: endpoint.getStatements(context).map(getTextOfTsNode),
+                isAsync: true, // if not returnsAPIPromise we return an `APIPromise`
+                statements: statements.map(getTextOfTsNode),
                 overloads: overloads.map((overload, index) => ({
                     docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
                     parameters: overload.parameters,
@@ -621,15 +679,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
                     )
                 }))
-            });
+            };
+            serviceClass.methods.push(method);
 
             if (overloads.length === 0) {
-                maybeAddDocs(method, docs);
+                maybeAddDocsStructure(method, docs);
             }
         }
 
         if (isIdempotent) {
-            serviceModule.addInterface(this.generateIdempotentRequestOptionsInterface(context));
+            serviceModule.statements.push(this.generateIdempotentRequestOptionsInterface(context));
         }
 
         for (const wrappedService of this.generatedWrappedServices) {
@@ -654,7 +713,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                       ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                   ]);
 
-            serviceClass.addMethod({
+            serviceClass.methods.push({
                 scope: Scope.Protected,
                 isAsync: true,
                 name: GeneratedSdkClientClassImpl.AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
@@ -664,13 +723,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         if (this.shouldGenerateCustomAuthorizationHeaderHelperMethod()) {
-            serviceClass.addMethod({
+            serviceClass.methods.push({
                 scope: Scope.Protected,
                 isAsync: true,
                 name: GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
                 statements: this.getCustomAuthorizationHeaderStatements(context).map(getTextOfTsNode)
             });
         }
+
+        context.sourceFile.addClass(serviceClass);
     }
 
     private shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
@@ -685,6 +746,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             return false;
         }
         return this.getCustomAuthorizationHeaders().length > 0;
+    }
+
+    public getBaseUrl(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
+        const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
+
+        const environment = this.getEnvironment(endpoint, context);
+
+        return ts.factory.createBinaryExpression(
+            referenceToBaseUrl,
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            environment
+        );
     }
 
     public getEnvironment(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
@@ -929,8 +1002,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             : `${this.serviceClassName}.${GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME}`;
     }
 
-    private generateRequestOptionsInterface(context: SdkContext): OptionalKind<InterfaceDeclarationStructure> {
-        const requestOptions = {
+    private generateRequestOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
+        const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
+            kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
             properties: [
                 {
@@ -958,8 +1032,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         hasQuestionToken: true,
                         docs: [`Override the ${header.name.wireValue} header`]
                     };
-                })
-            ]
+                }),
+                {
+                    name: "headers",
+                    type: "Record<string, string>",
+                    hasQuestionToken: true,
+                    docs: ["Additional headers to include in the request."]
+                }
+            ],
+            isExported: true
         };
 
         const generatedVersion = context.versionContext.getGeneratedVersion();
@@ -979,9 +1060,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
      * IDEMPOTENT REQUEST OPTIONS *
      ******************************/
 
-    private generateIdempotentRequestOptionsInterface(
-        context: SdkContext
-    ): OptionalKind<InterfaceDeclarationStructure> {
+    private generateIdempotentRequestOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
         for (const header of this.intermediateRepresentation.idempotencyHeaders) {
             if (!isLiteralHeader(header, context)) {
@@ -994,9 +1073,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
         }
         return {
+            kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
             extends: [GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME],
-            properties
+            properties,
+            isExported: true
         };
     }
 
@@ -1098,7 +1179,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return properties;
     }
 
-    private generateOptionsInterface(context: SdkContext): OptionalKind<InterfaceDeclarationStructure> {
+    private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
         if (!this.requireDefaultEnvironment) {
@@ -1113,6 +1194,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
             });
         }
+
+        properties.push({
+            name: GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
+            type: getTextOfTsNode(
+                context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                )
+            ),
+            hasQuestionToken: true,
+            docs: ["Specify a custom URL to connect the client to."]
+        });
 
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push({
@@ -1152,7 +1244,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         for (const pathParameter of getNonVariablePathParameters(this.intermediateRepresentation.pathParameters)) {
             properties.push({
-                name: getParameterNameForPathParameter({
+                name: getParameterNameForRootPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 }),
@@ -1239,7 +1331,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         for (const header of this.authHeaders) {
             const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
             const isOptional =
-                referenceToHeaderType.isOptional || !this.intermediateRepresentation.sdkConfig.isAuthMandatory;
+                referenceToHeaderType.isOptional ||
+                !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                header.headerEnvVar != null;
             properties.push({
                 name: this.getOptionKeyForAuthHeader(header),
                 type: getTextOfTsNode(
@@ -1295,8 +1389,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         return {
+            kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
-            properties
+            properties,
+            isExported: true
         };
     }
 
@@ -1315,6 +1411,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
+        );
+    }
+
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        return context.coreUtilities.fetcher.Supplier.get(
+            this.getReferenceToOption(GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME)
         );
     }
 
@@ -1517,7 +1619,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     ts.factory.createThrowStatement(
                                         context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
                                             message: ts.factory.createStringLiteral(
-                                                `Please specify ${this.bearerAuthScheme.tokenEnvVar} when instantiating the client.`
+                                                `Please specify a ${BEARER_TOKEN_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.bearerAuthScheme.tokenEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
                                             responseBody: undefined
@@ -1666,16 +1768,102 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     : context.coreUtilities.fetcher.Supplier.get(
                           this.getReferenceToOption(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme))
                       );
-
             if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
-                statements.push(
-                    ts.factory.createReturnStatement(
-                        context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                            usernameExpression,
-                            passwordExpression
+                if (this.basicAuthScheme.usernameEnvVar != null) {
+                    const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
+                    statements.push(
+                        ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        USERNAME_VARIABLE_NAME,
+                                        undefined,
+                                        undefined,
+                                        usernameExpression
+                                    )
+                                ],
+                                ts.NodeFlags.Const
+                            )
+                        ),
+                        ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createThrowStatement(
+                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                            message: ts.factory.createStringLiteral(
+                                                `Please specify a ${USERNAME_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.usernameEnvVar} environment variable`
+                                            ),
+                                            statusCode: undefined,
+                                            responseBody: undefined
+                                        })
+                                    )
+                                ],
+                                true
+                            )
                         )
-                    )
-                );
+                    );
+                    const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;
+                    statements.push(
+                        ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        PASSWORD_VARIABLE_NAME,
+                                        undefined,
+                                        undefined,
+                                        passwordExpression
+                                    )
+                                ],
+                                ts.NodeFlags.Const
+                            )
+                        ),
+                        ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createThrowStatement(
+                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                            message: ts.factory.createStringLiteral(
+                                                `Please specify a ${PASSWORD_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.passwordEnvVar} environment variable`
+                                            ),
+                                            statusCode: undefined,
+                                            responseBody: undefined
+                                        })
+                                    )
+                                ],
+                                true
+                            )
+                        )
+                    );
+                    statements.push(
+                        ts.factory.createReturnStatement(
+                            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
+                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME)
+                            )
+                        )
+                    );
+                } else {
+                    statements.push(
+                        ts.factory.createReturnStatement(
+                            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                                usernameExpression,
+                                passwordExpression
+                            )
+                        )
+                    );
+                }
             } else {
                 const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
                 const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;
@@ -1854,7 +2042,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public getReferenceToRootPathParameter(pathParameter: PathParameter): ts.Expression {
         return this.getReferenceToOption(
-            getParameterNameForPathParameter({
+            getParameterNameForRootPathParameter({
                 pathParameter,
                 retainOriginalCasing: this.retainOriginalCasing
             })

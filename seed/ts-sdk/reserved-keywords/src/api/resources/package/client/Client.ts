@@ -7,17 +7,21 @@ import * as SeedNurseryApi from "../../../index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Package {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,10 +39,12 @@ export class Package {
      */
     public async test(request: SeedNurseryApi.TestRequest, requestOptions?: Package.RequestOptions): Promise<void> {
         const { for: for_ } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["for"] = for_;
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -47,6 +53,7 @@ export class Package {
                 "User-Agent": "@fern/reserved-keywords/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -73,7 +80,7 @@ export class Package {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedNurseryApiTimeoutError();
+                throw new errors.SeedNurseryApiTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedNurseryApiError({
                     message: _response.error.errorMessage,

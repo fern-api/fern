@@ -12,7 +12,7 @@ export const LongType: core.serialization.ObjectSchema<serializers.LongType.Raw,
     });
 
 export declare namespace LongType {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
     }
 }

@@ -9,18 +9,22 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace CustomAuth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         customAuthScheme: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -39,7 +43,11 @@ export class CustomAuth {
      */
     public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "custom-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "custom-auth",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -49,6 +57,7 @@ export class CustomAuth {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await this._getCustomAuthorizationHeaders()),
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -74,7 +83,7 @@ export class CustomAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedCustomAuthError({
@@ -91,7 +100,7 @@ export class CustomAuth {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedCustomAuthTimeoutError();
+                throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling GET /custom-auth.");
             case "unknown":
                 throw new errors.SeedCustomAuthError({
                     message: _response.error.errorMessage,
@@ -115,7 +124,11 @@ export class CustomAuth {
      */
     public async postWithCustomAuth(request?: unknown, requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "custom-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "custom-auth",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -125,6 +138,7 @@ export class CustomAuth {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await this._getCustomAuthorizationHeaders()),
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -151,7 +165,7 @@ export class CustomAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 400:
                     throw new SeedCustomAuth.BadRequest();
@@ -170,7 +184,7 @@ export class CustomAuth {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedCustomAuthTimeoutError();
+                throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling POST /custom-auth.");
             case "unknown":
                 throw new errors.SeedCustomAuthError({
                     message: _response.error.errorMessage,

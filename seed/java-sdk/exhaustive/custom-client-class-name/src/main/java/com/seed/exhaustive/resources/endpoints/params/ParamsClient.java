@@ -10,9 +10,12 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
+import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -51,7 +54,51 @@ public class ParamsClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new BestApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * GET with path param
+     */
+    public String getWithInlinePath(GetWithInlinePath request) {
+        return getWithInlinePath(request, null);
+    }
+
+    /**
+     * GET with path param
+     */
+    public String getWithInlinePath(GetWithInlinePath request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("params")
+                .addPathSegments("path")
+                .addPathSegment(request.getParam())
+                .build();
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -193,6 +240,47 @@ public class ParamsClient {
     }
 
     /**
+     * GET with path and query params
+     */
+    public void getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
+        getWithInlinePathAndQuery(request, null);
+    }
+
+    /**
+     * GET with path and query params
+     */
+    public void getWithInlinePathAndQuery(GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("params")
+                .addPathSegments("path-query")
+                .addPathSegment(request.getParam());
+        httpUrl.addQueryParameter("query", request.getQuery());
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return;
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new BestApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
      * PUT to update with path param
      */
     public String modifyWithPath(String param, String request) {
@@ -221,6 +309,56 @@ public class ParamsClient {
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new BestApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * PUT to update with path param
+     */
+    public String modifyWithInlinePath(ModifyResourceAtInlinedPath request) {
+        return modifyWithInlinePath(request, null);
+    }
+
+    /**
+     * PUT to update with path param
+     */
+    public String modifyWithInlinePath(ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("params")
+                .addPathSegments("path")
+                .addPathSegment(request.getParam())
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PUT", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

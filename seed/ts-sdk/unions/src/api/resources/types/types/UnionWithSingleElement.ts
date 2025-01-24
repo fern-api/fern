@@ -6,8 +6,8 @@ import * as SeedUnions from "../../../index";
 
 export type UnionWithSingleElement = SeedUnions.UnionWithSingleElement.Foo;
 
-export declare namespace UnionWithSingleElement {
-    interface Foo extends SeedUnions.Foo {
+export namespace UnionWithSingleElement {
+    export interface Foo extends SeedUnions.Foo {
         type: "foo";
     }
 }

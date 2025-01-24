@@ -33,7 +33,7 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace ExampleEndpointCall {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         id?: string | null;
         name?: Name.Raw | null;
         url: string;

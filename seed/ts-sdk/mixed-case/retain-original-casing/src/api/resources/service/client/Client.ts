@@ -9,17 +9,21 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,12 +39,13 @@ export class Service {
      */
     public async getResource(
         ResourceID: string,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedMixedCase.Resource> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/resource/${encodeURIComponent(ResourceID)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/resource/${encodeURIComponent(ResourceID)}`,
             ),
             method: "GET",
             headers: {
@@ -50,6 +55,7 @@ export class Service {
                 "User-Agent": "@fern/mixed-case/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -80,7 +86,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedMixedCaseTimeoutError();
+                throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource/{ResourceID}.");
             case "unknown":
                 throw new errors.SeedMixedCaseError({
                     message: _response.error.errorMessage,
@@ -100,14 +106,18 @@ export class Service {
      */
     public async listResources(
         request: SeedMixedCase.ListResourcesRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedMixedCase.Resource[]> {
         const { page_limit: pageLimit, beforeDate } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["page_limit"] = pageLimit.toString();
         _queryParams["beforeDate"] = beforeDate;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/resource"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/resource",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -116,6 +126,7 @@ export class Service {
                 "User-Agent": "@fern/mixed-case/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -147,7 +158,7 @@ export class Service {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedMixedCaseTimeoutError();
+                throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource.");
             case "unknown":
                 throw new errors.SeedMixedCaseError({
                     message: _response.error.errorMessage,

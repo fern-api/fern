@@ -9,6 +9,7 @@ export interface ArraySchema
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithInline {
     value: FernOpenapiIr.Schema;
 }

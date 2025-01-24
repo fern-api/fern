@@ -1,3 +1,6 @@
+[project]
+name = "fern_server-sent-events"
+
 [tool.poetry]
 name = "fern_server-sent-events"
 version = "0.0.1"

@@ -1,16 +1,18 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, getExampleEndpointCalls, GetReferenceOpts, getTextOfTsNode } from "@fern-typescript/commons";
+import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
 import { buildUrl } from "../utils/buildUrl";
 import {
+    REQUEST_OPTIONS_PARAMETER_NAME,
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression,
-    REQUEST_OPTIONS_PARAMETER_NAME
+    getTimeoutExpression
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 
@@ -32,11 +34,11 @@ const EXAMPLE_PREFIX = "    ";
 
 export class GeneratedDefaultEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint;
+    public readonly response: GeneratedEndpointResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
-    private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
@@ -61,6 +63,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+    }
+
+    public isPaginated(context: SdkContext): boolean {
+        return this.response.getPaginationInfo(context) != null;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -182,8 +188,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         invocation: ts.Expression;
         context: SdkContext;
     }): ts.Node[] | undefined {
-        const paginationInfo = this.response.getPaginationInfo(context);
-        if (paginationInfo == null) {
+        if (this.endpoint.pagination == null || !context.config.generatePaginatedClients) {
             return undefined;
         }
 
@@ -380,27 +385,30 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return [...this.invokeFetcher(context), ...this.response.getReturnResponseStatements(context)];
     }
 
-    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
-        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+            }
         });
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
         } else {
-            return referenceToEnvironment;
+            return baseUrl;
         }
     }
 
     private invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
-            url: this.getReferenceToEnvironment(context),
+            url: this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,

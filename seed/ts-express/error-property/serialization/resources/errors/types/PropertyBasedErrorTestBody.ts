@@ -14,7 +14,7 @@ export const PropertyBasedErrorTestBody: core.serialization.ObjectSchema<
 });
 
 export declare namespace PropertyBasedErrorTestBody {
-    interface Raw {
+    export interface Raw {
         message: string;
     }
 }

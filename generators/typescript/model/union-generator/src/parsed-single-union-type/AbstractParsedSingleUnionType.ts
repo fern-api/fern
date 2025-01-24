@@ -1,6 +1,7 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
@@ -32,14 +33,20 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
         return {
             name: this.getInterfaceName(),
             extends: this.singleUnionType.getExtendsForInterface(context),
-            jsonProperties: [
+            properties: [
                 {
                     name: generatedUnion.discriminant,
                     type: getTextOfTsNode(this.getDiscriminantValueType())
                 },
+                ...this.singleUnionType.getDiscriminantPropertiesForInterface(context),
                 ...this.singleUnionType.getNonDiscriminantPropertiesForInterface(context)
-            ]
+            ],
+            module: this.singleUnionType.generateModule(context)
         };
+    }
+
+    public generateForInlineUnion(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.TypeNode {
+        return this.singleUnionType.generateForInlineUnion(context);
     }
 
     public getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction {

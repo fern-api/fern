@@ -3,9 +3,9 @@ import { Annotation } from "./Annotation";
 import { Class } from "./Class";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { Method } from "./Method";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Method } from "./Method";
 
 export declare namespace TestClass {
     interface Args {

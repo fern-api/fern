@@ -1,7 +1,9 @@
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { csharp, CSharpFile, dependencies, FileGenerator } from ".";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
+import { CSharpFile, FileGenerator, csharp, dependencies } from ".";
 import { AbstractCsharpGeneratorContext } from "./cli";
 import { BaseCsharpCustomConfigSchema } from "./custom-config";
+
 export class TestFileGenerator extends FileGenerator<
     CSharpFile,
     BaseCsharpCustomConfigSchema,

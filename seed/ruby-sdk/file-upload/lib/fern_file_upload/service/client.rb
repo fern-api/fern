@@ -46,22 +46,22 @@ module SeedFileUploadClient
         end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
-          maybeString: maybe_string,
+          maybe_string: maybe_string,
           integer: integer,
           file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
-          fileList: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file_list),
-          maybeFile: unless maybe_file.nil?
-                       SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: maybe_file)
-                     end,
-          maybeFileList: unless maybe_file_list.nil?
-                           SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: maybe_file_list)
-                         end,
-          maybeInteger: maybe_integer,
-          optionalListOfStrings: optional_list_of_strings,
-          listOfObjects: list_of_objects,
-          optionalMetadata: optional_metadata,
-          optionalObjectType: optional_object_type,
-          optionalId: optional_id
+          file_list: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file_list),
+          maybe_file: unless maybe_file.nil?
+                        SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: maybe_file)
+                      end,
+          maybe_file_list: unless maybe_file_list.nil?
+                             SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: maybe_file_list)
+                           end,
+          maybe_integer: maybe_integer,
+          optional_list_of_strings: optional_list_of_strings,
+          list_of_objects: list_of_objects,
+          optional_metadata: optional_metadata,
+          optional_object_type: optional_object_type,
+          optional_id: optional_id
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
@@ -126,9 +126,11 @@ module SeedFileUploadClient
     # @param foo [String]
     # @param bar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
     #   * :foo (String)
+    # @param foo_bar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
+    #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    def with_content_type(file:, foo:, bar:, request_options: nil)
+    def with_content_type(file:, foo:, bar:, foo_bar: nil, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -143,7 +145,8 @@ module SeedFileUploadClient
           **(request_options&.additional_body_parameters || {}),
           file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
           foo: foo,
-          bar: bar
+          bar: bar,
+          foo_bar: foo_bar
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/with-content-type"
       end
@@ -190,22 +193,22 @@ module SeedFileUploadClient
           end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
-            maybeString: maybe_string,
+            maybe_string: maybe_string,
             integer: integer,
             file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
-            fileList: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file_list),
-            maybeFile: unless maybe_file.nil?
-                         SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: maybe_file)
-                       end,
-            maybeFileList: unless maybe_file_list.nil?
-                             SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: maybe_file_list)
-                           end,
-            maybeInteger: maybe_integer,
-            optionalListOfStrings: optional_list_of_strings,
-            listOfObjects: list_of_objects,
-            optionalMetadata: optional_metadata,
-            optionalObjectType: optional_object_type,
-            optionalId: optional_id
+            file_list: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file_list),
+            maybe_file: unless maybe_file.nil?
+                          SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: maybe_file)
+                        end,
+            maybe_file_list: unless maybe_file_list.nil?
+                               SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: maybe_file_list)
+                             end,
+            maybe_integer: maybe_integer,
+            optional_list_of_strings: optional_list_of_strings,
+            list_of_objects: list_of_objects,
+            optional_metadata: optional_metadata,
+            optional_object_type: optional_object_type,
+            optional_id: optional_id
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
@@ -275,9 +278,11 @@ module SeedFileUploadClient
     # @param foo [String]
     # @param bar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
     #   * :foo (String)
+    # @param foo_bar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
+    #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    def with_content_type(file:, foo:, bar:, request_options: nil)
+    def with_content_type(file:, foo:, bar:, foo_bar: nil, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -293,7 +298,8 @@ module SeedFileUploadClient
             **(request_options&.additional_body_parameters || {}),
             file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
             foo: foo,
-            bar: bar
+            bar: bar,
+            foo_bar: foo_bar
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/with-content-type"
         end

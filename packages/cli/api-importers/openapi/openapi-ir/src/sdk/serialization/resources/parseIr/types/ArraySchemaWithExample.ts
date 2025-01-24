@@ -10,6 +10,7 @@ import { WithName } from "../../commons/types/WithName";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const ArraySchemaWithExample: core.serialization.ObjectSchema<
     serializers.ArraySchemaWithExample.Raw,
@@ -23,10 +24,17 @@ export const ArraySchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithName)
     .extend(WithDescription)
     .extend(WithAvailability)
-    .extend(WithTitle);
+    .extend(WithTitle)
+    .extend(WithInline);
 
 export declare namespace ArraySchemaWithExample {
-    interface Raw extends WithSdkGroupName.Raw, WithName.Raw, WithDescription.Raw, WithAvailability.Raw, WithTitle.Raw {
+    export interface Raw
+        extends WithSdkGroupName.Raw,
+            WithName.Raw,
+            WithDescription.Raw,
+            WithAvailability.Raw,
+            WithTitle.Raw,
+            WithInline.Raw {
         value: serializers.SchemaWithExample.Raw;
         example?: unknown[] | null;
     }

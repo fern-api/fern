@@ -5,7 +5,7 @@ package commons
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/examples/fern/core"
+	internal "github.com/examples/fern/internal"
 )
 
 type Data struct {
@@ -20,6 +20,27 @@ func NewDataFromString(value string) *Data {
 
 func NewDataFromBase64(value []byte) *Data {
 	return &Data{Type: "base64", Base64: value}
+}
+
+func (d *Data) GetType() string {
+	if d == nil {
+		return ""
+	}
+	return d.Type
+}
+
+func (d *Data) GetString() string {
+	if d == nil {
+		return ""
+	}
+	return d.String
+}
+
+func (d *Data) GetBase64() []byte {
+	if d == nil {
+		return nil
+	}
+	return d.Base64
 }
 
 func (d *Data) UnmarshalJSON(data []byte) error {
@@ -55,6 +76,9 @@ func (d *Data) UnmarshalJSON(data []byte) error {
 }
 
 func (d Data) MarshalJSON() ([]byte, error) {
+	if err := d.validate(); err != nil {
+		return nil, err
+	}
 	switch d.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", d.Type, d)
@@ -95,6 +119,40 @@ func (d *Data) Accept(visitor DataVisitor) error {
 	}
 }
 
+func (d *Data) validate() error {
+	if d == nil {
+		return fmt.Errorf("type %T is nil", d)
+	}
+	var fields []string
+	if d.String != "" {
+		fields = append(fields, "string")
+	}
+	if d.Base64 != nil {
+		fields = append(fields, "base64")
+	}
+	if len(fields) == 0 {
+		if d.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", d, d.Type)
+		}
+		return fmt.Errorf("type %T is empty", d)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", d, fields)
+	}
+	if d.Type != "" {
+		field := fields[0]
+		if d.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				d,
+				d.Type,
+				d,
+			)
+		}
+	}
+	return nil
+}
+
 type EventInfo struct {
 	Type     string
 	Metadata *Metadata
@@ -107,6 +165,27 @@ func NewEventInfoFromMetadata(value *Metadata) *EventInfo {
 
 func NewEventInfoFromTag(value Tag) *EventInfo {
 	return &EventInfo{Type: "tag", Tag: value}
+}
+
+func (e *EventInfo) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventInfo) GetMetadata() *Metadata {
+	if e == nil {
+		return nil
+	}
+	return e.Metadata
+}
+
+func (e *EventInfo) GetTag() Tag {
+	if e == nil {
+		return ""
+	}
+	return e.Tag
 }
 
 func (e *EventInfo) UnmarshalJSON(data []byte) error {
@@ -140,11 +219,14 @@ func (e *EventInfo) UnmarshalJSON(data []byte) error {
 }
 
 func (e EventInfo) MarshalJSON() ([]byte, error) {
+	if err := e.validate(); err != nil {
+		return nil, err
+	}
 	switch e.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "metadata":
-		return core.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
+		return internal.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
 	case "tag":
 		var marshaler = struct {
 			Type string `json:"type"`
@@ -173,12 +255,67 @@ func (e *EventInfo) Accept(visitor EventInfoVisitor) error {
 	}
 }
 
+func (e *EventInfo) validate() error {
+	if e == nil {
+		return fmt.Errorf("type %T is nil", e)
+	}
+	var fields []string
+	if e.Metadata != nil {
+		fields = append(fields, "metadata")
+	}
+	if e.Tag != "" {
+		fields = append(fields, "tag")
+	}
+	if len(fields) == 0 {
+		if e.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
+		}
+		return fmt.Errorf("type %T is empty", e)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
+	}
+	if e.Type != "" {
+		field := fields[0]
+		if e.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				e,
+				e.Type,
+				e,
+			)
+		}
+	}
+	return nil
+}
+
 type Metadata struct {
 	Id         string            `json:"id" url:"id"`
 	Data       map[string]string `json:"data,omitempty" url:"data,omitempty"`
 	JsonString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (m *Metadata) GetId() string {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Metadata) GetData() map[string]string {
+	if m == nil {
+		return nil
+	}
+	return m.Data
+}
+
+func (m *Metadata) GetJsonString() *string {
+	if m == nil {
+		return nil
+	}
+	return m.JsonString
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
@@ -192,18 +329,16 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Metadata(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
 func (m *Metadata) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

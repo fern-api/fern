@@ -13,7 +13,7 @@ export const GrpcTransport: core.serialization.ObjectSchema<serializers.GrpcTran
     });
 
 export declare namespace GrpcTransport {
-    interface Raw {
+    export interface Raw {
         service: ProtobufService.Raw;
     }
 }

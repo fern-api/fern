@@ -1,13 +1,15 @@
-import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { readFile } from "fs/promises";
+
+import { stripLeadingSlash } from "@fern-api/core-utils";
 import { DocsImporter, FernDocsNavigationBuilder } from "@fern-api/docs-importer-commons";
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
-import { readFile } from "fs/promises";
-import { MintJsonSchema, MintNavigationItem } from "./mintlify";
-import { convertLogo } from "./convertLogo";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+
 import { convertColors } from "./convertColors";
+import { convertLogo } from "./convertLogo";
 import { convertNavigationItem } from "./convertNavigationItem";
+import { MintJsonSchema, MintNavigationItem } from "./mintlify";
 import { getTabForMintItem } from "./utils/getTabForMintItem";
-import { stripLeadingSlash } from "@fern-api/core-utils";
 
 export declare namespace MintlifyImporter {
     interface Args {

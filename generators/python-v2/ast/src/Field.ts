@@ -1,6 +1,6 @@
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
 
 export declare namespace Field {
     export interface BaseArgs {
@@ -48,7 +48,8 @@ export class Field extends AstNode {
         }
 
         if (this.initializer !== undefined) {
-            writer.write(` = ${this.initializer}`);
+            writer.write(" = ");
+            this.initializer.write(writer);
         }
 
         if (this.docs != null) {

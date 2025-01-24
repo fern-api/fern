@@ -32,17 +32,17 @@ export const Auth: core.serialization.Schema<serializers.dynamic.Auth.Raw, FernI
     });
 
 export declare namespace Auth {
-    type Raw = Auth.Basic | Auth.Bearer | Auth.Header;
+    export type Raw = Auth.Basic | Auth.Bearer | Auth.Header;
 
-    interface Basic extends BasicAuth.Raw {
+    export interface Basic extends BasicAuth.Raw {
         type: "basic";
     }
 
-    interface Bearer extends BearerAuth.Raw {
+    export interface Bearer extends BearerAuth.Raw {
         type: "bearer";
     }
 
-    interface Header extends HeaderAuth.Raw {
+    export interface Header extends HeaderAuth.Raw {
         type: "header";
     }
 }

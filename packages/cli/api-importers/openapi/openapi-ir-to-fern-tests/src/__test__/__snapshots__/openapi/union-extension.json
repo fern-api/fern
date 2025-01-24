@@ -8,6 +8,7 @@
         "types": {
           "CounterPartyAccount": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "currency": "optional<string>",
               "iban": "optional<string>",
@@ -19,6 +20,7 @@
           },
           "IbanField": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "iban": "optional<string>",
             },
@@ -28,6 +30,7 @@
           },
           "Other": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "identification": "optional<string>",
               "schemeNameCone": "optional<string>",
@@ -38,6 +41,7 @@
           },
           "OtherField": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "other": "optional<Other>",
             },
@@ -49,6 +53,7 @@
             "discriminated": false,
             "docs": "PartyAccount with excluded currency in response",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

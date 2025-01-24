@@ -8,20 +8,20 @@ export type ErrorDeclarationDiscriminantValue =
     | FernIr.ErrorDeclarationDiscriminantValue.Property
     | FernIr.ErrorDeclarationDiscriminantValue.StatusCode;
 
-export declare namespace ErrorDeclarationDiscriminantValue {
-    interface Property extends FernIr.NameAndWireValue, _Utils {
+export namespace ErrorDeclarationDiscriminantValue {
+    export interface Property extends FernIr.NameAndWireValue, _Utils {
         type: "property";
     }
 
-    interface StatusCode extends _Utils {
+    export interface StatusCode extends _Utils {
         type: "statusCode";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ErrorDeclarationDiscriminantValue._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         property: (value: FernIr.NameAndWireValue) => _Result;
         statusCode: () => _Result;
         _other: (value: { type: string }) => _Result;
@@ -35,7 +35,7 @@ export const ErrorDeclarationDiscriminantValue = {
             type: "property",
             _visit: function <_Result>(
                 this: FernIr.ErrorDeclarationDiscriminantValue.Property,
-                visitor: FernIr.ErrorDeclarationDiscriminantValue._Visitor<_Result>
+                visitor: FernIr.ErrorDeclarationDiscriminantValue._Visitor<_Result>,
             ) {
                 return FernIr.ErrorDeclarationDiscriminantValue._visit(this, visitor);
             },
@@ -47,7 +47,7 @@ export const ErrorDeclarationDiscriminantValue = {
             type: "statusCode",
             _visit: function <_Result>(
                 this: FernIr.ErrorDeclarationDiscriminantValue.StatusCode,
-                visitor: FernIr.ErrorDeclarationDiscriminantValue._Visitor<_Result>
+                visitor: FernIr.ErrorDeclarationDiscriminantValue._Visitor<_Result>,
             ) {
                 return FernIr.ErrorDeclarationDiscriminantValue._visit(this, visitor);
             },
@@ -56,7 +56,7 @@ export const ErrorDeclarationDiscriminantValue = {
 
     _visit: <_Result>(
         value: FernIr.ErrorDeclarationDiscriminantValue,
-        visitor: FernIr.ErrorDeclarationDiscriminantValue._Visitor<_Result>
+        visitor: FernIr.ErrorDeclarationDiscriminantValue._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "property":

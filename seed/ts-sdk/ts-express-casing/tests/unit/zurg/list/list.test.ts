@@ -12,12 +12,12 @@ describe("list", () => {
         list(
             object({
                 helloWorld: property("hello_world", string()),
-            })
+            }),
         ),
         {
             raw: [{ hello_world: "123" }],
             parsed: [{ helloWorld: "123" }],
-        }
+        },
     );
 
     itValidate("not a list", list(string()), 42, [
@@ -36,6 +36,6 @@ describe("list", () => {
                 path: ["[0]"],
                 message: "Expected string. Received 42.",
             },
-        ]
+        ],
     );
 });

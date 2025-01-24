@@ -14,5 +14,5 @@ export const MetadataValue: core.serialization.Schema<serializers.MetadataValue.
     ]);
 
 export declare namespace MetadataValue {
-    type Raw = number | string | boolean;
+    export type Raw = number | string | boolean;
 }

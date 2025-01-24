@@ -11,7 +11,7 @@ export const ValidDefaultEnvironmentRule: Rule = {
                         if (environments == null || !Object.keys(environments).includes(defaultEnvironment)) {
                             return [
                                 {
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: `The default-environment ${defaultEnvironment} is not listed as an environment`
                                 }
                             ];

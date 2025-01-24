@@ -20,7 +20,7 @@ export const HttpResponseStreamSchemaDetailed: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace HttpResponseStreamSchemaDetailed {
-    interface Raw extends WithDocsSchema.Raw {
+    export interface Raw extends WithDocsSchema.Raw {
         type: string;
         format?: StreamFormat.Raw | null;
         terminator?: string | null;

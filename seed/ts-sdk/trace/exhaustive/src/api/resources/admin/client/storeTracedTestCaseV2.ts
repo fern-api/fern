@@ -7,17 +7,17 @@ import * as core from "../../../../core";
 
 export type Error = SeedTrace.admin.storeTracedTestCaseV2.Error._Unknown;
 
-export declare namespace Error {
-    interface _Unknown extends _Utils {
+export namespace Error {
+    export interface _Unknown extends _Utils {
         errorName: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.admin.storeTracedTestCaseV2.Error._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: SeedTrace.admin.storeTracedTestCaseV2.Error._Unknown,
-                visitor: SeedTrace.admin.storeTracedTestCaseV2.Error._Visitor<_Result>
+                visitor: SeedTrace.admin.storeTracedTestCaseV2.Error._Visitor<_Result>,
             ) {
                 return SeedTrace.admin.storeTracedTestCaseV2.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.admin.storeTracedTestCaseV2.Error,
-        visitor: SeedTrace.admin.storeTracedTestCaseV2.Error._Visitor<_Result>
+        visitor: SeedTrace.admin.storeTracedTestCaseV2.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             default:

@@ -1,4 +1,5 @@
 import { AbstractPythonGeneratorContext } from "@fern-api/base-python-generator";
+
 import { PydanticModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class PydanticModelGeneratorContext extends AbstractPythonGeneratorContext<PydanticModelCustomConfigSchema> {

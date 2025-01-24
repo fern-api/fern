@@ -16,7 +16,7 @@ export const MavenCentralSignature: core.serialization.ObjectSchema<
 });
 
 export declare namespace MavenCentralSignature {
-    interface Raw {
+    export interface Raw {
         keyId: string;
         password: string;
         secretKey: string;

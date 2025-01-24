@@ -1,13 +1,17 @@
 import { FernOpenapiIr } from "@fern-api/openapi-ir";
-import { buildEndpoint } from "./buildEndpoint";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
+import { buildEndpoint } from "./buildEndpoint";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
-export function buildServices(context: OpenApiIrConverterContext): {
+export interface ConvertedServicesResponse {
     schemaIdsToExclude: string[];
     sdkGroups: Set<string>;
-} {
+}
+
+export function buildServices(context: OpenApiIrConverterContext): ConvertedServicesResponse {
     const sdkGroups = new Set<string>();
     const { endpoints, tags } = context.ir;
     let schemaIdsToExclude: string[] = [];
@@ -32,11 +36,17 @@ export function buildServices(context: OpenApiIrConverterContext): {
             }
         }
         const irTag = tag == null ? undefined : tags.tagsById[tag];
+
+        context.setInState(State.Endpoint);
+        context.setEndpointMethod(endpoint.method);
         const convertedEndpoint = buildEndpoint({
             context,
             endpoint,
             declarationFile: file
         });
+        context.unsetEndpointMethod();
+        context.unsetInState(State.Endpoint);
+
         schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
         context.builder.addEndpoint(file, {
             name: endpointId,

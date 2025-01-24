@@ -1,3 +1,5 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     AllOfPropertyConflict,
     Availability,
@@ -11,17 +13,17 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
 import { convertAvailability } from "./convertAvailability";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
-import { isSchemaWithExampleEqual } from "./utils/isSchemaEqual";
+import { isSchemaWithExampleEqual } from "./utils/isSchemaWithExampleEqual";
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId;
@@ -108,7 +110,8 @@ export function convertObject({
                                             value: property.schema,
                                             description: undefined,
                                             availability: property.availability,
-                                            groupName: undefined
+                                            groupName: undefined,
+                                            inline: undefined
                                         })
                                     };
                                 }
@@ -127,7 +130,12 @@ export function convertObject({
             }
             parents.push({
                 schemaId,
-                convertedSchema: convertToReferencedSchema(allOfElement, [schemaId], source),
+                convertedSchema: convertToReferencedSchema(
+                    allOfElement,
+                    [schemaId],
+                    source,
+                    context.options.preserveSchemaIds
+                ),
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
@@ -190,7 +198,8 @@ export function convertObject({
                       description: undefined,
                       availability,
                       value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
-                      groupName
+                      groupName,
+                      inline: undefined
                   });
 
             const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
@@ -299,11 +308,13 @@ export function wrapObject({
                 fullExamples,
                 additionalProperties: isAdditionalPropertiesAny(additionalProperties),
                 availability: undefined,
-                source
+                source,
+                inline: undefined
             }),
             description,
             availability,
-            groupName
+            groupName,
+            inline: undefined
         });
     }
     return SchemaWithExample.object({
@@ -318,7 +329,8 @@ export function wrapObject({
         fullExamples,
         additionalProperties: isAdditionalPropertiesAny(additionalProperties),
         availability,
-        source
+        source,
+        inline: undefined
     });
 }
 

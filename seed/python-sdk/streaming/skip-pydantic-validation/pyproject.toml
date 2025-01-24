@@ -1,3 +1,6 @@
+[project]
+name = "fern_streaming"
+
 [tool.poetry]
 name = "fern_streaming"
 version = "0.0.1"

@@ -1,10 +1,11 @@
-import { Encoding, ExampleType, FernFilepath, Source, Type, TypeDeclaration } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import { Encoding, ExampleType, FernFilepath, Source, Type, TypeDeclaration } from "@fern-api/ir-sdk";
+import { SourceResolver } from "@fern-api/source-resolver";
+
 import { FernFileContext } from "../../FernFileContext";
 import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
-import { SourceResolver } from "../../resolvers/SourceResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getPropertiesByAudience } from "../../utils/getPropertiesByAudience";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -14,7 +15,6 @@ import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertTypeExample } from "./convertExampleType";
-import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
 import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
@@ -25,7 +25,7 @@ export interface TypeDeclarationWithDescendantFilepaths {
     propertiesByAudience: Record<AudienceId, Set<string>>;
 }
 
-export async function convertTypeDeclaration({
+export function convertTypeDeclaration({
     typeName,
     typeDeclaration,
     file,
@@ -41,8 +41,8 @@ export async function convertTypeDeclaration({
     exampleResolver: ExampleResolver;
     sourceResolver: SourceResolver;
     workspace: FernWorkspace;
-}): Promise<TypeDeclarationWithDescendantFilepaths> {
-    const declaration = await convertDeclaration(typeDeclaration);
+}): TypeDeclarationWithDescendantFilepaths {
+    const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
         typeName,
         file
@@ -55,7 +55,7 @@ export async function convertTypeDeclaration({
         propertiesByAudience = getPropertiesByAudience(typeDeclaration.properties ?? {});
     }
 
-    const source = await convertTypeDeclarationSource({
+    const source = convertTypeDeclarationSource({
         file,
         typeDeclaration,
         typeName,
@@ -66,9 +66,9 @@ export async function convertTypeDeclaration({
         propertiesByAudience,
         typeDeclaration: {
             ...declaration,
-            inline: false,
+            inline: getInline(typeDeclaration),
             name: declaredTypeName,
-            shape: await convertType({ typeDeclaration, file, typeResolver }),
+            shape: convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
             encoding: convertTypeDeclarationEncoding({ typeDeclaration, source }),
             source,
@@ -101,7 +101,7 @@ export async function convertTypeDeclaration({
     };
 }
 
-export async function convertType({
+export function convertType({
     typeDeclaration,
     file,
     typeResolver
@@ -109,17 +109,17 @@ export async function convertType({
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<Type> {
-    return await visitRawTypeDeclaration<Promise<Type> | Type>(typeDeclaration, {
+}): Type {
+    return visitRawTypeDeclaration<Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
         undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
-        enum: async (enum_) => Type.enum(await convertEnumTypeDeclaration({ _enum: enum_, file }))
+        enum: (enum_) => Type.enum(convertEnumTypeDeclaration({ _enum: enum_, file }))
     });
 }
 
-async function convertTypeDeclarationSource({
+function convertTypeDeclarationSource({
     file,
     typeDeclaration,
     typeName,
@@ -129,7 +129,7 @@ async function convertTypeDeclarationSource({
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     typeName: string;
     sourceResolver: SourceResolver;
-}): Promise<Source | undefined> {
+}): Source | undefined {
     if (typeof typeDeclaration === "string" || (typeDeclaration.source == null && typeDeclaration.encoding == null)) {
         return undefined;
     }
@@ -144,9 +144,9 @@ async function convertTypeDeclarationSource({
     if (typeDeclaration.source == null) {
         return undefined;
     }
-    const resolvedSource = await sourceResolver.resolveSourceOrThrow({
+    const resolvedSource = sourceResolver.resolveSourceOrThrow({
         source: typeDeclaration.source,
-        file
+        relativeFilepath: file.relativeFilepath
     });
     if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         return undefined;
@@ -194,4 +194,13 @@ function convertSourceToEncoding(source: Source | undefined): Encoding {
               json: {},
               proto: undefined
           };
+}
+function getInline(typeDeclaration: RawSchemas.TypeDeclarationSchema): boolean | undefined {
+    if (typeof typeDeclaration === "string") {
+        return undefined;
+    }
+    if ("inline" in typeDeclaration) {
+        return typeDeclaration.inline;
+    }
+    return undefined;
 }

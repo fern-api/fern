@@ -14,5 +14,5 @@ export const OctetStreamRequest: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({}).extend(WithDescription).extend(WithSource);
 
 export declare namespace OctetStreamRequest {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {}
+    export interface Raw extends WithDescription.Raw, WithSource.Raw {}
 }

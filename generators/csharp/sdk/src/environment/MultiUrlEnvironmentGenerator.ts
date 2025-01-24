@@ -1,6 +1,8 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -35,7 +37,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
                 csharp.field({
                     access: csharp.Access.Public,
                     name:
-                        this.context.customConfig["pascal-case-environments"] ?? true
+                        (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
                     static_: true,

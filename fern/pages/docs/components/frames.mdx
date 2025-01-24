@@ -3,37 +3,47 @@ title: 'Frames'
 description: 'Wrap images in a container with the frame component'
 ---
 
-<Frame caption="Beautiful mountains">
-  <img src="https://images.pexels.com/photos/1867601/pexels-photo-1867601.jpeg" alt="Sample photo of mountains"/>
-</Frame>
+The Frame component provides a container for images and other media with optional captions and backgrounds.
 
-<Aside>
+## Properties
 
-<CodeBlock title="Default">
-  ```jsx title="Default"
-    <Frame
-      caption="Beautiful mountains"
-    >
-        <img src="https://images.pexels.com/photos/1867601.jpeg" alt="Sample photo of mountains" />
+<ParamField path="caption" type="string" required={false}>
+  Caption text to display below the frame
+</ParamField>
+
+<ParamField path="background" type="'subtle' | undefined" required={false}>
+  Adds a subtle background to the frame
+</ParamField>
+
+<br />
+<Tabs>
+  <Tab title="Example">
+    <Frame caption="Beautiful mountains">
+      <img src="https://images.pexels.com/photos/1867601/pexels-photo-1867601.jpeg" alt="Sample photo of mountains"/>
     </Frame>
-  ```
-</CodeBlock>
+  </Tab>
+  <Tab title="Markdown">
+    ```jsx
+    <Frame caption="Beautiful mountains">
+      <img src="./path/to/image.jpg" alt="Sample photo of mountains"/>
+    </Frame>
+    ```
+  </Tab>
+</Tabs>
 
-</Aside>
+## With Subtle Background
 
-### Adding a subtle background
-
-In the scenario where you want to draw more attention to your framed images or your content blends with the main background of your documentation, you can use the `background="subtle"` prop to add a subtle background to the frame.
-
-<Frame caption="Beautiful mountains" background="subtle">
-  <img src="https://images.pexels.com/photos/1867601/pexels-photo-1867601.jpeg" />
-</Frame>
-
-```jsx title="Subtle background" {3}
-  <Frame
-    caption="Beautiful mountains"
-    background="subtle"
-  >
-      <img src="./relative/path/to/photo.jpeg" />
-  </Frame>
-```
+<Tabs>
+  <Tab title="Example">
+    <Frame caption="Beautiful mountains" background="subtle">
+      <img src="https://images.pexels.com/photos/1867601/pexels-photo-1867601.jpeg" alt="Sample photo of mountains"/>
+    </Frame>
+  </Tab>
+  <Tab title="Markdown">
+    ```jsx
+    <Frame caption="Beautiful mountains" background="subtle">
+      <img src="./path/to/image.jpg" alt="Sample photo of mountains"/>
+    </Frame>
+    ```
+  </Tab>
+</Tabs>

@@ -1,5 +1,6 @@
 import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-sdk/api";
 import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/api";
+
 import { getReferenceToVariable } from "./utils";
 
 const BASIC_AUTH_USERNAME_VARIABLE = "username";

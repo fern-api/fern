@@ -5,7 +5,7 @@ package audiences
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/audiences/fern/core"
+	internal "github.com/audiences/fern/internal"
 )
 
 type FindRequest struct {
@@ -14,11 +14,72 @@ type FindRequest struct {
 	PrivateProperty *int           `json:"privateProperty,omitempty" url:"-"`
 }
 
+type FilteredType struct {
+	PublicProperty  *string `json:"public_property,omitempty" url:"public_property,omitempty"`
+	PrivateProperty int     `json:"private_property" url:"private_property"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FilteredType) GetPublicProperty() *string {
+	if f == nil {
+		return nil
+	}
+	return f.PublicProperty
+}
+
+func (f *FilteredType) GetPrivateProperty() int {
+	if f == nil {
+		return 0
+	}
+	return f.PrivateProperty
+}
+
+func (f *FilteredType) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FilteredType) UnmarshalJSON(data []byte) error {
+	type unmarshaler FilteredType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FilteredType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FilteredType) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (i *ImportingType) GetImported() Imported {
+	if i == nil {
+		return ""
+	}
+	return i.Imported
 }
 
 func (i *ImportingType) GetExtraProperties() map[string]interface{} {
@@ -32,24 +93,22 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = ImportingType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
-	i._rawJSON = json.RawMessage(data)
+	i.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (i *ImportingType) String() string {
-	if len(i._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(i._rawJSON); err == nil {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)

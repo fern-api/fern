@@ -1,18 +1,8 @@
 export { DEFAULT_GROUP_NAME } from "../constants";
-export { addGenerator } from "./addGenerator";
-export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
-export { GeneratorName } from "./GeneratorName";
 export * from "./utils";
 export * from "./schemas";
 export { GenerationLanguage, getPackageName } from "./GeneratorsConfiguration";
-export { getGeneratorNameOrThrow } from "./getGeneratorName";
-export { getLatestGeneratorVersion } from "./getGeneratorVersions";
 export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
-export {
-    getPathToGeneratorsConfiguration,
-    loadGeneratorsConfiguration,
-    loadRawGeneratorsConfiguration
-} from "./loadGeneratorsConfiguration";
 export {
     API_ORIGIN_LOCATION_KEY,
     ASYNC_API_LOCATION_KEY,
@@ -20,10 +10,11 @@ export {
     OPENAPI_LOCATION_KEY
 } from "./schemas";
 export {
+    type APIDefinition,
     type APIDefinitionLocation,
+    type APIDefinitionSettings,
     type GeneratorGroup,
     type GeneratorInvocation,
     type GeneratorsConfiguration,
     type ProtoAPIDefinitionSchema
 } from "./GeneratorsConfiguration";
-export { updateGeneratorGroup } from "./updateGeneratorGroup";

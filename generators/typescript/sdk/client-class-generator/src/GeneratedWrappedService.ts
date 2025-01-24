@@ -1,7 +1,11 @@
-import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
+import { Reference, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { ClassDeclaration, Scope, ts } from "ts-morph";
+import { ClassDeclarationStructure, Scope, ts } from "ts-morph";
+
+import { SetRequired } from "@fern-api/core-utils";
+
+import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
@@ -30,7 +34,7 @@ export class GeneratedWrappedService {
         context
     }: {
         isRoot: boolean;
-        class_: ClassDeclaration;
+        class_: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">;
         context: SdkContext;
     }): void {
         const referenceToWrapped = this.getReferenceToWrappedService(class_, context);
@@ -39,7 +43,7 @@ export class GeneratedWrappedService {
             subpackageId: this.wrappedSubpackageId
         });
 
-        class_.addProperty({
+        class_.properties.push({
             name: this.getCachedMemberName(),
             scope: Scope.Protected,
             type: getTextOfTsNode(
@@ -51,7 +55,7 @@ export class GeneratedWrappedService {
         });
 
         if (isRoot && context.generateOAuthClients) {
-            class_.addGetAccessor({
+            class_.getAccessors.push({
                 name: this.getGetterName(),
                 returnType: getTextOfTsNode(referenceToWrapped.getTypeNode()),
                 scope: Scope.Public,
@@ -112,7 +116,7 @@ export class GeneratedWrappedService {
             });
             return;
         }
-        class_.addGetAccessor({
+        class_.getAccessors.push({
             name: this.getGetterName(),
             returnType: getTextOfTsNode(referenceToWrapped.getTypeNode()),
             scope: Scope.Public,
@@ -151,7 +155,10 @@ export class GeneratedWrappedService {
         return lastFernFilepathPart.camelCase.unsafeName;
     }
 
-    private getReferenceToWrappedService(serviceClass: ClassDeclaration, context: SdkContext): Reference {
+    private getReferenceToWrappedService(
+        serviceClass: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods">,
+        context: SdkContext
+    ): Reference {
         const reference = context.sdkClientClass.getReferenceToClientClass({
             isRoot: false,
             subpackageId: this.wrappedSubpackageId
@@ -163,7 +170,7 @@ export class GeneratedWrappedService {
             })
         );
 
-        if (wrappedServiceClassName !== serviceClass.getName()) {
+        if (wrappedServiceClassName !== serviceClass.name) {
             return reference;
         } else {
             return context.sdkClientClass.getReferenceToClientClass(

@@ -36,7 +36,7 @@ namespace SeedCsharpNamespaceConflict.Test.Core
                 new DummyObject { EnumProperty = KnownEnumValue2 },
                 JsonOptions
             );
-            TestContext.WriteLine("Serialized JSON: \n" + json);
+            TestContext.Out.WriteLine("Serialized JSON: \n" + json);
             var enumString = json.GetProperty("enum_property").GetString();
             Assert.That(enumString, Is.Not.Null);
             Assert.That(enumString, Is.EqualTo(KnownEnumValue2String));

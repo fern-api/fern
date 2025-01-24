@@ -2,8 +2,13 @@ import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
+import {
+    AbstractAPIWorkspace,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/workspace-loader";
+
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
@@ -49,7 +54,7 @@ export async function runRemoteGenerationForAPIWorkspace({
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
-                    getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({

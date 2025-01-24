@@ -1,5 +1,6 @@
-import { HttpService, IntermediateRepresentation, Package, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
+
+import { HttpService, IntermediateRepresentation, Package, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 
 export class PackageResolver {
     constructor(private readonly intermediateRepresentation: IntermediateRepresentation) {}

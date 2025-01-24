@@ -16,6 +16,14 @@ public final class SeedVariablesClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedVariablesClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedVariablesClientBuilder rootVariable(String rootVariable) {
         clientOptionsBuilder.rootVariable(rootVariable);
         return this;

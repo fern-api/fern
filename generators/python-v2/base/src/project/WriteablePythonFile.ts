@@ -1,5 +1,5 @@
+import { File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { File } from "@fern-api/generator-commons";
 import { python } from "@fern-api/python-ast";
 
 export declare namespace WriteablePythonFile {

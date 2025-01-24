@@ -22,7 +22,7 @@ export const ApiConfigurationV2Schema: core.serialization.ObjectSchema<
     .extend(WithEnvironmentsSchema);
 
 export declare namespace ApiConfigurationV2Schema {
-    interface Raw extends WithHeadersSchema.Raw, WithEnvironmentsSchema.Raw {
+    export interface Raw extends WithHeadersSchema.Raw, WithEnvironmentsSchema.Raw {
         auth?: ApiAuthSchema.Raw | null;
         specs: ApiConfigurationV2SpecsSchema.Raw;
     }

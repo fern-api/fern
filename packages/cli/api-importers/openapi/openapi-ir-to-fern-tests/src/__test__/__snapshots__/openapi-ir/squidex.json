@@ -71861,6 +71861,7 @@
           },
           "generatedName": "LocalizedValueOfReadonlyListOfStringValue",
           "groupName": [],
+          "inline": true,
           "type": "array"
         },
         "generatedName": "LocalizedValueOfReadonlyListOfString",
@@ -72013,6 +72014,7 @@
             "type": "primitive"
           },
           "groupName": [],
+          "inline": true,
           "type": "nullable"
         },
         "generatedName": "LocalizedValueOfNullableBoolean",
@@ -72413,6 +72415,7 @@
             "type": "primitive"
           },
           "groupName": [],
+          "inline": true,
           "type": "nullable"
         },
         "generatedName": "LocalizedValueOfNullableInstant",
@@ -72756,6 +72759,7 @@
             "type": "primitive"
           },
           "groupName": [],
+          "inline": true,
           "type": "nullable"
         },
         "generatedName": "LocalizedValueOfNullableDouble",
@@ -76468,6 +76472,7 @@
                 },
                 "generatedName": "CallsUsageDtoDtoDetailsValue",
                 "groupName": [],
+                "inline": true,
                 "type": "array"
               },
               "generatedName": "CallsUsageDtoDtoDetails",
@@ -78139,6 +78144,7 @@
                       "type": "primitive"
                     },
                     "groupName": [],
+                    "inline": true,
                     "type": "nullable"
                   },
                   "generatedName": "UpsertSchemaDtoPreviewUrls",

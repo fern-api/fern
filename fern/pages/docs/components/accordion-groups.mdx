@@ -1,52 +1,81 @@
 ---
 title: 'Accordion Groups'
-description: Display expandable/collapsible options that can reveal more information
-icon: 'table-rows'
+description: 'Display expandable/collapsible options that can reveal more information'
 ---
-<AccordionGroup>
-  <Accordion title="Option 1">
-    You can put other components inside Accordions.
 
-    ```ts index.ts
-    export function generateRandomNumber() {
-      return Math.random();
+Accordion Groups combine multiple accordions into a single collapsible interface. They maintain consistent styling and behavior while organizing related content into manageable sections.
+
+## Examples
+
+<AccordionGroup>
+  <Accordion title="Text Example">
+    This is a basic example of an accordion group.
+  </Accordion>
+
+  <Accordion title="Multimedia Example">
+    You can embed photos, videos, and other media within accordions for rich interactive content.
+
+    <embed 
+      src="./growing-fern.mp4" 
+      type="video/mp4"
+      width="640"
+      height="360"
+    />
+  </Accordion>
+
+  <Accordion title="Rich Content Support">
+    Accordions can contain rich content including code blocks, callouts, and other components.
+
+    ```ts
+    // Example of code inside an accordion
+    export function greet(name: string) {
+      return `Hello, ${name}!`;
     }   
     ```
-
-  </Accordion>
-
-  <Accordion title="Option 2">
-    This is a second option.
   </Accordion>
   
-  <Accordion title="Option 3">
-    This is a third option.
+  <Accordion title="Best Practices Using Accordion Groups">
+    - Use accordion groups when you have multiple related sections
+    - Each accordion should have a clear, descriptive title
+    - Keep content concise and focused
   </Accordion>
 </AccordionGroup>
 
 <Aside>
-<CodeBlock title="Markdown">
-````jsx
-<AccordionGroup>
-  <Accordion title="Option 1">
-    You can put other components inside Accordions.
+  <CodeBlock title="Example Usage">
+    ````jsx
+    <AccordionGroup>
+      <Accordion title="Text Example">
+        This is a basic example of an accordion group.
+      </Accordion>
 
-    ```ts
-    export function generateRandomNumber() {
-      return Math.random();
-    }   
-    ```
+      <Accordion title="Multimedia Example">
+        You can embed photos, videos, and other media within accordions for rich interactive content.
 
-  </Accordion>
+        <embed 
+          src="./growing-fern.mp4" 
+          type="video/mp4"
+          width="640"
+          height="360"
+        />
+      </Accordion>
 
-  <Accordion title="Option 2">
-    This is a second option.
-  </Accordion>
-  
-  <Accordion title="Option 3">
-    This is a third option.
-  </Accordion>
-</AccordionGroup>
-````
-</CodeBlock>
+      <Accordion title="Rich Content Support">
+        Accordions can contain rich content including code blocks, callouts, and other components.
+
+        ```ts
+        export function greet(name: string) {
+          return `Hello, ${name}!`;
+        }   
+        ```
+      </Accordion>
+      
+      <Accordion title="Best Practices Using Accordion Groups">
+        - Use accordion groups when you have multiple related sections
+        - Each accordion should have a clear title
+        - Keep content concise and focused
+      </Accordion>
+    </AccordionGroup>
+  ````
+  </CodeBlock>
 </Aside>

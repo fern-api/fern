@@ -18,7 +18,7 @@ export const VersionDeclarationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace VersionDeclarationSchema {
-    interface Raw {
+    export interface Raw {
         default?: string | null;
         values: VersionValue.Raw[];
         header: VersionDeclarationHeaderSchema.Raw;

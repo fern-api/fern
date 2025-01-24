@@ -1,8 +1,11 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import { ExampleEndpointCall, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { GrpcClientInfo } from "../../grpc/GrpcClientInfo";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { GrpcClientInfo } from "../../grpc/GrpcClientInfo";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { RESPONSE_VARIABLE_NAME } from "../utils/constants";
 
@@ -251,5 +254,15 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             name: "RpcException",
             namespace: "Grpc.Core"
         });
+    }
+
+    public getEndpointSignatureInfo({
+        serviceId,
+        endpoint
+    }: {
+        serviceId: string;
+        endpoint: HttpEndpoint;
+    }): EndpointSignatureInfo {
+        return super.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
     }
 }

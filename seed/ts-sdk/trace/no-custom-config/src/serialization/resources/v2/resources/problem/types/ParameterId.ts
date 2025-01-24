@@ -10,5 +10,5 @@ export const ParameterId: core.serialization.Schema<serializers.v2.ParameterId.R
     core.serialization.string();
 
 export declare namespace ParameterId {
-    type Raw = string;
+    export type Raw = string;
 }

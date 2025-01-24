@@ -16,7 +16,7 @@ export const PlatformHeaders: core.serialization.ObjectSchema<serializers.Platfo
     });
 
 export declare namespace PlatformHeaders {
-    interface Raw {
+    export interface Raw {
         language: string;
         sdkName: string;
         sdkVersion: string;

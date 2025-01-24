@@ -35,7 +35,7 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "maybeString",
+                                    "path": "maybe_string",
                                     "type": "payload"
                                 }
                             ],
@@ -96,7 +96,7 @@
                             },
                             "templateInput": {
                                 "location": "BODY",
-                                "path": "fileList"
+                                "path": "file_list"
                             },
                             "type": "iterable"
                         }
@@ -110,7 +110,7 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "maybeFile",
+                                    "path": "maybe_file",
                                     "type": "payload"
                                 }
                             ],
@@ -139,7 +139,7 @@
                             },
                             "templateInput": {
                                 "location": "BODY",
-                                "path": "maybeFileList"
+                                "path": "maybe_file_list"
                             },
                             "type": "iterable"
                         }
@@ -153,7 +153,7 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "maybeInteger",
+                                    "path": "maybe_integer",
                                     "type": "payload"
                                 }
                             ],
@@ -182,7 +182,7 @@
                             },
                             "templateInput": {
                                 "location": "BODY",
-                                "path": "optionalListOfStrings"
+                                "path": "optional_list_of_strings"
                             },
                             "type": "iterable"
                         }
@@ -223,7 +223,7 @@
                             },
                             "templateInput": {
                                 "location": "BODY",
-                                "path": "listOfObjects"
+                                "path": "list_of_objects"
                             },
                             "type": "iterable"
                         }
@@ -237,7 +237,7 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "optionalMetadata",
+                                    "path": "optional_metadata",
                                     "type": "payload"
                                 }
                             ],
@@ -256,7 +256,7 @@
                             },
                             "templateInput": {
                                 "location": "BODY",
-                                "path": "optionalObjectType"
+                                "path": "optional_object_type"
                             },
                             "type": "enum"
                         }
@@ -270,7 +270,7 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "optionalId",
+                                    "path": "optional_id",
                                     "type": "payload"
                                 }
                             ],
@@ -309,7 +309,7 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": "maybeString",
+                                        "path": "maybe_string",
                                         "type": "payload"
                                     }
                                 ],
@@ -370,7 +370,7 @@
                                 },
                                 "templateInput": {
                                     "location": "BODY",
-                                    "path": "fileList"
+                                    "path": "file_list"
                                 },
                                 "type": "iterable"
                             }
@@ -384,7 +384,7 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": "maybeFile",
+                                        "path": "maybe_file",
                                         "type": "payload"
                                     }
                                 ],
@@ -413,7 +413,7 @@
                                 },
                                 "templateInput": {
                                     "location": "BODY",
-                                    "path": "maybeFileList"
+                                    "path": "maybe_file_list"
                                 },
                                 "type": "iterable"
                             }
@@ -427,7 +427,7 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": "maybeInteger",
+                                        "path": "maybe_integer",
                                         "type": "payload"
                                     }
                                 ],
@@ -456,7 +456,7 @@
                                 },
                                 "templateInput": {
                                     "location": "BODY",
-                                    "path": "optionalListOfStrings"
+                                    "path": "optional_list_of_strings"
                                 },
                                 "type": "iterable"
                             }
@@ -497,7 +497,7 @@
                                 },
                                 "templateInput": {
                                     "location": "BODY",
-                                    "path": "listOfObjects"
+                                    "path": "list_of_objects"
                                 },
                                 "type": "iterable"
                             }
@@ -511,7 +511,7 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": "optionalMetadata",
+                                        "path": "optional_metadata",
                                         "type": "payload"
                                     }
                                 ],
@@ -530,7 +530,7 @@
                                 },
                                 "templateInput": {
                                     "location": "BODY",
-                                    "path": "optionalObjectType"
+                                    "path": "optional_object_type"
                                 },
                                 "type": "enum"
                             }
@@ -544,7 +544,7 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": "optionalId",
+                                        "path": "optional_id",
                                         "type": "payload"
                                     }
                                 ],
@@ -987,6 +987,36 @@
                             "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from seed.service import MyObject"
+                            ],
+                            "isOptional": true,
+                            "templateString": "foo_bar=MyObject(\n\t\t$FERN_INPUT\n\t)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "foo=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "foo_bar.foo",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n\t\t",
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -1062,6 +1092,36 @@
                                                 {
                                                     "location": "BODY",
                                                     "path": "bar.foo",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n\t\t",
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [
+                                    "from seed.service import MyObject"
+                                ],
+                                "isOptional": true,
+                                "templateString": "foo_bar=MyObject(\n\t\t$FERN_INPUT\n\t)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "foo=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "foo_bar.foo",
                                                     "type": "payload"
                                                 }
                                             ],

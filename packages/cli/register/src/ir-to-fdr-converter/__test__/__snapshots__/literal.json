@@ -34,10 +34,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_inlined:SomeAliasedLiteral": {
@@ -66,10 +63,7 @@
               "value": "type_inlined:ANestedLiteral"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_inlined:ANestedLiteral": {
@@ -88,9 +82,57 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
+        ]
+      }
+    },
+    "type_inlined:UndiscriminatedLiteral": {
+      "name": "UndiscriminatedLiteral",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "$ending"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_query:AliasToPrompt": {
+      "name": "AliasToPrompt",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "literal",
+          "value": {
+            "type": "stringLiteral",
+            "value": "You are a helpful assistant"
+          }
+        }
+      }
+    },
+    "type_query:AliasToStream": {
+      "name": "AliasToStream",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "literal",
+          "value": {
+            "type": "booleanLiteral",
+            "value": false
+          }
         }
       }
     },
@@ -130,6 +172,16 @@
             }
           },
           {
+            "key": "ending",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "$ending"
+              }
+            }
+          },
+          {
             "key": "context",
             "valueType": {
               "type": "id",
@@ -153,10 +205,7 @@
               "value": "type_reference:ContainerObject"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_reference:ContainerObject": {
@@ -175,10 +224,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_reference:NestedObjectWithLiterals": {
@@ -216,10 +262,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_reference:SomeLiteral": {
@@ -545,7 +588,8 @@
       "types": [
         "type_inlined:SomeAliasedLiteral",
         "type_inlined:ATopLevelLiteral",
-        "type_inlined:ANestedLiteral"
+        "type_inlined:ANestedLiteral",
+        "type_inlined:UndiscriminatedLiteral"
       ],
       "subpackages": []
     },
@@ -672,6 +716,36 @@
               }
             },
             {
+              "key": "optional_prompt",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "literal",
+                  "value": {
+                    "type": "stringLiteral",
+                    "value": "You are a helpful assistant"
+                  }
+                }
+              }
+            },
+            {
+              "key": "alias_prompt",
+              "type": {
+                "type": "id",
+                "value": "type_query:AliasToPrompt"
+              }
+            },
+            {
+              "key": "alias_optional_prompt",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_query:AliasToPrompt"
+                }
+              }
+            },
+            {
               "key": "query",
               "type": {
                 "type": "primitive",
@@ -687,6 +761,36 @@
                 "value": {
                   "type": "booleanLiteral",
                   "value": false
+                }
+              }
+            },
+            {
+              "key": "optional_stream",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "literal",
+                  "value": {
+                    "type": "booleanLiteral",
+                    "value": false
+                  }
+                }
+              }
+            },
+            {
+              "key": "alias_stream",
+              "type": {
+                "type": "id",
+                "value": "type_query:AliasToStream"
+              }
+            },
+            {
+              "key": "alias_optional_stream",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_query:AliasToStream"
                 }
               }
             }
@@ -708,7 +812,13 @@
               "pathParameters": {},
               "queryParameters": {
                 "prompt": "You are a helpful assistant",
+                "optional_prompt": "You are a helpful assistant",
+                "alias_prompt": "You are a helpful assistant",
+                "alias_optional_prompt": "You are a helpful assistant",
                 "stream": false,
+                "optional_stream": false,
+                "alias_stream": false,
+                "alias_optional_stream": false,
                 "query": "What is the weather today"
               },
               "headers": {
@@ -735,7 +845,10 @@
       ],
       "webhooks": [],
       "websockets": [],
-      "types": [],
+      "types": [
+        "type_query:AliasToPrompt",
+        "type_query:AliasToStream"
+      ],
       "subpackages": []
     },
     "subpackage_reference": {

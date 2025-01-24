@@ -26,7 +26,7 @@ import java.util.Optional;
 public final class QueryRequest {
     private final Optional<String> namespace;
 
-    private final int topK;
+    private final long topK;
 
     private final Optional<Metadata> filter;
 
@@ -36,7 +36,7 @@ public final class QueryRequest {
 
     private final Optional<List<QueryColumn>> queries;
 
-    private final Optional<List<Double>> column;
+    private final Optional<List<Float>> column;
 
     private final Optional<String> id;
 
@@ -46,12 +46,12 @@ public final class QueryRequest {
 
     private QueryRequest(
             Optional<String> namespace,
-            int topK,
+            long topK,
             Optional<Metadata> filter,
             Optional<Boolean> includeValues,
             Optional<Boolean> includeMetadata,
             Optional<List<QueryColumn>> queries,
-            Optional<List<Double>> column,
+            Optional<List<Float>> column,
             Optional<String> id,
             Optional<IndexedData> indexedData,
             Map<String, Object> additionalProperties) {
@@ -73,7 +73,7 @@ public final class QueryRequest {
     }
 
     @JsonProperty("topK")
-    public int getTopK() {
+    public long getTopK() {
         return topK;
     }
 
@@ -98,7 +98,7 @@ public final class QueryRequest {
     }
 
     @JsonProperty("column")
-    public Optional<List<Double>> getColumn() {
+    public Optional<List<Float>> getColumn() {
         return column;
     }
 
@@ -159,7 +159,7 @@ public final class QueryRequest {
     }
 
     public interface TopKStage {
-        _FinalStage topK(int topK);
+        _FinalStage topK(long topK);
 
         Builder from(QueryRequest other);
     }
@@ -187,9 +187,9 @@ public final class QueryRequest {
 
         _FinalStage queries(List<QueryColumn> queries);
 
-        _FinalStage column(Optional<List<Double>> column);
+        _FinalStage column(Optional<List<Float>> column);
 
-        _FinalStage column(List<Double> column);
+        _FinalStage column(List<Float> column);
 
         _FinalStage id(Optional<String> id);
 
@@ -202,13 +202,13 @@ public final class QueryRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TopKStage, _FinalStage {
-        private int topK;
+        private long topK;
 
         private Optional<IndexedData> indexedData = Optional.empty();
 
         private Optional<String> id = Optional.empty();
 
-        private Optional<List<Double>> column = Optional.empty();
+        private Optional<List<Float>> column = Optional.empty();
 
         private Optional<List<QueryColumn>> queries = Optional.empty();
 
@@ -241,7 +241,7 @@ public final class QueryRequest {
 
         @java.lang.Override
         @JsonSetter("topK")
-        public _FinalStage topK(int topK) {
+        public _FinalStage topK(long topK) {
             this.topK = topK;
             return this;
         }
@@ -273,14 +273,14 @@ public final class QueryRequest {
         }
 
         @java.lang.Override
-        public _FinalStage column(List<Double> column) {
+        public _FinalStage column(List<Float> column) {
             this.column = Optional.ofNullable(column);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "column", nulls = Nulls.SKIP)
-        public _FinalStage column(Optional<List<Double>> column) {
+        public _FinalStage column(Optional<List<Float>> column) {
             this.column = column;
             return this;
         }

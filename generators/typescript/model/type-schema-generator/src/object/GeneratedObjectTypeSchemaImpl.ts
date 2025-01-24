@@ -1,8 +1,10 @@
-import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
 export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
@@ -37,6 +39,10 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
             schema = schema.extend(context.typeSchema.getSchemaOfNamedType(extension, { isGeneratingSchema: true }));
         }
 
+        if (this.shape.extraProperties) {
+            schema = schema.passthrough();
+        }
+
         return schema;
     }
 
@@ -46,14 +52,25 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
             extends: this.shape.extends.map((extension) =>
                 getTextOfTsNode(context.typeSchema.getReferenceToRawNamedType(extension).getTypeNode())
             ),
-            properties: this.shape.properties.map((property) => {
-                const type = context.typeSchema.getReferenceToRawType(property.valueType);
-                return {
-                    name: `"${property.name.wireValue}"`,
-                    type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                    hasQuestionToken: type.isOptional
-                };
-            })
+            properties: [
+                ...this.shape.properties.map((property) => {
+                    const type = context.typeSchema.getReferenceToRawType(property.valueType);
+                    return {
+                        name: `"${property.name.wireValue}"`,
+                        type: getTextOfTsNode(type.typeNodeWithoutUndefined),
+                        hasQuestionToken: type.isOptional
+                    };
+                }),
+                ...(this.shape.extraProperties
+                    ? [
+                          {
+                              name: "[key: string]",
+                              type: "any"
+                          }
+                      ]
+                    : [])
+            ],
+            isExported: true
         });
     }
 

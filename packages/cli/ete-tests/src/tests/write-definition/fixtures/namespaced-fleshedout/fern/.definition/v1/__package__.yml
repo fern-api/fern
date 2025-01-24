@@ -39,6 +39,7 @@ types:
       - 'OFF'
       - AUTO
       - AUTO_PRESERVE_ORDER
+    inline: true
     source:
       openapi: openapi/cohere.yaml
   ChatRequestSafetyMode:
@@ -64,6 +65,7 @@ types:
       - CONTEXTUAL
       - STRICT
       - NONE
+    inline: true
     source:
       openapi: openapi/cohere.yaml
   ClientClosedRequestErrorBody:
@@ -82,6 +84,11 @@ types:
     source:
       openapi: openapi/cohere.yaml
   InternalServerErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  InvalidTokenErrorBody:
     properties:
       data: optional<string>
     source:
@@ -161,6 +168,14 @@ errors:
       - value: {}
     status-code: 500
     type: unknown
+  InvalidTokenError:
+    docs: >
+      This error is returned when a request or response contains a deny-listed
+      token.
+    examples:
+      - value: {}
+    status-code: 498
+    type: unknown
   NotFoundError:
     docs: >
       This error is returned when a resource is not found. This could be
@@ -235,6 +250,7 @@ service:
         - NotFoundError
         - UnprocessableEntityError
         - TooManyRequestsError
+        - InvalidTokenError
         - ClientClosedRequestError
         - InternalServerError
         - NotImplementedError

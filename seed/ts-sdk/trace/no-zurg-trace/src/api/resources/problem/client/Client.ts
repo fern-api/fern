@@ -9,14 +9,16 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Problem {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,6 +27,8 @@ export declare namespace Problem {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -114,12 +118,14 @@ export class Problem {
      */
     public async createProblem(
         request: SeedTrace.CreateProblemRequest,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.CreateProblemResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/create"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/problem-crud/create",
             ),
             method: "POST",
             headers: {
@@ -134,6 +140,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -160,7 +167,7 @@ export class Problem {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling POST /problem-crud/create.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -253,12 +260,14 @@ export class Problem {
     public async updateProblem(
         problemId: SeedTrace.ProblemId,
         request: SeedTrace.CreateProblemRequest,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.UpdateProblemResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${encodeURIComponent(problemId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/problem-crud/update/${encodeURIComponent(problemId)}`,
             ),
             method: "POST",
             headers: {
@@ -273,6 +282,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -299,7 +309,9 @@ export class Problem {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /problem-crud/update/{problemId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -319,8 +331,10 @@ export class Problem {
     public async deleteProblem(problemId: SeedTrace.ProblemId, requestOptions?: Problem.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${encodeURIComponent(problemId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/problem-crud/delete/${encodeURIComponent(problemId)}`,
             ),
             method: "DELETE",
             headers: {
@@ -335,6 +349,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -360,7 +375,9 @@ export class Problem {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling DELETE /problem-crud/delete/{problemId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
@@ -395,12 +412,14 @@ export class Problem {
      */
     public async getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,
-        requestOptions?: Problem.RequestOptions
+        requestOptions?: Problem.RequestOptions,
     ): Promise<SeedTrace.GetDefaultStarterFilesResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/default-starter-files"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/problem-crud/default-starter-files",
             ),
             method: "POST",
             headers: {
@@ -415,6 +434,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -441,7 +461,9 @@ export class Problem {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /problem-crud/default-starter-files.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,

@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 public final class Column {
     private final String id;
 
-    private final List<Double> values;
+    private final List<Float> values;
 
     private final Optional<Metadata> metadata;
 
@@ -35,7 +35,7 @@ public final class Column {
 
     private Column(
             String id,
-            List<Double> values,
+            List<Float> values,
             Optional<Metadata> metadata,
             Optional<IndexedData> indexedData,
             Map<String, Object> additionalProperties) {
@@ -52,7 +52,7 @@ public final class Column {
     }
 
     @JsonProperty("values")
-    public List<Double> getValues() {
+    public List<Float> getValues() {
         return values;
     }
 
@@ -107,11 +107,11 @@ public final class Column {
     public interface _FinalStage {
         Column build();
 
-        _FinalStage values(List<Double> values);
+        _FinalStage values(List<Float> values);
 
-        _FinalStage addValues(Double values);
+        _FinalStage addValues(Float values);
 
-        _FinalStage addAllValues(List<Double> values);
+        _FinalStage addAllValues(List<Float> values);
 
         _FinalStage metadata(Optional<Metadata> metadata);
 
@@ -130,7 +130,7 @@ public final class Column {
 
         private Optional<Metadata> metadata = Optional.empty();
 
-        private List<Double> values = new ArrayList<>();
+        private List<Float> values = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -180,20 +180,20 @@ public final class Column {
         }
 
         @java.lang.Override
-        public _FinalStage addAllValues(List<Double> values) {
+        public _FinalStage addAllValues(List<Float> values) {
             this.values.addAll(values);
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage addValues(Double values) {
+        public _FinalStage addValues(Float values) {
             this.values.add(values);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "values", nulls = Nulls.SKIP)
-        public _FinalStage values(List<Double> values) {
+        public _FinalStage values(List<Float> values) {
             this.values.clear();
             this.values.addAll(values);
             return this;

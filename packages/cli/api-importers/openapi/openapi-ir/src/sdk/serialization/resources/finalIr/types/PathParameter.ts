@@ -24,7 +24,7 @@ export const PathParameter: core.serialization.ObjectSchema<
     .extend(WithSource);
 
 export declare namespace PathParameter {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
         name: string;
         schema: serializers.Schema.Raw;
         variableReference?: string | null;

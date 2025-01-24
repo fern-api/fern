@@ -5,21 +5,26 @@
 import * as core from "../../../../core";
 import * as SeedQueryParameters from "../../../index";
 import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,7 +37,7 @@ export class User {
      */
     public async getUsername(
         request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedQueryParameters.User> {
         const {
             limit,
@@ -50,7 +55,7 @@ export class User {
             excludeUser,
             filter,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["limit"] = limit.toString();
         _queryParams["id"] = id;
         _queryParams["date"] = date;
@@ -62,12 +67,12 @@ export class User {
             allowUnrecognizedEnumValues: true,
             breadcrumbsPrefix: ["request", "user"],
         });
-        _queryParams["userList"] = JSON.stringify(userList);
+        _queryParams["userList"] = toJson(userList);
         if (optionalDeadline != null) {
             _queryParams["optionalDeadline"] = optionalDeadline.toISOString();
         }
 
-        _queryParams["keyValue"] = JSON.stringify(keyValue);
+        _queryParams["keyValue"] = toJson(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
         }
@@ -95,8 +100,8 @@ export class User {
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
                         breadcrumbsPrefix: ["request", "excludeUser"],
-                    })
-                )
+                    }),
+                ),
             );
         } else {
             _queryParams["excludeUser"] = serializers.User.jsonOrThrow(excludeUser, {
@@ -114,7 +119,11 @@ export class User {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/user"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/user",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -123,6 +132,7 @@ export class User {
                 "User-Agent": "@fern/query-parameters/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -154,7 +164,7 @@ export class User {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedQueryParametersTimeoutError();
+                throw new errors.SeedQueryParametersTimeoutError("Timeout exceeded when calling GET /user.");
             case "unknown":
                 throw new errors.SeedQueryParametersError({
                     message: _response.error.errorMessage,

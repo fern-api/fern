@@ -17,5 +17,5 @@ export const MyUnion: core.serialization.Schema<serializers.MyUnion.Raw, SeedUnd
     ]);
 
 export declare namespace MyUnion {
-    type Raw = string | string[] | number | number[] | number[][] | string[];
+    export type Raw = string | string[] | number | number[] | number[][] | string[];
 }

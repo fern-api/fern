@@ -1,9 +1,11 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Header } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase } from "lodash-es";
-import { buildTypeReference } from "./buildTypeReference";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Header } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildTypeReference } from "./buildTypeReference";
 import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
@@ -22,7 +24,8 @@ export function buildHeader({
         schema: header.schema,
         context,
         fileContainingReference,
-        namespace
+        namespace,
+        declarationDepth: 0
     });
     const headerType = getTypeFromTypeReference(typeReference);
     const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");

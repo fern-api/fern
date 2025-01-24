@@ -49,7 +49,7 @@ namespace SeedEnum.Test.Core
                 new DummyObject { EnumProperty = KnownEnumValue2 },
                 JsonOptions
             );
-            TestContext.WriteLine("Serialized JSON: \n" + json);
+            TestContext.Out.WriteLine("Serialized JSON: \n" + json);
             var enumString = json.GetProperty("enum_property").GetString();
             Assert.That(enumString, Is.Not.Null);
             Assert.That(enumString, Is.EqualTo(KnownEnumValue2));
@@ -62,7 +62,7 @@ namespace SeedEnum.Test.Core
                 new DummyObject { EnumProperty = UnknownEnumValue },
                 JsonOptions
             );
-            TestContext.WriteLine("Serialized JSON: \n" + json);
+            TestContext.Out.WriteLine("Serialized JSON: \n" + json);
             var enumString = json.GetProperty("enum_property").GetString();
             Assert.That(enumString, Is.Not.Null);
             Assert.That(enumString, Is.EqualTo(UnknownEnumValue));

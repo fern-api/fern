@@ -1,13 +1,13 @@
+import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { go } from "@fern-api/go-codegen";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { go } from "@fern-api/go-ast";
+
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
-import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
-import { Severity } from "./ErrorReporter";
 
 export declare namespace DynamicTypeInstantiationMapper {
     interface Args {
-        typeReference: DynamicSnippets.TypeReference;
+        typeReference: FernIr.dynamic.TypeReference;
         value: unknown;
         as?: ConvertedAs;
     }
@@ -25,6 +25,13 @@ export class DynamicTypeInstantiationMapper {
     }
 
     public convert(args: DynamicTypeInstantiationMapper.Args): go.TypeInstantiation {
+        // eslint-disable-next-line eqeqeq
+        if (args.value === null && !this.context.isNullable(args.typeReference)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Expected non-null value, but got null"
+            });
+        }
         if (args.value == null) {
             return go.TypeInstantiation.nop();
         }
@@ -42,6 +49,10 @@ export class DynamicTypeInstantiationMapper {
                 }
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
+            case "nullable":
+                return go.TypeInstantiation.optional(
+                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                );
             case "optional":
                 return go.TypeInstantiation.optional(
                     this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
@@ -57,13 +68,7 @@ export class DynamicTypeInstantiationMapper {
         }
     }
 
-    private convertList({
-        list,
-        value
-    }: {
-        list: DynamicSnippets.TypeReference;
-        value: unknown;
-    }): go.TypeInstantiation {
+    private convertList({ list, value }: { list: FernIr.dynamic.TypeReference; value: unknown }): go.TypeInstantiation {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -84,7 +89,7 @@ export class DynamicTypeInstantiationMapper {
         });
     }
 
-    private convertMap({ map, value }: { map: DynamicSnippets.MapType; value: unknown }): go.TypeInstantiation {
+    private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): go.TypeInstantiation {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -114,7 +119,7 @@ export class DynamicTypeInstantiationMapper {
         value,
         as
     }: {
-        named: DynamicSnippets.NamedType;
+        named: FernIr.dynamic.NamedType;
         value: unknown;
         as?: DynamicTypeInstantiationMapper.ConvertedAs;
     }): go.TypeInstantiation {
@@ -141,7 +146,7 @@ export class DynamicTypeInstantiationMapper {
         discriminatedUnion,
         value
     }: {
-        discriminatedUnion: DynamicSnippets.DiscriminatedUnionType;
+        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
     }): go.TypeInstantiation {
         const structTypeReference = this.context.getGoTypeReferenceFromDeclaration({
@@ -224,7 +229,7 @@ export class DynamicTypeInstantiationMapper {
         singleDiscriminatedUnionType
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
-        singleDiscriminatedUnionType: DynamicSnippets.SingleDiscriminatedUnionType;
+        singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
     }): go.StructField[] {
         const properties = this.context.associateByWireValue({
             parameters: singleDiscriminatedUnionType.properties ?? [],
@@ -251,7 +256,7 @@ export class DynamicTypeInstantiationMapper {
         object_,
         value
     }: {
-        object_: DynamicSnippets.ObjectType;
+        object_: FernIr.dynamic.ObjectType;
         value: unknown;
     }): go.TypeInstantiation {
         const properties = this.context.associateByWireValue({
@@ -277,7 +282,7 @@ export class DynamicTypeInstantiationMapper {
         });
     }
 
-    private convertEnum({ enum_, value }: { enum_: DynamicSnippets.EnumType; value: unknown }): go.TypeInstantiation {
+    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): go.TypeInstantiation {
         const name = this.getEnumValueName({ enum_, value });
         if (name == null) {
             return go.TypeInstantiation.nop();
@@ -290,13 +295,7 @@ export class DynamicTypeInstantiationMapper {
         );
     }
 
-    private getEnumValueName({
-        enum_,
-        value
-    }: {
-        enum_: DynamicSnippets.EnumType;
-        value: unknown;
-    }): string | undefined {
+    private getEnumValueName({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -319,7 +318,7 @@ export class DynamicTypeInstantiationMapper {
         undicriminatedUnion,
         value
     }: {
-        undicriminatedUnion: DynamicSnippets.UndiscriminatedUnionType;
+        undicriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): go.TypeInstantiation {
         const result = this.findMatchingUndiscriminatedUnionType({
@@ -350,9 +349,9 @@ export class DynamicTypeInstantiationMapper {
         undicriminatedUnion,
         value
     }: {
-        undicriminatedUnion: DynamicSnippets.UndiscriminatedUnionType;
+        undicriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
-    }): { valueTypeReference: DynamicSnippets.TypeReference; typeInstantiation: go.TypeInstantiation } | undefined {
+    }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: go.TypeInstantiation } | undefined {
         for (const typeReference of undicriminatedUnion.types) {
             try {
                 const typeInstantiation = this.convert({ typeReference, value });
@@ -371,7 +370,7 @@ export class DynamicTypeInstantiationMapper {
     private getUndiscriminatedUnionFieldName({
         typeReference
     }: {
-        typeReference: DynamicSnippets.TypeReference;
+        typeReference: FernIr.dynamic.TypeReference;
     }): string | undefined {
         switch (typeReference.type) {
             case "list":
@@ -388,20 +387,24 @@ export class DynamicTypeInstantiationMapper {
                 return this.context.getTypeName(named.declaration.name);
             }
             case "optional":
-                return this.getUndiscriminatedUnionFieldNameForOptional({ optional: typeReference });
+                return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
+            case "nullable":
+                return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
             case "primitive":
                 return this.getUndiscriminatedUnionFieldNameForPrimitive({ primitive: typeReference.value });
             case "set":
                 return this.getUndiscriminatedUnionFieldNameForSet({ set: typeReference });
             case "unknown":
                 return "Unknown";
+            default:
+                assertNever(typeReference);
         }
     }
 
     private getUndiscriminatedUnionFieldNameForList({
         list
     }: {
-        list: DynamicSnippets.TypeReference.List;
+        list: FernIr.dynamic.TypeReference.List;
     }): string | undefined {
         const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: list });
         if (fieldName == null) {
@@ -410,7 +413,7 @@ export class DynamicTypeInstantiationMapper {
         return `${fieldName}List`;
     }
 
-    private getUndiscriminatedUnionFieldNameForMap({ map }: { map: DynamicSnippets.MapType }): string | undefined {
+    private getUndiscriminatedUnionFieldNameForMap({ map }: { map: FernIr.dynamic.MapType }): string | undefined {
         const keyFieldName = this.getUndiscriminatedUnionFieldName({ typeReference: map.key });
         if (keyFieldName == null) {
             return undefined;
@@ -423,11 +426,11 @@ export class DynamicTypeInstantiationMapper {
     }
 
     private getUndiscriminatedUnionFieldNameForOptional({
-        optional
+        typeReference
     }: {
-        optional: DynamicSnippets.TypeReference.Optional;
+        typeReference: FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: optional });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference });
         if (fieldName == null) {
             return undefined;
         }
@@ -437,7 +440,7 @@ export class DynamicTypeInstantiationMapper {
     private getUndiscriminatedUnionFieldNameForSet({
         set
     }: {
-        set: DynamicSnippets.TypeReference.Set;
+        set: FernIr.dynamic.TypeReference.Set;
     }): string | undefined {
         const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: set });
         if (fieldName == null) {
@@ -449,11 +452,14 @@ export class DynamicTypeInstantiationMapper {
     private getUndiscriminatedUnionFieldNameForLiteral({
         literal
     }: {
-        literal: DynamicSnippets.LiteralType;
+        literal: FernIr.dynamic.LiteralType;
     }): string | undefined {
         switch (literal.type) {
             case "boolean":
-                return `${literal.value}BoolLiteral`;
+                if (literal.value) {
+                    return "TrueLiteral";
+                }
+                return "FalseLiteral";
             case "string":
                 return `${literal.value}StringLiteral`;
             default:
@@ -461,29 +467,29 @@ export class DynamicTypeInstantiationMapper {
         }
     }
 
-    private getUndiscriminatedUnionFieldNameForPrimitive({ primitive }: { primitive: PrimitiveTypeV1 }): string {
+    private getUndiscriminatedUnionFieldNameForPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): string {
         switch (primitive) {
-            case PrimitiveTypeV1.Integer:
-            case PrimitiveTypeV1.Uint:
+            case "INTEGER":
+            case "UINT":
                 return "Integer";
-            case PrimitiveTypeV1.Long:
-            case PrimitiveTypeV1.Uint64:
+            case "LONG":
+            case "UINT_64":
                 return "Long";
-            case PrimitiveTypeV1.Float:
-            case PrimitiveTypeV1.Double:
+            case "FLOAT":
+            case "DOUBLE":
                 return "Double";
-            case PrimitiveTypeV1.Boolean:
+            case "BOOLEAN":
                 return "Boolean";
-            case PrimitiveTypeV1.BigInteger:
-            case PrimitiveTypeV1.String:
+            case "BIG_INTEGER":
+            case "STRING":
                 return "String";
-            case PrimitiveTypeV1.Uuid:
+            case "UUID":
                 return "Uuid";
-            case PrimitiveTypeV1.Date:
+            case "DATE":
                 return "Date";
-            case PrimitiveTypeV1.DateTime:
+            case "DATE_TIME":
                 return "DateTime";
-            case PrimitiveTypeV1.Base64:
+            case "BASE_64":
                 return "Base64";
             default:
                 assertNever(primitive);
@@ -499,7 +505,7 @@ export class DynamicTypeInstantiationMapper {
         value,
         as
     }: {
-        primitive: PrimitiveTypeV1;
+        primitive: FernIr.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeInstantiationMapper.ConvertedAs;
     }): go.TypeInstantiation {
@@ -536,42 +542,42 @@ export class DynamicTypeInstantiationMapper {
                 return go.TypeInstantiation.bool(bool);
             }
             case "STRING": {
-                const str = this.getValueAsString({ value });
+                const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.string(str);
             }
             case "DATE": {
-                const date = this.getValueAsString({ value });
+                const date = this.context.getValueAsString({ value });
                 if (date == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.date(date);
             }
             case "DATE_TIME": {
-                const dateTime = this.getValueAsString({ value });
+                const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.dateTime(dateTime);
             }
             case "UUID": {
-                const uuid = this.getValueAsString({ value });
+                const uuid = this.context.getValueAsString({ value });
                 if (uuid == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.uuid(uuid);
             }
             case "BASE_64": {
-                const base64 = this.getValueAsString({ value });
+                const base64 = this.context.getValueAsString({ value });
                 if (base64 == null) {
                     return go.TypeInstantiation.nop();
                 }
                 return go.TypeInstantiation.bytes(base64);
             }
             case "BIG_INTEGER": {
-                const bigInt = this.getValueAsString({ value });
+                const bigInt = this.context.getValueAsString({ value });
                 if (bigInt == null) {
                     return go.TypeInstantiation.nop();
                 }
@@ -590,14 +596,7 @@ export class DynamicTypeInstantiationMapper {
         as?: DynamicTypeInstantiationMapper.ConvertedAs;
     }): number | undefined {
         const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value;
-        if (typeof num !== "number") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "number", value }).message
-            });
-            return undefined;
-        }
-        return num;
+        return this.context.getValueAsNumber({ value: num });
     }
 
     private getValueAsBoolean({
@@ -609,28 +608,6 @@ export class DynamicTypeInstantiationMapper {
     }): boolean | undefined {
         const bool =
             as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
-        if (typeof bool !== "boolean") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "boolean", value }).message
-            });
-            return undefined;
-        }
-        return bool;
-    }
-
-    private getValueAsString({ value }: { value: unknown }): string | undefined {
-        if (typeof value !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: "string", value }).message
-            });
-            return undefined;
-        }
-        return value;
-    }
-
-    private newTypeMismatchError({ expected, value }: { expected: string; value: unknown }): Error {
-        return new Error(`Expected ${expected} but got ${typeof value}`);
+        return this.context.getValueAsBoolean({ value: bool });
     }
 }

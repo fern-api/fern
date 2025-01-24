@@ -11,5 +11,5 @@ export const ConjureArgument: core.serialization.Schema<serializers.ConjureArgum
     core.serialization.undiscriminatedUnion([core.serialization.string(), ConjureArgumentWithParamType]);
 
 export declare namespace ConjureArgument {
-    type Raw = string | ConjureArgumentWithParamType.Raw;
+    export type Raw = string | ConjureArgumentWithParamType.Raw;
 }

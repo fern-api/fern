@@ -1,15 +1,20 @@
-import { AbsoluteFilePath, dirname, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import grayMatter from "gray-matter";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
+import { z } from "zod";
+
+import { AbsoluteFilePath, RelativeFilePath, dirname, relative, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+
+import { getMarkdownFormat } from "./getMarkdownFormat";
 import { parseMarkdownToTree } from "./parseMarkdownToTree";
 
 interface AbsolutePathMetadata {
-    absolutePathToMdx: AbsoluteFilePath;
+    absolutePathToMarkdownFile: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
 }
 
@@ -48,8 +53,9 @@ export function parseImagePaths(
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    replaceFrontmatterImagesforLogo(data, mapImage);
 
-    const tree = parseMarkdownToTree(content);
+    const tree = parseMarkdownToTree(content, getMarkdownFormat(metadata.absolutePathToMarkdownFile));
 
     let offset = 0;
 
@@ -143,14 +149,14 @@ export function parseImagePaths(
 
 function resolvePath(
     pathToImage: string | undefined,
-    { absolutePathToFernFolder, absolutePathToMdx }: AbsolutePathMetadata
+    { absolutePathToFernFolder, absolutePathToMarkdownFile }: AbsolutePathMetadata
 ): AbsoluteFilePath | undefined {
     if (pathToImage == null || isExternalUrl(pathToImage) || isDataUrl(pathToImage)) {
         return undefined;
     }
 
     const filepath = resolve(
-        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMdx),
+        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     );
 
@@ -176,7 +182,7 @@ function isDataUrl(url: string): boolean {
 export function replaceImagePathsAndUrls(
     markdown: string,
     fileIdsMap: ReadonlyMap<AbsoluteFilePath, string>,
-    markdownFilesToPathName: ReadonlyMap<AbsoluteFilePath, string>,
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>,
     metadata: AbsolutePathMetadata,
     context: TaskContext
 ): string {
@@ -206,6 +212,7 @@ export function replaceImagePathsAndUrls(
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    replaceFrontmatterImagesforLogo(data, mapImage);
 
     visit(tree, (node) => {
         if (node.position == null) {
@@ -229,7 +236,7 @@ export function replaceImagePathsAndUrls(
             if (href.endsWith(".md") || href.endsWith(".mdx")) {
                 const absoluteFilePath = resolvePath(href, metadata);
                 if (absoluteFilePath != null) {
-                    const pathName = markdownFilesToPathName.get(absoluteFilePath);
+                    const pathName = markdownFilesToPathName[absoluteFilePath];
                     if (pathName != null) {
                         replaced = replaced.replace(href, pathName);
                     } else {
@@ -239,7 +246,7 @@ export function replaceImagePathsAndUrls(
                                 absoluteFilePath
                             )} has no slug defined but is referenced by ${relative(
                                 metadata.absolutePathToFernFolder,
-                                metadata.absolutePathToMdx
+                                metadata.absolutePathToMarkdownFile
                             )}`
                         );
                     }
@@ -399,6 +406,53 @@ function visitFrontmatterImages(
                       };
             }
             // else do nothing
+        }
+    }
+}
+
+const LogoOverrideFrontmatterSchema = z.union([
+    z.string(),
+    z.object({
+        light: z.string().optional(),
+        dark: z.string().optional()
+    })
+]);
+
+export function convertImageToFileIdOrUrl(
+    value: string,
+    mapImage: (image: string | undefined) => string | undefined
+): CjsFdrSdk.docs.latest.FileIdOrUrl {
+    const mappedImage = mapImage(value);
+    return mappedImage
+        ? {
+              type: "fileId",
+              value: CjsFdrSdk.FileId(mappedImage)
+          }
+        : {
+              type: "url",
+              value: CjsFdrSdk.Url(value)
+          };
+}
+
+function replaceFrontmatterImagesforLogo(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: Record<string, any>,
+    mapImage: (image: string | undefined) => string | undefined
+) {
+    const parsedValue = LogoOverrideFrontmatterSchema.safeParse(data.logo);
+    if (!parsedValue.success) {
+        return;
+    }
+    const parsedFrontmatterLogo = parsedValue.data;
+
+    if (typeof parsedFrontmatterLogo === "string") {
+        data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage);
+    } else {
+        if (parsedFrontmatterLogo.light != null) {
+            data.logo.light = convertImageToFileIdOrUrl(parsedFrontmatterLogo.light, mapImage);
+        }
+        if (parsedFrontmatterLogo.dark != null) {
+            data.logo.dark = convertImageToFileIdOrUrl(parsedFrontmatterLogo.dark, mapImage);
         }
     }
 }

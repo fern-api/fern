@@ -12,5 +12,5 @@ export const WebSocketMessageOrigin: core.serialization.Schema<
 > = core.serialization.enum_(["client", "server"]);
 
 export declare namespace WebSocketMessageOrigin {
-    type Raw = "client" | "server";
+    export type Raw = "client" | "server";
 }

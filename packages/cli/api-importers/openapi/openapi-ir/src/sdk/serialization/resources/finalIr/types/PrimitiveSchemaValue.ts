@@ -61,7 +61,7 @@ export const PrimitiveSchemaValue: core.serialization.Schema<
     });
 
 export declare namespace PrimitiveSchemaValue {
-    type Raw =
+    export type Raw =
         | PrimitiveSchemaValue.Int
         | PrimitiveSchemaValue.Int64
         | PrimitiveSchemaValue.Uint
@@ -74,47 +74,47 @@ export declare namespace PrimitiveSchemaValue {
         | PrimitiveSchemaValue.Base64
         | PrimitiveSchemaValue.Boolean;
 
-    interface Int extends IntSchema.Raw {
+    export interface Int extends IntSchema.Raw {
         type: "int";
     }
 
-    interface Int64 extends LongSchema.Raw {
+    export interface Int64 extends LongSchema.Raw {
         type: "int64";
     }
 
-    interface Uint {
+    export interface Uint {
         type: "uint";
     }
 
-    interface Uint64 {
+    export interface Uint64 {
         type: "uint64";
     }
 
-    interface Float {
+    export interface Float {
         type: "float";
     }
 
-    interface Double extends DoubleSchema.Raw {
+    export interface Double extends DoubleSchema.Raw {
         type: "double";
     }
 
-    interface String extends StringSchema.Raw {
+    export interface String extends StringSchema.Raw {
         type: "string";
     }
 
-    interface Datetime {
+    export interface Datetime {
         type: "datetime";
     }
 
-    interface Date {
+    export interface Date {
         type: "date";
     }
 
-    interface Base64 {
+    export interface Base64 {
         type: "base64";
     }
 
-    interface Boolean extends BooleanSchema.Raw {
+    export interface Boolean extends BooleanSchema.Raw {
         type: "boolean";
     }
 }

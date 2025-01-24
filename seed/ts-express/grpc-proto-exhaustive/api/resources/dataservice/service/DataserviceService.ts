@@ -15,7 +15,7 @@ export interface DataserviceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     delete(
         req: express.Request<never, SeedApi.DeleteResponse, SeedApi.DeleteRequest, never>,
@@ -24,7 +24,7 @@ export interface DataserviceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     describe(
         req: express.Request<never, SeedApi.DescribeResponse, SeedApi.DescribeRequest, never>,
@@ -33,7 +33,7 @@ export interface DataserviceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     fetch(
         req: express.Request<
@@ -50,7 +50,7 @@ export interface DataserviceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     list(
         req: express.Request<
@@ -69,7 +69,7 @@ export interface DataserviceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     query(
         req: express.Request<never, SeedApi.QueryResponse, SeedApi.QueryRequest, never>,
@@ -78,7 +78,7 @@ export interface DataserviceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     update(
         req: express.Request<never, SeedApi.UpdateResponse, SeedApi.UpdateRequest, never>,
@@ -87,19 +87,22 @@ export interface DataserviceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class DataserviceService {
     private router;
 
-    constructor(private readonly methods: DataserviceServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: DataserviceServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -121,13 +124,13 @@ export class DataserviceService {
                                 res.json(
                                     serializers.UploadResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -135,7 +138,7 @@ export class DataserviceService {
                         console.warn(
                             `Endpoint 'upload' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -146,7 +149,7 @@ export class DataserviceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -164,13 +167,13 @@ export class DataserviceService {
                                 res.json(
                                     serializers.DeleteResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -178,7 +181,7 @@ export class DataserviceService {
                         console.warn(
                             `Endpoint 'delete' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -189,7 +192,7 @@ export class DataserviceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -207,13 +210,13 @@ export class DataserviceService {
                                 res.json(
                                     serializers.DescribeResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -221,7 +224,7 @@ export class DataserviceService {
                         console.warn(
                             `Endpoint 'describe' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -232,7 +235,7 @@ export class DataserviceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -245,13 +248,15 @@ export class DataserviceService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                serializers.FetchResponse.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                serializers.FetchResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -259,7 +264,7 @@ export class DataserviceService {
                     console.warn(
                         `Endpoint 'fetch' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -275,13 +280,13 @@ export class DataserviceService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                serializers.ListResponse.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                serializers.ListResponse.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -289,7 +294,7 @@ export class DataserviceService {
                     console.warn(
                         `Endpoint 'list' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -310,13 +315,13 @@ export class DataserviceService {
                                 res.json(
                                     serializers.QueryResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -324,7 +329,7 @@ export class DataserviceService {
                         console.warn(
                             `Endpoint 'query' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -335,7 +340,7 @@ export class DataserviceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -353,13 +358,13 @@ export class DataserviceService {
                                 res.json(
                                     serializers.UpdateResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -367,7 +372,7 @@ export class DataserviceService {
                         console.warn(
                             `Endpoint 'update' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -378,7 +383,7 @@ export class DataserviceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);

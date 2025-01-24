@@ -27,10 +27,17 @@ class WithContentTypeRequest extends JsonSerializableType
     public MyObject $bar;
 
     /**
+     * @var ?MyObject $fooBar
+     */
+    #[JsonProperty('foo_bar')]
+    public ?MyObject $fooBar;
+
+    /**
      * @param array{
      *   file: File,
      *   foo: string,
      *   bar: MyObject,
+     *   fooBar?: ?MyObject,
      * } $values
      */
     public function __construct(
@@ -39,5 +46,6 @@ class WithContentTypeRequest extends JsonSerializableType
         $this->file = $values['file'];
         $this->foo = $values['foo'];
         $this->bar = $values['bar'];
+        $this->fooBar = $values['fooBar'] ?? null;
     }
 }

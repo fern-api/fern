@@ -17,7 +17,7 @@ export const WebSocketMessageBodyReference: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace WebSocketMessageBodyReference {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         bodyType: serializers.TypeReference.Raw;
     }
 }

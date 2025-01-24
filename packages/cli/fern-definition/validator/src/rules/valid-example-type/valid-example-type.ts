@@ -1,9 +1,10 @@
 import {
-    constructFernFileContext,
     ExampleResolverImpl,
     ExampleValidators,
-    TypeResolverImpl
+    TypeResolverImpl,
+    constructFernFileContext
 } from "@fern-api/ir-generator";
+
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -32,11 +33,12 @@ export const ValidExampleTypeRule: Rule = {
                         typeResolver,
                         exampleResolver,
                         workspace,
-                        breadcrumbs: []
+                        breadcrumbs: [],
+                        depth: 0
                     });
                     return violations.map((violation) => {
                         return {
-                            severity: "error",
+                            severity: "fatal",
                             message: violation.message
                         };
                     });

@@ -8,18 +8,22 @@ import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Container {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,10 +39,14 @@ export class Container {
      */
     public async getAndReturnListOfPrimitives(
         request: string[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-primitives"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/list-of-primitives",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -48,6 +56,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -68,7 +77,7 @@ export class Container {
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
                         breadcrumbsPrefix: ["response"],
-                    }
+                    },
                 ),
             };
         }
@@ -92,7 +101,7 @@ export class Container {
      */
     public async getAndReturnListOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField[],
@@ -100,7 +109,11 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/list-of-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -110,6 +123,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -147,10 +161,14 @@ export class Container {
      */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-primitives"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/set-of-primitives",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -160,6 +178,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -180,7 +199,7 @@ export class Container {
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
                         breadcrumbsPrefix: ["response"],
-                    }
+                    },
                 ),
             };
         }
@@ -202,7 +221,7 @@ export class Container {
      */
     public async getAndReturnSetOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField[],
@@ -210,7 +229,11 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/set-of-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -220,6 +243,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -259,10 +283,14 @@ export class Container {
      */
     public async getAndReturnMapPrimToPrim(
         request: Record<string, string>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<core.APIResponse<Record<string, string>, Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-prim"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-prim",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -272,6 +300,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -313,7 +342,7 @@ export class Container {
      */
     public async getAndReturnMapOfPrimToObject(
         request: Record<string, Fiddle.types.ObjectWithRequiredField>,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<
         core.APIResponse<
             Record<string, Fiddle.types.ObjectWithRequiredField>,
@@ -321,7 +350,11 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-object"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-object",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -331,6 +364,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -351,7 +385,7 @@ export class Container {
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
                         breadcrumbsPrefix: ["response"],
-                    }
+                    },
                 ),
             };
         }
@@ -373,7 +407,7 @@ export class Container {
      */
     public async getAndReturnOptional(
         request?: Fiddle.types.ObjectWithRequiredField,
-        requestOptions?: Container.RequestOptions
+        requestOptions?: Container.RequestOptions,
     ): Promise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField | undefined,
@@ -381,7 +415,11 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/opt-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/opt-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -391,6 +429,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",

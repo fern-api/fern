@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient, SeedApi } from "@fern/imdb";
+import { SeedApiClient } from "@fern/imdb";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.imdb.createMovie({
@@ -49,6 +49,18 @@ try {
 ```
 
 ## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option. 
+
+```typescript
+const response = await client.imdb.createMovie(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
 
 ### Retries
 

@@ -1,25 +1,7 @@
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
-await client.dataservice.foo();
- 
-```                        
-
-
-```typescript
-import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
-
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
-await client.dataservice.foo();
- 
-```                        
-
-
-```typescript
-import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
-
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.upload({
   columns: [
     {
@@ -27,14 +9,14 @@ await client.dataservice.upload({
     },
   ],
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.upload({
   columns: [
     {
@@ -46,109 +28,109 @@ await client.dataservice.upload({
   ],
   namespace: "namespace",
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.delete({
   ids: ["ids", "ids"],
   deleteAll: true,
   namespace: "namespace",
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.fetch({
   ids: "ids",
   namespace: "namespace",
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.list({
   prefix: "prefix",
   limit: 1,
   paginationToken: "paginationToken",
   namespace: "namespace",
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.query({
   topK: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.query({
   namespace: "namespace",
   topK: 1,
@@ -179,25 +161,25 @@ await client.dataservice.query({
     values: [1.1, 1.1],
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.update({
   id: "id",
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ apiKey: "YOUR_AUTHORIZATION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.dataservice.update({
   id: "id",
   values: [1.1, 1.1],
@@ -207,7 +189,7 @@ await client.dataservice.update({
     values: [1.1, 1.1],
   },
 });
- 
-```                        
+
+```
 
 

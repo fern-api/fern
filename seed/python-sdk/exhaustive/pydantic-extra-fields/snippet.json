@@ -95,6 +95,32 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.content_type.post_json_patch_content_type(\n    string=\"string\",\n    integer=1,\n    long_=1000000,\n    double=1.1,\n    bool_=True,\n    datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    date=datetime.date.fromisoformat(\n        \"2023-01-15\",\n    ),\n    uuid_=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    base_64=\"SGVsbG8gd29ybGQh\",\n    list_=[\"list\", \"list\"],\n    set_={\"set\"},\n    map_={1: \"map\"},\n    bigint=1000000,\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.content_type.post_json_patch_content_type(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"list\", \"list\"],\n        set_={\"set\"},\n        map_={1: \"map\"},\n        bigint=1000000,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.content_type.post_json_patch_content_with_charset_type(\n    string=\"string\",\n    integer=1,\n    long_=1000000,\n    double=1.1,\n    bool_=True,\n    datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    date=datetime.date.fromisoformat(\n        \"2023-01-15\",\n    ),\n    uuid_=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    base_64=\"SGVsbG8gd29ybGQh\",\n    list_=[\"list\", \"list\"],\n    set_={\"set\"},\n    map_={1: \"map\"},\n    bigint=1000000,\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.content_type.post_json_patch_content_with_charset_type(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"list\", \"list\"],\n        set_={\"set\"},\n        map_={1: \"map\"},\n        bigint=1000000,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/enum",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/enum.getAndReturnEnum"
@@ -264,6 +290,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_inline_path(\n    param=\"param\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_inline_path(\n        param=\"param\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/params",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithQuery"
@@ -303,6 +342,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_inline_path_and_query(\n    param=\"param\",\n    query=\"query\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_inline_path_and_query(\n        param=\"param\",\n        query=\"query\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/params/path/{param}",
                 "method": "PUT",
                 "identifier_override": "endpoint_endpoints/params.modifyWithPath"
@@ -310,6 +362,19 @@
             "snippet": {
                 "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.modify_with_path(\n    param=\"param\",\n    request=\"string\",\n)\n",
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.modify_with_path(\n        param=\"param\",\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.modify_with_inline_path(\n    param=\"param\",\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.modify_with_inline_path(\n        param=\"param\",\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },

@@ -1,6 +1,7 @@
 name: publish-docs
 
 on:
+  workflow_dispatch:  # Added manual trigger
   push:
     paths:
       - "fern/**"
@@ -10,8 +11,7 @@ on:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && contains(github.ref, 'refs/heads/main')
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

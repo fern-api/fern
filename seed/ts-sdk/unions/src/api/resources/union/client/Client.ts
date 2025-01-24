@@ -9,17 +9,21 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Union {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,7 +39,11 @@ export class Union {
      */
     public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${encodeURIComponent(id)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/${encodeURIComponent(id)}`,
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -44,6 +52,7 @@ export class Union {
                 "User-Agent": "@fern/unions/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -74,7 +83,7 @@ export class Union {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedUnionsTimeoutError();
+                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling GET /{id}.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,
@@ -94,7 +103,9 @@ export class Union {
      */
     public async update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "PATCH",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -103,6 +114,7 @@ export class Union {
                 "User-Agent": "@fern/unions/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -134,7 +146,7 @@ export class Union {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedUnionsTimeoutError();
+                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,

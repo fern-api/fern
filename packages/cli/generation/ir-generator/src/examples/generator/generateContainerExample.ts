@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ContainerType, ExampleContainer, ExamplePrimitive, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
+
 import { ExampleGenerationResult, ExampleGenerationSuccess } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 
@@ -91,6 +92,30 @@ export function generateContainerExample({
                 example: ExampleContainer.optional({
                     optional: example.example,
                     valueType: containerType.optional
+                }),
+                jsonExample: example.jsonExample
+            };
+        }
+        case "nullable": {
+            if (skipOptionalProperties) {
+                return generateEmptyContainerExample({ containerType });
+            }
+            const example = generateTypeReferenceExample({
+                fieldName,
+                typeReference: containerType.nullable,
+                maxDepth,
+                currentDepth: currentDepth + 1,
+                typeDeclarations,
+                skipOptionalProperties
+            });
+            if (example.type === "failure") {
+                return generateEmptyContainerExample({ containerType });
+            }
+            return {
+                type: "success",
+                example: ExampleContainer.nullable({
+                    nullable: example.example,
+                    valueType: containerType.nullable
                 }),
                 jsonExample: example.jsonExample
             };
@@ -201,6 +226,16 @@ export function generateEmptyContainerExample({
                 example: ExampleContainer.optional({
                     optional: undefined,
                     valueType: containerType.optional
+                }),
+                jsonExample: undefined
+            };
+        }
+        case "nullable": {
+            return {
+                type: "success",
+                example: ExampleContainer.nullable({
+                    nullable: undefined,
+                    valueType: containerType.nullable
                 }),
                 jsonExample: undefined
             };
