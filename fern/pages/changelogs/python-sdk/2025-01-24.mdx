@@ -1,0 +1,13 @@
+## 4.3.12
+**`(feat):`** You can now override the default dev dependencies that fern generates out of the box using the `extra_dev_dependencies` configuration flag.
+For example, to add a specific version of `mypy` as a dev dependency, you can now do the following:
+
+```yaml
+config:
+  extra_dev_dependencies:
+    mypy: "^1.11.0"
+```
+
+Additionally, if fern detects pre-existing mypy configuration in your `pyproject_toml` configuration, it will not add its default configuration for `mypy`.
+
+
