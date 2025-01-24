@@ -861,10 +861,6 @@ public abstract class AbstractEndpointWriter {
 
                     @Override
                     public Void visitOffset(OffsetPagination offset) {
-                        if (offset.getPage().getPropertyPath().isPresent()
-                                && !offset.getPage().getPropertyPath().get().isEmpty()) {
-                            return null;
-                        }
                         com.fern.ir.model.types.TypeReference pageType = offset.getPage()
                                 .getProperty()
                                 .visit(new RequestPropertyValue.Visitor<com.fern.ir.model.types.TypeReference>() {
