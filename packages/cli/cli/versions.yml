@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI parser now prefers the JSON Content-Type variant over
+        others (e.g. application/x-www-form-urlencoded).
+      type: fix
+  irVersion: 55
+  version: 0.51.3
+
+- changelogEntry:
+    - summary: |
         Improved error messages when docs.yml doesn't match schema by showing more specific 
         validation errors and including the path where the error occurred.
       type: fix
