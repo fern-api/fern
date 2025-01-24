@@ -108,6 +108,8 @@ fixtures:
       outputFolder: java-custom-package-prefix
   java-single-property-endpoint:
     - outputFolder: java-single-property-endpoint
+  java-pagination-deep-cursor-path:
+    - outputFolder: java-pagination-deep-cursor-path
 scripts:
   - docker: fernapi/java-seed
     commands:
