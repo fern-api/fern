@@ -251,6 +251,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await cliContext.runTask(async (context) => {
                     await initializeWithReadme({
                         readmeUrl: argv.readme,
+                        organization: argv.organization ?? "fern",
                         taskContext: context,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });
@@ -267,6 +268,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await cliContext.runTask(async (taskContext) => {
                     await initializeWithMintlify({
                         pathToMintJson: argv.mintlify,
+                        organization: argv.organization ?? "fern",
                         taskContext,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });

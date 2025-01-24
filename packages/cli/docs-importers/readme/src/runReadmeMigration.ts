@@ -12,13 +12,15 @@ interface RunReadmeMigrationParams {
     outputPath: AbsoluteFilePath;
     taskContext: TaskContext;
     versionOfCli: string;
+    organization: string;
 }
 
 export async function runReadmeMigration({
     readmeUrl,
     outputPath,
     taskContext,
-    versionOfCli
+    versionOfCli,
+    organization
 }: RunReadmeMigrationParams): Promise<void> {
     const readmeImporter = new ReadmeImporter({
         context: taskContext
@@ -27,7 +29,7 @@ export async function runReadmeMigration({
     const builder = new FernDocsBuilderImpl();
 
     await readmeImporter.import({
-        args: { readmeUrl },
+        args: { readmeUrl, organization },
         builder
     });
 
@@ -42,7 +44,7 @@ export async function runReadmeMigration({
         JSON.stringify(
             {
                 version: versionOfCli,
-                organization: "fern"
+                organization
             },
             undefined,
             4
