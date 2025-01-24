@@ -1,6 +1,3 @@
-void runCli();
-
-export async function runCli(): Promise<void> {
-    // eslint-disable-next-line no-console
-    console.log("Noop...");
-}
+export { AbstractGoGeneratorCli } from "./cli/AbstractGoGeneratorCli";
+export { GoProject } from "./project/GoProject";
+export { FileGenerator } from "./FileGenerator";

@@ -501,6 +501,9 @@ importers:
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
+      '@fern-fern/ir-sdk':
+        specifier: ^55.0.0
+        version: 55.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -667,9 +670,24 @@ importers:
 
   generators/go-v2/sdk:
     devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/go-ast':
+        specifier: workspace:*
+        version: link:../ast
+      '@fern-api/go-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.898
+        version: 0.0.898
+      '@fern-fern/ir-sdk':
+        specifier: ^55.0.0
+        version: 55.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
