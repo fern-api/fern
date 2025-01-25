@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core";
 import * as SeedQueryParameters from "../../../index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
@@ -60,12 +61,12 @@ export class User {
         _queryParams["deadline"] = deadline;
         _queryParams["bytes"] = bytes;
         _queryParams["user"] = user;
-        _queryParams["userList"] = JSON.stringify(userList);
+        _queryParams["userList"] = toJson(userList);
         if (optionalDeadline != null) {
             _queryParams["optionalDeadline"] = optionalDeadline;
         }
 
-        _queryParams["keyValue"] = JSON.stringify(keyValue);
+        _queryParams["keyValue"] = toJson(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
         }

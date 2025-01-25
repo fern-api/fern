@@ -16,6 +16,7 @@ type InternalTypeLiteral =
     | String_
     | Tuple
     | Unkonwn_
+    | Null_
     | Nop;
 
 interface Array_ {
@@ -93,6 +94,10 @@ interface Unkonwn_ {
     value: unknown;
 }
 
+interface Null_ {
+    type: "null";
+}
+
 interface Nop {
     type: "nop";
 }
@@ -103,13 +108,15 @@ export class TypeLiteral extends AstNode {
     }
 
     public write(writer: Writer): void {
+        const noSerdeLayer = !!writer.customConfig?.noSerdeLayer;
+        const useBigInt = !!writer.customConfig?.useBigInt;
         switch (this.internalType.type) {
             case "array": {
                 this.writeIterable({ writer, iterable: this.internalType });
                 break;
             }
             case "blob": {
-                if (writer.customConfig?.noSerdeLayer) {
+                if (noSerdeLayer) {
                     writer.writeNode(TypeLiteral.string(this.internalType.value));
                     return;
                 }
@@ -123,15 +130,15 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "bigint": {
-                if (writer.customConfig?.noSerdeLayer) {
-                    writer.writeNode(TypeLiteral.string(this.internalType.value.toString()));
+                if (useBigInt) {
+                    writer.write(`BigInt("${this.internalType.value.toString()}")`);
                     return;
                 }
-                writer.write(`BigInt(${this.internalType.value.toString()})`);
-                break;
+                writer.write(`"${this.internalType.value.toString()}"`);
+                return;
             }
             case "datetime": {
-                if (writer.customConfig?.noSerdeLayer) {
+                if (noSerdeLayer) {
                     writer.writeNode(TypeLiteral.string(this.internalType.value));
                     return;
                 }
@@ -157,7 +164,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "set": {
-                if (writer.customConfig?.noSerdeLayer || this.isSetOfObjects()) {
+                if (noSerdeLayer || this.isSetOfObjects()) {
                     writer.writeNode(TypeLiteral.array({ values: this.internalType.values }));
                     return;
                 }
@@ -180,6 +187,10 @@ export class TypeLiteral extends AstNode {
             }
             case "unknown": {
                 this.writeUnknown({ writer, value: this.internalType.value });
+                break;
+            }
+            case "null": {
+                writer.write("null");
                 break;
             }
             case "nop":
@@ -351,6 +362,10 @@ export class TypeLiteral extends AstNode {
 
     public static unknown(value: unknown): TypeLiteral {
         return new this({ type: "unknown", value });
+    }
+
+    public static null(): TypeLiteral {
+        return new this({ type: "null" });
     }
 
     public static nop(): TypeLiteral {

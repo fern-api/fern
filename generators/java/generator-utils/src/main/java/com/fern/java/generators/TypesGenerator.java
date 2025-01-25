@@ -43,20 +43,27 @@ public final class TypesGenerator {
     }
 
     public Result generateFiles() {
-        Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces();
+        Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces(generatorContext);
         Map<TypeId, GeneratedJavaFile> generatedTypes = KeyedStream.stream(typeDeclarations)
                 .map(typeDeclaration -> {
+                    if (generatorContext.getCustomConfig().enableInlineTypes()
+                            && typeDeclaration.getInline().orElse(false)) {
+                        return Optional.<GeneratedJavaFile>empty();
+                    }
+
                     ClassName className =
                             generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
-                    Optional<GeneratedJavaFile> maybeGeneratedJavaFile = typeDeclaration
+                    Optional<AbstractTypeGenerator> maybeGeneratedJavaFile = typeDeclaration
                             .getShape()
                             .visit(new SingleTypeGenerator(
                                     generatorContext,
                                     typeDeclaration.getName(),
                                     className,
                                     generatedInterfaces,
-                                    false));
-                    return maybeGeneratedJavaFile;
+                                    false,
+                                    Set.of(className.simpleName()),
+                                    true));
+                    return maybeGeneratedJavaFile.map(AbstractTypeGenerator::generateFile);
                 })
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -64,10 +71,12 @@ public final class TypesGenerator {
         return new Result(generatedInterfaces, generatedTypes);
     }
 
-    private Map<TypeId, GeneratedJavaInterface> getGeneratedInterfaces() {
+    public static Map<TypeId, GeneratedJavaInterface> getGeneratedInterfaces(
+            AbstractGeneratorContext<?, ?> generatorContext) {
         Set<TypeId> interfaceCandidates = generatorContext.getInterfaceIds();
         return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), typeId -> {
-            TypeDeclaration typeDeclaration = typeDeclarations.get(typeId);
+            TypeDeclaration typeDeclaration =
+                    generatorContext.getTypeDeclarations().get(typeId);
             ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration
                     .getShape()
                     .getObject()

@@ -31,9 +31,13 @@ public interface EnrichedObjectProperty {
 
     boolean fromInterface();
 
+    boolean inline();
+
     Optional<String> docs();
 
     Optional<Literal> literal();
+
+    ObjectProperty objectProperty();
 
     @Value.Lazy
     default Optional<FieldSpec> fieldSpec() {
@@ -81,7 +85,7 @@ public interface EnrichedObjectProperty {
                     .addMember("value", "$S", wireKey().get())
                     .build());
         }
-        if (fromInterface()) {
+        if (fromInterface() && !inline()) {
             getterBuilder.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         if (docs().isPresent()) {
@@ -94,7 +98,8 @@ public interface EnrichedObjectProperty {
         return ImmutableEnrichedObjectProperty.builder();
     }
 
-    static EnrichedObjectProperty of(ObjectProperty objectProperty, boolean fromInterface, TypeName poetTypeName) {
+    static EnrichedObjectProperty of(
+            ObjectProperty objectProperty, boolean fromInterface, boolean inline, TypeName poetTypeName) {
         Name name = objectProperty.getName().getName();
         Optional<Literal> maybeLiteral =
                 objectProperty.getValueType().getContainer().flatMap(ContainerType::getLiteral);
@@ -103,6 +108,8 @@ public interface EnrichedObjectProperty {
                 .pascalCaseKey(name.getPascalCase().getSafeName())
                 .poetTypeName(poetTypeName)
                 .fromInterface(fromInterface)
+                .inline(inline)
+                .objectProperty(objectProperty)
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)

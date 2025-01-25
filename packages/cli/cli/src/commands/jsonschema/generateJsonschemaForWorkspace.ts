@@ -39,7 +39,7 @@ export async function generateJsonschemaForWorkspaces({
                     audiences: { type: "all" },
                     keywords: undefined,
                     smartCasing: false,
-                    disableExamples: true,
+                    exampleGeneration: { disabled: true },
                     version: undefined,
                     packageName: undefined,
                     readme: undefined,

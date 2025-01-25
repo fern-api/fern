@@ -146,6 +146,10 @@ colors:
   background:
     dark: null
     light: null
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
 navigation: []
 ",
         "name": "docs.yml",

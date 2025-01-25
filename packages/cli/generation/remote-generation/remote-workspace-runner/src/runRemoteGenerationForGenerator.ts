@@ -56,7 +56,7 @@ export async function runRemoteGenerationForGenerator({
         generationLanguage: generatorInvocation.language,
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
-        disableExamples: generatorInvocation.disableExamples,
+        exampleGeneration: { disabled: generatorInvocation.disableExamples },
         audiences,
         readme,
         packageName,

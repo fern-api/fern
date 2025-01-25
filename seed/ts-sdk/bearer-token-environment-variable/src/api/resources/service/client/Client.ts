@@ -99,7 +99,8 @@ export class Service {
         const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["COURIER_API_KEY"];
         if (bearer == null) {
             throw new errors.SeedBearerTokenEnvironmentVariableError({
-                message: "Please specify COURIER_API_KEY when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_API_KEY environment variable",
             });
         }
 

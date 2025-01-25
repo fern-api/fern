@@ -124,22 +124,22 @@
                     }
                 },
                 "password": {
-                    "originalName": "password",
+                    "originalName": "accessToken",
                     "camelCase": {
-                        "unsafeName": "password",
-                        "safeName": "password"
+                        "unsafeName": "accessToken",
+                        "safeName": "accessToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "password",
-                        "safeName": "password"
+                        "unsafeName": "access_token",
+                        "safeName": "access_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "PASSWORD",
-                        "safeName": "PASSWORD"
+                        "unsafeName": "ACCESS_TOKEN",
+                        "safeName": "ACCESS_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "Password",
-                        "safeName": "Password"
+                        "unsafeName": "AccessToken",
+                        "safeName": "AccessToken"
                     }
                 }
             },
@@ -243,22 +243,22 @@
                     }
                 },
                 "password": {
-                    "originalName": "password",
+                    "originalName": "accessToken",
                     "camelCase": {
-                        "unsafeName": "password",
-                        "safeName": "password"
+                        "unsafeName": "accessToken",
+                        "safeName": "accessToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "password",
-                        "safeName": "password"
+                        "unsafeName": "access_token",
+                        "safeName": "access_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "PASSWORD",
-                        "safeName": "PASSWORD"
+                        "unsafeName": "ACCESS_TOKEN",
+                        "safeName": "ACCESS_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "Password",
-                        "safeName": "Password"
+                        "unsafeName": "AccessToken",
+                        "safeName": "AccessToken"
                     }
                 }
             },

@@ -10,13 +10,13 @@ import (
 
 type Key struct {
 	KeyType              KeyType
-	defaultStringLiteral string
+	DefaultStringLiteral string
 
 	typ string
 }
 
 func NewKeyWithDefaultStringLiteral() *Key {
-	return &Key{typ: "defaultStringLiteral", defaultStringLiteral: "default"}
+	return &Key{typ: "DefaultStringLiteral", DefaultStringLiteral: "default"}
 }
 
 func (k *Key) GetKeyType() KeyType {
@@ -24,10 +24,6 @@ func (k *Key) GetKeyType() KeyType {
 		return ""
 	}
 	return k.KeyType
-}
-
-func (k *Key) DefaultStringLiteral() string {
-	return k.defaultStringLiteral
 }
 
 func (k *Key) UnmarshalJSON(data []byte) error {
@@ -39,9 +35,9 @@ func (k *Key) UnmarshalJSON(data []byte) error {
 	}
 	var valueDefaultStringLiteral string
 	if err := json.Unmarshal(data, &valueDefaultStringLiteral); err == nil {
-		k.typ = "defaultStringLiteral"
-		k.defaultStringLiteral = valueDefaultStringLiteral
-		if k.defaultStringLiteral != "default" {
+		k.typ = "DefaultStringLiteral"
+		k.DefaultStringLiteral = valueDefaultStringLiteral
+		if k.DefaultStringLiteral != "default" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", k, "default", valueDefaultStringLiteral)
 		}
 		return nil
@@ -53,7 +49,7 @@ func (k Key) MarshalJSON() ([]byte, error) {
 	if k.typ == "KeyType" || k.KeyType != "" {
 		return json.Marshal(k.KeyType)
 	}
-	if k.typ == "defaultStringLiteral" || k.defaultStringLiteral != "" {
+	if k.typ == "DefaultStringLiteral" || k.DefaultStringLiteral != "" {
 		return json.Marshal("default")
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", k)
@@ -68,8 +64,8 @@ func (k *Key) Accept(visitor KeyVisitor) error {
 	if k.typ == "KeyType" || k.KeyType != "" {
 		return visitor.VisitKeyType(k.KeyType)
 	}
-	if k.typ == "defaultStringLiteral" || k.defaultStringLiteral != "" {
-		return visitor.VisitDefaultStringLiteral(k.defaultStringLiteral)
+	if k.typ == "DefaultStringLiteral" || k.DefaultStringLiteral != "" {
+		return visitor.VisitDefaultStringLiteral(k.DefaultStringLiteral)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", k)
 }

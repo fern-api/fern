@@ -25,6 +25,13 @@ export class DynamicTypeInstantiationMapper {
     }
 
     public convert(args: DynamicTypeInstantiationMapper.Args): go.TypeInstantiation {
+        // eslint-disable-next-line eqeqeq
+        if (args.value === null && !this.context.isNullable(args.typeReference)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Expected non-null value, but got null"
+            });
+        }
         if (args.value == null) {
             return go.TypeInstantiation.nop();
         }
@@ -42,6 +49,10 @@ export class DynamicTypeInstantiationMapper {
                 }
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
+            case "nullable":
+                return go.TypeInstantiation.optional(
+                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                );
             case "optional":
                 return go.TypeInstantiation.optional(
                     this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
@@ -376,13 +387,17 @@ export class DynamicTypeInstantiationMapper {
                 return this.context.getTypeName(named.declaration.name);
             }
             case "optional":
-                return this.getUndiscriminatedUnionFieldNameForOptional({ optional: typeReference });
+                return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
+            case "nullable":
+                return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference });
             case "primitive":
                 return this.getUndiscriminatedUnionFieldNameForPrimitive({ primitive: typeReference.value });
             case "set":
                 return this.getUndiscriminatedUnionFieldNameForSet({ set: typeReference });
             case "unknown":
                 return "Unknown";
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -411,11 +426,11 @@ export class DynamicTypeInstantiationMapper {
     }
 
     private getUndiscriminatedUnionFieldNameForOptional({
-        optional
+        typeReference
     }: {
-        optional: FernIr.dynamic.TypeReference.Optional;
+        typeReference: FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: optional });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference });
         if (fieldName == null) {
             return undefined;
         }
@@ -441,7 +456,10 @@ export class DynamicTypeInstantiationMapper {
     }): string | undefined {
         switch (literal.type) {
             case "boolean":
-                return `${literal.value}BoolLiteral`;
+                if (literal.value) {
+                    return "TrueLiteral";
+                }
+                return "FalseLiteral";
             case "string":
                 return `${literal.value}StringLiteral`;
             default:

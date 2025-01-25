@@ -85,6 +85,19 @@ fixtures:
         publisher_name: "Fern"
         reference_url: "https://buildwithfern.com"
       outputFolder: signed_publish
+  java-inline-types:
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: true
+      outputFolder: inline
+    - customConfig:
+        enable-inline-types: false
+        wrapped-aliases: true
+      outputFolder: no-inline
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: false
+      outputFolder: no-wrapped-aliases
   imdb:
     - customConfig:
         disable-required-property-builder-checks: true
@@ -93,6 +106,8 @@ fixtures:
     - customConfig:
         package-prefix: "com.customprefix"
       outputFolder: java-custom-package-prefix
+  java-single-property-endpoint:
+    - outputFolder: java-single-property-endpoint
 scripts:
   - docker: fernapi/java-seed
     commands:
@@ -109,3 +124,4 @@ allowedFailures:
   - trace
   - unions
   - streaming-parameter
+  - literal

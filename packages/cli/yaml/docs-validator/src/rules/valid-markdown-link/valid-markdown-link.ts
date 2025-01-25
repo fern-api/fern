@@ -2,12 +2,10 @@ import chalk from "chalk";
 import { randomUUID } from "crypto";
 
 import { noop } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
-import { convertIrToApiDefinition } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 
@@ -138,7 +136,7 @@ export const ValidMarkdownLinks: Rule = {
                     generationLanguage: undefined,
                     keywords: undefined,
                     smartCasing: false,
-                    disableExamples: false,
+                    exampleGeneration: { disabled: false },
                     readme: undefined,
                     version: undefined,
                     packageName: undefined,

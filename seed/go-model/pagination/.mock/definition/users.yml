@@ -139,8 +139,34 @@ service:
           page:
             type: optional<integer>
             docs: Defaults to first page
+            default: 0
           per_page:
             type: optional<integer>
+            docs: Defaults to per page
+          order:
+            type: optional<Order>
+          starting_after:
+            type: optional<string>
+            docs: |
+              The cursor used for pagination in order to fetch
+              the next page of results.
+      response: ListUsersPaginationResponse
+
+    listWithDoubleOffsetPagination:
+      pagination:
+        offset: $request.page
+        results: $response.data
+      method: GET
+      path: ""
+      request:
+        name: ListUsersDoubleOffsetPaginationRequest
+        query-parameters:
+          page:
+            type: optional<double>
+            docs: Defaults to first page
+            default: 0
+          per_page:
+            type: optional<double>
             docs: Defaults to per page
           order:
             type: optional<Order>

@@ -27,7 +27,18 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): ts.TypeLiteral {
-        if (args.value == null) {
+        // eslint-disable-next-line eqeqeq
+        if (args.value === null) {
+            if (this.context.isNullable(args.typeReference)) {
+                return ts.TypeLiteral.null();
+            }
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Expected non-null value, but got null"
+            });
+            return ts.TypeLiteral.nop();
+        }
+        if (args.value === undefined) {
             return ts.TypeLiteral.nop();
         }
         switch (args.typeReference.type) {
@@ -45,6 +56,8 @@ export class DynamicTypeLiteralMapper {
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "optional":
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+            case "nullable":
                 return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });

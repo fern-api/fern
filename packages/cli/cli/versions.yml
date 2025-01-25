@@ -1,5 +1,162 @@
 - changelogEntry:
     - summary: |
+        Various improvements to the Mintlify and Readme importers, including better default styling 
+        and spec imports for Mintlify migrations.
+      type: fix
+  irVersion: 55
+  version: 0.51.4
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now prefers the JSON Content-Type variant over
+        others (e.g. application/x-www-form-urlencoded).
+      type: fix
+  irVersion: 55
+  version: 0.51.3
+
+- changelogEntry:
+    - summary: |
+        Improved error messages when docs.yml doesn't match schema by showing more specific 
+        validation errors and including the path where the error occurred.
+      type: fix
+  irVersion: 55
+  version: 0.51.2
+
+- changelogEntry:
+    - summary: |
+        Fixed x-fern-resolutions to properly handle escaped forward slashes ("~1") in schema references, 
+        correctly converting them to "/" when resolving references.
+      type: fix
+  irVersion: 55
+  version: 0.51.1
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports a --readme flag pointing to the URL of a Readme generated docs site and
+        migrates existing documentation to a fern-compatible repository.
+
+        To use this feature:
+        ```bash
+        fern init --readme https://url-to-readme-docs.com
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.51.0
+
+- changelogEntry:
+    - summary: |
+        Improve performance of `fern docs dev` by only reloading the markdown content when 
+        only markdown files are changed, avoiding unnecessary recompilation of the full docs.
+
+      type: fix
+  irVersion: 55
+  version: 0.50.17
+
+
+- changelogEntry:
+    - summary: |
+        Improve performance of `fern docs dev` by debouncing across edits to multiple files, 
+        reducing unnecessary recomputation.
+      type: fix
+  irVersion: 55
+  version: 0.50.16
+
+- changelogEntry:
+    - summary: |
+        This PR improves the performance of `fern docs dev`: 
+          - Fern does not generate examples if the user has provided them to us
+          - Temporarily comment out broken link checker until we make it faster
+      type: fix
+  irVersion: 55
+  version: 0.50.16
+
+- changelogEntry:
+    - summary: |
+        Move example generation failure logs to trace level since they are not relevant 
+        for users and add noise to debug logs.
+      type: fix
+  irVersion: 55
+  version: 0.50.15
+
+- changelogEntry:
+    - summary: |
+        Fixes a bug where duplicate types in undiscriminated unions (`oneOf` in OpenAPI) 
+        were not being deduped, which could lead to invalid generated code.
+      type: fix
+  irVersion: 55
+  version: 0.50.14
+
+- changelogEntry:
+    - summary: |
+        Fixes a bug where `--log-level debug` does not include trace logs.
+      type: fix
+  irVersion: 55
+  version: 0.50.13
+
+- changelogEntry:
+    - summary: |
+        Increase undici timeouts to make sure that `fern generate --docs` completes. 
+      type: fix
+  irVersion: 55
+  version: 0.50.12
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports a `--log-level trace` option to filter out noise from the 
+        debug log level. 
+      type: fix
+  irVersion: 55
+  version: 0.50.11
+
+- changelogEntry:
+    - summary: 
+        An addition to the broken link checker to further reduce false positives.
+      type: fix
+  irVersion: 55
+  version: 0.50.10
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI no longer logs the full API request when finishing docs registration, 
+        reducing unnecessary log output.
+      type: fix
+  irVersion: 55
+  version: 0.50.9
+
+- changelogEntry:
+    - summary: |
+        An additional fix to the OpenRPC parser for respecting tags when 
+        organizing methods in the API Reference.
+      type: fix
+  irVersion: 55
+  version: 0.50.8
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now respects method names as well as tags for 
+        organization the navigation.
+      type: fix
+  irVersion: 55
+  version: 0.50.7
+
+- changelogEntry:
+    - summary: |
+        The broken link checker is updated to reduce false positives. 
+      type: fix
+  irVersion: 55
+  version: 0.50.6
+
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI is updated to create the organization if it doesn't exist when `fern token` is called.
+      type: fix
+  irVersion: 55
+  version: 0.50.5
+
+
+- changelogEntry:
+    - summary: |
         The preview server is updated such that local previews of both OpenRPC and OpenAPI (legacy parser)
         are now possible. 
       type: fix

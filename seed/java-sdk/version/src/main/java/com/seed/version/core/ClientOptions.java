@@ -126,7 +126,7 @@ public final class ClientOptions {
 
         private int timeout = 60;
 
-        private Optional<ApiVersion> version;
+        private Optional<ApiVersion> version = Optional.empty();
 
         public Builder environment(Environment environment) {
             this.environment = environment;

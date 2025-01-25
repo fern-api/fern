@@ -14,7 +14,7 @@ export declare namespace BasicAuth {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
-        password?: core.Supplier<string | undefined>;
+        accessToken?: core.Supplier<string | undefined>;
     }
 
     export interface RequestOptions {
@@ -198,9 +198,25 @@ export class BasicAuth {
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
+        const username = (await core.Supplier.get(this._options.username)) ?? process?.env["USERNAME"];
+        if (username == null) {
+            throw new errors.SeedBasicAuthEnvironmentVariablesError({
+                message:
+                    "Please specify a username by either passing it in to the constructor or initializing a USERNAME environment variable",
+            });
+        }
+
+        const accessToken = (await core.Supplier.get(this._options.accessToken)) ?? process?.env["PASSWORD"];
+        if (accessToken == null) {
+            throw new errors.SeedBasicAuthEnvironmentVariablesError({
+                message:
+                    "Please specify a accessToken by either passing it in to the constructor or initializing a PASSWORD environment variable",
+            });
+        }
+
         return core.BasicAuth.toAuthorizationHeader({
-            username: (await core.Supplier.get(this._options.username)) ?? process?.env["USERNAME"],
-            password: (await core.Supplier.get(this._options.password)) ?? process?.env["PASSWORD"],
+            username: username,
+            password: accessToken,
         });
     }
 }

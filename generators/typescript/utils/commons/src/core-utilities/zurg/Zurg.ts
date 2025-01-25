@@ -62,6 +62,7 @@ export declare namespace Zurg {
     interface BaseSchema {
         toExpression: () => ts.Expression;
         isOptional: boolean;
+        isNullable: boolean;
     }
 
     interface SchemaUtils {
@@ -71,6 +72,7 @@ export declare namespace Zurg {
         jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
         nullable: () => Zurg.Schema;
         optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
         transform: (args: {
             newShape: ts.TypeNode | undefined;
             transform: ts.Expression;

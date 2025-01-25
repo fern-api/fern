@@ -184,7 +184,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				camelCase  = authScheme.Header.Name.Name.CamelCase.SafeName
 				optionName = fmt.Sprintf("With%s", pascalCase)
-				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false, f.packageLayout)
 				typeName   = "*core." + pascalCase + "Option"
 			)
 			f.P("// ", optionName, " sets the ", camelCase, " auth request header.")
@@ -207,7 +207,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
 			camelCase  = header.Name.Name.CamelCase.SafeName
 			optionName = fmt.Sprintf("With%s", pascalCase)
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false, f.packageLayout)
 			typeName   = "*core." + pascalCase + "Option"
 		)
 		f.P("// ", optionName, " sets the ", camelCase, " request header.")
@@ -249,7 +249,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 		)
 	}
 
@@ -278,7 +278,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 	for _, header := range idempotencyHeaders {
 		var (
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		)
 		if err := f.writeOptionStruct(pascalCase, goType, false, true); err != nil {
 			return err
@@ -339,8 +339,8 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(authScheme.Bearer.Token.PascalCase.UnsafeName, " string")
 		}
 		if authScheme.Basic != nil {
-			f.P("Username string")
-			f.P("Password string")
+			f.P(authScheme.Basic.Username.PascalCase.UnsafeName, " string")
+			f.P(authScheme.Basic.Password.PascalCase.UnsafeName, " string")
 		}
 		if authScheme.Header != nil {
 			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
@@ -349,7 +349,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(
 				authScheme.Header.Name.Name.PascalCase.UnsafeName,
 				" ",
-				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 			)
 		}
 	}
@@ -360,7 +360,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 		)
 	}
 	f.P("}")
@@ -408,8 +408,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
-			f.P(`if r.Username != "" && r.Password != "" {`)
-			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.Username + ": " + r.Password)))`)
+			var (
+				username = authScheme.Basic.Username.PascalCase.UnsafeName
+				password = authScheme.Basic.Password.PascalCase.UnsafeName
+			)
+			f.P(`if r.`, username, ` != "" && r.`, password, ` != "" {`)
+			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ": " + r.`, password, `)))`)
 			f.P("}")
 		}
 		if header := authScheme.Header; header != nil {
@@ -541,18 +545,22 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 			}
 			if authScheme.Basic != nil {
+				var (
+					username = authScheme.Basic.Username.PascalCase.UnsafeName
+					password = authScheme.Basic.Password.PascalCase.UnsafeName
+				)
 				// The basic auth option requires special care because it requires
 				// two parameters.
 				f.P("// BasicAuthOption implements the RequestOption interface.")
 				f.P("type BasicAuthOption struct {")
-				f.P("Username string")
-				f.P("Password string")
+				f.P(username, " string")
+				f.P(password, " string")
 				f.P("}")
 				f.P()
 
 				f.P("func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {")
-				f.P("opts.Username = b.Username")
-				f.P("opts.Password = b.Password")
+				f.P("opts.", username, " = b.", username)
+				f.P("opts.", password, " = b.", password)
 				f.P("}")
 				f.P()
 			}
@@ -563,7 +571,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 				var (
 					pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
-					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 				)
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
@@ -578,7 +586,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 		}
 		var (
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 		)
 		if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 			return err
@@ -647,7 +655,7 @@ func (f *fileWriter) WriteIdempotentRequestOptions(
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
 			camelCase  = header.Name.Name.CamelCase.SafeName
 			optionName = fmt.Sprintf("With%s", pascalCase)
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		)
 		f.P("// ", optionName, " sets the ", camelCase, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -785,8 +793,8 @@ func (f *fileWriter) WriteRequestOptions(
 						importPath,
 					),
 					[]ast.Expr{
-						ast.NewBasicLit(`"<YOUR_USERNAME>"`),
-						ast.NewBasicLit(`"<YOUR_PASSWORD>"`),
+						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Username.ScreamingSnakeCase.UnsafeName)),
+						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Password.ScreamingSnakeCase.UnsafeName)),
 					},
 				)
 				if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
@@ -800,10 +808,10 @@ func (f *fileWriter) WriteRequestOptions(
 				f.WriteDocs(auth.Docs)
 			}
 			typeName := "core.BasicAuthOption"
-			f.P("func WithBasicAuth(username, password string) *", typeName, " {")
+			f.P("func WithBasicAuth(", authScheme.Basic.Username.CamelCase.SafeName, ", ", authScheme.Basic.Password.CamelCase.SafeName, " string) *", typeName, " {")
 			f.P("return &", typeName, "{")
-			f.P("Username: username,")
-			f.P("Password: password,")
+			f.P(fmt.Sprintf("%s: %s,", authScheme.Basic.Username.PascalCase.UnsafeName, authScheme.Basic.Username.CamelCase.SafeName))
+			f.P(fmt.Sprintf("%s: %s,", authScheme.Basic.Password.PascalCase.UnsafeName, authScheme.Basic.Password.CamelCase.SafeName))
 			f.P("}")
 			f.P("}")
 			f.P()
@@ -818,7 +826,7 @@ func (f *fileWriter) WriteRequestOptions(
 				optionName = fmt.Sprintf("With%s", pascalCase)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
-				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 			)
 			if i == 0 {
 				option = ast.NewCallExpr(
@@ -859,7 +867,7 @@ func (f *fileWriter) WriteRequestOptions(
 			optionName = fmt.Sprintf("With%s", pascalCase)
 			field      = header.Name.Name.PascalCase.UnsafeName
 			param      = header.Name.Name.CamelCase.SafeName
-			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		)
 		f.P("// ", optionName, " sets the ", param, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -909,11 +917,10 @@ func (f *fileWriter) WriteClient(
 	rootClientInstantiation *ast.AssignStmt,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	packageLayout PackageLayout,
+	clientNameOverride string,
+	clientConstructorNameOverride string,
 ) (*GeneratedClient, error) {
-	var (
-		clientName = "Client"
-		receiver   = "c"
-	)
 	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
 	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
 		errorDiscriminationByPropertyStrategy = errorDiscriminationStrategy.Property
@@ -922,12 +929,30 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties, receiver)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties, packageLayout)
 		if err != nil {
 			return nil, err
 		}
 		endpoints = append(endpoints, endpoint)
 	}
+
+	var (
+		clientName            = "Client"
+		clientConstructorName = "NewClient"
+	)
+	if packageLayout == PackageLayoutFlat && fernFilepath.File != nil {
+		clientName = fernFilepath.File.PascalCase.UnsafeName + "Client"
+		clientConstructorName = "New" + clientName
+	}
+	if clientNameOverride != "" {
+		clientName = clientNameOverride
+		clientConstructorName = "New" + clientName
+	}
+	if clientConstructorNameOverride != "" {
+		clientConstructorName = clientConstructorNameOverride
+	}
+
+	receiver := typeNameToReceiver(clientName)
 
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
@@ -936,17 +961,21 @@ func (f *fileWriter) WriteClient(
 	f.P("header http.Header")
 	f.P()
 	for _, subpackage := range subpackages {
-		var (
-			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
-			clientTypeName = f.scope.AddImport(importPath) + "." + clientName
-		)
-		f.P(subpackage.Name.PascalCase.UnsafeName, " *", clientTypeName)
+		if packageLayout == PackageLayoutFlat {
+			f.P(subpackage.Name.PascalCase.UnsafeName, " *", subpackage.Name.PascalCase.UnsafeName, "Client")
+		} else {
+			var (
+				importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
+				clientTypeName = f.scope.AddImport(importPath) + "." + "Client"
+			)
+			f.P(subpackage.Name.PascalCase.UnsafeName, " *", clientTypeName)
+		}
 	}
 	f.P("}")
 	f.P()
 
 	// Generate the client constructor.
-	f.P("func New", clientName, "(opts ...option.RequestOption) *", clientName, " {")
+	f.P("func ", clientConstructorName, "(opts ...option.RequestOption) *", clientName, " {")
 	f.P("options := core.NewRequestOptions(opts...)")
 	for _, authScheme := range irAuth.Schemes {
 		if authScheme.Bearer != nil && authScheme.Bearer.TokenEnvVar != nil {
@@ -989,11 +1018,15 @@ func (f *fileWriter) WriteClient(
 	f.P("),")
 	f.P("header: options.ToHeader(),")
 	for _, subpackage := range subpackages {
-		var (
-			importPath        = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
-			clientConstructor = f.scope.AddImport(importPath) + ".NewClient(opts...),"
-		)
-		f.P(subpackage.Name.PascalCase.UnsafeName, ": ", clientConstructor)
+		if packageLayout == PackageLayoutFlat {
+			f.P(subpackage.Name.PascalCase.UnsafeName, ": ", "New", subpackage.Name.PascalCase.UnsafeName, "Client(opts...),")
+		} else {
+			var (
+				importPath        = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
+				clientConstructor = f.scope.AddImport(importPath) + ".NewClient(opts...),"
+			)
+			f.P(subpackage.Name.PascalCase.UnsafeName, ": ", clientConstructor)
+		}
 	}
 	f.P("}")
 	f.P("}")
@@ -1011,7 +1044,7 @@ func (f *fileWriter) WriteClient(
 		f.P("options := ", endpoint.OptionConstructor)
 		f.P("baseURL := internal.ResolveBaseURL(")
 		f.P("options.BaseURL,")
-		f.P("c.baseURL,")
+		f.P(receiver, ".baseURL,")
 		f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
 		f.P(")")
 		baseURLVariable := "baseURL"
@@ -1078,11 +1111,14 @@ func (f *fileWriter) WriteClient(
 			if errorDiscriminationByPropertyStrategy == nil {
 				f.P("errorCodes := internal.ErrorCodes{")
 				for _, responseError := range endpoint.Errors {
-					var (
-						errorDeclaration = f.errors[responseError.Error.ErrorId]
-						errorImportPath  = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-						errorType        = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
-					)
+					var errorType string
+					errorDeclaration := f.errors[responseError.Error.ErrorId]
+					if packageLayout == PackageLayoutFlat {
+						errorType = errorDeclaration.Name.Name.PascalCase.UnsafeName
+					} else {
+						errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+						errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					}
 					f.P(fmt.Sprintf("%d: func(apiError *core.APIError) error {", errorDeclaration.StatusCode))
 					f.P("return &", errorType, "{")
 					f.P("APIError: apiError,")
@@ -1115,11 +1151,14 @@ func (f *fileWriter) WriteClient(
 				f.P("}")
 				f.P("switch ", switchValue, " {")
 				for _, responseError := range endpoint.Errors {
-					var (
-						errorDeclaration = f.errors[responseError.Error.ErrorId]
-						errorImportPath  = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-						errorType        = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
-					)
+					var errorType string
+					errorDeclaration := f.errors[responseError.Error.ErrorId]
+					if packageLayout == PackageLayoutFlat {
+						errorType = errorDeclaration.Name.Name.PascalCase.UnsafeName
+					} else {
+						errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+						errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					}
 					if errorDiscriminationByPropertyStrategy != nil {
 						f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
 					} else {
@@ -1362,7 +1401,11 @@ func (f *fileWriter) WriteClient(
 			case "offset":
 				pagerConstructor = "internal.NewOffsetPager"
 
-				f.P("next := 1")
+				if endpoint.PaginationInfo.PageIsInteger {
+					f.P("next := 1")
+				} else {
+					f.P("var next ", strings.TrimPrefix(endpoint.PaginationInfo.PageGoType, "*"), " = 1")
+				}
 				if len(endpoint.PaginationInfo.PageNilCheck) > 0 {
 					f.P(endpoint.PaginationInfo.PageNilCheck)
 					if endpoint.PaginationInfo.PageIsOptional {
@@ -1502,6 +1545,7 @@ type paginationInfo struct {
 	PageZeroValue             string
 	PageFirstRequestParameter string
 	PageIsOptional            bool
+	PageIsInteger             bool
 	SetPageRequestParameter   string
 	Results                   *ir.ResponseProperty
 	ResultsPropertyPath       string
@@ -1549,7 +1593,7 @@ func (f *fileWriter) getPaginationInfo(
 			Type:                      t,
 			PageName:                  nameAndWireValue.Name,
 			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
-			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 			PageZeroValue:             valueTypeFormat.ZeroValue,
 			PageFirstRequestParameter: fmt.Sprintf("%s.%s", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName),
 			PageIsOptional:            pageIsOptional,
@@ -1557,12 +1601,12 @@ func (f *fileWriter) getPaginationInfo(
 			Results:                   pagination.Cursor.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Cursor.Results.PropertyPath),
 			ResultsNilCheck:           responsePropertyPathToNilCheck("response", pagination.Cursor.Results.PropertyPath),
-			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
-			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
+			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 			NextCursor:                pagination.Cursor.Next,
 			NextCursorPropertyPath:    responsePropertyPathToFullPathString("response", pagination.Cursor.Next.PropertyPath),
 			NextCursorNilCheck:        responsePropertyPathToNilCheck("response", pagination.Cursor.Next.PropertyPath),
-			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 			NextCursorIsOptional:      nextCursorIsOptional,
 		}, nil
 	case "offset":
@@ -1586,20 +1630,26 @@ func (f *fileWriter) getPaginationInfo(
 		if pageIsOptional {
 			pageFirstRequestParameter = "&next"
 		}
+		var pageIsInteger bool
+		primitive := maybePrimitive(valueType)
+		if primitive != nil {
+			pageIsInteger = isPrimitiveInteger(primitive)
+		}
 		return &paginationInfo{
 			Type:                      t,
 			PageName:                  nameAndWireValue.Name,
 			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
-			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 			PageZeroValue:             valueTypeFormat.ZeroValue,
 			PageFirstRequestParameter: pageFirstRequestParameter,
 			PageIsOptional:            pageIsOptional,
+			PageIsInteger:             pageIsInteger,
 			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
 			Results:                   pagination.Offset.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Offset.Results.PropertyPath),
 			ResultsNilCheck:           responsePropertyPathToNilCheck("response", pagination.Offset.Results.PropertyPath),
-			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
-			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
+			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 		}, nil
 	default:
 		return nil, fmt.Errorf("%s pagination is not supported yet", t)
@@ -2056,6 +2106,8 @@ func generatedClientInstantiation(
 	generatedAuth *GeneratedAuth,
 	generatedEnvironment *GeneratedEnvironment,
 	exportedClientName string,
+	clientConstructorNameOverride string,
+	packageLayout PackageLayout,
 ) *ast.AssignStmt {
 	var parameters []ast.Expr
 	if generatedAuth != nil {
@@ -2064,6 +2116,14 @@ func generatedClientInstantiation(
 	if generatedEnvironment != nil {
 		parameters = append(parameters, generatedEnvironment.Option)
 	}
+	rootImportPath := baseImportPath
+	if packageLayout != PackageLayoutFlat {
+		rootImportPath = packagePathToImportPath(baseImportPath, packagePathForClient(new(ir.FernFilepath)))
+	}
+	constructorName := fmt.Sprintf("New%s", exportedClientName)
+	if clientConstructorNameOverride != "" {
+		constructorName = clientConstructorNameOverride
+	}
 	return &ast.AssignStmt{
 		Left: []ast.Expr{
 			ast.NewLocalReference("client"),
@@ -2071,8 +2131,8 @@ func generatedClientInstantiation(
 		Right: []ast.Expr{
 			ast.NewCallExpr(
 				ast.NewImportedReference(
-					fmt.Sprintf("New%s", exportedClientName),
-					packagePathToImportPath(baseImportPath, packagePathForClient(new(ir.FernFilepath))),
+					constructorName,
+					rootImportPath,
 				),
 				parameters,
 			),
@@ -2171,7 +2231,7 @@ func (f *fileWriter) endpointFromIR(
 	idempotencyHeaders []*ir.HttpHeader,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
-	receiver string,
+	packageLayout PackageLayout,
 ) (*endpoint, error) {
 	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 
@@ -2220,7 +2280,7 @@ func (f *fileWriter) endpointFromIR(
 			if !ok {
 				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
 			}
-			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 			if isLiteralType(pathParameter.ValueType, f.types) {
 				continue
 			}
@@ -2287,7 +2347,7 @@ func (f *fileWriter) endpointFromIR(
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
 				switch requestBody.Type {
 				case "typeReference":
-					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 				case "bytes":
 					contentType = "application/octet-stream"
 					requestType = "[]byte"
@@ -2301,7 +2361,11 @@ func (f *fileWriter) endpointFromIR(
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
 				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
-				requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				if packageLayout == PackageLayoutFlat {
+					requestType = "*" + irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+				} else {
+					requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				}
 				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
 					contentType = "application/octet-stream"
 					requestValueName = "requestBuffer"
@@ -2372,7 +2436,7 @@ func (f *fileWriter) endpointFromIR(
 			if typeReference == nil {
 				return nil, fmt.Errorf("unsupported json response type: %s", irEndpoint.Response.Body.Json.Type)
 			}
-			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 			responseInitializerFormat = "var response %s"
 			responseIsOptionalParameter = typeReference.Container != nil && typeReference.Container.Optional != nil
 			responseParameterName = "&response"
@@ -2383,7 +2447,7 @@ func (f *fileWriter) endpointFromIR(
 			if irEndpoint.Response.Body.Json.NestedPropertyAsResponse != nil && irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty != nil {
 				responseProperty := irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty
 				responsePropertyTypeReference := responseProperty.ValueType
-				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 				signatureReturnValues = fmt.Sprintf("(%s, error)", responsePropertyType)
 				successfulReturnValues = fmt.Sprintf("response.%s, nil", responseProperty.Name.Name.PascalCase.UnsafeName)
 				errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(responsePropertyTypeReference, f.types))
@@ -2414,7 +2478,7 @@ func (f *fileWriter) endpointFromIR(
 			if err != nil {
 				return nil, err
 			}
-			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false), "*")
+			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout), "*")
 			responseParameterName = "response"
 			signatureReturnValues = fmt.Sprintf("(*core.Stream[%s], error)", responseType)
 			errorReturnValues = "nil, err"
@@ -2568,7 +2632,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	}
 	var (
 		importPath = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false)
+		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 	)
 	var literal string
 	if errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Literal != nil {
@@ -2659,18 +2723,18 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
-		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\" url:\"-\"`")
 	}
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range endpoint.AllPathParameters {
-			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 			f.WriteDocs(pathParameter.Docs)
 			f.P(pathParameter.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\" url:\"-\"`")
 		}
 	}
 	for _, queryParam := range endpoint.QueryParameters {
-		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
@@ -2731,7 +2795,7 @@ func (f *fileWriter) WriteRequestType(
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
 		referenceType = strings.TrimPrefix(
-			typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 			"*",
 		)
 		referenceIsPointer = reference.RequestBodyType.Named != nil && isPointer(f.types[reference.RequestBodyType.Named.TypeId])
@@ -3084,7 +3148,7 @@ func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReferen
 	r.writer.P(
 		r.bodyField,
 		" ",
-		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false),
+		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false, r.writer.packageLayout),
 		" `json:\"-\" url:\"-\"`",
 	)
 	return nil
@@ -3396,6 +3460,11 @@ func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
 		return maybePrimitive(typeReference.Container.Optional)
 	}
 	return nil
+}
+
+// isPrimitiveInteger returns true if the given primitive type is an integer.
+func isPrimitiveInteger(primitive *ir.PrimitiveType) bool {
+	return primitive.V1 == ir.PrimitiveTypeV1Integer || primitive.V1 == ir.PrimitiveTypeV1Uint || primitive.V1 == ir.PrimitiveTypeV1Uint64 || primitive.V1 == ir.PrimitiveTypeV1Long
 }
 
 // maybeLiteral recurses into the given value type, returning its underlying literal

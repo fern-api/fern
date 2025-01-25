@@ -2,6 +2,16 @@ package generator
 
 import "fmt"
 
+// PackageLayout represents the different package layouts supported by the generator.
+type PackageLayout uint
+
+// Enumerates the supported package layouts.
+const (
+	PackageLayoutUnspecified PackageLayout = iota
+	PackageLayoutNested
+	PackageLayoutFlat
+)
+
 // UnionVersion represents the different union versions supported by the generator.
 type UnionVersion uint
 
@@ -26,9 +36,12 @@ type Config struct {
 	Version                      string
 	IRFilepath                   string
 	SnippetFilepath              string
+	ClientName                   string
+	ClientConstructorName        string
 	ImportPath                   string
 	PackageName                  string
 	ExportedClientName           string
+	PackageLayout                PackageLayout
 	UnionVersion                 UnionVersion
 
 	// If not specified, a go.mod and go.sum will not be generated.
@@ -65,12 +78,19 @@ func NewConfig(
 	version string,
 	irFilepath string,
 	snippetFilepath string,
+	clientName string,
+	clientConstructorName string,
 	importPath string,
 	packageName string,
 	exportedClientName string,
+	packageLayout string,
 	unionVersion string,
 	moduleConfig *ModuleConfig,
 ) (*Config, error) {
+	pl, err := parsePackageLayout(packageLayout)
+	if err != nil {
+		return nil, err
+	}
 	uv, err := parseUnionVersion(unionVersion)
 	if err != nil {
 		return nil, err
@@ -88,9 +108,12 @@ func NewConfig(
 		Version:                      version,
 		IRFilepath:                   irFilepath,
 		SnippetFilepath:              snippetFilepath,
+		ClientName:                   clientName,
+		ClientConstructorName:        clientConstructorName,
 		ImportPath:                   importPath,
 		PackageName:                  packageName,
 		ExportedClientName:           exportedClientName,
+		PackageLayout:                pl,
 		UnionVersion:                 uv,
 		ModuleConfig:                 moduleConfig,
 	}, nil
@@ -106,4 +129,16 @@ func parseUnionVersion(unionVersion string) (UnionVersion, error) {
 		return UnionVersionV1, nil
 	}
 	return UnionVersionUnspecified, fmt.Errorf("unrecognized union version %q", unionVersion)
+}
+
+func parsePackageLayout(packageLayout string) (PackageLayout, error) {
+	switch packageLayout {
+	case "":
+		return PackageLayoutUnspecified, nil
+	case "nested":
+		return PackageLayoutNested, nil
+	case "flat":
+		return PackageLayoutFlat, nil
+	}
+	return PackageLayoutUnspecified, fmt.Errorf("unrecognized package layout %q", packageLayout)
 }

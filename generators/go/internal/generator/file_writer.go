@@ -36,6 +36,7 @@ type fileWriter struct {
 	inlinePathParameters         bool
 	inlineFileProperties         bool
 	unionVersion                 UnionVersion
+	packageLayout                PackageLayout
 	scope                        *gospec.Scope
 	types                        map[ir.TypeId]*ir.TypeDeclaration
 	errors                       map[ir.ErrorId]*ir.ErrorDeclaration
@@ -53,6 +54,7 @@ func newFileWriter(
 	alwaysSendRequiredProperties bool,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	packageLayout PackageLayout,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
@@ -87,7 +89,7 @@ func newFileWriter(
 	scope.AddImport(path.Join(baseImportPath, "internal"))
 	scope.AddImport(path.Join(baseImportPath, "option"))
 
-	return &fileWriter{
+	f := &fileWriter{
 		filename:                     filename,
 		packageName:                  packageName,
 		baseImportPath:               baseImportPath,
@@ -95,14 +97,16 @@ func newFileWriter(
 		alwaysSendRequiredProperties: alwaysSendRequiredProperties,
 		inlinePathParameters:         inlinePathParameters,
 		inlineFileProperties:         inlineFileProperties,
+		packageLayout:                packageLayout,
 		unionVersion:                 unionVersion,
 		scope:                        scope,
 		types:                        types,
 		errors:                       errors,
 		coordinator:                  coordinator,
-		snippetWriter:                NewSnippetWriter(baseImportPath, unionVersion, types),
 		buffer:                       new(bytes.Buffer),
 	}
+	f.snippetWriter = NewSnippetWriter(baseImportPath, unionVersion, types, f)
+	return f
 }
 
 // P writes the given element into a single line, concluding with a newline.
@@ -172,6 +176,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.alwaysSendRequiredProperties,
 		f.inlinePathParameters,
 		f.inlineFileProperties,
+		f.packageLayout,
 		f.unionVersion,
 		f.types,
 		f.errors,

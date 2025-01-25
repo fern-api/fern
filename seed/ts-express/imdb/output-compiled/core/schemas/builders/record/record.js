@@ -56,8 +56,7 @@ function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transfo
         };
     }
     return (0, entries_1.entries)(value).reduce((accPromise, [stringKey, value]) => {
-        // skip nullish keys
-        if (value == null) {
+        if (value === undefined) {
             return accPromise;
         }
         const acc = accPromise;

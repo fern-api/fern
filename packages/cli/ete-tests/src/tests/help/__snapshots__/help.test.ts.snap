@@ -37,6 +37,7 @@ Commands:
 
 Options:
       --help       Show help                                           [boolean]
-      --log-level  [choices: "debug", "info", "warn", "error"] [default: "info"]
+      --log-level
+          [choices: "trace", "debug", "info", "warn", "error"] [default: "info"]
   -v, --version    Print current version"
 `;

@@ -34,7 +34,9 @@ jobs:
         run: pnpm lint:style
 
       - name: Generate JSON Schema
-        run: pnpm jsonschema
+        run: |
+          pnpm fern:build
+          pnpm jsonschema
 
       - name: Format
         run: pnpm format:check

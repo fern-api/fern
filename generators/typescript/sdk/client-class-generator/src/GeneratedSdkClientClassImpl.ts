@@ -1619,7 +1619,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     ts.factory.createThrowStatement(
                                         context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
                                             message: ts.factory.createStringLiteral(
-                                                `Please specify ${this.bearerAuthScheme.tokenEnvVar} when instantiating the client.`
+                                                `Please specify a ${BEARER_TOKEN_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.bearerAuthScheme.tokenEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
                                             responseBody: undefined
@@ -1768,16 +1768,102 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     : context.coreUtilities.fetcher.Supplier.get(
                           this.getReferenceToOption(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme))
                       );
-
             if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
-                statements.push(
-                    ts.factory.createReturnStatement(
-                        context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                            usernameExpression,
-                            passwordExpression
+                if (this.basicAuthScheme.usernameEnvVar != null) {
+                    const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
+                    statements.push(
+                        ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        USERNAME_VARIABLE_NAME,
+                                        undefined,
+                                        undefined,
+                                        usernameExpression
+                                    )
+                                ],
+                                ts.NodeFlags.Const
+                            )
+                        ),
+                        ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createThrowStatement(
+                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                            message: ts.factory.createStringLiteral(
+                                                `Please specify a ${USERNAME_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.usernameEnvVar} environment variable`
+                                            ),
+                                            statusCode: undefined,
+                                            responseBody: undefined
+                                        })
+                                    )
+                                ],
+                                true
+                            )
                         )
-                    )
-                );
+                    );
+                    const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;
+                    statements.push(
+                        ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        PASSWORD_VARIABLE_NAME,
+                                        undefined,
+                                        undefined,
+                                        passwordExpression
+                                    )
+                                ],
+                                ts.NodeFlags.Const
+                            )
+                        ),
+                        ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createThrowStatement(
+                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                            message: ts.factory.createStringLiteral(
+                                                `Please specify a ${PASSWORD_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.passwordEnvVar} environment variable`
+                                            ),
+                                            statusCode: undefined,
+                                            responseBody: undefined
+                                        })
+                                    )
+                                ],
+                                true
+                            )
+                        )
+                    );
+                    statements.push(
+                        ts.factory.createReturnStatement(
+                            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
+                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME)
+                            )
+                        )
+                    );
+                } else {
+                    statements.push(
+                        ts.factory.createReturnStatement(
+                            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                                usernameExpression,
+                                passwordExpression
+                            )
+                        )
+                    );
+                }
             } else {
                 const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
                 const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;

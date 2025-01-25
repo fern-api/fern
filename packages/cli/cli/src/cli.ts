@@ -13,7 +13,7 @@ import {
     loadProjectConfig
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs, initializeWithMintlify } from "@fern-api/init";
+import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
@@ -62,7 +62,7 @@ async function runCli() {
 
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
         const { setGlobalDispatcher, Agent } = await import("undici");
-        setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
+        setGlobalDispatcher(new Agent({ connect: { timeout: 10_000 }, bodyTimeout: 0, headersTimeout: 600_000 }));
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -231,7 +231,11 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 })
                 .option("mintlify", {
                     type: "string",
-                    description: "Migrate docs from Mintlify"
+                    description: "Migrate docs from Mintlify provided a path to a mint.json file"
+                })
+                .option("readme", {
+                    type: "string",
+                    description: "Migrate docs from Readme provided a URL to a Readme generated docs site"
                 }),
         async (argv) => {
             if (argv.organization == null) {
@@ -239,6 +243,19 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            } else if (argv.readme != null && argv.mintlify != null) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --readme and --mintlify. Please choose one."
+                );
+            } else if (argv.readme != null) {
+                await cliContext.runTask(async (context) => {
+                    await initializeWithReadme({
+                        readmeUrl: argv.readme,
+                        organization: argv.organization ?? "fern",
+                        taskContext: context,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
+                    });
+                });
             } else if (argv.docs != null) {
                 await cliContext.runTask(async (context) => {
                     await initializeDocs({
@@ -251,6 +268,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await cliContext.runTask(async (taskContext) => {
                     await initializeWithMintlify({
                         pathToMintJson: argv.mintlify,
+                        organization: argv.organization ?? "fern",
                         taskContext,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });

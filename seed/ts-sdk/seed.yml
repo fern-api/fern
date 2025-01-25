@@ -132,6 +132,10 @@ fixtures:
     - outputFolder: bigint
       customConfig:
         useBigInt: true
+    - outputFolder: bigint-no-serde-layer
+      customConfig:
+        useBigInt: true
+        noSerdeLayer: true
   error-property:
     - customConfig:
         private: true
@@ -256,8 +260,6 @@ allowedFailures:
   - alias
   - api-wide-base-path
   - cross-package-type-names
-  - auth-environment-variables
-  - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences:no-custom-config
