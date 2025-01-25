@@ -38,28 +38,6 @@ tabs:
 
 css: ./assets/styles.css
 
-redirects:
-  - source: /learn/api-definition/fern/api-yml-reference
-    destination: /learn/api-definition/fern/api-yml/overview
-  - source: /learn/docs/api-references/api-playground/:slug
-    destination: /learn/docs/api-references/api-explorer/:slug
-  - source: /learn/docs/api-references/api-playground
-    destination: /learn/docs/api-references/api-explorer
-  - source: /learn/sdks/features/:slug
-    destination: /learn/sdks/capabilities/:slug
-  - source: /learn/sdks/package-managers/:slug
-    destination: /learn/sdks/guides/publish-to-package-managers/:slug
-  - source: /learn/sdks/introduction/configuration
-    destination: /learn/sdks/introduction/language-support
-  - source: /learn/sdks/getting-started/generate-your-first-sdk
-    destination: /learn/sdks/guides/generate-your-first-sdk
-  - source: /learn/sdks/getting-started/preview-your-sdk-locally
-    destination: /learn/sdks/guides/preview-your-sdk-locally
-  - source: /learn/sdks/getting-started/publish-a-public-facing-sdk
-    destination: /learn/sdks/guides/publish-a-public-facing-sdk
-  - source: /learn/docs/building-your-docs/:slug
-    destination: /learn/docs/building-and-customizing-your-docs/:slug
-
 navigation:
   - tab: home
     layout:
@@ -583,8 +561,8 @@ navigation:
     layout:
       - section: CLI Reference
         contents:
-          - page: CLI Overview
-            path: ./pages/cli-api/overview.mdx
+          - page: Get Started with Fern CLI
+            path: ./pages/cli-api/get-started.mdx
           - page: Global Options
             path: ./pages/cli-api/global-options.mdx
           - page: Commands
@@ -654,3 +632,27 @@ analytics:
     api-key: ${POSTHOG_API_KEY}
   gtm:
     container-id: GTM-55W3VNDW
+
+redirects:
+  - source: /learn/api-definition/fern/api-yml-reference
+    destination: /learn/api-definition/fern/api-yml/overview
+  - source: /learn/docs/api-references/api-playground/:slug
+    destination: /learn/docs/api-references/api-explorer/:slug
+  - source: /learn/docs/api-references/api-playground
+    destination: /learn/docs/api-references/api-explorer
+  - source: /learn/sdks/features/:slug
+    destination: /learn/sdks/capabilities/:slug
+  - source: /learn/sdks/package-managers/:slug
+    destination: /learn/sdks/guides/publish-to-package-managers/:slug
+  - source: /learn/sdks/introduction/configuration
+    destination: /learn/sdks/introduction/language-support
+  - source: /learn/sdks/getting-started/generate-your-first-sdk
+    destination: /learn/sdks/guides/generate-your-first-sdk
+  - source: /learn/sdks/getting-started/preview-your-sdk-locally
+    destination: /learn/sdks/guides/preview-your-sdk-locally
+  - source: /learn/sdks/getting-started/publish-a-public-facing-sdk
+    destination: /learn/sdks/guides/publish-a-public-facing-sdk
+  - source: /learn/docs/building-your-docs/:slug
+    destination: /learn/docs/building-and-customizing-your-docs/:slug
+  - source: /learn/cli-api/cli-reference/cli-overview
+    destination: /learn/cli-api/cli-reference/get-started
