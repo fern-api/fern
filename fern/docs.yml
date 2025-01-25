@@ -629,7 +629,7 @@ logo:
   dark: ./images/logo-white.svg
   height: 30
 colors:
-  accentPrimary:
+  accent-primary:
     dark: "#1DA32B"
     light: "#1DA32B"
   background:
