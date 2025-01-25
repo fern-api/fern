@@ -291,6 +291,7 @@ typography:
   bodyFont:
     name: Inter-Regular
     path: ./fonts/Inter-Regular.woff2
+    style: normal
 ```
 ```yaml title="Variable Font" {3-10}
 typography:
@@ -316,6 +317,10 @@ typography:
   <Note>
     Supported font file types are `.woff` and `woff2`.
   </Note>
+</ParamField>
+
+<ParamField path="style" type="string" required={false}>
+  The style of the font. Defaults to "normal". 
 </ParamField>
 
 <ParamField path="paths" type="object" required={false}>
