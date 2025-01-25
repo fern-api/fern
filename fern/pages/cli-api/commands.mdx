@@ -1,11 +1,188 @@
 ---
 title: 'Commands'
-description: 'Fern CLI command documentation'
+description: 'Complete reference for all Fern CLI commands'
+subtitle: 'Explore Fern CLI commands.'
 ---
 
-Explore documentation for popular Fern CLI commands. 
+## CLI Quick Start
+Get started with these commonly used commands:
 
-<AccordionGroup toc={true}>
+<CodeBlock title="Common Commands">
+```bash
+# Documentation
+fern init --docs                  # Create a new documentation project
+fern docs dev                     # Preview docs locally at http://localhost:3000
+fern generate --docs --preview    # Preview documentation changes
+fern generate --docs             # Generate and publish documentation
+
+# SDK Development
+fern init                        # Create a new SDK project
+fern check                       # Validate your API definition
+fern generate --preview          # Preview all SDK changes in .preview/ folder
+fern generate                    # Generate and publish SDKs for the default group (configured in generators.yml)
+
+# Working with specific SDK groups
+fern generate --group python-sdk --preview  # Preview Python SDK
+fern generate --group ts-sdk                # Generate TypeScript SDK
+
+```
+</CodeBlock>
+
+## Common Workflows
+
+<AccordionGroup>
+  <Accordion title="Setting up a new documentation site">
+    1. Initialize a new docs project:
+    ```bash
+    fern init --docs
+    ```
+    
+    2. Preview locally while making changes:
+    ```bash
+    fern docs dev
+    ```
+    
+    3. When ready to preview or publish:
+    ```bash
+    fern generate --docs --preview  # Generate a shareable preview link
+    fern generate --docs           # Publish to production
+    ```
+  </Accordion>
+
+  <Accordion title="Setting up SDK generation">
+    1. Initialize a new SDK project:
+    ```bash
+    fern init
+    ```
+    
+    2. Configure your generators in [`generators.yml`](/learn/generate-sdks/configuration)
+    
+    3. Generate SDKs:
+    ```bash
+    fern generate --preview  # Preview changes locally in .preview/ folder
+    fern generate --group python-sdk --preview  # Preview specific SDK group
+    fern generate           # Publish to production
+    ```
+
+    <Tip>
+      During development, use `--preview` to test your changes locally before publishing. 
+      The preview SDK will be generated into the `.preview/` folder.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="Converting from OpenAPI">
+    1. Place your OpenAPI spec in `fern/openapi/`
+    
+    2. Generate a Fern definition:
+    ```bash
+    fern write-definition
+    ```
+    
+    3. Generate OpenAPI overrides (optional):
+    ```bash
+    fern write-overrides
+    ```
+    
+    4. Generate SDKs or docs:
+    ```bash
+    fern generate [--docs]
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Command Reference
+
+### Development Commands
+| Command | Description | Common Use Case |
+|---------|-------------|----------------|
+| [`fern init`](#fern-init) | Create new Fern project | Starting new API project |
+| [`fern check`](#fern-check) | Validate API definition & config | Development validation, CI checks |
+| [`fern upgrade`](#fern-upgrade) | Update Fern CLI & generators | Keeping tools up to date |
+
+### Documentation Commands
+| Command | Description | Common Use Case |
+|---------|-------------|----------------|
+| [`fern docs dev`](#fern-docs-dev) | Run local docs preview server | Local docs development |
+| [`fern docs broken-links`](#fern-docs-broken-links) | Validate documentation links | Quality assurance |
+| [`fern generate --docs`](#fern-generate---docs) | Build & publish documentation | Release docs updates |
+
+### SDK Generation Commands  
+| Command | Description | Common Use Case |
+|---------|-------------|----------------|
+| [`fern generate`](#fern-generate) | Build & publish SDKs | Release SDK updates |
+| [`fern write-definition`](#fern-write-definition) | Convert OpenAPI to [Fern Definition](/learn/overview) | API migration |
+| [`fern write-overrides`](#fern-write-overrides) | Create OpenAPI customizations | Enhance OpenAPI specs |
+
+## Detailed Command Documentation
+
+<AccordionGroup>
+  <Accordion title="fern generate">
+    Use `fern generate` to run the Fern compiler and create SDKs for your API.
+
+    <CodeBlock title="terminal">
+    ```bash
+    fern generate [--group <group>] [--api <api>] [--version <version>] [--local] [--keepDocker] [--preview]
+    ```
+    </CodeBlock>
+
+    ### preview
+
+    Use `--preview` to test SDK changes locally before publishing. This is especially useful during development:
+    - Generates SDK into a local `.preview/` folder
+    - Allows quick iteration on your Fern definition
+    - No changes are published to package managers or GitHub
+    
+    ```bash
+    # Preview all SDKs
+    fern generate --preview
+    
+    # Preview specific SDK group
+    fern generate --group python-sdk --preview
+    ```
+
+    ### group
+
+    Use `--group <group>` to filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared.
+
+    ```bash
+    fern generate --group internal
+    ```
+
+    ### api
+
+    Use `--api <api>` to specify the API for SDK generation.
+
+    ```bash
+    fern generate --api public-api
+    ```
+
+    ### version
+
+    Use `--version` to specify a version for SDKs and documentation. Adherence to [semantic versioning](https://semver.org/) is advised.
+
+    ```bash
+    fern generate --version 2.11
+    ```
+
+    ### local
+
+    Use `--local` to generate code locally by downloading the Docker Image and running it on your machine. 
+    Note that running Docker locally supports outputting files, and not publishing to package managers.
+
+    ```bash
+    fern generate --local
+    ```
+
+    <Warning> [Docker Desktop](https://www.docker.com/products/docker-desktop/) must be installed and running on your machine. </Warning>
+
+    ### keepDocker
+
+    Use `--keepDocker` to keep the Docker container running after the generation is complete. This is useful for debugging.
+
+    ```bash
+    fern generate --local --keepDocker
+    ```
+  </Accordion>
 
   <Accordion title="fern check">
 
@@ -75,74 +252,6 @@ Explore documentation for popular Fern CLI commands.
 
   </Accordion>
   
-
-
-  <Accordion title="fern generate">
-
-    Use `fern generate` to run the Fern compiler and create SDKs for your API.
-
-    <CodeBlock title="terminal">
-        ```bash
-        fern generate [--group <group>] [--api <api>] [--version <version>] [--local] [--keepDocker] [--preview]
-        ```
-    </CodeBlock>
-
-    ### group
-
-    Use `--group <group>` to filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared in `generators.yml`.
-
-    ```bash
-    fern generate --group internal
-    ```
-
-    ### api
-
-    Use `--api <api>` to specify the API for SDK generation.
-
-    ```bash
-    fern generate --api public-api
-    ```
-
-    ### version
-
-    Use `--version` to specify a version for SDKs and documentation. Adherance to [semantic versioning](https://semver.org/) is advised.
-
-    ```bash
-    fern generate --version 2.11
-    ```
-
-    ### preview
-
-    Use `--preview` to preview updates to your SDKs before pushing changes to your GitHub repo or publishing to a package manager. The preview SDK will be generated into the `.preview/` folder.
-
-    ```bash
-    fern generate --preview
-    ```
-
-    ### local
-
-    Use `--local` to generate code locally by downloading the Docker Image and running it on your machine. 
-    Note that running Docker locally supports outputting files, and not publishing to package managers.
-
-    ```bash
-    fern generate --local
-    ```
-
-    <Warning> [Docker Desktop](https://www.docker.com/products/docker-desktop/) must be installed and running on your machine. </Warning>
-
-    ### keepDocker
-
-    Use `--keepDocker` to keep the Docker container running after the generation is complete. This is useful for debugging.
-
-    ```bash
-    fern generate --local --keepDocker
-    ```
-
-    <Warning> [Docker Desktop](https://www.docker.com/products/docker-desktop/) must be installed and running on your machine. </Warning>
-  
-  </Accordion>
-
-
   <Accordion title="fern generate --docs">
 
     Use `fern generate --docs` to create a documentation site for your API. 
@@ -171,7 +280,6 @@ Explore documentation for popular Fern CLI commands.
 
   </Accordion>
 
-
   <Accordion title="fern docs dev">
 
     Use `fern docs dev` to run a local development server to preview your docs.
@@ -191,7 +299,6 @@ Explore documentation for popular Fern CLI commands.
     ```
 
   </Accordion>
-
 
   <Accordion title="fern docs broken-links">
 
@@ -214,7 +321,6 @@ Explore documentation for popular Fern CLI commands.
 
   </Accordion>
 
-
   <Accordion title="fern upgrade">
 
     Use `fern upgrade` will upgrade your compiler version in `fern.config.json` to the
@@ -236,10 +342,9 @@ Explore documentation for popular Fern CLI commands.
 
   </Accordion>
 
-
   <Accordion title="fern init">
 
-    Use `fern init` to initialize a new Fern workspace in the current folder. By default, you’ll see the IMDb API example.
+    Use `fern init` to initialize a new Fern workspace in the current folder. By default, you'll see the IMDb API example.
 
     <CodeBlock title="terminal">
     ```bash
@@ -320,7 +425,6 @@ Explore documentation for popular Fern CLI commands.
     </Tip>
   </Accordion>
 
-
   <Accordion title="fern login">
 
     Use `fern login` to login to the Fern CLI via GitHub. Logging in allows you 
@@ -346,7 +450,6 @@ Explore documentation for popular Fern CLI commands.
 
   </Accordion>
 
-
   <Accordion title="fern token">
 
     Use `fern token `to generate a `FERN_TOKEN` specific to your organization defined 
@@ -355,7 +458,7 @@ Explore documentation for popular Fern CLI commands.
     <CodeBlock title="terminal">
     ```bash 
     fern token
-    ```
+    ```    
     </CodeBlock>
 
     ## GitHub Actions
@@ -373,7 +476,6 @@ Explore documentation for popular Fern CLI commands.
     See [the full example on GitHub](https://github.com/fern-api/fern/blob/main/.github/workflows/publish-docs.yml).
 
   </Accordion>
-
 
   <Accordion title="fern write-definition">
 
@@ -398,7 +500,7 @@ Explore documentation for popular Fern CLI commands.
         └─ api.yml
         └─ __package__.yml
     ```
-
+    
     <Warning>
     If you do not see the `.definition/` folder, use the appropriate command or configuration to view hidden folders (`ls -a` in `bash` and `zsh`).
     </Warning>
@@ -415,7 +517,6 @@ Explore documentation for popular Fern CLI commands.
     fern write-definition --api public-api
     ```
   </Accordion>
-
 
   <Accordion title="fern write-overrides">
 
