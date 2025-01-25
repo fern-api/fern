@@ -816,18 +816,51 @@ public abstract class AbstractEndpointWriter {
                                         throw new IllegalArgumentException("Unkown request property value type.");
                                     }
                                 });
+
+                        String propertyOverrideOnRequest = builderStartingAfterProperty;
+                        String propertyOverrideValueOnRequest = getStartingAfterVariableName();
+
+                        if (cursor.getPage().getPropertyPath().isPresent()
+                                && !cursor.getPage().getPropertyPath().get().isEmpty()) {
+                            List<EnrichedCursorPathSetter> setters = CursorPathUtils.getPathSetters(
+                                    cursor,
+                                    httpEndpoint,
+                                    clientGeneratorContext,
+                                    requestParameterSpec.name,
+                                    builderStartingAfterProperty,
+                                    getStartingAfterVariableName());
+                            setters.stream()
+                                    .map(EnrichedCursorPathSetter::setter)
+                                    .forEach(httpResponseBuilder::addStatement);
+
+                            if (setters.size() > 1) {
+                                EnrichedCursorPathGetter propertyOverrideGetter =
+                                        setters.get(setters.size() - 1).getter();
+                                propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
+                                propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
+
+                                if (!propertyOverrideGetter.pathItem().optional() && propertyOverrideGetter.optional()) {
+                                    propertyOverrideValueOnRequest += ".get()";
+                                }
+                            } else {
+                                throw new IllegalStateException(
+                                        "There should be at least one setter if the path is nonempty");
+                            }
+                        }
+
                         httpResponseBuilder.addStatement(
                                 "$T $L = $T.builder().from($L).$L($L).build()",
                                 requestParameterSpec.type,
                                 getNextRequestVariableName(),
                                 requestParameterSpec.type,
                                 requestParameterSpec.name,
-                                builderStartingAfterProperty,
-                                getStartingAfterVariableName());
+                                propertyOverrideOnRequest,
+                                propertyOverrideValueOnRequest);
                         SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                                 cursor.getResults().getPropertyPath(),
                                 cursor.getResults().getProperty(),
                                 body.getResponseBodyType());
+
                         CodeBlock resultBlock = CodeBlock.builder()
                                 .add(
                                         "$T $L = $L",
