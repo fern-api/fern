@@ -9,25 +9,29 @@ Get started with these commonly used commands:
 
 <CodeBlock title="Common Commands">
 ```bash
-# Documentation
+# Docs Development
 fern init --docs                  # Create a new documentation project
-fern docs dev                     # Preview docs locally at http://localhost:3000
+fern docs dev                     # Preview docs locally at localhost:3000
 fern generate --docs --preview    # Preview documentation changes
 fern generate --docs              # Generate and publish documentation
 
 # SDK Development
-fern init                        # Create a new SDK project
-fern check                       # Validate your API definition
-fern generate --preview          # Preview all SDK changes in .preview/ folder
-fern generate                    # Generate and publish SDKs for the default group
-fern generate --group python-sdk # Generate an SDK for a specific group
+fern init                         # Start new SDK project
+fern check                       # Validate API definition
+fern generate --preview          # Preview SDKs in .preview/ folder
+fern generate                    # Generate default SDK group
+fern generate --group ts-sdk     # Generate specific SDK group
 ```
 </CodeBlock>
+
+<Note>
+The "default SDK group" refers to the group marked as default in your `generators.yml`. Learn more about [default groups](/learn/generate-sdks/configuration#default-group).
+</Note>
 
 ## Common Workflows
 
 <AccordionGroup>
-  <Accordion title="Setting up a new documentation site">
+  <Accordion title="Setting up Docs">
     1. Initialize a new docs project:
     ```bash
     fern init --docs
@@ -66,24 +70,6 @@ fern generate --group python-sdk # Generate an SDK for a specific group
     </Tip>
   </Accordion>
 
-  <Accordion title="Converting from OpenAPI">
-    1. Place your OpenAPI spec in `fern/openapi/`
-    
-    2. Generate a Fern definition:
-    ```bash
-    fern write-definition
-    ```
-    
-    3. Generate OpenAPI overrides (optional):
-    ```bash
-    fern write-overrides
-    ```
-    
-    4. Generate SDKs or docs:
-    ```bash
-    fern generate [--docs]
-    ```
-  </Accordion>
 </AccordionGroup>
 
 ## Command Reference
