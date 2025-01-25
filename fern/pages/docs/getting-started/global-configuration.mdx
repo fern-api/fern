@@ -29,7 +29,7 @@ favicon: path/to/favicon.ico
 </ParamField>
 
 <ParamField path="logo" type="object" required={false}>
-  Learn more about the `logo` configuration [here](/learn/docs/getting-started/global-configuration#logo-configuration). 
+  Learn more about the [`logo` configuration](/learn/docs/getting-started/global-configuration#logo-configuration). 
 </ParamField>
 
 <ParamField path="favicon" type="string" required={false}>
@@ -37,38 +37,36 @@ favicon: path/to/favicon.ico
 </ParamField>
 
 <ParamField path="colors" type="objects" required={true}>
-  Configure the `primaryAccent` and `background` colors. Learn more about the `colors` configuration 
-  [here](/learn/docs/getting-started/global-configuration#colors-configuration). 
+  Configure the `primaryAccent` and `background` colors. Learn more about the [`colors` configuration](/learn/docs/getting-started/global-configuration#colors-configuration). 
 </ParamField>
 
 <ParamField path="redirects" type="list of objects" required={false}>
   An array of paths you want to configure to permanently redirect to another path. Learn more about the 
-  `redirects` configuration [here](/learn/docs/getting-started/global-configuration#redirects-configuration).
+  [`redirects` configuration](/learn/docs/getting-started/global-configuration#redirects-configuration).
 </ParamField>
 
 <ParamField path="navbar-links" type="list of objects" required={false}>
   Array of names and urls of links you want to include as a call to action. Learn more about the 
-  `navbar-links` configuration [here](/learn/docs/getting-started/global-configuration#navbar-links-configuration).
+  [`navbar-links` configuration](/learn/docs/getting-started/global-configuration#navbar-links-configuration).
 </ParamField>
 
 <ParamField path="background-image" type="object" required={false}>
   Set a custom background image to be displayed behind every page. Learn more about the 
-  `background-image` configuration [here](/learn/docs/getting-started/global-configuration#background-image-configuration).
+  [`background-image` configuration](/learn/docs/getting-started/global-configuration#background-image-configuration).
 </ParamField>
 
 <ParamField path="typography" type="object" required={false}>
-  Customize the fonts used in your documentation website. Learn more about the 
-  `typography` configuration [here](/learn/docs/getting-started/global-configuration#typography-configuration).
+  Customize the fonts used in your documentation website. Learn more about the [`typography` configuration](/learn/docs/getting-started/global-configuration#typography-configuration).
 </ParamField>
 
 <ParamField path="layout" type="object" required={false}>
   Customize the layout of your documentation website. Learn more about the 
-  `layout` configuration [here](/learn/docs/getting-started/global-configuration#layout-configuration).
+  [`layout` configuration](/learn/docs/getting-started/global-configuration#layout-configuration).
 </ParamField>
 
 <ParamField path="landing-page" type="object" required={false}>
   Creates a landing page for your documentation website. Learn more about the 
-  `landing-page` configuration [here](/learn/docs/getting-started/global-configuration#landing-page-configuration).
+  [`landing-page` configuration](/learn/docs/getting-started/global-configuration#landing-page-configuration).
 </ParamField>
 
 <ParamField path="default-language" type="string" required={false}>
@@ -97,13 +95,13 @@ instances:
 </ParamField>
 
 <ParamField path="instances.custom-domain" type="string or list of strings" required={false}>
-  The custom domain where your documentation is hosted. Learn more about setting up a custom domain [here](/learn/docs/building-your-docs/custom-domain). 
+  The custom domain where your documentation is hosted. Learn more about [setting up a custom domain](/learn/docs/building-your-docs/custom-domain). 
 </ParamField>
 
 <ParamField path="instances.edit-this-page" type="object" required={false}>
   If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given public GitHub repository. 
   
-  Learn more about the `edit-this-page` object [here](#github-configuration). 
+  Learn more about the [`edit-this-page` object](/learn/docs/getting-started/global-configuration#github-configuration). 
 </ParamField>
 
 ## Colors configuration 
@@ -268,19 +266,19 @@ typography:
 <ParamField path="typography.bodyFont" type="object" required={false}>
   Customize page and section titles. If not supplied, defaults to the body font. 
   
-  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration).
+  Learn more about the [`font` configuration](/learn/docs/getting-started/global-configuration#font-configuration).
 </ParamField>
 
 <ParamField path="typography.headingsFont" type="object" required={false}>
   Customize paragraph text and other body text. 
   
-  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration). 
+  Learn more about the [`font` configuration](/learn/docs/getting-started/global-configuration#font-configuration). 
 </ParamField>
 
 <ParamField path="typography.codeFont" type="object" required={false}>
   Customize code blocks and inline code snippets. 
   
-  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration). 
+  Learn more about the [`font` configuration](/learn/docs/getting-started/global-configuration#font-configuration). 
 </ParamField>
 
 ### Font configuration
@@ -291,6 +289,7 @@ typography:
   bodyFont:
     name: Inter-Regular
     path: ./fonts/Inter-Regular.woff2
+    style: normal
 ```
 ```yaml title="Variable Font" {3-10}
 typography:
@@ -299,7 +298,7 @@ typography:
     paths: 
       - path: ./fonts/Inter-Bold.woff2
         weight: "400"
-        style: normal
+        style: italic
       - path: ./fonts/Inter-Bold.woff2
         weight: 500 900 # <-- indicates a range of weights
         style: normal    
@@ -316,6 +315,10 @@ typography:
   <Note>
     Supported font file types are `.woff` and `woff2`.
   </Note>
+</ParamField>
+
+<ParamField path="style" type="string" required={false}>
+  The style of the font. Options are `normal` or `italic`. Defaults to `normal`. 
 </ParamField>
 
 <ParamField path="paths" type="object" required={false}>

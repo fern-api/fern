@@ -63,11 +63,6 @@ Explore documentation for popular Fern CLI commands.
         - name: Checkout repository
             uses: actions/checkout@v4
 
-        - name: Set up Node.js
-            uses: actions/setup-node@v2
-            with:
-            node-version: '14'
-
         - name: Install Fern
             run: npm install -g fern-api
 
@@ -264,7 +259,7 @@ Explore documentation for popular Fern CLI commands.
 
     ### docs
 
-    By adding `--docs`, you’ll also get a sample documentation website for your API with an API Reference section.
+    By adding `--docs`, you'll also get a sample documentation website for your API with an API Reference section.
 
     ```bash
     fern init --docs
@@ -279,7 +274,7 @@ Explore documentation for popular Fern CLI commands.
     navigation:
       - api: API Reference
     colors:
-    accentPrimary: '#ffffff'
+    accent-primary: '#ffffff'
     background: '#000000'
     ```
 
