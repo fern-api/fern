@@ -19,12 +19,8 @@ fern generate --docs              # Generate and publish documentation
 fern init                        # Create a new SDK project
 fern check                       # Validate your API definition
 fern generate --preview          # Preview all SDK changes in .preview/ folder
-fern generate                    # Generate and publish SDKs for the default group (configured in generators.yml)
-
-# Working with specific SDK groups
-fern generate --group python-sdk --preview  # Preview Python SDK
-fern generate --group ts-sdk                # Generate TypeScript SDK
-
+fern generate                    # Generate and publish SDKs for the default group
+fern generate --group python-sdk # Generate an SDK for a specific group
 ```
 </CodeBlock>
 
