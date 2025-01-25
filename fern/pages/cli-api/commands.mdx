@@ -51,27 +51,23 @@ Explore documentation for popular Fern CLI commands.
     name: Fern Validation Check
 
     on:
-    pull_request:
-    branches: - main
+      pull_request:
+      push:
+        branches:
+          - main
 
     jobs:
-    validate-fern-api:
-    name: Validate using Fern's linter
-    runs-on: ubuntu-latest
-
+      validate-fern-api:
+        name: Validate using Fern's linter
+        runs-on: ubuntu-latest
         steps:
-        - name: Checkout repository
+          - name: Checkout repository
             uses: actions/checkout@v4
 
-        - name: Set up Node.js
-            uses: actions/setup-node@v2
-            with:
-            node-version: '14'
-
-        - name: Install Fern
+          - name: Install Fern
             run: npm install -g fern-api
 
-        - name: Validate API with Fern
+          - name: Validate API with Fern
             run: fern check
 
     ```
