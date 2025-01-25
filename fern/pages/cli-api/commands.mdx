@@ -64,7 +64,7 @@ Explore documentation for popular Fern CLI commands.
           - name: Checkout repository
             uses: actions/checkout@v4
 
-          - name: Install Fern
+          - name: Install Fern CLI
             run: npm install -g fern-api
 
           - name: Validate API with Fern
@@ -260,7 +260,7 @@ Explore documentation for popular Fern CLI commands.
 
     ### docs
 
-    By adding `--docs`, you’ll also get a sample documentation website for your API with an API Reference section.
+    By adding `--docs`, you'll also get a sample documentation website for your API with an API Reference section.
 
     ```bash
     fern init --docs
@@ -275,7 +275,7 @@ Explore documentation for popular Fern CLI commands.
     navigation:
       - api: API Reference
     colors:
-    accentPrimary: '#ffffff'
+    accent-primary: '#ffffff'
     background: '#000000'
     ```
 
