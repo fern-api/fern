@@ -2,7 +2,6 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.http.BytesRequest;
-import com.fern.ir.model.http.CursorPagination;
 import com.fern.ir.model.http.FileUploadRequest;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpRequestBody;
@@ -93,24 +92,23 @@ public class PaginationPathUtils {
     }
 
     public static List<EnrichedCursorPathSetter> getPathSetters(
-            CursorPagination cursor,
+            List<Name> propertyPath,
             HttpEndpoint httpEndpoint,
             AbstractGeneratorContext<?, ?> generatorContext,
             String requestParameterSpecName,
-            String builderStartingAfterProperty,
-            String startingAfterVariableName) {
+            String propertyOverrideOnRequest,
+            String propertyOverrideValueOnRequest) {
         List<EnrichedCursorPathSetter> result = new ArrayList<>();
 
         List<EnrichedCursorPathItem> enrichedItems = new ArrayList<>();
-        List<Name> items = cursor.getPage().getPropertyPath().get();
         Optional<com.fern.ir.model.types.TypeReference> curr =
-                getPropertyTypeFromRequest(httpEndpoint, items.get(0), generatorContext);
+                getPropertyTypeFromRequest(httpEndpoint, propertyPath.get(0), generatorContext);
         Map<Name, TypeReference> referencesByName = new HashMap<>();
-        curr.map(curr_ -> referencesByName.put(items.get(0), curr_));
+        curr.map(curr_ -> referencesByName.put(propertyPath.get(0), curr_));
 
-        curr.flatMap(curr_ -> enriched(items.get(0), curr_)).ifPresent(enrichedItems::add);
+        curr.flatMap(curr_ -> enriched(propertyPath.get(0), curr_)).ifPresent(enrichedItems::add);
 
-        for (Name name : items.subList(1, items.size())) {
+        for (Name name : propertyPath.subList(1, propertyPath.size())) {
             if (curr.isEmpty()) {
                 break;
             }
@@ -196,8 +194,8 @@ public class PaginationPathUtils {
                                     "$T.builder().from($L).$L($L).build()",
                                     enrichedGetter.typeName(),
                                     enrichedGetter.propertyName() + "_",
-                                    builderStartingAfterProperty,
-                                    startingAfterVariableName)
+                                    propertyOverrideOnRequest,
+                                    propertyOverrideValueOnRequest)
                             .add(")")
                             .build());
                 } else {
@@ -207,8 +205,8 @@ public class PaginationPathUtils {
                                     "$T.builder().from($L).$L($L).build()",
                                     enrichedGetter.typeName(),
                                     enrichedGetter.typeName(),
-                                    builderStartingAfterProperty,
-                                    startingAfterVariableName)
+                                    propertyOverrideOnRequest,
+                                    propertyOverrideValueOnRequest)
                             .build());
                 }
             } else {

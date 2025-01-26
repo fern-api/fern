@@ -30,6 +30,7 @@ import com.seed.pagination.resources.users.types.Page;
 import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.UsernameContainer;
 import com.seed.pagination.resources.users.types.WithCursor;
+import com.seed.pagination.resources.users.types.WithPage;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
 import java.util.Collections;
@@ -283,7 +284,7 @@ public class UsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-                double newPageNumber = request.getPage().map(page -> page + 1).orElse(1);
+                double newPageNumber = request.getPage().map(page -> page + 1.0).orElse(1.0);
                 ListUsersDoubleOffsetPaginationRequest nextRequest = ListUsersDoubleOffsetPaginationRequest.builder()
                         .from(request)
                         .page(newPageNumber)
@@ -340,10 +341,17 @@ public class UsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-                int newPageNumber = request.getPage().map(page -> page + 1).orElse(1);
+                int newPageNumber = request.getPagination()
+                        .flatMap(WithPage::getPage)
+                        .map(page -> page + 1)
+                        .orElse(1);
+                Optional<WithPage> pagination = request.getPagination().map(pagination_ -> WithPage.builder()
+                        .from(pagination_)
+                        .page(newPageNumber)
+                        .build());
                 ListUsersBodyOffsetPaginationRequest nextRequest = ListUsersBodyOffsetPaginationRequest.builder()
                         .from(request)
-                        .page(newPageNumber)
+                        .pagination(pagination)
                         .build();
                 List<User> result = parsedResponse.getData();
                 return new SyncPagingIterable<>(
