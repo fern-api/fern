@@ -29,6 +29,7 @@ import com.seed.pagination.resources.users.types.NextPage;
 import com.seed.pagination.resources.users.types.Page;
 import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.UsernameContainer;
+import com.seed.pagination.resources.users.types.WithCursor;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
 import java.util.Collections;
@@ -153,9 +154,13 @@ public class UsersClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
                 Optional<String> startingAfter =
                         parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
+                Optional<WithCursor> pagination = request.getPagination().map(pagination_ -> WithCursor.builder()
+                        .from(pagination_)
+                        .cursor(startingAfter)
+                        .build());
                 ListUsersBodyCursorPaginationRequest nextRequest = ListUsersBodyCursorPaginationRequest.builder()
                         .from(request)
-                        .cursor(startingAfter)
+                        .pagination(pagination)
                         .build();
                 List<User> result = parsedResponse.getData();
                 return new SyncPagingIterable<>(

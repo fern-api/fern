@@ -12,6 +12,9 @@ import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.longpath.types.A;
+import com.seed.pagination.resources.longpath.types.B;
+import com.seed.pagination.resources.longpath.types.C;
+import com.seed.pagination.resources.longpath.types.D;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -66,8 +69,16 @@ public class LongPathClient {
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), com.seed.pagination.resources.longpath.types.Response.class);
                 Optional<String> startingAfter = parsedResponse.getStartingAfter();
-                A nextRequest =
-                        A.builder().from(request).startingAfter(startingAfter).build();
+                Optional<D> d = request.getB().map(B::getC).flatMap(C::getD).map(d_ -> D.builder()
+                        .from(d_)
+                        .startingAfter(startingAfter)
+                        .build());
+                Optional<C> c = d.flatMap(d_ -> request.getB()
+                        .map(B::getC)
+                        .map(c_ -> C.builder().from(c_).d(d_).build()));
+                Optional<B> b = c.flatMap(c_ ->
+                        request.getB().map(b_ -> B.builder().from(b_).c(c_).build()));
+                A nextRequest = A.builder().from(request).b(b).build();
                 List<String> result = parsedResponse.getResults();
                 return new SyncPagingIterable<>(
                         startingAfter.isPresent(), result, () -> doThing(nextRequest, requestOptions));

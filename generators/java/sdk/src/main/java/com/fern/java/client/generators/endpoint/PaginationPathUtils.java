@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class CursorPathUtils {
+public class PaginationPathUtils {
 
     public static Optional<TypeReference> getPropertyTypeFromRequest(
             HttpEndpoint httpEndpoint, Name desiredPropertyName, AbstractGeneratorContext<?, ?> generatorContext) {

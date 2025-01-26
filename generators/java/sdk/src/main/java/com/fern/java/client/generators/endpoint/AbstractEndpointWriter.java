@@ -822,7 +822,7 @@ public abstract class AbstractEndpointWriter {
 
                         if (cursor.getPage().getPropertyPath().isPresent()
                                 && !cursor.getPage().getPropertyPath().get().isEmpty()) {
-                            List<EnrichedCursorPathSetter> setters = CursorPathUtils.getPathSetters(
+                            List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
                                     cursor,
                                     httpEndpoint,
                                     clientGeneratorContext,
@@ -833,13 +833,14 @@ public abstract class AbstractEndpointWriter {
                                     .map(EnrichedCursorPathSetter::setter)
                                     .forEach(httpResponseBuilder::addStatement);
 
-                            if (setters.size() > 1) {
+                            if (!setters.isEmpty()) {
                                 EnrichedCursorPathGetter propertyOverrideGetter =
                                         setters.get(setters.size() - 1).getter();
                                 propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
                                 propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
 
-                                if (!propertyOverrideGetter.pathItem().optional() && propertyOverrideGetter.optional()) {
+                                if (!propertyOverrideGetter.pathItem().optional()
+                                        && propertyOverrideGetter.optional()) {
                                     propertyOverrideValueOnRequest += ".get()";
                                 }
                             } else {
@@ -951,14 +952,9 @@ public abstract class AbstractEndpointWriter {
                                         }
                                     })));
                         } else {
-                            httpResponseBuilder.addStatement(CodeBlock.of(
-                                    "$T $L = $L.get$L() + 1",
-                                    clientGeneratorContext
-                                            .getPoetTypeNameMapper()
-                                            .convertToTypeName(true, pageType),
-                                    getNewPageNumberVariableName(),
-                                    requestParameterSpec.name,
-                                    offset.getPage().getProperty().visit(new RequestPropertyValue.Visitor<String>() {
+                            String newNumberFieldNamePascal = offset.getPage()
+                                    .getProperty()
+                                    .visit(new RequestPropertyValue.Visitor<String>() {
 
                                         @Override
                                         public String visitQuery(QueryParameter queryParameter) {
@@ -982,7 +978,17 @@ public abstract class AbstractEndpointWriter {
                                         public String _visitUnknown(Object o) {
                                             throw new IllegalArgumentException("Unknown request property value type.");
                                         }
-                                    })));
+                                    });
+                            CodeBlock newNumberGetter =
+                                    CodeBlock.of("$L.get$L()", requestParameterSpec.name, newNumberFieldNamePascal);
+
+                            httpResponseBuilder.addStatement(CodeBlock.of(
+                                    "$T $L = $L + 1",
+                                    clientGeneratorContext
+                                            .getPoetTypeNameMapper()
+                                            .convertToTypeName(true, pageType),
+                                    getNewPageNumberVariableName(),
+                                    newNumberGetter));
                         }
                         httpResponseBuilder.addStatement(
                                 "$T $L = $T.builder().from($L).$L($L).build()",

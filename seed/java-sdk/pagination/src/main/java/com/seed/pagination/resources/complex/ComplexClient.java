@@ -69,9 +69,14 @@ public class ComplexClient {
                         .getPages()
                         .flatMap(CursorPages::getNext)
                         .flatMap(StartingAfterPaging::getStartingAfter);
+                Optional<StartingAfterPaging> pagination = request.getPagination()
+                        .map(pagination_ -> StartingAfterPaging.builder()
+                                .from(pagination_)
+                                .startingAfter(startingAfter)
+                                .build());
                 SearchRequest nextRequest = SearchRequest.builder()
                         .from(request)
-                        .startingAfter(startingAfter)
+                        .pagination(pagination)
                         .build();
                 List<Conversation> result = parsedResponse.getConversations();
                 return new SyncPagingIterable<>(
