@@ -53,6 +53,22 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
+await client.users.listWithDoubleOffsetPagination({
+  page: 1.1,
+  perPage: 1.1,
+  startingAfter: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
 await client.users.listWithBodyOffsetPagination({
   pagination: {
     page: 1,
