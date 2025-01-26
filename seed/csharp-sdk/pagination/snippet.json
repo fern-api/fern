@@ -18,6 +18,18 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
+                "identifier_override": "endpoint_users.listWithMixedTypeCursorPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithMixedTypeCursorPaginationAsync(\n    new ListUsersMixedTypeCursorPaginationRequest { Cursor = \"cursor\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
                 "identifier_override": "endpoint_users.listWithBodyCursorPagination"
             },
             "snippet": {
@@ -35,6 +47,18 @@
             "snippet": {
                 "type": "typescript",
                 "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithOffsetPaginationAsync(\n    new ListUsersOffsetPaginationRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Order = Order.Asc,\n        StartingAfter = \"starting_after\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithDoubleOffsetPaginationAsync(\n    new ListUsersDoubleOffsetPaginationRequest\n    {\n        Page = 1.1,\n        PerPage = 1.1,\n        Order = Order.Asc,\n        StartingAfter = \"starting_after\",\n    }\n);\n"
             }
         },
         {

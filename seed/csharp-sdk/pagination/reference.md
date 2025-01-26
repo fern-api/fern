@@ -48,6 +48,48 @@ await client.Users.ListWithCursorPaginationAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithMixedTypeCursorPaginationAsync</a>(ListUsersMixedTypeCursorPaginationRequest { ... }) -> Pager<User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Users.ListWithMixedTypeCursorPaginationAsync(
+    new ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListUsersMixedTypeCursorPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyCursorPaginationAsync</a>(ListUsersBodyCursorPaginationRequest { ... }) -> Pager<User></code></summary>
 <dl>
 <dd>
@@ -127,6 +169,54 @@ await client.Users.ListWithOffsetPaginationAsync(
 <dd>
 
 **request:** `ListUsersOffsetPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithDoubleOffsetPaginationAsync</a>(ListUsersDoubleOffsetPaginationRequest { ... }) -> Pager<User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Users.ListWithDoubleOffsetPaginationAsync(
+    new ListUsersDoubleOffsetPaginationRequest
+    {
+        Page = 1.1,
+        PerPage = 1.1,
+        Order = Order.Asc,
+        StartingAfter = "starting_after",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListUsersDoubleOffsetPaginationRequest` 
     
 </dd>
 </dl>

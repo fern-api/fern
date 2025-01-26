@@ -3,6 +3,7 @@
 from .resources import (
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
+    ListUsersMixedTypePaginationResponse,
     ListUsersPaginationResponse,
     NextPage,
     Order,
@@ -23,6 +24,7 @@ from .username_page import UsernamePage
 __all__ = [
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
+    "ListUsersMixedTypePaginationResponse",
     "ListUsersPaginationResponse",
     "NextPage",
     "Order",

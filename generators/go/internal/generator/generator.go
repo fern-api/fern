@@ -580,6 +580,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if generatedPagination {
 			files = append(files, newPageFile(g.coordinator))
 			files = append(files, newPagerFile(g.coordinator, g.config.ImportPath))
+			files = append(files, newPagerTestFile(g.coordinator))
 		}
 		clientTestFile, err := newClientTestFile(g.config.ImportPath, rootPackageName, g.coordinator, g.config.PackageLayout, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
@@ -1286,6 +1287,14 @@ func newPagerFile(coordinator *coordinator.Client, baseImportPath string) *File 
 		coordinator,
 		"internal/pager.go",
 		[]byte(content),
+	)
+}
+
+func newPagerTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/pager_test.go",
+		[]byte(pagerTestFile),
 	)
 }
 

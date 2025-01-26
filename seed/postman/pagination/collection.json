@@ -138,6 +138,80 @@
         },
         {
           "_type": "endpoint",
+          "name": "List With Mixed Type Cursor Pagination",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?cursor=cursor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "cursor",
+                  "description": null,
+                  "value": "cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users?cursor=cursor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "description": null,
+                      "value": "cursor"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"next\": \"next\",\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
           "name": "List With Body Cursor Pagination",
           "request": {
             "description": null,
