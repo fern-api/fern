@@ -23,20 +23,16 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor",
-    },
+const response = await client.users.listWithMixedTypeCursorPagination({
+    cursor: "cursor",
 });
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor",
-    },
+const page = await client.users.listWithMixedTypeCursorPagination({
+    cursor: "cursor",
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -65,7 +61,7 @@ will be thrown.
 import { SeedPaginationError } from "@fern/pagination";
 
 try {
-    await client.users.listWithBodyCursorPagination(...);
+    await client.users.listWithMixedTypeCursorPagination(...);
 } catch (err) {
     if (err instanceof SeedPaginationError) {
         console.log(err.statusCode);
@@ -112,7 +108,7 @@ while (page.hasNextPage()) {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.users.listWithBodyCursorPagination(..., {
+const response = await client.users.listWithMixedTypeCursorPagination(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -134,7 +130,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithBodyCursorPagination(..., {
+const response = await client.users.listWithMixedTypeCursorPagination(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -144,7 +140,7 @@ const response = await client.users.listWithBodyCursorPagination(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithBodyCursorPagination(..., {
+const response = await client.users.listWithMixedTypeCursorPagination(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -155,7 +151,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.users.listWithBodyCursorPagination(..., {
+const response = await client.users.listWithMixedTypeCursorPagination(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

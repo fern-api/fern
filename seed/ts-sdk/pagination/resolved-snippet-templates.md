@@ -21,6 +21,20 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
+await client.users.listWithMixedTypeCursorPagination({
+  cursor: "cursor",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
 await client.users.listWithBodyCursorPagination({
   pagination: {
     cursor: "cursor",
@@ -40,6 +54,22 @@ const client = new SeedPaginationClient({
 await client.users.listWithOffsetPagination({
   page: 1,
   perPage: 1,
+  startingAfter: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.users.listWithDoubleOffsetPagination({
+  page: 1.1,
+  perPage: 1.1,
   startingAfter: "starting_after",
 });
 

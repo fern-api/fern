@@ -3,7 +3,8 @@ import { join } from "path";
 import traverse from "traverse";
 
 import { docsYml } from "@fern-api/configuration";
-import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder } from "@fern-api/docs-importer-commons";
+import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons";
+import { DEFAULT_LAYOUT } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { isReadmeDeployment } from "./assert";
@@ -30,13 +31,8 @@ import { normalizePath, removeLeadingSlash, removeTrailingSlash } from "./utils/
 export declare namespace ReadmeImporter {
     interface Args {
         readmeUrl: string;
+        organization: string;
     }
-}
-
-export interface TabInfo {
-    name: string;
-    url: string;
-    navigationBuilder: FernDocsNavigationBuilder;
 }
 
 export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
@@ -74,6 +70,8 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
             builder.setColors({ colors: scrapeData.colors });
         }
 
+        builder.setLayout({ layout: DEFAULT_LAYOUT });
+
         for (const tab of scrapeData.tabs ?? []) {
             const tabSlug = removeLeadingSlash(tab.url);
             if (tab.name === "API Reference") {
@@ -101,6 +99,9 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                 nav.addItem({ item: section });
             }
         }
+
+        const instanceUrl = builder.setInstance({ companyName: args.organization });
+        this.context.logger.debug(`Added instance ${instanceUrl} to docs.yml`);
     }
 
     private async scrapeAllSiteTabs(html: string, url: string | URL): Promise<ScrapeResult> {
@@ -143,6 +144,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         const successes = results.filter((result) => result.success);
         successes.forEach((result) => {
+            this.context.logger.debug(`Successfully scraped tab: ${result.data?.name}`);
             if (!result.data) {
                 return;
             }

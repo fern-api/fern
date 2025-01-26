@@ -19,8 +19,8 @@ Instantiate and use the client with the following:
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-await client.Users.ListWithBodyCursorPaginationAsync(
-    new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "cursor" } }
+await client.Users.ListWithMixedTypeCursorPaginationAsync(
+    new ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
 );
 ```
 
@@ -33,7 +33,7 @@ will be thrown.
 using SeedPagination;
 
 try {
-    var response = await client.Users.ListWithBodyCursorPaginationAsync(...);
+    var response = await client.Users.ListWithMixedTypeCursorPaginationAsync(...);
 } catch (SeedPaginationApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -57,7 +57,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Users.ListWithBodyCursorPaginationAsync(
+var response = await client.Users.ListWithMixedTypeCursorPaginationAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -70,7 +70,7 @@ var response = await client.Users.ListWithBodyCursorPaginationAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Users.ListWithBodyCursorPaginationAsync(
+var response = await client.Users.ListWithMixedTypeCursorPaginationAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

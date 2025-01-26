@@ -68,6 +68,9 @@ var (
 	//go:embed sdk/internal/pager.go
 	pagerFile string
 
+	//go:embed sdk/internal/pager_test.go
+	pagerTestFile string
+
 	//go:embed sdk/utils/pointer.go
 	pointerFile string
 
@@ -1360,6 +1363,7 @@ func (f *fileWriter) WriteClient(
 				pagerConstructor = "internal.NewCursorPager"
 
 				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
+				f.P("var zeroValue ", endpoint.PaginationInfo.NextCursorGoType)
 				if len(endpoint.PaginationInfo.NextCursor.PropertyPath) > 0 {
 					f.P("var next ", endpoint.PaginationInfo.NextCursorGoType)
 					f.P(endpoint.PaginationInfo.NextCursorNilCheck)
@@ -1381,6 +1385,7 @@ func (f *fileWriter) WriteClient(
 					f.P("if next == nil {")
 					f.P("return &internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
 					f.P("Results: results,")
+					f.P("Done: next == zeroValue,")
 					f.P("}")
 					f.P("}")
 				}
@@ -1396,6 +1401,7 @@ func (f *fileWriter) WriteClient(
 					f.P("Next: next,")
 				}
 				f.P("Results: results,")
+				f.P("Done: next == zeroValue,")
 				f.P("}")
 				f.P("}")
 			case "offset":
