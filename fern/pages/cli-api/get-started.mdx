@@ -4,14 +4,33 @@ subtitle: Manage and configure your Fern projects, all from the command line.
 description: 'Overview of the Fern CLI including usage, installation, and CI/CD environments'
 ---
 
+## Prerequisites
+
+Before getting started with Fern CLI, ensure you have:
+
+- [Node.js](https://nodejs.org/) version 18 or higher installed
+- Basic familiarity with using command-line interfaces (CLI)
+
+You can verify your Node.js version by running:
+<CodeBlock title="Check Node Version">
+```bash
+node --version
+```
+</CodeBlock>
+
 ## Installing Fern CLI
 
-Run the following command to download and install Fern CLI from the [npm](https://www.npmjs.com/) registry. 
-
+<CodeBlock title="Install Fern CLI">
 ```bash
-npm install -g fern-api # install Fern CLI
-fern -v # ensure Fern was successfully installed
+npm install -g fern-api
 ```
+</CodeBlock>
+
+<CodeBlock title="Verify Installation">
+```bash
+fern -v
+```
+</CodeBlock>
 
 ## CLI Quick Start
 
@@ -78,6 +97,25 @@ The "default SDK group" refers to the group marked as default in your `generator
       During development, use `--preview` to test your changes locally before publishing. 
       The preview SDK will be generated into the `.preview/` folder.
     </Tip>
+  </Accordion>
+
+  <Accordion title="Setting up from OpenAPI">
+    1. Initialize a project from your OpenAPI spec:
+    ```bash
+    # From a local file
+    fern init --openapi ./path/to/openapi.yml
+
+    # From a URL
+    fern init --openapi https://link.buildwithfern.com/petstore-openapi
+    ```
+    
+    2. Review the generated Fern Definition files in the `fern/` directory
+    
+    3. Generate SDKs as normal:
+    ```bash
+    fern generate --preview  # Preview changes locally
+    fern generate           # Publish to production
+    ```
   </Accordion>
 
 </AccordionGroup>
