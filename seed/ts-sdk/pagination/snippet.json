@@ -15,6 +15,17 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
+                "identifier_override": "endpoint_users.listWithMixedTypeCursorPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithMixedTypeCursorPagination({\n    cursor: \"cursor\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithMixedTypeCursorPagination({\n    cursor: \"cursor\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
                 "identifier_override": "endpoint_users.listWithBodyCursorPagination"
             },
             "snippet": {
@@ -31,6 +42,17 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithOffsetPagination({\n    page: 1,\n    perPage: 1,\n    order: \"asc\",\n    startingAfter: \"starting_after\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithOffsetPagination({\n    page: 1,\n    perPage: 1,\n    order: \"asc\",\n    startingAfter: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.users.listWithDoubleOffsetPagination({\n    page: 1.1,\n    perPage: 1.1,\n    order: \"asc\",\n    startingAfter: \"starting_after\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.users.listWithDoubleOffsetPagination({\n    page: 1.1,\n    perPage: 1.1,\n    order: \"asc\",\n    startingAfter: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
             }
         },
         {

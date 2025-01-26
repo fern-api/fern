@@ -21,16 +21,13 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPagination
-from seed.users import WithCursor
 
 client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_body_cursor_pagination(
-    pagination=WithCursor(
-        cursor="cursor",
-    ),
+response = client.users.list_with_mixed_type_cursor_pagination(
+    cursor="cursor",
 )
 for item in response:
     yield item
@@ -47,7 +44,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedPagination
-from seed.users import WithCursor
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
@@ -56,10 +52,8 @@ client = AsyncSeedPagination(
 
 
 async def main() -> None:
-    response = await client.users.list_with_body_cursor_pagination(
-        pagination=WithCursor(
-            cursor="cursor",
-        ),
+    response = await client.users.list_with_mixed_type_cursor_pagination(
+        cursor="cursor",
     )
     async for item in response:
         yield item
@@ -80,7 +74,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.users.list_with_body_cursor_pagination(...)
+    client.users.list_with_mixed_type_cursor_pagination(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -127,7 +121,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_body_cursor_pagination(..., request_options={
+client.users.list_with_mixed_type_cursor_pagination(..., request_options={
     "max_retries": 1
 })
 ```
@@ -147,7 +141,7 @@ client = SeedPagination(
 
 
 # Override timeout for a specific method
-client.users.list_with_body_cursor_pagination(..., request_options={
+client.users.list_with_mixed_type_cursor_pagination(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

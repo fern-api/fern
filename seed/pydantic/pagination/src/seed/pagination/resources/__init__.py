@@ -4,6 +4,7 @@ from . import users
 from .users import (
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
+    ListUsersMixedTypePaginationResponse,
     ListUsersPaginationResponse,
     NextPage,
     Order,
@@ -21,6 +22,7 @@ from .users import (
 __all__ = [
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
+    "ListUsersMixedTypePaginationResponse",
     "ListUsersPaginationResponse",
     "NextPage",
     "Order",
