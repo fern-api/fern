@@ -21,7 +21,7 @@ subtitle: 'Learn about the Fern CLI commands.'
 | Command | Description |
 |---------|-------------|
 | [`fern generate`](#fern-generate) | Build & publish SDK updates |
-| [`fern write-definition`](#fern-write-definition) | Convert OpenAPI specifications to [Fern Definition](/learn/overview) |
+| [`fern write-definition`](#fern-write-definition) | Convert OpenAPI specifications to [Fern Definition](/learn/api-definition/fern/overview) |
 | [`fern write-overrides`](#fern-write-overrides) | Create OpenAPI customizations and enhancements |
 | [`fern generator upgrade`](#fern-generator-upgrade) | Update SDK generators to latest versions |
 
@@ -84,11 +84,9 @@ subtitle: 'Learn about the Fern CLI commands.'
 
     When successfully executed, this command will not produce any output.
 
-    <CodeBlock title="terminal">
     ```bash
     fern check [--api <api>] [--warnings]
     ```
-    </CodeBlock>
 
     ### api
 
@@ -150,11 +148,9 @@ subtitle: 'Learn about the Fern CLI commands.'
 
     Use `fern generate --docs` to create a documentation site for your API. 
 
-    <CodeBlock title="terminal">
     ```bash
     fern generate --docs [instance <instance-url>] [--preview]
     ```
-    </CodeBlock>
 
     ### instance
 
@@ -178,11 +174,9 @@ subtitle: 'Learn about the Fern CLI commands.'
 
     Use `fern docs dev` to run a local development server to preview your docs.
 
-    <CodeBlock title="terminal">
     ```bash
     fern docs dev [--port <port-number>]
     ```
-    </CodeBlock>
 
     ### port
 
@@ -198,11 +192,9 @@ subtitle: 'Learn about the Fern CLI commands.'
 
     Use `fern docs broken-links` to check for broken links in your API docs.
 
-    <CodeBlock title="terminal">
     ```bash
     fern docs broken-links [--strict]
     ```
-    </CodeBlock>
 
     ### strict
 
@@ -220,11 +212,9 @@ subtitle: 'Learn about the Fern CLI commands.'
     Use `fern upgrade` will upgrade your compiler version in `fern.config.json` to the
     latest version. It will also upgrade generators in `generators.yml` to their minimum-compatible versions.
 
-    <CodeBlock title="terminal">
     ```bash
     fern upgrade
     ```
-    </CodeBlock>
 
   </Accordion>
 
@@ -232,11 +222,9 @@ subtitle: 'Learn about the Fern CLI commands.'
 
     Use `fern init` to initialize a new Fern workspace in the current folder. By default, you'll see the IMDb API example.
 
-    <CodeBlock title="terminal">
     ```bash
     fern init [--docs]
     ```
-    </CodeBlock>
 
     This will create the following folder structure in your project:
 
@@ -309,6 +297,7 @@ subtitle: 'Learn about the Fern CLI commands.'
     <Tip>
     For more information on getting started, check out our [Quickstart Guide](/learn/docs/getting-started/quickstart)
     </Tip>
+
   </Accordion>
 
   <Accordion title="fern login">
@@ -316,11 +305,9 @@ subtitle: 'Learn about the Fern CLI commands.'
     Use `fern login` to login to the Fern CLI via GitHub. Logging in allows you 
     join GitHub organizations, gain permissions, and contribute to projects.
 
-    <CodeBlock title="terminal">
     ```bash
     fern login [--device code]
     ```
-    </CodeBlock>
 
     ### device-code
 
@@ -341,11 +328,9 @@ subtitle: 'Learn about the Fern CLI commands.'
     Use `fern token `to generate a `FERN_TOKEN` specific to your organization defined 
     in `fern.config.json`. Use the token to authenticate with the API in CI. Tokens do not expire.
 
-    <CodeBlock title="terminal">
     ```bash 
     fern token
     ```    
-    </CodeBlock>
 
     ## GitHub Actions
 
@@ -368,11 +353,9 @@ subtitle: 'Learn about the Fern CLI commands.'
     Use `fern write-definition` to convert your OpenAPI Specification into a Fern Definition. 
     You must have a `fern/openapi/` folder that contains an OpenAPI Specification file in `.json` or `.yaml` format.
 
-    <CodeBlock title="terminal">
     ```bash
     fern write-definition [--api <api>]
     ```
-    </CodeBlock>
 
     When run, this command creates a new folder within `fern/` called `.definition/`. 
 
@@ -410,11 +393,9 @@ subtitle: 'Learn about the Fern CLI commands.'
     reversible revisions to the API specification, including adding request and response examples for 
     code snippets in Fern Docs.
 
-    <CodeBlock title="terminal">
     ```bash
     fern write-overrides [--api <api>] [--exclude-models]
-    ```
-    </CodeBlock>
+    ```    
 
     When run, this command creates a new file within `fern/openapi/` called `openapi-overrides.yml`. 
 
@@ -430,6 +411,7 @@ subtitle: 'Learn about the Fern CLI commands.'
     ### api
 
     Use `--api` to specify the API to run the command on if multiple are defined.  
+
 
     ```bash
     fern write-overrides --api public-api
@@ -448,11 +430,9 @@ subtitle: 'Learn about the Fern CLI commands.'
   <Accordion title="fern generator upgrade">
     Use `fern generator upgrade` to update all generators in your `generators.yml` to their latest versions.
 
-    <CodeBlock title="terminal">
     ```bash
     fern generator upgrade [--list] [--generator <generator-name>] [--group <group>]
     ```
-    </CodeBlock>
 
     This command will:
     - Check for updates to all generators specified in your `generators.yml`
@@ -463,6 +443,7 @@ subtitle: 'Learn about the Fern CLI commands.'
 
     Use `--list` to see all available generator upgrades without applying them.
 
+      
     ```bash
     fern generator upgrade --list
     ```
@@ -487,5 +468,7 @@ subtitle: 'Learn about the Fern CLI commands.'
     <Note>
     This is different from `fern upgrade` which updates the Fern CLI version. Use both commands to keep your entire Fern toolchain up to date.
     </Note>
+    
   </Accordion>
+
 </AccordionGroup>
