@@ -40,7 +40,9 @@ export const ValidMarkdownFileReferences: Rule = {
                                     const pathExists = doesPathExistSync(AbsoluteFilePath.of(href.path));
                                     errors.push({
                                         severity: "error",
-                                        message: `Reference ${href.href} ${!pathExists ? "does not exist" : "exists but is not specified in docs.yml"}`
+                                        message: pathExists
+                                            ? `File ${href.href} does not exit`
+                                            : `File ${href.href} exists but is not specified in docs.yml`
                                     });
                                 } catch (err) {}
                             }
