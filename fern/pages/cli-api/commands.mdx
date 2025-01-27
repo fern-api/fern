@@ -6,235 +6,70 @@ subtitle: 'Learn about the Fern CLI commands.'
 
 | Command | Description |
 |---------|-------------|
-| [`fern init`](#fern-init) | Initialize new Fern API projects |
-| [`fern check`](#fern-check) | Validate API definition & configuration for development and CI |
-| [`fern upgrade`](#fern-upgrade) | Update Fern CLI & compiler to latest versions |
+| [`fern init`](#fern-init) | Create new Fern project from OpenAPI spec or scratch |
+| [`fern check`](#fern-check) | Validate API definition & configuration |
+| [`fern upgrade`](#fern-upgrade) | Update Fern CLI & generators to latest versions |
 
 ## Documentation Commands
+
 | Command | Description |
 |---------|-------------|
 | [`fern docs dev`](#fern-docs-dev) | Run local documentation preview server |
 | [`fern generate --docs`](#fern-generate---docs) | Build & publish documentation updates |
-| [`fern docs broken-links`](#fern-docs-broken-links) | Validate documentation links for quality assurance |
 
 ## SDK Generation Commands  
+
 | Command | Description |
 |---------|-------------|
 | [`fern generate`](#fern-generate) | Build & publish SDK updates |
 | [`fern write-definition`](#fern-write-definition) | Convert OpenAPI specifications to [Fern Definition](/learn/api-definition/fern/overview) |
-| [`fern write-overrides`](#fern-write-overrides) | Create OpenAPI customizations and enhancements |
+| [`fern write-overrides`](#fern-write-overrides) | Create OpenAPI customizations |
 | [`fern generator upgrade`](#fern-generator-upgrade) | Update SDK generators to latest versions |
 
 ## Detailed Command Documentation
 
 <AccordionGroup>
-  <Accordion title="fern generate">
-    Use `fern generate` to run the Fern compiler and create SDKs for your API.
-
-    <CodeBlock title="terminal">
-    ```bash
-    fern generate [--group <group>] [--api <api>] [--version <version>] [--preview]
-    ```
-    </CodeBlock>
-
-    ### preview
-
-    Use `--preview` to test SDK changes locally before publishing. This is especially useful during development:
-    - Generates SDK into a local `.preview/` folder
-    - Allows quick iteration on your Fern definition
-    - No changes are published to package managers or GitHub
-    
-    ```bash
-    # Preview all SDKs
-    fern generate --preview
-    
-    # Preview specific SDK group
-    fern generate --group python-sdk --preview
-    ```
-
-    ### group
-
-    Use `--group <group>` to filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared.
-
-    ```bash
-    fern generate --group internal
-    ```
-
-    ### api
-
-    Use `--api <api>` to specify the API for SDK generation.
-
-    ```bash
-    fern generate --api public-api
-    ```
-
-    ### version
-
-    Use `--version` to specify a version for SDKs and documentation. Adherence to [semantic versioning](https://semver.org/) is advised.
-
-    ```bash
-    fern generate --version 2.11
-    ```
-
-  </Accordion>
-
-  <Accordion title="fern check">
-
-    Use `fern check` to validate your API definition and Fern configuration: `fern.config.json`, `generators.yml`, and `docs.yml`.
-
-    When successfully executed, this command will not produce any output.
-
-    ```bash
-    fern check [--api <api>] [--warnings]
-    ```
-
-    ### api
-
-    Use `--api <api>` to specify which API you'd like to check. 
-
-    ```bash
-    fern check --api public-api
-    ```
-
-    ### warnings
-
-    Use `--warnings` to log warnings in addition to errors. 
-
-    ```bash
-    fern check --warnings
-    ```
-
-    ### strict-broken-links
-
-    Use `--strict-broken-links` to cause the command to fail (exit with a non-zero exit code) if any broken
-    links are found in your API docs.
-
-    ```bash
-    fern check --strict-broken-links
-    ```
-
-    ## Usage in a GitHub Action
-
-    <CodeBlock title = ".github/workflows/fern-check.yml" >
-    ```yml maxLines=14 
-    name: Fern Validation Check
-
-    on:
-      pull_request:
-      push:
-        branches:
-          - main
-
-    jobs:
-      validate-fern-api:
-        name: Validate using Fern's linter
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout repository
-            uses: actions/checkout@v4
-
-          - name: Install Fern CLI
-            run: npm install -g fern-api
-
-          - name: Validate API with Fern
-            run: fern check
-
-    ```
-    </CodeBlock>
-
-  </Accordion>
-  
-  <Accordion title="fern generate --docs">
-
-    Use `fern generate --docs` to create a documentation site for your API. 
-
-    ```bash
-    fern generate --docs [instance <instance-url>] [--preview]
-    ```
-
-    ### instance
-
-    Use `--instance` to specify which instance URL in your `docs.yml` to generate documentation for.
-
-    ```bash
-    fern generate --docs --instance your-organization.docs.buildwithfern.com
-    ```
-
-    ### preview
-
-    Use `--preview` to preview updates to your documentation before publishing changes to your production site. 
-
-    ```bash
-    fern generate --docs --preview
-    ```
-
-  </Accordion>
-
-  <Accordion title="fern docs dev">
-
-    Use `fern docs dev` to run a local development server to preview your docs.
-
-    ```bash
-    fern docs dev [--port <port-number>]
-    ```
-
-    ### port
-
-    Use `--port <port-number>` to specify the port the docs preview will be run on. 
-
-    ```bash
-    fern docs dev --port 57908
-    ```
-
-  </Accordion>
-
-  <Accordion title="fern docs broken-links">
-
-    Use `fern docs broken-links` to check for broken links in your API docs.
-
-    ```bash
-    fern docs broken-links [--strict]
-    ```
-
-    ### strict
-
-    Use `--strict-broken-links` to cause the command to fail (exit with a non-zero exit code) if any broken
-    links are found in your API docs.
-
-    ```bash
-    fern check --strict-broken-links
-    ```
-
-  </Accordion>
-
-  <Accordion title="fern upgrade">
-
-    Use `fern upgrade` will upgrade your compiler version in `fern.config.json` to the
-    latest version. It will also upgrade generators in `generators.yml` to their minimum-compatible versions.
-
-    ```bash
-    fern upgrade
-    ```
-
-  </Accordion>
-
   <Accordion title="fern init">
 
     Use `fern init` to initialize a new Fern workspace in the current folder. By default, you'll see the IMDb API example.
 
+    <CodeBlock title="terminal">
     ```bash
-    fern init [--docs]
+    fern init [--docs] [--openapi <path/url>]
     ```
+    </CodeBlock>
 
-    This will create the following folder structure in your project:
+    When initializing with OpenAPI, your project structure will look like this:
 
     ```bash
     fern/
-    ├─ fern.config.json # root-level configuration
+    ├─ fern.config.json
+    ├─ generators.yml # generators you're using
+    └─ openapi/
+        └─ openapi.json # your OpenAPI specification
+    ```
+
+    For Fern Definition initialization (without OpenAPI), you'll see this structure:
+
+    ```bash
+    fern/
+    ├─ fern.config.json
     ├─ generators.yml # generators you're using
     └─ definition/
         ├─ api.yml  # API-level configuration
         └─ imdb.yml # endpoints, types, and errors
+    ```
+
+    ### openapi
+
+    Use `--openapi` to initialize a project from an OpenAPI specification:
+
+    ```bash
+    # Initialize from local file
+    fern init --openapi ./path/to/openapi.yml
+
+    # Initialize from URL
+    fern init --openapi https://link.buildwithfern.com/petstore-openapi
     ```
 
     ### docs
@@ -297,6 +132,183 @@ subtitle: 'Learn about the Fern CLI commands.'
     <Tip>
     For more information on getting started, check out our [Quickstart Guide](/learn/docs/getting-started/quickstart)
     </Tip>
+  </Accordion>
+
+  <Accordion title="fern generate">
+    Use `fern generate` to run the Fern compiler and create SDKs for your API.
+
+    <CodeBlock title="terminal">
+    ```bash
+    fern generate [--group <group>] [--api <api>] [--version <version>] [--preview]
+    ```
+    </CodeBlock>
+
+    ### preview
+
+    Use `--preview` to test SDK changes locally before publishing. This is especially useful during development:
+    - Generates SDK into a local `.preview/` folder
+    - Allows quick iteration on your Fern definition
+    - No changes are published to package managers or GitHub
+    
+    ```bash
+    # Preview all SDKs
+    fern generate --preview
+    
+    # Preview specific SDK group
+    fern generate --group python-sdk --preview
+    ```
+
+    ### group
+
+    Use `--group <group>` to filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared.
+
+    ```bash
+    fern generate --group internal
+    ```
+
+    ### api
+
+    Use `--api <api>` to specify the API for SDK generation.
+
+    ```bash
+    fern generate --api public-api
+    ```
+
+    ### version
+
+    Use `--version` to specify a version for SDKs and documentation. Adherence to [semantic versioning](https://semver.org/) is advised.
+
+    ```bash
+    fern generate --version 2.11
+    ```
+
+  </Accordion>
+
+  <Accordion title="fern check">
+
+    Use `fern check` to validate your API definition and Fern configuration: `fern.config.json`, `generators.yml`, and `docs.yml`.
+
+    When successfully executed, this command will not produce any output.
+
+    <CodeBlock title="terminal">
+    ```bash
+    fern check [--api <api>] [--warnings]
+    ```
+    </CodeBlock>
+
+    ### api
+
+    Use `--api <api>` to specify which API you'd like to check. 
+
+    ```bash
+    fern check --api public-api
+    ```
+
+    ### warnings
+
+    Use `--warnings` to log warnings in addition to errors. 
+
+    ```bash
+    fern check --warnings
+    ```
+
+    ### strict-broken-links
+
+    Use `--strict-broken-links` to fail the command if any broken links are found in your API docs.
+
+    ```bash
+    fern check --strict-broken-links
+    ```
+
+    ## Usage in a GitHub Action
+
+    <CodeBlock title = ".github/workflows/fern-check.yml" >
+    ```yml maxLines=14 
+    name: Fern Validation Check
+
+    on:
+      pull_request:
+      push:
+        branches:
+          - main
+
+    jobs:
+      validate-fern-api:
+        name: Validate using Fern's linter
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v4
+
+          - name: Install Fern CLI
+            run: npm install -g fern-api
+
+          - name: Validate API with Fern
+            run: fern check
+
+    ```
+    </CodeBlock>
+
+  </Accordion>
+  
+  <Accordion title="fern generate --docs">
+
+    Use `fern generate --docs` to create a documentation site for your API. 
+
+    <CodeBlock title="terminal">
+    ```bash
+    fern generate --docs [instance <instance-url>] [--preview]
+    ```
+    </CodeBlock>
+
+    ### instance
+
+    Use `--instance` to specify which instance URL in your `docs.yml` to generate documentation for.
+
+    ```bash
+    fern generate --docs --instance your-organization.docs.buildwithfern.com
+    ```
+
+    ### preview
+
+    Use `--preview` to preview updates to your documentation before publishing changes to your production site. 
+
+    ```bash
+    fern generate --docs --preview
+    ```
+
+  </Accordion>
+
+  <Accordion title="fern docs dev">
+
+    Use `fern docs dev` to run a local development server to preview your docs.
+
+    <CodeBlock title="terminal">
+    ```bash
+    fern docs dev [--port <port-number>]
+    ```
+    </CodeBlock>
+
+    ### port
+
+    Use `--port <port-number>` to specify the port the docs preview will be run on. 
+
+    ```bash
+    fern docs dev --port 57908
+    ```
+
+  </Accordion>
+
+  <Accordion title="fern upgrade">
+
+    Use `fern upgrade` to upgrade your compiler version in `fern.config.json` to the
+    latest version. It will also upgrade generators in `generators.yml` to their minimum-compatible versions.
+
+    <CodeBlock title="terminal">
+    ```bash
+    fern upgrade
+    ```
+    </CodeBlock>
 
   </Accordion>
 
@@ -305,9 +317,11 @@ subtitle: 'Learn about the Fern CLI commands.'
     Use `fern login` to login to the Fern CLI via GitHub. Logging in allows you 
     join GitHub organizations, gain permissions, and contribute to projects.
 
+    <CodeBlock title="terminal">
     ```bash
     fern login [--device code]
     ```
+    </CodeBlock>
 
     ### device-code
 
@@ -328,9 +342,11 @@ subtitle: 'Learn about the Fern CLI commands.'
     Use `fern token `to generate a `FERN_TOKEN` specific to your organization defined 
     in `fern.config.json`. Use the token to authenticate with the API in CI. Tokens do not expire.
 
+    <CodeBlock title="terminal">
     ```bash 
     fern token
     ```    
+    </CodeBlock>
 
     ## GitHub Actions
 
@@ -353,9 +369,11 @@ subtitle: 'Learn about the Fern CLI commands.'
     Use `fern write-definition` to convert your OpenAPI Specification into a Fern Definition. 
     You must have a `fern/openapi/` folder that contains an OpenAPI Specification file in `.json` or `.yaml` format.
 
+    <CodeBlock title="terminal">
     ```bash
     fern write-definition [--api <api>]
     ```
+    </CodeBlock>
 
     When run, this command creates a new folder within `fern/` called `.definition/`. 
 
@@ -393,9 +411,11 @@ subtitle: 'Learn about the Fern CLI commands.'
     reversible revisions to the API specification, including adding request and response examples for 
     code snippets in Fern Docs.
 
+    <CodeBlock title="terminal">
     ```bash
     fern write-overrides [--api <api>] [--exclude-models]
-    ```    
+    ```
+    </CodeBlock>
 
     When run, this command creates a new file within `fern/openapi/` called `openapi-overrides.yml`. 
 
@@ -411,7 +431,6 @@ subtitle: 'Learn about the Fern CLI commands.'
     ### api
 
     Use `--api` to specify the API to run the command on if multiple are defined.  
-
 
     ```bash
     fern write-overrides --api public-api
@@ -430,9 +449,11 @@ subtitle: 'Learn about the Fern CLI commands.'
   <Accordion title="fern generator upgrade">
     Use `fern generator upgrade` to update all generators in your `generators.yml` to their latest versions.
 
+    <CodeBlock title="terminal">
     ```bash
     fern generator upgrade [--list] [--generator <generator-name>] [--group <group>]
     ```
+    </CodeBlock>
 
     This command will:
     - Check for updates to all generators specified in your `generators.yml`
@@ -443,7 +464,6 @@ subtitle: 'Learn about the Fern CLI commands.'
 
     Use `--list` to see all available generator upgrades without applying them.
 
-      
     ```bash
     fern generator upgrade --list
     ```
@@ -468,7 +488,5 @@ subtitle: 'Learn about the Fern CLI commands.'
     <Note>
     This is different from `fern upgrade` which updates the Fern CLI version. Use both commands to keep your entire Fern toolchain up to date.
     </Note>
-    
   </Accordion>
-
 </AccordionGroup>
