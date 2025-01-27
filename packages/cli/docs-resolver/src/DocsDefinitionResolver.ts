@@ -15,7 +15,15 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, listFiles, relative, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    RelativeFilePath,
+    doesPathExist,
+    join,
+    listFiles,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -275,8 +283,9 @@ export class DocsDefinitionResolver {
         return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 
-    private async getMarkdownFilesToFullSlugs(pages: Record<RelativeFilePath, string>): Promise<Map<AbsoluteFilePath, string>> {
-        console.time('getMarkdownFilesToFullSlugs');
+    private async getMarkdownFilesToFullSlugs(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, string>> {
         const mdxFilePathToSlug = new Map<AbsoluteFilePath, string>();
         for (const [relativePath, markdown] of Object.entries(pages)) {
             const frontmatter = matter(markdown);
@@ -302,14 +311,6 @@ export class DocsDefinitionResolver {
 
             const absoluteFilePath = join(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(pageId));
             mdxFilePathToSlug.set(absoluteFilePath, slug);
-        });
-
-        console.timeEnd('getMarkdownFilesToFullSlugs');
-
-        // Print the markdown file paths and their slugs
-        console.log("Markdown files and their slugs:");
-        mdxFilePathToSlug.forEach((slug, filePath) => {
-            console.log(`${filePath} -> ${slug}`);
         });
 
         return mdxFilePathToSlug;

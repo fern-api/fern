@@ -5,7 +5,7 @@ import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
 import { z } from "zod";
 
-import { AbsoluteFilePath, RelativeFilePath, dirname, relative, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
@@ -175,6 +175,34 @@ function isDataUrl(url: string): boolean {
     return url.startsWith("data:");
 }
 
+export type ReplacedHref = { type: "replace"; slug: string } | { type: "missing-reference"; path: string };
+
+export function getReplacedHref({
+    href,
+    metadata,
+    markdownFilesToPathName
+}: {
+    href: string | undefined;
+    metadata: AbsolutePathMetadata;
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>;
+}): ReplacedHref | undefined {
+    if (href == null) {
+        return;
+    }
+    if (href.endsWith(".md") || href.endsWith(".mdx")) {
+        const absoluteFilePath = resolvePath(href, metadata);
+        if (absoluteFilePath != null) {
+            const slug = markdownFilesToPathName[absoluteFilePath];
+            if (slug != null) {
+                return { type: "replace", slug };
+            } else {
+                return { type: "missing-reference", path: absoluteFilePath };
+            }
+        }
+    }
+    return undefined;
+}
+
 /**
  * This step should run after the images have been uploaded. It replaces the image paths in the markdown with the fileIDs.
  * In the frontend, the fileIDs are then used to securely fetch the images.
@@ -230,28 +258,9 @@ export function replaceImagePathsAndUrls(
         }
 
         function replaceHref(href: string | undefined) {
-            if (href == null) {
-                return;
-            }
-            if (href.endsWith(".md") || href.endsWith(".mdx")) {
-                const absoluteFilePath = resolvePath(href, metadata);
-                console.log(`Searching for markdown file: ${absoluteFilePath}`);
-                if (absoluteFilePath != null) {
-                    const pathName = markdownFilesToPathName[absoluteFilePath];
-                    if (pathName != null) {
-                        replaced = replaced.replace(href, pathName);
-                    } else {
-                        context.logger.error(
-                            `${relative(
-                                metadata.absolutePathToFernFolder,
-                                absoluteFilePath
-                            )} has no slug defined but is referenced by ${relative(
-                                metadata.absolutePathToFernFolder,
-                                metadata.absolutePathToMarkdownFile
-                            )}`
-                        );
-                    }
-                }
+            const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
+            if (href != null && replacedHref != null && replacedHref.type === "replace") {
+                replaced = replaced.replace(href, replacedHref.slug);
             }
         }
 
@@ -371,7 +380,7 @@ function getPosition(
     return { start, length };
 }
 
-function trimAnchor(text: unknown): string | undefined {
+export function trimAnchor(text: unknown): string | undefined {
     if (typeof text !== "string") {
         return undefined;
     }
