@@ -175,7 +175,9 @@ function isDataUrl(url: string): boolean {
     return url.startsWith("data:");
 }
 
-export type ReplacedHref = { type: "replace"; slug: string } | { type: "missing-reference"; path: string };
+export type ReplacedHref =
+    | { type: "replace"; slug: string; href: string }
+    | { type: "missing-reference"; path: string; href: string };
 
 export function getReplacedHref({
     href,
@@ -194,9 +196,9 @@ export function getReplacedHref({
         if (absoluteFilePath != null) {
             const slug = markdownFilesToPathName[absoluteFilePath];
             if (slug != null) {
-                return { type: "replace", slug };
+                return { type: "replace", slug, href };
             } else {
-                return { type: "missing-reference", path: absoluteFilePath };
+                return { type: "missing-reference", path: absoluteFilePath, href };
             }
         }
     }

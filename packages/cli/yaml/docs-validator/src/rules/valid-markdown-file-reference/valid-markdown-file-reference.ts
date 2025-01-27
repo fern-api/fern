@@ -1,9 +1,9 @@
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
-import { relative } from "path";
 import { visit } from "unist-util-visit";
 
 import { getMarkdownFormat, getReplacedHref, parseMarkdownToTree, trimAnchor } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, doesPathExistSync } from "@fern-api/fs-utils";
 
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -36,10 +36,13 @@ export const ValidMarkdownFileReferences: Rule = {
                             });
 
                             if (href?.type === "missing-reference") {
-                                errors.push({
-                                    severity: "error",
-                                    message: `References ${relative(context.workspace.absoluteFilePath, href.path)} which does not exist or is not specified in docs.yml`
-                                });
+                                try {
+                                    const pathExists = doesPathExistSync(AbsoluteFilePath.of(href.path));
+                                    errors.push({
+                                        severity: "error",
+                                        message: `Reference ${href.href} ${!pathExists ? "does not exist" : "exists but is not specified in docs.yml"}`
+                                    });
+                                } catch (err) {}
                             }
                         }
                     });
