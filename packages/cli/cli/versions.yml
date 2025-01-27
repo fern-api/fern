@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fixed OpenAPI importer to properly handle string enums that are specified as integers by coercing them to strings.
+      type: fix
+  irVersion: 55
+  version: 0.51.6
+
+- changelogEntry:
+    - summary: |
         Added a new rule to validate frontmatter parsing across markdown files, ensuring frontmatter 
         is properly formatted and can be parsed without errors.
       type: fix
