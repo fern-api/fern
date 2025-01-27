@@ -389,7 +389,7 @@ navigation:
         contents:
           - page: Write Markdown Content
             icon: fa-regular fa-font
-            path: ./pages/fern-docs/content/write-markdown.mdx
+            path: ./pages/docs/writing-content/write-markdown.mdx
             slug: write-markdown
           - section: Components
             icon: fa-regular fa-puzzle-piece
@@ -456,10 +456,10 @@ navigation:
                 slug: tabs
           - page: Frontmatter
             icon: fa-regular fa-sliders
-            path: ./pages/fern-docs/content/frontmatter.mdx
+            path: ./pages/docs/writing-content/frontmatter.mdx
           - page: Reusable Snippets
             icon: fa-regular fa-recycle
-            path: ./pages/fern-docs/content/reusable-snippets.mdx
+            path: ./pages/docs/writing-content/reusable-snippets.mdx
           - page: Changelog
             path: ./pages/docs/writing-content/changelog.mdx
             icon: fa-regular fa-clock-rotate-left
@@ -468,34 +468,34 @@ navigation:
         contents:
           - page: Generate API Reference
             icon: fa-solid fa-wand-magic-sparkles
-            path: ./pages/fern-docs/content/generate-api-ref.mdx
+            path: ./pages/docs/api-references/generate-api-ref.mdx
             slug: generate-api-ref
           - page: SDK Snippets
             icon: fa-regular fa-code
-            path: ./pages/fern-docs/config/sdk-snippets.mdx
+            path: ./pages/docs/api-references/sdk-snippets.mdx
           - section: API Explorer
             slug: api-explorer
-            path: ./pages/fern-docs/content/api-explorer.mdx
+            path: ./pages/docs/api-references/api-explorer.mdx
             icon: fa-regular fa-play
             contents:
               - page: Auto-populate API Keys
                 icon: fa-regular fa-key
-                path: ./pages/fern-docs/content/autopopulate-api-key.mdx
+                path: ./pages/docs/api-references/autopopulate-api-key.mdx
               - page: Advanced Configuration
                 icon: fa-regular fa-screwdriver-wrench
-                path: ./pages/fern-docs/content/customize-api-explorer.mdx
+                path: ./pages/docs/api-references/customize-api-explorer.mdx
           - page: Endpoint Errors
             icon: fa-regular fa-triangle-exclamation
-            path: ./pages/fern-docs/config/endpoint-errors.mdx
+            path: ./pages/docs/api-references/endpoint-errors.mdx
           - page: Audiences
             icon: fa-regular fa-user-group
-            path: ./pages/fern-docs/config/audiences.mdx
+            path: ./pages/docs/api-references/audiences.mdx
           - page: Customize API Reference Layout
             icon: fa-regular fa-arrows-up-down-left-right
-            path: ./pages/fern-docs/content/customize-api-ref.mdx
+            path: ./pages/docs/api-references/customize-api-ref.mdx
           - page: Write Markdown in API Reference
             icon: fa-regular fa-pencil
-            path: ./pages/fern-docs/content/api-ref-content.mdx
+            path: ./pages/docs/api-references/api-ref-content.mdx
 
       - section: Integrations
         slug: integrations
@@ -562,7 +562,7 @@ navigation:
       - section: CLI Reference
         contents:
           - page: Get Started with Fern CLI
-            path: ./pages/cli-api/get-started.mdx
+            path: ./pages/cli-api/cli-get-started.mdx
           - page: Global Options
             path: ./pages/cli-api/global-options.mdx
           - page: Commands
@@ -570,13 +570,12 @@ navigation:
           - changelog: ./pages/changelogs/cli
       - api: API Reference
         api-name: public-api
-        summary: ./pages/cli-api/api-summary.mdx
         paginated: true
         audiences:
           - external
         layout:
           - page: Overview
-            path: ./pages/cli-api/api-summary.mdx
+            path: ./pages/cli-api/api-get-started.mdx
 
 navbar-links:
   - type: minimal
@@ -608,8 +607,8 @@ logo:
   height: 30
 colors:
   accent-primary:
-    dark: "#1DA32B"
-    light: "#1DA32B"
+    dark: "#2BDB3C"
+    light: "#0D4C14"
   background:
     dark: "#081008"
     light: "#FBFFFA"
@@ -655,4 +654,36 @@ redirects:
   - source: /learn/docs/building-your-docs/:slug
     destination: /learn/docs/building-and-customizing-your-docs/:slug
   - source: /learn/cli-api/cli-reference/cli-overview
-    destination: /learn/cli-api/cli-reference/get-started
+    destination: /learn/cli-api/cli/overview
+  - source: /learn/cli-api/cli-reference/get-started
+    destination: /learn/cli-api/cli/get-started
+  - source: /learn/cli-api/cli-reference/cli-get-started
+    destination: /learn/cli-api/cli/get-started
+  - source: /learn/cli-api/overview
+    destination: /learn/cli-api/cli/overview
+  - source: /learn/cli-api/get-started
+    destination: /learn/cli-api/cli/get-started
+  - source: ./pages/fern-docs/content/write-markdown.mdx
+    destination: ./pages/docs/writing-content/write-markdown.mdx
+  - source: ./pages/fern-docs/content/frontmatter.mdx
+    destination: ./pages/docs/writing-content/frontmatter.mdx
+  - source: ./pages/fern-docs/content/reusable-snippets.mdx
+    destination: ./pages/docs/writing-content/reusable-snippets.mdx
+  - source: ./pages/fern-docs/content/generate-api-ref.mdx
+    destination: ./pages/docs/api-references/generate-api-ref.mdx
+  - source: ./pages/fern-docs/config/sdk-snippets.mdx
+    destination: ./pages/docs/api-references/sdk-snippets.mdx
+  - source: ./pages/fern-docs/content/api-explorer.mdx
+    destination: ./pages/docs/api-references/api-explorer.mdx
+  - source: ./pages/fern-docs/content/autopopulate-api-key.mdx
+    destination: ./pages/docs/api-references/autopopulate-api-key.mdx
+  - source: ./pages/fern-docs/content/customize-api-explorer.mdx
+    destination: ./pages/docs/api-references/customize-api-explorer.mdx
+  - source: ./pages/fern-docs/config/endpoint-errors.mdx
+    destination: ./pages/docs/api-references/endpoint-errors.mdx
+  - source: ./pages/fern-docs/config/audiences.mdx
+    destination: ./pages/docs/api-references/audiences.mdx
+  - source: ./pages/fern-docs/content/customize-api-ref.mdx
+    destination: ./pages/docs/api-references/customize-api-ref.mdx
+  - source: ./pages/fern-docs/content/api-ref-content.mdx
+    destination: ./pages/docs/api-references/api-ref-content.mdx
