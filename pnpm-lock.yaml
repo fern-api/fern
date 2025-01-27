@@ -7155,6 +7155,9 @@ importers:
       file-type:
         specifier: ^19.0.0
         version: 19.0.0
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
