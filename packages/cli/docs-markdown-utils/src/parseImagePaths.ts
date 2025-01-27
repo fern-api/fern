@@ -235,6 +235,7 @@ export function replaceImagePathsAndUrls(
             }
             if (href.endsWith(".md") || href.endsWith(".mdx")) {
                 const absoluteFilePath = resolvePath(href, metadata);
+                console.log(`Searching for markdown file: ${absoluteFilePath}`);
                 if (absoluteFilePath != null) {
                     const pathName = markdownFilesToPathName[absoluteFilePath];
                     if (pathName != null) {
