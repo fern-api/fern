@@ -389,7 +389,7 @@ navigation:
         contents:
           - page: Write Markdown Content
             icon: fa-regular fa-font
-            path: ./pages/docs/writing-content/write-markdown.mdx
+            path: ./pages/fern-docs/content/write-markdown.mdx
             slug: write-markdown
           - section: Components
             icon: fa-regular fa-puzzle-piece
@@ -456,10 +456,10 @@ navigation:
                 slug: tabs
           - page: Frontmatter
             icon: fa-regular fa-sliders
-            path: ./pages/docs/writing-content/frontmatter.mdx
+            path: ./pages/fern-docs/content/frontmatter.mdx
           - page: Reusable Snippets
             icon: fa-regular fa-recycle
-            path: ./pages/docs/writing-content/reusable-snippets.mdx
+            path: ./pages/fern-docs/content/reusable-snippets.mdx
           - page: Changelog
             path: ./pages/docs/writing-content/changelog.mdx
             icon: fa-regular fa-clock-rotate-left
@@ -468,34 +468,34 @@ navigation:
         contents:
           - page: Generate API Reference
             icon: fa-solid fa-wand-magic-sparkles
-            path: ./pages/docs/api-references/generate-api-ref.mdx
+            path: ./pages/fern-docs/content/generate-api-ref.mdx
             slug: generate-api-ref
           - page: SDK Snippets
             icon: fa-regular fa-code
-            path: ./pages/docs/api-references/sdk-snippets.mdx
+            path: ./pages/fern-docs/config/sdk-snippets.mdx
           - section: API Explorer
             slug: api-explorer
-            path: ./pages/docs/api-references/api-explorer.mdx
+            path: ./pages/fern-docs/content/api-explorer.mdx
             icon: fa-regular fa-play
             contents:
               - page: Auto-populate API Keys
                 icon: fa-regular fa-key
-                path: ./pages/docs/api-references/api-explorer/auto-populate-api-keys.mdx
+                path: ./pages/fern-docs/content/autopopulate-api-key.mdx
               - page: Advanced Configuration
                 icon: fa-regular fa-screwdriver-wrench
-                path: ./pages/docs/api-references/api-explorer/advanced-configuration.mdx
+                path: ./pages/fern-docs/content/customize-api-explorer.mdx
           - page: Endpoint Errors
             icon: fa-regular fa-triangle-exclamation
-            path: ./pages/docs/api-references/endpoint-errors.mdx
+            path: ./pages/fern-docs/config/endpoint-errors.mdx
           - page: Audiences
             icon: fa-regular fa-user-group
-            path: ./pages/docs/api-references/audiences.mdx
+            path: ./pages/fern-docs/config/audiences.mdx
           - page: Customize API Reference Layout
             icon: fa-regular fa-arrows-up-down-left-right
-            path: ./pages/docs/api-references/customize-api-reference-layout.mdx
+            path: ./pages/fern-docs/content/customize-api-ref.mdx
           - page: Write Markdown in API Reference
             icon: fa-regular fa-pencil
-            path: ./pages/docs/api-references/write-markdown-in-api-reference.mdx
+            path: ./pages/fern-docs/content/api-ref-content.mdx
 
       - section: Integrations
         slug: integrations
@@ -656,27 +656,3 @@ redirects:
     destination: /learn/docs/building-and-customizing-your-docs/:slug
   - source: /learn/cli-api/cli-reference/cli-overview
     destination: /learn/cli-api/cli-reference/get-started
-  - source: /learn/docs/fern-docs/content/write-markdown
-    destination: /learn/docs/writing-content/write-markdown
-  - source: /learn/docs/fern-docs/content/frontmatter
-    destination: /learn/docs/writing-content/frontmatter
-  - source: /learn/docs/fern-docs/content/reusable-snippets
-    destination: /learn/docs/writing-content/reusable-snippets
-  - source: /learn/docs/fern-docs/content/generate-api-ref
-    destination: /learn/docs/api-references/generate-api-ref
-  - source: /learn/docs/fern-docs/config/sdk-snippets
-    destination: /learn/docs/api-references/sdk-snippets
-  - source: /learn/docs/fern-docs/content/api-explorer
-    destination: /learn/docs/api-references/api-explorer
-  - source: /learn/docs/fern-docs/content/autopopulate-api-key
-    destination: /learn/docs/api-references/api-explorer/auto-populate-api-keys
-  - source: /learn/docs/fern-docs/content/customize-api-explorer
-    destination: /learn/docs/api-references/api-explorer/advanced-configuration
-  - source: /learn/docs/fern-docs/config/endpoint-errors
-    destination: /learn/docs/api-references/endpoint-errors
-  - source: /learn/docs/fern-docs/config/audiences
-    destination: /learn/docs/api-references/audiences
-  - source: /learn/docs/fern-docs/content/customize-api-ref
-    destination: /learn/docs/api-references/customize-api-reference-layout
-  - source: /learn/docs/fern-docs/content/api-ref-content
-    destination: /learn/docs/api-references/write-markdown-in-api-reference
