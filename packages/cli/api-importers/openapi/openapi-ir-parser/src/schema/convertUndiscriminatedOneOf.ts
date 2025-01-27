@@ -64,7 +64,12 @@ export function convertUndiscriminatedOneOf({
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
-        if (!isReferenceObject(schema) && schema.enum != null && context.options.cooerceEnumsToLiterals && schema.type === "string") {
+        if (
+            !isReferenceObject(schema) &&
+            schema.enum != null &&
+            context.options.cooerceEnumsToLiterals &&
+            schema.type === "string"
+        ) {
             return schema.enum.map((enumValue) => {
                 return SchemaWithExample.literal({
                     nameOverride: undefined,
