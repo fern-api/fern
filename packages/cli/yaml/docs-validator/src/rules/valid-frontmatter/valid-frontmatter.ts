@@ -17,10 +17,12 @@ export const ValidFrontmatter: Rule = {
                     grayMatter(fileContents);
                     return [];
                 } catch (error) {
-                    return [{
-                        severity: "fatal",
-                        message: `Failed to parse frontmatter${error instanceof Error ? `: ${error.message}` : ''}`
-                    }];
+                    return [
+                        {
+                            severity: "fatal",
+                            message: `Failed to parse frontmatter${error instanceof Error ? `: ${error.message}` : ""}`
+                        }
+                    ];
                 }
             }
         };

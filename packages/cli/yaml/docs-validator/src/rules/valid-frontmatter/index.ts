@@ -1,1 +1,1 @@
-export { ValidFileTypes } from "./valid-file-types";
+export { ValidFrontmatter } from "./valid-frontmatter";
