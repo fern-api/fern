@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Added better error messages when markdown files reference non-existent MDX files, showing the relative path 
+        to the missing file rather than just indicating an invalid reference.
+      type: fix
+  irVersion: 55
+  version: 0.51.7
+
+- changelogEntry:
+    - summary: |
         Fixed OpenAPI importer to properly handle string enums that are specified as integers by coercing them to strings.
       type: fix
   irVersion: 55

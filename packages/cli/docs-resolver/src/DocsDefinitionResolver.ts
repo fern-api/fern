@@ -15,7 +15,15 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, listFiles, relative, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    RelativeFilePath,
+    doesPathExist,
+    join,
+    listFiles,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -131,7 +139,7 @@ export class DocsDefinitionResolver {
 
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
-        this.markdownFilesToFullSlugs = this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
+        this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -275,9 +283,9 @@ export class DocsDefinitionResolver {
         return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 
-    // currently this only supports slugs that are included in frontmatter
-    // TODO: import @fern-ui/fdr-utils to resolve all slugs
-    private getMarkdownFilesToFullSlugs(pages: Record<RelativeFilePath, string>): Map<AbsoluteFilePath, string> {
+    private async getMarkdownFilesToFullSlugs(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, string>> {
         const mdxFilePathToSlug = new Map<AbsoluteFilePath, string>();
         for (const [relativePath, markdown] of Object.entries(pages)) {
             const frontmatter = matter(markdown);
@@ -286,6 +294,25 @@ export class DocsDefinitionResolver {
                 mdxFilePathToSlug.set(this.resolveFilepath(relativePath), slug.trim());
             }
         }
+
+        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(await this.toRootNode());
+
+        // all the page slugs in the docs:
+        const collector = FernNavigation.NodeCollector.collect(root);
+        collector.slugMap.forEach((node, slug) => {
+            if (node == null || !FernNavigation.isPage(node)) {
+                return;
+            }
+
+            const pageId = FernNavigation.getPageId(node);
+            if (pageId == null) {
+                return;
+            }
+
+            const absoluteFilePath = join(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(pageId));
+            mdxFilePathToSlug.set(absoluteFilePath, slug);
+        });
+
         return mdxFilePathToSlug;
     }
 
