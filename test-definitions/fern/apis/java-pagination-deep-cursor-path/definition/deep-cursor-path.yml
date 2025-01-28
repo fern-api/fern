@@ -81,7 +81,7 @@ service:
       path: /
       request:
         body:
-          type: A
+          type: InlineA
         content-type: application/json
       response:
         type: Response
