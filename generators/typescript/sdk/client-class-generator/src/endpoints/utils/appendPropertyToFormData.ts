@@ -31,7 +31,7 @@ export function appendPropertyToFormData({
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
 
             let statement = context.coreUtilities.formDataUtils.appendFile({
-                referenceToFormData: referenceToFormData,
+                referenceToFormData,
                 key: property.key.wireValue,
                 value: ts.factory.createIdentifier(
                     getParameterNameForFile({
@@ -70,7 +70,7 @@ export function appendPropertyToFormData({
                     ts.factory.createBlock(
                         [
                             context.coreUtilities.formDataUtils.appendFile({
-                                referenceToFormData: referenceToFormData,
+                                referenceToFormData,
                                 key: property.key.wireValue,
                                 value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)
                             })
@@ -129,7 +129,7 @@ export function appendPropertyToFormData({
                     ts.factory.createBlock(
                         [
                             context.coreUtilities.formDataUtils.append({
-                                referenceToFormData: referenceToFormData,
+                                referenceToFormData,
                                 key: property.name.wireValue,
                                 value: stringifyIterableItemType(
                                     ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
@@ -172,7 +172,7 @@ export function appendPropertyToFormData({
                 }
             } else {
                 statement = context.coreUtilities.formDataUtils.append({
-                    referenceToFormData: referenceToFormData,
+                    referenceToFormData,
                     key: property.name.wireValue,
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
                         includeNullCheckIfOptional: false
