@@ -11,7 +11,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/RootInfoResponse'
   /v1/activity:
@@ -21,7 +21,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ClientActivitySummary'
   /v1/activity/businesses/{businessId}:
@@ -37,10 +37,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/BusinessActivitySummary'
-
+                
   /v1/activity/businesses/{businessId}/activities:
     get:
       summary: 'List business activities'
@@ -54,10 +54,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
-                items:
+                items: 
                   $ref: '#/components/schemas/ApiTypedActivity'
 
   /v1/unit-transactions:
@@ -91,7 +91,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/AuthToken'
 
@@ -102,7 +102,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/PlaidConfigurationResponse'
     put:
@@ -116,10 +116,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/PlaidConfigurationResponse'
-
+                
   /v1/configure/stripe:
     get:
       summary: 'Get stripe secret'
@@ -127,7 +127,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/StripeConfigurationResponse'
     put:
@@ -141,10 +141,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/StripeConfigurationResponse'
-
+                
   /v1/businesses:
     post:
       summary: 'Create new business'
@@ -157,7 +157,7 @@ paths:
         '201':
           description: CREATED
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiBusiness'
     get:
@@ -166,12 +166,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiBusiness'
-
+                  
   /v1/businesses/{businessId}:
     get:
       summary: 'Get business'
@@ -185,7 +185,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiBusiness'
     put:
@@ -205,10 +205,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiBusiness'
-
+                
   /v1/businesses/{businessId}/archive:
     put:
       summary: 'Archive business'
@@ -222,10 +222,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiBusiness'
-
+                
   /v1/businesses/{businessId}/categories:
     get:
       summary: 'List chart of accounts categories for business'
@@ -239,10 +239,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/CategoryList'
-
+                
   /v1/businesses/{businessId}/balances:
     get:
       summary: 'Get chart of accounts for business'
@@ -256,10 +256,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiChartOfAccountsOld'
-
+                                
   /v1/businesses/{businessId}/plaid/items:
     get:
       summary: 'List plaid items for business'
@@ -273,10 +273,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiPlaidItem'
-
+                
   /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}:
     delete:
       summary: 'Delete plaid item from business'
@@ -295,10 +295,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}/configuration:
     get:
       summary: 'Get plaid item configuration'
@@ -317,7 +317,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/PlaidItemConfiguration'
     put:
@@ -342,10 +342,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/PlaidItemConfiguration'
-
+                
   /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}/unlink:
     post:
       summary: 'Unlink and archive plaid item and child plaid accounts'
@@ -364,10 +364,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/plaid/link:
     post:
       summary: 'Create plaid item link token'
@@ -381,10 +381,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiLinkToken'
-
+                
   /v1/businesses/{businessId}/plaid/link/exchange:
     post:
       summary: 'Exchange plaid token and add item to business'
@@ -403,10 +403,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/plaid/update-mode-link:
     post:
       summary: 'Update plaid link link'
@@ -425,10 +425,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiLinkToken'
-
+                
   /v1/businesses/{businessId}/plaid/accounts:
     get:
       summary: 'List plaid accounts for business'
@@ -442,12 +442,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiPlaidAccount'
-
+                  
   /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/archive:
     post:
       summary: 'Archive plaid account'
@@ -461,15 +461,15 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: string            
       responses:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiPlaidAccount'
-
+                
   /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/reactivate:
     post:
       summary: 'Reactivate archived plaid account'
@@ -483,15 +483,15 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: string            
       responses:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiPlaidAccount'
-
+                
   /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/configuration:
     get:
       summary: 'Get plaid account configuration'
@@ -510,7 +510,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/PlaidAccountConfiguration'
     put:
@@ -535,10 +535,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/PlaidAccountConfiguration'
-
+                
   /v1/businesses/{businessId}/bank-transactions:
     get:
       summary: 'List transactions from business'
@@ -552,12 +552,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiBankTransaction'
-
+                  
   /v1/businesses/{businessId}/bank-transactions/{transactionId}:
     get:
       summary: 'Get transaction from business'
@@ -576,10 +576,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiBankTransaction'
-
+                
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/categorize:
     put:
       summary: 'Categorize transaction'
@@ -603,10 +603,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiBankTransaction'
-
+                
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/uncategorize:
     put:
       summary: 'Uncategorize transaction'
@@ -625,10 +625,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiBankTransaction'
-
+                
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/match:
     put:
       summary: 'Match transaction'
@@ -652,10 +652,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiMatch'
-
+                
   /v1/businesses/{businessId}/bank-transactions/bulk-match:
     post:
       summary: 'Bulk match transactions'
@@ -674,10 +674,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/ledger-entries:
     get:
       summary: 'List transaction ledger entries'
@@ -696,10 +696,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
-                items:
+                items: 
                   $ref: '#/components/schemas/ApiLedgerEntry'
 
   /v1/businesses/{businessId}/payouts/{payoutId}:
@@ -720,10 +720,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiPayout'
-
+                
   /v1/businesses/{businessId}/invoices/bulk:
     post:
       summary: 'Create invoices from batch'
@@ -744,12 +744,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiInvoice'
-
+                  
   /v1/businesses/{businessId}/invoices/{invoiceId}:
     get:
       summary: 'Get invoice from business'
@@ -768,10 +768,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiInvoice'
-
+                
   /v1/businesses/{businessId}/invoices/{invoiceId}/delete:
     post:
       summary: 'Delete invoice from business'
@@ -790,10 +790,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiInvoice'
-
+                
   /v1/businesses/{businessId}/invoices/payments:
     get:
       summary: 'List invoice payments from business'
@@ -807,12 +807,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiInvoicePayment'
-
+                  
   /v1/businesses/{businessId}/invoices/payments/:
     post:
       summary: 'Create invoice payments from batch'
@@ -826,10 +826,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/CreateStandaloneInvoicePayment'
-
+                
   /v1/businesses/{businessId}/invoices/payments/{paymentId}:
     get:
       summary: 'Get invoice payment from business'
@@ -848,10 +848,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiInvoicePayment'
-
+                
   /v1/businesses/{businessId}/invoices/payments/{paymentId}/delete:
     post:
       summary: 'Delete invoice payment from business'
@@ -870,10 +870,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiInvoicePayment'
-
+                
   /v1/businesses/{businessId}/invoices/refunds/:
     get:
       summary: 'List refunds from business'
@@ -887,12 +887,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiRefund'
-
+                  
   /v1/businesses/{businessId}/external-accounts/:
     get:
       summary: 'List linked external accounts from business'
@@ -906,10 +906,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiExternalAccounts'
-
+                
   /v1/businesses/{businessId}/external-accounts/{accountId}:
     get:
       summary: 'Get linked external account from business'
@@ -928,10 +928,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiExternalAccount'
-
+                
   /v1/businesses/{businessId}/external-accounts/{accountId}/transactions:
     get:
       summary: 'Get transactions from linked external account'
@@ -950,10 +950,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiTransactions'
-
+                
   /v1/businesses/{businessId}/external-accounts/{accountId}/balance-timestamps:
     get:
       summary: 'List balance timestamps from linked external account'
@@ -972,10 +972,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiBalanceTimestamps'
-
+                
   /v1/businesses/{businessId}/external-accounts/{accountId}/opening-balance:
     get:
       summary: 'Get opening balance from linked external account'
@@ -994,10 +994,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiOpeningBalance'
-
+                
   /v1/businesses/{businessId}/external-accounts/{accountId}/archive:
     post:
       summary: 'Archive linked external account'
@@ -1016,10 +1016,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/custom-accounts/:
     post:
       summary: 'Add custom account for business'
@@ -1038,7 +1038,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiCustomAccount'
     get:
@@ -1053,10 +1053,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiCustomAccounts'
-
+                
   /v1/businesses/{businessId}/custom-accounts/{customAccountId}:
     get:
       summary: 'Get custom account from business'
@@ -1075,13 +1075,13 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
-                $ref: '#/components/schemas/ApiCustomAccount'
-
+                $ref: '#/components/schemas/ApiCustomAccount'  
+                
     patch:
       summary: 'Update custom account from business'
-      parameters:
+      parameters:  
         - name: businessId
           in: path
           required: true
@@ -1091,7 +1091,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: string  
       requestBody:
         content:
           application/json:
@@ -1101,11 +1101,11 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiCustomAccount'
-
-    put:
+                
+    put:  
       summary: 'Replace custom account from business'
       parameters:
         - name: businessId
@@ -1127,10 +1127,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiCustomAccount'
-
+                
     post:
       summary: 'Upload custom account transactions by JSON'
       parameters:
@@ -1143,22 +1143,22 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: string  
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewCustomTransactions'
+              $ref: '#/components/schemas/NewCustomTransactions' 
       responses:
         '201':
           description: CREATED
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/custom-accounts/{customAccountId}/archive:
-    post:
+    post: 
       summary: 'Archive custom account from business'
       parameters:
         - name: businessId
@@ -1182,7 +1182,7 @@ paths:
   /v1/businesses/{businessId}/custom-accounts/{customAccountId}/reactivate:
     post:
       summary: 'Reactivate custom account from business'
-      parameters:
+      parameters:  
         - name: businessId
           in: path
           required: true
@@ -1192,17 +1192,17 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: string  
       responses:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiCustomAccount'
-
+                
   /v1/businesses/{businessId}/custom-accounts/{customAccountId}/balance:
-    post:
+    post: 
       summary: 'Create custom account balance timestamp'
       parameters:
         - name: businessId
@@ -1224,10 +1224,10 @@ paths:
         '201':
           description: CREATED
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/custom-accounts/{customAccountId}/opening-balance:
     post:
       summary: 'Calculate new custom account opening balance entry'
@@ -1246,12 +1246,12 @@ paths:
         '201':
           description: CREATED
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiOpeningBalance'
-
+                
   /v1/businesses/{businessId}/ledger/balances:
-    get:
+    get:  
       summary: 'List account balances from ledger'
       parameters:
         - name: businessId
@@ -1263,27 +1263,27 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiLedgerBalances'
-
+                
   /v1/businesses/{businessId}/ledger/chart:
     get:
       summary: 'Get chart of accounts from business'
-      parameters:
+      parameters:  
         - name: businessId
           in: path
           required: true
           schema:
-            type: string
+            type: string  
       responses:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiChartOfAccounts'
-
+                
   /v1/businesses/{businessId}/ledger/manual-entries:
     post:
       summary: 'Create manual ledger entries'
@@ -1297,15 +1297,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateManualLedgerEntry'
+              $ref: '#/components/schemas/CreateManualLedgerEntry'  
       responses:
         '201':
           description: CREATED
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiManualLedgerEntry'
-
+                
   /v1/businesses/{businessId}/ledger/accounts:
     get:
       summary: 'Get ledger from business'
@@ -1319,11 +1319,11 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiLedger'
-
-    post:
+                
+    post:  
       summary: 'Create ledger account for business'
       parameters:
         - name: businessId
@@ -1340,10 +1340,10 @@ paths:
         '201':
           description: CREATED
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/SingleApiChartAccount'
-
+                
   /v1/businesses/{businessId}/ledger/accounts/{accountId}/lines:
     get:
       summary: 'List ledger account line items'
@@ -1362,12 +1362,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiLedgerAccountLineItem'
-
+                  
   /v1/businesses/{businessId}/ledger/entries:
     get:
       summary: 'List ledger entries from business'
@@ -1381,12 +1381,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiLedgerEntry'
-
+                  
   /v1/businesses/{businessId}/ledger/entries/{entryId}:
     get:
       summary: 'Get ledger entry from business'
@@ -1405,10 +1405,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiLedgerEntryWithTransaction'
-
+                
   /v1/businesses/{businessId}/ledger/entries/{entryId}/reverse:
     post:
       summary: 'Create reversal entry for ledger entry'
@@ -1427,10 +1427,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiLedgerEntryWithTransaction'
-
+                
   /v1/businesses/{businessId}/reports/profit-and-loss:
     get:
       summary: 'Get profit and loss report for business'
@@ -1444,10 +1444,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ProfitAndLoss'
-
+                
   /v1/businesses/{businessId}/reports/profit-and-loss-entries:
     get:
       summary: 'Get profit and loss entries from business'
@@ -1461,12 +1461,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/PnlEntry'
-
+                  
   /v1/businesses/{businessId}/reports/download-transactions-csv:
     get:
       summary: 'Download ledger transactions from business as csv'
@@ -1480,10 +1480,10 @@ paths:
         '200':
           description: OK
           content:
-            text/csv:
+            text/csv:    
               schema:
                 type: string
-
+                
   /v1/businesses/{businessId}/bank-transactions/tags:
     post:
       summary: 'Apply list of tags to list of transactions'
@@ -1502,12 +1502,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiTag'
-
+                  
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/tags:
     get:
       summary: 'List tags applied to transaction'
@@ -1526,12 +1526,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiTag'
-
+                  
   /v1/businesses/{businessId}/bank-transactions/{transactionId}/tags/{tagId}:
     delete:
       summary: 'Remove tag from transaction'
@@ -1560,10 +1560,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/payouts/tags:
     post:
       summary: 'Apply list of tags to list of payouts'
@@ -1582,12 +1582,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiTag'
-
+                  
     delete:
       summary: 'Delete list of payout tags'
       parameters:
@@ -1605,10 +1605,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/payouts/{payoutId}/tags/:
     get:
       summary: 'List tags applied to payout'
@@ -1627,12 +1627,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiTag'
-
+                  
   /v1/businesses/{businessId}/invoices/tags:
     post:
       summary: 'Apply list of tags to list of invoices'
@@ -1651,12 +1651,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
-                items:
+                items: 
                   $ref: '#/components/schemas/ApiTag'
-
+                  
   /v1/businesses/{businessId}/invoices/{invoiceId}/tags:
     get:
       summary: 'List tags applied to invoice'
@@ -1675,7 +1675,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
@@ -1698,7 +1698,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
@@ -1726,10 +1726,10 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-
+                
   /v1/businesses/{businessId}/invoices/payments/allocations/tags:
     post:
       summary: 'Apply list of tags to list of invoice payment allocations'
@@ -1748,12 +1748,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiTag'
-
+                  
   /v1/businesses/{businessId}/invoices/payments/{paymentId}/allocations/{allocationId}/tags:
     get:
       summary: 'List tags applied to invoice payment allocation'
@@ -1766,7 +1766,7 @@ paths:
         - name: paymentId
           in: path
           required: true
-          schema:
+          schema:  
             type: string
         - name: allocationId
           in: path
@@ -1777,12 +1777,12 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiTag'
-
+                  
   /v1/businesses/{businessId}/payouts/:
     get:
       summary: 'List payouts from business'
@@ -1796,7 +1796,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 type: array
                 items:
@@ -1818,10 +1818,10 @@ paths:
         '201':
           description: CREATED
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/ApiPayout'
-
+                
   /v1/businesses/{businessId}/ledger/accounts/{accountId}:
     get:
       summary: 'Get or create ledger account on business'
@@ -1840,7 +1840,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/SingleApiChartAccount'
     put:
@@ -1865,7 +1865,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json:    
               schema:
                 $ref: '#/components/schemas/SingleApiChartAccount'
 
@@ -4222,7 +4222,7 @@ components:
           Exclusion: '#/components/schemas/ExclusionCategorization'
           Split_Categorization: '#/components/schemas/SplitCategorization'
           AccountNested: '#/components/schemas/NestedAccountCategorization'
-          OptionalAccountNested: '#/components/schemas/NestedOptionalCategoryCategorization'
+          OptionalAccountNested: '#/components/schemas/NestedOptionalCatetoryCategorization'
           ExclusionNested: '#/components/schemas/NestedExclusionCategorization'
     AccountCategorization:
       type: object
@@ -4284,7 +4284,7 @@ components:
       type: object
       oneOf:
         - $ref: '#/components/schemas/NestedAccountCategorization'
-        - $ref: '#/components/schemas/NestedOptionalCategoryCategorization'
+        - $ref: '#/components/schemas/NestedOptionalCatetoryCategorization'
         - $ref: '#/components/schemas/NestedExclusionCategorization'
 
     NestedApiSubCategories:
@@ -4309,7 +4309,7 @@ components:
         subCategories:
           $ref: '#/components/schemas/NestedApiSubCategories'
 
-    NestedOptionalCategoryCategorization:
+    NestedOptionalCatetoryCategorization:
       type: object
       properties:
         id:

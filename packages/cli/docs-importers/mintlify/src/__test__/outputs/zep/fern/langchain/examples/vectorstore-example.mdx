@@ -88,10 +88,10 @@ zep = ZepClient(
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-import { ZepClient } from "@getzep/zep-js";
+import { ZepClient } from "@getep/zep-js";
 import { ChatOpenAI } from "@langchain/openai";
 import { BasePromptTemplate, ChatPromptTemplate, PromptTemplate } from "@langchain/core/prompts";
-import { ZepVectorStore, formatDocument } from "@getzep/zep-js/langchain";
+import { ZepVectorStore, formatDocument } from "@getep/zep-js/langchain";
 import { Document } from "@langchain/core/documents";
 import { RunnableMap, RunnableLambda, RunnablePassthrough } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
@@ -296,7 +296,7 @@ Here's a quick rundown of how the process works:
 3. `ChatOpenAI` calls an OpenAI model to generates an answer based on the prompt.
 4. Finally, `StrOutputParser` extracts the LLM's result into a string.
 
-To invoke this chain manually, simply pass the `question` into the chain's input.
+To invote this chain manually, simply pass the `question` into the chain's input.
 
 <Tabs group="langchain">
 

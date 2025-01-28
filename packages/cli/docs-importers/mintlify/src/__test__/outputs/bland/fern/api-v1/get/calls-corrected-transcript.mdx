@@ -28,7 +28,7 @@ slug: api-v1/get/calls-corrected-transcript
 </ResponseField>
 
 <ResponseField type="array" name="corrected">
-This will contain an array of objects. Each object will be constructed as the following.
+This will contain an array of objects. Each object will be constructed as the following. 
 ```json
 {
 "start": 0.069, // start time of the transcript
@@ -39,7 +39,7 @@ This will contain an array of objects. Each object will be constructed as the fo
 ```
 </ResponseField>
 <ResponseField type="array" name="aligned">
-Corrected transcripts provides us with a raw output that is generally unusable because we can't even necessarily align the 'assistant' and 'user' roles. To fix this, we provide our version of an 'aligned' transcript. This means essentially a transcript where the roles are matched to the pieces of text.
+Corrected transcripts provides us with a raw output that is generally unusable because we can't eveen neccessarily align the 'assistant' and 'user' roles. To fix this, we provide our version of an 'aligned' transcript. This means essentailly a transcript where the roles are matched to the pieces of text.
 
 We do this by vectorizing the text, taking the cosine similarity, and adding a predictive layer based off of the `wait_for_greeting` param (essentially how sure are we that assistant or user spoke first).
 

@@ -380,7 +380,7 @@
             }
           },
           {
-            "discriminantValue": "dateimte",
+            "discriminantValue": "datetime",
             "additionalProperties": {
               "extends": [],
               "properties": [

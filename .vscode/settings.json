@@ -42,5 +42,8 @@
   },
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
-  "dotnet.testWindow.disableAutoDiscovery": true
+  "dotnet.testWindow.disableAutoDiscovery": true,
+  "cSpell.import": [
+    "cspell.json"
+  ]
 }

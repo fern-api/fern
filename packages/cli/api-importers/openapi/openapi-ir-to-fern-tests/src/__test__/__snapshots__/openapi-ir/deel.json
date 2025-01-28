@@ -33924,7 +33924,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -34065,7 +34065,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -34108,7 +34108,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -34193,7 +34193,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -34236,7 +34236,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -37088,7 +37088,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -40882,7 +40882,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -40925,7 +40925,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -40968,7 +40968,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -41286,7 +41286,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -41329,7 +41329,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -41372,7 +41372,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -42790,7 +42790,7 @@
               "file": "../openapi.yml",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -57682,7 +57682,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -59667,7 +59667,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },

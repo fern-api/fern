@@ -14,12 +14,13 @@
     "project-words"
   ],
   "ignorePaths": [
-    "./seed",
+    "./seed/*/*/*",
     ".git",
     ".vscode",
     "**/__snapshots__/**",
     "**/__test__/**/fixtures",
     "**/__test__/**/output",
+    "**/__test__/**/outputs",
     "**/.next",
     "**/.pnp.*",
     "**/.turbo",

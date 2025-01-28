@@ -5,7 +5,7 @@
       "type": "string",
       "enum": [
         "date",
-        "dateimte"
+        "datetime"
       ]
     }
   },
@@ -37,7 +37,7 @@
     {
       "properties": {
         "type": {
-          "const": "dateimte"
+          "const": "datetime"
         },
         "value": {
           "oneOf": [

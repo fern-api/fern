@@ -1232,7 +1232,7 @@
               }
             },
             {
-              "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+              "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
               "key": "limit",
               "type": {
                 "type": "optional",
@@ -1360,7 +1360,7 @@
               }
             },
             {
-              "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+              "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
               "key": "limit",
               "type": {
                 "type": "optional",

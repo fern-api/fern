@@ -6767,7 +6767,7 @@
                           "type": "openapi"
                         },
                         "inline": true,
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -7695,7 +7695,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -8302,7 +8302,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -8638,7 +8638,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -9005,7 +9005,7 @@
                           "type": "openapi"
                         },
                         "inline": true,
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -11731,7 +11731,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -12680,7 +12680,7 @@
                           "type": "openapi"
                         },
                         "inline": true,
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -13235,7 +13235,7 @@
                         "file": "../openapi.json",
                         "type": "openapi"
                       },
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -17805,7 +17805,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -23142,7 +23142,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -25319,7 +25319,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -43313,7 +43313,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -54932,7 +54932,7 @@
             "file": "../openapi.json",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -55719,7 +55719,7 @@
                     "type": "openapi"
                   },
                   "inline": true,
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -56071,7 +56071,7 @@
                     "type": "openapi"
                   },
                   "inline": true,
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -59980,7 +59980,7 @@
                             "file": "../openapi.json",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -60442,7 +60442,7 @@
                     "type": "openapi"
                   },
                   "inline": true,
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -65407,7 +65407,7 @@
                     "type": "openapi"
                   },
                   "inline": true,
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
