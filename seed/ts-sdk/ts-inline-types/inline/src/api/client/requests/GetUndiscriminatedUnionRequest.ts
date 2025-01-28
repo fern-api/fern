@@ -67,23 +67,6 @@ export namespace GetUndiscriminatedUnionRequest {
           )
         /**
          * lorem ipsum */
-        | (
-              | {
-                    foo: string;
-                    bar: {
-                        foo: string;
-                        ref: SeedObject.ReferenceType;
-                    };
-                    ref: SeedObject.ReferenceType;
-                }
-              | {
-                    baz: string;
-                    ref: SeedObject.ReferenceType;
-                }
-              | SeedObject.ReferenceType
-          )
-        /**
-         * lorem ipsum */
         | ("SUNNY" | "CLOUDY" | "RAINING" | "SNOWING")
         /**
          * lorem ipsum */

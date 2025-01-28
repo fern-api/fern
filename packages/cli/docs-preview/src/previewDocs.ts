@@ -1,3 +1,4 @@
+import { readFile } from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
@@ -13,27 +14,61 @@ import {
     convertDbDocsConfigToRead,
     convertDocsDefinitionToDb
 } from "@fern-api/fdr-sdk";
-import { convertToFernHostAbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
-import { parseDocsConfiguration } from "../../configuration-loader/src/docs-yml/parseDocsConfiguration";
+import { replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
 
 export async function getPreviewDocsDefinition({
     domain,
     project,
-    context
+    context,
+    previousDocsDefinition,
+    editedAbsoluteFilepaths
 }: {
     domain: string;
     project: Project;
     context: TaskContext;
+    previousDocsDefinition?: DocsV1Read.DocsDefinition;
+    editedAbsoluteFilepaths?: AbsoluteFilePath[];
 }): Promise<DocsV1Read.DocsDefinition> {
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
         throw new Error("No docs workspace found in project");
+    }
+
+    if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
+        const allMarkdownFiles = editedAbsoluteFilepaths.every(
+            (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
+        );
+        for (const absoluteFilePath of editedAbsoluteFilepaths) {
+            const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
+            const markdown = (await readFile(absoluteFilePath)).toString();
+            const processedMarkdown = await replaceReferencedMarkdown({
+                markdown,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
+            });
+
+            const previousValue = previousDocsDefinition.pages[FdrAPI.PageId(relativePath)];
+            if (previousValue == null) {
+                continue;
+            }
+
+            previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
+                markdown: processedMarkdown,
+                editThisPageUrl: previousValue.editThisPageUrl
+            };
+        }
+
+        if (allMarkdownFiles) {
+            return previousDocsDefinition;
+        }
     }
 
     const fernWorkspaces = await Promise.all(
@@ -52,13 +87,6 @@ export async function getPreviewDocsDefinition({
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
-
-    const parsedDocsConfig = await parseDocsConfiguration({
-        rawDocsConfiguration: docsWorkspace.config,
-        context,
-        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
-    });
 
     const resolver = new DocsDefinitionResolver(
         domain,

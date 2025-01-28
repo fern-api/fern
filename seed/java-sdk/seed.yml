@@ -106,6 +106,8 @@ fixtures:
     - customConfig:
         package-prefix: "com.customprefix"
       outputFolder: java-custom-package-prefix
+  java-single-property-endpoint:
+    - outputFolder: java-single-property-endpoint
 scripts:
   - docker: fernapi/java-seed
     commands:
@@ -122,3 +124,4 @@ allowedFailures:
   - trace
   - unions
   - streaming-parameter
+  - literal

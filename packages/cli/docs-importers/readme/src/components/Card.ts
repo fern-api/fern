@@ -2,6 +2,7 @@ import type { Element, ElementContent } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
 import { assertIsDefined } from "../assert";
+import { convertHastChildrenToMdast } from "../customComponents/children";
 import { findTitle } from "../extract/title";
 import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 
@@ -52,7 +53,7 @@ export function scrapeCard(node: HastNode, _: HastNodeIndex, parent: HastNodePar
             title,
             href
         },
-        children: node.children as Array<ElementContent>
+        children: convertHastChildrenToMdast(node.children as Array<Element>) as Array<ElementContent>
     };
 
     return newNode;

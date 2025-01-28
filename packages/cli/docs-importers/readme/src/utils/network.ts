@@ -92,7 +92,7 @@ export async function fetchPageHtml({ url, browser }: { url: string | URL; brows
         }
         throw new Error("An unknown error occured.");
     } catch (error) {
-        throw new Error("Error retrieving HTML for ${url.toString()}");
+        throw new Error(`Error retrieving HTML for ${url.toString()}`);
     }
 }
 
@@ -108,6 +108,6 @@ export async function fetchImage(url: string): Promise<NodeJS.TypedArray> {
 
         return imageData;
     } catch (error) {
-        throw new Error(`${url} - failed to retrieve image from source`);
+        throw new Error(`Failed to retrieve image from source url ${url}`);
     }
 }

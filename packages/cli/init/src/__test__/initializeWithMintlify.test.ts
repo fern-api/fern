@@ -24,7 +24,8 @@ describe("initializeWithMintlify", () => {
             initializeWithMintlify({
                 pathToMintJson: "https://example.com/mint.json",
                 taskContext,
-                versionOfCli: "0.0.0"
+                versionOfCli: "0.0.0",
+                organization: "fern"
             })
         ).rejects.toThrow();
 
@@ -45,7 +46,8 @@ describe("initializeWithMintlify", () => {
             initializeWithMintlify({
                 pathToMintJson: "./mint.yml",
                 taskContext,
-                versionOfCli: "0.0.0"
+                versionOfCli: "0.0.0",
+                organization: "fern"
             })
         ).rejects.toThrow();
 
@@ -64,7 +66,8 @@ describe("initializeWithMintlify", () => {
             initializeWithMintlify({
                 pathToMintJson: "./mint.json",
                 taskContext,
-                versionOfCli: "0.0.0"
+                versionOfCli: "0.0.0",
+                organization: "fern"
             })
         ).rejects.toThrow();
 
@@ -86,7 +89,8 @@ describe("initializeWithMintlify", () => {
         await initializeWithMintlify({
             pathToMintJson: absolutePathToMintJson,
             taskContext,
-            versionOfCli: "0.0.0"
+            versionOfCli: "0.0.0",
+            organization: "fern"
         });
 
         expect(taskContext.failAndThrow).not.toHaveBeenCalled();
@@ -95,7 +99,8 @@ describe("initializeWithMintlify", () => {
             absolutePathToMintJson,
             outputPath,
             taskContext,
-            versionOfCli: "0.0.0"
+            versionOfCli: "0.0.0",
+            organization: "fern"
         });
     });
 });

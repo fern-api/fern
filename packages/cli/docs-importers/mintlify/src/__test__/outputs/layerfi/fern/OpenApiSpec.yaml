@@ -1,0 +1,4859 @@
+openapi: 3.0.0
+info:
+  title: Layer API
+  version: 1.0.0
+
+paths:
+  /whoami:
+    get:
+      summary: 'Get client info'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/RootInfoResponse'
+  /v1/activity:
+    get:
+      summary: 'Summary of activities for all businesses'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ClientActivitySummary'
+  /v1/activity/businesses/{businessId}:
+    get:
+      summary: 'Summary of business activities'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/BusinessActivitySummary'
+                
+  /v1/activity/businesses/{businessId}/activities:
+    get:
+      summary: 'List business activities'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ApiTypedActivity'
+
+  /v1/unit-transactions:
+    post:
+      summary: 'Import transactions'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FlatUnitTransactionInput'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlatUnitTransactionResult'
+
+  /v1/businesses/{id}/auth-token:
+    get:
+      summary: 'Get business auth token'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+
+  /v1/configure/plaid:
+    get:
+      summary: 'Get plaid client id and secret'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/PlaidConfigurationResponse'
+    put:
+      summary: 'Configure plaid client id and secret'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaidConfigurationInput'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/PlaidConfigurationResponse'
+                
+  /v1/configure/stripe:
+    get:
+      summary: 'Get stripe secret'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/StripeConfigurationResponse'
+    put:
+      summary: 'Configure stripe secret'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StripeConfigurationInput'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/StripeConfigurationResponse'
+                
+  /v1/businesses:
+    post:
+      summary: 'Create new business'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBusinessParams'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiBusiness'
+    get:
+      summary: 'List businesses'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiBusiness'
+                  
+  /v1/businesses/{businessId}:
+    get:
+      summary: 'Get business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiBusiness'
+    put:
+      summary: 'Update business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessUpdatePayload'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiBusiness'
+                
+  /v1/businesses/{businessId}/archive:
+    put:
+      summary: 'Archive business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiBusiness'
+                
+  /v1/businesses/{businessId}/categories:
+    get:
+      summary: 'List chart of accounts categories for business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/CategoryList'
+                
+  /v1/businesses/{businessId}/balances:
+    get:
+      summary: 'Get chart of accounts for business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiChartOfAccountsOld'
+                                
+  /v1/businesses/{businessId}/plaid/items:
+    get:
+      summary: 'List plaid items for business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiPlaidItem'
+                
+  /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}:
+    delete:
+      summary: 'Delete plaid item from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: plaidItemPlaidId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}/configuration:
+    get:
+      summary: 'Get plaid item configuration'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: plaidItemPlaidId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/PlaidItemConfiguration'
+    put:
+      summary: 'Set plaid item configuration'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: plaidItemPlaidId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaidItemConfiguration'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/PlaidItemConfiguration'
+                
+  /v1/businesses/{businessId}/plaid/items/{plaidItemPlaidId}/unlink:
+    post:
+      summary: 'Unlink and archive plaid item and child plaid accounts'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: plaidItemPlaidId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/plaid/link:
+    post:
+      summary: 'Create plaid item link token'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiLinkToken'
+                
+  /v1/businesses/{businessId}/plaid/link/exchange:
+    post:
+      summary: 'Exchange plaid token and add item to business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaidLinkPublicToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/plaid/update-mode-link:
+    post:
+      summary: 'Update plaid link link'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateModeLinkCreationPayload'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiLinkToken'
+                
+  /v1/businesses/{businessId}/plaid/accounts:
+    get:
+      summary: 'List plaid accounts for business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiPlaidAccount'
+                  
+  /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/archive:
+    post:
+      summary: 'Archive plaid account'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: plaidAccountId
+          in: path
+          required: true
+          schema:
+            type: string            
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiPlaidAccount'
+                
+  /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/reactivate:
+    post:
+      summary: 'Reactivate archived plaid account'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: plaidAccountId
+          in: path
+          required: true
+          schema:
+            type: string            
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiPlaidAccount'
+                
+  /v1/businesses/{businessId}/plaid/accounts/{plaidAccountId}/configuration:
+    get:
+      summary: 'Get plaid account configuration'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: plaidAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/PlaidAccountConfiguration'
+    put:
+      summary: 'Set plaid account configuration'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: plaidAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaidAccountConfiguration'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/PlaidAccountConfiguration'
+                
+  /v1/businesses/{businessId}/bank-transactions:
+    get:
+      summary: 'List transactions from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiBankTransaction'
+                  
+  /v1/businesses/{businessId}/bank-transactions/{transactionId}:
+    get:
+      summary: 'Get transaction from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiBankTransaction'
+                
+  /v1/businesses/{businessId}/bank-transactions/{transactionId}/categorize:
+    put:
+      summary: 'Categorize transaction'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankTransactionCategorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiBankTransaction'
+                
+  /v1/businesses/{businessId}/bank-transactions/{transactionId}/uncategorize:
+    put:
+      summary: 'Uncategorize transaction'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiBankTransaction'
+                
+  /v1/businesses/{businessId}/bank-transactions/{transactionId}/match:
+    put:
+      summary: 'Match transaction'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MatchPayload'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiMatch'
+                
+  /v1/businesses/{businessId}/bank-transactions/bulk-match:
+    post:
+      summary: 'Bulk match transactions'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuggestedMatchesWithTransactions'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/bank-transactions/{transactionId}/ledger-entries:
+    get:
+      summary: 'List transaction ledger entries'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ApiLedgerEntry'
+
+  /v1/businesses/{businessId}/payouts/{payoutId}:
+    get:
+      summary: 'Get payout from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: payoutId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiPayout'
+                
+  /v1/businesses/{businessId}/invoices/bulk:
+    post:
+      summary: 'Create invoices from batch'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/NewInvoicePostParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiInvoice'
+                  
+  /v1/businesses/{businessId}/invoices/{invoiceId}:
+    get:
+      summary: 'Get invoice from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiInvoice'
+                
+  /v1/businesses/{businessId}/invoices/{invoiceId}/delete:
+    post:
+      summary: 'Delete invoice from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiInvoice'
+                
+  /v1/businesses/{businessId}/invoices/payments:
+    get:
+      summary: 'List invoice payments from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiInvoicePayment'
+                  
+  /v1/businesses/{businessId}/invoices/payments/:
+    post:
+      summary: 'Create invoice payments from batch'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/CreateStandaloneInvoicePayment'
+                
+  /v1/businesses/{businessId}/invoices/payments/{paymentId}:
+    get:
+      summary: 'Get invoice payment from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiInvoicePayment'
+                
+  /v1/businesses/{businessId}/invoices/payments/{paymentId}/delete:
+    post:
+      summary: 'Delete invoice payment from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiInvoicePayment'
+                
+  /v1/businesses/{businessId}/invoices/refunds/:
+    get:
+      summary: 'List refunds from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiRefund'
+                  
+  /v1/businesses/{businessId}/external-accounts/:
+    get:
+      summary: 'List linked external accounts from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiExternalAccounts'
+                
+  /v1/businesses/{businessId}/external-accounts/{accountId}:
+    get:
+      summary: 'Get linked external account from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiExternalAccount'
+                
+  /v1/businesses/{businessId}/external-accounts/{accountId}/transactions:
+    get:
+      summary: 'Get transactions from linked external account'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiTransactions'
+                
+  /v1/businesses/{businessId}/external-accounts/{accountId}/balance-timestamps:
+    get:
+      summary: 'List balance timestamps from linked external account'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiBalanceTimestamps'
+                
+  /v1/businesses/{businessId}/external-accounts/{accountId}/opening-balance:
+    get:
+      summary: 'Get opening balance from linked external account'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiOpeningBalance'
+                
+  /v1/businesses/{businessId}/external-accounts/{accountId}/archive:
+    post:
+      summary: 'Archive linked external account'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/custom-accounts/:
+    post:
+      summary: 'Add custom account for business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCustomAccountParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiCustomAccount'
+    get:
+      summary: 'List custom accounts from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiCustomAccounts'
+                
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}:
+    get:
+      summary: 'Get custom account from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiCustomAccount'  
+                
+    patch:
+      summary: 'Update custom account from business'
+      parameters:  
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomAccountParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiCustomAccount'
+                
+    put:  
+      summary: 'Replace custom account from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCustomAccountParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiCustomAccount'
+                
+    post:
+      summary: 'Upload custom account transactions by JSON'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCustomTransactions' 
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/archive:
+    post: 
+      summary: 'Archive custom account from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiCustomAccount'
+
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/reactivate:
+    post:
+      summary: 'Reactivate custom account from business'
+      parameters:  
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string  
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiCustomAccount'
+                
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/balance:
+    post: 
+      summary: 'Create custom account balance timestamp'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCustomAccountBalance'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/custom-accounts/{customAccountId}/opening-balance:
+    post:
+      summary: 'Calculate new custom account opening balance entry'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiOpeningBalance'
+                
+  /v1/businesses/{businessId}/ledger/balances:
+    get:  
+      summary: 'List account balances from ledger'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiLedgerBalances'
+                
+  /v1/businesses/{businessId}/ledger/chart:
+    get:
+      summary: 'Get chart of accounts from business'
+      parameters:  
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string  
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiChartOfAccounts'
+                
+  /v1/businesses/{businessId}/ledger/manual-entries:
+    post:
+      summary: 'Create manual ledger entries'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateManualLedgerEntry'  
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiManualLedgerEntry'
+                
+  /v1/businesses/{businessId}/ledger/accounts:
+    get:
+      summary: 'Get ledger from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiLedger'
+                
+    post:  
+      summary: 'Create ledger account for business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiLedgerAccount'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/SingleApiChartAccount'
+                
+  /v1/businesses/{businessId}/ledger/accounts/{accountId}/lines:
+    get:
+      summary: 'List ledger account line items'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiLedgerAccountLineItem'
+                  
+  /v1/businesses/{businessId}/ledger/entries:
+    get:
+      summary: 'List ledger entries from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiLedgerEntry'
+                  
+  /v1/businesses/{businessId}/ledger/entries/{entryId}:
+    get:
+      summary: 'Get ledger entry from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiLedgerEntryWithTransaction'
+                
+  /v1/businesses/{businessId}/ledger/entries/{entryId}/reverse:
+    post:
+      summary: 'Create reversal entry for ledger entry'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiLedgerEntryWithTransaction'
+                
+  /v1/businesses/{businessId}/reports/profit-and-loss:
+    get:
+      summary: 'Get profit and loss report for business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ProfitAndLoss'
+                
+  /v1/businesses/{businessId}/reports/profit-and-loss-entries:
+    get:
+      summary: 'Get profit and loss entries from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PnlEntry'
+                  
+  /v1/businesses/{businessId}/reports/download-transactions-csv:
+    get:
+      summary: 'Download ledger transactions from business as csv'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/csv:    
+              schema:
+                type: string
+                
+  /v1/businesses/{businessId}/bank-transactions/tags:
+    post:
+      summary: 'Apply list of tags to list of transactions'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTagsPostParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiTag'
+                  
+  /v1/businesses/{businessId}/bank-transactions/{transactionId}/tags:
+    get:
+      summary: 'List tags applied to transaction'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiTag'
+                  
+  /v1/businesses/{businessId}/bank-transactions/{transactionId}/tags/{tagId}:
+    delete:
+      summary: 'Remove tag from transaction'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagsDeleteParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/payouts/tags:
+    post:
+      summary: 'Apply list of tags to list of payouts'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTagsPostParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiTag'
+                  
+    delete:
+      summary: 'Delete list of payout tags'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagsDeleteParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/payouts/{payoutId}/tags/:
+    get:
+      summary: 'List tags applied to payout'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: payoutId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiTag'
+                  
+  /v1/businesses/{businessId}/invoices/tags:
+    post:
+      summary: 'Apply list of tags to list of invoices'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTagsPostParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ApiTag'
+                  
+  /v1/businesses/{businessId}/invoices/{invoiceId}/tags:
+    get:
+      summary: 'List tags applied to invoice'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiTag'
+  /v1/businesses/{businessId}/invoices/payments/{paymentId}/tags:
+    get:
+      summary: 'List tags applied to invoice payment'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiTag'
+  /v1/businesses/{businessId}/invoices/payments/{paymentId}/allocations/tags:
+    delete:
+      summary: 'Delete tags applied to payment allocation'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagsDeleteParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+                
+  /v1/businesses/{businessId}/invoices/payments/allocations/tags:
+    post:
+      summary: 'Apply list of tags to list of invoice payment allocations'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTagsPostParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiTag'
+                  
+  /v1/businesses/{businessId}/invoices/payments/{paymentId}/allocations/{allocationId}/tags:
+    get:
+      summary: 'List tags applied to invoice payment allocation'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: paymentId
+          in: path
+          required: true
+          schema:  
+            type: string
+        - name: allocationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiTag'
+                  
+  /v1/businesses/{businessId}/payouts/:
+    get:
+      summary: 'List payouts from business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiPayout'
+    post:
+      summary: 'Create new payout for business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePayoutParams'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ApiPayout'
+                
+  /v1/businesses/{businessId}/ledger/accounts/{accountId}:
+    get:
+      summary: 'Get or create ledger account on business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/SingleApiChartAccount'
+    put:
+      summary: 'Update ledger account on business'
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApiLedgerAccount'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/SingleApiChartAccount'
+
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    RootInfoResponse:
+      type: object
+      properties:
+        clientName:
+          type: string
+          description: Name of the client
+        clientId:
+          type: string
+          format: uuid
+          description: Universally unique identifier of the client
+      required:
+        - clientName
+        - clientId
+    ApiChartOfAccounts:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedApiChartAccount'
+    PlaidConfigurationResponse:
+      type: object
+      properties:
+        client_id:
+          type: string
+        secret_last_4:
+          type: string
+    UpdateCustomAccountParams:
+      type: object
+      properties:
+        external_id:
+          type: string
+        mask:
+          type: string
+        account_name:
+          type: string
+        institution_name:
+          type: string
+        account_type:
+          type: string
+        account_subtype:
+          type: string
+    NewTagsPostParams:
+      type: object
+      properties:
+        key_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagKeyValue'
+        transaction_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+    ApiChartOfAccountsOld:
+      type: object
+      properties:
+        name:
+          type: string
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+    CreateManualLedgerEntry:
+      type: object
+      properties:
+        entry_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        memo:
+          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateLedgerEntryLineItem'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagKeyValue'
+    CreateApiLedgerAccount:
+      type: object
+      properties:
+        name:
+          type: string
+        normality:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        parent_id:
+          $ref: '#/components/schemas/AccountIdentifier'
+        stable_name:
+          $ref: '#/components/schemas/AccountStableName'
+        account_type:
+          $ref: '#/components/schemas/LedgerAccountType'
+        account_subtype:
+          $ref: '#/components/schemas/LedgerAccountSubtype'
+    MatchPayload:
+      oneOf:
+        - $ref: '#/components/schemas/ConfirmMatch'
+    CreateRefundParams:
+      type: object
+      properties:
+        external_id:
+          type: string
+        refunded_amount:
+          type: integer
+        fee:
+          type: integer
+        completed_at:
+          type: string
+          format: date-time
+        method:
+          $ref: '#/components/schemas/RefundPaymentMethod'
+        processor:
+          type: string
+        invoice_id:
+          type: string
+          format: uuid
+        invoice_external_id:
+          type: string
+        invoice_line_item_id:
+          type: string
+          format: uuid
+        invoice_payment_id:
+          type: string
+          format: uuid
+        invoice_payment_external_id:
+          type: string
+        recipient_name:
+          type: string
+    NewInvoicePostParams:
+      type: object
+      properties:
+        external_id:
+          type: string
+        sent_at:
+          type: string
+          format: date-time
+        due_at:
+          type: string
+          format: date-time
+        voided_at:
+          type: string
+          format: date-time
+        invoice_number:
+          type: string
+        recipient_name:
+          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewInvoiceLineItem'
+        additional_sales_taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTaxLineItem'
+        additional_discount:
+          type: integer
+        tips:
+          type: integer
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateImmediatePaymentInput'
+    ApiOpeningBalance:
+      type: object
+      properties:
+        external_account_external_id:
+          type: string
+        external_account_source:
+          $ref: '#/components/schemas/TransactionSource'
+        balance:
+          type: integer
+        effective_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    NewBusinessParams:
+      type: object
+      properties:
+        external_id:
+          type: string
+        legal_name:
+          type: string
+        tin:
+          type: string
+        us_state:
+          $ref: '#/components/schemas/USState'
+        entity_type:
+          $ref: '#/components/schemas/BusinessType'
+        phone_number:
+          type: string
+        sms_enabled:
+          type: boolean
+        sms_categorization_start_date:
+          type: string
+          format: date-time
+        activation_at:
+          type: string
+          format: date-time
+        internal_bank_account_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewBusinessUnitAccountId'
+        unit_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewBusinessUnitAccountId'
+        plaid_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatePlaidItem'
+        skip_onboarding:
+          type: boolean
+        industry:
+          $ref: '#/components/schemas/BusinessIndustry'
+        stripe_connect_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/StripeConnectAccountInput'
+    StripeConfigurationResponse:
+      type: object
+      properties:
+        stripe_secret_last_4:
+          type: string
+    NewCustomAccountBalance:
+      type: object
+      properties:
+        amount:
+          type: integer
+        date:
+          type: string
+          format: date-time
+    UpdateApiLedgerAccount:
+      type: object
+      properties:
+        stable_name:
+          $ref: '#/components/schemas/AccountStableName'
+        name:
+          type: string
+        normality:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        parent_id:
+          $ref: '#/components/schemas/AccountIdentifier'
+        account_type:
+          $ref: '#/components/schemas/LedgerAccountType'
+        account_subtype:
+          $ref: '#/components/schemas/LedgerAccountSubtype'
+    ApiInvoice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        business_id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+        status:
+          $ref: '#/components/schemas/InvoiceStatus'
+        sent_at:
+          type: string
+          format: date-time
+        due_at:
+          type: string
+          format: date-time
+        paid_at:
+          type: string
+          format: date-time
+        voided_at:
+          type: string
+          format: date-time
+        invoice_number:
+          type: string
+        recipient_name:
+          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiInvoiceLineItem'
+        subtotal:
+          type: integer
+        additional_discount:
+          type: integer
+        additional_sales_taxes_total:
+          type: integer
+        additional_sales_taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTaxLineItem'
+        tips:
+          type: integer
+        total_amount:
+          type: integer
+        outstanding_balance:
+          type: integer
+        payment_allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiInvoicePaymentAllocation'
+        imported_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        transaction_tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTag'
+    ApiBalanceTimestamps:
+      type: object
+      properties:
+        external_account_external_id:
+          type: string
+        external_account_source:
+          $ref: '#/components/schemas/TransactionSource'
+        balance_timestamps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiBalanceTimestamp'
+    ApiLedgerBalances:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedApiLedgerAccount'
+    BusinessType:
+      type: string
+      enum:
+        - SOLE_PROP
+        - C_CORP
+        - LLC
+        - S_CORP
+        - PARTNERSHIP
+    USState:
+      type: string
+      enum:
+        - ALABAMA
+        - ALASKA
+        - ARIZONA
+        - ARKANSAS
+        - CALIFORNIA
+        - COLORADO
+        - CONNECTICUT
+        - DELAWARE
+        - DISTRICT_OF_COLUMBIA
+        - FLORIDA
+        - GEORGIA
+        - HAWAII
+        - IDAHO
+        - ILLINOIS
+        - INDIANA
+        - IOWA
+        - KANSAS
+        - KENTUCKY
+        - LOUISIANA
+        - MAINE
+        - MARYLAND
+        - MASSACHUSETTS
+        - MICHIGAN
+        - MINNESOTA
+        - MISSISSIPPI
+        - MISSOURI
+        - MONTANA
+        - NEBRASKA
+        - NEVADA
+        - NEW_HAMPSHIRE
+        - NEW_JERSEY
+        - NEW_MEXICO
+        - NEW_YORK
+        - NORTH_CAROLINA
+        - NORTH_DAKOTA
+        - OHIO
+        - OKLAHOMA
+        - OREGON
+        - PENNSYLVANIA
+        - RHODE_ISLAND
+        - SOUTH_CAROLINA
+        - SOUTH_DAKOTA
+        - TENNESSEE
+        - TEXAS
+        - UTAH
+        - VERMONT
+        - VIRGINIA
+        - WASHINGTON
+        - WEST_VIRGINIA
+        - WISCONSIN
+        - WYOMING
+        - PUERTO_RICO
+    BusinessIndustry:
+      type: string
+      enum:
+        - TRUCKING
+        - DEMO_TRADES
+        - MEDSPA
+        - FLORIST
+    ApiTag:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        key:
+          type: string
+        value:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+    UpdateModeLinkCreationPayload:
+      type: object
+      properties:
+        plaid_item_id:
+          type: string
+    ApiBusiness:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+        legal_name:
+          type: string
+        tin:
+          type: string
+        us_state:
+          $ref: '#/components/schemas/USState'
+        entity_type:
+          $ref: '#/components/schemas/BusinessType'
+        industry:
+          $ref: '#/components/schemas/BusinessIndustry'
+        phone_number:
+          type: string
+        sms_enabled:
+          type: boolean
+        sms_categorization_start_date:
+          type: string
+          format: date-time
+        activation_at:
+          type: string
+          format: date-time
+        imported_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        archived_at:
+          type: string
+          format: date-time
+        unit_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIUnitAccount'
+        plaid_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiPlaidItem'
+        previously_imported:
+          type: boolean
+        stripe_connect_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiStripeConnectAccount'
+    ApiMatch:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        match_type:
+          $ref: '#/components/schemas/MatchType'
+        bank_transaction:
+          $ref: '#/components/schemas/ApiBankTransactionInterface'
+        details:
+          $ref: '#/components/schemas/ApiMatchDetails'
+    BusinessActivitySummary:
+      type: object
+      properties:
+        businessId:
+          type: string
+          format: uuid
+        legal_name:
+          type: string
+        sms_sent:
+          type: integer
+        sms_received:
+          type: integer
+        sms_sent_last_30:
+          type: integer
+        sms_received_last_30:
+          type: integer
+        categorized_last_month:
+          type: integer
+        uncategorized_last_month:
+          type: integer
+        categorized_by_api_last_month:
+          type: integer
+        categorized_by_sms_last_month:
+          type: integer
+        categorized_pct_last_month:
+          type: number
+        categorized_this_month:
+          type: integer
+        uncategorized_this_month:
+          type: integer
+        categorized_by_api_this_month:
+          type: integer
+        categorized_by_sms_this_month:
+          type: integer
+        categorized_pct_this_month:
+          type: number
+        days_since_last_activity:
+          type: integer
+        current_sms_queue_length:
+          type: integer
+    EmptyResponse:
+      type: object
+    NewCustomTransactions:
+      type: object
+      properties:
+        new_custom_transaction_params:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewCustomTransactionParams'
+    ClientActivitySummary:
+      type: object
+      properties:
+        businesses_onboarded:
+          type: integer
+        businesses_sent_sms:
+          type: integer
+        businesses_engaged:
+          type: integer
+        businesses_engaged_last_30:
+          type: integer
+        new_businesses_engaged_last_30:
+          type: integer
+        businesses_engaged_last_90:
+          type: integer
+        new_businesses_engaged_last_90:
+          type: integer
+        categorized_by_sms_last_30:
+          type: integer
+        categorized_by_api_last_30:
+          type: integer
+    ApiCustomAccounts:
+      type: object
+      properties:
+        custom_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiCustomAccount'
+    PnlEntry:
+      anyOf:
+        - $ref: '#/components/schemas/BankTransactionPnlEntry'
+        - $ref: '#/components/schemas/SplitBankTransactionPnlEntry'
+    ExternalAccountQueryParams:
+      type: object
+      properties:
+        account_source:
+          $ref: '#/components/schemas/TransactionSource'
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+
+
+
+    TagsDeleteParams:
+      type: object
+      properties:
+        tag_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of tag IDs to delete
+
+    ApiLinkToken:
+      type: object
+      properties:
+        link_token:
+          type: string
+          description: The link token to use for Plaid authentication
+
+    ApiPlaidAccount:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Universally unique identifier of the Plaid account
+        plaid_account_id:
+          type: string
+          description: Plaid's unique identifier for the account
+        plaid_item_id:
+          type: string
+          description: Plaid's unique identifier for the item
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        mask:
+          type: string
+          nullable: true
+          description: Last 4 digits of the account number
+        name:
+          type: string
+          nullable: true
+          description: Name of the account
+        account_type:
+          type: string
+          nullable: true
+          description: Type of the account
+        subtype:
+          type: string
+          nullable: true
+          description: Subtype of the account
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the account was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the account was last updated
+    PlaidItemConfiguration:
+      type: object
+      properties:
+        sync_transactions:
+          type: boolean
+          description: Whether to sync transactions for this item
+        current_cursor:
+          type: string
+          nullable: true
+          description: The current cursor position for transaction sync
+        archived:
+          type: boolean
+          description: Whether this item configuration is archived
+
+    PlaidInstitution:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the financial institution
+        institution_id:
+          type: string
+          description: Plaid's unique identifier for the institution
+
+    PlaidLinkPublicToken:
+      type: object
+      properties:
+        public_token:
+          type: string
+          description: The public token returned by Plaid Link
+        institution:
+          $ref: '#/components/schemas/PlaidInstitution'
+
+    PlaidAccountConfiguration:
+      type: object
+      properties:
+        sync_from_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp to start syncing account transactions from
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+
+    CreatePlaidItem:
+      type: object
+      properties:
+        item_id:
+          type: string
+          description: Plaid's unique identifier for the item
+        access_token:
+          type: string
+          description: Access token for the Plaid item
+        sync_transactions:
+          type: boolean
+          default: true
+          description: Whether to sync transactions for this item
+        institution_plaid_id:
+          type: string
+          nullable: true
+          description: Plaid's identifier for the institution
+
+    ApiPlaidInstitution:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Plaid's unique identifier for the institution
+        name:
+          type: string
+          description: The name of the financial institution
+        logo:
+          type: string
+          nullable: true
+          description: URL for the institution's logo
+
+
+    ApiTransactions:
+      type: object
+      properties:
+        external_account_external_id:
+          type: string
+        external_account_source:
+          $ref: '#/components/schemas/TransactionSource'
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiBankTransactionDataOnly'
+    AccountStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - ARCHIVED
+    ApiInvoicePayment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+          nullable: true
+        at:
+          type: string
+          format: date-time
+        method:
+          $ref: '#/components/schemas/PaymentMethod'
+        fee:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
+        processor:
+          type: string
+          nullable: true
+        imported_at:
+          type: string
+          format: date-time
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiInvoicePaymentAllocation'
+        transaction_tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTag'
+    ApiBankTransaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Universally unique identifier of the bank transaction
+        business_id:
+          type: string
+          format: uuid
+          description: Universally unique identifier of the business
+        source:
+          $ref: '#/components/schemas/TransactionSource'
+        source_transaction_id:
+          type: string
+          description: Transaction ID from the source
+        source_account_id:
+          type: string
+          description: Account ID from the source
+        imported_at:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction was imported
+        date:
+          type: string
+          format: date-time
+          description: Date of the transaction
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        amount:
+          type: integer
+          format: int64
+          description: Transaction amount in cents
+        counterparty_name:
+          type: string
+          nullable: true
+          description: Name of the transaction counterparty
+        description:
+          type: string
+          nullable: true
+          description: Description of the transaction
+        account_name:
+          type: string
+          nullable: true
+          description: Name of the bank account
+        categorization_status:
+          $ref: '#/components/schemas/CategorizationStatus'
+        category:
+          $ref: '#/components/schemas/ApiCategorization'
+        categorization_method:
+          $ref: '#/components/schemas/ClassifierAgent'
+        categorization_flow:
+          $ref: '#/components/schemas/ApiCategorizationFlow'
+        categorization_ux:
+          $ref: '#/components/schemas/CategorizationUX'
+        projected_income_category:
+          $ref: '#/components/schemas/ProjectedIncomeCategory'
+        suggested_matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSuggestedMatch'
+        match:
+          $ref: '#/components/schemas/ApiMatch'
+        transaction_tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTag'
+    ApiManualLedgerEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Universally unique identifier of the manual ledger entry
+        created_by:
+          type: string
+          description: Name of the user who created the manual ledger entry
+        memo:
+          type: string
+          description: Memo or description for the manual ledger entry
+        entry_id:
+          type: string
+          description: ID of the associated ledger entry
+    ApiExternalAccount:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Universally unique identifier of the external account
+        external_account_external_id:
+          type: string
+          description: External ID of the external account
+        external_account_source:
+          $ref: '#/components/schemas/TransactionSource'
+        external_account_name:
+          type: string
+          description: Name of the external account
+        latest_balance_timestamp:
+          $ref: '#/components/schemas/ApiBalanceTimestamp'
+        current_ledger_balance:
+          type: integer
+          format: int64
+          description: Current ledger balance of the external account in cents
+        mask:
+          type: string
+          nullable: true
+          description: Masked account number of the external account
+        institution:
+          $ref: '#/components/schemas/ApiExternalAccountInstitution'
+        connection_needs_repair_as_of:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp indicating when the connection started needing repair
+    SingleApiChartAccount:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AccountIdentifier'
+        name:
+          type: string
+          description: Name of the account
+        stable_name:
+          $ref: '#/components/schemas/AccountStableName'
+        normality:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        account_type:
+          $ref: '#/components/schemas/ApiLedgerAccountType'
+        account_subtype:
+          $ref: '#/components/schemas/ApiLedgerAccountSubtype'
+    ApiCustomAccount:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+        mask:
+          type: string
+          nullable: true
+        account_name:
+          type: string
+        institution_name:
+          type: string
+        account_type:
+          type: string
+          nullable: true
+        account_subtype:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        archived_at:
+          type: string
+          format: date-time
+          nullable: true
+    ApiLedgerEntryWithTransaction:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the ledger entry
+        business_id:
+          type: string
+          format: uuid
+        ledger_id:
+          type: string
+        agent:
+          oneOf:
+            - $ref: '#/components/schemas/ClassifierAgent'
+        entry_type:
+          oneOf:
+            - $ref: '#/components/schemas/LedgerEntryType'
+        date:
+          type: string
+          format: date-time
+        entry_at:
+          type: string
+          format: date-time
+        reversal_of_id:
+          type: string
+          nullable: true
+        reversal_id:
+          type: string
+          nullable: true
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiLineItem'
+        transaction:
+          oneOf:
+            - $ref: '#/components/schemas/ApiBankTransaction'
+        invoice:
+          oneOf:
+            - $ref: '#/components/schemas/ApiInvoice'
+        manual_entry:
+          oneOf:
+            - $ref: '#/components/schemas/ApiManualLedgerEntry'
+        source:
+          oneOf:
+            - $ref: '#/components/schemas/LedgerEntrySource'
+    ApiLineItem:
+      type: object
+      properties:
+        id:
+          type: string
+        entry_id:
+          type: string
+        account:
+          $ref: '#/components/schemas/SingleApiChartAccount'
+        amount:
+          type: integer
+          format: int64
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        entry_at:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    CreatePayoutParams:
+      type: object
+      properties:
+        external_id:
+          type: string
+        paid_out_amount:
+          type: integer
+          format: int64
+        fee:
+          type: integer
+          format: int64
+        refunds_amount:
+          type: integer
+          format: int64
+        processor:
+          $ref: '#/components/schemas/PaymentProcessor'
+        completed_at:
+          type: string
+          format: date-time
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayoutPaymentInput'
+        overwrite_payment_fees:
+          type: boolean
+          nullable: true
+    PayoutPaymentInput:
+      type: object
+      properties:
+        invoice_payment_external_id:
+          type: string
+        amount:
+          type: integer
+          format: int64
+    ApiPayout:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+          nullable: true
+        business_id:
+          type: string
+          format: uuid
+        paid_out_amount:
+          type: integer
+          format: int64
+        fee:
+          type: integer
+          format: int64
+        processor:
+          $ref: '#/components/schemas/PaymentProcessor'
+        imported_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        match:
+          oneOf:
+            - $ref: '#/components/schemas/ApiMatch'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiInvoicePayment'
+        transaction_tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTag'
+    ApiExternalAccounts:
+      type: object
+      properties:
+        external_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiExternalAccount'
+    ApiLedger:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedApiLedgerAccount'
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiLedgerEntry'
+    PlaidConfigurationInput:
+      type: object
+      properties:
+        client_id:
+          type: string
+        secret:
+          type: string
+    ApiLedgerEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        business_id:
+          type: string
+          format: uuid
+        ledger_id:
+          type: string
+        agent:
+          oneOf:
+            - $ref: '#/components/schemas/ClassifierAgent'
+        entry_type:
+          oneOf:
+            - $ref: '#/components/schemas/LedgerEntryType'
+        date:
+          type: string
+          format: date-time
+        entry_at:
+          type: string
+          format: date-time
+        reversal_of_id:
+          type: string
+          nullable: true
+        reversal_id:
+          type: string
+          nullable: true
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiLineItem'
+
+    NestedApiChartAccount:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AccountIdentifier'
+        name:
+          type: string
+        stable_name:
+          oneOf:
+            - $ref: '#/components/schemas/AccountStableName'
+        normality:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        account_type:
+          oneOf:
+            - $ref: '#/components/schemas/ApiLedgerAccountType'
+        account_subtype:
+          oneOf:
+            - $ref: '#/components/schemas/ApiLedgerAccountSubtype'
+        sub_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedApiChartAccount'
+    CreateLedgerEntryLineItem:
+      type: object
+      properties:
+        account_identifier:
+          $ref: '#/components/schemas/AccountIdentifier'
+        amount:
+          type: integer
+          format: int64
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+    TagKeyValue:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    NewInvoiceLineItem:
+      type: object
+      properties:
+        account_identifier:
+          oneOf:
+            - $ref: '#/components/schemas/AccountIdentifier'
+        description:
+          type: string
+          nullable: true
+        product:
+          type: string
+        unit_price:
+          type: integer
+          format: int64
+        quantity:
+          type: number
+          format: bigdecimal
+          nullable: true
+        discount_amount:
+          type: integer
+          format: int64
+          nullable: true
+        sales_taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTaxLineItem'
+          nullable: true
+        is_prepayment:
+          type: boolean
+          nullable: true
+    CreateImmediatePaymentInput:
+      type: object
+      properties:
+        external_id:
+          type: string
+          nullable: true
+        method:
+          $ref: '#/components/schemas/PaymentMethod'
+        fee:
+          type: integer
+          format: int64
+          nullable: true
+        amount:
+          type: integer
+          format: int64
+        processor:
+          type: string
+          nullable: true
+    ApiTaxLineItem:
+      type: object
+      properties:
+        tax_account:
+          oneOf:
+            - $ref: '#/components/schemas/TaxAccountIdentifier'
+        amount:
+          type: integer
+          format: int64
+    NewBusinessUnitAccountId:
+      type: object
+      properties:
+        unit_id:
+          type: string
+        account_name:
+          type: string
+          nullable: true
+        opening_balance_init_to_zero:
+          type: boolean
+        opening_balance_do_not_init:
+          type: boolean
+    StripeConnectAccountInput:
+      type: object
+      properties:
+        stripe_id:
+          type: string
+    TransactionSource:
+      type: string
+      enum:
+        - UNIT
+        - PLAID
+        - API
+        - STRIPE
+        - CUSTOM
+    ApiStripeConnectAccount:
+      type: object
+      properties:
+        stripe_connect_account_stripe_id:
+          type: string
+        last_synced_at:
+          type: string
+          format: date-time
+          nullable: true
+        archived_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        created_in_stripe:
+          type: string
+          format: date-time
+        merchant_name:
+          type: string
+          nullable: true
+    MatchType:
+      type: string
+      enum:
+        - TRANSFER
+        - INVOICE_PAYMENT
+        - PAYOUT
+    ApiBankTransactionInterface:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        business_id:
+          type: string
+          format: uuid
+        source:
+          $ref: '#/components/schemas/TransactionSource'
+        source_transaction_id:
+          type: string
+        source_account_id:
+          type: string
+        imported_at:
+          type: string
+          format: date-time
+        date:
+          type: string
+          format: date-time
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        amount:
+          type: integer
+          format: int64
+        counterparty_name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        account_name:
+          type: string
+          nullable: true
+        categorization_status:
+          $ref: '#/components/schemas/CategorizationStatus'
+    ApiMatchDetails:
+      type: object
+      required:
+        - id
+        - amount
+        - date
+      properties:
+        id:
+          type: string
+          format: uuid
+        amount:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true
+    InvoiceStatus:
+      type: string
+      enum:
+        - SENT
+        - PARTIALLY_PAID
+        - PAID
+        - VOIDED
+    ApiInvoiceLineItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        invoice_id:
+          type: string
+          format: uuid
+        account_identifier:
+          oneOf:
+            - $ref: '#/components/schemas/AccountIdentifier'
+        description:
+          type: string
+          nullable: true
+        product:
+          type: string
+          nullable: true
+        unit_price:
+          $ref: '#/components/schemas/SignedAmount'
+        quantity:
+          type: number
+          format: bigdecimal
+        subtotal:
+          type: integer
+          format: int64
+        discount_amount:
+          type: integer
+          format: int64
+        sales_taxes_total:
+          type: integer
+          format: int64
+        sales_taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTaxLineItem'
+          nullable: true
+        total_amount:
+          type: integer
+          format: int64
+    ApiInvoicePaymentAllocation:
+      type: object
+      properties:
+        invoice_id:
+          type: string
+          format: uuid
+        payment_id:
+          type: string
+          format: uuid
+        amount:
+          type: integer
+          format: int64
+        transaction_tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiTag'
+    PaymentMethod:
+      type: string
+      enum:
+        - CASH
+        - CHECK
+        - CREDIT_CARD
+        - ACH
+        - REDEEMED_PREPAYMENT
+        - OTHER
+
+    PaymentProcessor:
+      type: string
+      enum:
+        - STRIPE
+        - PAYPAL
+
+    PaymentBalanceTransactionType:
+      type: string
+      enum:
+        - charge
+        - payment
+        - refund
+        - payment_refund
+
+
+
+    ClassifierAgent:
+      type: string
+      enum:
+        - SMS
+        - API
+        - LAYER_AUTO
+        - LAYER_MANUAL
+
+    ProjectedIncomeCategory:
+      type: string
+      enum:
+        - REVENUE
+        - EXPENSE
+        - EXCLUDE
+
+    LayerApiSortOrder:
+      type: string
+      enum:
+        - ASC
+        - ASCENDING
+        - DES
+        - DESC
+        - DESCENDING
+
+    ReportingBasis:
+      type: string
+      enum:
+        - ACCRUAL
+        - CASH
+
+    BusinessLedgerProvider:
+      type: string
+      enum:
+        - MODERN_TREASURY
+        - LOCAL
+        - SPLITS_ONLY
+
+    BusinessLedgerStatus:
+      type: string
+      enum:
+        - CREATING
+        - ACTIVE
+        - CREATION_FAILED
+        - MIGRATING
+
+    ApiErrorType:
+      type: string
+      enum:
+        - ResourceArchived
+        - AuthFailure
+        - Plaid
+        - Stripe
+        - InvalidState
+        - ResourceNotFound
+        - InvalidParameters
+        - JsonSerialization
+        - Unknown
+        - BadRequest
+        - PaginationCursor
+        - Conflict
+    CurrencyCode:
+      type: string
+      enum:
+        - AED
+        - AFN
+        - ALL
+        - AMD
+        - ANG
+        - AOA
+        - ARS
+        - AUD
+        - AWG
+        - AZN
+        - BAM
+        - BBD
+        - BDT
+        - BGN
+        - BHD
+        - BIF
+        - BMD
+        - BND
+        - BOB
+        - BRL
+        - BSD
+        - BTN
+        - BWP
+        - BYR
+        - BZD
+        - CAD
+        - CDF
+        - CHF
+        - CLP
+        - CNY
+        - COP
+        - CRC
+        - CUC
+        - CUP
+        - CVE
+        - CZK
+        - DJF
+        - DKK
+        - DOP
+        - DZD
+        - EGP
+        - ERN
+        - ETB
+        - EUR
+        - FJD
+        - FKP
+        - GBP
+        - GEL
+        - GGP
+        - GHS
+        - GIP
+        - GMD
+        - GNF
+        - GTQ
+        - GYD
+        - HKD
+        - HNL
+        - HRK
+        - HTG
+        - HUF
+        - IDR
+        - ILS
+        - IMP
+        - INR
+        - IQD
+        - IRR
+        - ISK
+        - JEP
+        - JMD
+        - JOD
+        - JPY
+        - KES
+        - KGS
+        - KHR
+        - KMF
+        - KPW
+        - KRW
+        - KWD
+        - KYD
+        - KZT
+        - LAK
+        - LBP
+        - LKR
+        - LRD
+        - LSL
+        - LYD
+        - MAD
+        - MDL
+        - MGA
+        - MKD
+        - MMK
+        - MNT
+        - MOP
+        - MRO
+        - MUR
+        - MVR
+        - MWK
+        - MXN
+        - MYR
+        - MZN
+        - NAD
+        - NGN
+        - NIO
+        - NOK
+        - NPR
+        - NZD
+        - OMR
+        - PAB
+        - PEN
+        - PGK
+        - PHP
+        - PKR
+        - PLN
+        - PYG
+        - QAR
+        - RON
+        - RSD
+        - RUB
+        - RWF
+        - SAR
+        - SBD
+        - SCR
+        - SDG
+        - SEK
+        - SGD
+        - SHP
+        - SLL
+        - SOS
+        - SPL
+        - SRD
+        - STD
+        - SVC
+        - SYP
+        - SZL
+        - THB
+        - TJS
+        - TMT
+        - TND
+        - TOP
+        - TRY
+        - TTD
+        - TVD
+        - TWD
+        - TZS
+        - UAH
+        - UGX
+        - USD
+        - UYU
+        - UZS
+        - VEF
+        - VND
+        - VUV
+        - WST
+        - XAF
+        - XCD
+        - XDR
+        - XOF
+        - XPF
+        - YER
+        - ZAR
+        - ZMW
+        - ZWD
+    PnlTemplates:
+      type: string
+      enum:
+        - DEFAULT
+        - TRUCKING
+        - MEDSPA
+        - MEDSPA_NO_LICENSING
+        - CITRUS
+        - CITRUS_NO_LICENSING
+        - FLORIST
+
+
+
+    ClientStringName:
+      type: string
+      enum:
+        - CAUGHT_UP_LINK_PROMPT
+        - CAUGHT_UP_ONBOARDING_LINK_PROMPT
+        - ONBOARDING_COMPLETE_NOT_CAUGHT_UP
+        - CATEGORIZE_IN_APP_PROMPT
+
+    FallbackChildHandling:
+      type: string
+      enum:
+        - LINE_ITEM
+        - OTHER_BUCKET
+        - OMIT
+        - THROW_ERROR
+    BusinessUpdatePayload:
+      type: object
+      properties:
+        legalName:
+          type: string
+          nullable: true
+        tin:
+          type: string
+          nullable: true
+        usState:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/USState'
+        entityType:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/BusinessType'
+        industry:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/BusinessIndustry'
+        phoneNumber:
+          type: string
+          nullable: true
+        smsEnabled:
+          type: boolean
+          nullable: true
+        smsCategorizationStartDate:
+          type: string
+          format: date-time
+          nullable: true
+        activationAt:
+          type: string
+          format: date-time
+          nullable: true
+        archivedAt:
+          type: string
+          format: date-time
+          nullable: true
+        unitIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewBusinessUnitAccountId'
+          nullable: true
+        internalBankAccountIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewBusinessUnitAccountId'
+          nullable: true
+        plaidItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatePlaidItem'
+          nullable: true
+        stripeConnectAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/StripeConnectAccountInput'
+          nullable: true
+    ApiExternalAccountInstitution:
+      type: object
+      properties:
+        name:
+          type: string
+        logo:
+          type: string
+          nullable: true
+    ApiSuggestedMatch:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        matchType:
+          $ref: '#/components/schemas/MatchType'
+        details:
+          $ref: '#/components/schemas/ApiMatchDetails'
+    CategorizationUX:
+      type: object
+      properties:
+        prompt:
+          type: string
+          nullable: true
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategorizationOption'
+
+    CategorizationOption:
+      oneOf:
+        - $ref: '#/components/schemas/CategorizationOption_MenuOption'
+        - $ref: '#/components/schemas/CategorizationOption_CategorizeOption'
+        - $ref: '#/components/schemas/CategorizationOption_SplitOption'
+        - $ref: '#/components/schemas/CategorizationOption_FreeSelectOption'
+
+    CategorizationOption_MenuOption:
+      type: object
+      properties:
+        name:
+          type: string
+        display_string:
+          type: string
+        tooltip:
+          type: string
+          nullable: true
+        menu_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategorizationOption'
+
+    CategorizationOption_CategorizeOption:
+      type: object
+      properties:
+        name:
+          type: string
+        display_string:
+          type: string
+        tooltip:
+          type: string
+          nullable: true
+        account:
+          $ref: '#/components/schemas/ApiCategorization'
+
+    CategorizationOption_SplitOption:
+      type: object
+      properties:
+        name:
+          type: string
+          default: SPLIT
+        display_string:
+          type: string
+          default: Split
+        tooltip:
+          type: string
+          nullable: true
+
+    CategorizationOption_FreeSelectOption:
+      type: object
+      properties:
+        name:
+          type: string
+          default: FREE_SELECT
+        display_string:
+          type: string
+          default: Something else
+        tooltip:
+          type: string
+          nullable: true
+    ApiCategorizationFlow:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/InputStrategy'
+        category:
+          oneOf:
+            - $ref: '#/components/schemas/ApiCategorization'
+        suggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiCategorization'
+          nullable: true
+    CategorizationStatus:
+      type: string
+      enum:
+        - UNCATEGORIZED
+        - AUTO_CATEGORIZED
+        - CATEGORIZED
+        - DELETED
+        - TRANSFER
+        - REFUND
+        - INVOICE_PAYMENT
+    StripeConfigurationInput:
+      type: object
+      properties:
+        secret:
+          type: string
+    NewCustomAccountParams:
+      type: object
+      properties:
+        external_id:
+          type: string
+        mask:
+          type: string
+        account_name:
+          type: string
+        institution_name:
+          type: string
+        account_type:
+          type: string
+        account_subtype:
+          type: string
+    CreateStandaloneInvoicePayment:
+      type: object
+      properties:
+        external_id:
+          type: string
+          nullable: true
+        paid_at:
+          type: string
+          format: date-time
+        method:
+          $ref: '#/components/schemas/PaymentMethod'
+        fee:
+          type: integer
+          format: int64
+          nullable: true
+        amount:
+          type: integer
+          format: int64
+        processor:
+          type: string
+          nullable: true
+        invoice_payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoicePaymentAllocationInput'
+    InvoicePaymentAllocationInput:
+      type: object
+      properties:
+        invoice_id:
+          type: string
+          format: uuid
+        amount:
+          type: integer
+          format: int64
+    ApiRefund:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+          nullable: true
+        refunded_amount:
+          type: integer
+          format: int64
+        fee:
+          type: integer
+          format: int64
+        completed_at:
+          type: string
+          format: date-time
+        method:
+          $ref: '#/components/schemas/RefundPaymentMethod'
+        processor:
+          type: string
+          nullable: true
+        invoice_id:
+          type: string
+          format: uuid
+          nullable: true
+        invoice_line_item_id:
+          type: string
+          format: uuid
+          nullable: true
+        invoice_payment_id:
+          type: string
+          format: uuid
+          nullable: true
+        recipient_name:
+          type: string
+    ApiLedgerAccountLineItem:
+      type: object
+      properties:
+        id:
+          type: string
+        entry_id:
+          type: string
+        account:
+          $ref: '#/components/schemas/SingleApiChartAccount'
+        amount:
+          type: integer
+          format: int64
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        date:
+          type: string
+          format: date-time
+        source:
+          $ref: '#/components/schemas/LedgerEntrySource'
+        running_balance:
+          type: integer
+          format: int64
+        transaction:
+          $ref: '#/components/schemas/ApiBankTransaction'
+        invoice:
+          $ref: '#/components/schemas/ApiInvoice'
+    ProfitAndLoss:
+      type: object
+      properties:
+        business_id:
+          type: string
+          format: uuid
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+        income:
+          $ref: '#/components/schemas/LineItem'
+        cost_of_goods_sold:
+          oneOf:
+            - $ref: '#/components/schemas/LineItem'
+        gross_profit:
+          type: integer
+          format: int64
+        expenses:
+          $ref: '#/components/schemas/LineItem'
+        profit_before_taxes:
+          type: integer
+          format: int64
+        taxes:
+          $ref: '#/components/schemas/LineItem'
+        net_profit:
+          type: integer
+          format: int64
+        other_outflows:
+          oneOf:
+            - $ref: '#/components/schemas/LineItem'
+          nullable: true
+        personal_expenses:
+          oneOf:
+            - $ref: '#/components/schemas/LineItem'
+        fully_categorized:
+          type: boolean
+    SuggestedMatchesWithTransactions:
+      type: object
+      properties:
+        match_pairs:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestedMatchWithTransaction'
+    SuggestedMatchWithTransaction:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+        suggested_match_id:
+          type: string
+          format: uuid
+    ApiPlaidItem:
+      type: object
+      properties:
+        item_id:
+          type: string
+        access_token:
+          type: string
+          description: Access token for the Plaid item
+        sync_transactions:
+          type: boolean
+          description: Whether to sync transactions for this item
+        institution:
+          oneOf:
+            - $ref: '#/components/schemas/ApiPlaidInstitution'
+          description: The financial institution associated with this item (may be null for older items)
+    LedgerEntryType:
+      type: string
+      enum:
+        - BANK
+        - MANUAL
+        - OPENING_BALANCE
+    ApiLedgerAccountType:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/LedgerAccountType'
+        display_name:
+          type: string
+
+    LedgerAccountType:
+      type: string
+      enum:
+        - ASSET
+        - LIABILITY
+        - EQUITY
+        - REVENUE
+        - COGS
+        - EXPENSE
+
+    ApiLedgerAccountSubtype:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/LedgerAccountSubtype'
+        display_name:
+          type: string
+
+    LedgerAccountSubtype:
+      type: string
+      enum:
+        - CURRENT
+        - FIXED
+        - ACCOUNTS_RECEIVABLE
+        - LONG_TERM
+        - ACCOUNTS_PAYABLE
+        - CREDIT_CARD
+        - OWNERS_EQUITY
+        - PRODUCT_INCOME
+        - SERVICE_INCOME
+        - DIRECT_LABOR
+        - MATERIAL
+        - OVERHEAD
+        - ADVERTISING_AND_PROMOTION
+        - AUTOMOTIVE_EXPENSE
+        - BANK_FEES
+        - CHARITABLE_CONTRIBUTIONS
+        - COMMISSIONS_AND_FEES
+        - DUES_AND_SUBSCRIPTIONS
+        - INSURANCE
+        - INTEREST
+        - LEGAL_AND_PROFESSIONAL_FEES
+        - LICENSES
+        - MEALS_AND_ENTERTAINMENT
+        - OFFICE_SUPPLIES
+        - PAYROLL_ADMIN
+        - PAYROLL_BENEFITS
+        - PAYROLL_TAXES
+        - PHONE_AND_INTERNET
+        - RENT_OR_LEASE
+        - REPAIRS_AND_MAINTENANCE
+        - TAXES_AND_LICENSES
+        - TRAVEL
+        - UTILITIES
+        - DEPRECIATION
+    CategoryList:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedApiCategorization'
+    AccountIdentifier:
+      oneOf:
+        - $ref: '#/components/schemas/AccountId'
+        - $ref: '#/components/schemas/AccountStableName'
+
+    AccountId:
+      type: object
+      properties:
+        id:
+          type: string
+    AccountStableName:
+      type: object
+      properties:
+        name:
+          type: string
+    BankTransactionPnlEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        business_id:
+          type: string
+          format: uuid
+        source:
+          $ref: '#/components/schemas/TransactionSource'
+        source_transaction_id:
+          type: string
+        source_account_id:
+          type: string
+        imported_at:
+          type: string
+          format: date-time
+        date:
+          type: string
+          format: date-time
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        amount:
+          type: integer
+          format: int64
+        counterparty_name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        account_name:
+          type: string
+          nullable: true
+        categorization_status:
+          $ref: '#/components/schemas/CategorizationStatus'
+        category:
+          $ref: '#/components/schemas/ApiCategorization'
+        categorization_method:
+          oneOf:
+            - $ref: '#/components/schemas/ClassifierAgent'
+        categorization_flow:
+          oneOf:
+            - $ref: '#/components/schemas/ApiCategorizationFlow'
+        categorization_ux:
+          oneOf:
+            - $ref: '#/components/schemas/CategorizationUX'
+        projected_income_category:
+          $ref: '#/components/schemas/ProjectedIncomeCategory'
+
+    SplitBankTransactionPnlEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        business_id:
+          type: string
+          format: uuid
+        source:
+          $ref: '#/components/schemas/TransactionSource'
+        source_transaction_id:
+          type: string
+        source_account_id:
+          type: string
+        imported_at:
+          type: string
+          format: date-time
+        date:
+          type: string
+          format: date-time
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        amount:
+          type: integer
+          format: int64
+        counterparty_name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        account_name:
+          type: string
+          nullable: true
+        categorization_status:
+          $ref: '#/components/schemas/CategorizationStatus'
+        category:
+          $ref: '#/components/schemas/ApiCategorization'
+        categorization_method:
+          oneOf:
+            - $ref: '#/components/schemas/ClassifierAgent'
+        categorization_flow:
+          oneOf:
+            - $ref: '#/components/schemas/ApiCategorizationFlow'
+        categorization_ux:
+          oneOf:
+            - $ref: '#/components/schemas/CategorizationUX'
+        projected_income_category:
+          $ref: '#/components/schemas/ProjectedIncomeCategory'
+    NewCustomTransactionParams:
+      type: object
+      properties:
+        external_id:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        date:
+          type: string
+          format: date-time
+        merchant_name:
+          type: string
+          nullable: true
+        merchant_category_code:
+          type: string
+          nullable: true
+        currency_code:
+          $ref: '#/components/schemas/CurrencyCode'
+        description:
+          type: string
+        display_description:
+          type: string
+          nullable: true
+        balance:
+          type: integer
+          format: int64
+          nullable: true
+        opening_balance_do_not_init:
+          type: boolean
+        opening_balance_init_to_zero:
+          type: boolean
+        init_external_transaction_mappings:
+          type: boolean
+    InputStrategy:
+      type: string
+      enum:
+        - CATEGORY_SELECT
+        - SIMPLE_SEARCH
+        - UNCATEGORIZED
+    ApiBankTransactionDataOnly:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        business_id:
+          type: string
+          format: uuid
+        source:
+          $ref: '#/components/schemas/TransactionSource'
+        source_transaction_id:
+          type: string
+        source_account_id:
+          type: string
+        imported_at:
+          type: string
+          format: date-time
+        date:
+          type: string
+          format: date-time
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        amount:
+          type: integer
+          format: int64
+        counterparty_name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        account_name:
+          type: string
+          nullable: true
+        categorization_status:
+          $ref: '#/components/schemas/CategorizationStatus'
+    SignedAmount:
+      type: integer
+      format: int64
+    ExclusionClassification:
+      oneOf:
+        - $ref: '#/components/schemas/Exclusion'
+      discriminator:
+        propertyName: classificationType
+        mapping:
+          Exclusion: '#/components/schemas/Exclusion'
+    Exclusion:
+      type: object
+      properties:
+        exclusion_type:
+          $ref: '#/components/schemas/ExclusionType'
+      required:
+        - exclusion_type
+    ExclusionType:
+      type: string
+      description: "Type of exclusion for a bank transaction."
+      enum:
+        - PERSONAL_EXPENSES
+        - PERSONAL_INFLOWS
+        - OTHER_EXCLUSION
+      x-displayStrings:
+        PERSONAL_EXPENSES: "Personal transactions"
+        PERSONAL_INFLOWS: "Personal income sources"
+        OTHER_EXCLUSION: "Other exclusion"
+    ApiCategorization:
+      description: Base schema for categorization of API entities.
+      oneOf:
+        - $ref: '#/components/schemas/AccountCategorization'
+        - $ref: '#/components/schemas/ExclusionCategorization'
+        - $ref: '#/components/schemas/SplitCategorization'
+        - $ref: '#/components/schemas/NestedApiCategorization'
+      discriminator:
+        propertyName: type
+        mapping:
+          Account: '#/components/schemas/AccountCategorization'
+          Exclusion: '#/components/schemas/ExclusionCategorization'
+          Split_Categorization: '#/components/schemas/SplitCategorization'
+          AccountNested: '#/components/schemas/NestedAccountCategorization'
+          OptionalAccountNested: '#/components/schemas/NestedOptionalCatetoryCategorization'
+          ExclusionNested: '#/components/schemas/NestedExclusionCategorization'
+    AccountCategorization:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Derived ID from Account ID.
+        stable_name:
+          type: string
+          nullable: true
+        category:
+          type: string
+        display_name:
+          type: string
+      required:
+        - id
+        - category
+        - display_name
+    ExclusionCategorization:
+      type: object
+      properties:
+        id:
+          type: string
+        category:
+          type: string
+        display_name:
+          type: string
+      required:
+        - id
+        - category
+        - display_name
+    SplitCategorizationEntry:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+        category:
+          $ref: '#/components/schemas/AccountCategorization'
+    SplitCategorization:
+      type: object
+      properties:
+        id:
+          type: string
+          default: "SPLIT"
+        category:
+          type: string
+          default: "SPLIT"
+        display_name:
+          type: string
+          default: "Split"
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SplitCategorizationEntry'
+      required:
+        - entries
+    NestedApiCategorization:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/NestedAccountCategorization'
+        - $ref: '#/components/schemas/NestedOptionalCatetoryCategorization'
+        - $ref: '#/components/schemas/NestedExclusionCategorization'
+
+    NestedApiSubCategories:
+      type: array
+      items:
+        $ref: '#/components/schemas/NestedApiCategorization'
+      nullable: true
+
+    NestedAccountCategorization:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Derived ID from Account ID.
+        stable_name:
+          type: string
+          nullable: true
+        category:
+          type: string
+        display_name:
+          type: string
+        subCategories:
+          $ref: '#/components/schemas/NestedApiSubCategories'
+
+    NestedOptionalCatetoryCategorization:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Derived ID from Stable Name.
+        stable_name:
+          type: string
+        category:
+          type: string
+        display_name:
+          type: string
+        subCategories:
+          $ref: '#/components/schemas/NestedApiSubCategories'
+
+    NestedExclusionCategorization:
+      type: object
+      properties:
+        id:
+          type: string
+        category:
+          type: string
+        display_name:
+          type: string
+        subCategories:
+          $ref: '#/components/schemas/NestedApiSubCategories'
+
+    AccountName:
+      type: string
+
+    Account:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AccountId'
+        accountStableName:
+          oneOf:
+            - $ref: '#/components/schemas/AccountStableName'
+        number:
+          type: integer
+        name:
+          $ref: '#/components/schemas/AccountName'
+        subAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+          nullable: true
+        normality:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        balance:
+          type: integer
+          format: int64
+        selfOnlyBalance:
+          type: integer
+          format: int64
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiLineItem'
+    ConfirmMatch:
+      type: object
+      properties:
+        match_id:
+          type: string
+          format: uuid
+    TaxAccountIdentifier:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/LedgerAccountIdentifier'
+        - $ref: '#/components/schemas/TaxName'
+      discriminator:
+        propertyName: type
+        mapping:
+          Legder_Account_Id: '#/components/schemas/LedgerAccountIdentifier'
+          Tax_Name: '#/components/schemas/TaxName'
+    LedgerAccountIdentifier:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    TaxName:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    APIUnitAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        account_name:
+          type: string
+          nullable: true
+        imported_at:
+          type: string
+          format: date-time
+    NestedApiLedgerAccount:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AccountId'
+        name:
+          type: string
+        stable_name:
+          oneOf:
+            - $ref: '#/components/schemas/AccountStableName'
+        normality:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        account_type:
+          oneOf:
+            - $ref: '#/components/schemas/ApiLedgerAccountType'
+        account_subtype:
+          oneOf:
+            - $ref: '#/components/schemas/ApiLedgerAccountSubtype'
+        balance:
+          type: integer
+          format: int64
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiLineItem'
+        sub_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedApiLedgerAccount'
+    ApiBalanceTimestamp:
+      type: object
+      properties:
+        external_account_external_id:
+          type: string
+        external_account_source:
+          $ref: '#/components/schemas/TransactionSource'
+        balance:
+          type: integer
+          format: int64
+        at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+    LedgerEntrySource:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/TransactionLedgerEntrySource'
+        - $ref: '#/components/schemas/InvoiceLedgerEntrySource'
+        - $ref: '#/components/schemas/ManualLedgerEntrySource'
+        - $ref: '#/components/schemas/InvoicePaymentLedgerEntrySource'
+        - $ref: '#/components/schemas/RefundPaymentLedgerEntrySource'
+        - $ref: '#/components/schemas/OpeningBalanceLedgerEntrySource'
+        - $ref: '#/components/schemas/PayoutLedgerEntrySource'
+      discriminator:
+        propertyName: type
+        mapping:
+          Transaction_Ledger_Entry_Source: '#/components/schemas/TransactionLedgerEntrySource'
+          Invoice_Ledger_Entry_Source: '#/components/schemas/InvoiceLedgerEntrySource'
+          Manual_Ledger_Entry_Source: '#/components/schemas/ManualLedgerEntrySource'
+          Invoice_Payment_Ledger_Entry_Source: '#/components/schemas/InvoicePaymentLedgerEntrySource'
+          Refund_Ledger_Entry_Source: '#/components/schemas/RefundPaymentLedgerEntrySource'
+          Opening_Balance_Ledger_Entry_Source: '#/components/schemas/OpeningBalanceLedgerEntrySource'
+          Payout_Ledger_Entry_Source: '#/components/schemas/PayoutLedgerEntrySource'
+    TransactionLedgerEntrySource:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+        account_name:
+          type: string
+        date:
+          type: string
+          format: date-time
+        amount:
+          type: integer
+          format: int64
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        counterparty:
+          type: string
+          nullable: true
+        entity_name:
+          type: string
+          default: "Bank Transaction"
+        display_description:
+          type: string
+          default: "Generated display description based on account name and date"
+    InvoiceLedgerEntrySource:
+      type: object
+      properties:
+        invoice_id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+          nullable: true
+        invoice_number:
+          type: string
+          nullable: true
+        recipient_name:
+          type: string
+        date:
+          type: string
+          format: date-time
+        amount:
+          type: integer
+          format: int64
+        entity_name:
+          type: string
+          default: "Invoice"
+        display_description:
+          type: string
+          default: "Generated display description based on invoice number and date"
+
+    ManualLedgerEntrySource:
+      type: object
+      properties:
+        manual_entry_id:
+          type: string
+          format: uuid
+        memo:
+          type: string
+        created_by:
+          type: string
+        entity_name:
+          type: string
+          default: "Manual Entry"
+        display_description:
+          type: string
+          default: "Manual Entry"
+
+    InvoicePaymentLedgerEntrySource:
+      type: object
+      properties:
+        external_id:
+          type: string
+          nullable: true
+        invoice_id:
+          type: string
+          format: uuid
+        invoice_number:
+          type: string
+          nullable: true
+        amount:
+          type: integer
+          format: int64
+        entity_name:
+          type: string
+          default: "Invoice Payment"
+        display_description:
+          type: string
+          default: "Payment on invoice based on invoice number"
+
+    RefundPaymentLedgerEntrySource:
+      type: object
+      properties:
+        external_id:
+          type: string
+          nullable: true
+        refund_id:
+          type: string
+          format: uuid
+        refunded_to_customer_amount:
+          type: integer
+          format: int64
+        recipient_name:
+          type: string
+        entity_name:
+          type: string
+          default: "Refund"
+        display_description:
+          type: string
+          default: "Refund of amount based on customer details"
+
+    OpeningBalanceLedgerEntrySource:
+      type: object
+      properties:
+        account_name:
+          type: string
+        entity_name:
+          type: string
+          default: "Opening Balance Entry"
+        display_description:
+          type: string
+          default: "Opening balance for specified account"
+
+    PayoutLedgerEntrySource:
+      type: object
+      properties:
+        payout_id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+          nullable: true
+        paid_out_amount:
+          type: integer
+          format: int64
+        processor:
+          type: string
+        completed_at:
+          type: string
+          format: date-time
+        entity_name:
+          type: string
+          default: "Payout"
+        display_description:
+          type: string
+          default: "Payout processed by specified processor on specified date"
+    RefundPaymentMethod:
+      type: string
+      enum:
+        - CASH
+        - CHECK
+        - CREDIT_CARD
+        - ACH
+        - STORE_CREDIT
+        - OTHER
+    BankTransactionCategorization:
+      oneOf:
+        - $ref: '#/components/schemas/Category'
+        - $ref: '#/components/schemas/ApiSplitInput'
+    Category:
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/BankTransactionClassification'
+    SplitEntry:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+        category:
+          $ref: '#/components/schemas/BankTransactionClassification'
+    BankTransactionClassification:
+      oneOf:
+        - $ref: '#/components/schemas/ExclusionClassification'
+        - $ref: '#/components/schemas/AccountIdentifier'
+    ApiSplitInput:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SplitEntry'
+    AuthToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+          format: int64
+        token_type:
+          type: string
+    LineItem:
+      type: object
+      properties:
+        name:
+          type: string
+        display_name:
+          type: string
+        value:
+          type: integer
+          format: int64
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        is_contra:
+          type: boolean
+      required:
+        - name
+        - display_name
+        - value
+        - is_contra
+    BankTransactionDirection:
+      type: string
+      enum:
+        - DEBIT
+        - CREDIT
+    ApiTypedActivity:
+      type: object
+      required:
+        - createdAt
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+      discriminator:
+        propertyName: type
+        mapping:
+          Categorize_Transaction_Activity: '#/components/schemas/ApiCategorizeBankTransactionActivity'
+          Load_PnL_Activity: '#/components/schemas/ApiLoadPnlActivity'
+      oneOf:
+        - $ref: '#/components/schemas/ApiCategorizeBankTransactionActivity'
+        - $ref: '#/components/schemas/ApiLoadPnlActivity'
+
+    ApiCategorizeBankTransactionActivity:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ApiTypedActivity'
+      properties:
+        transactionId:
+          type: string
+          format: uuid
+        categorizationMethod:
+          $ref: '#/components/schemas/ClassifierAgent'
+        categorization:
+          $ref: '#/components/schemas/BankTransactionCategorization'
+      required:
+        - transactionId
+        - categorizationMethod
+        - categorization
+
+    ApiLoadPnlActivity:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ApiTypedActivity'
+      properties:
+        pnlStartDate:
+          type: string
+          format: date-time
+          nullable: true
+        pnlEndDate:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - createdAt
+    FlatUnitTransactionInput:
+      type: object
+      properties:
+        unit_transaction_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        transaction_type:
+          type: string
+        unit_account_id:
+          type: string
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        balance:
+          type: integer
+          format: int64
+        tags:
+          type: string
+          nullable: true
+        amount:
+          type: integer
+          format: int64
+        merchant_type:
+          type: string
+          nullable: true
+        merchant_location:
+          type: string
+          nullable: true
+        processed_counterparty_name:
+          type: string
+          nullable: true
+        card_last_4_digits:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        sec_code:
+          type: string
+          nullable: true
+        auto_categorize:
+          type: boolean
+          default: true
+        opening_balance_do_not_init:
+          type: boolean
+        opening_balance_init_to_zero:
+          type: boolean
+        init_external_transaction_mappings:
+          type: boolean
+
+    FlatUnitTransactionResult:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        externalTransactionMappingId:
+          type: string
+          format: uuid
+          nullable: true
+        unit_transaction_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        transaction_type:
+          type: string
+        unit_account_id:
+          type: string
+        business_id:
+          type: string
+          format: uuid
+        direction:
+          $ref: '#/components/schemas/BankTransactionDirection'
+        balance:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
+        merchant_type:
+          type: string
+          nullable: true
+        tags:
+          type: string
+          nullable: true
+        merchant_location:
+          type: string
+          nullable: true
+        processed_counterparty_name:
+          type: string
+          nullable: true
+        card_last_4_digits:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        sec_code:
+          type: string
+          nullable: true
+        category:
+          oneOf:
+            - $ref: '#/components/schemas/ApiCategorization'
+          nullable: true
+        categorizationStatus:
+          oneOf:
+            - $ref: '#/components/schemas/CategorizationStatus'
+          nullable: true
+        previouslyImported:
+          type: boolean

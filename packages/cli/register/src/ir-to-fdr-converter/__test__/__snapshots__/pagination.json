@@ -316,6 +316,34 @@
         ]
       }
     },
+    "type_users:ListUsersMixedTypePaginationResponse": {
+      "name": "ListUsersMixedTypePaginationResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "next",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_users:User"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_users:Page": {
       "name": "Page",
       "shape": {
@@ -567,6 +595,90 @@
         {
           "auth": false,
           "method": "POST",
+          "id": "listWithMixedTypeCursorPagination",
+          "originalEndpointId": "endpoint_users.listWithMixedTypeCursorPagination",
+          "name": "List With Mixed Type Cursor Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "cursor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_users:ListUsersMixedTypePaginationResponse"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "next": "next",
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "next": "next",
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
           "id": "listWithBodyCursorPagination",
           "originalEndpointId": "endpoint_users.listWithBodyCursorPagination",
           "name": "List With Body Cursor Pagination",
@@ -726,6 +838,148 @@
                   "type": "primitive",
                   "value": {
                     "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_users:Order"
+                }
+              }
+            },
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithDoubleOffsetPagination",
+          "originalEndpointId": "endpoint_users.listWithDoubleOffsetPagination",
+          "name": "List With Double Offset Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Defaults to first page",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "default": 0
+                  }
+                }
+              }
+            },
+            {
+              "description": "Defaults to per page",
+              "key": "per_page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
                   }
                 }
               }
@@ -1490,6 +1744,7 @@
         "type_users:ListUsersExtendedResponse",
         "type_users:ListUsersExtendedOptionalListResponse",
         "type_users:ListUsersPaginationResponse",
+        "type_users:ListUsersMixedTypePaginationResponse",
         "type_users:Page",
         "type_users:NextPage",
         "type_users:User"

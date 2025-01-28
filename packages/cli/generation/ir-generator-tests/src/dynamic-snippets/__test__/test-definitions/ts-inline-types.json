@@ -1456,10 +1456,6 @@
                 },
                 {
                     "type": "named",
-                    "value": "type_:UndiscriminatedUnion1DiscriminatedUnion1"
-                },
-                {
-                    "type": "named",
                     "value": "type_:UndiscriminatedUnion1InlineEnum1"
                 },
                 {

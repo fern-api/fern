@@ -31,14 +31,14 @@ public partial class QueryParamClient
     {
         var _query = new Dictionary<string, object>();
         _query["operand"] = request.Operand.Stringify();
-        _query["operandOrColor"] = request.OperandOrColor.ToString();
+        _query["operandOrColor"] = JsonUtils.Serialize(request.OperandOrColor);
         if (request.MaybeOperand != null)
         {
             _query["maybeOperand"] = request.MaybeOperand.Value.Stringify();
         }
         if (request.MaybeOperandOrColor != null)
         {
-            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
+            _query["maybeOperandOrColor"] = JsonUtils.Serialize(request.MaybeOperandOrColor);
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -86,10 +86,10 @@ public partial class QueryParamClient
         _query["operand"] = request.Operand.Select(_value => _value.Stringify()).ToList();
         _query["maybeOperand"] = request.MaybeOperand.Select(_value => _value.Stringify()).ToList();
         _query["operandOrColor"] = request
-            .OperandOrColor.Select(_value => _value.ToString())
+            .OperandOrColor.Select(_value => JsonUtils.Serialize(_value))
             .ToList();
         _query["maybeOperandOrColor"] = request
-            .MaybeOperandOrColor.Select(_value => _value.ToString())
+            .MaybeOperandOrColor.Select(_value => JsonUtils.Serialize(_value))
             .ToList();
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

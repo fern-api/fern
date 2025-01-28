@@ -45,7 +45,7 @@ function addComponentSchema({ openapi, schemaReference, schemaName }: AddCompone
     const keys = schemaReference
         .replace("#/", "")
         .split("/")
-        .map((key) => key.replace("~1", "/"));
+        .map((key) => key.replaceAll("~1", "/"));
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value = openapi as any;
@@ -106,7 +106,7 @@ function replaceWithSchemaReference({
     const keys = replaceReference
         .replace("#/", "")
         .split("/")
-        .map((key) => key.replace("~1", "/"));
+        .map((key) => key.replaceAll("~1", "/"));
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value = openapi as any;

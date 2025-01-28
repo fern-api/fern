@@ -3,7 +3,8 @@ import { join } from "path";
 import traverse from "traverse";
 
 import { docsYml } from "@fern-api/configuration";
-import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder } from "@fern-api/docs-importer-commons";
+import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons";
+import { DEFAULT_LAYOUT } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { isReadmeDeployment } from "./assert";
@@ -30,13 +31,8 @@ import { normalizePath, removeLeadingSlash, removeTrailingSlash } from "./utils/
 export declare namespace ReadmeImporter {
     interface Args {
         readmeUrl: string;
+        organization: string;
     }
-}
-
-export interface TabInfo {
-    name: string;
-    url: string;
-    navigationBuilder: FernDocsNavigationBuilder;
 }
 
 export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
@@ -74,6 +70,8 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
             builder.setColors({ colors: scrapeData.colors });
         }
 
+        builder.setLayout({ layout: DEFAULT_LAYOUT });
+
         for (const tab of scrapeData.tabs ?? []) {
             const tabSlug = removeLeadingSlash(tab.url);
             if (tab.name === "API Reference") {
@@ -101,6 +99,9 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                 nav.addItem({ item: section });
             }
         }
+
+        const instanceUrl = builder.setInstance({ companyName: args.organization });
+        this.context.logger.debug(`Added instance ${instanceUrl} to docs.yml`);
     }
 
     private async scrapeAllSiteTabs(html: string, url: string | URL): Promise<ScrapeResult> {
@@ -143,6 +144,7 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         const successes = results.filter((result) => result.success);
         successes.forEach((result) => {
+            this.context.logger.debug(`Successfully scraped tab: ${result.data?.name}`);
             if (!result.data) {
                 return;
             }
@@ -196,20 +198,18 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
 
         const urlObj = new URL(url);
         const origin = urlObj.origin;
-
+        if (origin === "") {
+            return { success: false, message: `Invalid URL: ${url}` };
+        }
         const sidebar = retrieveRootNavElement(siteHast);
         if (!sidebar) {
             return { success: false, message: `${url.toString()}: Failed to find sidebar element` };
         }
         const navItems = parseSidebar(sidebar);
-        if (origin === "") {
-            return { success: false, message: `invalid URL provided to scrape site: ${url}` };
-        }
-
         const flatNavItems = navItems.flatMap((section) => section.pages);
         const listOfLinks = iterateOverNavItems(flatNavItems, origin);
         if (listOfLinks.length === 0) {
-            return { success: false, message: `no navigation links were able to be found: ${url}` };
+            return { success: false, message: `No navigation items found for URL: ${url}` };
         }
 
         const externalLinks = listOfLinks.filter((url: URL) => url.origin !== origin);
@@ -253,27 +253,33 @@ export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
                 return value;
             };
 
-            traverse(navItems).forEach(function (value) {
-                if (
-                    externalLinkReplaceMap.has(value) ||
-                    (Array.isArray(value) && value.some((item) => externalLinkReplaceMap.has(item)))
-                ) {
-                    this.update(replaceLinks(value, externalLinkReplaceMap));
-                } else if (
-                    rootPathReplaceMap.has(value) ||
-                    (Array.isArray(value) && value.some((item) => rootPathReplaceMap.has(item)))
-                ) {
-                    this.update(replaceLinks(value, rootPathReplaceMap));
-                }
-            });
+            for (const section of navItems) {
+                traverse(section.pages).forEach(function (value) {
+                    if (
+                        externalLinkReplaceMap.has(value) ||
+                        (Array.isArray(value) && value.some((item) => externalLinkReplaceMap.has(item)))
+                    ) {
+                        this.update(replaceLinks(value, externalLinkReplaceMap));
+                    } else if (
+                        rootPathReplaceMap.has(value) ||
+                        (Array.isArray(value) && value.some((item) => rootPathReplaceMap.has(item)))
+                    ) {
+                        this.update(replaceLinks(value, rootPathReplaceMap));
+                    }
+                });
+            }
 
-            traverse(navItems).forEach(function (value) {
-                if (typeof value === "string") {
-                    this.update(value.replace("/overview", ""));
-                } else if (Array.isArray(value)) {
-                    this.update(value.map((item) => (typeof item === "string" ? item.replace("/overview", "") : item)));
-                }
-            });
+            for (const section of navItems) {
+                traverse(section.pages).forEach(function (value) {
+                    if (typeof value === "string") {
+                        this.update(value.replace("/overview", ""));
+                    } else if (Array.isArray(value)) {
+                        this.update(
+                            value.map((item) => (typeof item === "string" ? item.replace("/overview", "") : item))
+                        );
+                    }
+                });
+            }
 
             const failedPaths = [...extResults, ...intResults, ...rootResults]
                 .filter((r) => !r.success)

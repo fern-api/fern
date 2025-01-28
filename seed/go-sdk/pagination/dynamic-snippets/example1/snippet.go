@@ -16,14 +16,12 @@ func do() () {
             "<token>",
         ),
     )
-    client.Users.ListWithBodyCursorPagination(
+    client.Users.ListWithMixedTypeCursorPagination(
         context.TODO(),
-        &fern.ListUsersBodyCursorPaginationRequest{
-            Pagination: &fern.WithCursor{
-                Cursor: fern.String(
-                    "cursor",
-                ),
-            },
+        &fern.ListUsersMixedTypeCursorPaginationRequest{
+            Cursor: fern.String(
+                "cursor",
+            ),
         },
     )
 }

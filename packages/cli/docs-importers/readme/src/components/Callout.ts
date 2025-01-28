@@ -1,6 +1,7 @@
 import type { Element, ElementContent } from "hast";
 
 import { assertIsStringArray } from "../assert";
+import { convertHastChildrenToMdast } from "../customComponents/children";
 import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 
 export function scrapeCallout(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {
@@ -35,43 +36,13 @@ export function scrapeCallout(node: HastNode, _: HastNodeIndex, __: HastNodePare
             break;
     }
 
-    let icon: string | undefined;
-    for (const child of node.children) {
-        if (
-            child.type === "element" &&
-            child.tagName === "h2" &&
-            Array.isArray(child.properties?.className) &&
-            child.properties?.className.includes("callout-heading")
-        ) {
-            const iconSpan = child.children?.find(
-                (c) =>
-                    c.type === "element" &&
-                    c.tagName === "span" &&
-                    Array.isArray(c.properties?.className) &&
-                    c.properties?.className.includes("callout-icon")
-            );
-            if (iconSpan && iconSpan.type === "element" && iconSpan.children?.[0] && "value" in iconSpan.children[0]) {
-                icon = String(iconSpan.children[0].value);
-            }
-            break;
-        }
-    }
+    const textChildren = node.children.filter((child) => child.type === "element" && child.tagName === "p");
 
     const newNode: Element = {
         type: "element",
         tagName,
-        properties: {
-            ...(icon && { icon })
-        },
-        children: node.children.filter(
-            (child) =>
-                !(
-                    child.type === "element" &&
-                    child.tagName === "h2" &&
-                    Array.isArray(child.properties?.className) &&
-                    child.properties?.className.includes("callout-heading")
-                )
-        ) as Array<ElementContent>
+        properties: {},
+        children: convertHastChildrenToMdast(textChildren) as Array<ElementContent>
     };
 
     return newNode;

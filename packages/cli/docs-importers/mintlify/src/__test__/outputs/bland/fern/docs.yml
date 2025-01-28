@@ -14,6 +14,10 @@ colors:
   background:
     dark: '#0A141B'
     light: null
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
 tabs:
   api-v1:
     slug: api-v1
@@ -27,206 +31,289 @@ navigation:
       - section: Basic
         contents:
           - page: Send Call (Simple)
+            icon: null
             path: api-v1/post/calls-simple.mdx
           - page: Send Call using Pathways (Simple)
+            icon: null
             path: api-v1/post/calls-simple-pathway.mdx
       - section: Calls
         contents:
           - page: Send Call
+            icon: null
             path: api-v1/post/calls.mdx
           - page: Analyze Call with AI
+            icon: null
             path: api-v1/post/calls-id-analyze.mdx
           - page: Stop Active Call
+            icon: null
             path: api-v1/post/calls-id-stop.mdx
           - page: List Calls
+            icon: null
             path: api-v1/get/calls.mdx
           - page: Call Details
+            icon: null
             path: api-v1/get/calls-id.mdx
           - page: Audio Recording
+            icon: null
             path: api-v1/get/calls-id-recording.mdx
           - page: Get corrected transcripts
+            icon: null
             path: api-v1/get/calls-corrected-transcript.mdx
       - section: Web Agents
         contents:
           - page: Create a Web Agent
+            icon: null
             path: api-v1/post/agents.mdx
           - page: Update Web Agent Settings
+            icon: null
             path: api-v1/post/agents-id.mdx
           - page: Authorize a Web Agent Call
+            icon: null
             path: api-v1/post/agents-id-authorize.mdx
           - page: Delete Web Agent
+            icon: null
             path: api-v1/post/agents-id-delete.mdx
           - page: List Web Agents
+            icon: null
             path: api-v1/get/agents.mdx
       - section: Inbound Numbers
         contents:
           - page: Purchase Inbound number
+            icon: null
             path: api-v1/post/inbound-purchase.mdx
           - page: Update Inbound Details
+            icon: null
             path: api-v1/post/inbound-number-update.mdx
           - page: List Inbound Numbers
+            icon: null
             path: api-v1/get/inbound.mdx
           - page: Inbound Number Details
+            icon: null
             path: api-v1/get/inbound-number.mdx
       - section: Outbound Numbers
         contents:
           - page: Purchase Outbound number
+            icon: null
             path: api-v1/post/outbound-purchase.mdx
           - page: List Outbound Numbers
+            icon: null
             path: api-v1/get/outbound.mdx
       - section: Voices
         contents:
           - page: List Voices
+            icon: null
             path: api-v1/get/voices.mdx
           - page: Voice Details
+            icon: null
             path: api-v1/get/voices-id.mdx
           - page: Generate Audio Sample
+            icon: null
             path: api-v1/post/voices-id-sample.mdx
       - section: Custom Tools
         contents:
           - page: Create a Custom Tool
+            icon: null
             path: api-v1/post/tools.mdx
           - page: Update Custom Tool
+            icon: null
             path: api-v1/post/tools-tool-id.mdx
           - page: List Custom Tools
+            icon: null
             path: api-v1/get/tools.mdx
           - page: Custom Tool Details
+            icon: null
             path: api-v1/get/tools-tool-id.mdx
       - section: Custom Twilio Accounts
         contents:
           - page: Create Encrypted Key
+            icon: null
             path: api-v1/post/accounts.mdx
           - page: Delete Encrypted Key
+            icon: null
             path: api-v1/post/accounts-delete.mdx
           - page: Upload Inbound Phone Numbers
+            icon: null
             path: api-v1/post/inbound-insert.mdx
           - page: Delete Inbound Phone Number
+            icon: null
             path: api-v1/post/inbound-number-delete.mdx
       - section: Subaccounts
         contents:
           - page: Create Subaccount
+            icon: null
             path: api-v1/post/subaccounts.mdx
           - page: Transfer Credit to a Subaccount
+            icon: null
             path: api-v1/post/subaccounts-id-transfer.mdx
           - page: Rotate Subaccount API Key
+            icon: null
             path: api-v1/post/subaccounts-id-rotate.mdx
           - page: Disable Subaccount
+            icon: null
             path: api-v1/post/subaccounts-id-disable.mdx
           - page: List Subaccounts
+            icon: null
             path: api-v1/get/subaccounts.mdx
           - page: List Subaccount Details
+            icon: null
             path: api-v1/get/subaccounts-id.mdx
       - section: Batches
         contents:
           - page: Send a Batch of Calls
+            icon: null
             path: api-v1/post/batches.mdx
           - page: Analyze Batch with AI
+            icon: null
             path: api-v1/post/batches-id-analyze.mdx
           - page: Stop Active Batch
+            icon: null
             path: api-v1/post/batches-id-stop.mdx
           - page: List Batches
+            icon: null
             path: api-v1/get/batches.mdx
           - page: Batch Details
+            icon: null
             path: api-v1/get/batches-id.mdx
           - page: Retrieve Batch Analysis
+            icon: null
             path: api-v1/get/batches-id-analysis.mdx
       - section: SMS
         contents:
           - page: A2P Registration
+            icon: null
             path: api-v1/post/sms-submit-reg.mdx
           - page: Check SMS A2P status
+            icon: null
             path: api-v1/post/sms-check-registration.mdx
           - page: Update SMS Prompt
+            icon: null
             path: api-v1/post/sms-prompt-update.mdx
           - page: SMS Conversation Analysis
+            icon: null
             path: api-v1/post/sms-analyze.mdx
           - page: Get SMS Messages
+            icon: null
             path: api-v1/post/sms-get-messages.mdx
           - page: Toggle SMS Reply Method
+            icon: null
             path: api-v1/post/sms-toggle-human.mdx
           - page: Update SMS Webhook
+            icon: null
             path: api-v1/post/sms-webhook-update.mdx
       - section: Account
         contents:
           - page: Account Details
+            icon: null
             path: api-v1/get/me.mdx
   - tab: documentation
     layout:
       - section: Get Started
         contents:
           - page: Welcome to Bland AI
+            icon: null
             path: welcome-to-bland.mdx
           - page: Starter guide
+            icon: null
             path: starter-guide.mdx
       - section: Bland Enterprise
         contents:
           - page: Custom Twilio Integration
+            icon: null
             path: enterprise-features/custom-twilio.mdx
           - page: Fine-tuning & Custom LLMs
+            icon: null
             path: enterprise-features/custom-llm.mdx
           - page: Unlimited support
+            icon: null
             path: enterprise-features/unlimited-support.mdx
           - page: Custom languages & voices
+            icon: null
             path: enterprise-features/custom-tts.mdx
           - page: Bring your own Twilio
+            icon: null
             path: enterprise-features/bring-your-own-twilio.mdx
           - page: Enterprise rate limits
+            icon: null
             path: enterprise-features/enterprise-rate-limits.mdx
       - section: Featured guides
         contents:
           - page: Bland & Botpress
+            icon: null
             path: featured-guides/bland-and-botpress.mdx
       - section: Basic Tutorials
         contents:
           - page: Conversational Pathways
+            icon: null
             path: tutorials/pathways.mdx
           - page: Custom Tools
+            icon: null
             path: tutorials/custom-tools.mdx
           - page: Send your first phone call
+            icon: null
             path: tutorials/send-first-call.mdx
           - page: Webhook Signing
+            icon: null
             path: tutorials/webhook-signing.mdx
           - page: Send 1000 phone calls
+            icon: null
             path: tutorials/send-1000-calls-at-once.mdx
           - page: Dynamic Data
+            icon: null
             path: tutorials/dynamic-data.mdx
           - page: Setting max duration
+            icon: null
             path: tutorials/max-duration.mdx
           - page: Live transfer
+            icon: null
             path: tutorials/live-transfer.mdx
           - page: Webhooks
+            icon: null
             path: tutorials/webhooks.mdx
       - section: Primary Endpoints
         contents:
           - page: Make a call
+            icon: null
             path: api-reference/endpoint/call.mdx
           - page: Get transcript
+            icon: null
             path: api-reference/endpoint/logs.mdx
           - page: Wait on Hold (HoldForMe)
+            icon: null
             path: api-reference/endpoint/hold.mdx
           - page: End phone call
+            icon: null
             path: api-reference/endpoint/end.mdx
           - page: Validate Dynamic Data
+            icon: null
             path: api-reference/endpoint/dynamic_validate.mdx
           - page: Purchase inbound number
+            icon: null
             path: api-reference/endpoint/purchase.mdx
           - page: Update Inbound Prompt
+            icon: null
             path: api-reference/endpoint/inbound_prompt.mdx
           - page: Get recording
+            icon: null
             path: api-reference/endpoint/recording.mdx
       - section: Batch Endpoints
         contents:
           - page: Batch Calling
+            icon: null
             path: api-reference/batch-endpoint/batch.mdx
           - page: Retrieve a Batch
+            icon: null
             path: api-reference/batch-endpoint/batch_get.mdx
           - page: Retrieve All Batches
+            icon: null
             path: api-reference/batch-endpoint/batches_get.mdx
           - page: Cancel Batch
+            icon: null
             path: api-reference/batch-endpoint/batch_stop.mdx
           - page: Cancel All Batch Calls
+            icon: null
             path: api-reference/batch-endpoint/end_batches.mdx
       - section: Hold Endpoint
         contents:
           - page: Wait on Hold (HoldForMe)
+            icon: null
             path: api-reference/hold-endpoint/hold.mdx

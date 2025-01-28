@@ -1,7 +1,13 @@
 import { cp, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { DOCS_CONFIGURATION_FILENAME, FERN_DIRECTORY, docsYml } from "@fern-api/configuration";
+import {
+    DOCS_CONFIGURATION_FILENAME,
+    FERN_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
+    docsYml,
+    generatorsYml
+} from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
 
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
@@ -18,7 +24,7 @@ interface Asset {
 }
 
 export class FernDocsBuilderImpl extends FernDocsBuilder {
-    private absolutePathsToOpenAPI: AbsoluteFilePath[] = [];
+    private openApiSpecs: Record<RelativeFilePath, AbsoluteFilePath> = {};
     private nonTabbedNavigation: NonTabbedNavigationBuilderImpl = new NonTabbedNavigationBuilderImpl();
     private tabbedNavigation: Record<docsYml.RawSchemas.TabId, TabbedNavigationBuilderImpl> = {};
     private markdownPages: Record<RelativeFilePath, MarkdownPage> = {};
@@ -26,9 +32,18 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
     private docsYml: docsYml.RawSchemas.DocsConfiguration = {
         instances: []
     };
+    private generatorsYml: generatorsYml.GeneratorsConfigurationSchema = {
+        api: { specs: [] as generatorsYml.ApiConfigurationV2SpecsSchema }
+    };
 
-    public addOpenAPI({ absolutePathToOpenAPI }: { absolutePathToOpenAPI: AbsoluteFilePath }): void {
-        this.absolutePathsToOpenAPI.push(absolutePathToOpenAPI);
+    public addOpenAPI({
+        relativePathToOpenAPI,
+        absolutePathToOpenAPI
+    }: {
+        relativePathToOpenAPI: RelativeFilePath;
+        absolutePathToOpenAPI: AbsoluteFilePath;
+    }): void {
+        this.openApiSpecs[relativePathToOpenAPI] = absolutePathToOpenAPI;
     }
 
     public addMarkdownPage({
@@ -119,7 +134,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
             Object.entries(this.tabbedNavigation).forEach(([_, value]) => {
                 const tabbedItem: docsYml.RawSchemas.TabbedNavigationItem = {
                     tab: value.tabId,
-                    layout: value.items
+                    ...(value.items.length > 0 ? { layout: value.items } : {})
                 };
                 tabbedNavigationItems.push(tabbedItem);
             });
@@ -127,13 +142,29 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         } else if (this.nonTabbedNavigation != null) {
             this.docsYml.navigation = this.nonTabbedNavigation.items;
         }
+        if (Object.entries(this.openApiSpecs).length > 0 && this.generatorsYml?.api != null) {
+            if (typeof this.generatorsYml.api !== "string") {
+                this.generatorsYml.api = {
+                    specs: Object.entries(this.openApiSpecs).map(([relativePath]) => ({
+                        openapi: relativePath
+                    }))
+                };
+            }
+            await writeFile(
+                join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+                yaml.dump(generatorsYml.serialization.GeneratorsConfigurationSchema.jsonOrThrow(this.generatorsYml))
+            );
+            await Promise.all(
+                Object.entries(this.openApiSpecs).map(async ([relativePath, absolutePath]) => {
+                    const absolutePathToOpenAPI = join(absolutePathToFernDirectory, RelativeFilePath.of(relativePath));
+                    await mkdir(dirname(absolutePathToOpenAPI), { recursive: true });
+                    await cp(absolutePath, absolutePathToOpenAPI);
+                })
+            );
+        }
 
-        const absoluteFilePathToDocsYml = join(
-            absolutePathToFernDirectory,
-            RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)
-        );
         await writeFile(
-            absoluteFilePathToDocsYml,
+            join(absolutePathToFernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
             yaml.dump(docsYml.RawSchemas.Serializer.DocsConfiguration.jsonOrThrow(this.docsYml))
         );
 

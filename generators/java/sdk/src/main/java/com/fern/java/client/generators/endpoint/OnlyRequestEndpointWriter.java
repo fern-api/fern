@@ -227,6 +227,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             REQUEST_OPTIONS_PARAMETER_NAME);
             builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+            AbstractEndpointWriter.responseContentType(httpEndpoint.getResponse())
+                    .ifPresent(responseContentType ->
+                            builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.ACCEPT_HEADER, contentType));
             return builder.add(".build();\n").unindent().build();
         }
     }

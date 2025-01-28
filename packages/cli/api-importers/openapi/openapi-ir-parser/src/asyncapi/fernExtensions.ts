@@ -39,7 +39,16 @@ export const FernAsyncAPIExtension = {
      * paths:
      *   /path/to/my/endpoint:
      */
-    BASE_PATH: "x-fern-base-path"
+    BASE_PATH: "x-fern-base-path",
+
+    /**
+     * Used to tell fern to ignore channels.
+     *
+     * channels:
+     *   /my-channel:
+     *     x-fern-ignore: true
+     */
+    IGNORE: "x-fern-ignore"
 } as const;
 
 export type FernAsyncAPIExtension = Values<typeof FernAsyncAPIExtension>;

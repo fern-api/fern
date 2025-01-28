@@ -28,11 +28,11 @@ export async function parsePageGroup(
                 try {
                     if (opts.externalLinks) {
                         taskContext.logger.debug(`Scraping external link with URL: ${url}...`);
-                        return parsePage(`external-link-${index}`, url, { externalLink: true });
+                        return parsePage(taskContext, `external-link-${index}`, url, { externalLink: true });
                     } else {
                         const html = await fetchPageHtml({ url });
                         taskContext.logger.debug(`Scraping internal link with URL: ${url}...`);
-                        return parsePage(html, url, {
+                        return parsePage(taskContext, html, url, {
                             externalLink: false,
                             rootPath: opts.rootPaths ? opts.rootPaths[index] : undefined
                         });
