@@ -113,7 +113,7 @@ export class ClientsGenerator {
         if (classReferenceFactory !== undefined) {
             this.crf = classReferenceFactory;
         } else {
-            this.gc.logger.warn("[Ruby] Client generator was not provided a ClassReferenceFactory, regenerating one.");
+            this.gc.logger.warn("Client generator was not provided a ClassReferenceFactory, regenerating one.");
             const types = new Map();
             for (const type of Object.values(intermediateRepresentation.types)) {
                 types.set(type.name.typeId, type);
@@ -158,7 +158,7 @@ export class ClientsGenerator {
 
         let environmentClass: Class_ | undefined;
         if (this.intermediateRepresentation.environments !== undefined) {
-            this.gc.logger.debug("[Ruby] Preparing environment files.");
+            this.gc.logger.debug("Preparing environment files.");
             this.defaultEnvironment = getDefaultEnvironmentUrl(
                 this.clientName,
                 this.intermediateRepresentation.environments
@@ -180,7 +180,7 @@ export class ClientsGenerator {
             );
         }
 
-        this.gc.logger.debug("[Ruby] Preparing authorization headers.");
+        this.gc.logger.debug("Preparing authorization headers.");
         const headersGenerator = new HeadersGenerator(
             this.intermediateRepresentation.headers,
             this.crf,
@@ -188,7 +188,7 @@ export class ClientsGenerator {
             this.shouldGenerateOauth
         );
 
-        this.gc.logger.debug("[Ruby] Preparing request options classes.");
+        this.gc.logger.debug("Preparing request options classes.");
         const requestOptionsClass = new RequestOptions({
             headersGenerator,
             clientName: this.clientName
@@ -212,7 +212,7 @@ export class ClientsGenerator {
             isOptional: true
         });
 
-        this.gc.logger.debug("[Ruby] Preparing request clients.");
+        this.gc.logger.debug("Preparing request clients.");
         const [syncClientClass, asyncClientClass] = generateRequestClients(
             this.clientName,
             this.intermediateRepresentation.sdkConfig,
@@ -239,7 +239,7 @@ export class ClientsGenerator {
             })
         );
 
-        this.gc.logger.debug("[Ruby] Preparing example snippets.");
+        this.gc.logger.debug("Preparing example snippets.");
         const dummyRootClientDoNotUse = generateDummyRootClient(this.gemName, this.clientName, syncClientClass);
         const eg = new ExampleGenerator({
             rootClientClass: dummyRootClientDoNotUse,
@@ -280,7 +280,9 @@ export class ClientsGenerator {
             generatedClasses: Map<TypeId, Class_>,
             flattenedProperties: Map<TypeId, ObjectProperty[]>,
             subpackagePaths: Map<SubpackageId, string[]>,
-            artifactRegistry: ArtifactRegistry
+            artifactRegistry: ArtifactRegistry,
+            subpackages: Map<Name, Class_> = new Map(),
+            asyncSubpackages: Map<Name, Class_> = new Map()
         ): ClientClassPair {
             if (subpackage.service === undefined) {
                 throw new Error("Calling getServiceClasses without a service defined within the subpackage.");
@@ -306,7 +308,9 @@ export class ClientsGenerator {
                 fileUtilityClass,
                 locationGenerator,
                 subpackagePaths.get(packageId) ?? [],
-                artifactRegistry
+                artifactRegistry,
+                subpackages,
+                asyncSubpackages
             );
             const serviceModule = Module_.wrapInModules({
                 locationGenerator,
@@ -338,7 +342,35 @@ export class ClientsGenerator {
             subpackagePaths: Map<SubpackageId, string[]>,
             artifactRegistry: ArtifactRegistry
         ): ClientClassPair | undefined {
-            if (subpackage.service !== undefined) {
+            if (subpackage.service != null) {
+                const classPairs: ClientClassPair[] = subpackage.subpackages
+                    .map((subpackageId) => {
+                        const subpackage = subpackages.get(subpackageId);
+                        if (subpackage === undefined) {
+                            throw new Error(`Subpackage ${subpackageId} was not defined within in the IR`);
+                        }
+
+                        const classPair = subpackageClassReferences.get(subpackageId);
+                        if (classPair === undefined) {
+                            return getSubpackageClasses(
+                                subpackageName,
+                                subpackageId,
+                                subpackage,
+                                services,
+                                subpackages,
+                                clientName,
+                                crf,
+                                irBasePath,
+                                generatedClasses,
+                                flattenedProperties,
+                                subpackagePaths,
+                                artifactRegistry
+                            );
+                        }
+                        return classPair;
+                    })
+                    .filter((cp) => cp !== undefined) as ClientClassPair[];
+
                 return getServiceClasses(
                     packageId,
                     subpackage,
@@ -349,7 +381,9 @@ export class ClientsGenerator {
                     generatedClasses,
                     flattenedProperties,
                     subpackagePaths,
-                    artifactRegistry
+                    artifactRegistry,
+                    new Map(classPairs.map((cp) => [cp.subpackageName, cp.syncClientClass])),
+                    new Map(classPairs.map((cp) => [cp.subpackageName, cp.asyncClientClass]))
                 );
             } else {
                 // We create these subpackage files to support dot access for service clients,
@@ -412,7 +446,7 @@ export class ClientsGenerator {
             }
         }
 
-        this.gc.logger.debug("[Ruby] Generating files for subpackages.");
+        this.gc.logger.debug("Generating files for subpackages.");
         Array.from(this.subpackages.entries()).forEach(([packageId, subpackage]) =>
             getSubpackageClasses(
                 subpackage.name,
@@ -431,7 +465,7 @@ export class ClientsGenerator {
         );
 
         // 3. Generate main file, this is what people import while leveraging the gem.
-        this.gc.logger.debug("[Ruby] Generating files for root package.");
+        this.gc.logger.debug("Generating files for root package.");
         const rootSubpackageClasses = this.intermediateRepresentation.rootPackage.subpackages
             .map((sp) => subpackageClassReferences.get(sp))
             .filter((cp) => cp !== undefined) as ClientClassPair[];
@@ -508,7 +542,7 @@ export class ClientsGenerator {
             )
         );
 
-        this.gc.logger.debug("[Ruby] Generating snippets.json file.");
+        this.gc.logger.debug("Generating snippets.json file.");
         if (this.gc.config.output.snippetFilepath !== undefined) {
             clientFiles.push(eg.generateSnippetsFile(this.gc.config.output.snippetFilepath));
         }

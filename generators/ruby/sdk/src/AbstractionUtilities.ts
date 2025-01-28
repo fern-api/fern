@@ -572,7 +572,9 @@ export function generateService(
     fileUploadUtility: FileUploadUtility,
     locationGenerator: LocationGenerator,
     packagePath: string[],
-    artifactRegistry: ArtifactRegistry
+    artifactRegistry: ArtifactRegistry,
+    subpackages: Map<Name, Class_> = new Map(),
+    asyncSubpackages: Map<Name, Class_> = new Map()
 ): ClientClassPair {
     const subpackageName = subpackage.name;
     const serviceName = subpackageName.pascalCase.unsafeName;
@@ -590,14 +592,21 @@ export function generateService(
         import_,
         moduleBreadcrumbs
     });
+    const syncClassReference = new ClassReference({
+        name: `${serviceName}Client`,
+        import_,
+        moduleBreadcrumbs
+    });
     const syncClientClass = new Class_({
-        classReference: new ClassReference({
-            name: `${serviceName}Client`,
-            import_,
-            moduleBreadcrumbs
-        }),
-        properties: [requestClientProperty],
-        includeInitializer: true,
+        classReference: syncClassReference,
+        properties: [
+            requestClientProperty,
+            ...Array.from(subpackages.entries()).map(
+                ([spName, sp]) =>
+                    new Property({ name: getSubpackagePropertyNameFromIr(spName), type: sp.classReference })
+            )
+        ],
+        includeInitializer: false,
         functions: generateEndpoints(
             crf,
             eg,
@@ -614,19 +623,62 @@ export function generateService(
             packagePath,
             syncClientClassReference,
             artifactRegistry
-        )
+        ),
+        initializerOverride: new Function_({
+            name: "initialize",
+            invocationName: "new",
+            // Initialize each subpackage
+            functionBody: [
+                new Expression({
+                    leftSide: requestClientProperty.toVariable(),
+                    rightSide: requestClientProperty.name,
+                    isAssignment: true
+                }),
+                ...Array.from(subpackages.entries()).map(([spName, sp]) => {
+                    const subpackageClassVariable = new Variable({
+                        name: getSubpackagePropertyNameFromIr(spName),
+                        type: sp.classReference,
+                        variableType: VariableType.INSTANCE
+                    });
+                    return new Expression({
+                        leftSide: subpackageClassVariable,
+                        rightSide:
+                            sp.initializer !== undefined
+                                ? new FunctionInvocation({
+                                      onObject: sp.classReference,
+                                      baseFunction: sp.initializer,
+                                      arguments_: sp.initializer.parameters.map((param) =>
+                                          param.toArgument(requestClientProperty.toVariable(VariableType.LOCAL))
+                                      )
+                                  })
+                                : sp.classReference,
+                        isAssignment: true
+                    });
+                })
+            ],
+            parameters: [requestClientProperty.toParameter({})],
+            returnValue: syncClassReference,
+            documentation: subpackage.docs
+        })
     });
 
     // Add Async Client class
     const asyncRequestClientProperty = new Property({ name: "request_client", type: asyncRequestClientCr });
+    const asyncClassReference = new ClassReference({
+        name: `Async${serviceName}Client`,
+        import_,
+        moduleBreadcrumbs
+    });
     const asyncClientClass = new Class_({
-        classReference: new ClassReference({
-            name: `Async${serviceName}Client`,
-            import_,
-            moduleBreadcrumbs
-        }),
-        properties: [asyncRequestClientProperty],
-        includeInitializer: true,
+        classReference: asyncClassReference,
+        properties: [
+            asyncRequestClientProperty,
+            ...Array.from(subpackages.entries()).map(
+                ([spName, sp]) =>
+                    new Property({ name: getSubpackagePropertyNameFromIr(spName), type: sp.classReference })
+            )
+        ],
+        includeInitializer: false,
         functions: generateEndpoints(
             crf,
             eg,
@@ -643,7 +695,43 @@ export function generateService(
             packagePath,
             undefined,
             undefined
-        )
+        ),
+        initializerOverride: new Function_({
+            name: "initialize",
+            invocationName: "new",
+            // Initialize each subpackage
+            functionBody: [
+                new Expression({
+                    leftSide: requestClientProperty.toVariable(),
+                    rightSide: requestClientProperty.name,
+                    isAssignment: true
+                }),
+                ...Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
+                    const subpackageClassVariable = new Variable({
+                        name: getSubpackagePropertyNameFromIr(spName),
+                        type: sp.classReference,
+                        variableType: VariableType.INSTANCE
+                    });
+                    return new Expression({
+                        leftSide: subpackageClassVariable,
+                        rightSide:
+                            sp.initializer !== undefined
+                                ? new FunctionInvocation({
+                                      onObject: sp.classReference,
+                                      baseFunction: sp.initializer,
+                                      arguments_: sp.initializer.parameters.map((param) =>
+                                          param.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL))
+                                      )
+                                  })
+                                : sp.classReference,
+                        isAssignment: true
+                    });
+                })
+            ],
+            parameters: [requestClientProperty.toParameter({})],
+            returnValue: asyncClassReference,
+            documentation: subpackage.docs
+        })
     });
 
     return { subpackageName, syncClientClass, asyncClientClass };

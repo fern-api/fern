@@ -53,21 +53,24 @@ export class Module_ extends AstNode {
         let moduleWrappedItem: Module_ | Class_ | T = child;
         let moduleBreadcrumbs: string[] = [locationGenerator.rootModule];
         if (path) {
-            if (!locationGenerator.shouldFlattenModules) {
-                moduleBreadcrumbs = moduleBreadcrumbs.concat(locationGenerator.getModulePathFromTypeName(path));
-                const classWrapper = locationGenerator.getClassPathFromTypeName(path);
-
-                if (classWrapper !== undefined && includeFilename) {
-                    moduleWrappedItem = new Class_({
-                        classReference: new ClassReference({ name: classWrapper }),
-                        includeInitializer: false,
-                        children: child
-                    });
-                }
-            } else {
-                moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({ path, includeFilename, isType });
-            }
+            moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({ path, includeFilename, isType });
         }
+        // if (path) {
+        //     if (!locationGenerator.shouldFlattenModules) {
+        //         moduleBreadcrumbs = moduleBreadcrumbs.concat(locationGenerator.getModulePathFromTypeName(path));
+        //         const classWrapper = locationGenerator.getClassPathFromTypeName(path);
+
+        //         if (classWrapper !== undefined && includeFilename) {
+        //             moduleWrappedItem = new Class_({
+        //                 classReference: new ClassReference({ name: classWrapper }),
+        //                 includeInitializer: false,
+        //                 children: child
+        //             });
+        //         }
+        //     } else {
+        //         moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({ path, includeFilename, isType });
+        //     }
+        // }
 
         moduleBreadcrumbs.reverse().forEach(
             (mod) =>
