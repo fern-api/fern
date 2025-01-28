@@ -658,7 +658,7 @@ export class DocsDefinitionResolver {
         if (this.parsedDocsConfig.experimental?.openapiParserV2) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
 
-            const parserV2Promise = async () => {
+            const apiV2Promise = (async () => {
                 const api = (await generateFdrFromOpenApiWorkspace(
                     workspace,
                     this.taskContext
@@ -667,9 +667,7 @@ export class DocsDefinitionResolver {
                     throw new Error("Failed to generate API Definition from OpenAPI workspace");
                 }
                 return api;
-            };
-
-            const apiPromise = parserV2Promise();
+            })();
 
             // START EXAMPLE MERGING HACK
             const fernWorkspace = this.getFernWorkspaceForApiSection(item);
@@ -679,7 +677,7 @@ export class DocsDefinitionResolver {
                 generationLanguage: undefined,
                 keywords: undefined,
                 smartCasing: false,
-                disableExamples: false,
+                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
                 readme: undefined,
                 version: undefined,
                 packageName: undefined,
@@ -687,7 +685,7 @@ export class DocsDefinitionResolver {
                 sourceResolver: new SourceResolverImpl(this.taskContext, fernWorkspace)
             });
             const fernApi = convertIrToApiDefinition(ir, "", { oauth: item.playground?.oauth });
-            const api = await apiPromise;
+            const api = await apiV2Promise;
 
             mergeApiExamples(fernApi, api);
             // END EXAMPLE MERGING HACK
