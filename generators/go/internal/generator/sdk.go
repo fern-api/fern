@@ -650,7 +650,7 @@ func (f *fileWriter) WriteIdempotentRequestOptions(
 	importPath := path.Join(f.baseImportPath, "option")
 
 	// Generate the option.RequestOption type alias.
-	f.P("// IdempotentRequestOption adapts the behavior of an indivdual request.")
+	f.P("// IdempotentRequestOption adapts the behavior of an individual request.")
 	f.P("type IdempotentRequestOption = core.IdempotentRequestOption")
 
 	for _, header := range idempotencyHeaders {
@@ -690,7 +690,7 @@ func (f *fileWriter) WriteRequestOptions(
 	)
 
 	// Generate the option.RequestOption type alias.
-	f.P("// RequestOption adapts the behavior of an indivdual request.")
+	f.P("// RequestOption adapts the behavior of an individual request.")
 	f.P("type RequestOption = core.RequestOption")
 
 	// Generate the options for setting the base URL and HTTP client.
@@ -2246,9 +2246,9 @@ func (f *fileWriter) endpointFromIR(
 
 	// Add path parameters and request body, if any.
 	pathParameterToScopedName := make(map[string]string, len(irEndpoint.AllPathParameters))
-	pathParamters := make(map[string]*ir.PathParameter, len(irEndpoint.AllPathParameters))
+	pathParameters := make(map[string]*ir.PathParameter, len(irEndpoint.AllPathParameters))
 	for _, pathParameter := range irEndpoint.AllPathParameters {
-		pathParamters[pathParameter.Name.OriginalName] = pathParameter
+		pathParameters[pathParameter.Name.OriginalName] = pathParameter
 	}
 
 	var (
@@ -2265,7 +2265,7 @@ func (f *fileWriter) endpointFromIR(
 			if part.PathParameter == "" {
 				continue
 			}
-			pathParameter, ok := pathParamters[part.PathParameter]
+			pathParameter, ok := pathParameters[part.PathParameter]
 			if !ok {
 				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
 			}
@@ -2622,7 +2622,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("*core.APIError")
 	if errorDeclaration.Type == nil {
 		// This error doesn't have a body, so we only need to include the status code.
-		// We still needto implement the json.Unmarshaler and json.Marshaler though.
+		// We still need to implement the json.Unmarshaler and json.Marshaler though.
 		f.P("}")
 		f.P()
 		f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")

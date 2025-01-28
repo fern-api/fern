@@ -16,7 +16,7 @@ from ...core.pydantic_utilities import update_forward_refs
 class TraceResponsesPage(UniversalBaseModel):
     offset: typing.Optional[int] = pydantic.Field(default=None)
     """
-    If present, use this to load subseqent pages.
+    If present, use this to load subsequent pages.
     The offset is the id of the next trace response to load.
     """
 

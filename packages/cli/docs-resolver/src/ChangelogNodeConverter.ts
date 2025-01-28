@@ -52,8 +52,8 @@ export class ChangelogNodeConverter {
             }
             const changelogDate = extractDatetimeFromChangelogTitle(filename);
             if (changelogDate == null) {
-                const nameWihoutExtension = filename.split(".")[0]?.toLowerCase();
-                if (nameWihoutExtension != null && RESERVED_OVERVIEW_PAGE_NAMES.includes(nameWihoutExtension)) {
+                const nameWithoutExtension = filename.split(".")[0]?.toLowerCase();
+                if (nameWithoutExtension != null && RESERVED_OVERVIEW_PAGE_NAMES.includes(nameWithoutExtension)) {
                     overviewPagePath = absoluteFilepath;
                 }
 

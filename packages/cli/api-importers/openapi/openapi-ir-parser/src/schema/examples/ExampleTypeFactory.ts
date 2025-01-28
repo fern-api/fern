@@ -190,7 +190,7 @@ export class ExampleTypeFactory {
                         const exampleDiscriminant = fullExample?.[schema.value.discriminantProperty];
                         const exampleUnionVariantSchema = schema.value.schemas[exampleDiscriminant];
 
-                        // Pick the union variant from the example, othwerise try each of them until one works
+                        // Pick the union variant from the example, otherwise try each of them until one works
                         const unionVariants = [];
 
                         const schemaFromExample = this.getDiscriminatedUnionVariantSchema(schema.value, fullExample);
@@ -269,7 +269,7 @@ export class ExampleTypeFactory {
                         }
                         return FullExample.oneOf(FullOneOfExample.discriminated(result));
                     }
-                    case "undisciminated": {
+                    case "undiscriminated": {
                         const unionVariantSchema = this.getUnDiscriminatedUnionVariantSchema(schema.value, example);
                         if (unionVariantSchema != null) {
                             // TODO (we should select the oneOf schema based on the example)

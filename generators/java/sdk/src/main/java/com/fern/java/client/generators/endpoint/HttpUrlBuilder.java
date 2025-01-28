@@ -48,7 +48,7 @@ public final class HttpUrlBuilder {
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<String, PathParamInfo> servicePathParameters;
     private final Map<String, PathParamInfo> endpointPathParameters;
-    private final boolean hasOptionalPathParms;
+    private final boolean hasOptionalPathParams;
     private final boolean inlinePathParams;
 
     public HttpUrlBuilder(
@@ -71,7 +71,7 @@ public final class HttpUrlBuilder {
         this.httpService = httpService;
         this.servicePathParameters = servicePathParameters;
         this.endpointPathParameters = endpointPathParameters;
-        this.hasOptionalPathParms = Stream.concat(
+        this.hasOptionalPathParams = Stream.concat(
                         servicePathParameters.values().stream(), endpointPathParameters.values().stream())
                 .anyMatch(pathParamInfo ->
                         pathParamInfo.irParam().getValueType().getContainer().isPresent()
@@ -103,7 +103,7 @@ public final class HttpUrlBuilder {
     }
 
     public GeneratedHttpUrl generateBuilder(List<EnrichedObjectProperty> queryParamProperties) {
-        boolean shouldInline = queryParamProperties.isEmpty() && !hasOptionalPathParms;
+        boolean shouldInline = queryParamProperties.isEmpty() && !hasOptionalPathParams;
         if (shouldInline) {
             return generateInlineableCodeBlock();
         } else {
@@ -122,7 +122,7 @@ public final class HttpUrlBuilder {
         codeBlock.add(".build();\n").unindent();
         return GeneratedHttpUrl.builder()
                 .initialization(codeBlock.build())
-                .inlinableBuild(CodeBlock.of(httpUrlname))
+                .inlineableBuild(CodeBlock.of(httpUrlname))
                 .build();
     }
 
@@ -161,7 +161,7 @@ public final class HttpUrlBuilder {
         });
         return GeneratedHttpUrl.builder()
                 .initialization(codeBlock.build())
-                .inlinableBuild(CodeBlock.of("$L.build()", httpUrlname))
+                .inlineableBuild(CodeBlock.of("$L.build()", httpUrlname))
                 .build();
     }
 
@@ -256,7 +256,7 @@ public final class HttpUrlBuilder {
     public interface GeneratedHttpUrl {
         CodeBlock initialization();
 
-        CodeBlock inlinableBuild();
+        CodeBlock inlineableBuild();
 
         static ImmutableGeneratedHttpUrl.InitializationBuildStage builder() {
             return ImmutableGeneratedHttpUrl.builder();

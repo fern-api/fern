@@ -4,6 +4,6 @@
 
 import * as fs from "fs";
 
-export interface JustFileRequet {
+export interface JustFileRequest {
     file: File | fs.ReadStream | Blob;
 }

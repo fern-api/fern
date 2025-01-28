@@ -162,7 +162,7 @@ class ParamsClient:
         self,
         *,
         query: typing.Union[str, typing.Sequence[str]],
-        numer: typing.Union[int, typing.Sequence[int]],
+        number: typing.Union[int, typing.Sequence[int]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -172,7 +172,7 @@ class ParamsClient:
         ----------
         query : typing.Union[str, typing.Sequence[str]]
 
-        numer : typing.Union[int, typing.Sequence[int]]
+        number : typing.Union[int, typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -191,7 +191,7 @@ class ParamsClient:
         )
         client.endpoints.params.get_with_allow_multiple_query(
             query="query",
-            numer=1,
+            number=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -199,7 +199,7 @@ class ParamsClient:
             method="GET",
             params={
                 "query": query,
-                "numer": numer,
+                "number": number,
             },
             request_options=request_options,
         )
@@ -587,7 +587,7 @@ class AsyncParamsClient:
         self,
         *,
         query: typing.Union[str, typing.Sequence[str]],
-        numer: typing.Union[int, typing.Sequence[int]],
+        number: typing.Union[int, typing.Sequence[int]],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -597,7 +597,7 @@ class AsyncParamsClient:
         ----------
         query : typing.Union[str, typing.Sequence[str]]
 
-        numer : typing.Union[int, typing.Sequence[int]]
+        number : typing.Union[int, typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -621,7 +621,7 @@ class AsyncParamsClient:
         async def main() -> None:
             await client.endpoints.params.get_with_allow_multiple_query(
                 query="query",
-                numer=1,
+                number=1,
             )
 
 
@@ -632,7 +632,7 @@ class AsyncParamsClient:
             method="GET",
             params={
                 "query": query,
-                "numer": numer,
+                "number": number,
             },
             request_options=request_options,
         )

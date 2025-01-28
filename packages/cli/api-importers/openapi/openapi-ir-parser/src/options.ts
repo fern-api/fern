@@ -14,8 +14,8 @@ export interface ParseOpenAPIOptions {
     audiences: string[] | undefined;
     /* Whether or not to make additional property values optional */
     optionalAdditionalProperties: boolean;
-    /* Whether or not to cooerce enums as literals */
-    cooerceEnumsToLiterals: boolean;
+    /* Whether or not to coerce enums as literals */
+    coerceEnumsToLiterals: boolean;
     /* Whether or not to respect readonly properties in schemas */
     respectReadonlySchemas: boolean;
     /* Whether or not to respect nullable properties in schemas */
@@ -47,7 +47,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     useTitlesAsName: true,
     audiences: undefined,
     optionalAdditionalProperties: true,
-    cooerceEnumsToLiterals: true,
+    coerceEnumsToLiterals: true,
     respectReadonlySchemas: false,
     respectNullableSchemas: false,
     onlyIncludeReferencedSchemas: false,
@@ -80,10 +80,10 @@ export function getParseOptions({
             overrides?.optionalAdditionalProperties ??
             options?.optionalAdditionalProperties ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties,
-        cooerceEnumsToLiterals:
-            overrides?.cooerceEnumsToLiterals ??
-            options?.cooerceEnumsToLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals,
+        coerceEnumsToLiterals:
+            overrides?.coerceEnumsToLiterals ??
+            options?.coerceEnumsToLiterals ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceEnumsToLiterals,
         respectReadonlySchemas:
             overrides?.respectReadonlySchemas ??
             options?.respectReadonlySchemas ??

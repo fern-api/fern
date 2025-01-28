@@ -50,7 +50,7 @@ class TypeReferenceToTypeHintConverter:
         in_endpoint: Optional[bool],
         as_if_type_checking_import: bool = False,
     ) -> AST.TypeHint:
-        is_primative = self._context.get_declaration_for_type_id(name.type_id).shape.visit(
+        is_primitive = self._context.get_declaration_for_type_id(name.type_id).shape.visit(
             alias=lambda alias_td: alias_td.resolved_type.visit(
                 container=lambda c: False, named=lambda n: False, primitive=lambda p: True, unknown=lambda: False
             ),
@@ -65,7 +65,7 @@ class TypeReferenceToTypeHintConverter:
             as_request=in_endpoint if in_endpoint is not None else False,
             as_if_type_checking_import=as_if_type_checking_import,
         )
-        if is_primative:
+        if is_primitive:
             return AST.TypeHint.set(inner_hint)
         if in_endpoint:
             return AST.TypeHint.sequence(inner_hint)

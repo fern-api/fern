@@ -8,7 +8,7 @@ import (
 
 type GetWithMultipleQuery struct {
 	Query []string `query:"query"`
-	Numer []int    `query:"numer"`
+	Numer []int    `query:"number"`
 }
 
 type GetWithInlinePathAndQuery struct {

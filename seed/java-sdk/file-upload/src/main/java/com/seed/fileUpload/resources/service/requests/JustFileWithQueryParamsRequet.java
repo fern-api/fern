@@ -19,8 +19,8 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = JustFileWithQueryParamsRequet.Builder.class)
-public final class JustFileWithQueryParamsRequet {
+@JsonDeserialize(builder = JustFileWithQueryParamsRequest.Builder.class)
+public final class JustFileWithQueryParamsRequest {
     private final Optional<String> maybeString;
 
     private final int integer;
@@ -33,7 +33,7 @@ public final class JustFileWithQueryParamsRequet {
 
     private final Map<String, Object> additionalProperties;
 
-    private JustFileWithQueryParamsRequet(
+    private JustFileWithQueryParamsRequest(
             Optional<String> maybeString,
             int integer,
             Optional<Integer> maybeInteger,
@@ -76,7 +76,7 @@ public final class JustFileWithQueryParamsRequet {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof JustFileWithQueryParamsRequet && equalTo((JustFileWithQueryParamsRequet) other);
+        return other instanceof JustFileWithQueryParamsRequest && equalTo((JustFileWithQueryParamsRequest) other);
     }
 
     @JsonAnyGetter
@@ -84,7 +84,7 @@ public final class JustFileWithQueryParamsRequet {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(JustFileWithQueryParamsRequet other) {
+    private boolean equalTo(JustFileWithQueryParamsRequest other) {
         return maybeString.equals(other.maybeString)
                 && integer == other.integer
                 && maybeInteger.equals(other.maybeInteger)
@@ -110,7 +110,7 @@ public final class JustFileWithQueryParamsRequet {
     public interface IntegerStage {
         ListOfStringsStage integer(int integer);
 
-        Builder from(JustFileWithQueryParamsRequet other);
+        Builder from(JustFileWithQueryParamsRequest other);
     }
 
     public interface ListOfStringsStage {
@@ -118,7 +118,7 @@ public final class JustFileWithQueryParamsRequet {
     }
 
     public interface _FinalStage {
-        JustFileWithQueryParamsRequet build();
+        JustFileWithQueryParamsRequest build();
 
         _FinalStage maybeString(Optional<String> maybeString);
 
@@ -151,7 +151,7 @@ public final class JustFileWithQueryParamsRequet {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(JustFileWithQueryParamsRequet other) {
+        public Builder from(JustFileWithQueryParamsRequest other) {
             maybeString(other.getMaybeString());
             integer(other.getInteger());
             maybeInteger(other.getMaybeInteger());
@@ -214,8 +214,8 @@ public final class JustFileWithQueryParamsRequet {
         }
 
         @java.lang.Override
-        public JustFileWithQueryParamsRequet build() {
-            return new JustFileWithQueryParamsRequet(
+        public JustFileWithQueryParamsRequest build() {
+            return new JustFileWithQueryParamsRequest(
                     maybeString, integer, maybeInteger, listOfStrings, optionalListOfStrings, additionalProperties);
         }
     }

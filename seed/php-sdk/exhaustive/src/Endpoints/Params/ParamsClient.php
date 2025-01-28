@@ -162,7 +162,7 @@ class ParamsClient
     {
         $query = [];
         $query['query'] = $request->query;
-        $query['numer'] = $request->numer;
+        $query['number'] = $request->number;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

@@ -293,7 +293,7 @@ types:
   OneOfSchemaWithExample:
     union:
       discriminated: DiscriminatedOneOfSchemaWithExample
-      undisciminated: UnDiscriminatedOneOfSchemaWithExample
+      undiscriminated: UnDiscriminatedOneOfSchemaWithExample
 
   DiscriminatedOneOfSchemaWithExample:
     extends:

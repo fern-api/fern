@@ -40,7 +40,7 @@ service:
           query:
             type: string
             allow-multiple: true
-          numer:
+          number:
             type: integer
             allow-multiple: true
 

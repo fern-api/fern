@@ -541,7 +541,7 @@ export function isExamplePrimitive(example: FullExample): boolean {
             switch (example.value.type) {
                 case "discriminated":
                     return false;
-                case "undisciminated":
+                case "undiscriminated":
                     return isExamplePrimitive(example.value.value);
                 default:
                     return false;
@@ -569,7 +569,7 @@ export function getNameFromSchemaWithExample(schema: SchemaWithExample): string 
             switch (schema.value.type) {
                 case "discriminated":
                     return undefined;
-                case "undisciminated":
+                case "undiscriminated":
                     return undefined;
                 default:
                     return undefined;

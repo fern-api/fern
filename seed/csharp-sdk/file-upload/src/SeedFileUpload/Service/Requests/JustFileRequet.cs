@@ -4,7 +4,7 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
-public record JustFileRequet
+public record JustFileRequest
 {
     public override string ToString()
     {

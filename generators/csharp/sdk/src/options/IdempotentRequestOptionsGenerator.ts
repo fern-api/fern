@@ -28,7 +28,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
             interfaceReferences: [this.context.getIdempotentRequestOptionsInterfaceClassReference()]
         });
         class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
-        class_.addFields(this.baseOptionsGenerator.getIdepotentRequestOptionFields());
+        class_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields());
         class_.addMethod(
             csharp.method({
                 name: "GetIdempotencyHeaders",

@@ -32,7 +32,7 @@ types:
       `TooManyTokens` error will be returned.
 
 
-      Compatible Deployments: 
+      Compatible Deployments:
        - AUTO: Cohere Platform Only
        - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
     enum:
@@ -163,7 +163,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
@@ -387,7 +387,7 @@ service:
                 length limit, a `TooManyTokens` error will be returned.
 
 
-                Compatible Deployments: 
+                Compatible Deployments:
                  - AUTO: Cohere Platform Only
                  - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
               type: optional<ChatRequestPromptTruncation>

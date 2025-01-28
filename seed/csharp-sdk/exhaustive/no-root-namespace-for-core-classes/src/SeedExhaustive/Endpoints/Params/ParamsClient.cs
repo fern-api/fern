@@ -164,7 +164,7 @@ public partial class ParamsClient
     {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
-        _query["numer"] = request.Numer.Select(_value => _value.ToString()).ToList();
+        _query["number"] = request.Numer.Select(_value => _value.ToString()).ToList();
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

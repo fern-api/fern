@@ -260,7 +260,7 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             @java.lang.Override
-            public Bar deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+            public Bar deserialize(JsonParser p, DeserializationContext context) throws IOException {
                 Object value = p.readValueAs(Object.class);
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, InlineType1.class));

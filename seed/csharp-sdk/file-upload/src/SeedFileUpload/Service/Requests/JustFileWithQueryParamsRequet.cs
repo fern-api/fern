@@ -4,7 +4,7 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
-public record JustFileWithQueryParamsRequet
+public record JustFileWithQueryParamsRequest
 {
     public string? MaybeString { get; set; }
 

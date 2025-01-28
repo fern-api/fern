@@ -201,7 +201,7 @@ export class DynamicTypeLiteralMapper {
             case "object":
                 return this.convertObject({ object_: named, value });
             case "undiscriminatedUnion":
-                return this.convertUndicriminatedUnion({ undicriminatedUnion: named, value });
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
             default:
                 assertNever(named);
         }
@@ -427,15 +427,15 @@ export class DynamicTypeLiteralMapper {
         return value;
     }
 
-    private convertUndicriminatedUnion({
-        undicriminatedUnion,
+    private convertUndiscriminatedUnion({
+        undiscriminatedUnion,
         value
     }: {
-        undicriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
+        undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): ts.TypeLiteral {
         const result = this.findMatchingUndiscriminatedUnionType({
-            undicriminatedUnion,
+            undiscriminatedUnion,
             value
         });
         if (result == null) {
@@ -445,13 +445,13 @@ export class DynamicTypeLiteralMapper {
     }
 
     private findMatchingUndiscriminatedUnionType({
-        undicriminatedUnion,
+        undiscriminatedUnion,
         value
     }: {
-        undicriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
+        undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): ts.TypeLiteral | undefined {
-        for (const typeReference of undicriminatedUnion.types) {
+        for (const typeReference of undiscriminatedUnion.types) {
             try {
                 return this.convert({ typeReference, value });
             } catch (e) {
@@ -460,7 +460,7 @@ export class DynamicTypeLiteralMapper {
         }
         this.context.errors.add({
             severity: Severity.Critical,
-            message: `None of the types in the undicriminated union matched the given "${typeof value}" value`
+            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
         });
         return undefined;
     }

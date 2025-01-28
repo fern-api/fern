@@ -106,7 +106,7 @@ class FernTypedDict:
 
         return type_id_to_reference
 
-    def _field_type_is_circularly_referened(self, field_types: List[ir_types.TypeId]) -> bool:
+    def _field_type_is_circularly_referenced(self, field_types: List[ir_types.TypeId]) -> bool:
         type_id_to_reference = self._type_id_for_forward_ref()
 
         return (
@@ -144,7 +144,7 @@ class FernTypedDict:
     ) -> None:
         maybe_type_id = self._context.maybe_get_type_ids_for_type_reference(type_reference)
         as_if_type_checking = False
-        if maybe_type_id is not None and self._field_type_is_circularly_referened(maybe_type_id):
+        if maybe_type_id is not None and self._field_type_is_circularly_referenced(maybe_type_id):
             # Mark the class reference as if_typechecking since we have a circular ref that we'll
             # need to string reference and import through `if TYPE_CHECKING`.
             as_if_type_checking = True

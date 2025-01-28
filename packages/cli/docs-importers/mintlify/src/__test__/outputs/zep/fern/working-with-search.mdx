@@ -12,7 +12,7 @@ slug: working-with-search
 
 ## Simple, Text-based Semantic Queries
 
-The simplest form of search query is a text-based semantic simailrity query. No metadata filter is required, and the query is simply a string of text.
+The simplest form of search query is a text-based semantic similarity query. No metadata filter is required, and the query is simply a string of text.
 Zep will convert the query into an embedding and find semantically similar documents, chat history summaries, or chat messages.
 
 Below is an example search against a chat session using only search text.
@@ -79,7 +79,7 @@ When you run a search re-ranked by MMR, Zep retrieves double the number of resul
 
 If you request fewer than 10 results, Zep will return 10 results, but still return to you the top K results you requested.
 
-Zep's MMR algorithm is SIMD-hardware accelerated on `amd64` archicture CPUs, ensuring that MMR adds little overhead to your search.
+Zep's MMR algorithm is SIMD-hardware accelerated on `amd64` architecture CPUs, ensuring that MMR adds little overhead to your search.
 
 <h1>Constructing an MMR Re-Ranked Search Query</h1>
 

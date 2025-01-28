@@ -4,7 +4,7 @@ import { Type } from "./Type";
 
 /*
 
-Builds Swift Primiatives
+Builds Swift Primitives
 ========================
 
 Int = "integer"
@@ -16,25 +16,25 @@ NSDecimalNumber = "bigInteger"
 
 */
 
-export type PrimativeKey = "integer" | "double" | "string" | "boolean" | "long" | "bigInteger";
+export type PrimitiveKey = "integer" | "double" | "string" | "boolean" | "long" | "bigInteger";
 
-export declare namespace Primative {
+export declare namespace Primitive {
     interface Args {
-        key?: PrimativeKey;
+        key?: PrimitiveKey;
     }
 }
 
-export class Primative extends Type {
-    public readonly key?: PrimativeKey;
+export class Primitive extends Type {
+    public readonly key?: PrimitiveKey;
 
-    constructor(args: Primative.Args) {
+    constructor(args: Primitive.Args) {
         super({
-            name: Primative.getNameForKey(args.key)
+            name: Primitive.getNameForKey(args.key)
         });
         this.key = args.key;
     }
 
-    public static getNameForKey(key?: PrimativeKey): string {
+    public static getNameForKey(key?: PrimitiveKey): string {
         switch (key) {
             case "integer":
                 return "Int";

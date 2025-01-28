@@ -1,7 +1,7 @@
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.container.get_and_return_list_of_primitives(
 	request=[
 		"string",
@@ -16,7 +16,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithRequiredField
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.container.get_and_return_list_of_objects(
 	request=[
 		ObjectWithRequiredField(
@@ -34,9 +34,9 @@ client.endpoints.container.get_and_return_list_of_objects(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.container.get_and_return_set_of_primitives(
-	
+
 )
 
 ```
@@ -45,9 +45,9 @@ client.endpoints.container.get_and_return_set_of_primitives(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.container.get_and_return_set_of_objects(
-	
+
 )
 
 ```
@@ -56,7 +56,7 @@ client.endpoints.container.get_and_return_set_of_objects(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.container.get_and_return_map_prim_to_prim(
 	request={
 		"string": "string"
@@ -70,7 +70,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithRequiredField
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.container.get_and_return_map_of_prim_to_object(
 	request={
 		"string": ObjectWithRequiredField(
@@ -86,7 +86,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithRequiredField
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.container.get_and_return_optional(
 	request=ObjectWithRequiredField(
 		string="string"
@@ -99,7 +99,7 @@ client.endpoints.container.get_and_return_optional(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.content_type.post_json_patch_content_type(
 	string="string",
 	integer=1,
@@ -126,7 +126,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.content_type.post_json_patch_content_with_charset_type(
 	string="string",
 	integer=1,
@@ -153,7 +153,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 undefined
 
 ```
@@ -162,7 +162,7 @@ undefined
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.http_methods.test_get(
 	id="id"
 )
@@ -173,7 +173,7 @@ client.endpoints.http_methods.test_get(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.http_methods.test_post(
 	string="string"
 )
@@ -184,7 +184,7 @@ client.endpoints.http_methods.test_post(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.http_methods.test_put(
 	id="id",
 	string="string"
@@ -196,7 +196,7 @@ client.endpoints.http_methods.test_put(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.http_methods.test_patch(
 	id="id",
 	string="string",
@@ -224,7 +224,7 @@ client.endpoints.http_methods.test_patch(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.http_methods.test_delete(
 	id="id"
 )
@@ -235,7 +235,7 @@ client.endpoints.http_methods.test_delete(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.object.get_and_return_with_optional_field(
 	string="string",
 	integer=1,
@@ -262,7 +262,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.object.get_and_return_with_required_field(
 	string="string"
 )
@@ -273,7 +273,7 @@ client.endpoints.object.get_and_return_with_required_field(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.object.get_and_return_with_map_of_map(
 	map_={
 		"map": {
@@ -289,7 +289,7 @@ client.endpoints.object.get_and_return_with_map_of_map(
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithOptionalField
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.object.get_and_return_nested_with_optional_field(
 	string="string",
 	nested_object=ObjectWithOptionalField(
@@ -320,7 +320,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithOptionalField
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.object.get_and_return_nested_with_required_field(
 	string="string",
 	string="string",
@@ -353,7 +353,7 @@ from seed import SeedExhaustive
 from seed.types.object import NestedObjectWithRequiredField
 from seed.types.object import ObjectWithOptionalField
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 	request=[
 		NestedObjectWithRequiredField(
@@ -401,7 +401,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.params.get_with_path(
 	param="param"
 )
@@ -412,7 +412,7 @@ client.endpoints.params.get_with_path(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.params.get_with_inline_path(
 	param="param"
 )
@@ -423,7 +423,7 @@ client.endpoints.params.get_with_inline_path(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.params.get_with_query(
 	query="query",
 	number=1
@@ -435,10 +435,10 @@ client.endpoints.params.get_with_query(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.params.get_with_allow_multiple_query(
 	query="query",
-	numer=1
+	number=1
 )
 
 ```
@@ -447,7 +447,7 @@ client.endpoints.params.get_with_allow_multiple_query(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.params.get_with_path_and_query(
 	param="param",
 	query="query"
@@ -459,7 +459,7 @@ client.endpoints.params.get_with_path_and_query(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.params.get_with_inline_path_and_query(
 	param="param",
 	query="query"
@@ -471,7 +471,7 @@ client.endpoints.params.get_with_inline_path_and_query(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.params.modify_with_path(
 	param="param",
 	request="string"
@@ -483,7 +483,7 @@ client.endpoints.params.modify_with_path(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.params.modify_with_inline_path(
 	param="param",
 	request="string"
@@ -495,7 +495,7 @@ client.endpoints.params.modify_with_inline_path(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_string(
 	request="string"
 )
@@ -506,7 +506,7 @@ client.endpoints.primitive.get_and_return_string(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_int(
 	request=1
 )
@@ -517,7 +517,7 @@ client.endpoints.primitive.get_and_return_int(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_long(
 	request=1000000
 )
@@ -528,7 +528,7 @@ client.endpoints.primitive.get_and_return_long(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_double(
 	request=1.1
 )
@@ -539,7 +539,7 @@ client.endpoints.primitive.get_and_return_double(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_bool(
 	request=true
 )
@@ -550,7 +550,7 @@ client.endpoints.primitive.get_and_return_bool(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_datetime(
 	request="2024-01-15T09:30:00Z"
 )
@@ -561,7 +561,7 @@ client.endpoints.primitive.get_and_return_datetime(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_date(
 	request="2023-01-15"
 )
@@ -572,7 +572,7 @@ client.endpoints.primitive.get_and_return_date(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_uuid(
 	request="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 )
@@ -583,7 +583,7 @@ client.endpoints.primitive.get_and_return_uuid(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.primitive.get_and_return_base_64(
 	request="SGVsbG8gd29ybGQh"
 )
@@ -595,7 +595,7 @@ client.endpoints.primitive.get_and_return_base_64(
 from seed import SeedExhaustive
 from seed.types.union import Animal_Dog
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.endpoints.union.get_and_return_union(
 	request=request=Animal_Dog(name="name", likes_to_woof=true, )
 )
@@ -607,7 +607,7 @@ client.endpoints.union.get_and_return_union(
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithOptionalField
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.inlined_requests.post_with_object_bodyand_response(
 	string="string",
 	integer=1,
@@ -638,7 +638,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.no_auth.post_with_no_auth(
 	request={"key":"value"}
 )
@@ -649,9 +649,9 @@ client.no_auth.post_with_no_auth(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.no_req_body.get_with_no_request_body(
-	
+
 )
 
 ```
@@ -660,9 +660,9 @@ client.no_req_body.get_with_no_request_body(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.no_req_body.post_with_no_request_body(
-	
+
 )
 
 ```
@@ -671,7 +671,7 @@ client.no_req_body.post_with_no_request_body(
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )
 client.req_with_headers.get_with_custom_header(
 	x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
 	request="string"

@@ -15,7 +15,7 @@ type InternalTypeLiteral =
     | Set_
     | String_
     | Tuple
-    | Unkonwn_
+    | Unknown_
     | Null_
     | Nop;
 
@@ -89,7 +89,7 @@ interface Tuple {
     values: TypeLiteral[];
 }
 
-interface Unkonwn_ {
+interface Unknown_ {
     type: "unknown";
     value: unknown;
 }

@@ -5,7 +5,7 @@
 import * as FernIr from "../../../../../index";
 
 /**
- * Reperesents the request parameters required to call a specific endpoiont.
+ * Represents the request parameters required to call a specific endpoint.
  */
 export type Request = FernIr.dynamic.Request.Body | FernIr.dynamic.Request.Inlined;
 

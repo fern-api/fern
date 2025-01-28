@@ -5,7 +5,7 @@ namespace Seed\Service\Requests;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Utils\File;
 
-class JustFileRequet extends JsonSerializableType
+class JustFileRequest extends JsonSerializableType
 {
     /**
      * @var File $file

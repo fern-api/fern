@@ -11,8 +11,8 @@ use Seed\Core\Json\JsonEncoder;
 use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Service\Requests\JustFileRequet;
-use Seed\Service\Requests\JustFileWithQueryParamsRequet;
+use Seed\Service\Requests\JustFileRequest;
+use Seed\Service\Requests\JustFileWithQueryParamsRequest;
 use Seed\Service\Requests\WithContentTypeRequest;
 
 class ServiceClient
@@ -102,14 +102,14 @@ class ServiceClient
     }
 
     /**
-     * @param JustFileRequet $request
+     * @param JustFileRequest $request
      * @param ?array{
      *   baseUrl?: string,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function justFile(JustFileRequet $request, ?array $options = null): void
+    public function justFile(JustFileRequest $request, ?array $options = null): void
     {
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
@@ -137,14 +137,14 @@ class ServiceClient
     }
 
     /**
-     * @param JustFileWithQueryParamsRequet $request
+     * @param JustFileWithQueryParamsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function justFileWithQueryParams(JustFileWithQueryParamsRequet $request, ?array $options = null): void
+    public function justFileWithQueryParams(JustFileWithQueryParamsRequest $request, ?array $options = null): void
     {
         $query = [];
         $query['integer'] = $request->integer;

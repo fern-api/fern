@@ -9,11 +9,11 @@ import (
 	io "io"
 )
 
-type JustFileRequet struct {
+type JustFileRequest struct {
 	File io.Reader `json:"-" url:"-"`
 }
 
-type JustFileWithQueryParamsRequet struct {
+type JustFileWithQueryParamsRequest struct {
 	MaybeString           *string   `json:"-" url:"maybeString,omitempty"`
 	Integer               int       `json:"-" url:"integer"`
 	MaybeInteger          *int      `json:"-" url:"maybeInteger,omitempty"`

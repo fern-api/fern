@@ -445,9 +445,9 @@ export class ClientsGenerator {
         if (this.shouldGenerateOauth && this.oauthScheme != null) {
             const accessTokenClass = new AccessToken(this.clientName, this.oauthScheme.configuration);
 
-            let maybeRefereshTokenDetails;
+            let maybeRefreshTokenDetails;
             if (this.oauthScheme.configuration.refreshEndpoint) {
-                maybeRefereshTokenDetails = getOauthRefreshTokenFunctionMetadata({
+                maybeRefreshTokenDetails = getOauthRefreshTokenFunctionMetadata({
                     refreshEndpoint: this.oauthScheme.configuration.refreshEndpoint,
                     artifactRegistry: this.artifactRegistry
                 });
@@ -457,7 +457,7 @@ export class ClientsGenerator {
                     tokenEndpoint: this.oauthScheme.configuration.tokenEndpoint,
                     artifactRegistry: this.artifactRegistry
                 }),
-                refreshTokenFunction: maybeRefereshTokenDetails
+                refreshTokenFunction: maybeRefreshTokenDetails
             };
 
             oauthTokenProvider = new OauthTokenProvider({

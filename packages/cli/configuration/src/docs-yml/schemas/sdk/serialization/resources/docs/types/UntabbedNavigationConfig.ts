@@ -6,11 +6,11 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const UntabbedNavigationConifg: core.serialization.Schema<
-    serializers.UntabbedNavigationConifg.Raw,
-    FernDocsConfig.UntabbedNavigationConifg
+export const UntabbedNavigationConfig: core.serialization.Schema<
+    serializers.UntabbedNavigationConfig.Raw,
+    FernDocsConfig.UntabbedNavigationConfig
 > = core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem));
 
-export declare namespace UntabbedNavigationConifg {
+export declare namespace UntabbedNavigationConfig {
     export type Raw = serializers.NavigationItem.Raw[];
 }

@@ -232,8 +232,8 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 source: oneOfSchema.source,
                 inline: undefined
             });
-        case "undisciminated":
-            return OneOfSchemaWithExample.undisciminated({
+        case "undiscriminated":
+            return OneOfSchemaWithExample.undiscriminated({
                 description: oneOfSchema.description,
                 availability: oneOfSchema.availability,
                 generatedName: oneOfSchema.generatedName,

@@ -318,7 +318,7 @@ function visitExampleEndpointCall({
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
 }): void {
-    // if an example is entirely empty and has code samples, dont validate against the
+    // if an example is entirely empty and has code samples, don't validate against the
     // request or response schemas
     if (
         example.headers == null &&

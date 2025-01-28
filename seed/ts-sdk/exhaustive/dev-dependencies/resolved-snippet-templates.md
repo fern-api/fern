@@ -1,7 +1,7 @@
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnListOfPrimitives(
 	{
 		[
@@ -17,7 +17,7 @@ await client.endpoints.container.getAndReturnListOfPrimitives(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnListOfObjects(
 	{
 		[
@@ -37,7 +37,7 @@ await client.endpoints.container.getAndReturnListOfObjects(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnSetOfPrimitives(
 	{
 		new Set([
@@ -52,7 +52,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnSetOfObjects(
 	{
 		new Set([
@@ -69,7 +69,7 @@ await client.endpoints.container.getAndReturnSetOfObjects(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnMapPrimToPrim(
 	{
 		{
@@ -84,7 +84,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnMapOfPrimToObject(
 	{
 		{
@@ -385,7 +385,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
 	{
 		[
@@ -480,7 +480,7 @@ const client = new FiddleClient({
 });
 await client.endpoints.params.getWithAllowMultipleQuery({
   query: "query",
-  numer: 1,
+  number: 1,
 });
 
 ```
@@ -517,7 +517,7 @@ await client.endpoints.params.getWithInlinePathAndQuery("param", {
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.params.modifyWithPath(
 	"param",
 	{
@@ -531,7 +531,7 @@ await client.endpoints.params.modifyWithPath(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.params.modifyWithInlinePath(
 	"param",
 	{
@@ -545,7 +545,7 @@ await client.endpoints.params.modifyWithInlinePath(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnString(
 	{
 		"string"
@@ -558,7 +558,7 @@ await client.endpoints.primitive.getAndReturnString(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnInt(
 	{
 		1
@@ -571,7 +571,7 @@ await client.endpoints.primitive.getAndReturnInt(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnLong(
 	{
 		1000000
@@ -584,7 +584,7 @@ await client.endpoints.primitive.getAndReturnLong(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnDouble(
 	{
 		1.1
@@ -597,7 +597,7 @@ await client.endpoints.primitive.getAndReturnDouble(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnBool(
 	{
 		true
@@ -610,7 +610,7 @@ await client.endpoints.primitive.getAndReturnBool(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnDatetime(
 	{
 		"2024-01-15T09:30:00Z"
@@ -623,7 +623,7 @@ await client.endpoints.primitive.getAndReturnDatetime(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnDate(
 	{
 		"2023-01-15"
@@ -636,7 +636,7 @@ await client.endpoints.primitive.getAndReturnDate(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnUuid(
 	{
 		"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
@@ -649,7 +649,7 @@ await client.endpoints.primitive.getAndReturnUuid(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.primitive.getAndReturnBase64(
 	{
 		"SGVsbG8gd29ybGQh"
@@ -662,11 +662,11 @@ await client.endpoints.primitive.getAndReturnBase64(
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.union.getAndReturnUnion(
 	{
-		{ 
-			animal : "dog", 
+		{
+			animal : "dog",
 			name: "name",
 			likesToWoof: true
 		}
@@ -711,7 +711,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.noAuth.postWithNoAuth(
 	{
 		{"key":"value"}
@@ -748,7 +748,7 @@ await client.noReqBody.postWithNoRequestBody();
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.reqWithHeaders.getWithCustomHeader(
 	{
 		xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",

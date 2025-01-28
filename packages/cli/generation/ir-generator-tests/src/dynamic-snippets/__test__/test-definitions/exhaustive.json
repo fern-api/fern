@@ -6436,14 +6436,14 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "numer",
+                                "originalName": "number",
                                 "camelCase": {
-                                    "unsafeName": "numer",
-                                    "safeName": "numer"
+                                    "unsafeName": "number",
+                                    "safeName": "number"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "numer",
-                                    "safeName": "numer"
+                                    "unsafeName": "number",
+                                    "safeName": "number"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "NUMER",
@@ -6454,7 +6454,7 @@
                                     "safeName": "Numer"
                                 }
                             },
-                            "wireValue": "numer"
+                            "wireValue": "number"
                         },
                         "typeReference": {
                             "type": "list",

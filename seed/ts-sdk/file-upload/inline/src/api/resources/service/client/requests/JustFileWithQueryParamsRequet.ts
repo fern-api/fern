@@ -4,7 +4,7 @@
 
 import * as fs from "fs";
 
-export interface JustFileWithQueryParamsRequet {
+export interface JustFileWithQueryParamsRequest {
     maybeString?: string;
     integer: number;
     maybeInteger?: number;

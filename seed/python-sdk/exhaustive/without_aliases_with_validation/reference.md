@@ -37,8 +37,8 @@ client.endpoints.container.get_and_return_list_of_primitives(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[str]` 
-    
+**request:** `typing.Sequence[str]`
+
 </dd>
 </dl>
 
@@ -46,7 +46,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -99,8 +99,8 @@ client.endpoints.container.get_and_return_list_of_objects(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[ObjectWithRequiredField]` 
-    
+**request:** `typing.Sequence[ObjectWithRequiredField]`
+
 </dd>
 </dl>
 
@@ -108,7 +108,7 @@ client.endpoints.container.get_and_return_list_of_objects(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -156,8 +156,8 @@ client.endpoints.container.get_and_return_set_of_primitives(
 <dl>
 <dd>
 
-**request:** `typing.Set[str]` 
-    
+**request:** `typing.Set[str]`
+
 </dd>
 </dl>
 
@@ -165,7 +165,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -218,8 +218,8 @@ client.endpoints.container.get_and_return_set_of_objects(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[ObjectWithRequiredField]` 
-    
+**request:** `typing.Sequence[ObjectWithRequiredField]`
+
 </dd>
 </dl>
 
@@ -227,7 +227,7 @@ client.endpoints.container.get_and_return_set_of_objects(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -275,8 +275,8 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 <dl>
 <dd>
 
-**request:** `typing.Dict[str, str]` 
-    
+**request:** `typing.Dict[str, str]`
+
 </dd>
 </dl>
 
@@ -284,7 +284,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -337,8 +337,8 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 <dl>
 <dd>
 
-**request:** `typing.Dict[str, ObjectWithRequiredField]` 
-    
+**request:** `typing.Dict[str, ObjectWithRequiredField]`
+
 </dd>
 </dl>
 
@@ -346,7 +346,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -397,8 +397,8 @@ client.endpoints.container.get_and_return_optional(
 <dl>
 <dd>
 
-**request:** `typing.Optional[ObjectWithRequiredField]` 
-    
+**request:** `typing.Optional[ObjectWithRequiredField]`
+
 </dd>
 </dl>
 
@@ -406,7 +406,7 @@ client.endpoints.container.get_and_return_optional(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -455,8 +455,8 @@ client.endpoints.enum.get_and_return_enum(
 <dl>
 <dd>
 
-**request:** `WeatherReport` 
-    
+**request:** `WeatherReport`
+
 </dd>
 </dl>
 
@@ -464,7 +464,7 @@ client.endpoints.enum.get_and_return_enum(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -513,8 +513,8 @@ client.endpoints.http_methods.test_get(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -522,7 +522,7 @@ client.endpoints.http_methods.test_get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -570,8 +570,8 @@ client.endpoints.http_methods.test_post(
 <dl>
 <dd>
 
-**string:** `str` 
-    
+**string:** `str`
+
 </dd>
 </dl>
 
@@ -579,7 +579,7 @@ client.endpoints.http_methods.test_post(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -628,16 +628,16 @@ client.endpoints.http_methods.test_put(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**string:** `str` 
-    
+**string:** `str`
+
 </dd>
 </dl>
 
@@ -645,7 +645,7 @@ client.endpoints.http_methods.test_put(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -715,8 +715,8 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -724,103 +724,103 @@ client.endpoints.http_methods.test_patch(
 <dd>
 
 **string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**integer:** `typing.Optional[int]` 
-    
+**integer:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**long_:** `typing.Optional[int]` 
-    
+**long_:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**double:** `typing.Optional[float]` 
-    
+**double:** `typing.Optional[float]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**bool_:** `typing.Optional[bool]` 
-    
+**bool_:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**datetime:** `typing.Optional[dt.datetime]` 
-    
+**datetime:** `typing.Optional[dt.datetime]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**date:** `typing.Optional[dt.date]` 
-    
+**date:** `typing.Optional[dt.date]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**uuid_:** `typing.Optional[uuid.UUID]` 
-    
+**uuid_:** `typing.Optional[uuid.UUID]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**base_64:** `typing.Optional[str]` 
-    
+**base_64:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**list_:** `typing.Optional[typing.Sequence[str]]` 
-    
+**list_:** `typing.Optional[typing.Sequence[str]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**set_:** `typing.Optional[typing.Set[str]]` 
-    
+**set_:** `typing.Optional[typing.Set[str]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**map_:** `typing.Optional[typing.Dict[int, str]]` 
-    
+**map_:** `typing.Optional[typing.Dict[int, str]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**bigint:** `typing.Optional[str]` 
-    
+**bigint:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -828,7 +828,7 @@ client.endpoints.http_methods.test_patch(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -876,8 +876,8 @@ client.endpoints.http_methods.test_delete(
 <dl>
 <dd>
 
-**id:** `str` 
-    
+**id:** `str`
+
 </dd>
 </dl>
 
@@ -885,7 +885,7 @@ client.endpoints.http_methods.test_delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -956,103 +956,103 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dd>
 
 **string:** `typing.Optional[str]` — This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**integer:** `typing.Optional[int]` 
-    
+**integer:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**long_:** `typing.Optional[int]` 
-    
+**long_:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**double:** `typing.Optional[float]` 
-    
+**double:** `typing.Optional[float]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**bool_:** `typing.Optional[bool]` 
-    
+**bool_:** `typing.Optional[bool]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**datetime:** `typing.Optional[dt.datetime]` 
-    
+**datetime:** `typing.Optional[dt.datetime]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**date:** `typing.Optional[dt.date]` 
-    
+**date:** `typing.Optional[dt.date]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**uuid_:** `typing.Optional[uuid.UUID]` 
-    
+**uuid_:** `typing.Optional[uuid.UUID]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**base_64:** `typing.Optional[str]` 
-    
+**base_64:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**list_:** `typing.Optional[typing.Sequence[str]]` 
-    
+**list_:** `typing.Optional[typing.Sequence[str]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**set_:** `typing.Optional[typing.Set[str]]` 
-    
+**set_:** `typing.Optional[typing.Set[str]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**map_:** `typing.Optional[typing.Dict[int, str]]` 
-    
+**map_:** `typing.Optional[typing.Dict[int, str]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**bigint:** `typing.Optional[str]` 
-    
+**bigint:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -1060,7 +1060,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1108,8 +1108,8 @@ client.endpoints.object.get_and_return_with_required_field(
 <dl>
 <dd>
 
-**string:** `str` 
-    
+**string:** `str`
+
 </dd>
 </dl>
 
@@ -1117,7 +1117,7 @@ client.endpoints.object.get_and_return_with_required_field(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1165,8 +1165,8 @@ client.endpoints.object.get_and_return_with_map_of_map(
 <dl>
 <dd>
 
-**map_:** `typing.Dict[str, typing.Dict[str, str]]` 
-    
+**map_:** `typing.Dict[str, typing.Dict[str, str]]`
+
 </dd>
 </dl>
 
@@ -1174,7 +1174,7 @@ client.endpoints.object.get_and_return_with_map_of_map(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1247,16 +1247,16 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 <dl>
 <dd>
 
-**string:** `typing.Optional[str]` 
-    
+**string:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**nested_object:** `typing.Optional[ObjectWithOptionalField]` 
-    
+**nested_object:** `typing.Optional[ObjectWithOptionalField]`
+
 </dd>
 </dl>
 
@@ -1264,7 +1264,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1338,24 +1338,24 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dl>
 <dd>
 
-**string_:** `str` 
-    
+**string_:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**string:** `str` 
-    
+**string:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**nested_object:** `ObjectWithOptionalField` 
-    
+**nested_object:** `ObjectWithOptionalField`
+
 </dd>
 </dl>
 
@@ -1363,7 +1363,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1443,8 +1443,8 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[NestedObjectWithRequiredField]` 
-    
+**request:** `typing.Sequence[NestedObjectWithRequiredField]`
+
 </dd>
 </dl>
 
@@ -1452,7 +1452,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1515,8 +1515,8 @@ client.endpoints.params.get_with_path(
 <dl>
 <dd>
 
-**param:** `str` 
-    
+**param:** `str`
+
 </dd>
 </dl>
 
@@ -1524,7 +1524,7 @@ client.endpoints.params.get_with_path(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1587,16 +1587,16 @@ client.endpoints.params.get_with_query(
 <dl>
 <dd>
 
-**query:** `str` 
-    
+**query:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**number:** `int` 
-    
+**number:** `int`
+
 </dd>
 </dl>
 
@@ -1604,7 +1604,7 @@ client.endpoints.params.get_with_query(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1650,7 +1650,7 @@ client = SeedExhaustive(
 )
 client.endpoints.params.get_with_allow_multiple_query(
     query="string",
-    numer=1,
+    number=1,
 )
 
 ```
@@ -1667,16 +1667,16 @@ client.endpoints.params.get_with_allow_multiple_query(
 <dl>
 <dd>
 
-**query:** `typing.Union[str, typing.Sequence[str]]` 
-    
+**query:** `typing.Union[str, typing.Sequence[str]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**numer:** `typing.Union[int, typing.Sequence[int]]` 
-    
+**number:** `typing.Union[int, typing.Sequence[int]]`
+
 </dd>
 </dl>
 
@@ -1684,7 +1684,7 @@ client.endpoints.params.get_with_allow_multiple_query(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1747,16 +1747,16 @@ client.endpoints.params.get_with_path_and_query(
 <dl>
 <dd>
 
-**param:** `str` 
-    
+**param:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**query:** `str` 
-    
+**query:** `str`
+
 </dd>
 </dl>
 
@@ -1764,7 +1764,7 @@ client.endpoints.params.get_with_path_and_query(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1827,16 +1827,16 @@ client.endpoints.params.modify_with_path(
 <dl>
 <dd>
 
-**param:** `str` 
-    
+**param:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `str` 
-    
+**request:** `str`
+
 </dd>
 </dl>
 
@@ -1844,7 +1844,7 @@ client.endpoints.params.modify_with_path(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1893,8 +1893,8 @@ client.endpoints.primitive.get_and_return_string(
 <dl>
 <dd>
 
-**request:** `str` 
-    
+**request:** `str`
+
 </dd>
 </dl>
 
@@ -1902,7 +1902,7 @@ client.endpoints.primitive.get_and_return_string(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -1950,8 +1950,8 @@ client.endpoints.primitive.get_and_return_int(
 <dl>
 <dd>
 
-**request:** `int` 
-    
+**request:** `int`
+
 </dd>
 </dl>
 
@@ -1959,7 +1959,7 @@ client.endpoints.primitive.get_and_return_int(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2007,8 +2007,8 @@ client.endpoints.primitive.get_and_return_long(
 <dl>
 <dd>
 
-**request:** `int` 
-    
+**request:** `int`
+
 </dd>
 </dl>
 
@@ -2016,7 +2016,7 @@ client.endpoints.primitive.get_and_return_long(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2064,8 +2064,8 @@ client.endpoints.primitive.get_and_return_double(
 <dl>
 <dd>
 
-**request:** `float` 
-    
+**request:** `float`
+
 </dd>
 </dl>
 
@@ -2073,7 +2073,7 @@ client.endpoints.primitive.get_and_return_double(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2121,8 +2121,8 @@ client.endpoints.primitive.get_and_return_bool(
 <dl>
 <dd>
 
-**request:** `bool` 
-    
+**request:** `bool`
+
 </dd>
 </dl>
 
@@ -2130,7 +2130,7 @@ client.endpoints.primitive.get_and_return_bool(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2182,8 +2182,8 @@ client.endpoints.primitive.get_and_return_datetime(
 <dl>
 <dd>
 
-**request:** `dt.datetime` 
-    
+**request:** `dt.datetime`
+
 </dd>
 </dl>
 
@@ -2191,7 +2191,7 @@ client.endpoints.primitive.get_and_return_datetime(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2243,8 +2243,8 @@ client.endpoints.primitive.get_and_return_date(
 <dl>
 <dd>
 
-**request:** `dt.date` 
-    
+**request:** `dt.date`
+
 </dd>
 </dl>
 
@@ -2252,7 +2252,7 @@ client.endpoints.primitive.get_and_return_date(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2304,8 +2304,8 @@ client.endpoints.primitive.get_and_return_uuid(
 <dl>
 <dd>
 
-**request:** `uuid.UUID` 
-    
+**request:** `uuid.UUID`
+
 </dd>
 </dl>
 
@@ -2313,7 +2313,7 @@ client.endpoints.primitive.get_and_return_uuid(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2361,8 +2361,8 @@ client.endpoints.primitive.get_and_return_base_64(
 <dl>
 <dd>
 
-**request:** `str` 
-    
+**request:** `str`
+
 </dd>
 </dl>
 
@@ -2370,7 +2370,7 @@ client.endpoints.primitive.get_and_return_base_64(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2423,8 +2423,8 @@ client.endpoints.union.get_and_return_union(
 <dl>
 <dd>
 
-**request:** `Animal` 
-    
+**request:** `Animal`
+
 </dd>
 </dl>
 
@@ -2432,7 +2432,7 @@ client.endpoints.union.get_and_return_union(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2521,24 +2521,24 @@ client.inlined_requests.post_with_object_bodyand_response(
 <dl>
 <dd>
 
-**string:** `str` 
-    
+**string:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**integer:** `int` 
-    
+**integer:** `int`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**nested_object:** `ObjectWithOptionalField` 
-    
+**nested_object:** `ObjectWithOptionalField`
+
 </dd>
 </dl>
 
@@ -2546,7 +2546,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2609,8 +2609,8 @@ client.no_auth.post_with_no_auth(
 <dl>
 <dd>
 
-**request:** `typing.Optional[typing.Any]` 
-    
+**request:** `typing.Optional[typing.Any]`
+
 </dd>
 </dl>
 
@@ -2618,7 +2618,7 @@ client.no_auth.post_with_no_auth(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2666,7 +2666,7 @@ client.no_req_body.get_with_no_request_body()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2713,7 +2713,7 @@ client.no_req_body.post_with_no_request_body()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -2764,24 +2764,24 @@ client.req_with_headers.get_with_custom_header(
 <dl>
 <dd>
 
-**x_test_service_header:** `str` 
-    
+**x_test_service_header:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**x_test_endpoint_header:** `str` 
-    
+**x_test_endpoint_header:** `str`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `str` 
-    
+**request:** `str`
+
 </dd>
 </dl>
 
@@ -2789,7 +2789,7 @@ client.req_with_headers.get_with_custom_header(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>

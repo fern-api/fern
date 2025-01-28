@@ -12,5 +12,5 @@ export type FeatureFlagConfiguration =
      * A single feature flag with a configurable name, fallback value, and match value. Especially useful for non boolean feature flags. */
     | FernDocsConfig.FeatureFlag
     /**
-     * A list of feature flags. If any of the feature flags are satisifed, we will show all content. */
+     * A list of feature flags. If any of the feature flags are satisfied, we will show all content. */
     | FernDocsConfig.FeatureFlag[];

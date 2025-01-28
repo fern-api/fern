@@ -210,7 +210,7 @@ class SourceFileImpl(SourceFile):
                 tc_ref = AST.TypeHint.type_checking_reference()
                 self._reference_resolver.register_reference(tc_ref)
 
-            # register refrence for resolving later
+            # register reference for resolving later
             self._reference_resolver.register_reference(reference)
 
             # track dependency if this references relies on an external dep

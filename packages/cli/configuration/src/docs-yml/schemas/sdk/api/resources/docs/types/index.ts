@@ -18,7 +18,7 @@ export * from "./VersionConfig";
 export * from "./VersionAvailability";
 export * from "./VersionFileConfig";
 export * from "./NavigationConfig";
-export * from "./UntabbedNavigationConifg";
+export * from "./UntabbedNavigationConfig";
 export * from "./TabbedNavigationConfig";
 export * from "./TabbedNavigationItem";
 export * from "./NavigationItem";

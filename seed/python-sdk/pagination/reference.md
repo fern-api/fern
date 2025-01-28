@@ -46,7 +46,7 @@ for page in response.iter_pages():
 <dd>
 
 **page:** `typing.Optional[int]` — Defaults to first page
-    
+
 </dd>
 </dl>
 
@@ -54,26 +54,26 @@ for page in response.iter_pages():
 <dd>
 
 **per_page:** `typing.Optional[int]` — Defaults to per page
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
-    
+**order:** `typing.Optional[Order]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**starting_after:** `typing.Optional[str]` 
+**starting_after:** `typing.Optional[str]`
 
 The cursor used for pagination in order to fetch
 the next page of results.
-    
+
 </dd>
 </dl>
 
@@ -81,7 +81,7 @@ the next page of results.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -134,8 +134,8 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` 
-    
+**cursor:** `typing.Optional[str]`
+
 </dd>
 </dl>
 
@@ -143,7 +143,7 @@ for page in response.iter_pages():
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -199,12 +199,12 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**pagination:** `typing.Optional[WithCursor]` 
+**pagination:** `typing.Optional[WithCursor]`
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
 
-    
+
 </dd>
 </dl>
 
@@ -212,7 +212,7 @@ in order to fetch the next page of results.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -269,7 +269,7 @@ for page in response.iter_pages():
 <dd>
 
 **page:** `typing.Optional[int]` — Defaults to first page
-    
+
 </dd>
 </dl>
 
@@ -277,26 +277,26 @@ for page in response.iter_pages():
 <dd>
 
 **per_page:** `typing.Optional[int]` — Defaults to per page
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
-    
+**order:** `typing.Optional[Order]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**starting_after:** `typing.Optional[str]` 
+**starting_after:** `typing.Optional[str]`
 
 The cursor used for pagination in order to fetch
 the next page of results.
-    
+
 </dd>
 </dl>
 
@@ -304,7 +304,7 @@ the next page of results.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -361,7 +361,7 @@ for page in response.iter_pages():
 <dd>
 
 **page:** `typing.Optional[float]` — Defaults to first page
-    
+
 </dd>
 </dl>
 
@@ -369,26 +369,26 @@ for page in response.iter_pages():
 <dd>
 
 **per_page:** `typing.Optional[float]` — Defaults to per page
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
-    
+**order:** `typing.Optional[Order]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**starting_after:** `typing.Optional[str]` 
+**starting_after:** `typing.Optional[str]`
 
 The cursor used for pagination in order to fetch
 the next page of results.
-    
+
 </dd>
 </dl>
 
@@ -396,7 +396,7 @@ the next page of results.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -452,12 +452,12 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**pagination:** `typing.Optional[WithPage]` 
+**pagination:** `typing.Optional[WithPage]`
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
 
-    
+
 </dd>
 </dl>
 
@@ -465,7 +465,7 @@ in order to fetch the next page of results.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -521,27 +521,27 @@ for page in response.iter_pages():
 <dd>
 
 **page:** `typing.Optional[int]` — Defaults to first page
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]`
 
-The maxiumum number of elements to return.
+The maximum number of elements to return.
 This is also used as the step size in this
 paginated endpoint.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
-    
+**order:** `typing.Optional[Order]`
+
 </dd>
 </dl>
 
@@ -549,7 +549,7 @@ paginated endpoint.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -605,27 +605,27 @@ for page in response.iter_pages():
 <dd>
 
 **page:** `typing.Optional[int]` — Defaults to first page
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]`
 
-The maxiumum number of elements to return.
+The maximum number of elements to return.
 This is also used as the step size in this
 paginated endpoint.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
-    
+**order:** `typing.Optional[Order]`
+
 </dd>
 </dl>
 
@@ -633,7 +633,7 @@ paginated endpoint.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -690,8 +690,8 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[uuid.UUID]` 
-    
+**cursor:** `typing.Optional[uuid.UUID]`
+
 </dd>
 </dl>
 
@@ -699,7 +699,7 @@ for page in response.iter_pages():
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -756,8 +756,8 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[uuid.UUID]` 
-    
+**cursor:** `typing.Optional[uuid.UUID]`
+
 </dd>
 </dl>
 
@@ -765,7 +765,7 @@ for page in response.iter_pages():
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -818,11 +818,11 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**starting_after:** `typing.Optional[str]` 
+**starting_after:** `typing.Optional[str]`
 
 The cursor used for pagination in order to fetch
 the next page of results.
-    
+
 </dd>
 </dl>
 
@@ -830,7 +830,7 @@ the next page of results.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>
@@ -883,8 +883,8 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**offset:** `typing.Optional[int]` 
-    
+**offset:** `typing.Optional[int]`
+
 </dd>
 </dl>
 
@@ -892,7 +892,7 @@ for page in response.iter_pages():
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
+
 </dd>
 </dl>
 </dd>

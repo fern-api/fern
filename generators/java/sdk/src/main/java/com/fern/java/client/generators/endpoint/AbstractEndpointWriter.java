@@ -264,7 +264,7 @@ public abstract class AbstractEndpointWriter {
                 httpEndpoint,
                 contentType,
                 generatedObjectMapper,
-                generatedHttpUrl.inlinableBuild(),
+                generatedHttpUrl.inlineableBuild(),
                 sendContentType);
         endpointMethodBuilder.addCode(requestInitializer);
 
@@ -294,7 +294,7 @@ public abstract class AbstractEndpointWriter {
 
         MethodSpec endpointWithoutRequest = null;
         if (sdkRequest().isPresent() && sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
-            MethodSpec.Builder endpointWithoutRequestBldr = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+            MethodSpec.Builder endpointWithoutRequestBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
                     .addJavadoc(endpointWithRequestOptions.javadoc)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameters(pathParameters)
@@ -306,7 +306,7 @@ public abstract class AbstractEndpointWriter {
                             .getCamelCase()
                             .getUnsafeName()))
                     .collect(Collectors.toList());
-            endpointWithoutRequestBldr.addParameters(additionalParamsWithoutBody);
+            endpointWithoutRequestBuilder.addParameters(additionalParamsWithoutBody);
             List<String> paramNamesWoBody = Stream.concat(pathParameters.stream(), additionalParamsWithoutBody.stream())
                     .map(parameterSpec -> parameterSpec.name)
                     .collect(Collectors.toList());
@@ -323,7 +323,7 @@ public abstract class AbstractEndpointWriter {
             } else {
                 paramNamesWoBody.add("$T.builder().build()");
             }
-            endpointWithoutRequest = endpointWithoutRequestBldr
+            endpointWithoutRequest = endpointWithoutRequestBuilder
                     .addStatement(
                             endpointWithRequestOptions.returnType.equals(TypeName.VOID)
                                     ? endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")"
@@ -817,7 +817,7 @@ public abstract class AbstractEndpointWriter {
 
                                     @Override
                                     public String _visitUnknown(Object o) {
-                                        throw new IllegalArgumentException("Unkown request property value type.");
+                                        throw new IllegalArgumentException("Unknown request property value type.");
                                     }
                                 });
                         httpResponseBuilder.addStatement(

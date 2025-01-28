@@ -92,7 +92,7 @@ class SnippetTestFactory:
 
         return AST.Expression(AST.CodeWriter(envvar_writer))
 
-    def _enviroment(self, generated_environment: MultipleBaseUrlsEnvironmentGenerator) -> AST.ClassInstantiation:
+    def _environment(self, generated_environment: MultipleBaseUrlsEnvironmentGenerator) -> AST.ClassInstantiation:
         args = [AST.Expression(f'"{self.TEST_URL_ENVVAR}"'), AST.Expression('"base_url"')]
         os_get = AST.Expression(
             AST.FunctionInvocation(
@@ -149,7 +149,7 @@ class SnippetTestFactory:
             _kwargs.append(
                 (
                     "environment",
-                    AST.Expression(self._enviroment(self._generated_environment)),
+                    AST.Expression(self._environment(self._generated_environment)),
                 )
             )
 

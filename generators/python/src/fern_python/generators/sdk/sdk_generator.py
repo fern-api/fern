@@ -37,8 +37,8 @@ from .client_generator.generated_root_client import GeneratedRootClient
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.root_client_generator import RootClientGenerator
 from .custom_config import (
-    BaseDependencyCusomConfig,
-    DependencyCusomConfig,
+    BaseDependencyCustomConfig,
+    DependencyCustomConfig,
     SDKCustomConfig,
 )
 from .environment_generators import (
@@ -103,7 +103,7 @@ class SdkGenerator(AbstractGenerator):
         for dep, value in custom_config.extra_dependencies.items():
             if type(value) is str:
                 project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
-            elif isinstance(value, DependencyCusomConfig):
+            elif isinstance(value, DependencyCustomConfig):
                 project.add_dependency(
                     dependency=AST.Dependency(name=dep, version=value.version, optional=value.optional)
                 )
@@ -113,7 +113,7 @@ class SdkGenerator(AbstractGenerator):
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
             if type(bas_dep_value) is str:
                 project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=bas_dep_value))
-            elif isinstance(bas_dep_value, BaseDependencyCusomConfig):
+            elif isinstance(bas_dep_value, BaseDependencyCustomConfig):
                 project.add_dev_dependency(
                     dependency=AST.Dependency(
                         name=dep,

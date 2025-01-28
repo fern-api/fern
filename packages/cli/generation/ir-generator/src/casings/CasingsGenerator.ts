@@ -154,17 +154,17 @@ function hasAdjacentCommonInitialisms(wordList: string[]): boolean {
 }
 
 function maybeGetPluralInitialism(name: string): string | undefined {
-    return PLURAL_COMMON_ITIALISMS.get(name.toUpperCase());
+    return PLURAL_COMMON_INITIALISMS.get(name.toUpperCase());
 }
 
 function isCommonInitialism(name: string): boolean {
-    return COMMON_ITIALISMS.has(name.toUpperCase());
+    return COMMON_INITIALISMS.has(name.toUpperCase());
 }
 
 // For better casing conventions, define the set of common initialisms.
 //
 // Ref: https://github.com/golang/lint/blob/6edffad5e6160f5949cdefc81710b2706fbcd4f6/lint.go#L767C1-L809C2
-const COMMON_ITIALISMS = new Set<string>([
+const COMMON_INITIALISMS = new Set<string>([
     "ACL",
     "API",
     "ASCII",
@@ -211,7 +211,7 @@ const COMMON_ITIALISMS = new Set<string>([
 // A subset of the COMMON_INITIALISMS that require special handling. We want
 // the plural equivalent to be specified with a lowercase trailing 's', such
 // as 'APIs' and 'UUIDs'.
-const PLURAL_COMMON_ITIALISMS = new Map<string, string>([
+const PLURAL_COMMON_INITIALISMS = new Map<string, string>([
     ["ACLS", "ACLs"],
     ["APIS", "APIs"],
     ["CPUS", "CPUs"],

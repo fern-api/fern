@@ -6,7 +6,7 @@ import (
 	core "github.com/idempotency-headers/fern/core"
 )
 
-// IdempotentRequestOption adapts the behavior of an indivdual request.
+// IdempotentRequestOption adapts the behavior of an individual request.
 type IdempotentRequestOption = core.IdempotentRequestOption
 
 // WithIdempotencyKey sets the idempotencyKey request header.

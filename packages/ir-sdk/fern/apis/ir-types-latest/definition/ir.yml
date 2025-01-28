@@ -70,7 +70,7 @@ types:
     properties:
       defaultEndpoint:
         docs: |
-          If specified, this enpdoint should be used in every snippet (if possible).
+          If specified, this endpoint should be used in every snippet (if possible).
           Note that some endpoints aren't suitable for every feature (e.g. a non-list
           endpoint for pagination), so the default is a no-op in those cases.
         type: optional<commons.EndpointId>
@@ -83,10 +83,10 @@ types:
           with each feature.
         type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
   SourceConfig:
-    properties: 
+    properties:
       sources:
         docs: The raw API definitions that produced the IR.
-        type: list<ApiDefinitionSource> 
+        type: list<ApiDefinitionSource>
   ApiDefinitionSourceId:
     docs: |
       Uniquely identifies a specific API definition source. This allows us to clearly identify
@@ -117,12 +117,12 @@ types:
       sdkName: string
       sdkVersion: string
       userAgent: optional<UserAgent>
-  UserAgent: 
-    properties: 
-      header: 
+  UserAgent:
+    properties:
+      header:
         type: literal<"User-Agent">
-        docs: The user agent header for ease of access to generators. 
-      value: 
+        docs: The user agent header for ease of access to generators.
+      value:
         type: string
         docs: Formatted as "<package>/<version>"
 

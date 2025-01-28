@@ -88,7 +88,7 @@ class File
     /**
      * Maps this File into a multipart form data part.
      *
-     * @param string $name The name of the mutlipart form data part.
+     * @param string $name The name of the multipart form data part.
      * @param ?string $contentType Overrides the Content-Type associated with the file, if any.
      * @return MultipartFormDataPart
      */

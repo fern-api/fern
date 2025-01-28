@@ -81,7 +81,7 @@ This helps you to ensure that the user provides the necessary information before
 
 <img style={{ borderRadius: "0.5rem" }} src="tutorials/global_node.png" />
 
-Global Nodes take precendence over the condition decisions made by the agent. You can treat a global node as a node, that every other node in the pathway has a pathway to, with the label as the 'Global Pathway Label'.
+Global Nodes take precedence over the condition decisions made by the agent. You can treat a global node as a node, that every other node in the pathway has a pathway to, with the label as the 'Global Pathway Label'.
 
 Using the Reservation Booking Example, if the user were to ask a question like 'What are the opening hours of the restaurant' when the agent is at the 'Ask for reservation info' node, the condition decision would not be met as the user did not provide the date, time, and number of guests for the reservation. However, the pathway label would be 'user has a question about the restaurant's hours or location', which links to a Global Node. As Global Nodes take precedence over the condition decision, the agent would then move to the 'Global Node' named 'Restaurant Questions' and provide the user with the opening hours of the restaurant. After providing the user with the opening hours of the restaurant, the agent would then automatically return to the 'Ask for reservation info' node, and continue with the flow of the conversation.
 
