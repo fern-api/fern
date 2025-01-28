@@ -51,11 +51,11 @@ client.user.get_user(
 <dl>
 <dd>
 
-**user_id:** `str`
+**user_id:** `str` 
 
 The ID of the user to retrieve.
 This ID is unique to each user.
-
+    
 </dd>
 </dl>
 
@@ -63,7 +63,7 @@ This ID is unique to each user.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-
+    
 </dd>
 </dl>
 </dd>
@@ -126,24 +126,24 @@ client.user.create_user(
 <dl>
 <dd>
 
-**name:** `str`
+**name:** `str` 
 
 The name of the user to create.
 This name is unique to each user.
 
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**age:** `typing.Optional[int]`
+**age:** `typing.Optional[int]` 
 
 The age of the user.
 This property is not required.
 
-
+    
 </dd>
 </dl>
 
@@ -151,7 +151,7 @@ This property is not required.
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-
+    
 </dd>
 </dl>
 </dd>

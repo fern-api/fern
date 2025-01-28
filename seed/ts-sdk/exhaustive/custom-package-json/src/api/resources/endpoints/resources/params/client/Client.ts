@@ -213,7 +213,7 @@ export class Params {
         request: Fiddle.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>> {
-        const { query, number } = request;
+        const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
             _queryParams["query"] = query.map((item) => item);
@@ -221,10 +221,10 @@ export class Params {
             _queryParams["query"] = query;
         }
 
-        if (Array.isArray(number)) {
-            _queryParams["number"] = number.map((item) => item.toString());
+        if (Array.isArray(number_)) {
+            _queryParams["number"] = number_.map((item) => item.toString());
         } else {
-            _queryParams["number"] = number.toString();
+            _queryParams["number"] = number_.toString();
         }
 
         const _response = await core.fetcher({

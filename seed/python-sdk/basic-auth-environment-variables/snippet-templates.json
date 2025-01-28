@@ -39,7 +39,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": false,
-                            "templateString": "password=$FERN_INPUT",
+                            "templateString": "access_token=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "AUTH",
@@ -94,7 +94,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": false,
-                                "templateString": "password=$FERN_INPUT",
+                                "templateString": "access_token=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "AUTH",
@@ -161,7 +161,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": false,
-                            "templateString": "password=$FERN_INPUT",
+                            "templateString": "access_token=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "AUTH",
@@ -233,7 +233,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": false,
-                                "templateString": "password=$FERN_INPUT",
+                                "templateString": "access_token=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "AUTH",

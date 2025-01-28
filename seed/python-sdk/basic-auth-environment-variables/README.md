@@ -24,7 +24,7 @@ from seed import SeedBasicAuthEnvironmentVariables
 
 client = SeedBasicAuthEnvironmentVariables(
     username="YOUR_USERNAME",
-    password="YOUR_PASSWORD",
+    access_token="YOUR_ACCESS_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
 client.basic_auth.post_with_basic_auth(
@@ -43,7 +43,7 @@ from seed import AsyncSeedBasicAuthEnvironmentVariables
 
 client = AsyncSeedBasicAuthEnvironmentVariables(
     username="YOUR_USERNAME",
-    password="YOUR_PASSWORD",
+    access_token="YOUR_ACCESS_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
 

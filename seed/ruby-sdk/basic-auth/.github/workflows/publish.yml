@@ -16,7 +16,7 @@ jobs:
 
           - name: Test gem
             run: bundle install && bundle exec rake test
-              
+
           - name: Build and Push Gem
             env:
               GEM_HOST_API_KEY: ${{ secrets. }}
