@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "c": {
+      "$ref": "#/definitions/long-path.C"
+    }
+  },
+  "required": [
+    "c"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "long-path.D": {
+      "type": "object",
+      "properties": {
+        "starting_after": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "long-path.C": {
+      "type": "object",
+      "properties": {
+        "d": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/long-path.D"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

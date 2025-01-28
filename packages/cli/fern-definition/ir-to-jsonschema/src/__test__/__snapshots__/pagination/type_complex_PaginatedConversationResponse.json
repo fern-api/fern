@@ -1,0 +1,121 @@
+{
+  "type": "object",
+  "properties": {
+    "conversations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/complex.Conversation"
+      }
+    },
+    "pages": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/complex.CursorPages"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_count": {
+      "type": "integer"
+    },
+    "type": {
+      "const": "conversation.list"
+    }
+  },
+  "required": [
+    "conversations",
+    "total_count",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "complex.Conversation": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    },
+    "complex.StartingAfterPaging": {
+      "type": "object",
+      "properties": {
+        "per_page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "per_page"
+      ],
+      "additionalProperties": false
+    },
+    "complex.CursorPages": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/complex.StartingAfterPaging"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "per_page": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "total_pages": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "const": "pages"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
