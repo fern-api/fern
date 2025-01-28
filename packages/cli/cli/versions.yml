@@ -1,5 +1,28 @@
 - changelogEntry:
     - summary: |
+        Added better error messages when markdown files reference non-existent MDX files, showing the relative path 
+        to the missing file rather than just indicating an invalid reference.
+      type: fix
+  irVersion: 55
+  version: 0.51.7
+
+- changelogEntry:
+    - summary: |
+        Fixed OpenAPI importer to properly handle string enums that are specified as integers by coercing them to strings.
+      type: fix
+  irVersion: 55
+  version: 0.51.6
+
+- changelogEntry:
+    - summary: |
+        Added a new rule to validate frontmatter parsing across markdown files, ensuring frontmatter 
+        is properly formatted and can be parsed without errors.
+      type: fix
+  irVersion: 55
+  version: 0.51.5
+
+- changelogEntry:
+    - summary: |
         Various improvements to the Mintlify and Readme importers, including better default styling 
         and spec imports for Mintlify migrations.
       type: fix

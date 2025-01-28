@@ -6,28 +6,134 @@ subtitle: 'Learn about the Fern CLI commands.'
 
 | Command | Description |
 |---------|-------------|
-| [`fern init`](#fern-init) | Initialize new Fern API projects |
-| [`fern check`](#fern-check) | Validate API definition & configuration for development and CI |
-| [`fern upgrade`](#fern-upgrade) | Update Fern CLI & compiler to latest versions |
+| [`fern init`](#fern-init) | Create new Fern project from OpenAPI spec or scratch |
+| [`fern check`](#fern-check) | Validate API definition & configuration |
+| [`fern upgrade`](#fern-upgrade) | Update Fern CLI & generators to latest versions |
 
 ## Documentation Commands
+
 | Command | Description |
 |---------|-------------|
 | [`fern docs dev`](#fern-docs-dev) | Run local documentation preview server |
 | [`fern generate --docs`](#fern-generate---docs) | Build & publish documentation updates |
-| [`fern docs broken-links`](#fern-docs-broken-links) | Validate documentation links for quality assurance |
 
 ## SDK Generation Commands  
+
 | Command | Description |
 |---------|-------------|
 | [`fern generate`](#fern-generate) | Build & publish SDK updates |
-| [`fern write-definition`](#fern-write-definition) | Convert OpenAPI specifications to [Fern Definition](/learn/overview) |
-| [`fern write-overrides`](#fern-write-overrides) | Create OpenAPI customizations and enhancements |
+| [`fern write-definition`](#fern-write-definition) | Convert OpenAPI specifications to [Fern Definition](/learn/api-definition/fern/overview) |
+| [`fern write-overrides`](#fern-write-overrides) | Create OpenAPI customizations |
 | [`fern generator upgrade`](#fern-generator-upgrade) | Update SDK generators to latest versions |
 
 ## Detailed Command Documentation
 
 <AccordionGroup>
+  <Accordion title="fern init">
+
+    Use `fern init` to initialize a new Fern workspace in the current folder. By default, you'll see the IMDb API example.
+
+    <CodeBlock title="terminal">
+    ```bash
+    fern init [--docs] [--openapi <path/url>]
+    ```
+    </CodeBlock>
+
+    When initializing with OpenAPI, your project structure will look like this:
+
+    ```bash
+    fern/
+    ├─ fern.config.json
+    ├─ generators.yml # generators you're using
+    └─ openapi/
+        └─ openapi.json # your OpenAPI specification
+    ```
+
+    For Fern Definition initialization (without OpenAPI), you'll see this structure:
+
+    ```bash
+    fern/
+    ├─ fern.config.json
+    ├─ generators.yml # generators you're using
+    └─ definition/
+        ├─ api.yml  # API-level configuration
+        └─ imdb.yml # endpoints, types, and errors
+    ```
+
+    ### openapi
+
+    Use `--openapi` to initialize a project from an OpenAPI specification:
+
+    ```bash
+    # Initialize from local file
+    fern init --openapi ./path/to/openapi.yml
+
+    # Initialize from URL
+    fern init --openapi https://link.buildwithfern.com/petstore-openapi
+    ```
+
+    ### docs
+
+    By adding `--docs`, you'll also get a sample documentation website for your API with an API Reference section.
+
+    ```bash
+    fern init --docs
+    ```
+
+    The file added will contain:
+
+    ```yaml docs.yaml
+    instances:
+      - url: https://your-organization.docs.buildwithfern.com
+    title: Your Organization | Documentation
+    navigation:
+      - api: API Reference
+    colors:
+    accent-primary: '#ffffff'
+    background: '#000000'
+    ```
+
+    To publish the API docs, run [`fern generate --docs`](/learn/cli-api/cli-reference/commands#fern-generate---docs).
+
+    ### mintlify
+
+    By adding `--mintlify PATH_TO_MINT_CONFIG`, the CLI will automatically convert your Mintlify docs folder into a Fern docs site, based on the `mint.json` file.
+
+    ```bash
+    fern init --mintlify PATH_TO_MINT_CONFIG
+    ```
+
+    The CLI will create a `fern/` folder with the following structure:
+
+    ```bash
+    fern/
+    ├─ fern.config.json # root-level configuration
+    ├─ docs.yml # docs configuration
+    └─ ... # any other files / pages needed in your docs
+    ```
+
+    ### readme
+
+    By adding `--readme URL_TO_README_DOCS_SITE`, the CLI will automatically convert the Readme generated docs site into a Fern docs site.
+
+    ```bash
+    fern init --readme URL_TO_README_DOCS_SITE
+    ```
+
+    The CLI will create a `fern/` folder with the following structure:
+
+    ```bash
+    fern/
+    ├─ fern.config.json # root-level configuration
+    ├─ docs.yml # docs configuration
+    └─ ... # any other files / pages needed in your docs
+    ```
+
+    <Tip>
+    For more information on getting started, check out our [Quickstart Guide](/learn/docs/getting-started/quickstart)
+    </Tip>
+  </Accordion>
+
   <Accordion title="fern generate">
     Use `fern generate` to run the Fern compiler and create SDKs for your API.
 
@@ -108,8 +214,7 @@ subtitle: 'Learn about the Fern CLI commands.'
 
     ### strict-broken-links
 
-    Use `--strict-broken-links` to cause the command to fail (exit with a non-zero exit code) if any broken
-    links are found in your API docs.
+    Use `--strict-broken-links` to fail the command if any broken links are found in your API docs.
 
     ```bash
     fern check --strict-broken-links
@@ -194,30 +299,9 @@ subtitle: 'Learn about the Fern CLI commands.'
 
   </Accordion>
 
-  <Accordion title="fern docs broken-links">
-
-    Use `fern docs broken-links` to check for broken links in your API docs.
-
-    <CodeBlock title="terminal">
-    ```bash
-    fern docs broken-links [--strict]
-    ```
-    </CodeBlock>
-
-    ### strict
-
-    Use `--strict-broken-links` to cause the command to fail (exit with a non-zero exit code) if any broken
-    links are found in your API docs.
-
-    ```bash
-    fern check --strict-broken-links
-    ```
-
-  </Accordion>
-
   <Accordion title="fern upgrade">
 
-    Use `fern upgrade` will upgrade your compiler version in `fern.config.json` to the
+    Use `fern upgrade` to upgrade your compiler version in `fern.config.json` to the
     latest version. It will also upgrade generators in `generators.yml` to their minimum-compatible versions.
 
     <CodeBlock title="terminal">
@@ -226,89 +310,6 @@ subtitle: 'Learn about the Fern CLI commands.'
     ```
     </CodeBlock>
 
-  </Accordion>
-
-  <Accordion title="fern init">
-
-    Use `fern init` to initialize a new Fern workspace in the current folder. By default, you'll see the IMDb API example.
-
-    <CodeBlock title="terminal">
-    ```bash
-    fern init [--docs]
-    ```
-    </CodeBlock>
-
-    This will create the following folder structure in your project:
-
-    ```bash
-    fern/
-    ├─ fern.config.json # root-level configuration
-    ├─ generators.yml # generators you're using
-    └─ definition/
-        ├─ api.yml  # API-level configuration
-        └─ imdb.yml # endpoints, types, and errors
-    ```
-
-    ### docs
-
-    By adding `--docs`, you'll also get a sample documentation website for your API with an API Reference section.
-
-    ```bash
-    fern init --docs
-    ```
-
-    The file added will contain:
-
-    ```yaml docs.yaml
-    instances:
-      - url: https://your-organization.docs.buildwithfern.com
-    title: Your Organization | Documentation
-    navigation:
-      - api: API Reference
-    colors:
-    accent-primary: '#ffffff'
-    background: '#000000'
-    ```
-
-    To publish the API docs, run [`fern generate --docs`](/learn/cli-api/cli-reference/commands#fern-generate---docs).
-
-    ### mintlify
-
-    By adding `--mintlify PATH_TO_MINT_CONFIG`, the CLI will automatically convert your Mintlify docs folder into a Fern docs site, based on the `mint.json` file.
-
-    ```bash
-    fern init --mintlify PATH_TO_MINT_CONFIG
-    ```
-
-    The CLI will create a `fern/` folder with the following structure:
-
-    ```bash
-    fern/
-    ├─ fern.config.json # root-level configuration
-    ├─ docs.yml # docs configuration
-    └─ ... # any other files / pages needed in your docs
-    ```
-
-    ### readme
-
-    By adding `--readme URL_TO_README_DOCS_SITE`, the CLI will automatically convert the Readme generated docs site into a Fern docs site.
-
-    ```bash
-    fern init --readme URL_TO_README_DOCS_SITE
-    ```
-
-    The CLI will create a `fern/` folder with the following structure:
-
-    ```bash
-    fern/
-    ├─ fern.config.json # root-level configuration
-    ├─ docs.yml # docs configuration
-    └─ ... # any other files / pages needed in your docs
-    ```
-
-    <Tip>
-    For more information on getting started, check out our [Quickstart Guide](/learn/docs/getting-started/quickstart)
-    </Tip>
   </Accordion>
 
   <Accordion title="fern login">
