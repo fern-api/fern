@@ -55,6 +55,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<SourceResult>",
               },
               "source": {
@@ -132,6 +133,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<JobRequest>",
               },
               "source": {
@@ -185,6 +187,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "JobId",
               },
               "source": {
@@ -1356,6 +1359,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       response:
         docs: ''
         type: list<JobRequest>
+        status-code: 200
       examples:
         - response:
             body:
@@ -1415,6 +1419,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       response:
         docs: ''
         type: JobId
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -1433,6 +1438,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       response:
         docs: ''
         type: list<SourceResult>
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -2296,6 +2302,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.JobRequest",
               },
               "source": {
@@ -2314,6 +2321,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -2343,6 +2351,7 @@ types:
       response:
         docs: ''
         type: file
+        status-code: 200
     get_job:
       path: /v0/batch/jobs/{id}
       method: GET
@@ -2356,6 +2365,7 @@ types:
       response:
         docs: ''
         type: root.JobRequest
+        status-code: 200
       examples:
         - path-parameters:
             id: id

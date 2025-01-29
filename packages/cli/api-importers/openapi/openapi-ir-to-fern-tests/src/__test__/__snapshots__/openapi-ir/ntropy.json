@@ -99,6 +99,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -754,6 +755,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1168,6 +1170,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1599,6 +1602,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2154,6 +2158,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2325,6 +2330,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2545,6 +2551,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2720,6 +2727,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3224,6 +3232,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3415,6 +3424,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3593,6 +3603,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3886,6 +3897,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4145,6 +4157,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4401,6 +4414,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4763,6 +4777,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4919,6 +4934,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5091,6 +5107,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5352,6 +5369,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5532,6 +5550,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5715,6 +5734,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6018,6 +6038,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6178,6 +6199,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6303,6 +6325,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6470,6 +6493,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6629,6 +6653,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6794,6 +6819,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7069,6 +7095,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7252,6 +7279,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7448,6 +7476,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7733,6 +7762,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8044,6 +8074,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8288,6 +8319,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8645,6 +8677,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8825,6 +8858,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {

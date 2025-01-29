@@ -776,9 +776,9 @@ function convertHttpEndpointExample({
         responseStatusCode: Ir.http.ExampleResponse._visit(example.response, {
             ok: (ok) =>
                 ok._visit({
-                    body: (body) => (body != null ? 200 : 204),
-                    stream: (stream) => (stream.length > 0 ? 200 : 204),
-                    sse: (stream) => (stream.length > 0 ? 200 : 204),
+                    body: (body) => ((irEndpoint.response?.statusCode ?? body != null) ? 200 : 204),
+                    stream: (stream) => ((irEndpoint.response?.statusCode ?? stream.length > 0) ? 200 : 204),
+                    sse: (stream) => ((irEndpoint.response?.statusCode ?? stream.length > 0) ? 200 : 204),
                     _other: () => {
                         throw new Error("Unknown ExampleResponseBody: " + ok.type);
                     }

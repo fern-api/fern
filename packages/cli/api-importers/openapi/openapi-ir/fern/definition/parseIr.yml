@@ -122,6 +122,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithStatusCode
     properties:
       schema: SchemaWithExample
       responseProperty: optional<string>

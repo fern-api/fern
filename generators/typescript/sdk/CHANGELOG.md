@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.48.5] - 2025-01-28
+
+- Fix: Don't double wrap a blob if a user uploads a blob to a multi-part form.
+  Otherwise file's content-type is lost in Deno.
+
 ## [0.48.4] - 2025-01-21
 
 - Fix: When custom config `useBigInt` is `true`, generate examples and snippets with `BigInt("123")`.

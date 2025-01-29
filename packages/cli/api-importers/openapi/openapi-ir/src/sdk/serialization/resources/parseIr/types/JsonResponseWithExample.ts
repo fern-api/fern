@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { NamedFullExample } from "./NamedFullExample";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithStatusCode } from "../../commons/types/WithStatusCode";
 
 export const JsonResponseWithExample: core.serialization.ObjectSchema<
     serializers.JsonResponseWithExample.Raw,
@@ -19,10 +20,11 @@ export const JsonResponseWithExample: core.serialization.ObjectSchema<
         fullExamples: core.serialization.list(NamedFullExample).optional(),
     })
     .extend(WithDescription)
-    .extend(WithSource);
+    .extend(WithSource)
+    .extend(WithStatusCode);
 
 export declare namespace JsonResponseWithExample {
-    export interface Raw extends WithDescription.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithSource.Raw, WithStatusCode.Raw {
         schema: serializers.SchemaWithExample.Raw;
         responseProperty?: string | null;
         fullExamples?: NamedFullExample.Raw[] | null;

@@ -40,6 +40,7 @@
               },
               "response": {
                 "docs": "A simple API response.",
+                "status-code": 200,
                 "type": "Response",
               },
               "source": {
@@ -85,6 +86,7 @@
       response:
         docs: A simple API response.
         type: Response
+        status-code: 200
       examples:
         - request: {}
           response:

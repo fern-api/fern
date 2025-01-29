@@ -45,6 +45,7 @@
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "GetOrganizationUserResponse",
               },
               "source": {
@@ -127,6 +128,7 @@
       response:
         docs: Successful response
         type: GetOrganizationUserResponse
+        status-code: 200
       examples:
         - path-parameters:
             organization_id: organization_id
@@ -195,6 +197,7 @@ types:
               },
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "SearchResponse",
               },
               "source": {
@@ -269,6 +272,7 @@ service:
       response:
         docs: Successful response
         type: SearchResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: id

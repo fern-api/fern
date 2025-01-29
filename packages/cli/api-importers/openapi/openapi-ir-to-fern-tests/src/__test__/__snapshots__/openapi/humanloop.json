@@ -6268,6 +6268,7 @@ deployed to the default Environment will be used.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -6397,6 +6398,7 @@ If `"add"` or `"remove"`, one of the `version_id` or `environment` query paramet
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -6516,6 +6518,7 @@ Set the deployed Version for the specified Environment.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -6615,6 +6618,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -6719,6 +6723,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataDatasetResponse",
               },
               "source": {
@@ -6810,6 +6815,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataDatapointResponse",
               },
               "source": {
@@ -6889,6 +6895,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListDatasets",
               },
               "source": {
@@ -6978,6 +6985,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -7036,6 +7044,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedDataDatasetResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7157,6 +7166,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7240,6 +7250,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7313,6 +7324,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7383,6 +7395,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedDataDatapointResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7430,6 +7443,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListDatasets
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7479,6 +7493,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7542,6 +7557,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7780,6 +7796,7 @@ and check its status.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 201,
                 "type": "root.EvaluationResponse",
               },
               "source": {
@@ -7934,6 +7951,7 @@ Retrieve the Evaluation with the given ID.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluationResponse",
               },
               "source": {
@@ -8002,6 +8020,7 @@ This includes the number of generated Logs for every evaluatee and Evaluator met
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluationStats",
               },
               "source": {
@@ -8139,6 +8158,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataEvaluationResponse",
               },
               "source": {
@@ -8284,6 +8304,7 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluationResponse",
               },
               "source": {
@@ -8426,6 +8447,7 @@ as completed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluationResponse",
               },
               "source": {
@@ -8480,6 +8502,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedDataEvaluationResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8569,6 +8592,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationResponse
+        status-code: 201
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8662,6 +8686,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8780,6 +8805,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8886,6 +8912,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8983,6 +9010,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationStats
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9127,6 +9155,7 @@ docs: >+
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -9229,6 +9258,7 @@ an exception will be raised.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -9492,6 +9522,7 @@ an exception will be raised.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.EvaluationDebugResultResponse>",
               },
               "source": {
@@ -9608,6 +9639,7 @@ will be used for calls made to the Evaluator in this Environment.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -9693,6 +9725,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -9794,6 +9827,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListEvaluators",
               },
               "source": {
@@ -9856,6 +9890,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "path": "/evaluators/default",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.EvaluatorResponse>",
               },
               "source": {
@@ -9942,6 +9977,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListEvaluators",
               },
               "source": {
@@ -10031,6 +10067,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -10131,6 +10168,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListEvaluators
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10206,6 +10244,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10274,6 +10313,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10350,6 +10390,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10413,6 +10454,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListEvaluators
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10477,6 +10519,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10535,6 +10578,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10582,6 +10626,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.EvaluatorResponse>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10656,6 +10701,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.EvaluationDebugResultResponse>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11045,6 +11091,7 @@ You can manually create Logs through the API.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptLogResponse",
               },
               "source": {
@@ -11197,6 +11244,7 @@ You can manually create Logs through the API.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataPromptLogResponse",
               },
               "source": {
@@ -11274,6 +11322,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedDataPromptLogResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11363,6 +11412,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptLogResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11779,6 +11829,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "PromptsCallResponse",
               },
               "source": {
@@ -11894,6 +11945,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -12084,6 +12136,7 @@ an exception will be raised.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -12232,6 +12285,7 @@ will be used for calls made to the Prompt in this Environment.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -12349,6 +12403,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -12483,6 +12538,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListPrompts",
               },
               "source": {
@@ -12595,6 +12651,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListPrompts",
               },
               "source": {
@@ -12773,6 +12830,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.CreatePromptLogResponse",
               },
               "source": {
@@ -12894,6 +12952,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -13002,6 +13061,7 @@ within the Prompt for monitoring purposes.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -13147,6 +13207,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListPrompts
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13317,6 +13378,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13405,6 +13467,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13504,6 +13567,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13590,6 +13654,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListPrompts
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13673,6 +13738,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13754,6 +13820,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13977,6 +14044,7 @@ service:
       response:
         docs: Successful Response
         type: root.CreatePromptLogResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14150,6 +14218,7 @@ service:
       response:
         docs: Successful Response
         type: PromptsCallResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14264,6 +14333,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14590,6 +14660,7 @@ Log is in, nested within the evaluated Log.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.SessionResponse",
               },
               "source": {
@@ -14685,6 +14756,7 @@ Log is in, nested within the evaluated Log.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataSessionResponse",
               },
               "source": {
@@ -14718,6 +14790,7 @@ service:
       response:
         docs: Successful Response
         type: root.SessionResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14828,6 +14901,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedDataSessionResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14976,6 +15050,7 @@ docs: >+
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -15092,6 +15167,7 @@ an exception will be raised.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -15216,6 +15292,7 @@ will be used for calls made to the Tool in this Environment.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -15309,6 +15386,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -15415,6 +15493,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListTools",
               },
               "source": {
@@ -15461,6 +15540,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ToolTemplateResponse>",
               },
               "source": {
@@ -15552,6 +15632,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListTools",
               },
               "source": {
@@ -15694,6 +15775,7 @@ in the case where you are storing or deriving your Tool details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.CreateToolLogResponse",
               },
               "source": {
@@ -15791,6 +15873,7 @@ in the case where you are storing or deriving your Tool details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -15875,6 +15958,7 @@ within the Tool for monitoring purposes.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -15931,6 +16015,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListTools
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16023,6 +16108,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16092,6 +16178,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16174,6 +16261,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16243,6 +16331,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListTools
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16311,6 +16400,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16375,6 +16465,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16540,6 +16631,7 @@ service:
       response:
         docs: Successful Response
         type: root.CreateToolLogResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16573,6 +16665,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16629,6 +16722,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ToolTemplateResponse>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:

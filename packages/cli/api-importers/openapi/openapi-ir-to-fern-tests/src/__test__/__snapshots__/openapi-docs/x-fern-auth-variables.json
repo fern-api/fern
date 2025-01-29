@@ -32,6 +32,7 @@
               "path": "/user",
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "UserGetResponse",
               },
               "source": {
@@ -57,6 +58,7 @@
               "path": "/users",
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "list<UserGetAllResponseItem>",
               },
               "source": {
@@ -137,6 +139,7 @@ service:
       response:
         docs: Success
         type: UserGetResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -150,6 +153,7 @@ service:
       response:
         docs: Success
         type: list<UserGetAllResponseItem>
+        status-code: 200
       examples:
         - response:
             body:

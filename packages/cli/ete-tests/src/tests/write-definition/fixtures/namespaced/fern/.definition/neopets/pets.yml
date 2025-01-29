@@ -36,6 +36,7 @@ service:
               max: 100
       response:
         docs: A paged array of pets
+        status-code: 200
         type: neopetsRoot.Pets
       source:
         openapi: openapi/petstore/openapi.yml
@@ -60,6 +61,7 @@ service:
           type: string
       response:
         docs: Expected response to a valid request
+        status-code: 200
         type: neopetsRoot.Pet
       source:
         openapi: openapi/petstore/openapi.yml
