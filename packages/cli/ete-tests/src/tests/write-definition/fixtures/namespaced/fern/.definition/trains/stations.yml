@@ -61,6 +61,7 @@ service:
       path: /stations
       response:
         docs: A list of train stations
+        status-code: 200
         type: GetStationsResponse
       source:
         openapi: openapi/trains/openapi.yml

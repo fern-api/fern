@@ -261,6 +261,7 @@
                 "value": "type_:CreateResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
