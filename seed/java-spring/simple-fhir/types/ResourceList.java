@@ -101,7 +101,8 @@ public final class ResourceList {
     }
 
     @java.lang.Override
-    public ResourceList deserialize(JsonParser p, DeserializationContext context) throws IOException {
+    public ResourceList deserialize(JsonParser p, DeserializationContext context) throws
+        IOException {
       Object value = p.readValueAs(Object.class);
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, Account.class));
