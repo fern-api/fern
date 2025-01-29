@@ -168,7 +168,7 @@ public class ParamsClient {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
         .addPathSegments("params")
         ;httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("numer", Integer.toString(request.getNumer()));
+        httpUrl.addQueryParameter("number", Integer.toString(request.getNumer()));
         Request.Builder _requestBuilder = new Request.Builder()
           .url(httpUrl.build())
           .method("GET", null)

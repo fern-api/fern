@@ -15,7 +15,7 @@ export declare namespace PhpAttributeMapper {
     interface Args {
         type: php.Type;
 
-        // TODO: Remove the 'Pick' once 'availablity' is available on the InlinedRequestBodyProperty.
+        // TODO: Remove the 'Pick' once 'availability' is available on the InlinedRequestBodyProperty.
         property: Pick<ObjectProperty, "name">;
     }
 }

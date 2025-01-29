@@ -522,7 +522,7 @@ class AbstractUsersService(AbstractFernService):
                     parameter.replace(
                         default=fastapi.Query(
                             default=None,
-                            description="The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                            description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                         )
                     )
                 )
@@ -589,7 +589,7 @@ class AbstractUsersService(AbstractFernService):
                     parameter.replace(
                         default=fastapi.Query(
                             default=None,
-                            description="The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                            description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                         )
                     )
                 )

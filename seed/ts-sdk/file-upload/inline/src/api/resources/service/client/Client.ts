@@ -145,11 +145,11 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.JustFileRequet} request
+     * @param {SeedFileUpload.JustFileRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public async justFile(
-        request: SeedFileUpload.JustFileRequet,
+        request: SeedFileUpload.JustFileRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
@@ -206,11 +206,11 @@ export class Service {
     }
 
     /**
-     * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
+     * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public async justFileWithQueryParams(
-        request: SeedFileUpload.JustFileWithQueryParamsRequet,
+        request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};

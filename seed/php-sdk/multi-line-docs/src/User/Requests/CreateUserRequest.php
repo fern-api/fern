@@ -17,7 +17,7 @@ class CreateUserRequest extends JsonSerializableType
 
     /**
      * @var ?int $age The age of the user.
-    This propery is not required.
+    This property is not required.
 
      */
     #[JsonProperty('age')]

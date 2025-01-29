@@ -136,7 +136,7 @@ function convertResolvedResponse({
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
 
     if (resolvedResponse.content != null) {
-        const isdownloadFile = Object.entries(resolvedResponse.content).find(([_, mediaObject]) => {
+        const isDownloadFile = Object.entries(resolvedResponse.content).find(([_, mediaObject]) => {
             if (mediaObject.schema == null) {
                 return false;
             }
@@ -145,7 +145,7 @@ function convertResolvedResponse({
                 : mediaObject.schema;
             return resolvedSchema.type === "string" && resolvedSchema.format === "binary";
         });
-        if (isdownloadFile) {
+        if (isDownloadFile) {
             return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
         }
     }

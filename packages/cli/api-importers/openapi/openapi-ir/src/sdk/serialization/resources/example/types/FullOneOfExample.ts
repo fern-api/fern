@@ -18,7 +18,7 @@ export const FullOneOfExample: core.serialization.Schema<
                 core.serialization.lazy(() => serializers.FullExample),
             ),
         }),
-        undisciminated: core.serialization.object({
+        undiscriminated: core.serialization.object({
             value: core.serialization.lazy(() => serializers.FullExample),
         }),
     })
@@ -27,8 +27,8 @@ export const FullOneOfExample: core.serialization.Schema<
             switch (value.type) {
                 case "discriminated":
                     return FernOpenapiIr.FullOneOfExample.discriminated(value.value);
-                case "undisciminated":
-                    return FernOpenapiIr.FullOneOfExample.undisciminated(value.value);
+                case "undiscriminated":
+                    return FernOpenapiIr.FullOneOfExample.undiscriminated(value.value);
                 default:
                     return value as FernOpenapiIr.FullOneOfExample;
             }
@@ -37,15 +37,15 @@ export const FullOneOfExample: core.serialization.Schema<
     });
 
 export declare namespace FullOneOfExample {
-    export type Raw = FullOneOfExample.Discriminated | FullOneOfExample.Undisciminated;
+    export type Raw = FullOneOfExample.Discriminated | FullOneOfExample.Undiscriminated;
 
     export interface Discriminated {
         type: "discriminated";
         value: Record<PropertyKey.Raw, serializers.FullExample.Raw>;
     }
 
-    export interface Undisciminated {
-        type: "undisciminated";
+    export interface Undiscriminated {
+        type: "undiscriminated";
         value: serializers.FullExample.Raw;
     }
 }

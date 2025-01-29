@@ -14,7 +14,7 @@ types:
     properties:
       version:
         docs: |
-          The version of the dynamic IR. This is independent from the verison
+          The version of the dynamic IR. This is independent from the version
           of the primary IR.
         type: literal<"1.0.0">
       types: map<commons.TypeId, types.NamedType>

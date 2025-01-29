@@ -524,7 +524,7 @@ function convertObject({
                               file: fileContainingType
                           });
                           if (originalTypeDeclaration == null) {
-                              // dont fail hard because it may be from `base-properties`
+                              // don't fail hard because it may be from `base-properties`
                               return exampleProperties;
                           }
 

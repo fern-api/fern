@@ -99,7 +99,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500

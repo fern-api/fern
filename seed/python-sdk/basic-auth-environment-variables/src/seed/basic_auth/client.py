@@ -38,7 +38,7 @@ class BasicAuthClient:
 
         client = SeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.basic_auth.get_with_basic_auth()
@@ -95,7 +95,7 @@ class BasicAuthClient:
 
         client = SeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.basic_auth.post_with_basic_auth(
@@ -161,7 +161,7 @@ class AsyncBasicAuthClient:
 
         client = AsyncSeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -226,7 +226,7 @@ class AsyncBasicAuthClient:
 
         client = AsyncSeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 

@@ -55,7 +55,7 @@ export class RemoteTaskHandler {
                 maven: (mavenPackage) => `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
                 pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
                 ruby: (rubyGem) => `${rubyGem.name}:${rubyGem.version}`,
-                nuget: (nugetPakcage) => `${nugetPakcage.name} ${nugetPakcage.version}`,
+                nuget: (nugetPackage) => `${nugetPackage.name} ${nugetPackage.version}`,
                 _other: () => "<unknown package>"
             });
         });

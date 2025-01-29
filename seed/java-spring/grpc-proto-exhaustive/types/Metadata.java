@@ -87,7 +87,7 @@ public final class Metadata {
     }
 
     @java.lang.Override
-    public Metadata deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    public Metadata deserialize(JsonParser p, DeserializationContext context) throws IOException {
       Object value = p.readValueAs(Object.class);
       try {
         return ofMapOfStringToMetadataValue(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Map<String, MetadataValue>>() {}));

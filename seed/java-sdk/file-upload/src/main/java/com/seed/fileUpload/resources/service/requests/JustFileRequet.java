@@ -13,18 +13,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = JustFileRequet.Builder.class)
-public final class JustFileRequet {
+@JsonDeserialize(builder = JustFileRequest.Builder.class)
+public final class JustFileRequest {
     private final Map<String, Object> additionalProperties;
 
-    private JustFileRequet(Map<String, Object> additionalProperties) {
+    private JustFileRequest(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof JustFileRequet;
+        return other instanceof JustFileRequest;
     }
 
     @JsonAnyGetter
@@ -48,12 +48,12 @@ public final class JustFileRequet {
 
         private Builder() {}
 
-        public Builder from(JustFileRequet other) {
+        public Builder from(JustFileRequest other) {
             return this;
         }
 
-        public JustFileRequet build() {
-            return new JustFileRequet(additionalProperties);
+        public JustFileRequest build() {
+            return new JustFileRequest(additionalProperties);
         }
     }
 }

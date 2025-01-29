@@ -330,7 +330,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.42.5] - 2024-11-23
 
-- Fix: Remove extraenous import in pagination snippets.
+- Fix: Remove extraneous import in pagination snippets.
 
 ## [0.42.4] - 2024-11-21
 
@@ -792,7 +792,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.27.2] - 2024-07-08
 
-- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatiblity` and
+- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatibility` and
   `Custom Fetcher` under the Advanced section in the generated README.
 
 ## [0.27.1] - 2024-07-08
@@ -824,7 +824,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.26.0-rc3] - 2024-06-30
 
-- Fix: The typesript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
+- Fix: The typescript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
 
 ## [0.26.0-rc2] - 2024-06-27
 
@@ -868,12 +868,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.25.2] - 2024-06-20
 
-- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+- Fix: The generator now removes `fs`, `path`, and `os` dependencies from the browser
   runtime.
 
 ## [0.25.1] - 2024-06-20
 
-- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+- Fix: The generator now removes `fs`, `path`, and `os` dependencies from the browser
   runtime.
 
 ## [0.25.0] - 2024-06-19
@@ -923,7 +923,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.24.0-rc0] - 2024-06-18
 
 - Feature: Dynamic client instantiation snippets are now generated. Note this only affects
-  enteprise users that are using Fern's Snippets API.
+  enterprise users that are using Fern's Snippets API.
 
 ## [0.23.3] - 2024-06-17
 
@@ -1531,7 +1531,7 @@ seedExamples.file.notification.service.getException(...)
 
 ## [0.11.2] - 2024-02-13
 
-- Fix: ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were eroniously ignored.
+- Fix: ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were erroneously ignored.
 
 ## [0.11.1] - 2024-02-13
 
@@ -1553,4 +1553,4 @@ seedExamples.file.notification.service.getException(...)
 
 ## [0.9.7] - 2024-02-11
 
-- Chore: Intialize this changelog
+- Chore: Initialize this changelog

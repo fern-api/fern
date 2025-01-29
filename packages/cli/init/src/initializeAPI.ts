@@ -5,7 +5,7 @@ import path from "path";
 
 import {
     APIS_DIRECTORY,
-    DEFAULT_API_WORSPACE_FOLDER_NAME,
+    DEFAULT_API_WORKSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME
 } from "@fern-api/configuration-loader";
@@ -63,11 +63,11 @@ async function getDirectoryOfNewAPIWorkspace({
             absolutePathToFernDirectory,
             RelativeFilePath.of(APIS_DIRECTORY)
         );
-        let newApiDirectory = join(pathToApisDirectory, RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}`));
+        let newApiDirectory = join(pathToApisDirectory, RelativeFilePath.of(`${DEFAULT_API_WORKSPACE_FOLDER_NAME}`));
         while (await doesPathExist(newApiDirectory)) {
             newApiDirectory = join(
                 pathToApisDirectory,
-                RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}${++attemptCount}`)
+                RelativeFilePath.of(`${DEFAULT_API_WORKSPACE_FOLDER_NAME}${++attemptCount}`)
             );
         }
         return newApiDirectory;

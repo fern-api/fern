@@ -1,6 +1,6 @@
 - changelogEntry:
     - summary: |
-        Fix wrapped requests without inline path parameters checking not rendering 
+        Fix wrapped requests without inline path parameters checking not rendering
         no-request endpoint because of non-optional parameters
       type: fix
   createdAt: '2025-01-23'
@@ -105,7 +105,7 @@
   version: 2.5.0
 - changelogEntry:
     - summary: |
-        We now support overriding sdk package prefixes by adding a "package-prefix" key under the java-sdk generator 
+        We now support overriding sdk package prefixes by adding a "package-prefix" key under the java-sdk generator
         configuration.
       type: feat
   createdAt: '2024-12-10'
@@ -160,7 +160,7 @@
       ```
     type: break
   - summary: |
-      Generated builder methods now enforce non-null checks for required fields, ensuring that all required 
+      Generated builder methods now enforce non-null checks for required fields, ensuring that all required
       fields are properly validated during object construction:
         ```java
         @java.lang.Override
@@ -594,7 +594,7 @@
 
   - summary: |
      The SDK generator now supports scanning API credentials
-      via environment varaibles.
+      via environment variables.
       ```java
       Imdb imdb = Imdb.builder()
         .apiKey("...") // defaults to System.getenv("IMDB_API_KEY")

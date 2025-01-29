@@ -449,7 +449,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         )
 
 
-# TODO: For V1 naming, we should take into account if the new name introduces a conflcit with an existing class name
+# TODO: For V1 naming, we should take into account if the new name introduces a conflict with an existing class name
 def get_single_union_type_class_name(
     name: ir_types.DeclaredTypeName,
     wire_discriminant_value: ir_types.NameAndWireValue,

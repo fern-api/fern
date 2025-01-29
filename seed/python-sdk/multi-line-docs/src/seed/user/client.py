@@ -76,7 +76,7 @@ class UserClient:
 
         age : typing.Optional[int]
             The age of the user.
-            This propery is not required.
+            This property is not required.
 
 
         request_options : typing.Optional[RequestOptions]
@@ -193,7 +193,7 @@ class AsyncUserClient:
 
         age : typing.Optional[int]
             The age of the user.
-            This propery is not required.
+            This property is not required.
 
 
         request_options : typing.Optional[RequestOptions]

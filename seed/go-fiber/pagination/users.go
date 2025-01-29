@@ -79,7 +79,7 @@ type ListUsersOffsetPaginationRequest struct {
 type ListWithOffsetPaginationHasNextPageRequest struct {
 	// Defaults to first page
 	Page *int `query:"page"`
-	// The maxiumum number of elements to return.
+	// The maximum number of elements to return.
 	// This is also used as the step size in this
 	// paginated endpoint.
 	Limit *int   `query:"limit"`
@@ -89,7 +89,7 @@ type ListWithOffsetPaginationHasNextPageRequest struct {
 type ListUsersOffsetStepPaginationRequest struct {
 	// Defaults to first page
 	Page *int `query:"page"`
-	// The maxiumum number of elements to return.
+	// The maximum number of elements to return.
 	// This is also used as the step size in this
 	// paginated endpoint.
 	Limit *int   `query:"limit"`

@@ -1103,7 +1103,7 @@ func (e *EndpointReference) String() string {
 type ErrorId = string
 
 // Defines the original string, and its escaped-equivalent (depending on the target programming language).
-// This is paricularly relevant to example string literals.
+// This is particularly relevant to example string literals.
 //
 // For example, in Python we escape strings that contain single or double quotes by using triple quotes,
 // in Go we use backticks, etc.
@@ -7943,7 +7943,7 @@ func (p *ProtoSource) String() string {
 // The configuration used to generate a README.md file. If present, the generator
 // should call the generator-cli to produce a README.md.
 type ReadmeConfig struct {
-	// If specified, this enpdoint should be used in every snippet (if possible).
+	// If specified, this endpoint should be used in every snippet (if possible).
 	// Note that some endpoints aren't suitable for every feature (e.g. a non-list
 	// endpoint for pagination), so the default is a no-op in those cases.
 	DefaultEndpoint  *EndpointId `json:"defaultEndpoint,omitempty" url:"defaultEndpoint,omitempty"`
@@ -13200,7 +13200,7 @@ func (m *MapType) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
-// A reference to a named type. For backwards compatbility, this type must be fully compatible
+// A reference to a named type. For backwards compatibility, this type must be fully compatible
 // with the DeclaredTypeName.
 type NamedType struct {
 	TypeId       TypeId            `json:"typeId" url:"typeId"`

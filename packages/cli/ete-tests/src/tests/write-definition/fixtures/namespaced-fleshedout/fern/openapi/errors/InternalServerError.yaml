@@ -1,5 +1,5 @@
 description: |
-  This error is returned when an uncategorised internal server error occurs.
+  This error is returned when an uncategorized internal server error occurs.
 content:
   application/json:
     schema:

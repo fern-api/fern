@@ -153,7 +153,7 @@ public partial class ParamsClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-    ///     new GetWithMultipleQuery { Query = ["query"], Numer = [1] }
+    ///     new GetWithMultipleQuery { Query = ["query"], Number = [1] }
     /// );
     /// </code>
     /// </example>
@@ -165,7 +165,7 @@ public partial class ParamsClient
     {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
-        _query["numer"] = request.Numer.Select(_value => _value.ToString()).ToList();
+        _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

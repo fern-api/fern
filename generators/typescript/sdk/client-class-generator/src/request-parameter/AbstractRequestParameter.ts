@@ -72,7 +72,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined;
-    protected abstract getParameterType(contxt: SdkContext): {
+    protected abstract getParameterType(context: SdkContext): {
         type: ts.TypeNode;
         hasQuestionToken: boolean;
         initializer?: ts.Expression;

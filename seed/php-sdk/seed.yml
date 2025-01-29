@@ -36,7 +36,7 @@ allowedFailures:
   - enum
   # Enums don't support the fromJson method yet.
   - exhaustive
-  # Mutli URL environments are not supported yet.
+  # Multi URL environments are not supported yet.
   - multi-url-environment
   - multi-url-environment-no-default
   # Enum as map key not allowed in PHP.

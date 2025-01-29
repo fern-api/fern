@@ -2697,7 +2697,7 @@
               }
             },
             {
-              "key": "numer",
+              "key": "number",
               "type": {
                 "type": "primitive",
                 "value": {
@@ -2714,7 +2714,7 @@
               "pathParameters": {},
               "queryParameters": {
                 "query": "query",
-                "numer": 1
+                "number": 1
               },
               "headers": {},
               "responseStatusCode": 204,

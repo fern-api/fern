@@ -391,7 +391,7 @@ func do() {
 	client := client.NewClient()
 	client.Service.JustFile(
 		context.TODO(),
-		&acme.JustFileRequet{
+		&acme.JustFileRequest{
 			File: strings.NewReader(
 				"Hello, world!",
 			),
@@ -415,7 +415,7 @@ func do() {
 	client := client.NewClient()
 	client.Service.JustFileWithQueryParams(
 		context.TODO(),
-		&acme.JustFileWithQueryParamsRequet{
+		&acme.JustFileWithQueryParamsRequest{
 			Integer: 42,
 			MaybeString: acme.String(
 				"exists",
@@ -1138,7 +1138,7 @@ func do() {
 	client := client.NewFernClient()
 	client.Service.JustFile(
 		context.TODO(),
-		&acme.JustFileRequet{
+		&acme.JustFileRequest{
 			File: strings.NewReader(
 				"Hello, world!",
 			),
@@ -1162,7 +1162,7 @@ func do() {
 	client := client.NewFernClient()
 	client.Service.JustFileWithQueryParams(
 		context.TODO(),
-		&acme.JustFileWithQueryParamsRequet{
+		&acme.JustFileWithQueryParamsRequest{
 			Integer: 42,
 			MaybeString: acme.String(
 				"exists",

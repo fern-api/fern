@@ -175,7 +175,7 @@ class ReferencedAPICollector {
             const err = e as Error;
             this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
             this.context.logger.error(
-                "An error occured while trying to read an API definition. Please reach out to support."
+                "An error occurred while trying to read an API definition. Please reach out to support."
             );
             if (err.stack != null) {
                 this.context.logger.error(err?.stack);
@@ -203,7 +203,7 @@ class ReferencedAPICollectorV2 {
             const err = e as Error;
             this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`);
             this.context.logger.error(
-                "An error occured while trying to read an API definition. Please reach out to support."
+                "An error occurred while trying to read an API definition. Please reach out to support."
             );
             if (err.stack != null) {
                 this.context.logger.error(err?.stack);

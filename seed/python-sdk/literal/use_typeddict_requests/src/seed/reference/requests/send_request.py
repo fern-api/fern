@@ -12,6 +12,7 @@ class SendRequestParams(typing_extensions.TypedDict):
     prompt: typing.Literal["You are a helpful assistant"]
     query: str
     stream: typing.Literal[False]
+    ending: typing.Literal["$ending"]
     context: SomeLiteral
     maybe_context: typing_extensions.NotRequired[
         typing_extensions.Annotated[SomeLiteral, FieldMetadata(alias="maybeContext")]

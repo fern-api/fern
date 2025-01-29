@@ -31,7 +31,7 @@ module SeedUnionsClient
         member = case struct.type
                  when "date"
                    Date.parse(json_object.value) unless json_object.value.nil?
-                 when "dateimte"
+                 when "datetime"
                    DateTime.parse(json_object.value) unless json_object.value.nil?
                  else
                    Date.parse(json_object) unless json_object.nil?
@@ -45,7 +45,7 @@ module SeedUnionsClient
       def to_json(*_args)
         case @discriminant
         when "date"
-        when "dateimte"
+        when "datetime"
         end
         { "type": @discriminant, "value": @member }.to_json
         @member.to_json
@@ -61,7 +61,7 @@ module SeedUnionsClient
         case obj.type
         when "date"
           obj.is_a?(Date) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "dateimte"
+        when "datetime"
           obj.is_a?(DateTime) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -84,8 +84,8 @@ module SeedUnionsClient
 
       # @param member [DateTime]
       # @return [SeedUnionsClient::Types::UnionWithOptionalTime]
-      def self.dateimte(member:)
-        new(member: member, discriminant: "dateimte")
+      def self.datetime(member:)
+        new(member: member, discriminant: "datetime")
       end
     end
   end

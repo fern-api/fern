@@ -15,7 +15,7 @@ from .abc.abstract_type_generator import AbstractTypeGenerator
 from .get_visit_method import VisitableItem, VisitorArgument, get_visit_method
 
 
-# Note enums are the same for both pydantic models and typeddicts os the generator is not multi-plexed
+# Note enums are the same for both pydantic models and typeddicts os the generator is not multiplexed
 class EnumGenerator(AbstractTypeGenerator):
     UNKNOWN_MEMBER_NAME = "_UNKNOWN"
 

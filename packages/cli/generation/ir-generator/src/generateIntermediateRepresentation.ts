@@ -206,7 +206,7 @@ export function generateIntermediateRepresentation({
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
-                    // Generic type declarations are syntatic sugar for
+                    // Generic type declarations are syntactic sugar for
                     // fern definition users, but not actually meant to be in the
                     // generated SDKs
                     if (isGeneric(typeName)) {

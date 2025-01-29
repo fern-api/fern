@@ -60,7 +60,7 @@
       ```
     type: break
   - summary: |
-      Generated builder methods now enforce non-null checks for required fields, ensuring that all required 
+      Generated builder methods now enforce non-null checks for required fields, ensuring that all required
       fields are properly validated during object construction:
         ```java
         @java.lang.Override
@@ -163,7 +163,7 @@
   version: 0.7.1
 
 - changelogEntry:
-  - summary: Intialize this changelog
+  - summary: Initialize this changelog
     type: fix
   createdAt: '2024-02-03'
   version: 0.6.1

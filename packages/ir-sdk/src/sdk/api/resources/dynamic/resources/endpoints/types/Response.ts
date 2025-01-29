@@ -5,7 +5,7 @@
 import * as FernIr from "../../../../../index";
 
 /**
- * Reperesents the response returned by a specific endpoint.
+ * Represents the response returned by a specific endpoint.
  *
  * For now, we only support json responses, but this is set up to support a
  * variety of other endpoint response types (e.g. file download, pagination,

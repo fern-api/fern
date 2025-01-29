@@ -468,10 +468,10 @@ service:
       timestamp:
         docs: >-
           The timestamp in seconds for this group of events (included for
-          compatibility reasons). We recommend using the timestampms field
+          compatibility reasons). We recommend using the timestamps field
           instead.
         type: double
-      timestampms:
+      timestamps:
         docs: The timestamp in milliseconds for this group of events.
         type: double
       type: literal<"update">
@@ -1722,7 +1722,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
@@ -2122,7 +2122,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500

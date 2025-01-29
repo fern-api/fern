@@ -218,7 +218,7 @@ module SeedPaginationClient
     end
 
     # @param page [Integer] Defaults to first page
-    # @param limit [Integer] The maxiumum number of elements to return.
+    # @param limit [Integer] The maximum number of elements to return.
     #  This is also used as the step size in this
     #  paginated endpoint.
     # @param order [SeedPaginationClient::Users::Order]
@@ -255,7 +255,7 @@ module SeedPaginationClient
     end
 
     # @param page [Integer] Defaults to first page
-    # @param limit [Integer] The maxiumum number of elements to return.
+    # @param limit [Integer] The maximum number of elements to return.
     #  This is also used as the step size in this
     #  paginated endpoint.
     # @param order [SeedPaginationClient::Users::Order]
@@ -609,7 +609,7 @@ module SeedPaginationClient
     end
 
     # @param page [Integer] Defaults to first page
-    # @param limit [Integer] The maxiumum number of elements to return.
+    # @param limit [Integer] The maximum number of elements to return.
     #  This is also used as the step size in this
     #  paginated endpoint.
     # @param order [SeedPaginationClient::Users::Order]
@@ -648,7 +648,7 @@ module SeedPaginationClient
     end
 
     # @param page [Integer] Defaults to first page
-    # @param limit [Integer] The maxiumum number of elements to return.
+    # @param limit [Integer] The maximum number of elements to return.
     #  This is also used as the step size in this
     #  paginated endpoint.
     # @param order [SeedPaginationClient::Users::Order]

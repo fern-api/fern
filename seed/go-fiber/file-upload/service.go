@@ -8,7 +8,7 @@ import (
 	internal "github.com/file-upload/fern/internal"
 )
 
-type JustFileWithQueryParamsRequet struct {
+type JustFileWithQueryParamsRequest struct {
 	MaybeString           *string   `query:"maybeString"`
 	Integer               int       `query:"integer"`
 	MaybeInteger          *int      `query:"maybeInteger"`

@@ -37,8 +37,8 @@ export class DataClass extends AstNode {
     public addMethod(method: Method): void {
         this.class_.addMethod(method);
     }
-    public addTrait(traitClassRefeference: ClassReference): void {
-        this.class_.addTrait(traitClassRefeference);
+    public addTrait(traitClassReference: ClassReference): void {
+        this.class_.addTrait(traitClassReference);
     }
 
     public write(writer: Writer): void {

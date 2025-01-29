@@ -554,7 +554,7 @@ class FromProtoPropertyMapper {
     }): CodeBlock {
         const on = csharp.codeblock(`${propertyName}?`);
         if (this.context.isPrimitive(listType)) {
-            // Lists of primtiive types can be directly mapped.
+            // Lists of primitive types can be directly mapped.
             const method = this.context.isReadOnlyMemoryType(listType) ? "ToArray" : "ToList";
             return csharp.codeblock((writer) => {
                 writer.writeNode(

@@ -45,7 +45,7 @@ public partial class ServiceClient
     }
 
     public async Task JustFileAsync(
-        JustFileRequet request,
+        JustFileRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -73,7 +73,7 @@ public partial class ServiceClient
     }
 
     public async Task JustFileWithQueryParamsAsync(
-        JustFileWithQueryParamsRequet request,
+        JustFileWithQueryParamsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

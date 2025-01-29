@@ -90,7 +90,7 @@ export class LocalTaskHandler {
         const absolutePathToFernignore = AbsoluteFilePath.of(
             join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
         );
-        const fernIngnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+        const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
 
         // Copy files from local output to tmp directory
         await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
@@ -113,7 +113,7 @@ export class LocalTaskHandler {
         await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir);
 
         // Undo changes to fernignore paths
-        await this.runGitCommand(["reset", "--", ...fernIngnorePaths], tmpOutputResolutionDir);
+        await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
         await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // Delete local output directory and copy all files from the generated directory

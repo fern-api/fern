@@ -6,10 +6,10 @@
  * @example
  *     {
  *         query: "query",
- *         numer: 1
+ *         number: 1
  *     }
  */
 export interface GetWithMultipleQuery {
     query: string | string[];
-    numer: number | number[];
+    number: number | number[];
 }

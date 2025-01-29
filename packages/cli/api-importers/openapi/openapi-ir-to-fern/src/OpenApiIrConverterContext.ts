@@ -251,7 +251,7 @@ export class OpenApiIrConverterContext {
                     this.markSchemaAsReferenced(oneOf, namespace);
                 }
                 return;
-            case "undisciminated":
+            case "undiscriminated":
                 for (const oneOf of schema.schemas) {
                     this.markSchemaAsReferenced(oneOf, namespace);
                 }

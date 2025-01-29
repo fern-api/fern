@@ -6,7 +6,7 @@ import {
     ExampleStreamResponseSchema
 } from "../schemas";
 import { isSimpleStreamResponseSchema } from "./isSimpleStreamResponseSchema";
-import { isSseStsreamResponseSchema } from "./isSseStreamResponseSchema";
+import { isSseStreamResponseSchema } from "./isSseStreamResponseSchema";
 
 export interface ExampleResponseSchemaVisitor<T> {
     body: (example: ExampleBodyResponseSchema) => T;
@@ -39,5 +39,5 @@ export function isExampleSseResponseSchema(
     endpoint: HttpEndpointSchema,
     example: ExampleResponseSchema
 ): example is ExampleSseResponseSchema {
-    return (example as ExampleSseResponseSchema).stream !== undefined && isSseStsreamResponseSchema(endpoint);
+    return (example as ExampleSseResponseSchema).stream !== undefined && isSseStreamResponseSchema(endpoint);
 }

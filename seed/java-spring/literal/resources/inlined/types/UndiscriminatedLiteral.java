@@ -86,7 +86,7 @@ public final class UndiscriminatedLiteral {
     }
 
     @java.lang.Override
-    public UndiscriminatedLiteral deserialize(JsonParser p, DeserializationContext ctxt) throws
+    public UndiscriminatedLiteral deserialize(JsonParser p, DeserializationContext context) throws
         IOException {
       Object value = p.readValueAs(Object.class);
       try {

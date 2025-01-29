@@ -29,7 +29,7 @@
       summary: Fix literal value deserialization.
       changed:
         - >-
-          Updates object and undisriminated union deserialization to return an
+          Updates object and undiscriminated union deserialization to return an
           error whenever any literal values do not exist or are mismatched.
   irVersion: 40
 - version: 0.23.0
@@ -292,7 +292,7 @@
     - type: fix
       summary: Support boolean literals.
     - type: fix
-      summary: Union subt-ypes with no properties are now go 1.13 compatible.
+      summary: Union subtypes with no properties are now go 1.13 compatible.
   irVersion: 28
 - version: 0.9.0
   createdAt: '2023-10-31'

@@ -1450,7 +1450,7 @@ GET with multiple of same query param
 ```typescript
 await client.endpoints.params.getWithAllowMultipleQuery({
     query: "query",
-    numer: 1,
+    number: 1,
 });
 ```
 

@@ -5,7 +5,7 @@
 import * as FernIr from "../../../index";
 
 /**
- * A reference to a named type. For backwards compatbility, this type must be fully compatible
+ * A reference to a named type. For backwards compatibility, this type must be fully compatible
  * with the DeclaredTypeName.
  */
 export interface NamedType {

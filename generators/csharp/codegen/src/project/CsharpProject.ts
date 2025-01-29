@@ -317,7 +317,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }
 
     /*
-     * Unused after removing unneccessary utils file.
+     * Unused after removing unnecessary utils file.
      */
     private async createTestUtilsDirectory({
         absolutePathToTestProjectDirectory

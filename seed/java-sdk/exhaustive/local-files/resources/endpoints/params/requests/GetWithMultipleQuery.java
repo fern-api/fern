@@ -26,13 +26,13 @@ import org.jetbrains.annotations.NotNull;
 public final class GetWithMultipleQuery {
   private final String query;
 
-  private final int numer;
+  private final int number;
 
   private final Map<String, Object> additionalProperties;
 
-  private GetWithMultipleQuery(String query, int numer, Map<String, Object> additionalProperties) {
+  private GetWithMultipleQuery(String query, int number, Map<String, Object> additionalProperties) {
     this.query = query;
-    this.numer = numer;
+    this.number = number;
     this.additionalProperties = additionalProperties;
   }
 
@@ -41,9 +41,9 @@ public final class GetWithMultipleQuery {
     return query;
   }
 
-  @JsonProperty("numer")
+  @JsonProperty("number")
   public int getNumer() {
-    return numer;
+    return number;
   }
 
   @java.lang.Override
@@ -58,12 +58,12 @@ public final class GetWithMultipleQuery {
   }
 
   private boolean equalTo(GetWithMultipleQuery other) {
-    return query.equals(other.query) && numer == other.numer;
+    return query.equals(other.query) && number == other.number;
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.query, this.numer);
+    return Objects.hash(this.query, this.number);
   }
 
   @java.lang.Override
@@ -82,7 +82,7 @@ public final class GetWithMultipleQuery {
   }
 
   public interface NumerStage {
-    _FinalStage numer(int numer);
+    _FinalStage number(int number);
   }
 
   public interface _FinalStage {
@@ -95,7 +95,7 @@ public final class GetWithMultipleQuery {
   public static final class Builder implements QueryStage, NumerStage, _FinalStage {
     private String query;
 
-    private int numer;
+    private int number;
 
     @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
@@ -106,7 +106,7 @@ public final class GetWithMultipleQuery {
     @java.lang.Override
     public Builder from(GetWithMultipleQuery other) {
       query(other.getQuery());
-      numer(other.getNumer());
+      number(other.getNumer());
       return this;
     }
 
@@ -118,15 +118,15 @@ public final class GetWithMultipleQuery {
     }
 
     @java.lang.Override
-    @JsonSetter("numer")
-    public _FinalStage numer(int numer) {
-      this.numer = numer;
+    @JsonSetter("number")
+    public _FinalStage number(int number) {
+      this.number = number;
       return this;
     }
 
     @java.lang.Override
     public GetWithMultipleQuery build() {
-      return new GetWithMultipleQuery(query, numer, additionalProperties);
+      return new GetWithMultipleQuery(query, number, additionalProperties);
     }
   }
 }
