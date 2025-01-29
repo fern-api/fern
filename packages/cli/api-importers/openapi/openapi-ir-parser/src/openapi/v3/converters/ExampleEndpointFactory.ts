@@ -104,6 +104,15 @@ export class ExampleEndpointFactory {
         if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === "present") {
             const required = this.isSchemaRequired(responseSchemaIdResponse.schema);
 
+            if (endpoint.response?.type === "json" && endpoint.response.statusCode === 204) {
+                responseExamples.push([
+                    undefined,
+                    EndpointResponseExample.withoutStreaming(FullExample.object({
+                        properties: {}
+                    }))
+                ]);
+            }
+
             if (responseSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
                     skipReadonly: false,

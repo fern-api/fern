@@ -11588,6 +11588,31 @@
           "headers": [],
           "response": {
             "value": {
+              "properties": {},
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        },
+        {
+          "pathParameters": [
+            {
+              "name": "contract_id",
+              "value": {
+                "value": {
+                  "value": "37nex2x",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
               "properties": {
                 "data": {
                   "properties": {

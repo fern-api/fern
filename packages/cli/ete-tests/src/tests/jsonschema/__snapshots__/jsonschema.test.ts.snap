@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`jsonschema > works with latest version 1`] = `
+{
+  "additionalProperties": false,
+  "definitions": {
+    "imdb.MovieId": {
+      "type": "string",
+    },
+  },
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/imdb.MovieId",
+    },
+    "rating": {
+      "type": "number",
+    },
+    "title": {
+      "type": "string",
+    },
+  },
+  "required": [
+    "id",
+    "title",
+    "rating",
+  ],
+  "type": "object",
+}
+`;

@@ -23788,6 +23788,14 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                     "contract_id": "37nex2x",
                   },
                   "response": {
+                    "body": {},
+                  },
+                },
+                {
+                  "path-parameters": {
+                    "contract_id": "37nex2x",
+                  },
+                  "response": {
                     "body": {
                       "data": {
                         "updated": true,
@@ -25080,6 +25088,10 @@ service:
         - root.ArchiveContractRequestNotFoundError
         - root.ArchiveContractRequestInternalServerError
       examples:
+        - path-parameters:
+            contract_id: 37nex2x
+          response:
+            body: {}
         - path-parameters:
             contract_id: 37nex2x
           response:

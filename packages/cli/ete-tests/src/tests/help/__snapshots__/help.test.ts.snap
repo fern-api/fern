@@ -1,9 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`help > no arguments 1`] = `
-"(node:76082) [DEP0040] DeprecationWarning: The \`punycode\` module is deprecated. Please use a userland alternative instead.
-(Use \`node --trace-deprecation ...\` to show where the warning was created)
-fern-dev
+"fern-dev
 
 Commands:
   fern-dev init                         Initialize a Fern API
