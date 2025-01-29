@@ -1,5 +1,5 @@
 # Stage 1: Build Node CLI
-FROM node:20.18-alpine3.20 as node
+FROM node:20.18-alpine3.20 AS node
 
 RUN apk --no-cache add git zip \
   && git config --global user.name "fern" \
@@ -23,6 +23,7 @@ COPY generators/go/version.go /workspace/version.go
 
 # Copy Node CLI from first stage and rename it /bin/go-v2
 COPY --from=node /dist/cli.cjs /bin/go-v2
+RUN chmod +x /bin/go-v2
 
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk
 

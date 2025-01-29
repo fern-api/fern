@@ -1,12 +1,12 @@
+import { Field } from "../Field";
+import { File } from "../File";
+import { Func } from "../Func";
 import { GoTypeReference } from "../GoTypeReference";
+import { Struct } from "../Struct";
 import { Type } from "../Type";
 import { TypeInstantiation } from "../TypeInstantiation";
 import { AstNode } from "../core/AstNode";
 import { GoFile } from "../core/GoFile";
-import { File } from "../File";
-import { Func } from "../Func";
-import { Struct } from "../Struct";
-import { Field } from "../Field";
 
 interface TestCase {
     description: string;
@@ -302,7 +302,7 @@ describe("file", () => {
                     })
                 )
             })
-        )
+        );
         const bar = new Struct({
             name: "Bar",
             importPath: "github.com/acme/acme-go"
@@ -317,7 +317,7 @@ describe("file", () => {
                     })
                 )
             })
-        )
+        );
         file.add([foo, bar]);
         const content = file.toString({
             packageName: "example",
@@ -326,7 +326,7 @@ describe("file", () => {
             customConfig: {}
         });
         expect(content).toMatchSnapshot();
-    })
+    });
 });
 
 const USER_TYPE_REFERENCE = new GoTypeReference({

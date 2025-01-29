@@ -36,10 +36,15 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.mkdir(absolutePathToDirectory);
         await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
         if (files.length > 0) {
-            await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
-                doNotPipeOutput: true,
-                cwd: absolutePathToDirectory
-            });
+            // TODO: Uncomment this once the go-v2 generator is responsible for producing the go.mod file.
+            // Otherwise, we get a "directory prefix . does not contain main module or its selected dependencies" error.
+            //
+            // ---
+            //
+            // await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
+            //     doNotPipeOutput: true,
+            //     cwd: absolutePathToDirectory
+            // });
         }
         return absolutePathToDirectory;
     }

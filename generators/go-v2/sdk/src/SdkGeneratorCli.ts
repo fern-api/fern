@@ -1,4 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -7,7 +8,6 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { WireTestGenerator } from "./wiretest/WireTestGenerator";
-import { go } from "@fern-api/go-ast";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -46,7 +46,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         this.generateWireTests(context);
-        return;
+        await context.project.persist();
     }
 
     private generateWireTests(context: SdkGeneratorContext) {

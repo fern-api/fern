@@ -239,7 +239,6 @@ export abstract class AbstractGoGeneratorContext<
         return this.ir.types[typeId];
     }
 
-
     public getLocationForTypeId(typeId: TypeId): FileLocation {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return this.getFileLocation(typeDeclaration.name.fernFilepath);

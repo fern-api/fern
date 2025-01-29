@@ -1,8 +1,10 @@
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { GoFile } from "@fern-api/go-base";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { go } from "@fern-api/go-ast";
+import { GoFile } from "@fern-api/go-base";
 import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
@@ -18,14 +20,21 @@ export class WireTestGenerator {
         // TODO: Include every test case as a separate item in the table-driven tests.
         console.log(`TODO: Generate test cases for service ${serviceId}, endpoints: ${endpoints}`);
         const file = go.file();
+        file.add(
+            go.func({
+                name: "nop",
+                parameters: [],
+                return_: []
+            })
+        );
         return new GoFile({
             node: file,
-            directory: RelativeFilePath.of("TODO"),
-            filename: "TODO_test.go",
-            packageName: "TODO_test",
-            rootImportPath: "TODO",
-            importPath: "TODO",
-            customConfig: this.context.customConfig,
+            directory: RelativeFilePath.of("user"),
+            filename: "user_test.go",
+            packageName: "user_test",
+            rootImportPath: "github.com/fern-api/fern-go",
+            importPath: "github.com/fern-api/fern-go",
+            customConfig: this.context.customConfig
         });
     }
 }

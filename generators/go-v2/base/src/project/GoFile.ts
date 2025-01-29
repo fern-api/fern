@@ -1,12 +1,8 @@
-import path from "path";
 
 import { AbstractFormatter, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
-
-import { AstNode } from "@fern-api/go-ast/src/go";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
+import { AstNode } from "@fern-api/go-ast/src/go";
 
 export declare namespace GoFile {
     interface Args {
@@ -30,7 +26,16 @@ export declare namespace GoFile {
 }
 
 export class GoFile extends File {
-    constructor({ node, directory, filename, packageName, rootImportPath, importPath, customConfig, formatter }: GoFile.Args) {
+    constructor({
+        node,
+        directory,
+        filename,
+        packageName,
+        rootImportPath,
+        importPath,
+        customConfig,
+        formatter
+    }: GoFile.Args) {
         super(
             filename,
             directory,
@@ -43,12 +48,11 @@ export class GoFile extends File {
             })
         );
     }
+    // public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {
+    //     await this.write(directoryPrefix);
+    // }
 
-    public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {
-        await this.write(directoryPrefix);
-    }
-
-    public static getFilePathFromFernFilePath(fernFilePath: FernFilepath): RelativeFilePath {
-        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => part.pascalCase.safeName)));
-    }
+    // public static getFilePathFromFernFilePath(fernFilePath: FernFilepath): RelativeFilePath {
+    //     return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => part.pascalCase.safeName)));
+    // }
 }
