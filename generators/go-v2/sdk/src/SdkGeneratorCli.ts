@@ -45,7 +45,8 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        this.generateWireTests(context);
+        // TODO: Enable wire tests, when available.
+        // this.generateWireTests(context);
         await context.project.persist();
     }
 

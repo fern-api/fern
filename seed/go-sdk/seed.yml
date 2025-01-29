@@ -23,7 +23,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-go-sdk:latest
-    command: docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
 language: go
 generatorType: SDK
 defaultOutputMode: github

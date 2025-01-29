@@ -18,7 +18,6 @@ export class WireTestGenerator {
         // TODO: Map the endpoint's full path to the dynamic IR representation (e.g. POST /users).
         // TODO: Map the example into the dynamic IR payload (similar to the test suite generator).
         // TODO: Include every test case as a separate item in the table-driven tests.
-        console.log(`TODO: Generate test cases for service ${serviceId}, endpoints: ${endpoints}`);
         const file = go.file();
         file.add(
             go.func({
