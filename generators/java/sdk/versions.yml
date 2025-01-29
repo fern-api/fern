@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Add deep cursor path pagination support.
+      type: feat
+  createdAt: '2025-01-29'
+  irVersion: 53
+  version: 2.11.0
+- changelogEntry:
+    - summary: |
         Fix wrapped requests without inline path parameters checking not rendering
         no-request endpoint because of non-optional parameters
       type: fix
