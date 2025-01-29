@@ -101,7 +101,9 @@
                     },
                   },
                 },
-                "content-type": "application/json",
+                "content-type": "application/x-www-form-urlencoded",
+                "docs": "Test request body
+",
                 "headers": undefined,
                 "name": "PostExampleRequest",
                 "path-parameters": undefined,
@@ -189,7 +191,9 @@
               docs: >-
                 Arbitrary object that will be attached as document metadata to
                 the extracted document.
-        content-type: application/json
+        content-type: application/x-www-form-urlencoded
+        docs: |
+          Test request body
       response:
         docs: The sample response
         type: string

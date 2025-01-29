@@ -450,16 +450,19 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithStatusCode
 
   TextResponse:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithStatusCode
 
   JsonResponse:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithStatusCode
     properties:
       schema: Schema
       responseProperty: optional<string>

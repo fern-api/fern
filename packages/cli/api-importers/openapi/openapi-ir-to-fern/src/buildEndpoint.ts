@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { MediaType, assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
+import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -186,8 +186,11 @@ export function buildEndpoint({
                 });
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
-                    type: getTypeFromTypeReference(responseTypeReference)
+                    type: getTypeFromTypeReference(responseTypeReference),
                 };
+                if (jsonResponse.statusCode != null) {
+                    convertedEndpoint.response["status-code"] = jsonResponse.statusCode;
+                }
                 if (jsonResponse.responseProperty != null) {
                     convertedEndpoint.response.property = jsonResponse.responseProperty;
                 }
@@ -212,7 +215,7 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -223,19 +226,21 @@ export function buildEndpoint({
             file: (fileResponse) => {
                 convertedEndpoint.response = {
                     docs: fileResponse.description ?? undefined,
-                    type: "file"
+                    type: "file",
+                    "status-code": fileResponse.statusCode
                 };
             },
             streamingText: (textResponse) => {
                 convertedEndpoint["response-stream"] = {
                     docs: textResponse.description ?? undefined,
-                    type: "text"
+                    type: "text",
                 };
             },
             text: (textResponse) => {
                 convertedEndpoint.response = {
                     docs: textResponse.description ?? undefined,
-                    type: "text"
+                    type: "text",
+                    "status-code": textResponse.statusCode
                 };
             },
             _other: () => {

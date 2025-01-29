@@ -248,13 +248,14 @@
           },
           "type": "object"
         },
-        "contentType": "application/json",
-        "fullExamples": [],
-        "additionalProperties": false,
+        "description": "Test request body\n",
+        "contentType": "application/x-www-form-urlencoded",
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
+        "additionalProperties": false,
         "type": "json"
       },
       "response": {

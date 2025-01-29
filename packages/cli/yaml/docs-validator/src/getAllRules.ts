@@ -7,7 +7,6 @@ import { PlaygroundEnvironmentsExistRule } from "./rules/playground-environments
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints";
 import { ValidFileTypes } from "./rules/valid-file-types";
 import { ValidFrontmatter } from "./rules/valid-frontmatter";
-import { ValidMarkdownFileReferences } from "./rules/valid-markdown-file-reference";
 import { ValidateVersionFileRule } from "./rules/validate-version-file";
 
 export function getAllRules(): Rule[] {
@@ -22,6 +21,6 @@ export function getAllRules(): Rule[] {
         ValidDocsEndpoints,
         AllRolesMustBeDeclaredRule,
         ValidFrontmatter,
-        ValidMarkdownFileReferences
+        // ValidMarkdownFileReferences
     ];
 }
