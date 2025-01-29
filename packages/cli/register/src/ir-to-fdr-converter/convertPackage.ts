@@ -565,7 +565,11 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
     if (type != null) {
         return { type, statusCode: irResponse.statusCode, description };
     } else if (irResponse.statusCode != null) {
-        return { statusCode: irResponse.statusCode, description, type: { type: "object", extends: [], properties: [], extraProperties: undefined }};
+        return {
+            statusCode: irResponse.statusCode,
+            description,
+            type: { type: "object", extends: [], properties: [], extraProperties: undefined }
+        };
     } else {
         return undefined;
     }

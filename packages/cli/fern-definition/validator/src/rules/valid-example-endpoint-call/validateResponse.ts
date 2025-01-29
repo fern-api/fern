@@ -69,7 +69,8 @@ function validateBodyResponse({
     const violations: RuleViolation[] = [];
     if (example.error == null) {
         if (endpoint.response != null) {
-            const responseTypeReference = typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response;
+            const responseTypeReference =
+                typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response;
             if (responseTypeReference == null) {
                 return violations;
             }

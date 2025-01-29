@@ -176,11 +176,13 @@ function convertJsonResponse(
     file: FernFileContext,
     typeResolver: TypeResolver
 ): HttpResponseBody.Json | undefined {
-    const responseTypeReference = typeof response !== "string" ? response.type : response; 
+    const responseTypeReference = typeof response !== "string" ? response.type : response;
     if (responseTypeReference == null) {
         return undefined;
     }
-    const responseBodyType = file.parseTypeReference(typeof response === "string" ? response : { ...response, type: responseTypeReference });
+    const responseBodyType = file.parseTypeReference(
+        typeof response === "string" ? response : { ...response, type: responseTypeReference }
+    );
     const resolvedType = typeResolver.resolveTypeOrThrow({
         type: responseTypeReference,
         file
