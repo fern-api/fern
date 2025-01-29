@@ -2334,6 +2334,7 @@ types:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.Application",
               },
               "source": {
@@ -2402,6 +2403,7 @@ types:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Application",
               },
               "source": {
@@ -2458,6 +2460,7 @@ types:
               "path": "/apps/v1/list",
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.ApplicationWithDeployment>",
               },
               "source": {
@@ -2511,6 +2514,7 @@ types:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Application",
               },
               "source": {
@@ -2538,6 +2542,7 @@ service:
       response:
         docs: Ok
         type: list<root.ApplicationWithDeployment>
+        status-code: 200
       examples:
         - response:
             body:
@@ -2579,6 +2584,7 @@ service:
       response:
         docs: ''
         type: root.Application
+        status-code: 201
       errors:
         - root.CreateAppRequestUnprocessableEntityError
         - root.CreateAppRequestInternalServerError
@@ -2613,6 +2619,7 @@ service:
       response:
         docs: Ok
         type: root.Application
+        status-code: 200
       errors:
         - root.UpdateAppRequestNotFoundError
         - root.UpdateAppRequestInternalServerError
@@ -2646,6 +2653,7 @@ service:
       response:
         docs: Ok
         type: root.Application
+        status-code: 200
       errors:
         - root.GetAppInfoRequestNotFoundError
       examples:
@@ -2718,6 +2726,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "LoginAnonymousResponse",
               },
               "source": {
@@ -2766,6 +2775,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "LoginGoogleResponse",
               },
               "source": {
@@ -2813,6 +2823,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "LoginNicknameResponse",
               },
               "source": {
@@ -2890,6 +2901,7 @@ service:
       response:
         docs: Ok
         type: LoginAnonymousResponse
+        status-code: 200
       errors:
         - root.LoginAnonymousRequestNotFoundError
       examples:
@@ -2915,6 +2927,7 @@ service:
       response:
         docs: Ok
         type: LoginNicknameResponse
+        status-code: 200
       errors:
         - root.LoginNicknameRequestNotFoundError
       examples:
@@ -2942,6 +2955,7 @@ service:
       response:
         docs: Ok
         type: LoginGoogleResponse
+        status-code: 200
       errors:
         - root.LoginGoogleRequestUnauthorizedError
         - root.LoginGoogleRequestNotFoundError
@@ -3009,6 +3023,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.Build",
               },
               "source": {
@@ -3084,6 +3099,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Build",
               },
               "source": {
@@ -3132,6 +3148,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.Build>",
               },
               "source": {
@@ -3166,6 +3183,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -3195,6 +3213,7 @@ service:
       response:
         docs: Ok
         type: list<root.Build>
+        status-code: 200
       errors:
         - root.GetBuildsRequestNotFoundError
       examples:
@@ -3226,6 +3245,7 @@ service:
       response:
         docs: Ok
         type: root.Build
+        status-code: 200
       errors:
         - root.GetBuildInfoRequestNotFoundError
       examples:
@@ -3257,6 +3277,7 @@ service:
       response:
         docs: ''
         type: root.Build
+        status-code: 201
       errors:
         - root.CreateBuildRequestNotFoundError
         - root.CreateBuildRequestUnprocessableEntityError
@@ -3296,6 +3317,7 @@ service:
       response:
         docs: Ok
         type: file
+        status-code: 200
       errors:
         - root.RunBuildRequestNotFoundError
         - root.RunBuildRequestInternalServerError
@@ -3392,6 +3414,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.Deployment",
               },
               "source": {
@@ -3442,6 +3465,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Deployment",
               },
               "source": {
@@ -3492,6 +3516,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.Deployment>",
               },
               "source": {
@@ -3521,6 +3546,7 @@ service:
       response:
         docs: Ok
         type: list<root.Deployment>
+        status-code: 200
       errors:
         - root.GetDeploymentsRequestNotFoundError
       examples:
@@ -3554,6 +3580,7 @@ service:
       response:
         docs: Ok
         type: root.Deployment
+        status-code: 200
       errors:
         - root.GetDeploymentInfoRequestNotFoundError
       examples:
@@ -3591,6 +3618,7 @@ service:
       response:
         docs: ''
         type: root.Deployment
+        status-code: 201
       errors:
         - root.CreateDeploymentRequestBadRequestError
         - root.CreateDeploymentRequestNotFoundError
@@ -3658,6 +3686,7 @@ service:
               "path": "/discovery/v1/ping",
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.DiscoveryResponse",
               },
               "source": {
@@ -3685,6 +3714,7 @@ service:
       response:
         docs: Ok
         type: root.DiscoveryResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -3750,6 +3780,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.RoomId",
               },
               "source": {
@@ -3801,6 +3832,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.RoomId",
               },
               "source": {
@@ -3865,6 +3897,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.Lobby>",
               },
               "source": {
@@ -3903,6 +3936,7 @@ service:
       response:
         docs: Ok
         type: root.RoomId
+        status-code: 200
       availability: deprecated
       errors:
         - root.CreatePrivateLobbyDeprecatedRequestUnauthorizedError
@@ -3937,6 +3971,7 @@ service:
       response:
         docs: Ok
         type: root.RoomId
+        status-code: 200
       availability: deprecated
       errors:
         - root.CreatePublicLobbyDeprecatedRequestUnauthorizedError
@@ -3971,6 +4006,7 @@ service:
       response:
         docs: Ok
         type: list<root.Lobby>
+        status-code: 200
       availability: deprecated
       errors:
         - root.ListActivePublicLobbiesDeprecatedRequestUnauthorizedError
@@ -4080,6 +4116,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.Lobby",
               },
               "source": {
@@ -4158,6 +4195,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.Lobby",
               },
               "source": {
@@ -4236,6 +4274,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.Lobby",
               },
               "source": {
@@ -4314,6 +4353,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.Lobby",
               },
               "source": {
@@ -4360,6 +4400,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Lobby",
               },
               "source": {
@@ -4409,6 +4450,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.Lobby>",
               },
               "source": {
@@ -4473,6 +4515,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Lobby",
               },
               "source": {
@@ -4528,6 +4571,7 @@ service:
       response:
         docs: ''
         type: root.Lobby
+        status-code: 201
       availability: deprecated
       errors:
         - root.CreatePrivateLobbyRequestUnauthorizedError
@@ -4581,6 +4625,7 @@ service:
       response:
         docs: ''
         type: root.Lobby
+        status-code: 201
       availability: deprecated
       errors:
         - root.CreatePublicLobbyRequestUnauthorizedError
@@ -4634,6 +4679,7 @@ service:
       response:
         docs: ''
         type: root.Lobby
+        status-code: 201
       availability: deprecated
       errors:
         - root.CreateLocalLobbyRequestUnauthorizedError
@@ -4688,6 +4734,7 @@ service:
       response:
         docs: ''
         type: root.Lobby
+        status-code: 201
       errors:
         - root.CreateLobbyRequestUnauthorizedError
         - root.CreateLobbyRequestNotFoundError
@@ -4732,6 +4779,7 @@ service:
       response:
         docs: Ok
         type: list<root.Lobby>
+        status-code: 200
       examples:
         - path-parameters:
             appId: appId
@@ -4760,6 +4808,7 @@ service:
       response:
         docs: Ok
         type: root.Lobby
+        status-code: 200
       errors:
         - root.GetLobbyInfoRequestNotFoundError
       examples:
@@ -4797,6 +4846,7 @@ service:
       response:
         docs: Ok
         type: root.Lobby
+        status-code: 200
       errors:
         - root.SetLobbyStateRequestNotFoundError
         - root.SetLobbyStateRequestUnprocessableEntityError
@@ -4865,6 +4915,7 @@ types:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -4893,6 +4944,7 @@ types:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "text",
               },
               "source": {
@@ -4921,6 +4973,7 @@ types:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "file",
               },
               "source": {
@@ -4956,6 +5009,7 @@ service:
       response:
         docs: Ok
         type: file
+        status-code: 200
       errors:
         - root.GetLogsForAppRequestNotFoundError
     GetLogsForProcess:
@@ -4975,6 +5029,7 @@ service:
       response:
         docs: Ok
         type: file
+        status-code: 200
       errors:
         - root.GetLogsForProcessRequestNotFoundError
     GetLogsForDeployment:
@@ -4994,6 +5049,7 @@ service:
       response:
         docs: Ok
         type: text
+        status-code: 200
       errors:
         - root.GetLogsForDeploymentRequestNotFoundError
   source:
@@ -5074,6 +5130,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.MetricsResponse",
               },
               "source": {
@@ -5113,6 +5170,7 @@ service:
       response:
         docs: Ok
         type: root.MetricsResponse
+        status-code: 200
       errors:
         - root.GetMetricsRequestNotFoundError
         - root.GetMetricsRequestUnprocessableEntityError
@@ -5191,6 +5249,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Process",
               },
               "source": {
@@ -5254,6 +5313,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.ProcessWithRooms>",
               },
               "source": {
@@ -5309,6 +5369,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.Process>",
               },
               "source": {
@@ -5342,6 +5403,7 @@ service:
       response:
         docs: Ok
         type: list<root.ProcessWithRooms>
+        status-code: 200
       errors:
         - root.GetRunningProcessesRequestNotFoundError
       examples:
@@ -5385,6 +5447,7 @@ service:
       response:
         docs: Ok
         type: list<root.Process>
+        status-code: 200
       errors:
         - root.GetStoppedProcessesRequestNotFoundError
       examples:
@@ -5420,6 +5483,7 @@ service:
       response:
         docs: Ok
         type: root.Process
+        status-code: 200
       errors:
         - root.GetProcessInfoRequestNotFoundError
       examples:
@@ -5498,6 +5562,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.RoomId",
               },
               "source": {
@@ -5568,6 +5633,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.RoomWithoutAllocations>",
               },
               "source": {
@@ -5608,6 +5674,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.ConnectionInfo",
               },
               "source": {
@@ -5652,6 +5719,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "list<root.RoomWithoutAllocations>",
               },
               "source": {
@@ -5702,6 +5770,7 @@ service:
               },
               "response": {
                 "docs": "Ok",
+                "status-code": 200,
                 "type": "root.Room",
               },
               "source": {
@@ -5763,6 +5832,7 @@ service:
       response:
         docs: ''
         type: root.RoomId
+        status-code: 201
       errors:
         - root.CreateRoomRequestNotFoundError
         - root.CreateRoomRequestInternalServerError
@@ -5785,6 +5855,7 @@ service:
       response:
         docs: Ok
         type: root.Room
+        status-code: 200
       errors:
         - root.GetRoomInfoRequestNotFoundError
       examples:
@@ -5818,6 +5889,7 @@ service:
       response:
         docs: Ok
         type: list<root.RoomWithoutAllocations>
+        status-code: 200
       errors:
         - root.GetActiveRoomsForProcessRequestNotFoundError
       examples:
@@ -5846,6 +5918,7 @@ service:
       response:
         docs: Ok
         type: list<root.RoomWithoutAllocations>
+        status-code: 200
       errors:
         - root.GetInactiveRoomsForProcessRequestNotFoundError
       examples:
@@ -5906,6 +5979,7 @@ service:
       response:
         docs: Ok
         type: root.ConnectionInfo
+        status-code: 200
       errors:
         - root.GetConnectionInfoRequestBadRequestError
         - root.GetConnectionInfoRequestNotFoundError

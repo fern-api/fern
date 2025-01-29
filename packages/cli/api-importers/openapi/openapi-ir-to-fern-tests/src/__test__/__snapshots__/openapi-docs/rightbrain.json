@@ -5351,6 +5351,7 @@
               "path": "/ping",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -5378,6 +5379,7 @@
               "path": "/whoami",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -10583,6 +10585,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -10597,6 +10600,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - WhoamiWhoamiGetRequestUnprocessableEntityError
       examples:
@@ -16717,6 +16721,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Chat",
               },
               "source": {
@@ -16760,6 +16765,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Chat",
               },
               "source": {
@@ -16813,6 +16819,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatConfig",
               },
               "source": {
@@ -16856,6 +16863,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -16899,6 +16907,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.Chat>",
               },
               "source": {
@@ -16955,6 +16964,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -17017,6 +17027,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -17089,6 +17100,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -17137,6 +17149,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatDocumentQueryResult>",
               },
               "source": {
@@ -17233,6 +17246,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatConfig",
               },
               "source": {
@@ -17291,6 +17305,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Chat",
               },
               "source": {
@@ -17433,6 +17448,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.Chat>
+        status-code: 200
       errors:
         - root.GetRecentChatsForUserChatRecentGetRequestUnprocessableEntityError
       examples:
@@ -17459,6 +17475,7 @@ service:
       response:
         docs: Successful Response
         type: root.Chat
+        status-code: 200
       errors:
         - root.GetChatChatChatIdGetRequestBadRequestError
         - root.GetChatChatChatIdGetRequestForbiddenError
@@ -17495,6 +17512,7 @@ service:
       response:
         docs: Successful Response
         type: root.Chat
+        status-code: 200
       errors:
         - root.UpdateChatChatChatIdPostRequestBadRequestError
         - root.UpdateChatChatChatIdPostRequestForbiddenError
@@ -17527,6 +17545,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatConfig
+        status-code: 200
       errors:
         - root.GetChatConfigChatChatIdConfigGetRequestBadRequestError
         - root.GetChatConfigChatChatIdConfigGetRequestForbiddenError
@@ -17591,6 +17610,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatConfig
+        status-code: 200
       errors:
         - root.SetChatConfigChatChatIdConfigPostRequestBadRequestError
         - root.SetChatConfigChatChatIdConfigPostRequestForbiddenError
@@ -17637,6 +17657,7 @@ service:
       response:
         docs: Successful Response
         type: root.Chat
+        status-code: 200
       errors:
         - root.CreateChatChatPostRequestBadRequestError
         - root.CreateChatChatPostRequestForbiddenError
@@ -17671,6 +17692,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatDocumentQueryResult>
+        status-code: 200
       errors:
         - root.QueryChatChatChatIdQueryGetRequestBadRequestError
         - root.QueryChatChatChatIdQueryGetRequestForbiddenError
@@ -17702,6 +17724,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.ChatIamListMembersRequestBadRequestError
         - root.ChatIamListMembersRequestForbiddenError
@@ -17738,6 +17761,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.ChatGetMemberRequestBadRequestError
         - root.ChatGetMemberRequestForbiddenError
@@ -17793,6 +17817,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.ChatIamUpdateMemberRolesRequestBadRequestError
         - root.ChatIamUpdateMemberRolesRequestForbiddenError
@@ -17836,6 +17861,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.ChatIamTestPermissionsRequestBadRequestError
         - root.ChatIamTestPermissionsRequestForbiddenError
@@ -17994,6 +18020,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -18063,6 +18090,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -18128,6 +18156,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -18173,6 +18202,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.CollectionStatsResponse",
               },
               "source": {
@@ -18243,6 +18273,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -18297,6 +18328,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Collection",
               },
               "source": {
@@ -18344,6 +18376,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -18404,6 +18437,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -18470,6 +18504,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -18546,6 +18581,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -18610,6 +18646,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetChat",
               },
               "source": {
@@ -18676,6 +18713,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetCollection",
               },
               "source": {
@@ -18730,6 +18768,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -18772,6 +18811,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.AsyncJobResult",
               },
               "source": {
@@ -18866,6 +18906,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetCollection
+        status-code: 200
       errors:
         - >-
           root.ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequestBadRequestError
@@ -18915,6 +18956,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - >-
           root.CreateCollectionOrgOrgIdProjectProjectIdCollectionPostRequestBadRequestError
@@ -18956,6 +18998,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - >-
           root.GetCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdGetRequestBadRequestError
@@ -19003,6 +19046,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - >-
           root.CollectionEditOrgOrgIdProjectProjectIdCollectionCollectionIdPostRequestBadRequestError
@@ -19045,6 +19089,7 @@ service:
       response:
         docs: Successful Response
         type: root.CollectionStatsResponse
+        status-code: 200
       errors:
         - >-
           root.CollectionStatsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGetRequestBadRequestError
@@ -19083,6 +19128,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChat
+        status-code: 200
       errors:
         - >-
           root.ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequestBadRequestError
@@ -19131,6 +19177,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.QueryCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdQueryPostRequestBadRequestError
@@ -19164,6 +19211,7 @@ service:
       response:
         docs: Successful Response
         type: root.AsyncJobResult
+        status-code: 200
       errors:
         - >-
           root.UpdateSummaryOrgOrgIdProjectProjectIdCollectionCollectionIdUpdateSummaryPostRequestBadRequestError
@@ -19200,6 +19248,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - >-
           root.CollectionAddOrgOrgIdProjectProjectIdCollectionCollectionIdAddPostRequestBadRequestError
@@ -19248,6 +19297,7 @@ service:
       response:
         docs: Successful Response
         type: root.Collection
+        status-code: 200
       errors:
         - >-
           root.CollectionRemoveOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePostRequestBadRequestError
@@ -19299,6 +19349,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.CollectionIamListMembersRequestBadRequestError
         - root.CollectionIamListMembersRequestForbiddenError
@@ -19340,6 +19391,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.CollectionGetMemberRequestBadRequestError
         - root.CollectionGetMemberRequestForbiddenError
@@ -19400,6 +19452,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.CollectionIamUpdateMemberRolesRequestBadRequestError
         - root.CollectionIamUpdateMemberRolesRequestForbiddenError
@@ -19447,6 +19500,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.CollectionIamTestPermissionsRequestBadRequestError
         - root.CollectionIamTestPermissionsRequestForbiddenError
@@ -19583,6 +19637,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -19629,6 +19684,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -19697,6 +19753,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -19753,6 +19810,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -19825,6 +19883,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -19860,6 +19919,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.InitialiseOrgOrgIdProjectProjectIdComposePostRequestBadRequestError
@@ -19898,6 +19958,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.GenerateOrgOrgIdProjectProjectIdComposeGeneratePostRequestBadRequestError
@@ -19943,6 +20004,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.UpdateSectionOrgOrgIdProjectProjectIdComposeUpdateSectionPostRequestBadRequestError
@@ -19992,6 +20054,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.SectionTalkingPointsOrgOrgIdProjectProjectIdComposeSectionTalkingPointsPostRequestBadRequestError
@@ -20035,6 +20098,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.TopicOrgOrgIdProjectProjectIdComposeTopicPostRequestBadRequestError
@@ -20128,6 +20192,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -20194,6 +20259,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -20233,6 +20299,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -20299,6 +20366,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -20340,6 +20408,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -20395,6 +20464,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -20460,6 +20530,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -20509,6 +20580,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -20547,6 +20619,7 @@ service:
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - >-
           root.ListFilesOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdListFilesGetRequestUnprocessableEntityError
@@ -20586,6 +20659,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.FetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPostRequestUnprocessableEntityError
@@ -20657,6 +20731,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdDeleteRequestBadRequestError
@@ -20692,6 +20767,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequestBadRequestError
@@ -20739,6 +20815,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.CheckStatusOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunGetRequestBadRequestError
@@ -20785,6 +20862,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - >-
           root.GetConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigGetRequestBadRequestError
@@ -20820,6 +20898,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.SetConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigPostRequestBadRequestError
@@ -20853,6 +20932,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.CallbackDatasourceBoxCallbackGetRequestUnprocessableEntityError
       examples:
@@ -20936,6 +21016,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -21002,6 +21083,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -21041,6 +21123,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -21107,6 +21190,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -21148,6 +21232,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -21203,6 +21288,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -21268,6 +21354,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -21317,6 +21404,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -21355,6 +21443,7 @@ service:
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - >-
           root.ListFilesOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdListFilesGetRequestUnprocessableEntityError
@@ -21395,6 +21484,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.FetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPostRequestUnprocessableEntityError
@@ -21466,6 +21556,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdDeleteRequestBadRequestError
@@ -21502,6 +21593,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequestBadRequestError
@@ -21550,6 +21642,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.CheckStatusOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunGetRequestBadRequestError
@@ -21597,6 +21690,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - >-
           root.GetConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigGetRequestBadRequestError
@@ -21633,6 +21727,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.SetConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigPostRequestBadRequestError
@@ -21666,6 +21761,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.CallbackDatasourceConfluenceCallbackGetRequestUnprocessableEntityError
@@ -21750,6 +21846,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -21816,6 +21913,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -21855,6 +21953,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -21921,6 +22020,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -21962,6 +22062,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -22017,6 +22118,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -22082,6 +22184,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -22131,6 +22234,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -22169,6 +22273,7 @@ service:
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - >-
           root.ListFilesOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdListFilesGetRequestUnprocessableEntityError
@@ -22209,6 +22314,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.FetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPostRequestUnprocessableEntityError
@@ -22280,6 +22386,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdDeleteRequestBadRequestError
@@ -22316,6 +22423,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequestBadRequestError
@@ -22364,6 +22472,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.CheckStatusOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunGetRequestBadRequestError
@@ -22411,6 +22520,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - >-
           root.GetConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigGetRequestBadRequestError
@@ -22447,6 +22557,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.SetConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigPostRequestBadRequestError
@@ -22480,6 +22591,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.CallbackDatasourceDropboxCallbackGetRequestUnprocessableEntityError
@@ -22564,6 +22676,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -22630,6 +22743,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -22669,6 +22783,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -22735,6 +22850,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -22776,6 +22892,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -22831,6 +22948,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -22896,6 +23014,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -22945,6 +23064,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -22983,6 +23103,7 @@ service:
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - >-
           root.ListFilesOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdListFilesGetRequestUnprocessableEntityError
@@ -23023,6 +23144,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.FetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPostRequestUnprocessableEntityError
@@ -23094,6 +23216,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdDeleteRequestBadRequestError
@@ -23130,6 +23253,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequestBadRequestError
@@ -23177,6 +23301,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.CheckStatusOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunGetRequestBadRequestError
@@ -23224,6 +23349,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - >-
           root.GetConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigGetRequestBadRequestError
@@ -23260,6 +23386,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.SetConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigPostRequestBadRequestError
@@ -23293,6 +23420,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.CallbackDatasourceGdriveCallbackGetRequestUnprocessableEntityError
@@ -23377,6 +23505,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -23443,6 +23572,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -23482,6 +23612,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -23548,6 +23679,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -23589,6 +23721,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -23644,6 +23777,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -23709,6 +23843,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -23758,6 +23893,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -23796,6 +23932,7 @@ service:
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - >-
           root.ListFilesOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdListFilesGetRequestUnprocessableEntityError
@@ -23836,6 +23973,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.FetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPostRequestUnprocessableEntityError
@@ -23907,6 +24045,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdDeleteRequestBadRequestError
@@ -23943,6 +24082,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequestBadRequestError
@@ -23990,6 +24130,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.CheckStatusOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunGetRequestBadRequestError
@@ -24037,6 +24178,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - >-
           root.GetConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigGetRequestBadRequestError
@@ -24073,6 +24215,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.SetConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigPostRequestBadRequestError
@@ -24106,6 +24249,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.CallbackDatasourceNotionCallbackGetRequestUnprocessableEntityError
@@ -24190,6 +24334,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -24256,6 +24401,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -24295,6 +24441,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -24361,6 +24508,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -24402,6 +24550,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -24457,6 +24606,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -24522,6 +24672,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -24571,6 +24722,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -24609,6 +24761,7 @@ service:
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - >-
           root.ListFilesOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdListFilesGetRequestUnprocessableEntityError
@@ -24649,6 +24802,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.FetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPostRequestUnprocessableEntityError
@@ -24720,6 +24874,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdDeleteRequestBadRequestError
@@ -24756,6 +24911,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequestBadRequestError
@@ -24804,6 +24960,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.CheckStatusOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunGetRequestBadRequestError
@@ -24851,6 +25008,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - >-
           root.GetConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigGetRequestBadRequestError
@@ -24887,6 +25045,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.SetConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigPostRequestBadRequestError
@@ -24920,6 +25079,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.CallbackDatasourceOnedriveCallbackGetRequestUnprocessableEntityError
@@ -25004,6 +25164,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -25070,6 +25231,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -25109,6 +25271,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -25175,6 +25338,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -25216,6 +25380,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceConfiguration",
               },
               "source": {
@@ -25271,6 +25436,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ObjectList",
               },
               "source": {
@@ -25336,6 +25502,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -25385,6 +25552,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -25423,6 +25591,7 @@ service:
       response:
         docs: Successful Response
         type: root.ObjectList
+        status-code: 200
       errors:
         - >-
           root.ListFilesOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdListFilesGetRequestUnprocessableEntityError
@@ -25463,6 +25632,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.FetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPostRequestUnprocessableEntityError
@@ -25534,6 +25704,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdDeleteRequestBadRequestError
@@ -25570,6 +25741,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequestBadRequestError
@@ -25618,6 +25790,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.CheckStatusOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunGetRequestBadRequestError
@@ -25665,6 +25838,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceConfiguration
+        status-code: 200
       errors:
         - >-
           root.GetConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigGetRequestBadRequestError
@@ -25701,6 +25875,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.SetConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigPostRequestBadRequestError
@@ -25734,6 +25909,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.CallbackDatasourceSharepointCallbackGetRequestUnprocessableEntityError
@@ -25812,6 +25988,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DocumentStatusResponse",
               },
               "source": {
@@ -25851,6 +26028,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -25891,6 +26069,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatDocumentEmbeddingRecord",
               },
               "source": {
@@ -25947,6 +26126,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetChatDocumentEmbeddingRecord",
               },
               "source": {
@@ -26007,6 +26187,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatDocument",
               },
               "source": {
@@ -26083,6 +26264,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetChatDocument",
               },
               "source": {
@@ -26135,6 +26317,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatDocumentQueryResult>",
               },
               "source": {
@@ -26213,6 +26396,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ChatDocument",
               },
               "source": {
@@ -26287,6 +26471,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatDocument>",
               },
               "source": {
@@ -26334,6 +26519,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -26394,6 +26580,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -26460,6 +26647,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -26536,6 +26724,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -26585,6 +26774,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DocumentStatusResponse",
               },
               "source": {
@@ -26749,6 +26939,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChatDocument
+        status-code: 200
       errors:
         - >-
           root.DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestBadRequestError
@@ -26802,6 +26993,7 @@ service:
       response:
         docs: Successful Response
         type: root.DocumentStatusResponse
+        status-code: 200
       errors:
         - >-
           root.DocumentCreateOrgOrgIdProjectProjectIdDocumentPostRequestBadRequestError
@@ -26845,6 +27037,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatDocument>
+        status-code: 200
       availability: deprecated
       errors:
         - >-
@@ -26890,6 +27083,7 @@ service:
       response:
         docs: Successful Response
         type: root.DocumentStatusResponse
+        status-code: 200
       errors:
         - >-
           root.TaskStatusOrgOrgIdProjectProjectIdDocumentCreateStatusGroupIdGetRequestBadRequestError
@@ -26929,6 +27123,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatDocumentQueryResult>
+        status-code: 200
       errors:
         - >-
           root.DocumentQueryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGetRequestBadRequestError
@@ -26962,6 +27157,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatDocument
+        status-code: 200
       errors:
         - >-
           root.DocumentFetchOrgOrgIdProjectProjectIdDocumentDocumentIdGetRequestBadRequestError
@@ -27015,6 +27211,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatDocument
+        status-code: 200
       errors:
         - >-
           root.DocumentUpdateOrgOrgIdProjectProjectIdDocumentDocumentIdPostRequestBadRequestError
@@ -27062,6 +27259,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DocumentDeleteOrgOrgIdProjectProjectIdDocumentDocumentIdDeleteRequestBadRequestError
@@ -27097,6 +27295,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChatDocumentEmbeddingRecord
+        status-code: 200
       errors:
         - >-
           root.DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequestBadRequestError
@@ -27137,6 +27336,7 @@ service:
       response:
         docs: Successful Response
         type: root.ChatDocumentEmbeddingRecord
+        status-code: 200
       errors:
         - >-
           root.DocumentEmbeddingGetOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingEmbeddingIdGetRequestUnprocessableEntityError
@@ -27169,6 +27369,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.DocumentIamListMembersRequestBadRequestError
         - root.DocumentIamListMembersRequestForbiddenError
@@ -27210,6 +27411,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.DocumentGetMemberRequestBadRequestError
         - root.DocumentGetMemberRequestForbiddenError
@@ -27270,6 +27472,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.DocumentIamUpdateMemberRolesRequestBadRequestError
         - root.DocumentIamUpdateMemberRolesRequestForbiddenError
@@ -27317,6 +27520,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.DocumentIamTestPermissionsRequestBadRequestError
         - root.DocumentIamTestPermissionsRequestForbiddenError
@@ -27411,6 +27615,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 201,
                 "type": "root.OAuthClientCreateResponse",
               },
               "source": {
@@ -27462,6 +27667,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -27512,6 +27718,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.KratosWebhookResponse",
               },
               "source": {
@@ -27562,6 +27769,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.KratosWebhookResponse",
               },
               "source": {
@@ -27597,6 +27805,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.WebhookHydraTokenHookInternalWebhookHydraTokenHookPostRequestUnprocessableEntityError
@@ -27636,6 +27845,7 @@ service:
       response:
         docs: Successful Response
         type: root.OAuthClientCreateResponse
+        status-code: 201
       errors:
         - >-
           root.RegisterOauthClientInternalProjectProjectIdRegisterOauthClientPostRequestBadRequestError
@@ -27669,6 +27879,7 @@ service:
       response:
         docs: Successful Response
         type: root.KratosWebhookResponse
+        status-code: 200
       errors:
         - >-
           root.WebhookKratosSignupCheckInternalWebhookKratosSignupCheckPostRequestUnprocessableEntityError
@@ -27699,6 +27910,7 @@ service:
       response:
         docs: Successful Response
         type: root.KratosWebhookResponse
+        status-code: 200
       errors:
         - >-
           root.WebhookKratosSignupCommitInternalWebhookKratosSignupCommitPostRequestUnprocessableEntityError
@@ -27847,6 +28059,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatModel>",
               },
               "source": {
@@ -27887,6 +28100,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ChatGuardrail>",
               },
               "source": {
@@ -27925,6 +28139,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatModel>
+        status-code: 200
       availability: generally-available
       errors:
         - root.GetAllModelsRequestBadRequestError
@@ -28034,6 +28249,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ChatGuardrail>
+        status-code: 200
       errors:
         - >-
           root.ListAvailableGuardrailsOrgOrgIdProjectProjectIdGuardrailGetRequestUnprocessableEntityError
@@ -28110,6 +28326,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Org",
               },
               "source": {
@@ -28149,6 +28366,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationDomain",
               },
               "source": {
@@ -28195,6 +28413,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetOrganizationDomain",
               },
               "source": {
@@ -28247,6 +28466,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationDomain",
               },
               "source": {
@@ -28285,6 +28505,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Org",
               },
               "source": {
@@ -28350,6 +28571,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationInvite",
               },
               "source": {
@@ -28434,6 +28656,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetOrganizationInvite",
               },
               "source": {
@@ -28475,6 +28698,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -28510,6 +28734,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -28569,6 +28794,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Org",
               },
               "source": {
@@ -28620,6 +28846,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Org",
               },
               "source": {
@@ -28663,6 +28890,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -28719,6 +28947,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -28781,6 +29010,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -28853,6 +29083,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -28982,6 +29213,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.OrganizationIamListMembersRequestBadRequestError
         - root.OrganizationIamListMembersRequestForbiddenError
@@ -29018,6 +29250,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.OrganizationGetMemberRequestBadRequestError
         - root.OrganizationGetMemberRequestForbiddenError
@@ -29073,6 +29306,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.OrganizationIamUpdateMemberRolesRequestBadRequestError
         - root.OrganizationIamUpdateMemberRolesRequestForbiddenError
@@ -29116,6 +29350,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.OrganizationIamTestPermissionsRequestBadRequestError
         - root.OrganizationIamTestPermissionsRequestForbiddenError
@@ -29148,6 +29383,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.OrgListOrgGetRequestUnprocessableEntityError
       examples:
@@ -29174,6 +29410,7 @@ service:
       response:
         docs: Successful Response
         type: root.Org
+        status-code: 200
       errors:
         - root.OrgCreateOrgPostRequestUnprocessableEntityError
       examples:
@@ -29198,6 +29435,7 @@ service:
       response:
         docs: Successful Response
         type: root.Org
+        status-code: 200
       errors:
         - root.OrgGetOrgOrgIdGetRequestBadRequestError
         - root.OrgGetOrgOrgIdGetRequestForbiddenError
@@ -29232,6 +29470,7 @@ service:
       response:
         docs: Successful Response
         type: root.Org
+        status-code: 200
       errors:
         - root.OrgUpdateOrgOrgIdPostRequestBadRequestError
         - root.OrgUpdateOrgOrgIdPostRequestForbiddenError
@@ -29258,6 +29497,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.OrgJoinOrgOrgIdJoinPostRequestBadRequestError
         - root.OrgJoinOrgOrgIdJoinPostRequestForbiddenError
@@ -29291,6 +29531,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetOrganizationInvite
+        status-code: 200
       errors:
         - root.OrgInvitesListOrgOrgIdInviteGetRequestBadRequestError
         - root.OrgInvitesListOrgOrgIdInviteGetRequestForbiddenError
@@ -29332,6 +29573,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationInvite
+        status-code: 200
       errors:
         - root.OrgInvitesCreateOrgOrgIdInvitePostRequestBadRequestError
         - root.OrgInvitesCreateOrgOrgIdInvitePostRequestForbiddenError
@@ -29380,6 +29622,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetOrganizationDomain
+        status-code: 200
       errors:
         - root.OrgDomainsListOrgOrgIdDomainsGetRequestBadRequestError
         - root.OrgDomainsListOrgOrgIdDomainsGetRequestForbiddenError
@@ -29415,6 +29658,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationDomain
+        status-code: 200
       errors:
         - root.OrgDomainsPostOrgOrgIdDomainsPostRequestBadRequestError
         - root.OrgDomainsPostOrgOrgIdDomainsPostRequestForbiddenError
@@ -29442,6 +29686,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationDomain
+        status-code: 200
       errors:
         - >-
           root.OrgDomainDeleteOrgOrgIdDomainsDomainIdDeleteRequestBadRequestError
@@ -29475,6 +29720,7 @@ service:
       response:
         docs: Successful Response
         type: root.Org
+        status-code: 200
       errors:
         - root.OrgUpdateAvatarOrgOrgIdAvatarPostRequestBadRequestError
         - root.OrgUpdateAvatarOrgOrgIdAvatarPostRequestForbiddenError
@@ -29551,6 +29797,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Project",
               },
               "source": {
@@ -29596,6 +29843,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -29655,6 +29903,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectWithDatasources",
               },
               "source": {
@@ -29708,6 +29957,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectConfig",
               },
               "source": {
@@ -29766,6 +30016,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -29830,6 +30081,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -29904,6 +30156,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -29959,6 +30212,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetProject",
               },
               "source": {
@@ -30013,6 +30267,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Project",
               },
               "source": {
@@ -30110,6 +30365,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectConfig",
               },
               "source": {
@@ -30166,6 +30422,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Project",
               },
               "source": {
@@ -30337,6 +30594,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetProject
+        status-code: 200
       errors:
         - root.ListProjectOrgOrgIdProjectGetRequestBadRequestError
         - root.ListProjectOrgOrgIdProjectGetRequestForbiddenError
@@ -30374,6 +30632,7 @@ service:
       response:
         docs: Successful Response
         type: root.Project
+        status-code: 200
       errors:
         - root.CreateProjectOrgOrgIdProjectPostRequestBadRequestError
         - root.CreateProjectOrgOrgIdProjectPostRequestForbiddenError
@@ -30403,6 +30662,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectWithDatasources
+        status-code: 200
       errors:
         - root.GetProjectOrgOrgIdProjectProjectIdGetRequestBadRequestError
         - root.GetProjectOrgOrgIdProjectProjectIdGetRequestForbiddenError
@@ -30452,6 +30712,7 @@ service:
       response:
         docs: Successful Response
         type: root.Project
+        status-code: 200
       errors:
         - root.UpdateProjectOrgOrgIdProjectProjectIdPostRequestBadRequestError
         - root.UpdateProjectOrgOrgIdProjectProjectIdPostRequestForbiddenError
@@ -30482,6 +30743,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectConfig
+        status-code: 200
       errors:
         - >-
           root.GetProjectConfigOrgOrgIdProjectProjectIdConfigGetRequestUnprocessableEntityError
@@ -30543,6 +30805,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectConfig
+        status-code: 200
       errors:
         - >-
           root.SetProjectConfigOrgOrgIdProjectProjectIdConfigPostRequestBadRequestError
@@ -30588,6 +30851,7 @@ service:
       response:
         docs: Successful Response
         type: root.Project
+        status-code: 200
       errors:
         - >-
           root.ProjectUpdateAvatarOrgOrgIdProjectProjectIdAvatarPostRequestBadRequestError
@@ -30625,6 +30889,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.ProjectIamListMembersRequestBadRequestError
         - root.ProjectIamListMembersRequestForbiddenError
@@ -30663,6 +30928,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.ProjectGetMemberRequestBadRequestError
         - root.ProjectGetMemberRequestForbiddenError
@@ -30720,6 +30986,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.ProjectIamUpdateMemberRolesRequestBadRequestError
         - root.ProjectIamUpdateMemberRolesRequestForbiddenError
@@ -30765,6 +31032,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.ProjectIamTestPermissionsRequestBadRequestError
         - root.ProjectIamTestPermissionsRequestForbiddenError
@@ -30940,6 +31208,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -30975,6 +31244,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -31058,6 +31328,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasourceSyncRun",
               },
               "source": {
@@ -31119,6 +31390,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
               "source": {
@@ -31150,6 +31422,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.EnableOrgOrgIdProjectProjectIdScrapePostRequestUnprocessableEntityError
@@ -31185,6 +31458,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.FetchOrgOrgIdProjectProjectIdScrapeStartPostRequestUnprocessableEntityError
@@ -31227,6 +31501,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.CheckStatusOrgOrgIdProjectProjectIdScrapeRunSyncRunIdGetRequestUnprocessableEntityError
@@ -31271,6 +31546,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
+        status-code: 200
       errors:
         - >-
           root.ListRunsOrgOrgIdProjectProjectIdScrapeRunsGetRequestUnprocessableEntityError
@@ -31398,6 +31674,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskForwarder",
               },
               "source": {
@@ -31492,6 +31769,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetTaskForwarder",
               },
               "source": {
@@ -31556,6 +31834,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskForwarder",
               },
               "source": {
@@ -31648,6 +31927,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskForwarder",
               },
               "source": {
@@ -31701,6 +31981,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskForwarder
+        status-code: 200
       availability: generally-available
       errors:
         - root.GetAllTaskForwardersRequestBadRequestError
@@ -31776,6 +32057,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskForwarder
+        status-code: 200
       availability: generally-available
       errors:
         - root.CreateTaskForwarderRequestBadRequestError
@@ -31831,6 +32113,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskForwarder
+        status-code: 200
       availability: generally-available
       errors:
         - root.GetTaskForwarderRequestBadRequestError
@@ -31901,6 +32184,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskForwarder
+        status-code: 200
       availability: generally-available
       errors:
         - root.UpdateTaskForwarderRequestBadRequestError
@@ -32089,6 +32373,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Task",
               },
               "source": {
@@ -32235,6 +32520,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Task",
               },
               "source": {
@@ -32345,6 +32631,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetTask",
               },
               "source": {
@@ -32427,6 +32714,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.Task",
               },
               "source": {
@@ -32502,6 +32790,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskRun",
               },
               "source": {
@@ -32617,6 +32906,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetTaskRun",
               },
               "source": {
@@ -32708,6 +32998,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TaskRun",
               },
               "source": {
@@ -32755,6 +33046,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -32815,6 +33107,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultSetIamMember",
               },
               "source": {
@@ -32881,6 +33174,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMPermissionTest",
               },
               "source": {
@@ -32957,6 +33251,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.IAMMember",
               },
               "source": {
@@ -33209,6 +33504,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTask
+        status-code: 200
       availability: generally-available
       errors:
         - root.GetAllTasksRequestBadRequestError
@@ -33341,6 +33637,7 @@ service:
       response:
         docs: Successful Response
         type: root.Task
+        status-code: 200
       availability: generally-available
       errors:
         - root.CreateTaskRequestBadRequestError
@@ -33442,6 +33739,7 @@ service:
       response:
         docs: Successful Response
         type: root.Task
+        status-code: 200
       availability: generally-available
       errors:
         - root.GetTaskRequestBadRequestError
@@ -33575,6 +33873,7 @@ service:
       response:
         docs: Successful Response
         type: root.Task
+        status-code: 200
       availability: generally-available
       errors:
         - root.EditTaskRequestBadRequestError
@@ -33675,6 +33974,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskRun
+        status-code: 200
       availability: generally-available
       errors:
         - root.GetTaskRunsRequestBadRequestError
@@ -33753,6 +34053,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskRun
+        status-code: 200
       availability: generally-available
       errors:
         - root.RunTaskRequestBadRequestError
@@ -33811,6 +34112,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
+        status-code: 200
       errors:
         - root.TaskIamListMembersRequestBadRequestError
         - root.TaskIamListMembersRequestForbiddenError
@@ -33851,6 +34153,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.TaskGetMemberRequestBadRequestError
         - root.TaskGetMemberRequestForbiddenError
@@ -33910,6 +34213,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMMember
+        status-code: 200
       errors:
         - root.TaskIamUpdateMemberRolesRequestBadRequestError
         - root.TaskIamUpdateMemberRolesRequestForbiddenError
@@ -33957,6 +34261,7 @@ service:
       response:
         docs: Successful Response
         type: root.IAMPermissionTest
+        status-code: 200
       errors:
         - root.TaskIamTestPermissionsRequestBadRequestError
         - root.TaskIamTestPermissionsRequestForbiddenError
@@ -33999,6 +34304,7 @@ service:
       response:
         docs: Successful Response
         type: root.TaskRun
+        status-code: 200
       availability: generally-available
       errors:
         - root.GetTaskRunRequestBadRequestError
@@ -34197,6 +34503,7 @@ types:
               "path": "/user",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -34246,6 +34553,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -34290,6 +34598,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -34319,6 +34628,7 @@ service:
       response:
         docs: Successful Response
         type: root.User
+        status-code: 200
       errors:
         - root.UserGetUserGetRequestUnprocessableEntityError
       examples:
@@ -34349,6 +34659,7 @@ service:
       response:
         docs: Successful Response
         type: root.User
+        status-code: 200
       errors:
         - root.UserPostUserPostRequestUnprocessableEntityError
       examples:
@@ -34376,6 +34687,7 @@ service:
       response:
         docs: Successful Response
         type: root.User
+        status-code: 200
       errors:
         - root.UserUpdateAvatarUserAvatarPostRequestUnprocessableEntityError
       examples:

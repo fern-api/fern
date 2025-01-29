@@ -65,7 +65,7 @@ export function convertResponse({
                 streamFormat,
                 source,
                 namespace: context.namespace,
-                statusCode: responseStatusCode
+                statusCode: typeof statusCode === 'string' ? parseInt(statusCode) : statusCode,
             });
         }
     }

@@ -132,6 +132,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
@@ -248,14 +249,13 @@
           },
           "type": "object"
         },
-        "description": "Test request body\n",
-        "contentType": "application/x-www-form-urlencoded",
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "fullExamples": [],
-        "additionalProperties": false,
         "type": "json"
       },
       "response": {
@@ -273,6 +273,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},

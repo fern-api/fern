@@ -5880,6 +5880,7 @@ types:
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.AccountJointOwners",
               },
               "source": {
@@ -5917,6 +5918,7 @@ service:
       response:
         docs: OK.
         type: root.AccountJointOwners
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -6002,6 +6004,7 @@ docs: Account Joint Owners
               },
               "response": {
                 "docs": "OK. The response is a representation of the customer's account.",
+                "status-code": 200,
                 "type": "root.Account",
               },
               "source": {
@@ -6073,6 +6076,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               },
               "response": {
                 "docs": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter.",
+                "status-code": 200,
                 "type": "root.AccountBalances",
               },
               "source": {
@@ -6195,6 +6199,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               },
               "response": {
                 "docs": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
+                "status-code": 200,
                 "type": "root.Accounts",
               },
               "source": {
@@ -6259,6 +6264,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               },
               "response": {
                 "docs": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
+                "status-code": 200,
                 "type": "root.Accounts",
               },
               "source": {
@@ -6357,6 +6363,7 @@ service:
           the `nextPage_url` property is present in the response, the client can
           fetch the next page of accounts by performing a `GET` on that URL.
         type: root.Accounts
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -6425,6 +6432,7 @@ service:
       response:
         docs: OK. The response is a representation of the customer's account.
         type: root.Account
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -6502,6 +6510,7 @@ service:
           OK. The response contains the balances for all the accounts in the
           `?accounts=` query parameter.
         type: root.AccountBalances
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -6592,6 +6601,7 @@ service:
           the client can fetch the next page of accounts by performing a `GET`
           on that URL.
         type: root.Accounts
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -6689,6 +6699,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.CutoffTimes",
               },
               "source": {
@@ -6866,6 +6877,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.TransferDateRestrictions",
               },
               "source": {
@@ -6982,6 +6994,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.TransferSchedules",
               },
               "source": {
@@ -7080,6 +7093,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.InstitutionLookupResult",
               },
               "source": {
@@ -7146,6 +7160,7 @@ service:
       response:
         docs: OK.
         type: root.InstitutionLookupResult
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7237,6 +7252,7 @@ service:
       response:
         docs: OK.
         type: root.TransferSchedules
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7313,6 +7329,7 @@ service:
       response:
         docs: OK.
         type: root.CutoffTimes
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7400,6 +7417,7 @@ service:
       response:
         docs: OK.
         type: root.TransferDateRestrictions
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7559,6 +7577,7 @@ The authenticated user must have the `account.allows.manageJointOwners` permissi
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.JointOwnerInvitation",
               },
               "source": {
@@ -7610,6 +7629,7 @@ service:
       response:
         docs: OK.
         type: root.JointOwnerInvitation
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7685,6 +7705,7 @@ service:
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.OverdraftProtection",
               },
               "source": {
@@ -7772,6 +7793,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
               },
               "response": {
                 "docs": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
+                "status-code": 200,
                 "type": "root.EligibleOverdraftAccounts",
               },
               "source": {
@@ -7832,6 +7854,7 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.OverdraftProtection",
               },
               "source": {
@@ -7906,6 +7929,7 @@ service:
           the response, the client can fetch the next page of accounts by
           performing a `GET` on that URL.
         type: root.EligibleOverdraftAccounts
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7948,6 +7972,7 @@ service:
       response:
         docs: OK.
         type: root.OverdraftProtection
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -7994,6 +8019,7 @@ service:
       response:
         docs: OK.
         type: root.OverdraftProtection
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -8069,6 +8095,7 @@ This is a _conditional operation_ when the `If-None-Match` header is used. If th
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.TransactionCategories",
               },
               "source": {
@@ -8118,6 +8145,7 @@ service:
       response:
         docs: OK.
         type: root.TransactionCategories
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -8333,6 +8361,7 @@ The default response lists only recent transactions. Normally, this is transacti
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.Transactions",
               },
               "source": {
@@ -8515,6 +8544,7 @@ service:
       response:
         docs: OK.
         type: root.Transactions
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -8695,6 +8725,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "response": {
                 "docs": "Created.",
+                "status-code": 201,
                 "type": "root.Transfer",
               },
               "source": {
@@ -8792,6 +8823,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.Transfer",
               },
               "source": {
@@ -8935,6 +8967,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.Transfers",
               },
               "source": {
@@ -9041,6 +9074,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "response": {
                 "docs": "OK.",
+                "status-code": 200,
                 "type": "root.Transfer",
               },
               "source": {
@@ -9135,6 +9169,7 @@ service:
       response:
         docs: OK.
         type: root.Transfers
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9247,6 +9282,7 @@ service:
       response:
         docs: Created.
         type: root.Transfer
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9309,6 +9345,7 @@ service:
       response:
         docs: OK.
         type: root.Transfer
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -9415,6 +9452,7 @@ service:
       response:
         docs: OK.
         type: root.Transfer
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

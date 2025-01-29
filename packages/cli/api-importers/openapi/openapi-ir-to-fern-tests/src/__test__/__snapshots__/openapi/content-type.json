@@ -61,6 +61,7 @@
               },
               "response": {
                 "docs": "The sample response",
+                "status-code": 201,
                 "type": "string",
               },
               "source": {
@@ -101,9 +102,7 @@
                     },
                   },
                 },
-                "content-type": "application/x-www-form-urlencoded",
-                "docs": "Test request body
-",
+                "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostExampleRequest",
                 "path-parameters": undefined,
@@ -111,6 +110,7 @@
               },
               "response": {
                 "docs": "The sample response",
+                "status-code": 201,
                 "type": "string",
               },
               "source": {
@@ -163,6 +163,7 @@
       response:
         docs: The sample response
         type: string
+        status-code: 201
       examples:
         - path-parameters:
             corpus_key: corpus_key
@@ -191,12 +192,11 @@
               docs: >-
                 Arbitrary object that will be attached as document metadata to
                 the extracted document.
-        content-type: application/x-www-form-urlencoded
-        docs: |
-          Test request body
+        content-type: application/json
       response:
         docs: The sample response
         type: string
+        status-code: 201
       examples:
         - path-parameters:
             corpus_key: corpus_key
