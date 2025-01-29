@@ -4,6 +4,14 @@
         the status code from the OpenAPI spec through the IR and FDR layers.
       type: fix
   irVersion: 55
+  version: 0.51.9
+
+- changelogEntry:
+    - summary: |
+        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating 
+        the status code from the OpenAPI spec through the IR and FDR layers.
+      type: fix
+  irVersion: 55
   version: 0.51.8
 
 - changelogEntry:
