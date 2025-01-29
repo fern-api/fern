@@ -20,7 +20,7 @@ export function getAllRules(): Rule[] {
         PlaygroundEnvironmentsExistRule,
         ValidDocsEndpoints,
         AllRolesMustBeDeclaredRule,
-        ValidFrontmatter,
+        ValidFrontmatter
         // ValidMarkdownFileReferences
     ];
 }

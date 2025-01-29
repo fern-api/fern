@@ -186,7 +186,7 @@ export function buildEndpoint({
                 });
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
-                    type: getTypeFromTypeReference(responseTypeReference),
+                    type: getTypeFromTypeReference(responseTypeReference)
                 };
                 if (jsonResponse.statusCode != null) {
                     convertedEndpoint.response["status-code"] = jsonResponse.statusCode;
@@ -215,7 +215,7 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0,
+                    declarationDepth: 0
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -233,7 +233,7 @@ export function buildEndpoint({
             streamingText: (textResponse) => {
                 convertedEndpoint["response-stream"] = {
                     docs: textResponse.description ?? undefined,
-                    type: "text",
+                    type: "text"
                 };
             },
             text: (textResponse) => {

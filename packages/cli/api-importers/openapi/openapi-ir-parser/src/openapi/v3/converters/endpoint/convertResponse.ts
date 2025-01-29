@@ -65,7 +65,7 @@ export function convertResponse({
                 streamFormat,
                 source,
                 namespace: context.namespace,
-                statusCode: typeof statusCode === 'string' ? parseInt(statusCode) : statusCode,
+                statusCode: typeof statusCode === "string" ? parseInt(statusCode) : statusCode
             });
         }
     }
@@ -122,7 +122,7 @@ function convertResolvedResponse({
     responseBreadcrumbs,
     source,
     namespace,
-    statusCode,
+    statusCode
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
@@ -183,7 +183,7 @@ function convertResolvedResponse({
                         context,
                         responseBreadcrumbs,
                         source,
-                        namespace,
+                        namespace
                     ),
                     source,
                     statusCode
