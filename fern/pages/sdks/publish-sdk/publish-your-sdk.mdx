@@ -36,6 +36,15 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
     ```bash Go
     fern add fern-go-sdk --group go-sdk
     ```
+    ```bash Ruby
+    fern add fern-ruby-sdk --group ruby-sdk
+    ```
+    ```bash .NET
+    fern add fern-csharp-sdk --group csharp-sdk
+    ```
+    ```bash PHP
+    fern add fern-php-sdk --group php-sdk
+    ```
   </CodeBlocks>
 
   Once the command completes, you'll see a new group created in your `generators.yml`. 
@@ -46,7 +55,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ts-sdk:
         generators:
           - name: fernapi/fern-typescript-node-sdk
-            version: 0.45.2
+            version: 0.48.4
             output:
               location: local-file-system
               path: ../sdks/typescript
@@ -56,7 +65,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       python-sdk:
         generators:
           - name: fernapi/fern-python-sdk
-            version: 4.3.10
+            version: 4.3.11
             output:
               location: local-file-system
               path: ../sdks/python
@@ -66,21 +75,21 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       java-sdk:
         generators:
           - name: fernapi/fern-java-sdk
-            version: 2.8.1
+            version: 2.10.7
     ```
     ```yaml Go 
     groups:
       go-sdk:
         generators:
           - name: fernapi/fern-go-sdk
-            version: 0.35.1
+            version: 0.36.2
     ```
     ```yaml .NET 
     groups: 
-      java-sdk:
+      csharp-sdk:
         generators:
           - name: fernapi/fern-csharp-sdk
-            version: 1.9.11
+            version: 1.9.12
     ```
     ```yaml Ruby 
     groups: 
@@ -88,6 +97,13 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
         generators:
           - name: fernapi/fern-ruby-sdk
             version: 0.9.0
+    ```
+    ```yaml PHP 
+    groups: 
+      php-sdk:
+        generators:
+          - name: fernapi/fern-php-sdk
+            version: 0.2.2
     ```
   </CodeBlocks>
 
@@ -162,12 +178,18 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ruby-sdk:
         generators:
           - name: fernapi/fern-ruby-sdk
-            version: 0.8.2
+            version: 0.9.0-rc2
             output:
               location: rubygems
               package-name: imdb
               api-key: ${RUBYGEMS_API_KEY}
     ```
+    ```yaml title="PHP"
+    groups: 
+      php-sdk:
+        generators:
+          - name: fernapi/fern-php-sdk
+            version: 0.2.2
   </CodeBlocks>
 
 
