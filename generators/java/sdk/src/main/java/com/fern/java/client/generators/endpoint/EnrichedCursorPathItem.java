@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fern.ir.model.commons.Name;
 import org.immutables.value.Value;
 
+// TODO(ajgateno): This will be necessary until the required IR changes include more information about the path
 @Value.Immutable
 @JsonSerialize(as = ImmutableEnrichedCursorPathItem.class)
 @JsonDeserialize(as = ImmutableEnrichedCursorPathItem.class)

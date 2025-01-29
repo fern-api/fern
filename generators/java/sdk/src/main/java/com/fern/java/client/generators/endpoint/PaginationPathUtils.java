@@ -398,7 +398,7 @@ public class PaginationPathUtils {
 
         @Override
         public Optional<TypeReference> visitReference(HttpRequestBodyReference httpRequestBodyReference) {
-            // TODO(ajgateno): Should not happen for this use-case since we should only allow named types for
+            // NOTE: Should not happen for this use-case since we should only allow named types for
             //  pagination.
             if (httpRequestBodyReference.getRequestBodyType().getNamed().isEmpty()) {
                 return Optional.empty();

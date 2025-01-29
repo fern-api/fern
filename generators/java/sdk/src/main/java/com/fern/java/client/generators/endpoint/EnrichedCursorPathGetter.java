@@ -5,6 +5,7 @@ import com.squareup.javapoet.TypeName;
 import java.util.Optional;
 import org.immutables.value.Value;
 
+// TODO(ajgateno): This will be necessary until the required IR changes include more information about the path
 @Value.Immutable
 public interface EnrichedCursorPathGetter {
 
