@@ -194,6 +194,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     @Override
                     public Void visitTypeReference(HttpRequestBodyReference typeReference) {
                         builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+                        AbstractEndpointWriter.responseContentType(httpEndpoint.getResponse())
+                                .ifPresent(responseContentType -> builder.add(
+                                        ".addHeader($S, $S)\n", AbstractEndpointWriter.ACCEPT_HEADER, contentType));
                         return null;
                     }
 

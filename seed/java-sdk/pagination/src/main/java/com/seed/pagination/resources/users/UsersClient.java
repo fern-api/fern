@@ -159,7 +159,7 @@ public class UsersClient {
                                 .build();
                 List<User> result = parsedResponse.getData();
                 return new SyncPagingIterable<>(
-                        startingAfter.isPresent(),
+                        !startingAfter.isEmpty(),
                         result,
                         () -> listWithMixedTypeCursorPagination(nextRequest, requestOptions));
             }
@@ -173,8 +173,8 @@ public class UsersClient {
         }
     }
 
-    public void listWithBodyCursorPagination() {
-        listWithBodyCursorPagination(
+    public SyncPagingIterable<User> listWithBodyCursorPagination() {
+        return listWithBodyCursorPagination(
                 ListUsersBodyCursorPaginationRequest.builder().build());
     }
 
@@ -342,7 +342,7 @@ public class UsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-                double newPageNumber = request.getPage().map(page -> page + 1).orElse(1);
+                double newPageNumber = request.getPage().map(page -> page + 1.0).orElse(1.0);
                 ListUsersDoubleOffsetPaginationRequest nextRequest = ListUsersDoubleOffsetPaginationRequest.builder()
                         .from(request)
                         .page(newPageNumber)
@@ -361,8 +361,8 @@ public class UsersClient {
         }
     }
 
-    public void listWithBodyOffsetPagination() {
-        listWithBodyOffsetPagination(
+    public SyncPagingIterable<User> listWithBodyOffsetPagination() {
+        return listWithBodyOffsetPagination(
                 ListUsersBodyOffsetPaginationRequest.builder().build());
     }
 

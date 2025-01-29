@@ -873,10 +873,31 @@ public abstract class AbstractEndpointWriter {
                                 .add(resultSnippet.codeBlock)
                                 .build();
                         httpResponseBuilder.addStatement(resultBlock);
+
+                        CodeBlock hasNextPageBlock;
+
+                        if (nextSnippet.typeReference.getContainer().isPresent()) {
+                            if (nextSnippet.typeReference.getContainer().get().isOptional()) {
+                                hasNextPageBlock = CodeBlock.of("$L.isPresent()", getStartingAfterVariableName());
+                            } else {
+                                throw new IllegalStateException(
+                                        "Found non-optional container as next page token. This should be impossible "
+                                                + "due to fern check validation.");
+                            }
+                        } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
+                            hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
+                                    getStartingAfterVariableName(),
+                                    nextSnippet.typeReference.getPrimitive().get());
+                        } else {
+                            throw new IllegalStateException(
+                                    "Found non-optional, non-primitive as next page token. This should be impossible "
+                                            + "due to fern check validation.");
+                        }
+
                         httpResponseBuilder.addStatement(
-                                "return new $T<>($L.isPresent(), $L, () -> $L($L))",
+                                "return new $T<>($L, $L, () -> $L($L))",
                                 pagerClassName,
-                                getStartingAfterVariableName(),
+                                hasNextPageBlock,
                                 getResultVariableName(),
                                 endpointName,
                                 methodParameters);
