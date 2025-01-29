@@ -107,9 +107,11 @@ export class ExampleEndpointFactory {
             if (endpoint.response?.type === "json" && endpoint.response.statusCode === 204) {
                 responseExamples.push([
                     undefined,
-                    EndpointResponseExample.withoutStreaming(FullExample.object({
-                        properties: {}
-                    }))
+                    EndpointResponseExample.withoutStreaming(
+                        FullExample.object({
+                            properties: {}
+                        })
+                    )
                 ]);
             }
 
