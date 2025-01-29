@@ -712,7 +712,8 @@
                   "type": "unknown"
                 }
               }
-            }
+            },
+            "statusCode": 200
           },
           "errorsV2": [],
           "examples": [
@@ -804,6 +805,7 @@
                 "value": "type_:UploadResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -946,6 +948,7 @@
                 "value": "type_:DeleteResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1027,6 +1030,7 @@
                 "value": "type_:DescribeResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1129,6 +1133,7 @@
                 "value": "type_:FetchResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1280,6 +1285,7 @@
                 "value": "type_:ListResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1477,6 +1483,7 @@
                 "value": "type_:QueryResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1678,6 +1685,7 @@
                 "value": "type_:UpdateResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],

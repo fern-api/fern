@@ -133,6 +133,7 @@ service:
         name: V2ChatRequest
       response:
         docs: OK
+        status-code: 200
         type: list<string>
       source:
         openapi: openapi/cohere-v2.yaml
