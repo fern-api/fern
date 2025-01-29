@@ -14,16 +14,18 @@ WORKDIR /workspace
 
 RUN apk add --no-cache ca-certificates git nodejs
 
-COPY go.mod go.sum /workspace/
+COPY generators/go/go.mod generators/go/go.sum /workspace/
 RUN go mod download
 
-COPY cmd /workspace/cmd
-COPY internal /workspace/internal
-COPY version.go /workspace/version.go
+COPY generators/go/cmd /workspace/cmd
+COPY generators/go/internal /workspace/internal
+COPY generators/go/version.go /workspace/version.go
 
-# Copy Node CLI from first stage
-COPY --from=node /dist/cli.cjs /dist/cli.cjs
+# Copy Node CLI from first stage and rename it /bin/go-v2
+COPY --from=node /dist/cli.cjs /bin/go-v2
 
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk
+
+RUN test -f /bin/go-v2 || echo "go-v2 CLI not found or not executable"
 
 ENTRYPOINT ["/fern-go-sdk"]
