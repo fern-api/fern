@@ -203,7 +203,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-//        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
     }
 
     public abstract void runInGithubModeHook(

@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "starting_after": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "results"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
