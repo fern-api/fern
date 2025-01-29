@@ -729,6 +729,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.EndUser",
               },
               "source": {
@@ -817,6 +818,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.EndUsers",
               },
               "source": {
@@ -913,6 +915,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.EndUser",
               },
               "source": {
@@ -977,6 +980,7 @@ service:
       response:
         docs: OK
         type: root.EndUser
+        status-code: 200
       errors:
         - root.UnauthorizedError
         - root.NotFoundError
@@ -1038,6 +1042,7 @@ service:
       response:
         docs: OK
         type: root.EndUser
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -1113,6 +1118,7 @@ service:
       response:
         docs: OK
         type: root.EndUsers
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

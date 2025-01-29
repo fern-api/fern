@@ -85,6 +85,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Completion",
               },
               "source": {
@@ -186,6 +187,7 @@ service:
       response:
         docs: ''
         type: root.Completion
+        status-code: 200
       examples:
         - request:
             stream: false

@@ -49,6 +49,7 @@
               },
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "UsersResponse",
               },
               "source": {
@@ -130,6 +131,7 @@
       response:
         docs: Success
         type: UsersResponse
+        status-code: 200
       examples:
         - response:
             body:

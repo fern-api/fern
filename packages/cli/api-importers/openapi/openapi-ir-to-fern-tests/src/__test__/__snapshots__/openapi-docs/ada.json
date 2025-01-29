@@ -967,6 +967,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.EndUser",
               },
               "source": {
@@ -1055,6 +1056,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.EndUsers",
               },
               "source": {
@@ -1151,6 +1153,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.EndUser",
               },
               "source": {
@@ -1215,6 +1218,7 @@ service:
       response:
         docs: OK
         type: root.EndUser
+        status-code: 200
       errors:
         - root.GetEndUserByIdRequestUnauthorizedError
         - root.GetEndUserByIdRequestNotFoundError
@@ -1276,6 +1280,7 @@ service:
       response:
         docs: OK
         type: root.EndUser
+        status-code: 200
       errors:
         - root.UpdateEndUserByIdRequestBadRequestError
         - root.UpdateEndUserByIdRequestUnauthorizedError
@@ -1351,6 +1356,7 @@ service:
       response:
         docs: OK
         type: root.EndUsers
+        status-code: 200
       errors:
         - root.GetEndUsersRequestBadRequestError
         - root.GetEndUsersRequestUnauthorizedError

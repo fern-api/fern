@@ -517,6 +517,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -550,6 +551,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -583,6 +585,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -607,6 +610,7 @@ types:
               "path": "/api/v1/agents",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -649,6 +653,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -705,6 +710,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -732,6 +738,7 @@ types:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -765,6 +772,7 @@ types:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.CreateAgentApiV1AgentsPostRequestUnprocessableEntityError
       examples:
@@ -787,6 +795,7 @@ types:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.GetAgentApiV1AgentsAgentIdGetRequestUnprocessableEntityError
       examples:
@@ -808,6 +817,7 @@ types:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteAgentApiV1AgentsAgentIdDeleteRequestUnprocessableEntityError
@@ -834,6 +844,7 @@ types:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.PatchAgentApiV1AgentsAgentIdPatchRequestUnprocessableEntityError
       examples:
@@ -867,6 +878,7 @@ types:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.PromptAgentApiV1AgentsAgentIdPredictPostRequestUnprocessableEntityError
@@ -931,6 +943,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -964,6 +977,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -997,6 +1011,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1021,6 +1036,7 @@ imports:
               "path": "/api/v1/api-tokens",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1048,6 +1064,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -1069,6 +1086,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.CreateApiTokenApiV1ApiTokensPostRequestUnprocessableEntityError
       examples:
@@ -1090,6 +1108,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.GetApiTokenApiV1ApiTokensTokenIdGetRequestUnprocessableEntityError
@@ -1112,6 +1131,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestUnprocessableEntityError
@@ -1175,6 +1195,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1225,6 +1246,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1260,6 +1282,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.SignInApiV1AuthSignInPostRequestUnprocessableEntityError
       examples:
@@ -1290,6 +1313,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.SignUpApiV1AuthSignUpPostRequestUnprocessableEntityError
       examples:
@@ -1368,6 +1392,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1401,6 +1426,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1434,6 +1460,7 @@ service:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1458,6 +1485,7 @@ service:
               "path": "/api/v1/documents",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1485,6 +1513,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -1518,6 +1547,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.CreateDocumentApiV1DocumentsPostRequestUnprocessableEntityError
       examples:
@@ -1541,6 +1571,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.GetDocumentApiV1DocumentsDocumentIdGetRequestUnprocessableEntityError
@@ -1563,6 +1594,7 @@ service:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestUnprocessableEntityError
@@ -1630,6 +1662,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1663,6 +1696,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1696,6 +1730,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1720,6 +1755,7 @@ imports:
               "path": "/api/v1/prompts",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1762,6 +1798,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1789,6 +1826,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -1813,6 +1851,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.CreateAPromptApiV1PromptsPostRequestUnprocessableEntityError
       examples:
@@ -1836,6 +1875,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.GetPromptApiV1PromptsPromptIdGetRequestUnprocessableEntityError
       examples:
@@ -1857,6 +1897,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.DeletePromptApiV1PromptsPromptIdDeleteRequestUnprocessableEntityError
@@ -1883,6 +1924,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - >-
           root.PatchPromptApiV1PromptsPromptIdPatchRequestUnprocessableEntityError
@@ -1951,6 +1993,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -1984,6 +2027,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -2017,6 +2061,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -2041,6 +2086,7 @@ imports:
               "path": "/api/v1/tools",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -2068,6 +2114,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -2092,6 +2139,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.CreateAToolApiV1ToolsPostRequestUnprocessableEntityError
       examples:
@@ -2114,6 +2162,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.GetToolApiV1ToolsToolIdGetRequestUnprocessableEntityError
       examples:
@@ -2135,6 +2184,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.DeleteToolApiV1ToolsToolIdDeleteRequestUnprocessableEntityError
       examples:
@@ -2174,6 +2224,7 @@ imports:
               "path": "/api/v1/traces",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -2201,6 +2252,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -2246,6 +2298,7 @@ imports:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -2270,6 +2323,7 @@ imports:
               "path": "/api/v1/users/me",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "unknown",
               },
               "source": {
@@ -2296,6 +2350,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       examples:
         - response:
             body:
@@ -2312,6 +2367,7 @@ imports:
       response:
         docs: Successful Response
         type: unknown
+        status-code: 200
       errors:
         - root.ReadUserApiV1UsersUserIdGetRequestUnprocessableEntityError
       examples:

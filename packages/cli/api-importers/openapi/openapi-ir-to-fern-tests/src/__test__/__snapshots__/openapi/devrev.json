@@ -5152,6 +5152,7 @@ types:
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.ArtifactsLocateResponse",
               },
               "source": {
@@ -5209,6 +5210,7 @@ types:
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.ArtifactsPrepareResponse",
               },
               "source": {
@@ -5243,6 +5245,7 @@ service:
       response:
         docs: Success.
         type: root.ArtifactsLocateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -5277,6 +5280,7 @@ service:
       response:
         docs: Success.
         type: root.ArtifactsPrepareResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -5360,6 +5364,7 @@ enterprise connections can be created by an organization.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.DevOrgAuthConnectionsCreateResponse",
               },
               "source": {
@@ -5456,6 +5461,7 @@ connections can not be deleted using this method.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.DevOrgAuthConnectionsGetResponse",
               },
               "source": {
@@ -5501,6 +5507,7 @@ created by the user.
               "path": "/dev-orgs.auth-connections.list",
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.DevOrgAuthConnectionsListResponse",
               },
               "source": {
@@ -5600,6 +5607,7 @@ disabled.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.DevOrgAuthConnectionsUpdateResponse",
               },
               "source": {
@@ -5638,6 +5646,7 @@ service:
       response:
         docs: Success.
         type: root.DevOrgAuthConnectionsCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -5703,6 +5712,7 @@ service:
       response:
         docs: Success.
         type: root.DevOrgAuthConnectionsGetResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -5738,6 +5748,7 @@ service:
       response:
         docs: Success.
         type: root.DevOrgAuthConnectionsListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -5803,6 +5814,7 @@ service:
       response:
         docs: Success.
         type: root.DevOrgAuthConnectionsUpdateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -5933,6 +5945,7 @@ requesting an application access token (AAT).
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.AuthTokensCreateResponse",
               },
               "source": {
@@ -6063,6 +6076,7 @@ given Dev organization.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.AuthTokensGetResponse",
               },
               "source": {
@@ -6146,6 +6160,7 @@ subject.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.AuthTokensListResponse",
               },
               "source": {
@@ -6283,6 +6298,7 @@ organization.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.AuthTokensUpdateResponse",
               },
               "source": {
@@ -6360,6 +6376,7 @@ service:
       response:
         docs: Success.
         type: root.AuthTokensCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -6430,6 +6447,7 @@ service:
       response:
         docs: Success.
         type: root.AuthTokensGetResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -6508,6 +6526,7 @@ service:
       response:
         docs: Success.
         type: root.AuthTokensListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -6590,6 +6609,7 @@ service:
       response:
         docs: Success.
         type: root.AuthTokensUpdateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -6751,6 +6771,7 @@ used.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.DevUsersListResponse",
               },
               "source": {
@@ -6827,6 +6848,7 @@ used.
               "path": "/dev-users.self",
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.DevUsersSelfResponse",
               },
               "source": {
@@ -6887,6 +6909,7 @@ service:
       response:
         docs: Success.
         type: root.DevUsersListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -6930,6 +6953,7 @@ service:
       response:
         docs: Success.
         type: root.DevUsersSelfResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7086,6 +7110,7 @@ docs: Dev user interactions.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.PartsCreateResponse",
               },
               "source": {
@@ -7136,6 +7161,7 @@ docs: Dev user interactions.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.PartsDeleteResponse",
               },
               "source": {
@@ -7232,6 +7258,7 @@ docs: Dev user interactions.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.PartsGetResponse",
               },
               "source": {
@@ -7345,6 +7372,7 @@ used.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.PartsListResponse",
               },
               "source": {
@@ -7439,6 +7467,7 @@ used.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.PartsUpdateResponse",
               },
               "source": {
@@ -7471,6 +7500,7 @@ service:
       response:
         docs: Success.
         type: root.PartsCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7543,6 +7573,7 @@ service:
       response:
         docs: Success.
         type: root.PartsDeleteResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7574,6 +7605,7 @@ service:
       response:
         docs: Success.
         type: root.PartsGetResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7670,6 +7702,7 @@ service:
       response:
         docs: Success.
         type: root.PartsListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7720,6 +7753,7 @@ service:
       response:
         docs: Success.
         type: root.PartsUpdateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -7889,6 +7923,7 @@ records.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.RevOrgsCreateResponse",
               },
               "source": {
@@ -7939,6 +7974,7 @@ records.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.RevOrgsDeleteResponse",
               },
               "source": {
@@ -8016,6 +8052,7 @@ records.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.RevOrgsGetResponse",
               },
               "source": {
@@ -8133,6 +8170,7 @@ them.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.RevOrgsListResponse",
               },
               "source": {
@@ -8242,6 +8280,7 @@ records.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.RevOrgsUpdateResponse",
               },
               "source": {
@@ -8300,6 +8339,7 @@ service:
       response:
         docs: Success.
         type: root.RevOrgsCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -8359,6 +8399,7 @@ service:
       response:
         docs: Success.
         type: root.RevOrgsDeleteResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -8389,6 +8430,7 @@ service:
       response:
         docs: Success.
         type: root.RevOrgsGetResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -8497,6 +8539,7 @@ service:
       response:
         docs: Success.
         type: root.RevOrgsListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -8566,6 +8609,7 @@ service:
       response:
         docs: Success.
         type: root.RevOrgsUpdateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -8716,6 +8760,7 @@ permitted.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.TagsCreateResponse",
               },
               "source": {
@@ -8766,6 +8811,7 @@ permitted.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.TagsDeleteResponse",
               },
               "source": {
@@ -8844,6 +8890,7 @@ permitted.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.TagsGetResponse",
               },
               "source": {
@@ -8918,6 +8965,7 @@ used.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.TagsListResponse",
               },
               "source": {
@@ -9015,6 +9063,7 @@ tags.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.TagsUpdateResponse",
               },
               "source": {
@@ -9062,6 +9111,7 @@ service:
       response:
         docs: Success.
         type: root.TagsCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9121,6 +9171,7 @@ service:
       response:
         docs: Success.
         type: root.TagsDeleteResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9151,6 +9202,7 @@ service:
       response:
         docs: Success.
         type: root.TagsGetResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9221,6 +9273,7 @@ service:
       response:
         docs: Success.
         type: root.TagsListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9276,6 +9329,7 @@ service:
       response:
         docs: Success.
         type: root.TagsUpdateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9411,6 +9465,7 @@ docs: DevRev tag interactions.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.TimelineEntriesCreateResponse",
               },
               "source": {
@@ -9495,6 +9550,7 @@ docs: DevRev tag interactions.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.TimelineEntriesGetResponse",
               },
               "source": {
@@ -9585,6 +9641,7 @@ used.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.TimelineEntriesListResponse",
               },
               "source": {
@@ -9666,6 +9723,7 @@ used.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.TimelineEntriesUpdateResponse",
               },
               "source": {
@@ -9698,6 +9756,7 @@ service:
       response:
         docs: Success.
         type: root.TimelineEntriesCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9759,6 +9818,7 @@ service:
       response:
         docs: Success.
         type: root.TimelineEntriesGetResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9837,6 +9897,7 @@ service:
       response:
         docs: Success.
         type: root.TimelineEntriesListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -9884,6 +9945,7 @@ service:
       response:
         docs: Success.
         type: root.TimelineEntriesUpdateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -10043,6 +10105,7 @@ response.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.WebhooksCreateResponse",
               },
               "source": {
@@ -10093,6 +10156,7 @@ response.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WebhooksDeleteResponse",
               },
               "source": {
@@ -10172,6 +10236,7 @@ response.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WebhooksGetResponse",
               },
               "source": {
@@ -10224,6 +10289,7 @@ response.
               "path": "/webhooks.list",
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WebhooksListResponse",
               },
               "source": {
@@ -10337,6 +10403,7 @@ won't receive any object events until successfully verified.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WebhooksUpdateResponse",
               },
               "source": {
@@ -10389,6 +10456,7 @@ service:
       response:
         docs: Success.
         type: root.WebhooksCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -10449,6 +10517,7 @@ service:
       response:
         docs: Success.
         type: root.WebhooksDeleteResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -10479,6 +10548,7 @@ service:
       response:
         docs: Success.
         type: root.WebhooksGetResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -10532,6 +10602,7 @@ service:
       response:
         docs: Success.
         type: root.WebhooksListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -10606,6 +10677,7 @@ service:
       response:
         docs: Success.
         type: root.WebhooksUpdateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -10792,6 +10864,7 @@ docs: Webhook event APIs.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 201,
                 "type": "root.WorksCreateResponse",
               },
               "source": {
@@ -10842,6 +10915,7 @@ docs: Webhook event APIs.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WorksDeleteResponse",
               },
               "source": {
@@ -10992,6 +11066,7 @@ organizations.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WorksExportResponse",
               },
               "source": {
@@ -11114,6 +11189,7 @@ organizations.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WorksGetResponse",
               },
               "source": {
@@ -11277,6 +11353,7 @@ organizations.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WorksListResponse",
               },
               "source": {
@@ -11398,6 +11475,7 @@ organizations.
               },
               "response": {
                 "docs": "Success.",
+                "status-code": 200,
                 "type": "root.WorksUpdateResponse",
               },
               "source": {
@@ -11432,6 +11510,7 @@ service:
       response:
         docs: Success.
         type: root.WorksCreateResponse
+        status-code: 201
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11526,6 +11605,7 @@ service:
       response:
         docs: Success.
         type: root.WorksDeleteResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11601,6 +11681,7 @@ service:
       response:
         docs: Success.
         type: root.WorksExportResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11666,6 +11747,7 @@ service:
       response:
         docs: Success.
         type: root.WorksGetResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11806,6 +11888,7 @@ service:
       response:
         docs: Success.
         type: root.WorksListResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -11871,6 +11954,7 @@ service:
       response:
         docs: Success.
         type: root.WorksUpdateResponse
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.UnauthorizedError

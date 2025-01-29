@@ -28,6 +28,7 @@
               "path": "/example",
               "response": {
                 "docs": "Successful response",
+                "status-code": 200,
                 "type": "Schema1",
               },
               "source": {
@@ -67,6 +68,7 @@
       response:
         docs: Successful response
         type: Schema1
+        status-code: 200
       examples:
         - response:
             body:

@@ -8895,6 +8895,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "AccessGroupsListResponse",
               },
               "source": {
@@ -9083,6 +9084,7 @@ service:
       response:
         docs: Request was successful
         type: AccessGroupsListResponse
+        status-code: 200
       errors:
         - root.AccessGroupsListRequestBadRequestError
         - root.AccessGroupsListRequestUnauthorizedError
@@ -9208,6 +9210,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "AssetsCreateResponse",
               },
               "source": {
@@ -9279,6 +9282,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "AssetsCreateFolderResponse",
               },
               "source": {
@@ -9371,6 +9375,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "AssetsGetResponse",
               },
               "source": {
@@ -9420,6 +9425,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "AssetsGetFolderResponse",
               },
               "source": {
@@ -9483,6 +9489,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "AssetsListResponse",
               },
               "source": {
@@ -9540,6 +9547,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "AssetsListFoldersResponse",
               },
               "source": {
@@ -9619,6 +9627,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "AssetsUpdateResponse",
               },
               "source": {
@@ -10573,6 +10582,7 @@ service:
       response:
         docs: Request was successful
         type: AssetsListResponse
+        status-code: 200
       errors:
         - root.AssetsListRequestBadRequestError
         - root.AssetsListRequestUnauthorizedError
@@ -10643,6 +10653,7 @@ service:
       response:
         docs: Request was successful
         type: AssetsCreateResponse
+        status-code: 200
       errors:
         - root.AssetsCreateRequestBadRequestError
         - root.AssetsCreateRequestUnauthorizedError
@@ -10696,6 +10707,7 @@ service:
       response:
         docs: Request was successful
         type: AssetsGetResponse
+        status-code: 200
       errors:
         - root.AssetsGetRequestBadRequestError
         - root.AssetsGetRequestUnauthorizedError
@@ -10770,6 +10782,7 @@ service:
       response:
         docs: Request was successful
         type: AssetsUpdateResponse
+        status-code: 200
       errors:
         - root.AssetsUpdateRequestBadRequestError
         - root.AssetsUpdateRequestUnauthorizedError
@@ -10819,6 +10832,7 @@ service:
       response:
         docs: Request was successful
         type: AssetsListFoldersResponse
+        status-code: 200
       errors:
         - root.AssetsListFoldersRequestBadRequestError
         - root.AssetsListFoldersRequestUnauthorizedError
@@ -10873,6 +10887,7 @@ service:
       response:
         docs: Request was successful
         type: AssetsCreateFolderResponse
+        status-code: 200
       errors:
         - root.AssetsCreateFolderRequestBadRequestError
         - root.AssetsCreateFolderRequestUnauthorizedError
@@ -10912,6 +10927,7 @@ service:
       response:
         docs: Request was successful
         type: AssetsGetFolderResponse
+        status-code: 200
       errors:
         - root.AssetsGetFolderRequestBadRequestError
         - root.AssetsGetFolderRequestUnauthorizedError
@@ -11025,6 +11041,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "CollectionsCreateResponse",
               },
               "source": {
@@ -11147,6 +11164,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "CollectionsGetResponse",
               },
               "source": {
@@ -11212,6 +11230,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "CollectionsListResponse",
               },
               "source": {
@@ -11673,6 +11692,7 @@ service:
       response:
         docs: Request was successful
         type: CollectionsListResponse
+        status-code: 200
       errors:
         - root.CollectionsListRequestBadRequestError
         - root.CollectionsListRequestUnauthorizedError
@@ -11732,6 +11752,7 @@ service:
       response:
         docs: Request was successful
         type: CollectionsCreateResponse
+        status-code: 200
       errors:
         - root.CollectionsCreateRequestBadRequestError
         - root.CollectionsCreateRequestUnauthorizedError
@@ -11777,6 +11798,7 @@ service:
       response:
         docs: Request was successful
         type: CollectionsGetResponse
+        status-code: 200
       errors:
         - root.CollectionsGetRequestBadRequestError
         - root.CollectionsGetRequestUnauthorizedError
@@ -11940,6 +11962,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "FieldsCreateResponse",
               },
               "source": {
@@ -12019,6 +12042,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "FieldsUpdateResponse",
               },
               "source": {
@@ -12332,6 +12356,7 @@ service:
       response:
         docs: Request was successful
         type: FieldsCreateResponse
+        status-code: 200
       errors:
         - root.FieldsCreateRequestBadRequestError
         - root.FieldsCreateRequestUnauthorizedError
@@ -12389,6 +12414,7 @@ service:
       response:
         docs: Request was successful
         type: FieldsUpdateResponse
+        status-code: 200
       errors:
         - root.FieldsUpdateRequestBadRequestError
         - root.FieldsUpdateRequestUnauthorizedError
@@ -12511,6 +12537,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 202,
                 "type": "ItemsCreateItemResponse",
               },
               "source": {
@@ -12595,6 +12622,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 202,
                 "type": "ItemsCreateItemForMultipleLocalesResponse",
               },
               "source": {
@@ -12686,6 +12714,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 202,
                 "type": "ItemsCreateItemLiveResponse",
               },
               "source": {
@@ -12843,6 +12872,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ItemsGetItemResponse",
               },
               "source": {
@@ -12910,6 +12940,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ItemsGetItemLiveResponse",
               },
               "source": {
@@ -13019,6 +13050,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ItemsListItemsResponse",
               },
               "source": {
@@ -13128,6 +13160,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ItemsListItemsLiveResponse",
               },
               "source": {
@@ -13191,6 +13224,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 202,
                 "type": "ItemsPublishItemResponse",
               },
               "source": {
@@ -13287,6 +13321,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ItemsUpdateItemResponse",
               },
               "source": {
@@ -13383,6 +13418,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ItemsUpdateItemLiveResponse",
               },
               "source": {
@@ -14776,6 +14812,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsListItemsResponse
+        status-code: 200
       errors:
         - root.ItemsListItemsRequestBadRequestError
         - root.ItemsListItemsRequestUnauthorizedError
@@ -14854,6 +14891,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsCreateItemResponse
+        status-code: 202
       errors:
         - root.ItemsCreateItemRequestBadRequestError
         - root.ItemsCreateItemRequestUnauthorizedError
@@ -14935,6 +14973,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsListItemsLiveResponse
+        status-code: 200
       errors:
         - root.ItemsListItemsLiveRequestBadRequestError
         - root.ItemsListItemsLiveRequestUnauthorizedError
@@ -15011,6 +15050,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsCreateItemLiveResponse
+        status-code: 202
       errors:
         - root.ItemsCreateItemLiveRequestBadRequestError
         - root.ItemsCreateItemLiveRequestUnauthorizedError
@@ -15081,6 +15121,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsCreateItemForMultipleLocalesResponse
+        status-code: 202
       errors:
         - root.ItemsCreateItemForMultipleLocalesRequestBadRequestError
         - root.ItemsCreateItemForMultipleLocalesRequestUnauthorizedError
@@ -15139,6 +15180,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsGetItemResponse
+        status-code: 200
       errors:
         - root.ItemsGetItemRequestBadRequestError
         - root.ItemsGetItemRequestUnauthorizedError
@@ -15238,6 +15280,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsUpdateItemResponse
+        status-code: 200
       errors:
         - root.ItemsUpdateItemRequestBadRequestError
         - root.ItemsUpdateItemRequestUnauthorizedError
@@ -15303,6 +15346,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsGetItemLiveResponse
+        status-code: 200
       errors:
         - root.ItemsGetItemLiveRequestBadRequestError
         - root.ItemsGetItemLiveRequestUnauthorizedError
@@ -15405,6 +15449,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsUpdateItemLiveResponse
+        status-code: 200
       errors:
         - root.ItemsUpdateItemLiveRequestBadRequestError
         - root.ItemsUpdateItemLiveRequestUnauthorizedError
@@ -15463,6 +15508,7 @@ service:
       response:
         docs: Request was successful
         type: ItemsPublishItemResponse
+        status-code: 202
       errors:
         - root.ItemsPublishItemRequestBadRequestError
         - root.ItemsPublishItemRequestUnauthorizedError
@@ -15537,6 +15583,7 @@ Required scope | `ecommerce:read`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "EcommerceGetSettingsResponse",
               },
               "source": {
@@ -15611,6 +15658,7 @@ service:
       response:
         docs: Request was successful
         type: EcommerceGetSettingsResponse
+        status-code: 200
       errors:
         - root.EcommerceGetSettingsRequestBadRequestError
         - root.EcommerceGetSettingsRequestUnauthorizedError
@@ -15704,6 +15752,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "FormsGetResponse",
               },
               "source": {
@@ -15753,6 +15802,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "FormsGetSubmissionResponse",
               },
               "source": {
@@ -15864,6 +15914,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "FormsListResponse",
               },
               "source": {
@@ -15946,6 +15997,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "FormsListSubmissionsResponse",
               },
               "source": {
@@ -16012,6 +16064,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "FormsUpdateSubmissionResponse",
               },
               "source": {
@@ -16920,6 +16973,7 @@ service:
       response:
         docs: Request was successful
         type: FormsListResponse
+        status-code: 200
       errors:
         - root.FormsListRequestBadRequestError
         - root.FormsListRequestUnauthorizedError
@@ -16994,6 +17048,7 @@ service:
       response:
         docs: Request was successful
         type: FormsGetResponse
+        status-code: 200
       errors:
         - root.FormsGetRequestBadRequestError
         - root.FormsGetRequestUnauthorizedError
@@ -17058,6 +17113,7 @@ service:
       response:
         docs: Request was successful
         type: FormsListSubmissionsResponse
+        status-code: 200
       errors:
         - root.FormsListSubmissionsRequestBadRequestError
         - root.FormsListSubmissionsRequestUnauthorizedError
@@ -17108,6 +17164,7 @@ service:
       response:
         docs: Request was successful
         type: FormsGetSubmissionResponse
+        status-code: 200
       errors:
         - root.FormsGetSubmissionRequestBadRequestError
         - root.FormsGetSubmissionRequestUnauthorizedError
@@ -17155,6 +17212,7 @@ service:
       response:
         docs: Request was successful
         type: FormsUpdateSubmissionResponse
+        status-code: 200
       errors:
         - root.FormsUpdateSubmissionRequestBadRequestError
         - root.FormsUpdateSubmissionRequestUnauthorizedError
@@ -17276,6 +17334,7 @@ Required scope | `ecommerce:read`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "InventoryListResponse",
               },
               "source": {
@@ -17354,6 +17413,7 @@ Required scope | `ecommerce:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "InventoryUpdateResponse",
               },
               "source": {
@@ -17604,6 +17664,7 @@ service:
       response:
         docs: Request was successful
         type: InventoryListResponse
+        status-code: 200
       errors:
         - root.InventoryListRequestBadRequestError
         - root.InventoryListRequestUnauthorizedError
@@ -17661,6 +17722,7 @@ service:
       response:
         docs: Request was successful
         type: InventoryUpdateResponse
+        status-code: 200
       errors:
         - root.InventoryUpdateRequestBadRequestError
         - root.InventoryUpdateRequestUnauthorizedError
@@ -18514,6 +18576,7 @@ Required scope | `ecommerce:read`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "OrdersGetResponse",
               },
               "source": {
@@ -18967,6 +19030,7 @@ Required scope | `ecommerce:read`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "OrdersListResponse",
               },
               "source": {
@@ -19249,6 +19313,7 @@ Required scope | `ecommerce:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "OrdersRefundResponse",
               },
               "source": {
@@ -19541,6 +19606,7 @@ Required scope | `ecommerce:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "OrdersUpdateResponse",
               },
               "source": {
@@ -19822,6 +19888,7 @@ Required scope | `ecommerce:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "OrdersUpdateFulfillResponse",
               },
               "source": {
@@ -20086,6 +20153,7 @@ Required scope | `ecommerce:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "OrdersUpdateUnfulfillResponse",
               },
               "source": {
@@ -34388,6 +34456,7 @@ service:
       response:
         docs: Request was successful
         type: OrdersListResponse
+        status-code: 200
       errors:
         - root.OrdersListRequestBadRequestError
         - root.OrdersListRequestUnauthorizedError
@@ -34745,6 +34814,7 @@ service:
       response:
         docs: Request was successful
         type: OrdersGetResponse
+        status-code: 200
       errors:
         - root.OrdersGetRequestBadRequestError
         - root.OrdersGetRequestUnauthorizedError
@@ -34978,6 +35048,7 @@ service:
       response:
         docs: Request was successful
         type: OrdersUpdateResponse
+        status-code: 200
       errors:
         - root.OrdersUpdateRequestBadRequestError
         - root.OrdersUpdateRequestUnauthorizedError
@@ -35201,6 +35272,7 @@ service:
       response:
         docs: Request was successful
         type: OrdersUpdateFulfillResponse
+        status-code: 200
       errors:
         - root.OrdersUpdateFulfillRequestBadRequestError
         - root.OrdersUpdateFulfillRequestUnauthorizedError
@@ -35415,6 +35487,7 @@ service:
       response:
         docs: Request was successful
         type: OrdersUpdateUnfulfillResponse
+        status-code: 200
       errors:
         - root.OrdersUpdateUnfulfillRequestBadRequestError
         - root.OrdersUpdateUnfulfillRequestUnauthorizedError
@@ -35638,6 +35711,7 @@ service:
       response:
         docs: Request was successful
         type: OrdersRefundResponse
+        status-code: 200
       errors:
         - root.OrdersRefundRequestBadRequestError
         - root.OrdersRefundRequestUnauthorizedError
@@ -36306,6 +36380,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "PagesGetContentResponse",
               },
               "source": {
@@ -36379,6 +36454,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "PagesGetMetadataResponse",
               },
               "source": {
@@ -36493,6 +36569,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "PagesListResponse",
               },
               "source": {
@@ -36601,6 +36678,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "UpdatePageSettingsResponse",
               },
               "source": {
@@ -36684,6 +36762,7 @@ Required scope | `pages:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "UpdateStaticContentResponse",
               },
               "source": {
@@ -38003,6 +38082,7 @@ service:
       response:
         docs: Request was successful
         type: PagesListResponse
+        status-code: 200
       errors:
         - root.PagesListRequestBadRequestError
         - root.PagesListRequestUnauthorizedError
@@ -38096,6 +38176,7 @@ service:
       response:
         docs: Request was successful
         type: PagesGetMetadataResponse
+        status-code: 200
       errors:
         - root.PagesGetMetadataRequestBadRequestError
         - root.PagesGetMetadataRequestUnauthorizedError
@@ -38173,6 +38254,7 @@ service:
       response:
         docs: Request was successful
         type: UpdatePageSettingsResponse
+        status-code: 200
       errors:
         - root.UpdatePageSettingsRequestBadRequestError
         - root.UpdatePageSettingsRequestUnauthorizedError
@@ -38258,6 +38340,7 @@ service:
       response:
         docs: Request was successful
         type: PagesGetContentResponse
+        status-code: 200
       errors:
         - root.PagesGetContentRequestBadRequestError
         - root.PagesGetContentRequestUnauthorizedError
@@ -38335,6 +38418,7 @@ service:
       response:
         docs: Request was successful
         type: UpdateStaticContentResponse
+        status-code: 200
       errors:
         - root.UpdateStaticContentRequestBadRequestError
         - root.UpdateStaticContentRequestUnauthorizedError
@@ -38502,6 +38586,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ScriptsGetCustomCodeResponse",
               },
               "source": {
@@ -38594,6 +38679,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ScriptsUpsertCustomCodeResponse",
               },
               "source": {
@@ -38920,6 +39006,7 @@ service:
       response:
         docs: Request was successful
         type: ScriptsGetCustomCodeResponse
+        status-code: 200
       errors:
         - root.ScriptsGetCustomCodeRequestBadRequestError
         - root.ScriptsGetCustomCodeRequestUnauthorizedError
@@ -38970,6 +39057,7 @@ service:
       response:
         docs: Request was successful
         type: ScriptsUpsertCustomCodeResponse
+        status-code: 200
       errors:
         - root.ScriptsUpsertCustomCodeRequestBadRequestError
         - root.ScriptsUpsertCustomCodeRequestUnauthorizedError
@@ -39202,6 +39290,7 @@ Required scope | `ecommerce:write`",
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ProductsCreateResponse",
               },
               "source": {
@@ -39299,6 +39388,7 @@ Required scope | `ecommerce:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ProductsCreateSkuResponse",
               },
               "source": {
@@ -39434,6 +39524,7 @@ Required scope | `ecommerce:read`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ProductsGetResponse",
               },
               "source": {
@@ -39583,6 +39674,7 @@ Required scope | `ecommerce:read`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ProductsListResponse",
               },
               "source": {
@@ -39720,6 +39812,7 @@ Required scope | `ecommerce:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ProductsUpdateResponse",
               },
               "source": {
@@ -39828,6 +39921,7 @@ Required scope | `ecommerce:write`
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ProductsUpdateSkuResponse",
               },
               "source": {
@@ -45747,6 +45841,7 @@ service:
       response:
         docs: Request was successful
         type: ProductsListResponse
+        status-code: 200
       errors:
         - root.ProductsListRequestBadRequestError
         - root.ProductsListRequestUnauthorizedError
@@ -45882,6 +45977,7 @@ service:
       response:
         docs: Request was successful
         type: ProductsCreateResponse
+        status-code: 200
       errors:
         - root.ProductsCreateRequestBadRequestError
         - root.ProductsCreateRequestUnauthorizedError
@@ -45977,6 +46073,7 @@ service:
       response:
         docs: Request was successful
         type: ProductsGetResponse
+        status-code: 200
       errors:
         - root.ProductsGetRequestBadRequestError
         - root.ProductsGetRequestUnauthorizedError
@@ -46092,6 +46189,7 @@ service:
       response:
         docs: Request was successful
         type: ProductsUpdateResponse
+        status-code: 200
       errors:
         - root.ProductsUpdateRequestBadRequestError
         - root.ProductsUpdateRequestUnauthorizedError
@@ -46194,6 +46292,7 @@ service:
       response:
         docs: Request was successful
         type: ProductsCreateSkuResponse
+        status-code: 200
       errors:
         - root.ProductsCreateSkuRequestBadRequestError
         - root.ProductsCreateSkuRequestUnauthorizedError
@@ -46270,6 +46369,7 @@ service:
       response:
         docs: Request was successful
         type: ProductsUpdateSkuResponse
+        status-code: 200
       errors:
         - root.ProductsUpdateSkuRequestBadRequestError
         - root.ProductsUpdateSkuRequestUnauthorizedError
@@ -46390,6 +46490,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ScriptsListResponse",
               },
               "source": {
@@ -46477,6 +46578,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 201,
                 "type": "ScriptsRegisterHostedResponse",
               },
               "source": {
@@ -46561,6 +46663,7 @@ service:
               },
               "response": {
                 "docs": "Created",
+                "status-code": 201,
                 "type": "ScriptsRegisterInlineResponse",
               },
               "source": {
@@ -46857,6 +46960,7 @@ service:
       response:
         docs: Request was successful
         type: ScriptsListResponse
+        status-code: 200
       errors:
         - root.ScriptsListRequestBadRequestError
         - root.ScriptsListRequestUnauthorizedError
@@ -46944,6 +47048,7 @@ service:
       response:
         docs: Request was successful
         type: ScriptsRegisterHostedResponse
+        status-code: 201
       errors:
         - root.ScriptsRegisterHostedRequestBadRequestError
         - root.ScriptsRegisterHostedRequestUnauthorizedError
@@ -47024,6 +47129,7 @@ service:
       response:
         docs: Created
         type: ScriptsRegisterInlineResponse
+        status-code: 201
       errors:
         - root.ScriptsRegisterInlineRequestBadRequestError
         - root.ScriptsRegisterInlineRequestUnauthorizedError
@@ -47138,6 +47244,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "SitesGetResponse",
               },
               "source": {
@@ -47187,6 +47294,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "SitesGetCustomDomainResponse",
               },
               "source": {
@@ -47344,6 +47452,7 @@ service:
               "path": "/sites",
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "SitesListResponse",
               },
               "source": {
@@ -47411,6 +47520,7 @@ service:
               },
               "response": {
                 "docs": "Request accepted",
+                "status-code": 202,
                 "type": "SitesPublishResponse",
               },
               "source": {
@@ -48254,6 +48364,7 @@ service:
       response:
         docs: Request was successful
         type: SitesListResponse
+        status-code: 200
       errors:
         - root.SitesListRequestUnauthorizedError
         - root.SitesListRequestNotFoundError
@@ -48375,6 +48486,7 @@ service:
       response:
         docs: Request was successful
         type: SitesGetResponse
+        status-code: 200
       errors:
         - root.SitesGetRequestBadRequestError
         - root.SitesGetRequestUnauthorizedError
@@ -48437,6 +48549,7 @@ service:
       response:
         docs: Request was successful
         type: SitesGetCustomDomainResponse
+        status-code: 200
       errors:
         - root.SitesGetCustomDomainRequestUnauthorizedError
         - root.SitesGetCustomDomainRequestForbiddenError
@@ -48486,6 +48599,7 @@ service:
       response:
         docs: Request accepted
         type: SitesPublishResponse
+        status-code: 202
       errors:
         - root.SitesPublishRequestBadRequestError
         - root.SitesPublishRequestUnauthorizedError
@@ -48600,6 +48714,7 @@ webhooks:
               },
               "response": {
                 "docs": "A list of site activity logs",
+                "status-code": 200,
                 "type": "ActivityLogsListResponse",
               },
               "source": {
@@ -48784,6 +48899,7 @@ service:
       response:
         docs: A list of site activity logs
         type: ActivityLogsListResponse
+        status-code: 200
       errors:
         - root.ActivityLogsListRequestForbiddenError
         - root.ActivityLogsListRequestNotFoundError
@@ -48909,6 +49025,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ScriptsGetCustomCodeResponse",
               },
               "source": {
@@ -49010,6 +49127,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ScriptsListCustomCodeBlocksResponse",
               },
               "source": {
@@ -49102,6 +49220,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "ScriptsUpsertCustomCodeResponse",
               },
               "source": {
@@ -49633,6 +49752,7 @@ service:
       response:
         docs: Request was successful
         type: ScriptsGetCustomCodeResponse
+        status-code: 200
       errors:
         - root.ScriptsGetCustomCodeRequestBadRequestError
         - root.ScriptsGetCustomCodeRequestUnauthorizedError
@@ -49688,6 +49808,7 @@ service:
       response:
         docs: Request was successful
         type: ScriptsUpsertCustomCodeResponse
+        status-code: 200
       errors:
         - root.ScriptsUpsertCustomCodeRequestBadRequestError
         - root.ScriptsUpsertCustomCodeRequestUnauthorizedError
@@ -49779,6 +49900,7 @@ service:
       response:
         docs: Request was successful
         type: ScriptsListCustomCodeBlocksResponse
+        status-code: 200
       errors:
         - root.ScriptsListCustomCodeBlocksRequestBadRequestError
         - root.ScriptsListCustomCodeBlocksRequestUnauthorizedError
@@ -49860,6 +49982,7 @@ service:
               "path": "/token/authorized_by",
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "TokenAuthorizedByResponse",
               },
               "source": {
@@ -49912,6 +50035,7 @@ service:
               "path": "/token/introspect",
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "TokenIntrospectResponse",
               },
               "source": {
@@ -50111,6 +50235,7 @@ service:
       response:
         docs: Request was successful
         type: TokenAuthorizedByResponse
+        status-code: 200
       errors:
         - root.TokenAuthorizedByRequestUnauthorizedError
         - root.TokenAuthorizedByRequestForbiddenError
@@ -50137,6 +50262,7 @@ service:
       response:
         docs: Request was successful
         type: TokenIntrospectResponse
+        status-code: 200
       errors:
         - root.TokenIntrospectRequestUnauthorizedError
       examples:
@@ -50273,6 +50399,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "UsersGetResponse",
               },
               "source": {
@@ -50368,6 +50495,7 @@ service:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "UsersInviteResponse",
               },
               "source": {
@@ -50511,6 +50639,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "UsersListResponse",
               },
               "source": {
@@ -50609,6 +50738,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "UsersUpdateResponse",
               },
               "source": {
@@ -52761,6 +52891,7 @@ service:
       response:
         docs: Request was successful
         type: UsersListResponse
+        status-code: 200
       errors:
         - root.UsersListRequestBadRequestError
         - root.UsersListRequestUnauthorizedError
@@ -52846,6 +52977,7 @@ service:
       response:
         docs: Request was successful
         type: UsersGetResponse
+        status-code: 200
       errors:
         - root.UsersGetRequestBadRequestError
         - root.UsersGetRequestUnauthorizedError
@@ -52936,6 +53068,7 @@ service:
       response:
         docs: Request was successful
         type: UsersUpdateResponse
+        status-code: 200
       errors:
         - root.UsersUpdateRequestBadRequestError
         - root.UsersUpdateRequestUnauthorizedError
@@ -53009,6 +53142,7 @@ service:
       response:
         docs: Request was successful
         type: UsersInviteResponse
+        status-code: 200
       errors:
         - root.UsersInviteRequestBadRequestError
         - root.UsersInviteRequestUnauthorizedError
@@ -53196,6 +53330,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 201,
                 "type": "WebhooksCreateResponse",
               },
               "source": {
@@ -53273,6 +53408,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "WebhooksGetResponse",
               },
               "source": {
@@ -53356,6 +53492,7 @@ webhooks:
               },
               "response": {
                 "docs": "Request was successful",
+                "status-code": 200,
                 "type": "WebhooksListResponse",
               },
               "source": {
@@ -54330,6 +54467,7 @@ service:
       response:
         docs: Request was successful
         type: WebhooksListResponse
+        status-code: 200
       errors:
         - root.WebhooksListRequestBadRequestError
         - root.WebhooksListRequestUnauthorizedError
@@ -54452,6 +54590,7 @@ service:
       response:
         docs: Request was successful
         type: WebhooksCreateResponse
+        status-code: 201
       errors:
         - root.WebhooksCreateRequestBadRequestError
         - root.WebhooksCreateRequestUnauthorizedError
@@ -54488,6 +54627,7 @@ service:
       response:
         docs: Request was successful
         type: WebhooksGetResponse
+        status-code: 200
       errors:
         - root.WebhooksGetRequestBadRequestError
         - root.WebhooksGetRequestUnauthorizedError

@@ -196,6 +196,7 @@
           "file": "../openapi.yaml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
@@ -382,6 +383,7 @@
           "file": "../openapi.yaml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
@@ -472,6 +474,7 @@
           "file": "../openapi.yaml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
@@ -645,6 +648,7 @@
           "file": "../openapi.yaml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "file"
       },
       "errors": {},
@@ -703,6 +707,7 @@
           "file": "../openapi.yaml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},

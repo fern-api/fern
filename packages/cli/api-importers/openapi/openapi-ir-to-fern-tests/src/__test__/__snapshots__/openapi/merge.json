@@ -9386,6 +9386,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
               "path": "/account-details",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AccountDetails",
               },
               "source": {
@@ -9414,6 +9415,7 @@ service:
       response:
         docs: ''
         type: root.AccountDetails
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -9480,6 +9482,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AccountToken",
               },
               "source": {
@@ -9512,6 +9515,7 @@ service:
       response:
         docs: ''
         type: root.AccountToken
+        status-code: 200
       examples:
         - path-parameters:
             public_token: public_token
@@ -9593,6 +9597,7 @@ service:
               "path": "/available-actions",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.AvailableActions",
               },
               "source": {
@@ -9621,6 +9626,7 @@ service:
       response:
         docs: ''
         type: root.AvailableActions
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -9784,6 +9790,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedBankInfoList",
               },
               "source": {
@@ -9860,6 +9867,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.BankInfo",
               },
               "source": {
@@ -10001,6 +10009,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedBankInfoList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -10058,6 +10067,7 @@ service:
       response:
         docs: ''
         type: root.BankInfo
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -10196,6 +10206,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedBenefitList",
               },
               "source": {
@@ -10265,6 +10276,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Benefit",
               },
               "source": {
@@ -10343,6 +10355,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedBenefitList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -10395,6 +10408,7 @@ service:
       response:
         docs: ''
         type: root.Benefit
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -10526,6 +10540,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedCompanyList",
               },
               "source": {
@@ -10591,6 +10606,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Company",
               },
               "source": {
@@ -10659,6 +10675,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedCompanyList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -10705,6 +10722,7 @@ service:
       response:
         docs: ''
         type: root.Company
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -10944,6 +10962,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedEmployeePayrollRunList",
               },
               "source": {
@@ -11112,6 +11131,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.EmployeePayrollRun",
               },
               "source": {
@@ -11262,6 +11282,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedEmployeePayrollRunList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -11339,6 +11360,7 @@ service:
       response:
         docs: ''
         type: root.EmployeePayrollRun
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -11570,6 +11592,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.EmployeeResponse",
               },
               "source": {
@@ -11835,6 +11858,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedEmployeeList",
               },
               "source": {
@@ -11870,6 +11894,7 @@ service:
               "path": "/employees/meta/post",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MetaResponse",
               },
               "source": {
@@ -11978,6 +12003,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Employee",
               },
               "source": {
@@ -15522,6 +15548,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedEmployeeList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -15598,6 +15625,7 @@ service:
       response:
         docs: ''
         type: root.EmployeeResponse
+        status-code: 201
       examples:
         - headers: {}
           request:
@@ -15705,6 +15733,7 @@ service:
       response:
         docs: ''
         type: root.Employee
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -15795,6 +15824,7 @@ service:
       response:
         docs: ''
         type: root.MetaResponse
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -15936,6 +15966,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedEmploymentList",
               },
               "source": {
@@ -16016,6 +16047,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Employment",
               },
               "source": {
@@ -16516,6 +16548,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedEmploymentList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -16577,6 +16610,7 @@ service:
       response:
         docs: ''
         type: root.Employment
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -16646,6 +16680,7 @@ service:
               "path": "/sync-status/resync",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.SyncStatus>",
               },
               "source": {
@@ -16679,6 +16714,7 @@ service:
       response:
         docs: ''
         type: list<root.SyncStatus>
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -16745,6 +16781,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RemoteKey",
               },
               "source": {
@@ -16782,6 +16819,7 @@ service:
       response:
         docs: ''
         type: root.RemoteKey
+        status-code: 200
       examples:
         - request:
             name: Remote Deployment Key 1
@@ -16902,6 +16940,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedGroupList",
               },
               "source": {
@@ -16971,6 +17010,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Group",
               },
               "source": {
@@ -17050,6 +17090,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedGroupList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -17099,6 +17140,7 @@ service:
       response:
         docs: ''
         type: root.Group
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -17221,6 +17263,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedIssueList",
               },
               "source": {
@@ -17262,6 +17305,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Issue",
               },
               "source": {
@@ -17361,6 +17405,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedIssueList
+        status-code: 200
       examples:
         - response:
             body:
@@ -17390,6 +17435,7 @@ service:
       response:
         docs: ''
         type: root.Issue
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -17523,6 +17569,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.LinkToken",
               },
               "source": {
@@ -17616,6 +17663,7 @@ service:
       response:
         docs: ''
         type: root.LinkToken
+        status-code: 200
       examples:
         - request:
             end_user_email_address: end_user_email_address
@@ -17762,6 +17810,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedAccountDetailsAndActionsList",
               },
               "source": {
@@ -17895,6 +17944,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedAccountDetailsAndActionsList
+        status-code: 200
       examples:
         - response:
             body:
@@ -18045,6 +18095,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedLocationList",
               },
               "source": {
@@ -18120,6 +18171,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Location",
               },
               "source": {
@@ -18194,6 +18246,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedLocationList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -18249,6 +18302,7 @@ service:
       response:
         docs: ''
         type: root.Location
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -18378,6 +18432,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RemoteResponse",
               },
               "source": {
@@ -18444,6 +18499,7 @@ service:
       response:
         docs: ''
         type: root.RemoteResponse
+        status-code: 200
       examples:
         - headers: {}
           request:
@@ -18561,6 +18617,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedPayGroupList",
               },
               "source": {
@@ -18620,6 +18677,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PayGroup",
               },
               "source": {
@@ -18688,6 +18746,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedPayGroupList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -18729,6 +18788,7 @@ service:
       response:
         docs: ''
         type: root.PayGroup
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -18886,6 +18946,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedPayrollRunList",
               },
               "source": {
@@ -18957,6 +19018,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PayrollRun",
               },
               "source": {
@@ -19181,6 +19243,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedPayrollRunList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -19232,6 +19295,7 @@ service:
       response:
         docs: ''
         type: root.PayrollRun
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -19311,6 +19375,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.RemoteKey",
               },
               "source": {
@@ -19348,6 +19413,7 @@ service:
       response:
         docs: ''
         type: root.RemoteKey
+        status-code: 200
       examples:
         - request:
             name: Remote Deployment Key 1
@@ -19399,6 +19465,7 @@ service:
               "path": "/selective-sync/configurations",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.LinkedAccountSelectiveSyncConfiguration>",
               },
               "source": {
@@ -19457,6 +19524,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.LinkedAccountSelectiveSyncConfiguration>",
               },
               "source": {
@@ -19517,6 +19585,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedConditionSchemaList",
               },
               "source": {
@@ -19545,6 +19614,7 @@ service:
       response:
         docs: ''
         type: list<root.LinkedAccountSelectiveSyncConfiguration>
+        status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
           headers: {}
@@ -19575,6 +19645,7 @@ service:
       response:
         docs: ''
         type: list<root.LinkedAccountSelectiveSyncConfiguration>
+        status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
           headers: {}
@@ -19610,6 +19681,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedConditionSchemaList
+        status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
           headers: {}
@@ -19686,6 +19758,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedSyncStatusList",
               },
               "source": {
@@ -19725,6 +19798,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedSyncStatusList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -19847,6 +19921,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedTeamList",
               },
               "source": {
@@ -19911,6 +19986,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.Team",
               },
               "source": {
@@ -19987,6 +20063,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedTeamList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -20034,6 +20111,7 @@ service:
       response:
         docs: ''
         type: root.Team
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -20172,6 +20250,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.TimeOffResponse",
               },
               "source": {
@@ -20312,6 +20391,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedTimeOffList",
               },
               "source": {
@@ -20347,6 +20427,7 @@ service:
               "path": "/time-off/meta/post",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.MetaResponse",
               },
               "source": {
@@ -20426,6 +20507,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TimeOff",
               },
               "source": {
@@ -20807,6 +20889,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedTimeOffList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -20861,6 +20944,7 @@ service:
       response:
         docs: ''
         type: root.TimeOffResponse
+        status-code: 201
       examples:
         - headers: {}
           request:
@@ -20941,6 +21025,7 @@ service:
       response:
         docs: ''
         type: root.TimeOff
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -20979,6 +21064,7 @@ service:
       response:
         docs: ''
         type: root.MetaResponse
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -21121,6 +21207,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.PaginatedTimeOffBalanceList",
               },
               "source": {
@@ -21195,6 +21282,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.TimeOffBalance",
               },
               "source": {
@@ -21323,6 +21411,7 @@ service:
       response:
         docs: ''
         type: root.PaginatedTimeOffBalanceList
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -21378,6 +21467,7 @@ service:
       response:
         docs: ''
         type: root.TimeOffBalance
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -21469,6 +21559,7 @@ service:
               },
               "response": {
                 "docs": "",
+                "status-code": 201,
                 "type": "root.WebhookReceiver",
               },
               "source": {
@@ -21497,6 +21588,7 @@ service:
               "path": "/webhook-receivers",
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "list<root.WebhookReceiver>",
               },
               "source": {
@@ -21525,6 +21617,7 @@ service:
       response:
         docs: ''
         type: list<root.WebhookReceiver>
+        status-code: 200
       examples:
         - headers: {}
           response:
@@ -21556,6 +21649,7 @@ service:
       response:
         docs: ''
         type: root.WebhookReceiver
+        status-code: 201
       examples:
         - headers: {}
           request:

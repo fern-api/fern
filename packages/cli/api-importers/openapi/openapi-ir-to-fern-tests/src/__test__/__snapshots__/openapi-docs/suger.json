@@ -7879,6 +7879,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedApiClientAccessToken",
               },
               "source": {
@@ -7920,6 +7921,7 @@ types:
       response:
         docs: OK
         type: root.SharedApiClientAccessToken
+        status-code: 200
       errors:
         - root.GetApiClientAccessTokenRequestInternalServerError
       examples:
@@ -8018,6 +8020,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedIdentityBuyer",
               },
               "source": {
@@ -8068,6 +8071,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedIdentityBuyer>",
               },
               "source": {
@@ -8162,6 +8166,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedIdentityBuyer",
               },
               "source": {
@@ -8195,6 +8200,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedIdentityBuyer>
+        status-code: 200
       errors:
         - root.ListBuyersByOrganizationRequestInternalServerError
       examples:
@@ -8232,6 +8238,7 @@ service:
       response:
         docs: OK
         type: root.SharedIdentityBuyer
+        status-code: 200
       errors:
         - root.GetBuyerRequestInternalServerError
       examples:
@@ -8300,6 +8307,7 @@ service:
       response:
         docs: OK
         type: root.SharedIdentityBuyer
+        status-code: 200
       errors:
         - root.UpdateBuyerNameDescriptionRequestInternalServerError
       examples:
@@ -8417,6 +8425,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedAddEntitlementCreditResponse",
               },
               "source": {
@@ -8509,6 +8518,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedWorkloadEntitlement",
               },
               "source": {
@@ -8598,6 +8608,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadEntitlement>",
               },
               "source": {
@@ -8692,6 +8703,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadEntitlement>",
               },
               "source": {
@@ -8786,6 +8798,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadEntitlement>",
               },
               "source": {
@@ -8880,6 +8893,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadEntitlement>",
               },
               "source": {
@@ -8974,6 +8988,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadEntitlement>",
               },
               "source": {
@@ -9081,6 +9096,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedWorkloadEntitlement",
               },
               "source": {
@@ -9130,6 +9146,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadEntitlement>
+        status-code: 200
       errors:
         - root.ListEntitlementsByBuyerRequestInternalServerError
       examples:
@@ -9197,6 +9214,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadEntitlement>
+        status-code: 200
       errors:
         - root.ListEntitlementsRequestInternalServerError
       examples:
@@ -9266,6 +9284,7 @@ service:
       response:
         docs: OK
         type: root.SharedWorkloadEntitlement
+        status-code: 200
       errors:
         - root.GetEntitlementRequestInternalServerError
       examples:
@@ -9349,6 +9368,7 @@ service:
       response:
         docs: OK
         type: root.SharedAddEntitlementCreditResponse
+        status-code: 200
       errors:
         - root.AddEntitlementCreditRequestBadRequestError
         - root.AddEntitlementCreditRequestInternalServerError
@@ -9393,6 +9413,7 @@ service:
       response:
         docs: OK
         type: root.SharedWorkloadEntitlement
+        status-code: 200
       errors:
         - root.UpdateEntitlementNameRequestInternalServerError
       examples:
@@ -9464,6 +9485,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadEntitlement>
+        status-code: 200
       errors:
         - root.ListEntitlementsByOfferRequestInternalServerError
       examples:
@@ -9534,6 +9556,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadEntitlement>
+        status-code: 200
       errors:
         - root.ListEntitlementsByPartnerRequestInternalServerError
       examples:
@@ -9604,6 +9627,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadEntitlement>
+        status-code: 200
       errors:
         - root.ListEntitlementsByProductRequestInternalServerError
       examples:
@@ -9769,6 +9793,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedWorkloadEntitlementTerm",
               },
               "source": {
@@ -9863,6 +9888,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadEntitlementTerm>",
               },
               "source": {
@@ -9899,6 +9925,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadEntitlementTerm>
+        status-code: 200
       errors:
         - root.ListEntitlementTermsRequestInternalServerError
       examples:
@@ -9972,6 +9999,7 @@ service:
       response:
         docs: OK
         type: root.SharedWorkloadEntitlementTerm
+        status-code: 200
       errors:
         - root.GetEntitlementTermRequestInternalServerError
       examples:
@@ -10164,6 +10192,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedIdentityIntegration",
               },
               "source": {
@@ -10208,6 +10237,7 @@ service:
               },
               "response": {
                 "docs": "Empty string if deletion is successful",
+                "status-code": 200,
                 "type": "string",
               },
               "source": {
@@ -10328,6 +10358,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedIdentityIntegration",
               },
               "source": {
@@ -10373,6 +10404,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedIdentityIntegration>",
               },
               "source": {
@@ -10522,6 +10554,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedIdentityIntegration",
               },
               "source": {
@@ -10566,6 +10599,7 @@ service:
               },
               "response": {
                 "docs": "whether it is verified or not",
+                "status-code": 200,
                 "type": "boolean",
               },
               "source": {
@@ -10707,6 +10741,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedIdentityIntegration>
+        status-code: 200
       errors:
         - root.ListIntegrationsByOrganizationRequestInternalServerError
       examples:
@@ -10749,6 +10784,7 @@ service:
       response:
         docs: OK
         type: root.SharedIdentityIntegration
+        status-code: 200
       errors:
         - root.CreateIntegrationRequestBadRequestError
         - root.CreateIntegrationRequestInternalServerError
@@ -10846,6 +10882,7 @@ service:
       response:
         docs: OK
         type: root.SharedIdentityIntegration
+        status-code: 200
       errors:
         - root.GetIntegrationRequestNotFoundError
         - root.GetIntegrationRequestInternalServerError
@@ -10940,6 +10977,7 @@ service:
       response:
         docs: Empty string if deletion is successful
         type: string
+        status-code: 200
       errors:
         - root.DeleteIntegrationRequestInternalServerError
       examples:
@@ -10983,6 +11021,7 @@ service:
       response:
         docs: OK
         type: root.SharedIdentityIntegration
+        status-code: 200
       errors:
         - root.UpdateIntegrationRequestBadRequestError
         - root.UpdateIntegrationRequestInternalServerError
@@ -11082,6 +11121,7 @@ service:
       response:
         docs: whether it is verified or not
         type: boolean
+        status-code: 200
       errors:
         - root.VerifyIntegrationRequestInternalServerError
       examples:
@@ -11224,6 +11264,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedMeteringUsageRecordGroup",
               },
               "source": {
@@ -11319,6 +11360,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedMeteringUsageRecordReport",
               },
               "source": {
@@ -11397,6 +11439,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedListUsageRecordGroupsResponse",
               },
               "source": {
@@ -11470,6 +11513,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedListUsageRecordGroupsResponse",
               },
               "source": {
@@ -11548,6 +11592,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedListUsageRecordGroupsResponse",
               },
               "source": {
@@ -11625,6 +11670,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedListUsageRecordReportsResponse",
               },
               "source": {
@@ -11693,6 +11739,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedListUsageRecordReportsResponse",
               },
               "source": {
@@ -11766,6 +11813,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedListUsageRecordReportsResponse",
               },
               "source": {
@@ -11853,6 +11901,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedMeteringUsageRecordGroup",
               },
               "source": {
@@ -11906,6 +11955,7 @@ service:
       response:
         docs: OK
         type: root.SharedListUsageRecordGroupsResponse
+        status-code: 200
       errors:
         - root.ListUsageRecordGroupsByEntitlementRequestBadRequestError
         - root.ListUsageRecordGroupsByEntitlementRequestInternalServerError
@@ -11964,6 +12014,7 @@ service:
       response:
         docs: OK
         type: root.SharedMeteringUsageRecordGroup
+        status-code: 200
       errors:
         - root.ReportUsageRecordGroupRequestBadRequestError
         - root.ReportUsageRecordGroupRequestConflictError
@@ -12034,6 +12085,7 @@ service:
       response:
         docs: OK
         type: root.SharedListUsageRecordReportsResponse
+        status-code: 200
       errors:
         - root.ListUsageRecordReportsByEntitlementRequestBadRequestError
         - root.ListUsageRecordReportsByEntitlementRequestInternalServerError
@@ -12086,6 +12138,7 @@ service:
       response:
         docs: OK
         type: root.SharedListUsageRecordGroupsResponse
+        status-code: 200
       errors:
         - root.ListUsageRecordGroupsByProductRequestBadRequestError
         - root.ListUsageRecordGroupsByProductRequestInternalServerError
@@ -12142,6 +12195,7 @@ service:
       response:
         docs: OK
         type: root.SharedListUsageRecordReportsResponse
+        status-code: 200
       errors:
         - root.ListUsageRecordReportsByProductRequestBadRequestError
         - root.ListUsageRecordReportsByProductRequestInternalServerError
@@ -12191,6 +12245,7 @@ service:
       response:
         docs: OK
         type: root.SharedListUsageRecordGroupsResponse
+        status-code: 200
       errors:
         - root.ListUsageRecordGroupsByOrganizationRequestBadRequestError
         - root.ListUsageRecordGroupsByOrganizationRequestInternalServerError
@@ -12229,6 +12284,7 @@ service:
       response:
         docs: OK
         type: root.SharedMeteringUsageRecordGroup
+        status-code: 200
       errors:
         - root.GetUsageRecordGroupRequestInternalServerError
       examples:
@@ -12282,6 +12338,7 @@ service:
       response:
         docs: OK
         type: root.SharedListUsageRecordReportsResponse
+        status-code: 200
       errors:
         - root.ListUsageRecordReportsByOrganizationRequestBadRequestError
         - root.ListUsageRecordReportsByOrganizationRequestInternalServerError
@@ -12318,6 +12375,7 @@ service:
       response:
         docs: OK
         type: root.SharedMeteringUsageRecordReport
+        status-code: 200
       errors:
         - root.GetUsageRecordReportRequestInternalServerError
       examples:
@@ -12415,6 +12473,7 @@ service:
               },
               "response": {
                 "docs": "Empty string if cancellation is successful",
+                "status-code": 200,
                 "type": "string",
               },
               "source": {
@@ -12577,6 +12636,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedWorkloadOffer",
               },
               "source": {
@@ -12739,6 +12799,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedWorkloadOffer",
               },
               "source": {
@@ -12778,6 +12839,7 @@ service:
               },
               "response": {
                 "docs": "Empty string if deletion is successful",
+                "status-code": 200,
                 "type": "string",
               },
               "source": {
@@ -12939,6 +13001,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedWorkloadOffer",
               },
               "source": {
@@ -13033,6 +13096,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadOffer>",
               },
               "source": {
@@ -13133,6 +13197,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadOffer>",
               },
               "source": {
@@ -13232,6 +13297,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadOffer>",
               },
               "source": {
@@ -13283,6 +13349,7 @@ service:
       response:
         docs: OK
         type: root.SharedWorkloadOffer
+        status-code: 200
       errors:
         - root.CreateOrUpdateDraftOfferRequestBadRequestError
         - root.CreateOrUpdateDraftOfferRequestInternalServerError
@@ -13404,6 +13471,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadOffer>
+        status-code: 200
       errors:
         - root.ListOffersByOrganizationRequestInternalServerError
       examples:
@@ -13475,6 +13543,7 @@ service:
       response:
         docs: OK
         type: root.SharedWorkloadOffer
+        status-code: 200
       errors:
         - root.CreateOfferRequestBadRequestError
         - root.CreateOfferRequestInternalServerError
@@ -13599,6 +13668,7 @@ service:
       response:
         docs: OK
         type: root.SharedWorkloadOffer
+        status-code: 200
       errors:
         - root.GetOfferRequestInternalServerError
       examples:
@@ -13724,6 +13794,7 @@ service:
       response:
         docs: Empty string if deletion is successful
         type: string
+        status-code: 200
       errors:
         - root.DeleteOfferRequestInternalServerError
       examples:
@@ -13752,6 +13823,7 @@ service:
       response:
         docs: Empty string if cancellation is successful
         type: string
+        status-code: 200
       errors:
         - root.CancelOfferRequestBadRequestError
         - root.CancelOfferRequestInternalServerError
@@ -13779,6 +13851,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadOffer>
+        status-code: 200
       errors:
         - root.ListOffersByPartnerRequestInternalServerError
       examples:
@@ -13852,6 +13925,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadOffer>
+        status-code: 200
       errors:
         - root.ListOffersByProductRequestInternalServerError
       examples:
@@ -13987,6 +14061,7 @@ types:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedOperation>",
               },
               "source": {
@@ -14038,6 +14113,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedOperation>
+        status-code: 200
       errors:
         - root.ListOperationsRequestInternalServerError
       examples:
@@ -14099,6 +14175,7 @@ service:
               },
               "response": {
                 "docs": "Empty string if deletion is successful",
+                "status-code": 200,
                 "type": "string",
               },
               "source": {
@@ -14217,6 +14294,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedWorkloadProduct",
               },
               "source": {
@@ -14266,6 +14344,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedAwsSaasProductDimension>",
               },
               "source": {
@@ -14334,6 +14413,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadProduct>",
               },
               "source": {
@@ -14407,6 +14487,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "list<root.SharedWorkloadProduct>",
               },
               "source": {
@@ -14544,6 +14625,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedWorkloadProduct",
               },
               "source": {
@@ -14601,6 +14683,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadProduct>
+        status-code: 200
       errors:
         - root.ListProductsByPartnerRequestInternalServerError
       examples:
@@ -14650,6 +14733,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedWorkloadProduct>
+        status-code: 200
       errors:
         - root.ListProductsByOrganizationRequestInternalServerError
       examples:
@@ -14701,6 +14785,7 @@ service:
       response:
         docs: OK
         type: root.SharedWorkloadProduct
+        status-code: 200
       errors:
         - root.GetProductRequestInternalServerError
       examples:
@@ -14787,6 +14872,7 @@ service:
       response:
         docs: Empty string if deletion is successful
         type: string
+        status-code: 200
       errors:
         - root.DeleteProductRequestInternalServerError
       examples:
@@ -14821,6 +14907,7 @@ service:
       response:
         docs: OK
         type: root.SharedWorkloadProduct
+        status-code: 200
       errors:
         - root.UpdateProductRequestInternalServerError
       examples:
@@ -14911,6 +14998,7 @@ service:
       response:
         docs: OK
         type: list<root.SharedAwsSaasProductDimension>
+        status-code: 200
       errors:
         - root.ListProductMeteringDimensionsRequestInternalServerError
       examples:
@@ -15043,6 +15131,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedRevenueReport",
               },
               "source": {
@@ -15113,6 +15202,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedUsageReport",
               },
               "source": {
@@ -15191,6 +15281,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedListRevenueRecordDetailsResponse",
               },
               "source": {
@@ -15290,6 +15381,7 @@ service:
               },
               "response": {
                 "docs": "OK",
+                "status-code": 200,
                 "type": "root.SharedListRevenueRecordsResponse",
               },
               "source": {
@@ -15414,6 +15506,7 @@ service:
       response:
         docs: OK
         type: root.SharedListRevenueRecordsResponse
+        status-code: 200
       errors:
         - root.ListRevenueRecordsRequestBadRequestError
         - root.ListRevenueRecordsRequestInternalServerError
@@ -15491,6 +15584,7 @@ service:
       response:
         docs: OK
         type: root.SharedListRevenueRecordDetailsResponse
+        status-code: 200
       errors:
         - root.ListRevenueRecordDetailsRequestBadRequestError
         - root.ListRevenueRecordDetailsRequestInternalServerError
@@ -15546,6 +15640,7 @@ service:
       response:
         docs: OK
         type: root.SharedRevenueReport
+        status-code: 200
       errors:
         - root.GetRevenueReportRequestBadRequestError
         - root.GetRevenueReportRequestInternalServerError
@@ -15612,6 +15707,7 @@ service:
       response:
         docs: OK
         type: root.SharedUsageReport
+        status-code: 200
       errors:
         - root.GetUsageReportRequestBadRequestError
         - root.GetUsageReportRequestInternalServerError

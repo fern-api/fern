@@ -8088,6 +8088,7 @@ types:
               },
               "response": {
                 "docs": "A single attempt",
+                "status-code": 200,
                 "type": "optional<root.EventAttempt>",
               },
               "source": {
@@ -8167,6 +8168,7 @@ types:
               },
               "response": {
                 "docs": "List of attempts",
+                "status-code": 200,
                 "type": "root.EventAttemptPaginatedResult",
               },
               "source": {
@@ -8230,6 +8232,7 @@ service:
       response:
         docs: List of attempts
         type: root.EventAttemptPaginatedResult
+        status-code: 200
       errors:
         - root.GetAttemptsRequestBadRequestError
         - root.GetAttemptsRequestUnprocessableEntityError
@@ -8277,6 +8280,7 @@ service:
       response:
         docs: A single attempt
         type: optional<root.EventAttempt>
+        status-code: 200
       errors:
         - root.GetAttemptRequestNotFoundError
       examples:
@@ -8416,6 +8420,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "A single bookmark",
+                "status-code": 200,
                 "type": "root.Bookmark",
               },
               "source": {
@@ -8449,6 +8454,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "An object with deleted bookmark's id",
+                "status-code": 200,
                 "type": "root.DeletedBookmarkResponse",
               },
               "source": {
@@ -8498,6 +8504,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "A single bookmark",
+                "status-code": 200,
                 "type": "root.Bookmark",
               },
               "source": {
@@ -8610,6 +8617,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "List of bookmarks",
+                "status-code": 200,
                 "type": "root.BookmarkPaginatedResult",
               },
               "source": {
@@ -8688,6 +8696,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "Array of created events",
+                "status-code": 200,
                 "type": "root.EventArray",
               },
               "source": {
@@ -8791,6 +8800,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               },
               "response": {
                 "docs": "A single bookmark",
+                "status-code": 200,
                 "type": "root.Bookmark",
               },
               "source": {
@@ -8895,6 +8905,7 @@ service:
       response:
         docs: List of bookmarks
         type: root.BookmarkPaginatedResult
+        status-code: 200
       errors:
         - root.GetBookmarksRequestBadRequestError
         - root.GetBookmarksRequestUnprocessableEntityError
@@ -8957,6 +8968,7 @@ service:
       response:
         docs: A single bookmark
         type: root.Bookmark
+        status-code: 200
       errors:
         - root.CreateBookmarkRequestBadRequestError
         - root.CreateBookmarkRequestUnprocessableEntityError
@@ -8996,6 +9008,7 @@ service:
       response:
         docs: A single bookmark
         type: root.Bookmark
+        status-code: 200
       errors:
         - root.GetBookmarkRequestNotFoundError
       examples:
@@ -9058,6 +9071,7 @@ service:
       response:
         docs: A single bookmark
         type: root.Bookmark
+        status-code: 200
       errors:
         - root.UpdateBookmarkRequestBadRequestError
         - root.UpdateBookmarkRequestNotFoundError
@@ -9097,6 +9111,7 @@ service:
       response:
         docs: An object with deleted bookmark's id
         type: root.DeletedBookmarkResponse
+        status-code: 200
       errors:
         - root.DeleteBookmarkRequestNotFoundError
       examples:
@@ -9126,6 +9141,7 @@ service:
       response:
         docs: Array of created events
         type: root.EventArray
+        status-code: 200
       errors:
         - root.TriggerBookmarkRequestBadRequestError
         - root.TriggerBookmarkRequestNotFoundError
@@ -9222,6 +9238,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "response": {
                 "docs": "A single events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -9282,6 +9299,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "response": {
                 "docs": "A single events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -9312,6 +9330,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "path": "/bulk/events/retry/plan",
               "response": {
                 "docs": "Events bulk retry plan",
+                "status-code": 200,
                 "type": "root.BatchOperationPlan",
               },
               "source": {
@@ -9393,6 +9412,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "response": {
                 "docs": "List of events bulk retries",
+                "status-code": 200,
                 "type": "root.BatchOperationPaginatedResult",
               },
               "source": {
@@ -9442,6 +9462,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "response": {
                 "docs": "A single events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -10476,6 +10497,7 @@ service:
       response:
         docs: List of events bulk retries
         type: root.BatchOperationPaginatedResult
+        status-code: 200
       errors:
         - root.GetEventBulkRetriesRequestBadRequestError
         - root.GetEventBulkRetriesRequestUnprocessableEntityError
@@ -10527,6 +10549,7 @@ service:
       response:
         docs: A single events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CreateEventBulkRetryRequestBadRequestError
         - root.CreateEventBulkRetryRequestUnprocessableEntityError
@@ -10561,6 +10584,7 @@ service:
       response:
         docs: Events bulk retry plan
         type: root.BatchOperationPlan
+        status-code: 200
       errors:
         - root.GenerateEventBulkRetryPlanRequestBadRequestError
         - root.GenerateEventBulkRetryPlanRequestUnprocessableEntityError
@@ -10583,6 +10607,7 @@ service:
       response:
         docs: A single events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.GetEventBulkRetryRequestNotFoundError
       examples:
@@ -10619,6 +10644,7 @@ service:
       response:
         docs: A single events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CancelEventBulkRetryRequestNotFoundError
       examples:
@@ -10703,6 +10729,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single ignored events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -10763,6 +10790,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single ignored events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -10793,6 +10821,7 @@ docs: ''
               "path": "/bulk/ignored-events/retry/plan",
               "response": {
                 "docs": "Ignored events bulk retry plan",
+                "status-code": 200,
                 "type": "root.BatchOperationPlan",
               },
               "source": {
@@ -10874,6 +10903,7 @@ docs: ''
               },
               "response": {
                 "docs": "List of ignored events bulk retries",
+                "status-code": 200,
                 "type": "root.BatchOperationPaginatedResult",
               },
               "source": {
@@ -10923,6 +10953,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single ignored events bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -11101,6 +11132,7 @@ service:
       response:
         docs: List of ignored events bulk retries
         type: root.BatchOperationPaginatedResult
+        status-code: 200
       errors:
         - root.GetIgnoredEventBulkRetriesRequestBadRequestError
         - root.GetIgnoredEventBulkRetriesRequestUnprocessableEntityError
@@ -11150,6 +11182,7 @@ service:
       response:
         docs: A single ignored events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CreateIgnoredEventBulkRetryRequestBadRequestError
         - root.CreateIgnoredEventBulkRetryRequestUnprocessableEntityError
@@ -11184,6 +11217,7 @@ service:
       response:
         docs: Ignored events bulk retry plan
         type: root.BatchOperationPlan
+        status-code: 200
       errors:
         - root.GenerateIgnoredEventBulkRetryPlanRequestBadRequestError
         - root.GenerateIgnoredEventBulkRetryPlanRequestUnprocessableEntityError
@@ -11206,6 +11240,7 @@ service:
       response:
         docs: A single ignored events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.GetIgnoredEventBulkRetryRequestNotFoundError
       examples:
@@ -11242,6 +11277,7 @@ service:
       response:
         docs: A single ignored events bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CancelIgnoredEventBulkRetryRequestNotFoundError
       examples:
@@ -11326,6 +11362,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single requests bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -11386,6 +11423,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single requests bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -11416,6 +11454,7 @@ docs: ''
               "path": "/bulk/requests/retry/plan",
               "response": {
                 "docs": "Requests bulk retry plan",
+                "status-code": 200,
                 "type": "root.BatchOperationPlan",
               },
               "source": {
@@ -11497,6 +11536,7 @@ docs: ''
               },
               "response": {
                 "docs": "List of request bulk retries",
+                "status-code": 200,
                 "type": "root.BatchOperationPaginatedResult",
               },
               "source": {
@@ -11546,6 +11586,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single requests bulk retry",
+                "status-code": 200,
                 "type": "root.BatchOperation",
               },
               "source": {
@@ -12304,6 +12345,7 @@ service:
       response:
         docs: List of request bulk retries
         type: root.BatchOperationPaginatedResult
+        status-code: 200
       errors:
         - root.GetRequestBulkRetriesRequestBadRequestError
         - root.GetRequestBulkRetriesRequestUnprocessableEntityError
@@ -12355,6 +12397,7 @@ service:
       response:
         docs: A single requests bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CreateRequestBulkRetryRequestBadRequestError
         - root.CreateRequestBulkRetryRequestUnprocessableEntityError
@@ -12389,6 +12432,7 @@ service:
       response:
         docs: Requests bulk retry plan
         type: root.BatchOperationPlan
+        status-code: 200
       errors:
         - root.GenerateRequestBulkRetryPlanRequestBadRequestError
         - root.GenerateRequestBulkRetryPlanRequestUnprocessableEntityError
@@ -12411,6 +12455,7 @@ service:
       response:
         docs: A single requests bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.GetRequestBulkRetryRequestNotFoundError
       examples:
@@ -12447,6 +12492,7 @@ service:
       response:
         docs: A single requests bulk retry
         type: root.BatchOperation
+        status-code: 200
       errors:
         - root.CancelRequestBulkRetryRequestNotFoundError
       examples:
@@ -12579,6 +12625,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -12741,6 +12788,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -12838,6 +12886,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -12970,6 +13019,7 @@ docs: ''
               },
               "response": {
                 "docs": "List of connections",
+                "status-code": 200,
                 "type": "root.ConnectionPaginatedResult",
               },
               "source": {
@@ -13067,6 +13117,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13164,6 +13215,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13261,6 +13313,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13400,6 +13453,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13562,6 +13616,7 @@ docs: ''
               },
               "response": {
                 "docs": "A single connection",
+                "status-code": 200,
                 "type": "root.Connection",
               },
               "source": {
@@ -13986,6 +14041,7 @@ service:
       response:
         docs: List of connections
         type: root.ConnectionPaginatedResult
+        status-code: 200
       errors:
         - root.GetConnectionsRequestBadRequestError
         - root.GetConnectionsRequestUnprocessableEntityError
@@ -14087,6 +14143,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.CreateConnectionRequestBadRequestError
         - root.CreateConnectionRequestUnprocessableEntityError
@@ -14197,6 +14254,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.UpsertConnectionRequestBadRequestError
         - root.UpsertConnectionRequestUnprocessableEntityError
@@ -14269,6 +14327,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.GetConnectionRequestNotFoundError
       examples:
@@ -14364,6 +14423,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.UpdateConnectionRequestBadRequestError
         - root.UpdateConnectionRequestNotFoundError
@@ -14438,6 +14498,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.ArchiveConnectionRequestNotFoundError
       examples:
@@ -14509,6 +14570,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.UnarchiveConnectionRequestNotFoundError
       examples:
@@ -14580,6 +14642,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.PauseConnectionRequestNotFoundError
       examples:
@@ -14651,6 +14714,7 @@ service:
       response:
         docs: A single connection
         type: root.Connection
+        status-code: 200
       errors:
         - root.UnpauseConnectionRequestNotFoundError
       examples:
@@ -14766,6 +14830,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -14845,6 +14910,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -14888,6 +14954,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -14966,6 +15033,7 @@ docs: >-
               },
               "response": {
                 "docs": "List of destinations",
+                "status-code": 200,
                 "type": "root.DestinationPaginatedResult",
               },
               "source": {
@@ -15009,6 +15077,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -15099,6 +15168,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -15178,6 +15248,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single destination",
+                "status-code": 200,
                 "type": "root.Destination",
               },
               "source": {
@@ -15311,6 +15382,7 @@ service:
       response:
         docs: List of destinations
         type: root.DestinationPaginatedResult
+        status-code: 200
       errors:
         - root.GetDestinationsRequestBadRequestError
         - root.GetDestinationsRequestUnprocessableEntityError
@@ -15371,6 +15443,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.CreateDestinationRequestBadRequestError
         - root.CreateDestinationRequestUnprocessableEntityError
@@ -15425,6 +15498,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.UpsertDestinationRequestBadRequestError
         - root.UpsertDestinationRequestUnprocessableEntityError
@@ -15457,6 +15531,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.GetDestinationRequestNotFoundError
       examples:
@@ -15515,6 +15590,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.UpdateDestinationRequestBadRequestError
         - root.UpdateDestinationRequestNotFoundError
@@ -15550,6 +15626,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.ArchiveDestinationRequestNotFoundError
       examples:
@@ -15581,6 +15658,7 @@ service:
       response:
         docs: A single destination
         type: root.Destination
+        status-code: 200
       errors:
         - root.UnarchiveDestinationRequestNotFoundError
       examples:
@@ -15669,6 +15747,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "A single event",
+                "status-code": 200,
                 "type": "root.Event",
               },
               "source": {
@@ -15835,6 +15914,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "List of events",
+                "status-code": 200,
                 "type": "root.EventPaginatedResult",
               },
               "source": {
@@ -15868,6 +15948,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "A request raw body data",
+                "status-code": 200,
                 "type": "root.RawBody",
               },
               "source": {
@@ -15926,6 +16007,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "A single event",
+                "status-code": 200,
                 "type": "root.Event",
               },
               "source": {
@@ -16008,6 +16090,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               },
               "response": {
                 "docs": "Retried event with event attempt",
+                "status-code": 200,
                 "type": "root.RetriedEvent",
               },
               "source": {
@@ -16125,6 +16208,7 @@ service:
       response:
         docs: List of events
         type: root.EventPaginatedResult
+        status-code: 200
       errors:
         - root.GetEventsRequestBadRequestError
         - root.GetEventsRequestUnprocessableEntityError
@@ -16172,6 +16256,7 @@ service:
       response:
         docs: A single event
         type: root.Event
+        status-code: 200
       errors:
         - root.GetEventRequestNotFoundError
       examples:
@@ -16217,6 +16302,7 @@ service:
       response:
         docs: A request raw body data
         type: root.RawBody
+        status-code: 200
       errors:
         - root.GetRequestRawBodyRequestNotFoundError
       examples:
@@ -16238,6 +16324,7 @@ service:
       response:
         docs: Retried event with event attempt
         type: root.RetriedEvent
+        status-code: 200
       errors:
         - root.RetryEventRequestNotFoundError
       examples:
@@ -16305,6 +16392,7 @@ service:
       response:
         docs: A single event
         type: root.Event
+        status-code: 200
       errors:
         - root.MuteEventRequestNotFoundError
       examples:
@@ -16385,6 +16473,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "Attach operation success status",
+                "status-code": 200,
                 "type": "root.AttachedIntegrationToSource",
               },
               "source": {
@@ -16467,6 +16556,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "A single integration",
+                "status-code": 200,
                 "type": "root.Integration",
               },
               "source": {
@@ -16500,6 +16590,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "An object with deleted integration id",
+                "status-code": 200,
                 "type": "root.DeletedIntegration",
               },
               "source": {
@@ -16534,6 +16625,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "Detach operation success status",
+                "status-code": 200,
                 "type": "root.DetachedIntegrationFromSource",
               },
               "source": {
@@ -16584,6 +16676,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "A single integration",
+                "status-code": 200,
                 "type": "root.Integration",
               },
               "source": {
@@ -16648,6 +16741,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "List of integrations",
+                "status-code": 200,
                 "type": "root.IntegrationPaginatedResult",
               },
               "source": {
@@ -16725,6 +16819,7 @@ docs: An event is any request that Hookdeck receives from a source.
               },
               "response": {
                 "docs": "A single integration",
+                "status-code": 200,
                 "type": "root.Integration",
               },
               "source": {
@@ -16793,6 +16888,7 @@ service:
       response:
         docs: List of integrations
         type: root.IntegrationPaginatedResult
+        status-code: 200
       errors:
         - root.GetIntegrationsRequestBadRequestError
         - root.GetIntegrationsRequestUnprocessableEntityError
@@ -16850,6 +16946,7 @@ service:
       response:
         docs: A single integration
         type: root.Integration
+        status-code: 200
       errors:
         - root.CreateIntegrationRequestBadRequestError
         - root.CreateIntegrationRequestUnprocessableEntityError
@@ -16894,6 +16991,7 @@ service:
       response:
         docs: A single integration
         type: root.Integration
+        status-code: 200
       errors:
         - root.GetIntegrationRequestNotFoundError
       examples:
@@ -16946,6 +17044,7 @@ service:
       response:
         docs: A single integration
         type: root.Integration
+        status-code: 200
       errors:
         - root.UpdateIntegrationRequestBadRequestError
         - root.UpdateIntegrationRequestNotFoundError
@@ -16984,6 +17083,7 @@ service:
       response:
         docs: An object with deleted integration id
         type: root.DeletedIntegration
+        status-code: 200
       errors:
         - root.DeleteIntegrationRequestNotFoundError
       examples:
@@ -17006,6 +17106,7 @@ service:
       response:
         docs: Attach operation success status
         type: root.AttachedIntegrationToSource
+        status-code: 200
       errors:
         - root.AttachIntegrationToSourceRequestBadRequestError
         - root.AttachIntegrationToSourceRequestNotFoundError
@@ -17030,6 +17131,7 @@ service:
       response:
         docs: Detach operation success status
         type: root.DetachedIntegrationFromSource
+        status-code: 200
       errors:
         - root.DetachIntegrationToSourceRequestBadRequestError
         - root.DetachIntegrationToSourceRequestNotFoundError
@@ -17156,6 +17258,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17189,6 +17292,7 @@ types:
               },
               "response": {
                 "docs": "An object with deleted issue trigger's id",
+                "status-code": 200,
                 "type": "root.DeletedIssueTriggerResponse",
               },
               "source": {
@@ -17238,6 +17342,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17287,6 +17392,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17336,6 +17442,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17400,6 +17507,7 @@ types:
               },
               "response": {
                 "docs": "List of issue triggers",
+                "status-code": 200,
                 "type": "root.IssueTriggerPaginatedResult",
               },
               "source": {
@@ -17481,6 +17589,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17556,6 +17665,7 @@ types:
               },
               "response": {
                 "docs": "A single issue trigger",
+                "status-code": 200,
                 "type": "root.IssueTrigger",
               },
               "source": {
@@ -17691,6 +17801,7 @@ service:
       response:
         docs: List of issue triggers
         type: root.IssueTriggerPaginatedResult
+        status-code: 200
       errors:
         - root.GetIssueTriggersRequestBadRequestError
         - root.GetIssueTriggersRequestUnprocessableEntityError
@@ -17742,6 +17853,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.CreateIssueTriggerRequestBadRequestError
         - root.CreateIssueTriggerRequestUnprocessableEntityError
@@ -17790,6 +17902,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.UpsertIssueTriggerRequestBadRequestError
         - root.UpsertIssueTriggerRequestUnprocessableEntityError
@@ -17826,6 +17939,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.GetIssueTriggerRequestNotFoundError
       examples:
@@ -17877,6 +17991,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.UpdateIssueTriggerRequestBadRequestError
         - root.UpdateIssueTriggerRequestUnprocessableEntityError
@@ -17913,6 +18028,7 @@ service:
       response:
         docs: An object with deleted issue trigger's id
         type: root.DeletedIssueTriggerResponse
+        status-code: 200
       errors:
         - root.DeleteIssueTriggerRequestNotFoundError
       examples:
@@ -17934,6 +18050,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.DisableIssueTriggerRequestNotFoundError
       examples:
@@ -17968,6 +18085,7 @@ service:
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
+        status-code: 200
       errors:
         - root.EnableIssueTriggerRequestNotFoundError
       examples:
@@ -18058,6 +18176,7 @@ docs: >-
               },
               "response": {
                 "docs": "Dismissed issue",
+                "status-code": 200,
                 "type": "root.Issue",
               },
               "source": {
@@ -18161,6 +18280,7 @@ docs: >-
               },
               "response": {
                 "docs": "A single issue",
+                "status-code": 200,
                 "type": "root.IssueWithData",
               },
               "source": {
@@ -18233,6 +18353,7 @@ docs: >-
               },
               "response": {
                 "docs": "Issue count",
+                "status-code": 200,
                 "type": "root.IssueCount",
               },
               "source": {
@@ -18358,6 +18479,7 @@ docs: >-
               },
               "response": {
                 "docs": "List of issues",
+                "status-code": 200,
                 "type": "root.IssueWithDataPaginatedResult",
               },
               "source": {
@@ -18432,6 +18554,7 @@ docs: >-
               },
               "response": {
                 "docs": "Updated issue",
+                "status-code": 200,
                 "type": "root.Issue",
               },
               "source": {
@@ -18618,6 +18741,7 @@ service:
       response:
         docs: List of issues
         type: root.IssueWithDataPaginatedResult
+        status-code: 200
       errors:
         - root.GetIssuesRequestBadRequestError
         - root.GetIssuesRequestUnprocessableEntityError
@@ -18707,6 +18831,7 @@ service:
       response:
         docs: Issue count
         type: root.IssueCount
+        status-code: 200
       errors:
         - root.GetIssueCountRequestUnprocessableEntityError
       examples:
@@ -18730,6 +18855,7 @@ service:
       response:
         docs: A single issue
         type: root.IssueWithData
+        status-code: 200
       errors:
         - root.GetIssueRequestNotFoundError
       examples:
@@ -18818,6 +18944,7 @@ service:
       response:
         docs: Updated issue
         type: root.Issue
+        status-code: 200
       errors:
         - root.UpdateIssueRequestBadRequestError
         - root.UpdateIssueRequestUnprocessableEntityError
@@ -18861,6 +18988,7 @@ service:
       response:
         docs: Dismissed issue
         type: root.Issue
+        status-code: 200
       errors:
         - root.DismissIssueRequestNotFoundError
       examples:
@@ -18954,6 +19082,7 @@ docs: >-
               },
               "response": {
                 "docs": "Toggle operation status response",
+                "status-code": 200,
                 "type": "root.ToggleWebhookNotifications",
               },
               "source": {
@@ -18997,6 +19126,7 @@ service:
       response:
         docs: Toggle operation status response
         type: root.ToggleWebhookNotifications
+        status-code: 200
       examples:
         - request: {}
           response:
@@ -19073,6 +19203,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "A single request",
+                "status-code": 200,
                 "type": "root.Request",
               },
               "source": {
@@ -19246,6 +19377,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "List of events",
+                "status-code": 200,
                 "type": "root.EventPaginatedResult",
               },
               "source": {
@@ -19320,6 +19452,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "List of ignored events",
+                "status-code": 200,
                 "type": "root.IgnoredEventPaginatedResult",
               },
               "source": {
@@ -19353,6 +19486,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "A request raw body data",
+                "status-code": 200,
                 "type": "root.RawBody",
               },
               "source": {
@@ -19463,6 +19597,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "List of requests",
+                "status-code": 200,
                 "type": "root.RequestPaginatedResult",
               },
               "source": {
@@ -19568,6 +19703,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               },
               "response": {
                 "docs": "Retry request operation result",
+                "status-code": 200,
                 "type": "root.RetryRequest",
               },
               "source": {
@@ -19711,6 +19847,7 @@ service:
       response:
         docs: List of requests
         type: root.RequestPaginatedResult
+        status-code: 200
       errors:
         - root.GetRequestsRequestBadRequestError
         - root.GetRequestsRequestUnprocessableEntityError
@@ -19756,6 +19893,7 @@ service:
       response:
         docs: A single request
         type: root.Request
+        status-code: 200
       errors:
         - root.GetRequestRequestNotFoundError
       examples:
@@ -19799,6 +19937,7 @@ service:
       response:
         docs: A request raw body data
         type: root.RawBody
+        status-code: 200
       errors:
         - root.GetRequestRawBodyRequestNotFoundError
       examples:
@@ -19830,6 +19969,7 @@ service:
       response:
         docs: Retry request operation result
         type: root.RetryRequest
+        status-code: 200
       errors:
         - root.RetryRequestRequestBadRequestError
         - root.RetryRequestRequestNotFoundError
@@ -19963,6 +20103,7 @@ service:
       response:
         docs: List of events
         type: root.EventPaginatedResult
+        status-code: 200
       errors:
         - root.GetRequestEventsRequestBadRequestError
         - root.GetRequestEventsRequestNotFoundError
@@ -20026,6 +20167,7 @@ service:
       response:
         docs: List of ignored events
         type: root.IgnoredEventPaginatedResult
+        status-code: 200
       errors:
         - root.GetRequestIgnoredEventsRequestBadRequestError
         - root.GetRequestIgnoredEventsRequestNotFoundError
@@ -20108,6 +20250,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20177,6 +20320,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20222,6 +20366,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20297,6 +20442,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "List of rulesets",
+                "status-code": 200,
                 "type": "root.RulesetPaginatedResult",
               },
               "source": {
@@ -20342,6 +20488,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20420,6 +20567,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20489,6 +20637,7 @@ docs: A request represent a webhook received by Hookdeck.
               },
               "response": {
                 "docs": "A single ruleset",
+                "status-code": 200,
                 "type": "optional<root.Ruleset>",
               },
               "source": {
@@ -20555,6 +20704,7 @@ service:
       response:
         docs: List of rulesets
         type: root.RulesetPaginatedResult
+        status-code: 200
       errors:
         - root.GetRulesetsRequestBadRequestError
         - root.GetRulesetsRequestUnprocessableEntityError
@@ -20605,6 +20755,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.CreateRulesetRequestBadRequestError
         - root.CreateRulesetRequestUnprocessableEntityError
@@ -20649,6 +20800,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.UpsertRulesetRequestBadRequestError
         - root.UpsertRulesetRequestUnprocessableEntityError
@@ -20680,6 +20832,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.GetRulesetRequestNotFoundError
       examples:
@@ -20728,6 +20881,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.UpdateRulesetRequestBadRequestError
         - root.UpdateRulesetRequestNotFoundError
@@ -20761,6 +20915,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.ArchiveRulesetRequestNotFoundError
       examples:
@@ -20791,6 +20946,7 @@ service:
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
+        status-code: 200
       errors:
         - root.UnarchiveRulesetRequestNotFoundError
       examples:
@@ -20868,6 +21024,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -20935,6 +21092,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -20983,6 +21141,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -21062,6 +21221,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "List of sources",
+                "status-code": 200,
                 "type": "root.SourcePaginatedResult",
               },
               "source": {
@@ -21110,6 +21270,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -21186,6 +21347,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -21253,6 +21415,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               },
               "response": {
                 "docs": "A single source",
+                "status-code": 200,
                 "type": "root.Source",
               },
               "source": {
@@ -21320,6 +21483,7 @@ service:
       response:
         docs: List of sources
         type: root.SourcePaginatedResult
+        status-code: 200
       errors:
         - root.GetSourcesRequestBadRequestError
         - root.GetSourcesRequestUnprocessableEntityError
@@ -21370,6 +21534,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.CreateSourceRequestBadRequestError
         - root.CreateSourceRequestUnprocessableEntityError
@@ -21414,6 +21579,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.UpsertSourceRequestBadRequestError
         - root.UpsertSourceRequestUnprocessableEntityError
@@ -21449,6 +21615,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.GetSourceRequestNotFoundError
       examples:
@@ -21497,6 +21664,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.UpdateSourceRequestBadRequestError
         - root.UpdateSourceRequestNotFoundError
@@ -21534,6 +21702,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.ArchiveSourceRequestNotFoundError
       examples:
@@ -21568,6 +21737,7 @@ service:
       response:
         docs: A single source
         type: root.Source
+        status-code: 200
       errors:
         - root.UnarchiveSourceRequestNotFoundError
       examples:
@@ -21672,6 +21842,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation",
+                "status-code": 200,
                 "type": "root.Transformation",
               },
               "source": {
@@ -21715,6 +21886,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation",
+                "status-code": 200,
                 "type": "root.Transformation",
               },
               "source": {
@@ -21781,6 +21953,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation execution",
+                "status-code": 200,
                 "type": "root.TransformationExecution",
               },
               "source": {
@@ -21880,6 +22053,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "List of transformation executions",
+                "status-code": 200,
                 "type": "root.TransformationExecutionPaginatedResult",
               },
               "source": {
@@ -21948,6 +22122,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "List of transformations",
+                "status-code": 200,
                 "type": "root.TransformationPaginatedResult",
               },
               "source": {
@@ -22024,6 +22199,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "Transformation run output",
+                "status-code": 200,
                 "type": "root.TransformationExecutorOutput",
               },
               "source": {
@@ -22099,6 +22275,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation",
+                "status-code": 200,
                 "type": "root.Transformation",
               },
               "source": {
@@ -22170,6 +22347,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "response": {
                 "docs": "A single transformation",
+                "status-code": 200,
                 "type": "root.Transformation",
               },
               "source": {
@@ -22444,6 +22622,7 @@ service:
       response:
         docs: List of transformations
         type: root.TransformationPaginatedResult
+        status-code: 200
       errors:
         - root.GetTransformationsRequestBadRequestError
         - root.GetTransformationsRequestUnprocessableEntityError
@@ -22496,6 +22675,7 @@ service:
       response:
         docs: A single transformation
         type: root.Transformation
+        status-code: 200
       errors:
         - root.CreateTransformationRequestBadRequestError
         - root.CreateTransformationRequestUnprocessableEntityError
@@ -22545,6 +22725,7 @@ service:
       response:
         docs: A single transformation
         type: root.Transformation
+        status-code: 200
       errors:
         - root.UpsertTransformationRequestBadRequestError
         - root.UpsertTransformationRequestUnprocessableEntityError
@@ -22577,6 +22758,7 @@ service:
       response:
         docs: A single transformation
         type: root.Transformation
+        status-code: 200
       errors:
         - root.GetTransformationRequestNotFoundError
       examples:
@@ -22626,6 +22808,7 @@ service:
       response:
         docs: A single transformation
         type: root.Transformation
+        status-code: 200
       errors:
         - root.UpdateTransformationRequestBadRequestError
         - root.UpdateTransformationRequestNotFoundError
@@ -22680,6 +22863,7 @@ service:
       response:
         docs: Transformation run output
         type: root.TransformationExecutorOutput
+        status-code: 200
       errors:
         - root.TestTransformationRequestBadRequestError
         - root.TestTransformationRequestUnprocessableEntityError
@@ -22732,6 +22916,7 @@ service:
       response:
         docs: List of transformation executions
         type: root.TransformationExecutionPaginatedResult
+        status-code: 200
       errors:
         - root.GetTransformationExecutionsRequestBadRequestError
         - root.GetTransformationExecutionsRequestUnprocessableEntityError
@@ -22779,6 +22964,7 @@ service:
       response:
         docs: A single transformation execution
         type: root.TransformationExecution
+        status-code: 200
       errors:
         - root.GetTransformationExecutionRequestNotFoundError
       examples:
