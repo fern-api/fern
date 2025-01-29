@@ -3,6 +3,13 @@
         The OpenAPI parser generates response examples that are `{}` for 204 response types.
       type: fix
   irVersion: 55
+  version: 0.51.11
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser generates response examples that are `{}` for 204 response types.
+      type: fix
+  irVersion: 55
   version: 0.51.10
 
 - changelogEntry:

@@ -113,9 +113,7 @@ export class ExampleEndpointFactory {
                         })
                     )
                 ]);
-            }
-
-            if (responseSchemaIdResponse.examples.length === 0) {
+            } else if (responseSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
                     skipReadonly: false,
                     schema: responseSchemaIdResponse.schema,

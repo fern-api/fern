@@ -11595,44 +11595,6 @@
           },
           "codeSamples": [],
           "type": "full"
-        },
-        {
-          "pathParameters": [
-            {
-              "name": "contract_id",
-              "value": {
-                "value": {
-                  "value": "37nex2x",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "response": {
-            "value": {
-              "properties": {
-                "data": {
-                  "properties": {
-                    "updated": {
-                      "value": {
-                        "value": true,
-                        "type": "boolean"
-                      },
-                      "type": "primitive"
-                    }
-                  },
-                  "type": "object"
-                }
-              },
-              "type": "object"
-            },
-            "type": "withoutStreaming"
-          },
-          "codeSamples": [],
-          "type": "full"
         }
       ],
       "source": {

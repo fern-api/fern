@@ -14161,18 +14161,6 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                     "body": {},
                   },
                 },
-                {
-                  "path-parameters": {
-                    "contract_id": "37nex2x",
-                  },
-                  "response": {
-                    "body": {
-                      "data": {
-                        "updated": true,
-                      },
-                    },
-                  },
-                },
               ],
               "method": "PATCH",
               "pagination": undefined,
@@ -15462,12 +15450,6 @@ service:
             contract_id: 37nex2x
           response:
             body: {}
-        - path-parameters:
-            contract_id: 37nex2x
-          response:
-            body:
-              data:
-                updated: true
       audiences:
         - external
     inviteToSignContract:
