@@ -633,8 +633,12 @@ analytics:
     container-id: GTM-55W3VNDW
 
 redirects:
+  - source: /learn/welcome
+    destination: /learn
+    permanent: true
   - source: /learn/home
-    destination: /learn/welcome
+    destination: /learn
+    permanent: true
   - source: /learn/api-definition/fern/api-yml-reference
     destination: /learn/api-definition/fern/api-yml/overview
   - source: /learn/docs/api-references/api-playground/:slug
