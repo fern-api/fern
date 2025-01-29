@@ -254,9 +254,11 @@ function visitEndpoint({
                 visitObject(response, {
                     docs: createDocsVisitor(visitor, nodePathForResponse),
                     type: (type) => {
-                        visitTypeReference(type, [...nodePathForResponse, "type"], {
-                            location: TypeReferenceLocation.Response
-                        });
+                        if (type != null) {
+                            visitTypeReference(type, [...nodePathForResponse, "type"], {
+                                location: TypeReferenceLocation.Response
+                            });
+                        }
                     },
                     property: noop,
                     "status-code": noop

@@ -1,5 +1,25 @@
 - changelogEntry:
     - summary: |
+        The Fern Definition now allows you to declare status codes for the response without having a type. 
+        This is useful for `204` response status codes. 
+ 
+        ```yml users.yml
+        service: 
+          auth: false
+          base-path: /users
+          endpoints: 
+            update: 
+              path: ""
+              response: 
+                status-code: 204        
+        ```
+      type: fix
+  irVersion: 55
+  version: 0.51.12
+
+
+- changelogEntry:
+    - summary: |
         The OpenAPI parser generates response examples that are `{}` for 204 response types.
       type: fix
   irVersion: 55

@@ -69,10 +69,13 @@ function validateBodyResponse({
     const violations: RuleViolation[] = [];
     if (example.error == null) {
         if (endpoint.response != null) {
+            const responseTypeReference = typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response;
+            if (responseTypeReference == null) {
+                return violations;
+            }
             violations.push(
                 ...ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
+                    rawTypeReference: responseTypeReference,
                     example: example.body,
                     typeResolver,
                     exampleResolver,

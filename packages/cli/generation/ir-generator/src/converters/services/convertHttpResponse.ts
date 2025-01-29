@@ -111,20 +111,22 @@ export function convertNonStreamHttpResponseBody({
         const docs = typeof response !== "string" ? response.docs : undefined;
         const responseType = typeof response === "string" ? response : response.type;
 
-        if (parseRawFileType(responseType) != null) {
-            return HttpResponseBody.fileDownload({
-                docs
-            });
-        } else if (parseRawTextType(responseType) != null) {
-            return HttpResponseBody.text({
-                docs
-            });
-        } else if (parseRawBytesType(responseType) != null) {
-            return HttpResponseBody.bytes({
-                docs
-            });
-        } else {
-            return convertJsonResponse(response, docs, file, typeResolver);
+        if (responseType != null) {
+            if (parseRawFileType(responseType) != null) {
+                return HttpResponseBody.fileDownload({
+                    docs
+                });
+            } else if (parseRawTextType(responseType) != null) {
+                return HttpResponseBody.text({
+                    docs
+                });
+            } else if (parseRawBytesType(responseType) != null) {
+                return HttpResponseBody.bytes({
+                    docs
+                });
+            } else {
+                return convertJsonResponse(response, docs, file, typeResolver);
+            }
         }
     }
 
@@ -173,10 +175,14 @@ function convertJsonResponse(
     docs: string | undefined,
     file: FernFileContext,
     typeResolver: TypeResolver
-): HttpResponseBody.Json {
-    const responseBodyType = file.parseTypeReference(response);
+): HttpResponseBody.Json | undefined {
+    const responseTypeReference = typeof response !== "string" ? response.type : response; 
+    if (responseTypeReference == null) {
+        return undefined;
+    }
+    const responseBodyType = file.parseTypeReference(typeof response === "string" ? response : { ...response, type: responseTypeReference });
     const resolvedType = typeResolver.resolveTypeOrThrow({
-        type: typeof response !== "string" ? response.type : response,
+        type: responseTypeReference,
         file
     });
     const responseProperty = typeof response !== "string" ? response.property : undefined;

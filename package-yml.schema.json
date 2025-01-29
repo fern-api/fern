@@ -2020,7 +2020,14 @@
           ]
         },
         "type": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "property": {
           "oneOf": [
@@ -2043,9 +2050,6 @@
           ]
         }
       },
-      "required": [
-        "type"
-      ],
       "additionalProperties": false
     },
     "service.HttpResponseSchema": {
