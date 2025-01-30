@@ -42,7 +42,7 @@ public final class GetWithMultipleQuery {
   }
 
   @JsonProperty("number")
-  public int getNumer() {
+  public int getNumber() {
     return number;
   }
 
@@ -76,12 +76,12 @@ public final class GetWithMultipleQuery {
   }
 
   public interface QueryStage {
-    NumerStage query(@NotNull String query);
+    NumberStage query(@NotNull String query);
 
     Builder from(GetWithMultipleQuery other);
   }
 
-  public interface NumerStage {
+  public interface NumberStage {
     _FinalStage number(int number);
   }
 
@@ -92,7 +92,7 @@ public final class GetWithMultipleQuery {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements QueryStage, NumerStage, _FinalStage {
+  public static final class Builder implements QueryStage, NumberStage, _FinalStage {
     private String query;
 
     private int number;
@@ -106,13 +106,13 @@ public final class GetWithMultipleQuery {
     @java.lang.Override
     public Builder from(GetWithMultipleQuery other) {
       query(other.getQuery());
-      number(other.getNumer());
+      number(other.getNumber());
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("query")
-    public NumerStage query(@NotNull String query) {
+    public NumberStage query(@NotNull String query) {
       this.query = Objects.requireNonNull(query, "query must not be null");
       return this;
     }

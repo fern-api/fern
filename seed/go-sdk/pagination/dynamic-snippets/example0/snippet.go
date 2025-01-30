@@ -16,19 +16,26 @@ func do() () {
             "<token>",
         ),
     )
-    client.Users.ListWithCursorPagination(
+    client.Complex.Search(
         context.TODO(),
-        &fern.ListUsersCursorPaginationRequest{
-            Page: fern.Int(
-                1,
-            ),
-            PerPage: fern.Int(
-                1,
-            ),
-            Order: fern.OrderAsc.Ptr(),
-            StartingAfter: fern.String(
-                "starting_after",
-            ),
+        &fern.SearchRequest{
+            Pagination: &fern.StartingAfterPaging{
+                PerPage: 1,
+                StartingAfter: fern.String(
+                    "starting_after",
+                ),
+            },
+            Query: &fern.SearchRequestQuery{
+                SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{
+                    Field: fern.String(
+                        "field",
+                    ),
+                    Operator: fern.SingleFilterSearchRequestOperatorEquals.Ptr(),
+                    Value: fern.String(
+                        "value",
+                    ),
+                },
+            },
         },
     )
 }

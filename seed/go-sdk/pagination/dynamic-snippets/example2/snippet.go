@@ -18,6 +18,10 @@ func do() () {
     )
     client.Users.ListWithMixedTypeCursorPagination(
         context.TODO(),
-        &fern.ListUsersMixedTypeCursorPaginationRequest{},
+        &fern.ListUsersMixedTypeCursorPaginationRequest{
+            Cursor: fern.String(
+                "cursor",
+            ),
+        },
     )
 }
