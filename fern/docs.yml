@@ -637,67 +637,64 @@ analytics:
 redirects:
   - source: /learn/home
     destination: /learn/welcome
+    permanent: true
   - source: /learn/api-definition/fern/api-yml-reference
     destination: /learn/api-definition/fern/api-yml/overview
+    permanent: true
   - source: /learn/docs/api-references/api-playground/:slug
     destination: /learn/docs/api-references/api-explorer/:slug
+    permanent: true
   - source: /learn/docs/api-references/api-playground
     destination: /learn/docs/api-references/api-explorer
+    permanent: true
   - source: /learn/sdks/features/:slug
     destination: /learn/sdks/capabilities/:slug
+    permanent: true
   - source: /learn/sdks/package-managers/:slug
     destination: /learn/sdks/guides/publish-to-package-managers/:slug
+    permanent: true
   - source: /learn/sdks/introduction/configuration
     destination: /learn/sdks/introduction/language-support
+    permanent: true
   - source: /learn/sdks/getting-started/generate-your-first-sdk
     destination: /learn/sdks/guides/generate-your-first-sdk
+    permanent: true
   - source: /learn/sdks/getting-started/preview-your-sdk-locally
     destination: /learn/sdks/guides/preview-your-sdk-locally
+    permanent: true
   - source: /learn/sdks/getting-started/publish-a-public-facing-sdk
     destination: /learn/sdks/guides/publish-a-public-facing-sdk
+    permanent: true
   - source: /learn/docs/building-your-docs/:slug
     destination: /learn/docs/building-and-customizing-your-docs/:slug
+    permanent: true
   - source: /learn/cli-api/cli-reference/cli-overview
     destination: /learn/cli-api/cli/overview
+    permanent: true
   - source: /learn/cli-api/cli-reference/get-started
     destination: /learn/cli-api/cli/get-started
+    permanent: true
   - source: /learn/cli-api/cli-reference/cli-get-started
     destination: /learn/cli-api/cli/get-started
+    permanent: true
   - source: /learn/cli-api/overview
     destination: /learn/cli-api/cli/overview
+    permanent: true
   - source: /learn/cli-api/get-started
     destination: /learn/cli-api/cli/get-started
+    permanent: true
   - source: /learn/cli-api/cli-reference/get-started-with-fern-cli
     destination: /learn/cli-reference/overview
+    permanent: true
   - source: /learn/cli-api/cli-reference/global-options
-    destination: /learn/cli-reference/options 
+    destination: /learn/cli-reference/options
+    permanent: true
   - source: /learn/cli-api/cli-reference/commands
     destination: /learn/cli-reference/commands
+    permanent: true
   - source: /learn/cli-api/cli-reference/changelog
     destination: /learn/cli-reference/changelog
+    permanent: true
   - source: /learn/cli-api/api-reference/overview
     destination: /learn/api-reference/overview
-  - source: ./pages/fern-docs/content/write-markdown.mdx
-    destination: ./pages/docs/writing-content/write-markdown.mdx
-  - source: ./pages/fern-docs/content/frontmatter.mdx
-    destination: ./pages/docs/writing-content/frontmatter.mdx
-  - source: ./pages/fern-docs/content/reusable-snippets.mdx
-    destination: ./pages/docs/writing-content/reusable-snippets.mdx
-  - source: ./pages/fern-docs/content/generate-api-ref.mdx
-    destination: ./pages/docs/api-references/generate-api-ref.mdx
-  - source: ./pages/fern-docs/config/sdk-snippets.mdx
-    destination: ./pages/docs/api-references/sdk-snippets.mdx
-  - source: ./pages/fern-docs/content/api-explorer.mdx
-    destination: ./pages/docs/api-references/api-explorer.mdx
-  - source: ./pages/fern-docs/content/autopopulate-api-key.mdx
-    destination: ./pages/docs/api-references/autopopulate-api-key.mdx
-  - source: ./pages/fern-docs/content/customize-api-explorer.mdx
-    destination: ./pages/docs/api-references/customize-api-explorer.mdx
-  - source: ./pages/fern-docs/config/endpoint-errors.mdx
-    destination: ./pages/docs/api-references/endpoint-errors.mdx
-  - source: ./pages/fern-docs/config/audiences.mdx
-    destination: ./pages/docs/api-references/audiences.mdx
-  - source: ./pages/fern-docs/content/customize-api-ref.mdx
-    destination: ./pages/docs/api-references/customize-api-ref.mdx
-  - source: ./pages/fern-docs/content/api-ref-content.mdx
-    destination: ./pages/docs/api-references/api-ref-content.mdx
+    permanent: true
