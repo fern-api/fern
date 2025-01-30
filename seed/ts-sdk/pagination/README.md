@@ -23,16 +23,32 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.users.listWithMixedTypeCursorPagination({
-    cursor: "cursor",
+const response = await client.complex.search({
+    pagination: {
+        perPage: 1,
+        startingAfter: "starting_after",
+    },
+    query: {
+        field: "field",
+        operator: "=",
+        value: "value",
+    },
 });
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithMixedTypeCursorPagination({
-    cursor: "cursor",
+const page = await client.complex.search({
+    pagination: {
+        perPage: 1,
+        startingAfter: "starting_after",
+    },
+    query: {
+        field: "field",
+        operator: "=",
+        value: "value",
+    },
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -61,7 +77,7 @@ will be thrown.
 import { SeedPaginationError } from "@fern/pagination";
 
 try {
-    await client.users.listWithMixedTypeCursorPagination(...);
+    await client.complex.search(...);
 } catch (err) {
     if (err instanceof SeedPaginationError) {
         console.log(err.statusCode);
@@ -79,22 +95,32 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.users.listWithCursorPagination({
-    page: 1,
-    perPage: 1,
-    order: "asc",
-    startingAfter: "starting_after",
+const response = await client.complex.search({
+    pagination: {
+        perPage: 1,
+        startingAfter: "starting_after",
+    },
+    query: {
+        field: "field",
+        operator: "=",
+        value: "value",
+    },
 });
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithCursorPagination({
-    page: 1,
-    perPage: 1,
-    order: "asc",
-    startingAfter: "starting_after",
+const page = await client.complex.search({
+    pagination: {
+        perPage: 1,
+        startingAfter: "starting_after",
+    },
+    query: {
+        field: "field",
+        operator: "=",
+        value: "value",
+    },
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -108,7 +134,7 @@ while (page.hasNextPage()) {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.users.listWithMixedTypeCursorPagination(..., {
+const response = await client.complex.search(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -130,7 +156,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithMixedTypeCursorPagination(..., {
+const response = await client.complex.search(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -140,7 +166,7 @@ const response = await client.users.listWithMixedTypeCursorPagination(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithMixedTypeCursorPagination(..., {
+const response = await client.complex.search(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -151,7 +177,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.users.listWithMixedTypeCursorPagination(..., {
+const response = await client.complex.search(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
