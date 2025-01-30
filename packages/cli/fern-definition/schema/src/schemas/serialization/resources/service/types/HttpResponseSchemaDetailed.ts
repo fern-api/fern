@@ -12,7 +12,7 @@ export const HttpResponseSchemaDetailed: core.serialization.ObjectSchema<
     FernDefinition.HttpResponseSchemaDetailed
 > = core.serialization
     .object({
-        type: core.serialization.string(),
+        type: core.serialization.string().optional(),
         property: core.serialization.string().optional(),
         "status-code": core.serialization.number().optional(),
     })
@@ -20,7 +20,7 @@ export const HttpResponseSchemaDetailed: core.serialization.ObjectSchema<
 
 export declare namespace HttpResponseSchemaDetailed {
     export interface Raw extends WithDocsSchema.Raw {
-        type: string;
+        type?: string | null;
         property?: string | null;
         "status-code"?: number | null;
     }
