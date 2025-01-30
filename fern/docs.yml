@@ -34,7 +34,7 @@ tabs:
   cli-api:
     display-name: CLI & API Reference
     icon: fa-regular fa-code
-    slug: cli-api
+    skip-slug: true
 
 css: ./assets/styles.css
 
@@ -563,8 +563,10 @@ navigation:
         contents:
           - page: Get Started with Fern CLI
             path: ./pages/cli-api/cli-get-started.mdx
+            slug: overview
           - page: Global Options
             path: ./pages/cli-api/global-options.mdx
+            slug: options
           - page: Commands
             path: ./pages/cli-api/commands.mdx
           - changelog: ./pages/changelogs/cli
@@ -665,6 +667,16 @@ redirects:
     destination: /learn/cli-api/cli/overview
   - source: /learn/cli-api/get-started
     destination: /learn/cli-api/cli/get-started
+  - source: /learn/cli-api/cli-reference/get-started-with-fern-cli
+    destination: /learn/cli-reference/overview
+  - source: /learn/cli-api/cli-reference/global-options
+    destination: /learn/cli-reference/options 
+  - source: /learn/cli-api/cli-reference/commands
+    destination: /learn/cli-reference/commands
+  - source: /learn/cli-api/cli-reference/changelog
+    destination: /learn/cli-reference/changelog
+  - source: /learn/cli-api/api-reference/overview
+    destination: /learn/api-reference/overview
   - source: ./pages/fern-docs/content/write-markdown.mdx
     destination: ./pages/docs/writing-content/write-markdown.mdx
   - source: ./pages/fern-docs/content/frontmatter.mdx
