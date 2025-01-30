@@ -173,7 +173,7 @@ public class ParamsClient {
                 .newBuilder()
                 .addPathSegments("params");
         httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("number", Integer.toString(request.getNumer()));
+        httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -309,6 +309,7 @@ public class ParamsClient {
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

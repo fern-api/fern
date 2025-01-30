@@ -78,7 +78,7 @@ public final class SearchRequestQuery {
         }
 
         @java.lang.Override
-        public SearchRequestQuery deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public SearchRequestQuery deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, SingleFilterSearchRequest.class));
