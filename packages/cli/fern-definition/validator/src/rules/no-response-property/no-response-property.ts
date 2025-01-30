@@ -23,6 +23,9 @@ export const NoResponsePropertyRule: Rule = {
                         return [];
                     }
                     const responseType = typeof response === "string" ? response : response.type;
+                    if (responseType == null) {
+                        return [];
+                    }
                     if (parseRawFileType(responseType) != null) {
                         return [];
                     } else if (parseRawTextType(responseType) != null) {
@@ -38,8 +41,12 @@ export const NoResponsePropertyRule: Rule = {
                         rootApiFile: workspace.definition.rootApiFile.contents,
                         casingsGenerator: CASINGS_GENERATOR
                     });
+                    const responseTypeReference = typeof response !== "string" ? response.type : response;
+                    if (responseTypeReference == null) {
+                        return [];
+                    }
                     const resolvedType = typeResolver.resolveTypeOrThrow({
-                        type: typeof response !== "string" ? response.type : response,
+                        type: responseTypeReference,
                         file
                     });
                     const result = resolvedTypeHasProperty(resolvedType, responseProperty, file, typeResolver);

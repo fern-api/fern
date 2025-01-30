@@ -2,6 +2,17 @@
     "endpoints": [
         {
             "id": {
+                "path": "/conversations/search",
+                "method": "POST",
+                "identifier_override": "endpoint_complex.search"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.complex.search({\n    pagination: {\n        perPage: 1,\n        startingAfter: \"starting_after\"\n    },\n    query: {\n        field: \"field\",\n        operator: \"=\",\n        value: \"value\"\n    }\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.complex.search({\n    pagination: {\n        perPage: 1,\n        startingAfter: \"starting_after\"\n    },\n    query: {\n        field: \"field\",\n        operator: \"=\",\n        value: \"value\"\n    }\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithCursorPagination"
