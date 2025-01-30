@@ -5,6 +5,23 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
+await client.complex.search({
+  pagination: {
+    perPage: 1,
+    startingAfter: "starting_after",
+  },
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
 await client.users.listWithCursorPagination({
   page: 1,
   perPage: 1,
