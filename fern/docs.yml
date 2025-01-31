@@ -644,47 +644,26 @@ redirects:
   - source: /learn/api-definition/fern/api-yml-reference
     destination: /learn/api-definition/fern/api-yml/overview
     permanent: true
-  - source: /learn/docs/api-references/api-playground/:slug
-    destination: /learn/docs/api-references/api-explorer/:slug
+  - source: /learn/docs/api-references/api-playground/:slug*
+    destination: /learn/docs/api-references/api-explorer/:slug*
     permanent: true
   - source: /learn/docs/api-references/api-playground
     destination: /learn/docs/api-references/api-explorer
     permanent: true
-  - source: /learn/sdks/features/:slug
-    destination: /learn/sdks/capabilities/:slug
+  - source: /learn/sdks/features/:slug*
+    destination: /learn/sdks/capabilities/:slug*
     permanent: true
-  - source: /learn/sdks/package-managers/:slug
-    destination: /learn/sdks/guides/publish-to-package-managers/:slug
+  - source: /learn/sdks/package-managers/:slug*
+    destination: /learn/sdks/guides/publish-to-package-managers/:slug*
     permanent: true
   - source: /learn/sdks/introduction/configuration
     destination: /learn/sdks/introduction/language-support
     permanent: true
-  - source: /learn/sdks/getting-started/generate-your-first-sdk
-    destination: /learn/sdks/guides/generate-your-first-sdk
+  - source: /learn/sdks/getting-started/:slug*
+    destination: /learn/sdks/guides/:slug*
     permanent: true
-  - source: /learn/sdks/getting-started/preview-your-sdk-locally
-    destination: /learn/sdks/guides/preview-your-sdk-locally
-    permanent: true
-  - source: /learn/sdks/getting-started/publish-a-public-facing-sdk
-    destination: /learn/sdks/guides/publish-a-public-facing-sdk
-    permanent: true
-  - source: /learn/docs/building-your-docs/:slug
-    destination: /learn/docs/building-and-customizing-your-docs/:slug
-    permanent: true
-  - source: /learn/cli-api/cli-reference/cli-overview
-    destination: /learn/cli-api/cli/overview
-    permanent: true
-  - source: /learn/cli-api/cli-reference/get-started
-    destination: /learn/cli-api/cli/get-started
-    permanent: true
-  - source: /learn/cli-api/cli-reference/cli-get-started
-    destination: /learn/cli-api/cli/get-started
-    permanent: true
-  - source: /learn/cli-api/overview
-    destination: /learn/cli-api/cli/overview
-    permanent: true
-  - source: /learn/cli-api/get-started
-    destination: /learn/cli-api/cli/get-started
+  - source: /learn/docs/building-your-docs/:slug*
+    destination: /learn/docs/building-and-customizing-your-docs/:slug*
     permanent: true
   - source: /learn/cli-api/cli-reference/get-started-with-fern-cli
     destination: /learn/cli-reference/overview
@@ -692,12 +671,12 @@ redirects:
   - source: /learn/cli-api/cli-reference/global-options
     destination: /learn/cli-reference/options
     permanent: true
-  - source: /learn/cli-api/cli-reference/commands
-    destination: /learn/cli-reference/commands
+  - source: /learn/cli-api/cli-reference/:slug*
+    destination: /learn/cli-reference/:slug*
     permanent: true
-  - source: /learn/cli-api/cli-reference/changelog
-    destination: /learn/cli-reference/changelog
+  - source: /learn/cli-api/cli/:slug*
+    destination: /learn/cli-reference/:slug*
     permanent: true
-  - source: /learn/cli-api/api-reference/overview
-    destination: /learn/api-reference/overview
+  - source: /learn/cli-api/:slug*
+    destination: /learn/cli-reference/:slug*
     permanent: true
