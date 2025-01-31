@@ -84,7 +84,7 @@ export function parseAsyncAPI({
     for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
         const shouldIgnore = getExtension<boolean>(channel, FernAsyncAPIExtension.IGNORE);
         if (shouldIgnore != null && shouldIgnore) {
-            context.logger.info(`Channel ${channelPath} is marked with x-fern-ignore. Skipping.`);
+            context.logger.debug(`Channel ${channelPath} is marked with x-fern-ignore. Skipping.`);
             continue;
         }
         if (channel.bindings?.ws == null) {
