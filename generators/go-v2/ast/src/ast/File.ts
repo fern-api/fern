@@ -16,12 +16,8 @@ export class File extends AstNode {
         this.nodes = nodes ?? [];
     }
 
-    public add(node: AstNode | AstNode[]): void {
-        if (Array.isArray(node)) {
-            this.nodes.push(...node);
-            return;
-        }
-        this.nodes.push(node);
+    public add(...nodes: AstNode[]): void {
+        this.nodes.push(...nodes);
     }
 
     public write(writer: Writer): void {

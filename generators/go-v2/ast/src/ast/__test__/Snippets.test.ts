@@ -318,7 +318,7 @@ describe("file", () => {
                 )
             })
         );
-        file.add([foo, bar]);
+        file.add(foo, bar);
         const content = file.toString({
             packageName: "example",
             rootImportPath: "github.com/acme/acme-go",
