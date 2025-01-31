@@ -2543,8 +2543,8 @@ importers:
   generators/typescript/playground/browser:
     dependencies:
       form-data:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.0.1
+        version: 4.0.1
       js-base64:
         specifier: ^3.7.6
         version: 3.7.7
@@ -3689,8 +3689,8 @@ importers:
         specifier: ^4.21.2
         version: 4.21.2
       form-data:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.0.1
+        version: 4.0.1
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.15.3)(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2))
@@ -5336,8 +5336,8 @@ importers:
         specifier: ^8.56.0
         version: 8.56.0
       form-data:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.0.1
+        version: 4.0.1
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
@@ -6148,8 +6148,8 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1
       form-data:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.0.1
+        version: 4.0.1
       image-size:
         specifier: ^1.1.1
         version: 1.1.1
@@ -11812,6 +11812,10 @@ packages:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
 
+  form-data@4.0.1:
+    resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==}
+    engines: {node: '>= 6'}
+
   formdata-node@6.0.3:
     resolution: {integrity: sha512-8e1++BCiTzUno9v5IZ2J6bv4RU+3UKDmqWUQD0MIMVCd9AdhWkO1gw57oo1mNEX1dMq2EGI+FbWz4B92pscSQg==}
     engines: {node: '>= 18'}
@@ -16872,7 +16876,7 @@ snapshots:
 
   '@fern-api/venus-api-sdk@0.10.2':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.1
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
@@ -16886,7 +16890,7 @@ snapshots:
 
   '@fern-fern/fdr-cjs-sdk@0.129.3-c425af4ef':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.1
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
@@ -16937,7 +16941,7 @@ snapshots:
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     dependencies:
-      form-data: 4.0.0
+      form-data: 4.0.1
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
@@ -17874,7 +17878,7 @@ snapshots:
   '@types/node-fetch@2.6.9':
     dependencies:
       '@types/node': 18.15.3
-      form-data: 4.0.0
+      form-data: 4.0.1
 
   '@types/node@14.18.63': {}
 
@@ -18511,7 +18515,7 @@ snapshots:
   axios@1.7.7:
     dependencies:
       follow-redirects: 1.15.6
-      form-data: 4.0.0
+      form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -20231,6 +20235,12 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
+  form-data@4.0.1:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+
   formdata-node@6.0.3: {}
 
   forwarded@0.2.0: {}
@@ -21446,7 +21456,7 @@ snapshots:
       decimal.js: 10.4.3
       domexception: 4.0.0
       escodegen: 2.1.0
-      form-data: 4.0.0
+      form-data: 4.0.1
       html-encoding-sniffer: 3.0.0
       http-proxy-agent: 5.0.0
       https-proxy-agent: 5.0.1
