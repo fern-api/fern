@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The OpenRPC parser now handles displaying optional parameters in the request.
+      type: fix
+  irVersion: 55
+  version: 0.51.15
+
+- changelogEntry:
+    - summary: |
         Updates `whatwg` so that users eliminate punycode deprecation warning.
       type: fix
   irVersion: 55
