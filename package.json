@@ -125,5 +125,10 @@
     "!packages/cli/cli/dist/local",
     "!packages/cli/cli/dist/dev",
     "!packages/cli/cli/dist/prod"
-  ]
+  ],
+  "pnpm": {
+    "overrides": {
+      "node-fetch@2.x>whatwg-url": "^14.0.0"
+    }
+  }
 }
