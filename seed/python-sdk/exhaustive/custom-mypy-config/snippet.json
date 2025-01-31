@@ -1,0 +1,512 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/container/list-of-primitives",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_list_of_primitives(\n    request=[\"string\", \"string\"],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_list_of_primitives(\n        request=[\"string\", \"string\"],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/container/list-of-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfObjects"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\nfrom seed.types.object import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_list_of_objects(\n    request=[\n        ObjectWithRequiredField(\n            string=\"string\",\n        ),\n        ObjectWithRequiredField(\n            string=\"string\",\n        ),\n    ],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.object import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_list_of_objects(\n        request=[\n            ObjectWithRequiredField(\n                string=\"string\",\n            ),\n            ObjectWithRequiredField(\n                string=\"string\",\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/container/set-of-primitives",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_set_of_primitives(\n    request={\"string\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_set_of_primitives(\n        request={\"string\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/container/set-of-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfObjects"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\nfrom seed.types.object import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_set_of_objects(\n    request=[\n        ObjectWithRequiredField(\n            string=\"string\",\n        )\n    ],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.object import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_set_of_objects(\n        request=[\n            ObjectWithRequiredField(\n                string=\"string\",\n            )\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/container/map-prim-to-prim",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_map_prim_to_prim(\n    request={\"string\": \"string\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_map_prim_to_prim(\n        request={\"string\": \"string\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/container/map-prim-to-object",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\nfrom seed.types.object import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_map_of_prim_to_object(\n    request={\n        \"string\": ObjectWithRequiredField(\n            string=\"string\",\n        )\n    },\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.object import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_map_of_prim_to_object(\n        request={\n            \"string\": ObjectWithRequiredField(\n                string=\"string\",\n            )\n        },\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/container/opt-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\nfrom seed.types.object import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_optional(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.object import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.container.get_and_return_optional(\n        request=ObjectWithRequiredField(\n            string=\"string\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/enum",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/enum.getAndReturnEnum"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.enum.get_and_return_enum(\n    request=\"SUNNY\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.enum.get_and_return_enum(\n        request=\"SUNNY\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/http-methods.testGet"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_get(\n    id=\"id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.http_methods.test_get(\n        id=\"id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/http-methods",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/http-methods.testPost"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_post(\n    string=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.http_methods.test_post(\n        string=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/http-methods.testPut"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_put(\n    id=\"id\",\n    string=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.http_methods.test_put(\n        id=\"id\",\n        string=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_endpoints/http-methods.testPatch"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_patch(\n    id=\"id\",\n    string=\"string\",\n    integer=1,\n    long_=1000000,\n    double=1.1,\n    bool_=True,\n    datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    date=datetime.date.fromisoformat(\n        \"2023-01-15\",\n    ),\n    uuid_=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    base_64=\"SGVsbG8gd29ybGQh\",\n    list_=[\"list\", \"list\"],\n    set_={\"set\"},\n    map_={1: \"map\"},\n    bigint=1000000,\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.http_methods.test_patch(\n        id=\"id\",\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"list\", \"list\"],\n        set_={\"set\"},\n        map_={1: \"map\"},\n        bigint=1000000,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_endpoints/http-methods.testDelete"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_delete(\n    id=\"id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.http_methods.test_delete(\n        id=\"id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/object/get-and-return-with-optional-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithOptionalField"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_with_optional_field(\n    string=\"string\",\n    integer=1,\n    long_=1000000,\n    double=1.1,\n    bool_=True,\n    datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    date=datetime.date.fromisoformat(\n        \"2023-01-15\",\n    ),\n    uuid_=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    base_64=\"SGVsbG8gd29ybGQh\",\n    list_=[\"list\", \"list\"],\n    set_={\"set\"},\n    map_={1: \"map\"},\n    bigint=1000000,\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_with_optional_field(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"list\", \"list\"],\n        set_={\"set\"},\n        map_={1: \"map\"},\n        bigint=1000000,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/object/get-and-return-with-required-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredField"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_with_required_field(\n    string=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_with_required_field(\n        string=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/object/get-and-return-with-map-of-map",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_with_map_of_map(\n    map_={\"map\": {\"map\": \"map\"}},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_with_map_of_map(\n        map_={\"map\": {\"map\": \"map\"}},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/object/get-and-return-nested-with-optional-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExhaustive\nfrom seed.types.object import ObjectWithOptionalField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_nested_with_optional_field(\n    string=\"string\",\n    nested_object=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"list\", \"list\"],\n        set_={\"set\"},\n        map_={1: \"map\"},\n        bigint=1000000,\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.object import ObjectWithOptionalField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_nested_with_optional_field(\n        string=\"string\",\n        nested_object=ObjectWithOptionalField(\n            string=\"string\",\n            integer=1,\n            long_=1000000,\n            double=1.1,\n            bool_=True,\n            datetime=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            date=datetime.date.fromisoformat(\n                \"2023-01-15\",\n            ),\n            uuid_=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            base_64=\"SGVsbG8gd29ybGQh\",\n            list_=[\"list\", \"list\"],\n            set_={\"set\"},\n            map_={1: \"map\"},\n            bigint=1000000,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field/{string}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExhaustive\nfrom seed.types.object import ObjectWithOptionalField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_nested_with_required_field(\n    string_=\"string\",\n    string=\"string\",\n    nested_object=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"list\", \"list\"],\n        set_={\"set\"},\n        map_={1: \"map\"},\n        bigint=1000000,\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.object import ObjectWithOptionalField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_nested_with_required_field(\n        string_=\"string\",\n        string=\"string\",\n        nested_object=ObjectWithOptionalField(\n            string=\"string\",\n            integer=1,\n            long_=1000000,\n            double=1.1,\n            bool_=True,\n            datetime=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            date=datetime.date.fromisoformat(\n                \"2023-01-15\",\n            ),\n            uuid_=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            base_64=\"SGVsbG8gd29ybGQh\",\n            list_=[\"list\", \"list\"],\n            set_={\"set\"},\n            map_={1: \"map\"},\n            bigint=1000000,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field-list",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExhaustive\nfrom seed.types.object import (\n    NestedObjectWithRequiredField,\n    ObjectWithOptionalField,\n)\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_nested_with_required_field_as_list(\n    request=[\n        NestedObjectWithRequiredField(\n            string=\"string\",\n            nested_object=ObjectWithOptionalField(\n                string=\"string\",\n                integer=1,\n                long_=1000000,\n                double=1.1,\n                bool_=True,\n                datetime=datetime.datetime.fromisoformat(\n                    \"2024-01-15 09:30:00+00:00\",\n                ),\n                date=datetime.date.fromisoformat(\n                    \"2023-01-15\",\n                ),\n                uuid_=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                base_64=\"SGVsbG8gd29ybGQh\",\n                list_=[\"list\", \"list\"],\n                set_={\"set\"},\n                map_={1: \"map\"},\n                bigint=1000000,\n            ),\n        ),\n        NestedObjectWithRequiredField(\n            string=\"string\",\n            nested_object=ObjectWithOptionalField(\n                string=\"string\",\n                integer=1,\n                long_=1000000,\n                double=1.1,\n                bool_=True,\n                datetime=datetime.datetime.fromisoformat(\n                    \"2024-01-15 09:30:00+00:00\",\n                ),\n                date=datetime.date.fromisoformat(\n                    \"2023-01-15\",\n                ),\n                uuid_=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                base_64=\"SGVsbG8gd29ybGQh\",\n                list_=[\"list\", \"list\"],\n                set_={\"set\"},\n                map_={1: \"map\"},\n                bigint=1000000,\n            ),\n        ),\n    ],\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.object import (\n    NestedObjectWithRequiredField,\n    ObjectWithOptionalField,\n)\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_nested_with_required_field_as_list(\n        request=[\n            NestedObjectWithRequiredField(\n                string=\"string\",\n                nested_object=ObjectWithOptionalField(\n                    string=\"string\",\n                    integer=1,\n                    long_=1000000,\n                    double=1.1,\n                    bool_=True,\n                    datetime=datetime.datetime.fromisoformat(\n                        \"2024-01-15 09:30:00+00:00\",\n                    ),\n                    date=datetime.date.fromisoformat(\n                        \"2023-01-15\",\n                    ),\n                    uuid_=uuid.UUID(\n                        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                    ),\n                    base_64=\"SGVsbG8gd29ybGQh\",\n                    list_=[\"list\", \"list\"],\n                    set_={\"set\"},\n                    map_={1: \"map\"},\n                    bigint=1000000,\n                ),\n            ),\n            NestedObjectWithRequiredField(\n                string=\"string\",\n                nested_object=ObjectWithOptionalField(\n                    string=\"string\",\n                    integer=1,\n                    long_=1000000,\n                    double=1.1,\n                    bool_=True,\n                    datetime=datetime.datetime.fromisoformat(\n                        \"2024-01-15 09:30:00+00:00\",\n                    ),\n                    date=datetime.date.fromisoformat(\n                        \"2023-01-15\",\n                    ),\n                    uuid_=uuid.UUID(\n                        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                    ),\n                    base_64=\"SGVsbG8gd29ybGQh\",\n                    list_=[\"list\", \"list\"],\n                    set_={\"set\"},\n                    map_={1: \"map\"},\n                    bigint=1000000,\n                ),\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPath"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_path(\n    param=\"param\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_path(\n        param=\"param\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithQuery"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_query(\n    query=\"query\",\n    number=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_query(\n        query=\"query\",\n        number=1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_allow_multiple_query(\n    query=\"query\",\n    numer=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_allow_multiple_query(\n        query=\"query\",\n        numer=1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPathAndQuery"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_path_and_query(\n    param=\"param\",\n    query=\"query\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_path_and_query(\n        param=\"param\",\n        query=\"query\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/params.modifyWithPath"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.modify_with_path(\n    param=\"param\",\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.modify_with_path(\n        param=\"param\",\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/string",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_string(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_string(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/integer",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnInt"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_int(\n    request=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_int(\n        request=1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/long",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnLong"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_long(\n    request=1000000,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_long(\n        request=1000000,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/double",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDouble"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_double(\n    request=1.1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_double(\n        request=1.1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/boolean",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBool"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_bool(\n    request=True,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_bool(\n        request=True,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/datetime",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDatetime"
+            },
+            "snippet": {
+                "sync_client": "import datetime\n\nfrom seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_datetime(\n    request=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_datetime(\n        request=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/date",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDate"
+            },
+            "snippet": {
+                "sync_client": "import datetime\n\nfrom seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_date(\n    request=datetime.date.fromisoformat(\n        \"2023-01-15\",\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_date(\n        request=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/uuid",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnUUID"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_uuid(\n    request=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n)\n",
+                "async_client": "import asyncio\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_uuid(\n        request=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/primitive/base64",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBase64"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_base_64(\n    request=\"SGVsbG8gd29ybGQh\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.primitive.get_and_return_base_64(\n        request=\"SGVsbG8gd29ybGQh\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/union",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/union.getAndReturnUnion"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\nfrom seed.types.union import Animal_Dog\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.union.get_and_return_union(\n    request=Animal_Dog(\n        name=\"name\",\n        likes_to_woof=True,\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.union import Animal_Dog\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.union.get_and_return_union(\n        request=Animal_Dog(\n            name=\"name\",\n            likes_to_woof=True,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/req-bodies/object",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExhaustive\nfrom seed.types.object import ObjectWithOptionalField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_requests.post_with_object_bodyand_response(\n    string=\"string\",\n    integer=1,\n    nested_object=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"list\", \"list\"],\n        set_={\"set\"},\n        map_={1: \"map\"},\n        bigint=1000000,\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExhaustive\nfrom seed.types.object import ObjectWithOptionalField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined_requests.post_with_object_bodyand_response(\n        string=\"string\",\n        integer=1,\n        nested_object=ObjectWithOptionalField(\n            string=\"string\",\n            integer=1,\n            long_=1000000,\n            double=1.1,\n            bool_=True,\n            datetime=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            date=datetime.date.fromisoformat(\n                \"2023-01-15\",\n            ),\n            uuid_=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            base_64=\"SGVsbG8gd29ybGQh\",\n            list_=[\"list\", \"list\"],\n            set_={\"set\"},\n            map_={1: \"map\"},\n            bigint=1000000,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/no-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_no-auth.postWithNoAuth"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.no_auth.post_with_no_auth(\n    request={\"key\": \"value\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.no_auth.post_with_no_auth(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/no-req-body",
+                "method": "GET",
+                "identifier_override": "endpoint_no-req-body.getWithNoRequestBody"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.no_req_body.get_with_no_request_body()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.no_req_body.get_with_no_request_body()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/no-req-body",
+                "method": "POST",
+                "identifier_override": "endpoint_no-req-body.postWithNoRequestBody"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.no_req_body.post_with_no_request_body()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.no_req_body.post_with_no_request_body()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/test-headers/custom-header",
+                "method": "POST",
+                "identifier_override": "endpoint_req-with-headers.getWithCustomHeader"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.req_with_headers.get_with_custom_header(\n    x_test_service_header=\"X-TEST-SERVICE-HEADER\",\n    x_test_endpoint_header=\"X-TEST-ENDPOINT-HEADER\",\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.req_with_headers.get_with_custom_header(\n        x_test_service_header=\"X-TEST-SERVICE-HEADER\",\n        x_test_endpoint_header=\"X-TEST-ENDPOINT-HEADER\",\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}
