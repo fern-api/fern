@@ -17,7 +17,7 @@ import (
 func TestCreateMovie(t *testing.T) {
 	testCases := []wiretest.TestCase{
 		{
-			Description: "POST /movies/create-movie (0)",
+			Description: "POST /movies/create-movie",
 			Request: &wiretest.Request{
 				Method: http.MethodPost,
 				Path:   "/movies/create-movie",
@@ -26,6 +26,16 @@ func TestCreateMovie(t *testing.T) {
 			Response: &wiretest.Response{
 				Body: `"movieId"`,
 			},
+			Run: func(t *testing.T, serverURL string) (interface{}, error) {
+				client := client.NewClient(option.WithBaseURL(serverURL))
+				return client.Imdb.CreateMovie(
+					context.Background(),
+					&fern.CreateMovieRequest{
+						Title:  "The Matrix",
+						Rating: 8.7,
+					},
+				)
+			},
 		},
 	}
 	for _, testCase := range testCases {
@@ -33,14 +43,7 @@ func TestCreateMovie(t *testing.T) {
 			server, cleanup := wiretest.NewServer(t, testCase)
 			defer cleanup()
 
-			client := client.NewClient(option.WithBaseURL(server.URL))
-			response, err := client.Imdb.CreateMovie(
-				context.Background(),
-				&fern.CreateMovieRequest{
-					Title:  "The Matrix",
-					Rating: 8.7,
-				},
-			)
+			response, err := testCase.Run(t, server.URL)
 			require.NoError(t, err)
 
 			bytes, err := json.Marshal(response)

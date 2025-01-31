@@ -16,6 +16,7 @@ type TestCase struct {
 	Description string
 	Request     *Request
 	Response    *Response
+	Run         func(t *testing.T, serverURL string) (interface{}, error)
 }
 
 // Request defines all of the request parameters that are expected by the server.
