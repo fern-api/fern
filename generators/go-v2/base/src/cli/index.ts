@@ -1,0 +1,1 @@
+export { AbstractGoGeneratorCli } from "./AbstractGoGeneratorCli";

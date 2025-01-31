@@ -13,6 +13,7 @@ import (
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
+	gov2 "github.com/fern-api/fern-go/internal/generator/v2"
 	generatorexec "github.com/fern-api/generator-exec-go"
 )
 
@@ -358,6 +359,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	case ModeFiber:
 		break
 	case ModeClient:
+		// If we're running in SDK mode, start by running the go-v2 SDK generator.
+		v2 := gov2.New(g.coordinator)
+		if err := v2.Run(); err != nil {
+			return nil, err
+		}
 		var (
 			generatedAuth        *GeneratedAuth
 			generatedEnvironment *GeneratedEnvironment

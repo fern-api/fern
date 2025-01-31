@@ -59,8 +59,9 @@ export class Writer extends AbstractWriter {
         if (maybeAlias != null) {
             return maybeAlias;
         }
+        const set = new Set<Alias>(Object.values(this.imports));
         let alias = this.getValidAlias(basename(importPath));
-        while (alias in this.imports) {
+        while (set.has(alias)) {
             alias = "_" + alias;
         }
         this.imports[importPath] = alias;
