@@ -668,6 +668,12 @@ redirects:
   - source: /learn/cli-api/cli-reference/get-started-with-fern-cli
     destination: /learn/cli-reference/overview
     permanent: true
+  - source: /learn/cli-api/cli-reference/cli-overview
+    destination: /learn/cli-reference/overview
+    permanent: true
+  - source: /learn/cli-reference/cli-overview
+    destination: /learn/cli-reference/overview
+    permanent: true
   - source: /learn/cli-api/cli-reference/global-options
     destination: /learn/cli-reference/options
     permanent: true
