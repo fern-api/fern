@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestClient(t *testing.T) {
+func TestCreateMovie(t *testing.T) {
 	testCases := []wiretest.TestCase{
 		{
 			Description: "POST /movies/create-movie (0)",
