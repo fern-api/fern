@@ -46,7 +46,7 @@ func TestClient(t *testing.T) {
 			bytes, err := json.Marshal(response)
 			require.NoError(t, err)
 
-			assert.Equal(t, testCase.Response.Body, string(bytes))
+			assert.JSONEq(t, testCase.Response.Body, string(bytes))
 		})
 	}
 }
