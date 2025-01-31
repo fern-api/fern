@@ -3,7 +3,7 @@
         The OpenRPC parser now handles displaying parameters as object examples.
       type: fix
   irVersion: 55
-  version: 0.51.16
+  version: 0.51.17
 
 - changelogEntry:
     - summary: |
