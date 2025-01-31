@@ -4646,8 +4646,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/path-utils
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4701,8 +4701,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4783,8 +4783,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -4838,8 +4838,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -4969,8 +4969,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5257,8 +5257,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../../../generators/typescript/utils/core-utilities/fetcher
@@ -6109,8 +6109,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -6612,8 +6612,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7534,8 +7534,8 @@ importers:
         specifier: 0.10.2
         version: 0.10.2
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.127.5-72dd47f6f
-        version: 0.127.5-72dd47f6f
+        specifier: 0.129.3-c425af4ef
+        version: 0.129.3-c425af4ef
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
         version: 0.0.5297
@@ -9092,9 +9092,6 @@ packages:
 
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
-
-  '@fern-fern/fdr-cjs-sdk@0.127.5-72dd47f6f':
-    resolution: {integrity: sha512-0rdM8Aknc0rUsQD/m86fr9Zfdlm5q2pP45KMZO7BAaxTdRs4kth1CHjkuPdQ9HNw6KnGiomdZvdzCpYZmXtZVw==}
 
   '@fern-fern/fdr-cjs-sdk@0.129.3-c425af4ef':
     resolution: {integrity: sha512-842/VaPIX3Q+ogDi6Yr30jv22QOUSdYNcOaclYaKWafZgNCoUSyuprEPyTDchuch58biw8MhXn90bo1wdSBcyw==}
@@ -16878,17 +16875,6 @@ snapshots:
       - encoding
 
   '@fern-fern/docs-config@0.0.80': {}
-
-  '@fern-fern/fdr-cjs-sdk@0.127.5-72dd47f6f':
-    dependencies:
-      form-data: 4.0.0
-      formdata-node: 6.0.3
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
 
   '@fern-fern/fdr-cjs-sdk@0.129.3-c425af4ef':
     dependencies:
