@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Updates `whatwg` so that users eliminate punycode deprecation warning.
+      type: fix
+  irVersion: 55
+  version: 0.51.14
+
+- changelogEntry:
+    - summary: |
         OpenAPI overrides now support resolving file references from the location of the
         OpenAPI overrides file itself. Previously, relative paths were only resolved from
         the OpenAPI source file.
