@@ -677,3 +677,6 @@ redirects:
   - source: /learn/cli-api/cli/:slug*
     destination: /learn/cli-reference/:slug*
     permanent: true
+  - source: /learn/cli-api/:slug*
+    destination: /learn/cli-reference/:slug*
+    permanent: true
