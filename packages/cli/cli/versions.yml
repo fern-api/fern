@@ -3,7 +3,7 @@
         The OpenRPC parser now handles displaying optional parameters in the request.
       type: fix
   irVersion: 55
-  version: 0.51.15
+  version: 0.51.16
 
 - changelogEntry:
     - summary: |
