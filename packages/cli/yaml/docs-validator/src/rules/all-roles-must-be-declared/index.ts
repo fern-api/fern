@@ -1,4 +1,5 @@
-import { Rule, RuleViolation } from "../../Rule";
+import { RuleViolation } from "@fern-api/validation-utils";
+import { Rule } from "../../Rule";
 
 export const AllRolesMustBeDeclaredRule: Rule = {
     name: "all-roles-must-be-declared",
@@ -12,6 +13,7 @@ export const AllRolesMustBeDeclaredRule: Rule = {
                 for (const usedRole of usedRoles) {
                     if (declaredRoles == null || !declaredRoles.includes(usedRole)) {
                         violations.push({
+                            name: AllRolesMustBeDeclaredRule.name,
                             severity: "fatal",
                             // TODO: add a link to the docs
                             message: `Role "${usedRole}" is used but not declared at the top level of the docs.yml file.`

@@ -2,7 +2,8 @@ import tinycolor from "tinycolor2";
 
 import { docsYml, getColorFromRawConfig, getColorType } from "@fern-api/configuration-loader";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { RuleViolation } from "@fern-api/validation-utils";
+import { Rule } from "../../Rule";
 
 export const AccentColorContrastRule: Rule = {
     name: "accent-color-contrast",
@@ -44,6 +45,7 @@ export function validateTheme(
 
     if (!tinycolor(backgroundColor).isValid()) {
         ruleViolations.push({
+            name: AccentColorContrastRule.name,
             severity: "fatal",
             message: `Invalid background color provided for colors.background.${theme}: ${backgroundColor}.`
         });
@@ -51,6 +53,7 @@ export function validateTheme(
         const newBackground = enforceBackgroundTheme(tinycolor(backgroundColor), theme);
         if (tinycolor(backgroundColor).toHexString() !== newBackground.toHexString()) {
             ruleViolations.push({
+                name: AccentColorContrastRule.name,
                 severity: "warning",
                 message: `The provided background color for ${theme} mode is not ${theme} enough. It will be adjusted to ${newBackground.toHexString()}.`
             });
@@ -60,11 +63,13 @@ export function validateTheme(
 
     if (accentPrimaryColor == null) {
         ruleViolations.push({
+            name: AccentColorContrastRule.name,
             severity: "warning",
             message: `No accent-color provided for ${theme} mode. A random color will be used.`
         });
     } else if (!tinycolor(accentPrimaryColor).isValid()) {
         ruleViolations.push({
+            name: AccentColorContrastRule.name,
             severity: "fatal",
             message: `Invalid accent-color provided for colors.accent-primary.${theme}: ${accentPrimaryColor}.`
         });
@@ -74,16 +79,19 @@ export function validateTheme(
 
         if (ratio < 3) {
             ruleViolations.push({
+                name: AccentColorContrastRule.name,
                 severity: "warning",
                 message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. It should be at least 3:1.`
             });
         } else if (ratio < 4.5) {
             ruleViolations.push({
+                name: AccentColorContrastRule.name,
                 severity: "warning",
                 message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. Fern will adjust the color to meet the minimum contrast ratio of 4.5:1 for WCAG AA and 7:1 for WCAG AAA.`
             });
         } else if (ratio < 7) {
             ruleViolations.push({
+                name: AccentColorContrastRule.name,
                 severity: "warning",
                 message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. Fern will adjust the color to meet the minimum contrast ratio of 7:1 for WCAG AAA.`
             });

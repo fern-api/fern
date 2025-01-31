@@ -1,13 +1,13 @@
 import stripAnsi from "strip-ansi";
 
-import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
+import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 
+import { ValidationViolation } from "@fern-api/validation-utils";
 import { Rule } from "../Rule";
-import { ValidationViolation } from "../ValidationViolation";
 import { runRulesOnWorkspace } from "../validateFernWorkspace";
 
 export declare namespace getViolationsForRule {

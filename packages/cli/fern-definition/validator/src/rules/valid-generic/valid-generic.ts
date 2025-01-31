@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
-import { NodePath, isGeneric, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import { isGeneric, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 import { Rule, RuleViolation } from "../../Rule";
 import { visitDefinitionFileYamlAst } from "../../ast";

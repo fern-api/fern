@@ -1,4 +1,5 @@
-import { NodePath, RawSchemas, RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { RawSchemas, RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 export type RootApiFileAstVisitor<R = void | void> = {
     [K in keyof RootApiFileAstNodeTypes]: RootApiFileAstNodeVisitor<K, R>;

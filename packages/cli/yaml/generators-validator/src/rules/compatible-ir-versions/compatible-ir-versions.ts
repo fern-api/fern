@@ -2,18 +2,23 @@ import { generatorsYml } from "@fern-api/configuration-loader";
 import { createFdrGeneratorsSdkService } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { ValidationViolation } from "@fern-api/validation-utils";
+import { RelativeFilePath } from "../../../../../../commons/path-utils/src";
+import { Rule } from "../../Rule";
 
 function getMaybeBadVersionMessage(
     generatorName: string,
     minCliVersion: string,
     cliVersion: string
-): RuleViolation[] | undefined {
+): ValidationViolation[] | undefined {
     if (!isVersionAhead(cliVersion, minCliVersion)) {
         return [
             {
+                name: "compatible-ir-version",
                 severity: "fatal",
-                message: `The generator ${generatorName} requires CLI version ${minCliVersion} or later (current version: ${cliVersion}). Please run \`fern upgrade\` to upgrade your CLI version and use this generator.`
+                message: `The generator ${generatorName} requires CLI version ${minCliVersion} or later (current version: ${cliVersion}). Please run \`fern upgrade\` to upgrade your CLI version and use this generator.`,
+                relativeFilepath: RelativeFilePath.of("generators.yml"),
+                nodePath: []
             }
         ];
     }

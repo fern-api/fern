@@ -1,13 +1,13 @@
 export { EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants";
-export { type NodePath, type NodePathItem } from "./NodePath";
 export * as RawSchemas from "./schemas";
-export { type DefinitionFileSchema, type RootApiFileSchema, type PackageMarkerFileSchema } from "./schemas";
-export * from "./utils/generics";
+export { type DefinitionFileSchema, type PackageMarkerFileSchema, type RootApiFileSchema } from "./schemas/api";
 export * from "./utils/auth";
+export * from "./utils/generics";
 export { getRequestBody } from "./utils/getRequestBody";
+export { HttpEndpointReferenceParser } from "./utils/HttpEndpointReferenceParser";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
-export { isRawProtobufSourceSchema } from "./utils/isRawProtobufSourceSchema";
 export { isOpenApiSourceSchema } from "./utils/isOpenApiSourceSchema";
+export { isRawProtobufSourceSchema } from "./utils/isRawProtobufSourceSchema";
 export { isRawTextType } from "./utils/isRawTextType";
 export { parseBytesRequest, type BytesRequest } from "./utils/parseBytesRequest";
 export { parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest";
@@ -44,4 +44,4 @@ export {
     type RawTypeDeclarationVisitor
 } from "./utils/visitRawTypeDeclaration";
 export { FernContainerRegex, visitRawTypeReference } from "./utils/visitRawTypeReference";
-export { HttpEndpointReferenceParser } from "./utils/HttpEndpointReferenceParser";
+

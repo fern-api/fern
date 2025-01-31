@@ -1,5 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { NodePath } from "@fern-api/validation-utils";
 
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "./utils/createDocsVisitor";

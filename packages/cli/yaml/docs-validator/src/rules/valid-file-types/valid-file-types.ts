@@ -5,7 +5,8 @@ import path from "path";
 
 import { doesPathExist } from "@fern-api/fs-utils";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { RuleViolation } from "@fern-api/validation-utils";
+import { Rule } from "../../Rule";
 
 const ALLOWED_FILE_TYPES = new Set<MimeType>([
     // image files
@@ -104,6 +105,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         } else {
             return [
                 {
+                    name: ValidFileTypes.name,
                     severity: "fatal",
                     message: `The file type of ${fileType.mime} is not allowed: ${absoluteFilepath}`
                 }
@@ -121,6 +123,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         if (encoding == null) {
             return [
                 {
+                    name: ValidFileTypes.name,
                     severity: "fatal",
                     message: `The encoding of the file could not be detected: ${absoluteFilepath}`
                 }
@@ -129,6 +132,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         if (!ALLOWED_ENCODINGS.has(encoding.toUpperCase())) {
             return [
                 {
+                    name: ValidFileTypes.name,
                     severity: "fatal",
                     message: `The encoding of ${encoding} is not allowed: ${absoluteFilepath}`
                 }
@@ -141,6 +145,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
     // in all other cases, return false
     return [
         {
+            name: ValidFileTypes.name,
             severity: "fatal",
             message: `File is not allowed to be uploaded: ${absoluteFilepath}`
         }

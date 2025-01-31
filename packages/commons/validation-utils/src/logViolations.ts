@@ -2,36 +2,35 @@ import chalk from "chalk";
 
 import { formatLog } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
-import { ValidationViolation } from "@fern-api/fern-definition-validator";
-import { LogLevel } from "@fern-api/logger";
-import { TaskContext } from "@fern-api/task-context";
-import { NodePath } from "@fern-api/validation-utils";
+import { LogLevel, Logger } from "@fern-api/logger";
+import { NodePath } from "./NodePath";
+import { ValidationViolation } from "./ValidationViolation";
 
 export interface LogViolationsResponse {
     hasErrors: boolean;
 }
 
 export function logViolations({
-    context,
+    logger,
     violations,
     logWarnings,
     logSummary = true
 }: {
-    context: TaskContext;
+    logger: Logger;
     violations: ValidationViolation[];
     logWarnings: boolean;
     logSummary?: boolean;
 }): LogViolationsResponse {
     const stats = getViolationStats(violations);
     if (logSummary) {
-        logViolationsSummary({ context, stats, logWarnings });
+        logViolationsSummary({ logger, stats, logWarnings });
     }
 
     const violationsByNodePath = groupViolationsByNodePath(violations);
 
     for (const [nodePath, violations] of violationsByNodePath) {
         const relativeFilepath = violations[0]?.relativeFilepath ?? "";
-        logViolationsGroup({ logWarnings, relativeFilepath, nodePath, violations, context });
+        logViolationsGroup({ logWarnings, relativeFilepath, nodePath, violations, logger });
     }
 
     return {
@@ -52,13 +51,13 @@ function logViolationsGroup({
     relativeFilepath,
     nodePath,
     violations,
-    context
+    logger
 }: {
     logWarnings: boolean;
     relativeFilepath: string;
     nodePath: NodePath;
     violations: ValidationViolation[];
-    context: TaskContext;
+    logger: Logger;
 }): void {
     const severity = getSeverityForViolations(violations);
     if (severity === "warning" && !logWarnings) {
@@ -73,7 +72,7 @@ function logViolationsGroup({
         })
         .filter((message): message is string => message != null)
         .join("\n");
-    context.logger.log(
+    logger.log(
         getLogLevelForSeverity(severity),
         formatLog({
             breadcrumbs: [
@@ -114,11 +113,11 @@ function getLogLevelForSeverity(severity: ValidationViolation["severity"]) {
 
 function logViolationsSummary({
     stats,
-    context,
+    logger,
     logWarnings
 }: {
     stats: ViolationStats;
-    context: TaskContext;
+    logger: Logger;
     logWarnings: boolean;
 }): void {
     const { numFatal, numErrors, numWarnings } = stats;
@@ -129,11 +128,11 @@ function logViolationsSummary({
     }
 
     if (numFatal > 0) {
-        context.logger.error(message);
+        logger.error(message);
     } else if (numErrors + numWarnings > 0) {
-        context.logger.warn(message);
+        logger.warn(message);
     } else {
-        context.logger.info(chalk.green("✓ All checks passed"));
+        logger.info(chalk.green("✓ All checks passed"));
     }
 }
 

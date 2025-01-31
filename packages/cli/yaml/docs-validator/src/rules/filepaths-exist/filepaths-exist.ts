@@ -10,6 +10,7 @@ export const FilepathsExistRule: Rule = {
                 if (!(await doesPathExist(absoluteFilepath))) {
                     return [
                         {
+                            name: FilepathsExistRule.name,
                             severity: "fatal",
                             message: `Path ${value} does not exist`
                         }

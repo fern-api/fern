@@ -23,6 +23,7 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
             if (nonExistentEnvironmentIds.length === 1) {
                 return [
                     {
+                        name: PlaygroundEnvironmentsExistRule.name,
                         severity: "fatal",
                         message: `The API does not contain the ${nonExistentEnvironmentIds[0]} environment. ${
                             getExistingEnvironmentIds(Array.from(availableEnvironmentIds)) ?? ""
@@ -33,6 +34,7 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
 
             return [
                 {
+                    name: PlaygroundEnvironmentsExistRule.name,
                     severity: "fatal",
                     message: `The API does not contain the following environments: ${nonExistentEnvironmentIds.join(
                         ", "

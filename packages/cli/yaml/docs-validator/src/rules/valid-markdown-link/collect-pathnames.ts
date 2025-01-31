@@ -2,9 +2,10 @@ import type { Position } from "unist";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-import { RuleViolation } from "../../Rule";
+import { RuleViolation } from "@fern-api/validation-utils";
 import { safeCollectLinksAndSources } from "./collect-links";
 import { stripAnchorsAndSearchParams } from "./url-utils";
+import { ValidMarkdownLinks } from "./valid-markdown-link";
 
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
 const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;
@@ -80,6 +81,7 @@ export function collectPathnamesToCheck(
                 });
             } catch (error) {
                 violations.push({
+                    name: ValidMarkdownLinks.name,
                     severity: "warning",
                     message: `Invalid URL: ${link.href}`
                 });
@@ -109,6 +111,7 @@ export function collectPathnamesToCheck(
                 new URL(source.src);
             } catch (error) {
                 violations.push({
+                    name: ValidMarkdownLinks.name,
                     severity: "warning" as const,
                     message: `Invalid URL: ${source.src}`
                 });
