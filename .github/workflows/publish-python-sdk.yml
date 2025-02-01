@@ -1,10 +1,10 @@
-name: python-sdk
+name: Publish Python SDK
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: "The version of the python SDK that you would like to release"
+        description: "The version of the Python SDK that you would like to release for Fern's public API"
         required: true
         type: string
 
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Fern
+      - name: Install Fern CLI
         run: npm install -g fern-api
 
       - name: Release Python SDK

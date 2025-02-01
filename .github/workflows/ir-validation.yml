@@ -1,4 +1,4 @@
-name: IR Check
+name: IR Validation
 
 on:
   workflow_dispatch:

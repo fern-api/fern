@@ -1,7 +1,9 @@
-name: fhir
+name: FHIR Definition Validation
+
 on:
   push:
-    branches: main
+    branches:
+      - main
     paths:
       - "fern/apis/fhir/**"
 

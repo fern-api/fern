@@ -1,4 +1,4 @@
-name: java
+name: Java Generator Tests
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
   workflow_call:
 
 jobs:
-  compile:
+  java-compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -25,7 +25,7 @@ jobs:
         working-directory: ./generators/java
         run: ./gradlew compileJava
 
-  test:
+  java-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -43,7 +43,7 @@ jobs:
           TERM: dumb
         run: ./gradlew test
 
-  check:
+  java-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

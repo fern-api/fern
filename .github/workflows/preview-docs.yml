@@ -1,4 +1,4 @@
-name: preview-docs
+name: Preview Fern's Documentation
 
 on:
   pull_request_target:

@@ -1,4 +1,4 @@
-name: fern
+name: CLI Validation
 
 on:
   pull_request:
