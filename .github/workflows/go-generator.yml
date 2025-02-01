@@ -1,4 +1,4 @@
-name: go
+name: Go Generator Tests
 
 on:
   pull_request:

@@ -1,4 +1,4 @@
-name: OpenAPI IR Check
+name: Validate OpenAPI IR
 
 on:
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Install Fern
+      - name: Install Fern CLI
         run: npm install -g fern-api
 
       - name: Check IR Definitions
