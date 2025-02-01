@@ -467,12 +467,15 @@ navigation:
       - section: API References
         contents:
           - page: Generate API Reference
-            icon: fa-solid fa-wand-magic-sparkles
+            icon: fa-regular fa-wand-sparkles
             path: ./pages/docs/api-references/generate-api-ref.mdx
             slug: generate-api-ref
           - page: SDK Snippets
-            icon: fa-regular fa-code
+            icon: fa-regular fa-brackets-curly
             path: ./pages/docs/api-references/sdk-snippets.mdx
+          - page: HTTP Snippets
+            icon: fa-regular fa-code
+            path: ./pages/docs/api-references/http-snippets.mdx
           - section: API Explorer
             slug: api-explorer
             path: ./pages/docs/api-references/api-explorer.mdx
