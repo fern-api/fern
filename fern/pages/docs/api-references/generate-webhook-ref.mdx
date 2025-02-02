@@ -7,7 +7,7 @@ Similar to API References, Fern Docs can automatically generate your Webhook Ref
 
 Example:
 
-```yml docs.yml {9-10}
+```yml docs.yml {11-12}
 navigation:
   - section: Introduction
     contents:
@@ -29,7 +29,7 @@ Your webhooks should be defined in a dedicated folder within your Fern project:
 
 <Tabs>
 <Tab title="OpenAPI">
-```
+```bash
 fern/
   └── apis/
       ├── webhooks-v1/           # Webhook definition
@@ -49,7 +49,7 @@ api:
 You can read more about how to define webhooks in your OpenAPI specification [here](/learn/api-definition/openapi/webhooks).
 </Tab>
 <Tab title="Fern Definition">
-```
+```bash
 fern/
   └── apis/
       ├── webhooks-v1/           # Webhook definition
@@ -77,7 +77,7 @@ navigation:
 
 When using multiple webhook definitions, organize them in separate directories within your Fern project:
 
-```
+```bash
 fern/
   └── apis/
       ├── payment-webhooks/     # Payment webhook definitions
