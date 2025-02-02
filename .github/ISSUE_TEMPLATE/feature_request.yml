@@ -1,5 +1,5 @@
-name: "Feature Request"
-description: "Suggest a new feature or improvement for Fern."
+name: "✨ Feature Request"
+description: "How can we make Fern even more awesome?"
 title: "[Feature]: "
 labels: ["enhancement"]
 assignees: [dsheridan]

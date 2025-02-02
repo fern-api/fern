@@ -1,5 +1,5 @@
-name: "Documentation Issue or Gap"
-description: "Is something missing or incorrect in the docs? Let us know!"
+name: "📖 Documentation Improvement"
+description: "Something missing or incorrect in our docs (buildwithfern.com/learn)?"
 title: "[Docs]: "
 labels: ["documentation"]
 assignees: [dsheridan]

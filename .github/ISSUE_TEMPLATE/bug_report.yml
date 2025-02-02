@@ -1,5 +1,5 @@
-name: "Bug Report"
-description: "Something isn't working? Let us know!"
+name: "🐛 Bug Report"
+description: "Uh-oh! Something now working?"
 title: "[Bug]: "
 labels: ["bug"]
 assignees: [dsheridan]
