@@ -17,22 +17,22 @@ HTTP snippets are enabled by default for all Fern documentation sites. If you wi
 navigation:
   - api: API Reference
     snippets:
-      sdk: # SDK snippets configuration
-        typescript: your-package-name    # Enable TypeScript SDK snippets
-        python: your-package-name        # Enable Python SDK snippets
-      http: # HTTP snippet configuration
-        targets:          # order determines display order in dropdown
-          - id: python    # default: requests
-          - id: php
-            library: guzzle   # override default library
-          - id: curl
-          - id: javascript
-            library: axios    # override default fetch
-          - id: java     # default: okhttp
-          - id: go       # default: native
-          - id: ruby     # default: native
-          - id: csharp   # default: restsharp
-          
+      sdk:
+        typescript: your-package-name
+        python: your-package-name
+      http:
+        - language: python    # default: requests
+        - language: php
+          library: guzzle   # override default library
+        - language: curl
+        - language: javascript
+        - language: javascript # can have the same language multiple times with different libraries
+          library: axios
+        - language: java
+        - language: go
+        - language: ruby
+        - language: csharp
+        
         # Or disable HTTP snippets entirely
         enabled: false    # defaults to true
 
