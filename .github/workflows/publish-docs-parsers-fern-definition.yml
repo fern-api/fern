@@ -1,4 +1,4 @@
-name: Publish Docs Parsers for Fern Definition
+name: Publish @fern-fern/docs-parsers-fern-definition
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
           NEW_VERSION="$major.$minor.$((patch + 1))"
           echo "next_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Generate docs parsers
+      - name: Generate SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
