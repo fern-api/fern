@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The docs will now display errors by default. Previously, errors were hidden by default and needed to be explicitly 
+        enabled with `displayErrors: true`.
+      type: fix
+  irVersion: 55
+  version: 0.51.18
+
+- changelogEntry:
+    - summary: |
         The OpenRPC parser now handles displaying parameters as object examples.
       type: fix
   irVersion: 55
