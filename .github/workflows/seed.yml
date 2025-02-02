@@ -219,7 +219,7 @@ jobs:
   typescript-sdk:
     runs-on: Seed
     needs: changes
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') && github.repository == 'fern-api/fern' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
