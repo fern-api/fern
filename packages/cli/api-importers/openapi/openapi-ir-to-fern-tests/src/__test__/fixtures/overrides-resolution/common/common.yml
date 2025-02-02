@@ -1,0 +1,59 @@
+components:
+  schemas:
+    UserCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        settings:
+          $ref: '#/components/schemas/UserSettings'
+          nullable: true
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+        settings:
+          $ref: '#/components/schemas/UserSettings'
+          nullable: true
+        stats:
+          $ref: '#/components/schemas/UserStats'
+          nullable: true
+    UserSettings:
+      type: object
+      properties:
+        theme:
+          type: string
+        notifications:
+          type: boolean
+        lastModified:
+          type: string
+          format: date-time
+          nullable: true
+
+    UserStats:
+      type: object
+      properties:
+        totalLogins:
+          type: integer
+          nullable: true
+        lastLoginTime:
+          type: string
+          format: date-time
+          nullable: true
+        accountStatus:
+          type: string
+          enum: [active, suspended, deleted]
+          nullable: true
+

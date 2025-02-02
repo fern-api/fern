@@ -3,16 +3,22 @@ title: "Global Configuration"
 subtitle: "Customize your documentation using the docs.yml file"
 ---
 
-<Note>
-  Not all of the properties in `docs.yml` are documented here. If you'd like to see all properties, please check out the 
-  the  raw [schema](https://github.com/fern-api/fern/blob/69e74d9c27dc031ec2e84e70b878c40e9e9678a5/packages/cli/configuration/fern/definition/docs.yml#L110-L153)
-</Note>
+### Editor Support
+
+To enable intelligent YAML validation and autocompletion in your editor, add this line at the top of your `docs.yml` file:
+
+```yaml docs.yml
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+```
+
+This enables real-time schema validation and autocompletion based on our [complete schema](https://github.com/fern-api/fern/blob/09555d587294fd3dc77ceb35f21e8976a5a2b7a2/fern/apis/docs-yml/definition/docs.yml#L110).
 
 ## Top-level properties
 
 Every Fern documentation website needs a `docs.yml` file with the core configuration settings. 
 
 ```yaml docs.yml
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
 
 title: My Docs
 
@@ -22,8 +28,8 @@ logo:
   light: path/to/logo.png
 
 favicon: path/to/favicon.ico
-
 ```
+
 <ParamField path="title" type="string" required={false}>
   A string that is used as the tab bar title.
 </ParamField>

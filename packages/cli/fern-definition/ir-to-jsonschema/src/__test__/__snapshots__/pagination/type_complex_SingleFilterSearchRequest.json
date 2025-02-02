@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "field": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "operator": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/complex.SingleFilterSearchRequestOperator"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "complex.SingleFilterSearchRequestOperator": {
+      "type": "string",
+      "enum": [
+        "=",
+        "!=",
+        "IN",
+        "NIN",
+        "<",
+        ">",
+        "~",
+        "!~",
+        "^",
+        "$"
+      ]
+    }
+  }
+}

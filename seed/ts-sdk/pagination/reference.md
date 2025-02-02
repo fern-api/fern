@@ -1,5 +1,84 @@
 # Reference
 
+## Conversations
+
+<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>({ ...params }) -> core.Page<SeedPagination.Conversation></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.complex.search({
+    pagination: {
+        perPage: 1,
+        startingAfter: "starting_after",
+    },
+    query: {
+        field: "field",
+        operator: "=",
+        value: "value",
+    },
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+const page = await client.complex.search({
+    pagination: {
+        perPage: 1,
+        startingAfter: "starting_after",
+    },
+    query: {
+        field: "field",
+        operator: "=",
+        value: "value",
+    },
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.SearchRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Complex.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Users
 
 <details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>

@@ -144,7 +144,7 @@ types:
     extends:
       - commons.WithDocsSchema
     properties:
-      type: string
+      type: optional<string>
       property: optional<string>
       status-code: optional<integer>
 

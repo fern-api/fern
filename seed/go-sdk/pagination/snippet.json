@@ -2,6 +2,17 @@
     "endpoints": [
         {
             "id": {
+                "path": "/conversations/search",
+                "method": "POST",
+                "identifier_override": "endpoint_complex.search"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Complex.Search(\n\tcontext.TODO(),\n\t\u0026fern.SearchRequest{\n\t\tPagination: \u0026fern.StartingAfterPaging{\n\t\t\tPerPage: 1,\n\t\t\tStartingAfter: fern.String(\n\t\t\t\t\"starting_after\",\n\t\t\t),\n\t\t},\n\t\tQuery: fern.NewSearchRequestQueryFromSingleFilterSearchRequest(\n\t\t\t\u0026fern.SingleFilterSearchRequest{\n\t\t\t\tField: fern.String(\n\t\t\t\t\t\"field\",\n\t\t\t\t),\n\t\t\t\tOperator: fern.SingleFilterSearchRequestOperatorEquals,\n\t\t\t\tValue: fern.String(\n\t\t\t\t\t\"value\",\n\t\t\t\t),\n\t\t\t},\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithExtendedResults"

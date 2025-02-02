@@ -32,6 +32,10 @@ public class UserClient {
         this.clientOptions = clientOptions;
     }
 
+    public User getUser(String userId) {
+        return getUser(userId, GetUsersRequest.builder().build());
+    }
+
     public User getUser(String userId, GetUsersRequest request) {
         return getUser(userId, request, null);
     }
@@ -89,6 +93,7 @@ public class UserClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -150,6 +155,10 @@ public class UserClient {
         } catch (IOException e) {
             throw new SeedPathParametersException("Network error executing HTTP request", e);
         }
+    }
+
+    public List<User> searchUsers(String userId) {
+        return searchUsers(userId, SearchUsersRequest.builder().build());
     }
 
     public List<User> searchUsers(String userId, SearchUsersRequest request) {

@@ -223,7 +223,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 clientOptionsMember.name,
                                 ClientOptionsGenerator.HEADERS_METHOD_NAME,
                                 AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
-                        .add(".addHeader($S, $S);\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+                        .add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType)
+                        .add(".addHeader($S, $S);\n", AbstractEndpointWriter.ACCEPT_HEADER, contentType);
             } else {
                 requestBodyCodeBlock.add(
                         ".headers($T.of($L.$L($L)));\n",

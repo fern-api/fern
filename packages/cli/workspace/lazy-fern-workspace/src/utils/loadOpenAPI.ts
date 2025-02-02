@@ -45,6 +45,7 @@ export async function loadOpenAPI({
         // references are resolved.
         return await parseOpenAPI({
             absolutePathToOpenAPI,
+            absolutePathToOpenAPIOverrides,
             parsed: merged
         });
     }

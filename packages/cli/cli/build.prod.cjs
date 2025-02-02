@@ -11,7 +11,6 @@ async function main() {
         format: ['cjs'],
         minify: true,
         outDir: 'dist/prod',
-        noExternal: ['punycode'],
         env: {
             AUTH0_DOMAIN: "fern-prod.us.auth0.com",
             AUTH0_CLIENT_ID: "syaWnk6SjNoo5xBf1omfvziU3q7085lh",

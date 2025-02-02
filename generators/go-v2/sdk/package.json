@@ -29,15 +29,21 @@
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-sdk:latest ../../.."
   },
   "devDependencies": {
+    "@fern-api/go-ast": "workspace:*",
+    "@fern-api/go-base": "workspace:*",
+    "@fern-api/base-generator": "workspace:*",
+    "@fern-api/configs": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
+    "@fern-fern/generator-exec-sdk": "^0.0.898",
+    "@fern-fern/ir-sdk": "^55.0.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "@types/node": "18.15.3",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "esbuild": "^0.24.0",
     "tsup": "^8.0.2",
-    "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "vitest": "^2.1.8"
   }
