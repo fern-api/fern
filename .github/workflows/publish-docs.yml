@@ -1,4 +1,4 @@
-name: Publish Fern's Documentation
+name: Publish Docs
 
 on:
   push:

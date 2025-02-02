@@ -16,7 +16,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  release-cli:
+  run:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     outputs:

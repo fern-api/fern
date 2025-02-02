@@ -1,4 +1,4 @@
-name: Publish Docs Parsers for Fern Definition
+name: Publish @fern-fern/docs-parsers-fern-definition
 
 on:
   workflow_dispatch:
