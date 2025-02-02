@@ -1,4 +1,4 @@
-name: CLI Build
+name: ci
 
 on:
   push:
