@@ -13,7 +13,7 @@ on:
 
 jobs:
   publish-dev:
-    if: ${{ inputs.version == null }}
+    if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -47,7 +47,7 @@ jobs:
 
   # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:
-    if: ${{ inputs.version == null }}
+    if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     environment: Fern Prod
     runs-on: ubuntu-latest
     steps:
