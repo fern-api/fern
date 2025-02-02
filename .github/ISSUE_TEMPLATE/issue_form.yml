@@ -1,0 +1,175 @@
+name: "Report an Issue or Suggest a Feature"
+description: "File a bug, feature request, or documentation issue for Fern"
+title: "[Issue]: "
+labels: []
+assignees: [dsheridan]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: "Issue Title"
+      description: "Provide a descriptive title for your issue"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: "What type of issue are you reporting?"
+      options:
+        - "Bug (Something isn't working)"
+        - "Feature Request (I'd like a new feature)"
+        - "Documentation Issue (There's a mistake in the docs)"
+        - "Other"
+      multiple: false
+    validations:
+      required: true
+
+  - type: dropdown
+    id: product
+    attributes:
+      label: "Which Fern component are you reporting about?"
+      description: "Select the specific part of Fern that you're experiencing issues with or want to improve"
+      options:
+        - "SDK Generator"
+        - "Fern Docs"
+        - "Fern CLI"
+        - "Our Documentation (/learn on buildwithfern.com)"
+        - "Other"
+      multiple: false
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: "Describe the issue"
+      description: "Provide as much detail as possible, including steps to reproduce, expected behavior, and actual behavior."
+      placeholder: "Describe the issue in detail..."
+    validations:
+      required: true
+
+  # CLI-Specific Fields
+  - type: textarea
+    id: cli-command
+    attributes:
+      label: "CLI Command Used"
+      description: "Paste the exact CLI command that caused the issue."
+      placeholder: "e.g., fern generate-sdk --version latest..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: cli-version
+    attributes:
+      label: "CLI Version"
+      placeholder: "e.g., 0.50.3"
+    validations:
+      required: false
+
+  # SDK-Specific Fields
+  - type: textarea
+    id: generator-version
+    attributes:
+      label: "SDK Generator Version"
+      placeholder: "e.g., fernapi/fern-typescript-node-sdk 0.9.5"
+    validations:
+      required: false
+
+  - type: textarea
+    id: api-spec
+    attributes:
+      label: "Minimal API Specification"
+      description: "Provide the smallest API spec necessary to reproduce the issue."
+      placeholder: "Paste API spec here..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: actual-code
+    attributes:
+      label: "Actual Generated Code"
+      description: "Paste the generated code that contains the issue."
+      placeholder: "Paste generated code here..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected-code
+    attributes:
+      label: "Expected Generated Code"
+      description: "Provide an example of what you expected the generated code to look like."
+      placeholder: "Paste expected code here..."
+    validations:
+      required: false
+
+  # API Docs-Specific Fields
+  - type: textarea
+    id: docs-error
+    attributes:
+      label: "Documentation Error Details"
+      description: "Describe any errors, missing information, or inconsistencies in your published API Docs."
+      placeholder: "The `/users` endpoint is missing parameter X..."
+    validations:
+      required: false
+
+  # Documentation Page URL
+  - type: input
+    id: doc-url
+    attributes:
+      label: "URL of the Documentation Page"
+      placeholder: "e.g., https://buildwithfern.com/learn/some-page"
+    validations:
+      required: false
+
+  - type: textarea
+    id: suggested-improvement
+    attributes:
+      label: "Suggested Improvement"
+      description: "Describe what should be improved and how."
+      placeholder: "Suggest an improvement..."
+    validations:
+      required: false
+
+  # Feature Request Fields
+  - type: textarea
+    id: proposed-feature
+    attributes:
+      label: "Feature Proposal"
+      description: "Describe the new feature, why it's needed, and any alternatives considered."
+      placeholder: "Explain the feature idea..."
+    validations:
+      required: false
+
+  # File Attachment (for all issues)
+  - type: textarea
+    id: file-attachment
+    attributes:
+      label: "Attach Files (Optional)"
+      description: "Attach screenshots, logs, or any relevant files to help us debug."
+      placeholder: "Drag and drop files or paste links here..."
+    validations:
+      required: false
+
+  # Urgency Dropdown (for all issues)
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: "How urgent is this?"
+      options:
+        - "Blocking production"
+        - "High - impacts many users"
+        - "Medium - inconvenient but manageable"
+        - "Low - minor issue"
+    validations:
+      required: false
+
+  # Environment Details
+  - type: textarea
+    id: environment-details
+    attributes:
+      label: "Environment Details (Optional)"
+      description: "Include OS, browser, or other relevant environment details."
+      placeholder: "e.g., macOS 12.1, Chrome 90"
+    validations:
+      required: false
