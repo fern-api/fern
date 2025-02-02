@@ -9,7 +9,7 @@ on:
   workflow_call:
 
 jobs:
-  java-compile:
+  compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -25,7 +25,7 @@ jobs:
         working-directory: ./generators/java
         run: ./gradlew compileJava
 
-  java-test:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -43,7 +43,7 @@ jobs:
           TERM: dumb
         run: ./gradlew test
 
-  java-lint:
+  check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

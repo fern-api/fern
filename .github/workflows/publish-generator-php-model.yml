@@ -1,5 +1,5 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-php-model
+name: Publish PHP Model Generator
 
 on:
   push:
