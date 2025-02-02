@@ -499,6 +499,9 @@ navigation:
           - page: Write Markdown in API Reference
             icon: fa-regular fa-pencil
             path: ./pages/docs/api-references/api-ref-content.mdx
+          - page: Generate Webhook Reference
+            icon: fa-regular fa-webhook
+            path: ./pages/docs/api-references/generate-webhook-ref.mdx
 
       - section: Integrations
         slug: integrations
