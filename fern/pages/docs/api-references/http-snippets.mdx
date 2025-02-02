@@ -10,13 +10,16 @@ subtitle: HTTP snippets allow users to see API request examples using common HTT
 
 ## Setup
 
-1. Ensure you have a paid Fern subscription
-2. Contact support to request HTTP snippets activation
-3. Once enabled, build your production docs
+HTTP snippets are enabled by default for all Fern documentation sites. If you wish to disable them, you can do so in your `docs.yml` configuration file:
 
-<Note>
-Currently, HTTP snippets are provided as an all-or-nothing set. You cannot configure which languages are displayed. If you would like this feature, please [open a GitHub issue](https://github.com/fern-api/fern/issues/new?template=docs-feature.yml).
-</Note>
+<CodeBlock title="docs.yml">
+```yaml 
+navigation:
+  - api: API Reference
+    snippets:
+      http: false # <--- disable HTTP snippets; defaults to true
+```
+</CodeBlock>
 
 ## How It Works
 
