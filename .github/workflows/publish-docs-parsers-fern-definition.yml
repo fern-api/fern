@@ -1,4 +1,4 @@
-name: publish-docs-parsers-fern-definition
+name: Publish Docs Parsers for Fern Definition
 
 on:
   workflow_dispatch:

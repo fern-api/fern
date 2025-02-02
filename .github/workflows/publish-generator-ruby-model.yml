@@ -1,5 +1,5 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-ruby-model
+name: Publish Ruby Model Generator
 
 on:
   push:

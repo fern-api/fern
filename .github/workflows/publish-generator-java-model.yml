@@ -1,5 +1,5 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-java-model
+name: Publish Java Model Generator
 
 on:
   push:

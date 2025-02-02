@@ -1,5 +1,5 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-java-spring
+name: Publish Java Spring Generator
 
 on:
   push:

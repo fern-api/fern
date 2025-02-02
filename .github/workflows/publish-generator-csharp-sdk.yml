@@ -1,5 +1,5 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-csharp-sdk
+name: Publish C# SDK Generator
 
 on:
   push:
