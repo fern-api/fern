@@ -1,0 +1,148 @@
+name: "Bug Report"
+description: "Something isn't working? Let us know!"
+title: "[Bug]: "
+labels: ["bug"]
+assignees: [dsheridan]
+body:
+  - type: markdown
+    attributes:
+      value: "### 🛠 Thanks for reporting a bug! Please provide the details below."
+
+  - type: dropdown
+    id: product
+    attributes:
+      label: "Which Fern component?"
+      options:
+        - "SDK Generator"
+        - "Fern CLI"
+        - "Fern Docs"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "How urgent is this?"
+      options:
+        - "P0 - Critical (Blocking work)"
+        - "P1 - High (Strongly needed)"
+        - "P2 - Medium (Would be helpful)"
+        - "P3 - Low (Nice to have)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: "How often does this happen?"
+      options:
+        - "Every time"
+        - "Frequently (50%+ of the time)"
+        - "Occasionally (~10-50% of the time)"
+        - "Rarely (<10% of the time)"
+        - "Not sure"
+    validations:
+      required: false
+
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: "What's the issue?"
+      description: "Steps to reproduce, expected vs. actual behavior."
+      placeholder: |
+        Example:
+        1. Run `fern generate --group typescript-sdk`
+        2. Open the generated code in `sdk/my-api.ts`
+        3. Notice `Client.fetch()` returns incorrect response
+        
+        **Expected**: Returns a properly typed object.  
+        **Actual**: Returns `any` instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Logs or Error Messages"
+      description: "Paste any relevant logs, stack traces, or CLI output."
+      placeholder: "Copy and paste logs here..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "Environment Details"
+      description: "What OS, browser, or runtime are you using?"
+      placeholder: "e.g., macOS 14.2, Node.js 18.17.1, Python 3.11"
+    validations:
+      required: false
+
+  # SDK Generator-specific fields
+  - type: markdown
+    attributes:
+      value: "#### SDK Generator (if applicable)"
+  - type: textarea
+    id: generator-version
+    attributes:
+      label: "SDK Generator Version"
+      placeholder: "e.g., fernapi/fern-typescript-node-sdk 0.9.5"
+    validations:
+      required: false
+  - type: textarea
+    id: api-spec
+    attributes:
+      label: "Minimal API Spec"
+      placeholder: "Provide a small spec to reproduce the issue"
+    validations:
+      required: false
+
+  # CLI-specific fields
+  - type: markdown
+    attributes:
+      value: "#### Fern CLI (if applicable)"
+  - type: textarea
+    id: cli-command
+    attributes:
+      label: "CLI Command Used"
+      placeholder: "e.g., fern generate --docs --preview --log-level debug"
+    validations:
+      required: false
+  - type: textarea
+    id: cli-version
+    attributes:
+      label: "CLI Version"
+      placeholder: "e.g., 0.50.3"
+    validations:
+      required: false
+
+  # API Docs-specific fields
+  - type: markdown
+    attributes:
+      value: "#### Fern Docs (if applicable)"
+  - type: input
+    id: doc-url
+    attributes:
+      label: "URL of the Documentation Page"
+      placeholder: "e.g., https://buildwithfern.com/learn/some-page"
+    validations:
+      required: false
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: "Have you found a workaround? (Optional)"
+      description: "If you’ve found a temporary solution, let us know."
+      placeholder: "Describe any workarounds..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: file-attachment
+    attributes:
+      label: "Attach Files (Optional)"
+      description: "Screenshots, logs, or relevant files."
+      placeholder: "Drag and drop files or paste links here..."
+    validations:
+      required: false
