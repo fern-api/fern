@@ -9,10 +9,10 @@ body:
     attributes:
       label: "What type of issue are you reporting?"
       options:
-        - Bug (Something isn't working)
-        - Feature Request (I'd like a new feature)
-        - Documentation Issue (There's a mistake in the docs)
-        - Other
+        - "Bug (Something isn't working)"
+        - "Feature Request (I'd like a new feature)"
+        - "Documentation Issue (There's a mistake in the docs)"
+        - "Other"
       multiple: false
     validations:
       required: true
@@ -23,11 +23,11 @@ body:
       label: "Which Fern component are you reporting about?"
       description: "Select the specific part of Fern that you're experiencing issues with or want to improve"
       options:
-        - SDK Generator
-        - Fern Docs
-        - Fern CLI
-        - Our Documentation (buildwithfern.com/learn)
-        - Other
+        - "SDK Generator"
+        - "Fern Docs"
+        - "Fern CLI"
+        - "Our Documentation (/learn on buildwithfern.com)"
+        - "Other"
       multiple: false
     validations:
       required: true
@@ -41,29 +41,32 @@ body:
     validations:
       required: true
 
-  # 🔹 CLI-Specific Issue Fields
+  # CLI-Specific Fields
   - type: textarea
     id: cli-command
     attributes:
       label: "CLI Command Used"
       description: "Paste the exact CLI command that caused the issue."
       placeholder: "e.g., fern generate-sdk --version latest..."
-    if: product == "Fern CLI"
+    validations:
+      required: false
 
   - type: textarea
     id: cli-version
     attributes:
       label: "CLI Version"
-      placeholder: "e.g., 0.44.11"
-    if: product == "SDK Generator (Fern-generated SDKs)" || product == "Fern CLI"
+      placeholder: "e.g., 0.50.3"
+    validations:
+      required: false
 
-  # 🔹 SDK-Specific Issue Fields
+  # SDK-Specific Fields
   - type: textarea
     id: generator-version
     attributes:
       label: "SDK Generator Version"
       placeholder: "e.g., fernapi/fern-typescript-node-sdk 0.9.5"
-    if: product == "SDK Generator (Fern-generated SDKs)"
+    validations:
+      required: false
 
   - type: textarea
     id: api-spec
@@ -71,7 +74,8 @@ body:
       label: "Minimal API Specification"
       description: "Provide the smallest API spec necessary to reproduce the issue."
       placeholder: "Paste API spec here..."
-    if: product == "SDK Generator (Fern-generated SDKs)" || product == "Fern Docs (Your published API documentation)"
+    validations:
+      required: false
 
   - type: textarea
     id: actual-code
@@ -79,7 +83,8 @@ body:
       label: "Actual Generated Code"
       description: "Paste the generated code that contains the issue."
       placeholder: "Paste generated code here..."
-    if: product == "SDK Generator (Fern-generated SDKs)"
+    validations:
+      required: false
 
   - type: textarea
     id: expected-code
@@ -87,24 +92,27 @@ body:
       label: "Expected Generated Code"
       description: "Provide an example of what you expected the generated code to look like."
       placeholder: "Paste expected code here..."
-    if: product == "SDK Generator (Fern-generated SDKs)"
+    validations:
+      required: false
 
-  # 🔹 API Docs-Specific Fields
+  # API Docs-Specific Fields
   - type: textarea
     id: docs-error
     attributes:
       label: "Documentation Error Details"
       description: "Describe any errors, missing information, or inconsistencies in your published API Docs."
       placeholder: "The `/users` endpoint is missing parameter X..."
-    if: product == "Fern Docs (Your published API documentation)"
+    validations:
+      required: false
 
-  # 🔹 Documentation Page URL
+  # Documentation Page URL
   - type: input
     id: doc-url
     attributes:
       label: "URL of the Documentation Page"
       placeholder: "e.g., https://buildwithfern.com/learn/some-page"
-    if: product == "Our Documentation (/learn on buildwithfern.com)"
+    validations:
+      required: false
 
   - type: textarea
     id: suggested-improvement
@@ -112,26 +120,30 @@ body:
       label: "Suggested Improvement"
       description: "Describe what should be improved and how."
       placeholder: "Suggest an improvement..."
-    if: product == "Our Documentation (/learn on buildwithfern.com)"
+    validations:
+      required: false
 
-  # 🔹 Feature Request Fields
+  # Feature Request Fields
   - type: textarea
     id: proposed-feature
     attributes:
       label: "Feature Proposal"
       description: "Describe the new feature, why it's needed, and any alternatives considered."
       placeholder: "Explain the feature idea..."
-    if: issue-type == "Feature Request"
+    validations:
+      required: false
 
-  # 🆕 🔹 File Attachment (for all issues)
+  # File Attachment (for all issues)
   - type: textarea
     id: file-attachment
     attributes:
       label: "Attach Files (Optional)"
       description: "Attach screenshots, logs, or any relevant files to help us debug."
       placeholder: "Drag and drop files or paste links here..."
+    validations:
+      required: false
 
-  # 🆕 🔹 Urgency Dropdown (for all issues)
+  # Urgency Dropdown (for all issues)
   - type: dropdown
     id: urgency
     attributes:
@@ -141,10 +153,15 @@ body:
         - "High - impacts many users"
         - "Medium - inconvenient but manageable"
         - "Low - minor issue"
+    validations:
+      required: false
 
+  # Environment Details
   - type: textarea
     id: environment-details
     attributes:
       label: "Environment Details (Optional)"
       description: "Include OS, browser, or other relevant environment details."
       placeholder: "e.g., macOS 12.1, Chrome 90"
+    validations:
+      required: false
