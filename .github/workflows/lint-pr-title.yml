@@ -44,6 +44,8 @@ jobs:
             openapi
             deps
             deps-dev
+            fiber
+            pydantic
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
