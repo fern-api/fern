@@ -4,6 +4,14 @@ title: ""
 labels: []
 assignees: [dsheridan]
 body:
+  - type: input
+    id: title
+    attributes:
+      label: "Issue Title"
+      description: "Provide a descriptive title for your issue"
+    validations:
+      required: true
+
   - type: dropdown
     id: issue-type
     attributes:
