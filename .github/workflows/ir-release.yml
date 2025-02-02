@@ -1,4 +1,4 @@
-name: IR SDKs
+name: Release IR SDKs
 
 on:
   workflow_dispatch:

@@ -1,12 +1,12 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-pydantic
+name: Publish Python FastAPI Generator
 
 on:
   push:
     branches:
       - main
     paths:
-      - "generators/python/pydantic/versions.yml"
+      - "generators/python/fastapi/versions.yml"
   workflow_dispatch:
     inputs:
       version:
@@ -18,7 +18,7 @@ env:
   DOCKER_BUILDKIT: 1
 
 jobs:
-  publish-changed-generators:
+  run:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
@@ -40,20 +40,20 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          VERSIONS_FILE="generators/python/fastapi/versions.yml"
           git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
 
           if [ $? -eq 0 ]; then
-            pnpm seed:local publish generator pydantic --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+            pnpm seed:local publish generator fastapi --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
           else
             echo "No previous versions found, skipping publish."
           fi
 
-          pnpm seed:local register generator --generators pydantic
+          pnpm seed:local register generator --generators fastapi
 
   # Manually publish and register generators
   # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
-  publish-manually:
+  manual:
     runs-on: ubuntu-latest
     # Only run this job if this has been triggered manually
     if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -76,5 +76,5 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          pnpm seed:local publish generator pydantic --ver ${{ inputs.version }} --log-level debug
-          pnpm seed:local register generator --generators pydantic
+          pnpm seed:local publish generator fastapi --ver ${{ inputs.version }} --log-level debug
+          pnpm seed:local register generator --generators fastapi

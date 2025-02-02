@@ -1,4 +1,4 @@
-name: seed
+name: Seed Snapshot Tests
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
       csharp: ${{ steps.filter.outputs.csharp }}
       php: ${{ steps.filter.outputs.php }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
         id: filter
         with:

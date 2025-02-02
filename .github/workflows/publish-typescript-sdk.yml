@@ -1,10 +1,10 @@
-name: node-sdk
+name: Release TypeScript SDK
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: "The version of the Node SDK that you would like to release"
+        description: "The version of the TypeScript SDK that you would like to release for Fern's public API"
         required: true
         type: string
 
@@ -13,15 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-
-      - name: Download Fern
+      - name: Install Fern CLI
         run: npm install -g fern-api
 
-      - name: Release Node SDK
+      - name: Release TypeScript SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}

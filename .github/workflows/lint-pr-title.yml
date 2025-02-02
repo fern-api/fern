@@ -1,4 +1,4 @@
-name: "Lint PR Title"
+name: Lint PR Title
 
 on:
   pull_request_target:
@@ -44,6 +44,8 @@ jobs:
             openapi
             deps
             deps-dev
+            fiber
+            pydantic
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

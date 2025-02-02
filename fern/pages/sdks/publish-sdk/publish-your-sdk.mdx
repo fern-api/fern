@@ -235,7 +235,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
   
   <CodeBlocks>
     ```yaml title="Python" maxLines=0
-    name: python-sdk
+    name: Publish Python SDK
 
     on:
       workflow_dispatch:
@@ -263,7 +263,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
               fern generate --group python-sdk --version ${{ inputs.version }} --log-level debug
     ```
     ```yaml title="TypeScript" maxLines=0
-    name: ts-sdk
+    name: Publish TypeScript SDK
 
     on:
       workflow_dispatch:

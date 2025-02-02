@@ -1,4 +1,4 @@
-name: fern
+name: Validate Fern Definitions
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  check-definitions:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -28,4 +28,3 @@ jobs:
           pnpm --filter @fern-api/cli dist:cli:prod
           cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           node $cli_path check
-
