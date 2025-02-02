@@ -1,6 +1,6 @@
 name: "Report an Issue or Suggest a Feature"
 description: "File a bug, feature request, or documentation issue for Fern"
-title: ""
+title: "[Issue]: "
 labels: []
 assignees: [dsheridan]
 body:
