@@ -1,4 +1,4 @@
-name: CLI Validation
+name: Validate Fern Definitions
 
 on:
   pull_request:
