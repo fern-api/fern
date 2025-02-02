@@ -7,6 +7,7 @@ on:
 
 jobs:
   ruby-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -31,6 +32,7 @@ jobs:
           delete-branch: true
 
   ruby-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -55,6 +57,7 @@ jobs:
           delete-branch: true
 
   pydantic-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -79,6 +82,7 @@ jobs:
           delete-branch: true
 
   python-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -103,6 +107,7 @@ jobs:
           delete-branch: true
 
   fastapi:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -127,6 +132,7 @@ jobs:
           delete-branch: true
 
   openapi:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -151,6 +157,7 @@ jobs:
           delete-branch: true
 
   postman:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -175,6 +182,7 @@ jobs:
           delete-branch: true
 
   java-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -199,6 +207,7 @@ jobs:
           delete-branch: true
 
   java-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -223,6 +232,7 @@ jobs:
           delete-branch: true
 
   java-spring:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -247,6 +257,7 @@ jobs:
           delete-branch: true
 
   typescript-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -271,6 +282,7 @@ jobs:
           delete-branch: true
 
   typescript-express:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -295,6 +307,7 @@ jobs:
           delete-branch: true
 
   go-fiber:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -319,6 +332,7 @@ jobs:
           delete-branch: true
 
   go-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -343,6 +357,7 @@ jobs:
           delete-branch: true
 
   go-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -367,6 +382,7 @@ jobs:
           delete-branch: true
 
   csharp-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -391,6 +407,7 @@ jobs:
           delete-branch: true
 
   csharp-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -415,6 +432,7 @@ jobs:
           delete-branch: true
 
   php-model:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -439,6 +457,7 @@ jobs:
           delete-branch: true
 
   php-sdk:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
