@@ -28,6 +28,10 @@ service:
 
 ## Receiving bytes
 
+<Note>
+  When handling binary data in responses, use `type: file` instead of `type: bytes`. The `bytes` type is only supported in requests.
+</Note>
+
 On the other hand, if your API is returning a stream of bytes, then you can leverage the `bytes` type as a response.
 
 ```yml textToSpeech.yml
@@ -46,9 +50,10 @@ service:
               type: string
               docs: The text that you want converted to speech.
       response:
-        type: bytes
+        type: file
         docs: The bytes of the audio file.
 ```
+
 
 
 
