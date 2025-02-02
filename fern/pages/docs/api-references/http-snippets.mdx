@@ -17,7 +17,26 @@ HTTP snippets are enabled by default for all Fern documentation sites. If you wi
 navigation:
   - api: API Reference
     snippets:
-      http: false # <--- disable HTTP snippets; defaults to true
+      sdk: # SDK snippets configuration
+        typescript: your-package-name    # Enable TypeScript SDK snippets
+        python: your-package-name        # Enable Python SDK snippets
+      http: # HTTP snippet configuration
+        targets:          # order determines display order in dropdown
+          - id: python    # default: requests
+          - id: php
+            library: guzzle   # override default library
+          - id: curl
+          - id: javascript
+            library: axios    # override default fetch
+          - id: java     # default: okhttp
+          - id: go       # default: native
+          - id: ruby     # default: native
+          - id: csharp   # default: restsharp
+          
+        # Or disable HTTP snippets entirely
+        enabled: false    # defaults to true
+
+default-language: typescript
 ```
 </CodeBlock>
 
@@ -43,5 +62,3 @@ HTTP snippets automatically include:
 - If your API has SDK snippets, those will be shown by default
 - If no SDK snippets exist, HTTP snippets will display automatically
 - User language preferences are saved client-side
-
-To see HTTP snippets in action, check out [Humanloop's API documentation](https://humanloop.com/docs/api-reference/prompts/log) for a live example of how they appear in production documentation.
