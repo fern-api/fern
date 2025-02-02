@@ -17,6 +17,7 @@ env:
 
 jobs:
   release-cli:
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
