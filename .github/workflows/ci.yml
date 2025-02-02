@@ -45,6 +45,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   compile:
+    if: github.repository == 'fern-api/fern'
     runs-on: CLI
     steps:
       - name: Checkout repo
@@ -69,6 +70,7 @@ jobs:
         run: pnpm lint:eslint
 
   test:
+    if: github.repository == 'fern-api/fern'
     runs-on: Test
     steps:
       - name: Checkout repo
@@ -95,6 +97,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   ete-tests:
+    if: github.repository == 'fern-api/fern'
     runs-on: CLI
     steps:
       - name: Checkout repo
@@ -117,7 +120,7 @@ jobs:
 
   live-test-dev:
     environment: Fern Dev
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -139,7 +142,7 @@ jobs:
 
   live-test-dev-windows:
     environment: Fern Dev
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
     runs-on: windows-latest
     steps:
       - name: Checkout repo
