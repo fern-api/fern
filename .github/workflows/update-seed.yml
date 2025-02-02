@@ -1,4 +1,4 @@
-name: Update Seed
+name: Update Seed Snapshots
 
 on:
   schedule:

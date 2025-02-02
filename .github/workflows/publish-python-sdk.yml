@@ -9,7 +9,7 @@ on:
         type: string
 
 jobs:
-  release:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

@@ -14,12 +14,12 @@ on:
       - main
 
 jobs:
-  check:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Install
         uses: ./.github/actions/install
 

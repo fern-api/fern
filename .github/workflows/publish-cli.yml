@@ -1,4 +1,4 @@
-name: Publish Dev + Prod CLIs
+name: Publish CLI
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
         type: string
 
 jobs:
-  publish-dev:
+  dev:
     if: ${{ inputs.version == null }}
     runs-on: ubuntu-latest
     env:
@@ -69,7 +69,7 @@ jobs:
           cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
-  publish:
+  prod:
     needs: [live-test]
     if: ${{ inputs.version == null }}
     runs-on: ubuntu-latest
@@ -101,7 +101,7 @@ jobs:
           previous_commit="$(git rev-parse --short HEAD~1)"
           echo "Preview of the previous file ${previous_commit}"
           head tmp_cli_previous_versions.yml
-          
+
           current_commit="$(git rev-parse --short HEAD)"
           echo "Preview of the current file ${current_commit}"
           head packages/cli/cli/versions.yml
@@ -110,7 +110,7 @@ jobs:
           pnpm seed publish cli  --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
           pnpm seed register cli
 
-  publish-manually:
+  manual:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
     env:

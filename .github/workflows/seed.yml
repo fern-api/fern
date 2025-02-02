@@ -1,4 +1,4 @@
-name: seed
+name: Run Seed Tests
 
 on:
   push:
@@ -293,7 +293,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: Run seed
         uses: ./.github/actions/cached-seed
         with:
@@ -335,7 +335,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: Run seed
         uses: ./.github/actions/cached-seed
         with:

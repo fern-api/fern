@@ -14,7 +14,7 @@ on:
       - main
 
 jobs:
-  check:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
