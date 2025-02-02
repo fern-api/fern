@@ -1,4 +1,4 @@
-name: seed
+name: Seed Snapshot Tests
 
 on:
   push:
