@@ -10,35 +10,13 @@ subtitle: HTTP snippets allow users to see API request examples using common HTT
 
 ## Setup
 
-HTTP snippets are enabled by default for all Fern documentation sites. If you wish to disable them, you can do so in your `docs.yml` configuration file:
+1. Ensure you have a paid Fern subscription
+2. Contact support to request HTTP snippets activation
+3. Once enabled, build your production docs
 
-<CodeBlock title="docs.yml">
-```yaml 
-navigation:
-  - api: API Reference
-    snippets:
-      sdk:
-        typescript: your-package-name
-        python: your-package-name
-      http:
-        - language: python    # default: requests
-        - language: php
-          library: guzzle   # override default library
-        - language: curl
-        - language: javascript
-        - language: javascript # can have the same language multiple times with different libraries
-          library: axios
-        - language: java
-        - language: go
-        - language: ruby
-        - language: csharp
-        
-        # Or disable HTTP snippets entirely
-        enabled: false    # defaults to true
-
-default-language: typescript
-```
-</CodeBlock>
+<Note>
+Currently, HTTP snippets are provided as an all-or-nothing set. You cannot configure which languages are displayed. If you would like this feature, please [open a GitHub issue](https://github.com/fern-api/fern/issues/new?template=docs-feature.yml).
+</Note>
 
 ## How It Works
 
@@ -62,3 +40,5 @@ HTTP snippets automatically include:
 - If your API has SDK snippets, those will be shown by default
 - If no SDK snippets exist, HTTP snippets will display automatically
 - User language preferences are saved client-side
+
+To see HTTP snippets in action, check out [Humanloop's API documentation](https://humanloop.com/docs/api-reference/prompts/log) for a live example of how they appear in production documentation.
