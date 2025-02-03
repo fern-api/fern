@@ -18,16 +18,17 @@ ENV HTTPX_LOG_LEVEL=trace
 
 COPY pyproject.toml ./pyproject.toml
 COPY poetry.lock ./poetry.lock
+COPY ./src/__init__.py ./src/__init__.py
+COPY ./src/fern_python/__init__.py ./src/fern_python/__init__.py
 
-RUN pip3 install poetry==1.8.5 &&\
-  poetry config virtualenvs.create false &&\
-  poetry install
+RUN pip3 install poetry==1.8.5
+RUN poetry config virtualenvs.create false
+RUN poetry install
 
 COPY ./sdk/features.yml /assets/features.yml
 COPY ./core_utilities/sdk /assets/core_utilities
 COPY ./core_utilities/shared /assets/core_utilities
 COPY ./tests /assets/tests
-
 COPY ./src ./src
 
 RUN poetry install
