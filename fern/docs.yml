@@ -153,6 +153,7 @@ navigation:
           - page: WebSockets
             icon: fa-regular fa-globe
             path: ./pages/api-definition/fern-definition/websockets.mdx
+            slug: websockets
           - page: Errors
             icon: fa-regular fa-exclamation-triangle
             path: ./pages/api-definition/fern-definition/errors.mdx
@@ -691,4 +692,7 @@ redirects:
     permanent: true
   - source: /learn/cli-api/:slug*
     destination: /learn/cli-reference/:slug*
+    permanent: true
+  - source: /learn/sdks/capabilities/web-sockets
+    destination: /learn/sdks/capabilities/websockets
     permanent: true
