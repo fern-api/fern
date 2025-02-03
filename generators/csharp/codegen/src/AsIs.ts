@@ -35,6 +35,7 @@ export const AsIsFiles = {
         TestCustomProps: "test/Test.Custom.props.Template",
         TemplateTestClientCs: "test/TemplateTestClient.cs",
         TemplateTestCsProj: "test/Template.Test.csproj",
+        OneOfSerializerTests: "test/OneOfSerializerTests.Template.cs",
         EnumSerializerTests: "test/EnumSerializerTests.Template.cs",
         RawClientTests: "test/RawClientTests.Template.cs",
         StringEnumSerializerTests: "test/StringEnumSerializerTests.Template.cs",
