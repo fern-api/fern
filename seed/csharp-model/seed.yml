@@ -45,7 +45,7 @@ fixtures:
         experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
 scripts:
-  - docker: mcr.microsoft.com/dotnet/sdk:8.0-alpine3.21
+  - docker: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 allowedFailures:
