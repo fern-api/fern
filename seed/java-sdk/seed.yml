@@ -110,6 +110,8 @@ fixtures:
     - outputFolder: java-single-property-endpoint
   java-pagination-deep-cursor-path:
     - outputFolder: java-pagination-deep-cursor-path
+  accept-header:
+    - outputFolder: accept-header
 scripts:
   - docker: fernapi/java-seed
     commands:
