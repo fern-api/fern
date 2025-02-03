@@ -1689,6 +1689,26 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
+    public static Optional<CodeBlock> maybeAcceptsHeader(HttpEndpoint httpEndpoint, boolean withSemiColon) {
+        String ending = withSemiColon ? ";\n" : "\n";
+
+        Set<String> contentTypes = new HashSet<>();
+
+        // TODO: We'll need to get error content types from the IR once they're available.
+        if (!httpEndpoint.getErrors().get().isEmpty()) {
+            contentTypes.add(APPLICATION_JSON_HEADER);
+        }
+
+        responseContentType(httpEndpoint.getResponse()).ifPresent(contentTypes::add);
+
+        if (contentTypes.isEmpty()) {
+            return Optional.empty();
+        }
+
+        String headerValue = String.join("; ", contentTypes);
+        return Optional.of(CodeBlock.of(".addHeader($S, $S)" + ending, ACCEPT_HEADER, headerValue));
+    }
+
     public static Optional<String> responseContentType(Optional<HttpResponse> response) {
         if (response.isEmpty()) {
             return Optional.empty();
