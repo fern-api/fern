@@ -1,0 +1,8 @@
+*
+!pyproject.toml
+!poetry.lock
+!./sdk/features.yml
+!./core_utilities/sdk
+!./core_utilities/shared
+!./tests
+!./src
