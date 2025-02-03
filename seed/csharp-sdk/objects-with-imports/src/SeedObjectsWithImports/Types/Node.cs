@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
 
-#nullable enable
-
 namespace SeedObjectsWithImports;
 
 public record Node

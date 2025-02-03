@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
 
-#nullable enable
-
 namespace SeedExhaustive.Test.Unit.MockServer;
 
 [TestFixture]

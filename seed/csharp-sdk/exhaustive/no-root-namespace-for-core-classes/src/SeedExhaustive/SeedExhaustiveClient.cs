@@ -2,13 +2,11 @@ using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
 using SeedExhaustive.Types;
 
-#nullable enable
-
 namespace SeedExhaustive;
 
 public partial class SeedExhaustiveClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedExhaustiveClient(string token, ClientOptions? clientOptions = null)
     {

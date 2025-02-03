@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedStreaming.Core;
 
-#nullable enable
-
 namespace SeedStreaming;
 
 public record GenerateStreamRequest

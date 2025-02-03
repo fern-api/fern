@@ -1,8 +1,6 @@
 using System;
 using System.Net.Http;
 
-#nullable enable
-
 namespace SeedBytes.Core;
 
 internal interface IRequestOptions

@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedNullable.Core;
 
-#nullable enable
-
 namespace SeedNullable;
 
 public partial class ClientOptions

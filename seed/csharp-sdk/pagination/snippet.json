@@ -4,6 +4,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/conversations/search",
+                "method": "POST",
+                "identifier_override": "endpoint_complex.search"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Complex.SearchAsync(\n    new SearchRequest\n    {\n        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = \"starting_after\" },\n        Query = new SingleFilterSearchRequest\n        {\n            Field = \"field\",\n            Operator = SingleFilterSearchRequestOperator.Equals,\n            Value = \"value\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithCursorPagination"

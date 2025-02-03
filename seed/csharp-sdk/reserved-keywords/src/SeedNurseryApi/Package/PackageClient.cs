@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedNurseryApi.Core;
 
-#nullable enable
-
 namespace SeedNurseryApi;
 
 public partial class PackageClient
@@ -29,17 +27,19 @@ public partial class PackageClient
     {
         var _query = new Dictionary<string, object>();
         _query["for"] = request.For;
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

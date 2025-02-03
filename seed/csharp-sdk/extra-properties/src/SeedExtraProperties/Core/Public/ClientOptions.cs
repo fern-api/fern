@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedExtraProperties.Core;
 
-#nullable enable
-
 namespace SeedExtraProperties;
 
 public partial class ClientOptions

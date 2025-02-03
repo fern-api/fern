@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedEnum.Core;
 
-#nullable enable
-
 namespace SeedEnum;
 
 [JsonConverter(typeof(StringEnumSerializer<Operand>))]

@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedNullable.Core;
 
-#nullable enable
-
 namespace SeedNullable;
 
 public record CreateUserRequest

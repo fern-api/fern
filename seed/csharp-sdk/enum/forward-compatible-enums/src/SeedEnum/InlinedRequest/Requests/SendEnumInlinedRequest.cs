@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using OneOf;
 using SeedEnum.Core;
 
-#nullable enable
-
 namespace SeedEnum;
 
 public record SendEnumInlinedRequest

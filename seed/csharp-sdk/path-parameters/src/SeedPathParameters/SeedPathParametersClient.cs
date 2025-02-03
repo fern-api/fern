@@ -1,12 +1,10 @@
 using SeedPathParameters.Core;
 
-#nullable enable
-
 namespace SeedPathParameters;
 
 public partial class SeedPathParametersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedPathParametersClient(ClientOptions? clientOptions = null)
     {

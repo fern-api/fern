@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedMixedCase.Core;
 
-#nullable enable
-
 namespace SeedMixedCase;
 
 public partial class RequestOptions : IRequestOptions

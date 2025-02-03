@@ -2,8 +2,6 @@ using OneOf;
 using SeedApi.Core;
 using Proto = Google.Protobuf.WellKnownTypes;
 
-#nullable enable
-
 namespace SeedApi;
 
 public sealed class MetadataValue(

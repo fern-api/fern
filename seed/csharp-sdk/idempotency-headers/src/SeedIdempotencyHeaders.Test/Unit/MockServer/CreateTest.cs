@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedIdempotencyHeaders;
 using SeedIdempotencyHeaders.Core;
 
-#nullable enable
-
 namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
 
 [TestFixture]

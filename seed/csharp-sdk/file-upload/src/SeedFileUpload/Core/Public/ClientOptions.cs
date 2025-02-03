@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedFileUpload.Core;
 
-#nullable enable
-
 namespace SeedFileUpload;
 
 public partial class ClientOptions

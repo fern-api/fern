@@ -4,8 +4,6 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedUnknownAsAny.Core;
 
-#nullable enable
-
 namespace SeedUnknownAsAny.Test.Unit.MockServer;
 
 [TestFixture]

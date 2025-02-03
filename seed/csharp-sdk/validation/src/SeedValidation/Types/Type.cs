@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedValidation.Core;
 
-#nullable enable
-
 namespace SeedValidation;
 
 public record Type

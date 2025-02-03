@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = User.V1;
 
-#nullable enable
-
 namespace SeedApi;
 
 public record CreateRequest

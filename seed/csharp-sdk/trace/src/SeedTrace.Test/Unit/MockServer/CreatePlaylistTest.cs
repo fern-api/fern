@@ -6,8 +6,6 @@ using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]

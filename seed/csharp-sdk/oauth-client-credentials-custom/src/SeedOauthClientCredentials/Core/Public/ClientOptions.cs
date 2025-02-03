@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedOauthClientCredentials.Core;
 
-#nullable enable
-
 namespace SeedOauthClientCredentials;
 
 public partial class ClientOptions

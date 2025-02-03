@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedIdempotencyHeaders.Core;
 
-#nullable enable
-
 namespace SeedIdempotencyHeaders;
 
 public partial class ClientOptions

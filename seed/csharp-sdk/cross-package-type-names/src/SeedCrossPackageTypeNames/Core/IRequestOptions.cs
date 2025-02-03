@@ -1,8 +1,6 @@
 using System;
 using System.Net.Http;
 
-#nullable enable
-
 namespace SeedCrossPackageTypeNames.Core;
 
 internal interface IRequestOptions

@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedMultiLineDocs.Core;
 
-#nullable enable
-
 namespace SeedMultiLineDocs;
 
 public record User

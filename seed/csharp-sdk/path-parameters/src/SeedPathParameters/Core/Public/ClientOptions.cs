@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedPathParameters.Core;
 
-#nullable enable
-
 namespace SeedPathParameters;
 
 public partial class ClientOptions

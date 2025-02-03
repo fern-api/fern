@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Core;
 
-#nullable enable
-
 namespace SeedObjectsWithImports.Commons;
 
 public record Metadata

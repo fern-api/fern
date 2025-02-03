@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedCsharpNamespaceConflict.Core;
 
-#nullable enable
-
 namespace SeedCsharpNamespaceConflict.B;
 
 public record TestType

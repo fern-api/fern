@@ -1,12 +1,10 @@
 using SeedCustomAuth.Core;
 
-#nullable enable
-
 namespace SeedCustomAuth;
 
 public partial class SeedCustomAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedCustomAuthClient(
         string? customAuthScheme = null,

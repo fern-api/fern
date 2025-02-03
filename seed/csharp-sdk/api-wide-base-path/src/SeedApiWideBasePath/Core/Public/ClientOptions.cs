@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedApiWideBasePath.Core;
 
-#nullable enable
-
 namespace SeedApiWideBasePath;
 
 public partial class ClientOptions

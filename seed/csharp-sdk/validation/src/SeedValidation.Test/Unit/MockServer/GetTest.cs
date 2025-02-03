@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedValidation;
 using SeedValidation.Core;
 
-#nullable enable
-
 namespace SeedValidation.Test.Unit.MockServer;
 
 [TestFixture]

@@ -1,12 +1,10 @@
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral;
 
 public partial class SeedLiteralClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedLiteralClient(ClientOptions? clientOptions = null)
     {
