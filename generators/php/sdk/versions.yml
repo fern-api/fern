@@ -1,3 +1,17 @@
+- version: 0.3.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for customizing the package name, which is used in the `User-Agent` header.
+        Users can configure this like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.3.0
+          config:
+            packageName: acme/acme-php
+        ```
+  irVersion: 53
 - version: 0.2.3
   changelogEntry:
     - type: fix

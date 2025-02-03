@@ -61,6 +61,13 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public getPackageName(): string {
+        if (this.customConfig.packageName != null) {
+            return this.customConfig.packageName;
+        }
+        return `${this.config.organization}/${this.config.organization}`;
+    }
+
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
