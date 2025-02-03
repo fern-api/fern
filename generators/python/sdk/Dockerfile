@@ -1,4 +1,4 @@
-FROM node:18.20-alpine??? AS node
+FROM node:18.20-alpine3.21 AS node
 FROM python:3.9.14
 
 COPY --from=node /usr/local/bin/node /usr/local/bin/
@@ -12,14 +12,14 @@ ENV HTTPX_LOG_LEVEL=trace
 
 COPY pyproject.toml ./pyproject.toml
 COPY poetry.lock ./poetry.lock
+COPY ./core_utilities/sdk /assets/core_utilities
+COPY ./core_utilities/shared /assets/core_utilities
 
 RUN pip3 install poetry==1.8.5 &&\
   poetry config virtualenvs.create false &&\
   poetry install
 
 COPY ./sdk/features.yml /assets/features.yml
-COPY ./core_utilities/sdk /assets/core_utilities
-COPY ./core_utilities/shared /assets/core_utilities
 COPY ./tests /assets/tests
 
 COPY ./src ./src
