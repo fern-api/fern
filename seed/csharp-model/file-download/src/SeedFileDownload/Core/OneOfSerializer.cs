@@ -40,11 +40,15 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
 
     private static (System.Type type, MethodInfo cast)[] GetOneOfTypes(System.Type typeToConvert)
     {
-        var casts = typeToConvert
-            .GetRuntimeMethods()
+        var type = typeToConvert;
+        if (Nullable.GetUnderlyingType(type) is { } underlyingType)
+        {
+            type = underlyingType;
+        }
+
+        var casts = type.GetRuntimeMethods()
             .Where(m => m.IsSpecialName && m.Name == "op_Implicit")
             .ToArray();
-        var type = typeToConvert;
         while (type != null)
         {
             if (
@@ -59,6 +63,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
 
             type = type.BaseType;
         }
+
         throw new InvalidOperationException($"{type} isn't OneOf or OneOfBase");
     }
 
