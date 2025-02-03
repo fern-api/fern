@@ -269,10 +269,9 @@ class ComposerJson {
     }
 
     public toString(): string {
-        const composerProjectName = `${this.context.config.organization}/${this.context.config.organization}`;
         return `
 {
-  "name": "${composerProjectName}",
+  "name": "${this.context.getPackageName()}",
   "version": ${this.context.version != null ? `"${this.context.version}"` : '"0.0.0"'},
   "description": "${this.projectName} PHP Library",
   "keywords": [
