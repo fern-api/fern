@@ -266,6 +266,44 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         .addStatement("$L = $T.create(\"\", null)", getOkhttpRequestBodyName(), RequestBody.class)
                         .beginControlFlow("if ($N.isPresent())", "request");
             }
+
+            CodeBlock requestBodyGetter = CodeBlock.of("$L", "request");
+
+            if (clientGeneratorContext.getCustomConfig().inlinePathParameters()
+                    // TODO(ajgateno): If we don't have this null check, IntelliJ gives a warning.
+                    //  Figure out if/when this can be null.
+                    && generatedWrappedRequest != null
+                    && generatedWrappedRequest.requestBodyGetter().isPresent()) {
+                if (generatedWrappedRequest.requestBodyGetter().get()
+                        instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter) {
+                    requestBodyGetter = CodeBlock.of(
+                            "$L.$L()",
+                            "request",
+                            ((GeneratedWrappedRequest.ReferencedRequestBodyGetter) generatedWrappedRequest
+                                            .requestBodyGetter()
+                                            .get())
+                                    .requestBodyGetter()
+                                    .name);
+                    initializeRequestBody(isOptional, requestBodyGetter);
+                } else if (generatedWrappedRequest.requestBodyGetter().get()
+                        instanceof GeneratedWrappedRequest.InlinedRequestBodyGetters) {
+                    GeneratedWrappedRequest.InlinedRequestBodyGetters inlinedRequestBodyGetter =
+                            ((GeneratedWrappedRequest.InlinedRequestBodyGetters)
+                                    generatedWrappedRequest.requestBodyGetter().get());
+                    initializeRequestBody(isOptional, requestBodyGetter);
+                    WrappedRequestEndpointWriter.initializeRequestBodyProperties(
+                            "request", getRequestBodyPropertiesName(), inlinedRequestBodyGetter, codeBlock);
+                } else {
+                    throw new IllegalStateException("Found invalid body better for request-only endpoint: "
+                            + generatedWrappedRequest.requestBodyGetter().get());
+                }
+            } else {
+                initializeRequestBody(isOptional, requestBodyGetter);
+            }
+            return null;
+        }
+
+        private void initializeRequestBody(boolean isOptional, CodeBlock requestBodyGetter) {
             codeBlock
                     .addStatement(
                             "$L = $T.create($T.$L.writeValueAsBytes($L), $T.$L)",
@@ -273,7 +311,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             RequestBody.class,
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
-                            "request",
+                            requestBodyGetter,
                             clientGeneratorContext.getPoetClassNameFactory().getMediaTypesClassName(),
                             CoreMediaTypesGenerator.APPLICATION_JSON_FIELD_CONSTANT)
                     .endControlFlow();
@@ -284,7 +322,6 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .beginControlFlow("catch($T e)", JsonProcessingException.class)
                     .addStatement("throw new $T($S, e)", baseErrorClassName, "Failed to serialize request")
                     .endControlFlow();
-            return null;
         }
 
         @Override
