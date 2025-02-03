@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The OpenRPC parser now supports generating code snippets in the API Explorer.
+      type: fix
+  irVersion: 55
+  version: 0.51.19
+
+- changelogEntry:
+    - summary: |
         The docs will now display errors by default. Previously, errors were hidden by default and needed to be explicitly 
         enabled with `displayErrors: true`.
       type: fix
