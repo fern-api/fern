@@ -231,49 +231,66 @@ navigation:
         contents:
           - page: Strongly Typed
             path: ./pages/sdks/capabilities/strongly-typed.mdx
+            slug: strongly-typed
           - page: Idiomatic Method Names
             path: ./pages/sdks/capabilities/idiomatic-method-names.mdx
+            slug: method-names
           - page: Schema Validation
             path: ./pages/sdks/capabilities/schema-validation.mdx
+            slug: schema-validation
           - page: Discriminated Unions
             path: ./pages/sdks/capabilities/discriminated-unions.mdx
+            slug: discriminated-unions
           - page: Multipart Form Data
             path: ./pages/sdks/capabilities/multipart-form-data.mdx
+            slug: multipart-form-data
           - page: Forward Compatibility
             path: ./pages/sdks/capabilities/forward-compatibility.mdx
+            slug: forward-compatibility
           - page: Registry Publishing
             path: ./pages/sdks/capabilities/publish-to-registries.mdx
             icon: fa-regular fa-pro
+            slug: publish-to-registries
           - page: Auto-Pagination
             path: ./pages/sdks/capabilities/auto-pagination.mdx
             icon: fa-regular fa-pro
+            slug: pagination
           - page: OAuth Token Refresh
             path: ./pages/sdks/capabilities/oauth.mdx
             icon: fa-regular fa-pro
+            slug: oauth
           - page: Retries with Backoff
             path: ./pages/sdks/capabilities/retries-with-backoff.mdx
             icon: fa-regular fa-pro
+            slug: retries
           - page: Webhook Signature Verification
             path: ./pages/sdks/capabilities/webhook-signature-verification.mdx
             icon: fa-regular fa-pro
+            slug: webhook-signature
           - page: Idempotency Headers
             path: ./pages/sdks/capabilities/idempotency-headers.mdx
             icon: fa-regular fa-pro
+            slug: idempotency
           - page: Server-Sent Events
             path: ./pages/sdks/capabilities/server-sent-events.mdx
             icon: fa-regular fa-pro
+            slug: server-sent-events
           - page: Integration Tests
             path: ./pages/sdks/capabilities/integration-tests.mdx
             icon: fa-regular fa-pro
+            slug: integration-tests
           - page: Code Snippets
             path: ./pages/sdks/capabilities/code-snippets.mdx
             icon: fa-regular fa-pro
+            slug: code-snippets
           - page: Augment with Custom Code
             path: ./pages/sdks/capabilities/augment-with-custom-code.mdx
             icon: fa-regular fa-pro
+            slug: custom-code
           - page: Merging Multiple APIs
             path: ./pages/sdks/capabilities/merging-multiple-apis.mdx
             icon: fa-regular fa-pro
+            slug: merging-apis
           - page: WebSockets
             path: ./pages/sdks/capabilities/websockets.mdx
             icon: fa-regular fa-pro
@@ -692,7 +709,4 @@ redirects:
     permanent: true
   - source: /learn/cli-api/:slug*
     destination: /learn/cli-reference/:slug*
-    permanent: true
-  - source: /learn/sdks/capabilities/web-sockets
-    destination: /learn/sdks/capabilities/websockets
     permanent: true
