@@ -270,8 +270,6 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             CodeBlock requestBodyGetter = CodeBlock.of("$L", "request");
 
             if (clientGeneratorContext.getCustomConfig().inlinePathParameters()
-                    // TODO(ajgateno): If we don't have this null check, we get a warning.
-                    //  Figure out if/when this can be null.
                     && generatedWrappedRequest != null
                     && generatedWrappedRequest.requestBodyGetter().isPresent()) {
                 if (generatedWrappedRequest.requestBodyGetter().get()
