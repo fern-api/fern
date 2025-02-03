@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SystemTask = System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.Pagination;
@@ -7,7 +8,7 @@ namespace <%= namespace%>.Test.Core.Pagination;
 public class StringCursorTest
 {
     [Test]
-    public async Task CursorPagerShouldWorkWithStringCursor()
+    public async SystemTask CursorPagerShouldWorkWithStringCursor()
     {
         var pager = CreatePager();
         await AssertPager(pager);
@@ -71,7 +72,7 @@ public class StringCursorTest
             (_, _, _) =>
             {
                 responses.MoveNext();
-                return Task.FromResult(responses.Current);
+                return SystemTask.FromResult(responses.Current);
             },
             (request, cursor) =>
             {
@@ -84,7 +85,7 @@ public class StringCursorTest
         return pager;
     }
 
-    private async Task AssertPager(Pager<object> pager)
+    private async SystemTask AssertPager(Pager<object> pager)
     {
         var pageEnumerator = pager.AsPagesAsync().GetAsyncEnumerator();
 

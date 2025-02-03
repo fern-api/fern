@@ -21,6 +21,7 @@ publish:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
     context: .
+    dockerignore-path: ./generators/csharp/sdk/.dockerignore
 test:
   docker:
     image: fernapi/fern-csharp-sdk:latest

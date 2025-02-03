@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace;
 
 public record CustomTestCasesUnsupported

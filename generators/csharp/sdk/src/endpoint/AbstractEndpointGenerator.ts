@@ -198,11 +198,12 @@ export abstract class AbstractEndpointGenerator {
         }
 
         getEndpointReturnType({ context: this.context, endpoint });
-        return new csharp.MethodInvocation({
+        return csharp.invokeMethod({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on,
             async: true,
+            configureAwait: true,
             generics: []
         });
     }

@@ -6,6 +6,25 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.14
+  createdAt: "2025-02-03"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add support for nullable undiscriminated unions (OneOf<X, Y, Z>?), and add tests for undiscriminated unions.
+  irVersion: 53
+- version: 1.9.13
+  createdAt: "2025-02-02"
+  changelogEntry:
+    - type: internal
+      summary: |
+        Miscellaneous improvement for the C# generator
+        - Call `.ConfigureAwait(false)` on Tasks
+        - Use `Enumerable<T>.Empty` instead of creating a new empty list
+        - Add PolySharp to test project and use C# 12
+        - Remove redundant `#nullable enable` directives
+        - Improve C# syntax
+  irVersion: 53
 - version: 1.9.12
   createdAt: "2025-01-22"
   changelogEntry:

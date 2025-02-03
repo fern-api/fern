@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedAudiences.Core;
 
-#nullable enable
-
 namespace SeedAudiences.FolderD;
 
 public record Response

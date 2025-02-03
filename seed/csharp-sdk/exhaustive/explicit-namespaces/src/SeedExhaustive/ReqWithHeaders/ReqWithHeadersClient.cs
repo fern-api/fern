@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive.ReqWithHeaders;
 
 public partial class ReqWithHeadersClient
@@ -42,18 +40,20 @@ public partial class ReqWithHeadersClient
                 { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
             }
         );
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/test-headers/custom-header",
-                Body = request.Body,
-                Headers = _headers,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/test-headers/custom-header",
+                    Body = request.Body,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

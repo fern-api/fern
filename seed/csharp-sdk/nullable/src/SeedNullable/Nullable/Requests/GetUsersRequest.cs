@@ -1,7 +1,5 @@
 using SeedNullable.Core;
 
-#nullable enable
-
 namespace SeedNullable;
 
 public record GetUsersRequest

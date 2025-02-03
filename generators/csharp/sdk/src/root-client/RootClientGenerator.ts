@@ -78,7 +78,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             csharp.field({
                 access: csharp.Access.Private,
                 name: CLIENT_MEMBER_NAME,
-                type: csharp.Type.reference(this.context.getRawClientClassReference())
+                type: csharp.Type.reference(this.context.getRawClientClassReference()),
+                readonly: true
             })
         );
 
@@ -87,7 +88,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 csharp.field({
                     access: csharp.Access.Private,
                     name: GRPC_CLIENT_MEMBER_NAME,
-                    type: csharp.Type.reference(this.context.getRawGrpcClientClassReference())
+                    type: csharp.Type.reference(this.context.getRawGrpcClientClassReference()),
+                    readonly: true
                 })
             );
 
@@ -323,7 +325,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         clientOptionsArgument?: csharp.ClassInstantiation;
         includeEnvVarArguments?: boolean;
     }): csharp.ClassInstantiation {
-        new csharp.ClassInstantiation({
+        csharp.instantiateClass({
             classReference: this.context.getClientOptionsClassReference(),
             arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
         });
@@ -381,7 +383,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 })
             );
         }
-        return new csharp.ClassInstantiation({
+        return csharp.instantiateClass({
             classReference: this.context.getRootClientClassReference(),
             arguments_
         });

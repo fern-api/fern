@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedNurseryApi.Core;
 
-#nullable enable
-
 namespace SeedNurseryApi;
 
 public partial class ClientOptions

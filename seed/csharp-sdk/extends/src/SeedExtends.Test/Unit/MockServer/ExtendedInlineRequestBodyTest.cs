@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedExtends;
 
-#nullable enable
-
 namespace SeedExtends.Test.Unit.MockServer;
 
 [TestFixture]

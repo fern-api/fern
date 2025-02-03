@@ -438,6 +438,10 @@ class ToProtoPropertyMapper {
 
 class FromProtoPropertyMapper {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private readonly enumerableClassReference = csharp.classReference({
+        namespace: "System.Linq",
+        name: "Enumerable"
+    });
 
     constructor({ context }: { context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema> }) {
         this.context = context;
@@ -549,7 +553,7 @@ class FromProtoPropertyMapper {
         wrapperType
     }: {
         propertyName: string;
-        listType: TypeReference;
+        listType: ContainerType.List["list"] | ContainerType.Set["set"];
         wrapperType?: WrapperType;
     }): CodeBlock {
         const on = csharp.codeblock(`${propertyName}?`);
@@ -565,11 +569,15 @@ class FromProtoPropertyMapper {
                     })
                 );
                 if (wrapperType !== WrapperType.Optional) {
-                    writer.write(" ?? new ");
+                    writer.write(" ?? ");
                     writer.writeNode(
-                        csharp.Type.listType(this.context.csharpTypeMapper.convert({ reference: listType }))
+                        csharp.invokeMethod({
+                            on: this.enumerableClassReference,
+                            method: "Empty",
+                            generics: [this.context.csharpTypeMapper.convert({ reference: listType })],
+                            arguments_: []
+                        })
                     );
-                    writer.write("()");
                 }
             });
         }

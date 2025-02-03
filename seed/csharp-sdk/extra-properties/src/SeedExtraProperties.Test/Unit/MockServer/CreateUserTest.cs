@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedExtraProperties;
 using SeedExtraProperties.Core;
 
-#nullable enable
-
 namespace SeedExtraProperties.Test.Unit.MockServer;
 
 [TestFixture]

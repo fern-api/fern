@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedOauthClientCredentialsDefault.Core;
 
-#nullable enable
-
 namespace SeedOauthClientCredentialsDefault;
 
 public record GetTokenRequest

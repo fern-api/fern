@@ -1,4 +1,3 @@
-using System;
 using Grpc.Core;
 using Grpc.Net.Client;
 
@@ -53,14 +52,11 @@ internal class RawGrpcClient
         );
     }
 
-    private void SetHeaders(global::Grpc.Core.Metadata metadata, Headers headers)
+    private static void SetHeaders(global::Grpc.Core.Metadata metadata, Headers headers)
     {
         foreach (var header in headers)
         {
-            var value = header.Value?.Match(
-                str => str,
-                func => func.Invoke()
-            );
+            var value = header.Value?.Match(str => str, func => func.Invoke());
             if (value != null)
             {
                 metadata.Add(header.Key, value);

@@ -1,12 +1,10 @@
 using SeedAuthEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedAuthEnvironmentVariables;
 
 public partial class SeedAuthEnvironmentVariablesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedAuthEnvironmentVariablesClient(
         string xAnotherHeader,

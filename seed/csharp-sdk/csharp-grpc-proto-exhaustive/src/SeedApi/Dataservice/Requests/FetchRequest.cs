@@ -1,8 +1,6 @@
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
-#nullable enable
-
 namespace SeedApi;
 
 public record FetchRequest

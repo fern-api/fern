@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
 
-#nullable enable
-
 namespace SeedOauthClientCredentials.Test.Unit.MockServer;
 
 [TestFixture]

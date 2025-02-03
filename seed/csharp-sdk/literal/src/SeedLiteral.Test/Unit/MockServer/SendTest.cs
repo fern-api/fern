@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedLiteral;
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral.Test.Unit.MockServer;
 
 [TestFixture]

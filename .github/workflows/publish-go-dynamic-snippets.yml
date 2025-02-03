@@ -14,7 +14,7 @@ env:
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 jobs:
-  publish:
+  run:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
     steps:

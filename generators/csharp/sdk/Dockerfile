@@ -3,6 +3,13 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.21
 
 ENV YARN_CACHE_FOLDER=/.yarn
 ENV PATH="$PATH:/root/.dotnet/tools"
+ENV DOTNET_NOLOGO=1
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
+RUN apk --no-cache add bash curl git zip && git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+
+RUN dotnet tool install -g csharpier
 
 RUN apk --no-cache add bash curl git zip
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"

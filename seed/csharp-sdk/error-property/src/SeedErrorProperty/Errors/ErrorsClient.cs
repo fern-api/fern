@@ -1,7 +1,5 @@
 using SeedErrorProperty.Core;
 
-#nullable enable
-
 namespace SeedErrorProperty;
 
 public partial class ErrorsClient

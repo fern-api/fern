@@ -1,4 +1,4 @@
-name: python
+name: Python Generator
 
 on:
   pull_request:

@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using OneOf;
 using SeedApi.Core;
 
-#nullable enable
-
 namespace SeedApi;
 
 public record Account

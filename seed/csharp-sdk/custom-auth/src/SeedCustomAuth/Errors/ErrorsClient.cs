@@ -1,7 +1,5 @@
 using SeedCustomAuth.Core;
 
-#nullable enable
-
 namespace SeedCustomAuth;
 
 public partial class ErrorsClient

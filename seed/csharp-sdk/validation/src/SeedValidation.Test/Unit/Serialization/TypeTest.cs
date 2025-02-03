@@ -5,8 +5,6 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedValidation;
 
-#nullable enable
-
 namespace SeedValidation.Test;
 
 [TestFixture]

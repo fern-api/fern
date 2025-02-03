@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using OneOf;
 using SeedEnum.Core;
 
-#nullable enable
-
 namespace SeedEnum;
 
 public partial class PathParamClient
@@ -29,16 +27,18 @@ public partial class PathParamClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"path/{operand}/{operandOrColor}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = $"path/{operand}/{operandOrColor}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

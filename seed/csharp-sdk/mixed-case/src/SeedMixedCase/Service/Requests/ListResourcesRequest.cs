@@ -1,7 +1,5 @@
 using SeedMixedCase.Core;
 
-#nullable enable
-
 namespace SeedMixedCase;
 
 public record ListResourcesRequest

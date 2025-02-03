@@ -8,6 +8,12 @@ export declare namespace MethodInvocation {
     interface Args {
         /* Defaults to false */
         async?: boolean;
+        /*
+        How to call configureAwait(false/true) when async is true.
+        Defaults to `false`, which adds `configureAwait(false)`.
+        If true, nothing is added, as the default it `configureAwait(true)`.
+        */
+        configureAwait?: boolean;
         /* The method to invoke */
         method: string;
         /* A map of the field for the class and the value to be assigned to it. */
@@ -24,15 +30,17 @@ export class MethodInvocation extends AstNode {
     private method: string;
     private on: AstNode | undefined;
     private async: boolean;
+    private configureAwait: boolean;
     private generics: csharp.Type[];
 
-    constructor({ method, arguments_, on, async, generics }: MethodInvocation.Args) {
+    constructor({ method, arguments_, on, async, configureAwait, generics }: MethodInvocation.Args) {
         super();
 
         this.method = method;
         this.arguments = arguments_;
         this.on = on;
         this.async = async ?? false;
+        this.configureAwait = configureAwait ?? false;
         this.generics = generics ?? [];
     }
 
@@ -67,5 +75,8 @@ export class MethodInvocation extends AstNode {
         writer.dedent();
 
         writer.write(")");
+        if (this.async && this.configureAwait === false) {
+            writer.write(".ConfigureAwait(false)");
+        }
     }
 }

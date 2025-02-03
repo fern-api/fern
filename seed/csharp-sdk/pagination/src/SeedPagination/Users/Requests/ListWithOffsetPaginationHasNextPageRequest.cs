@@ -1,7 +1,5 @@
 using SeedPagination.Core;
 
-#nullable enable
-
 namespace SeedPagination;
 
 public record ListWithOffsetPaginationHasNextPageRequest

@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-#nullable enable
-
 namespace SeedPlainText.Test.Unit.MockServer;
 
 [TestFixture]

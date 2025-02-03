@@ -1,12 +1,10 @@
 using SeedResponseProperty.Core;
 
-#nullable enable
-
 namespace SeedResponseProperty;
 
 public partial class SeedResponsePropertyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedResponsePropertyClient(ClientOptions? clientOptions = null)
     {

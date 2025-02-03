@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedMultiUrlEnvironment.Core;
 
-#nullable enable
-
 namespace SeedMultiUrlEnvironment;
 
 public partial class RequestOptions : IRequestOptions
