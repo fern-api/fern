@@ -121,15 +121,19 @@ navigation:
           - page: Overview
             icon: fa-regular fa-seedling
             path: ./pages/api-definition/fern-definition/overview.mdx
+            slug: overview
           - page: Authentication
             icon: fa-regular fa-lock-keyhole
             path: ./pages/api-definition/fern-definition/auth.mdx
+            slug: authentication
           - page: Types
             icon: fa-regular fa-shapes
             path: ./pages/api-definition/fern-definition/types.mdx
+            slug: types
           - section: Endpoints
             icon: fa-regular fa-plug
             path: ./pages/api-definition/fern-definition/endpoints.mdx
+            slug: endpoints
             contents: 
               - page: HTTP JSON Endpoints
                 icon: fa-regular fa-display-code
@@ -150,6 +154,7 @@ navigation:
           - page: Webhooks
             icon: fa-regular fa-webhook
             path: ./pages/api-definition/fern-definition/webhooks.mdx
+            slug: webhooks
           - page: WebSockets
             icon: fa-regular fa-globe
             path: ./pages/api-definition/fern-definition/websockets.mdx
@@ -157,18 +162,23 @@ navigation:
           - page: Errors
             icon: fa-regular fa-exclamation-triangle
             path: ./pages/api-definition/fern-definition/errors.mdx
+            slug: errors
           - page: Imports
             icon: fa-regular fa-download
             path: ./pages/api-definition/fern-definition/imports.mdx
+            slug: imports
           - page: Examples
             icon: fa-regular fa-square-terminal
             path: ./pages/api-definition/fern-definition/examples.mdx
+            slug: examples
           - page: Audiences
             icon: fa-duotone fa-users
             path: ./pages/api-definition/fern-definition/audiences.mdx
+            slug: audiences
           - page: Availability
             icon: fa-regular fa-clock-rotate-left
             path: ./pages/api-definition/fern-definition/availability.mdx
+            slug: availability
           - section: api.yml Reference
             icon: fa-regular fa-books
             slug: api-yml
