@@ -6,7 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "BadRequestError": {
+          "companiescreateOrUpdateCompanyBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -26,7 +26,7 @@
             "status-code": 400,
             "type": "Error",
           },
-          "UnauthorizedError": {
+          "companiescreateOrUpdateCompanyUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -145,7 +145,7 @@
         },
       },
       "rawContents": "errors:
-  BadRequestError:
+  companiescreateOrUpdateCompanyBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
@@ -156,7 +156,7 @@
             - code: bad_request
               message: bad 'test' parameter
         name: Bad Request
-  UnauthorizedError:
+  companiescreateOrUpdateCompanyUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
@@ -274,8 +274,8 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
 {% /admonition %}
 ",
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.companiescreateOrUpdateCompanyBadRequestError",
+                "root.companiescreateOrUpdateCompanyUnauthorizedError",
               ],
               "examples": [
                 {
@@ -531,8 +531,8 @@ service:
         type: Company
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.companiescreateOrUpdateCompanyBadRequestError
+        - root.companiescreateOrUpdateCompanyUnauthorizedError
       examples:
         - name: Successful
           request:

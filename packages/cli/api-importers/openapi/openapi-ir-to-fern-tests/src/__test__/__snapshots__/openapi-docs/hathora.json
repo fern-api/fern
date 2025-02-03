@@ -6,19 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "BadRequestError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 400,
-            "type": "string",
-          },
-          "InternalServerError": {
+          "appV1CreateAppInternalServerError": {
             "docs": "",
             "examples": [
               {
@@ -30,7 +18,31 @@
             "status-code": 500,
             "type": "string",
           },
-          "NotFoundError": {
+          "appV1CreateAppUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "appV1DeleteAppInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "appV1DeleteAppNotFoundError": {
             "docs": "",
             "examples": [
               {
@@ -42,7 +54,7 @@
             "status-code": 404,
             "type": "string",
           },
-          "TooManyRequestsError": {
+          "appV1GetAppInfoNotFoundError": {
             "docs": "",
             "examples": [
               {
@@ -51,10 +63,58 @@
                 "value": "string",
               },
             ],
-            "status-code": 429,
+            "status-code": 404,
             "type": "string",
           },
-          "UnauthorizedError": {
+          "appV1UpdateAppInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "appV1UpdateAppNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "authV1LoginAnonymousNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "authV1LoginGoogleNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "authV1LoginGoogleUnauthorizedError": {
             "docs": "",
             "examples": [
               {
@@ -66,7 +126,43 @@
             "status-code": 401,
             "type": "string",
           },
-          "UnprocessableEntityError": {
+          "authV1LoginNicknameNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "buildV1CreateBuildInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "buildV1CreateBuildNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "buildV1CreateBuildUnprocessableEntityError": {
             "docs": "",
             "examples": [
               {
@@ -76,6 +172,810 @@
               },
             ],
             "status-code": 422,
+            "type": "string",
+          },
+          "buildV1DeleteBuildInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "buildV1DeleteBuildNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "buildV1DeleteBuildUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "buildV1GetBuildInfoNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "buildV1GetBuildsNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "buildV1RunBuildInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "buildV1RunBuildNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "deploymentV1CreateDeploymentBadRequestError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 400,
+            "type": "string",
+          },
+          "deploymentV1CreateDeploymentInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "deploymentV1CreateDeploymentNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "deploymentV1GetDeploymentInfoNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "deploymentV1GetDeploymentsNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV1CreatePrivateLobbyDeprecatedInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "lobbyV1CreatePrivateLobbyDeprecatedNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV1CreatePrivateLobbyDeprecatedTooManyRequestsError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 429,
+            "type": "string",
+          },
+          "lobbyV1CreatePrivateLobbyDeprecatedUnauthorizedError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 401,
+            "type": "string",
+          },
+          "lobbyV1CreatePrivateLobbyDeprecatedUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "lobbyV1CreatePublicLobbyDeprecatedInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "lobbyV1CreatePublicLobbyDeprecatedNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV1CreatePublicLobbyDeprecatedTooManyRequestsError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 429,
+            "type": "string",
+          },
+          "lobbyV1CreatePublicLobbyDeprecatedUnauthorizedError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 401,
+            "type": "string",
+          },
+          "lobbyV1CreatePublicLobbyDeprecatedUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "lobbyV1ListActivePublicLobbiesDeprecatedNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV1ListActivePublicLobbiesDeprecatedUnauthorizedError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 401,
+            "type": "string",
+          },
+          "lobbyV2CreateLobbyInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "lobbyV2CreateLobbyNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV2CreateLobbyTooManyRequestsError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 429,
+            "type": "string",
+          },
+          "lobbyV2CreateLobbyUnauthorizedError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 401,
+            "type": "string",
+          },
+          "lobbyV2CreateLobbyUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "lobbyV2CreateLocalLobbyInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "lobbyV2CreateLocalLobbyNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV2CreateLocalLobbyTooManyRequestsError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 429,
+            "type": "string",
+          },
+          "lobbyV2CreateLocalLobbyUnauthorizedError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 401,
+            "type": "string",
+          },
+          "lobbyV2CreateLocalLobbyUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "lobbyV2CreatePrivateLobbyInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "lobbyV2CreatePrivateLobbyNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV2CreatePrivateLobbyTooManyRequestsError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 429,
+            "type": "string",
+          },
+          "lobbyV2CreatePrivateLobbyUnauthorizedError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 401,
+            "type": "string",
+          },
+          "lobbyV2CreatePrivateLobbyUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "lobbyV2CreatePublicLobbyInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "lobbyV2CreatePublicLobbyNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV2CreatePublicLobbyTooManyRequestsError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 429,
+            "type": "string",
+          },
+          "lobbyV2CreatePublicLobbyUnauthorizedError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 401,
+            "type": "string",
+          },
+          "lobbyV2CreatePublicLobbyUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "lobbyV2GetLobbyInfoNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV2SetLobbyStateNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "lobbyV2SetLobbyStateUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "logV1GetLogsForAppNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "logV1GetLogsForDeploymentNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "logV1GetLogsForProcessNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "metricsV1GetMetricsNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "metricsV1GetMetricsUnprocessableEntityError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 422,
+            "type": "string",
+          },
+          "processesV1GetProcessInfoNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "processesV1GetRunningProcessesNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "processesV1GetStoppedProcessesNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "roomV1CreateRoomInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "roomV1CreateRoomNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "roomV1DestroyRoomInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "roomV1DestroyRoomNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "roomV1GetActiveRoomsForProcessNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "roomV1GetConnectionInfoBadRequestError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 400,
+            "type": "string",
+          },
+          "roomV1GetConnectionInfoInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "roomV1GetConnectionInfoNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "roomV1GetInactiveRoomsForProcessNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "roomV1GetRoomInfoNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
+            "type": "string",
+          },
+          "roomV1SuspendRoomInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 500,
+            "type": "string",
+          },
+          "roomV1SuspendRoomNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "string",
+              },
+            ],
+            "status-code": 404,
             "type": "string",
           },
         },
@@ -575,38 +1475,488 @@
         },
       },
       "rawContents": "errors:
-  UnprocessableEntityError:
+  appV1CreateAppUnprocessableEntityError:
     status-code: 422
     type: string
     docs: ''
     examples:
       - value: string
-  InternalServerError:
+  appV1CreateAppInternalServerError:
     status-code: 500
     type: string
     docs: ''
     examples:
       - value: string
-  NotFoundError:
+  appV1UpdateAppNotFoundError:
     status-code: 404
     type: string
     docs: ''
     examples:
       - value: string
-  UnauthorizedError:
+  appV1UpdateAppInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  appV1GetAppInfoNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  appV1DeleteAppNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  appV1DeleteAppInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  authV1LoginAnonymousNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  authV1LoginNicknameNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  authV1LoginGoogleUnauthorizedError:
     status-code: 401
     type: string
     docs: ''
     examples:
       - value: string
-  BadRequestError:
+  authV1LoginGoogleNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1GetBuildsNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1GetBuildInfoNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1CreateBuildNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1CreateBuildUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1CreateBuildInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1RunBuildNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1RunBuildInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1DeleteBuildNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1DeleteBuildUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  buildV1DeleteBuildInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  deploymentV1GetDeploymentsNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  deploymentV1GetDeploymentInfoNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  deploymentV1CreateDeploymentBadRequestError:
     status-code: 400
     type: string
     docs: ''
     examples:
       - value: string
-  TooManyRequestsError:
+  deploymentV1CreateDeploymentNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  deploymentV1CreateDeploymentInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePrivateLobbyDeprecatedUnauthorizedError:
+    status-code: 401
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePrivateLobbyDeprecatedNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePrivateLobbyDeprecatedUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePrivateLobbyDeprecatedTooManyRequestsError:
     status-code: 429
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePrivateLobbyDeprecatedInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePublicLobbyDeprecatedUnauthorizedError:
+    status-code: 401
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePublicLobbyDeprecatedNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePublicLobbyDeprecatedUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePublicLobbyDeprecatedTooManyRequestsError:
+    status-code: 429
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1CreatePublicLobbyDeprecatedInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1ListActivePublicLobbiesDeprecatedUnauthorizedError:
+    status-code: 401
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV1ListActivePublicLobbiesDeprecatedNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePrivateLobbyUnauthorizedError:
+    status-code: 401
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePrivateLobbyNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePrivateLobbyUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePrivateLobbyTooManyRequestsError:
+    status-code: 429
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePrivateLobbyInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePublicLobbyUnauthorizedError:
+    status-code: 401
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePublicLobbyNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePublicLobbyUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePublicLobbyTooManyRequestsError:
+    status-code: 429
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreatePublicLobbyInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLocalLobbyUnauthorizedError:
+    status-code: 401
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLocalLobbyNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLocalLobbyUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLocalLobbyTooManyRequestsError:
+    status-code: 429
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLocalLobbyInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLobbyUnauthorizedError:
+    status-code: 401
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLobbyNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLobbyUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLobbyTooManyRequestsError:
+    status-code: 429
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2CreateLobbyInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2GetLobbyInfoNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2SetLobbyStateNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  lobbyV2SetLobbyStateUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  logV1GetLogsForAppNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  logV1GetLogsForProcessNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  logV1GetLogsForDeploymentNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  metricsV1GetMetricsNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  metricsV1GetMetricsUnprocessableEntityError:
+    status-code: 422
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  processesV1GetRunningProcessesNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  processesV1GetStoppedProcessesNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  processesV1GetProcessInfoNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1CreateRoomNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1CreateRoomInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1GetRoomInfoNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1GetActiveRoomsForProcessNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1GetInactiveRoomsForProcessNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1DestroyRoomNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1DestroyRoomInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1SuspendRoomNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1SuspendRoomInternalServerError:
+    status-code: 500
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1GetConnectionInfoBadRequestError:
+    status-code: 400
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1GetConnectionInfoNotFoundError:
+    status-code: 404
+    type: string
+    docs: ''
+    examples:
+      - value: string
+  roomV1GetConnectionInfoInternalServerError:
+    status-code: 500
     type: string
     docs: ''
     examples:
@@ -947,8 +2297,8 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
-                "root.InternalServerError",
+                "root.appV1CreateAppUnprocessableEntityError",
+                "root.appV1CreateAppInternalServerError",
               ],
               "examples": [
                 {
@@ -995,8 +2345,8 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.appV1DeleteAppNotFoundError",
+                "root.appV1DeleteAppInternalServerError",
               ],
               "examples": [
                 {
@@ -1019,7 +2369,7 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.appV1GetAppInfoNotFoundError",
               ],
               "examples": [
                 {
@@ -1121,8 +2471,8 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.appV1UpdateAppNotFoundError",
+                "root.appV1UpdateAppInternalServerError",
               ],
               "examples": [
                 {
@@ -1236,8 +2586,8 @@ service:
         type: root.Application
         status-code: 201
       errors:
-        - root.UnprocessableEntityError
-        - root.InternalServerError
+        - root.appV1CreateAppUnprocessableEntityError
+        - root.appV1CreateAppInternalServerError
       examples:
         - request:
             authConfiguration: {}
@@ -1271,8 +2621,8 @@ service:
         type: root.Application
         status-code: 200
       errors:
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.appV1UpdateAppNotFoundError
+        - root.appV1UpdateAppInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -1305,7 +2655,7 @@ service:
         type: root.Application
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.appV1GetAppInfoNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -1331,8 +2681,8 @@ service:
       path-parameters:
         appId: root.AppId
       errors:
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.appV1DeleteAppNotFoundError
+        - root.appV1DeleteAppInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -1354,7 +2704,7 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.authV1LoginAnonymousNotFoundError",
               ],
               "examples": [
                 {
@@ -1387,8 +2737,8 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
+                "root.authV1LoginGoogleUnauthorizedError",
+                "root.authV1LoginGoogleNotFoundError",
               ],
               "examples": [
                 {
@@ -1436,7 +2786,7 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.authV1LoginNicknameNotFoundError",
               ],
               "examples": [
                 {
@@ -1553,7 +2903,7 @@ service:
         type: LoginAnonymousResponse
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.authV1LoginAnonymousNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -1579,7 +2929,7 @@ service:
         type: LoginNicknameResponse
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.authV1LoginNicknameNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -1607,8 +2957,8 @@ service:
         type: LoginGoogleResponse
         status-code: 200
       errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
+        - root.authV1LoginGoogleUnauthorizedError
+        - root.authV1LoginGoogleNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -1635,9 +2985,9 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
-                "root.InternalServerError",
+                "root.buildV1CreateBuildNotFoundError",
+                "root.buildV1CreateBuildUnprocessableEntityError",
+                "root.buildV1CreateBuildInternalServerError",
               ],
               "examples": [
                 {
@@ -1684,9 +3034,9 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
-                "root.InternalServerError",
+                "root.buildV1DeleteBuildNotFoundError",
+                "root.buildV1DeleteBuildUnprocessableEntityError",
+                "root.buildV1DeleteBuildInternalServerError",
               ],
               "examples": [
                 {
@@ -1711,7 +3061,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.buildV1GetBuildInfoNotFoundError",
               ],
               "examples": [
                 {
@@ -1760,7 +3110,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.buildV1GetBuildsNotFoundError",
               ],
               "examples": [
                 {
@@ -1809,8 +3159,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.buildV1RunBuildNotFoundError",
+                "root.buildV1RunBuildInternalServerError",
               ],
               "method": "POST",
               "pagination": undefined,
@@ -1865,7 +3215,7 @@ service:
         type: list<root.Build>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.buildV1GetBuildsNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -1897,7 +3247,7 @@ service:
         type: root.Build
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.buildV1GetBuildInfoNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -1929,9 +3279,9 @@ service:
         type: root.Build
         status-code: 201
       errors:
-        - root.NotFoundError
-        - root.UnprocessableEntityError
-        - root.InternalServerError
+        - root.buildV1CreateBuildNotFoundError
+        - root.buildV1CreateBuildUnprocessableEntityError
+        - root.buildV1CreateBuildInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -1969,8 +3319,8 @@ service:
         type: file
         status-code: 200
       errors:
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.buildV1RunBuildNotFoundError
+        - root.buildV1RunBuildInternalServerError
     DeleteBuild:
       path: /builds/v1/{appId}/delete/{buildId}
       method: DELETE
@@ -1981,9 +3331,9 @@ service:
         appId: root.AppId
         buildId: root.BuildId
       errors:
-        - root.NotFoundError
-        - root.UnprocessableEntityError
-        - root.InternalServerError
+        - root.buildV1DeleteBuildNotFoundError
+        - root.buildV1DeleteBuildUnprocessableEntityError
+        - root.buildV1DeleteBuildInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -2006,9 +3356,9 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.deploymentV1CreateDeploymentBadRequestError",
+                "root.deploymentV1CreateDeploymentNotFoundError",
+                "root.deploymentV1CreateDeploymentInternalServerError",
               ],
               "examples": [
                 {
@@ -2075,7 +3425,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.deploymentV1GetDeploymentInfoNotFoundError",
               ],
               "examples": [
                 {
@@ -2126,7 +3476,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.deploymentV1GetDeploymentsNotFoundError",
               ],
               "examples": [
                 {
@@ -2198,7 +3548,7 @@ service:
         type: list<root.Deployment>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.deploymentV1GetDeploymentsNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -2232,7 +3582,7 @@ service:
         type: root.Deployment
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.deploymentV1GetDeploymentInfoNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -2270,9 +3620,9 @@ service:
         type: root.Deployment
         status-code: 201
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.deploymentV1CreateDeploymentBadRequestError
+        - root.deploymentV1CreateDeploymentNotFoundError
+        - root.deploymentV1CreateDeploymentInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -2390,11 +3740,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
-                "root.TooManyRequestsError",
-                "root.InternalServerError",
+                "root.lobbyV1CreatePrivateLobbyDeprecatedUnauthorizedError",
+                "root.lobbyV1CreatePrivateLobbyDeprecatedNotFoundError",
+                "root.lobbyV1CreatePrivateLobbyDeprecatedUnprocessableEntityError",
+                "root.lobbyV1CreatePrivateLobbyDeprecatedTooManyRequestsError",
+                "root.lobbyV1CreatePrivateLobbyDeprecatedInternalServerError",
               ],
               "examples": [
                 {
@@ -2442,11 +3792,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
-                "root.TooManyRequestsError",
-                "root.InternalServerError",
+                "root.lobbyV1CreatePublicLobbyDeprecatedUnauthorizedError",
+                "root.lobbyV1CreatePublicLobbyDeprecatedNotFoundError",
+                "root.lobbyV1CreatePublicLobbyDeprecatedUnprocessableEntityError",
+                "root.lobbyV1CreatePublicLobbyDeprecatedTooManyRequestsError",
+                "root.lobbyV1CreatePublicLobbyDeprecatedInternalServerError",
               ],
               "examples": [
                 {
@@ -2494,8 +3844,8 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
+                "root.lobbyV1ListActivePublicLobbiesDeprecatedUnauthorizedError",
+                "root.lobbyV1ListActivePublicLobbiesDeprecatedNotFoundError",
               ],
               "examples": [
                 {
@@ -2589,11 +3939,11 @@ service:
         status-code: 200
       availability: deprecated
       errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - root.lobbyV1CreatePrivateLobbyDeprecatedUnauthorizedError
+        - root.lobbyV1CreatePrivateLobbyDeprecatedNotFoundError
+        - root.lobbyV1CreatePrivateLobbyDeprecatedUnprocessableEntityError
+        - root.lobbyV1CreatePrivateLobbyDeprecatedTooManyRequestsError
+        - root.lobbyV1CreatePrivateLobbyDeprecatedInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -2624,11 +3974,11 @@ service:
         status-code: 200
       availability: deprecated
       errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - root.lobbyV1CreatePublicLobbyDeprecatedUnauthorizedError
+        - root.lobbyV1CreatePublicLobbyDeprecatedNotFoundError
+        - root.lobbyV1CreatePublicLobbyDeprecatedUnprocessableEntityError
+        - root.lobbyV1CreatePublicLobbyDeprecatedTooManyRequestsError
+        - root.lobbyV1CreatePublicLobbyDeprecatedInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -2659,8 +4009,8 @@ service:
         status-code: 200
       availability: deprecated
       errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
+        - root.lobbyV1ListActivePublicLobbiesDeprecatedUnauthorizedError
+        - root.lobbyV1ListActivePublicLobbiesDeprecatedNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -2697,11 +4047,11 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
-                "root.TooManyRequestsError",
-                "root.InternalServerError",
+                "root.lobbyV2CreateLobbyUnauthorizedError",
+                "root.lobbyV2CreateLobbyNotFoundError",
+                "root.lobbyV2CreateLobbyUnprocessableEntityError",
+                "root.lobbyV2CreateLobbyTooManyRequestsError",
+                "root.lobbyV2CreateLobbyInternalServerError",
               ],
               "examples": [
                 {
@@ -2778,11 +4128,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
-                "root.TooManyRequestsError",
-                "root.InternalServerError",
+                "root.lobbyV2CreateLocalLobbyUnauthorizedError",
+                "root.lobbyV2CreateLocalLobbyNotFoundError",
+                "root.lobbyV2CreateLocalLobbyUnprocessableEntityError",
+                "root.lobbyV2CreateLocalLobbyTooManyRequestsError",
+                "root.lobbyV2CreateLocalLobbyInternalServerError",
               ],
               "examples": [
                 {
@@ -2857,11 +4207,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
-                "root.TooManyRequestsError",
-                "root.InternalServerError",
+                "root.lobbyV2CreatePrivateLobbyUnauthorizedError",
+                "root.lobbyV2CreatePrivateLobbyNotFoundError",
+                "root.lobbyV2CreatePrivateLobbyUnprocessableEntityError",
+                "root.lobbyV2CreatePrivateLobbyTooManyRequestsError",
+                "root.lobbyV2CreatePrivateLobbyInternalServerError",
               ],
               "examples": [
                 {
@@ -2936,11 +4286,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.UnauthorizedError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
-                "root.TooManyRequestsError",
-                "root.InternalServerError",
+                "root.lobbyV2CreatePublicLobbyUnauthorizedError",
+                "root.lobbyV2CreatePublicLobbyNotFoundError",
+                "root.lobbyV2CreatePublicLobbyUnprocessableEntityError",
+                "root.lobbyV2CreatePublicLobbyTooManyRequestsError",
+                "root.lobbyV2CreatePublicLobbyInternalServerError",
               ],
               "examples": [
                 {
@@ -3014,7 +4364,7 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.lobbyV2GetLobbyInfoNotFoundError",
               ],
               "examples": [
                 {
@@ -3111,8 +4461,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.lobbyV2SetLobbyStateNotFoundError",
+                "root.lobbyV2SetLobbyStateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -3224,11 +4574,11 @@ service:
         status-code: 201
       availability: deprecated
       errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - root.lobbyV2CreatePrivateLobbyUnauthorizedError
+        - root.lobbyV2CreatePrivateLobbyNotFoundError
+        - root.lobbyV2CreatePrivateLobbyUnprocessableEntityError
+        - root.lobbyV2CreatePrivateLobbyTooManyRequestsError
+        - root.lobbyV2CreatePrivateLobbyInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -3278,11 +4628,11 @@ service:
         status-code: 201
       availability: deprecated
       errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - root.lobbyV2CreatePublicLobbyUnauthorizedError
+        - root.lobbyV2CreatePublicLobbyNotFoundError
+        - root.lobbyV2CreatePublicLobbyUnprocessableEntityError
+        - root.lobbyV2CreatePublicLobbyTooManyRequestsError
+        - root.lobbyV2CreatePublicLobbyInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -3332,11 +4682,11 @@ service:
         status-code: 201
       availability: deprecated
       errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - root.lobbyV2CreateLocalLobbyUnauthorizedError
+        - root.lobbyV2CreateLocalLobbyNotFoundError
+        - root.lobbyV2CreateLocalLobbyUnprocessableEntityError
+        - root.lobbyV2CreateLocalLobbyTooManyRequestsError
+        - root.lobbyV2CreateLocalLobbyInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -3386,11 +4736,11 @@ service:
         type: root.Lobby
         status-code: 201
       errors:
-        - root.UnauthorizedError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - root.lobbyV2CreateLobbyUnauthorizedError
+        - root.lobbyV2CreateLobbyNotFoundError
+        - root.lobbyV2CreateLobbyUnprocessableEntityError
+        - root.lobbyV2CreateLobbyTooManyRequestsError
+        - root.lobbyV2CreateLobbyInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -3460,7 +4810,7 @@ service:
         type: root.Lobby
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.lobbyV2GetLobbyInfoNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -3498,8 +4848,8 @@ service:
         type: root.Lobby
         status-code: 200
       errors:
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.lobbyV2SetLobbyStateNotFoundError
+        - root.lobbyV2SetLobbyStateUnprocessableEntityError
       examples:
         - path-parameters:
             appId: appId
@@ -3547,7 +4897,7 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.logV1GetLogsForAppNotFoundError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -3576,7 +4926,7 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.logV1GetLogsForDeploymentNotFoundError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -3605,7 +4955,7 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.logV1GetLogsForProcessNotFoundError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -3661,7 +5011,7 @@ service:
         type: file
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.logV1GetLogsForAppNotFoundError
     GetLogsForProcess:
       path: /logs/v1/{appId}/process/{processId}
       method: GET
@@ -3681,7 +5031,7 @@ service:
         type: file
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.logV1GetLogsForProcessNotFoundError
     GetLogsForDeployment:
       path: /logs/v1/{appId}/deployment/{deploymentId}
       method: GET
@@ -3701,7 +5051,7 @@ service:
         type: text
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.logV1GetLogsForDeploymentNotFoundError
   source:
     openapi: ../openapi.json
 ",
@@ -3720,8 +5070,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.metricsV1GetMetricsNotFoundError",
+                "root.metricsV1GetMetricsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -3822,8 +5172,8 @@ service:
         type: root.MetricsResponse
         status-code: 200
       errors:
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.metricsV1GetMetricsNotFoundError
+        - root.metricsV1GetMetricsUnprocessableEntityError
       examples:
         - path-parameters:
             appId: appId
@@ -3860,7 +5210,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.processesV1GetProcessInfoNotFoundError",
               ],
               "examples": [
                 {
@@ -3910,7 +5260,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.processesV1GetRunningProcessesNotFoundError",
               ],
               "examples": [
                 {
@@ -3974,7 +5324,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.processesV1GetStoppedProcessesNotFoundError",
               ],
               "examples": [
                 {
@@ -4055,7 +5405,7 @@ service:
         type: list<root.ProcessWithRooms>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.processesV1GetRunningProcessesNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -4099,7 +5449,7 @@ service:
         type: list<root.Process>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.processesV1GetStoppedProcessesNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -4135,7 +5485,7 @@ service:
         type: root.Process
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.processesV1GetProcessInfoNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -4176,8 +5526,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.roomV1CreateRoomNotFoundError",
+                "root.roomV1CreateRoomInternalServerError",
               ],
               "examples": [
                 {
@@ -4223,8 +5573,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.roomV1DestroyRoomNotFoundError",
+                "root.roomV1DestroyRoomInternalServerError",
               ],
               "examples": [
                 {
@@ -4249,7 +5599,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.roomV1GetActiveRoomsForProcessNotFoundError",
               ],
               "examples": [
                 {
@@ -4294,9 +5644,9 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.roomV1GetConnectionInfoBadRequestError",
+                "root.roomV1GetConnectionInfoNotFoundError",
+                "root.roomV1GetConnectionInfoInternalServerError",
               ],
               "examples": [
                 {
@@ -4335,7 +5685,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.roomV1GetInactiveRoomsForProcessNotFoundError",
               ],
               "examples": [
                 {
@@ -4380,7 +5730,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
+                "root.roomV1GetRoomInfoNotFoundError",
               ],
               "examples": [
                 {
@@ -4431,8 +5781,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.roomV1SuspendRoomNotFoundError",
+                "root.roomV1SuspendRoomInternalServerError",
               ],
               "examples": [
                 {
@@ -4484,8 +5834,8 @@ service:
         type: root.RoomId
         status-code: 201
       errors:
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.roomV1CreateRoomNotFoundError
+        - root.roomV1CreateRoomInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -4507,7 +5857,7 @@ service:
         type: root.Room
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.roomV1GetRoomInfoNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -4541,7 +5891,7 @@ service:
         type: list<root.RoomWithoutAllocations>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.roomV1GetActiveRoomsForProcessNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -4570,7 +5920,7 @@ service:
         type: list<root.RoomWithoutAllocations>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.roomV1GetInactiveRoomsForProcessNotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -4595,8 +5945,8 @@ service:
         appId: root.AppId
         roomId: root.RoomId
       errors:
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.roomV1DestroyRoomNotFoundError
+        - root.roomV1DestroyRoomInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -4611,8 +5961,8 @@ service:
         appId: root.AppId
         roomId: root.RoomId
       errors:
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.roomV1SuspendRoomNotFoundError
+        - root.roomV1SuspendRoomInternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -4631,9 +5981,9 @@ service:
         type: root.ConnectionInfo
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.roomV1GetConnectionInfoBadRequestError
+        - root.roomV1GetConnectionInfoNotFoundError
+        - root.roomV1GetConnectionInfoInternalServerError
       examples:
         - path-parameters:
             appId: appId

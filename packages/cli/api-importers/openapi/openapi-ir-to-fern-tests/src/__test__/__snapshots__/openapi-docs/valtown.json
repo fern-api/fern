@@ -6,21 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "BadRequestError": {
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                  "type": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "InternalServerError": {
+          "emailssendInternalServerError": {
             "docs": "Default Response",
             "examples": [
               {
@@ -32,9 +18,10 @@
               },
             ],
             "status-code": 500,
-            "type": "emails.ymlsendInternalServerErrorSchema",
+            "type": "emailssendInternalServerErrorSchema",
           },
-          "NotFoundError": {
+          "valscancelNotFoundError": {
+            "docs": "Default Response",
             "examples": [
               {
                 "docs": undefined,
@@ -43,7 +30,47 @@
               },
             ],
             "status-code": 404,
+            "type": "string",
+          },
+          "valsdeleteNotFoundError": {
+            "docs": "The val was not found",
+            "status-code": 404,
             "type": "unknown",
+          },
+          "valsdeleteVersionNotFoundError": {
+            "docs": "The val was not found",
+            "status-code": 404,
+            "type": "unknown",
+          },
+          "valsevalGetBadRequestError": {
+            "docs": "The function throw an error or had invalid syntax",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                  "type": "error",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "valsevalGetBadRequestErrorSchema",
+          },
+          "valsevalPostBadRequestError": {
+            "docs": "Default Response",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "error": "error",
+                  "type": "error",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "valsevalPostBadRequestErrorSchema",
           },
         },
         "navigation": [
@@ -548,7 +575,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               "openapi": "../openapi.yml",
             },
           },
-          "emails.ymlsendInternalServerErrorSchema": {
+          "emailssendInternalServerErrorSchema": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -558,7 +585,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               "openapi": "../openapi.yml",
             },
           },
-          "vals.ymlevalGetBadRequestErrorSchema": {
+          "valsevalGetBadRequestErrorSchema": {
             "docs": "The function throw an error or had invalid syntax",
             "inline": undefined,
             "properties": {
@@ -569,7 +596,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               "openapi": "../openapi.yml",
             },
           },
-          "vals.ymlevalPostBadRequestErrorSchema": {
+          "valsevalPostBadRequestErrorSchema": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -583,20 +610,20 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         },
       },
       "rawContents": "types:
-  vals.ymlevalPostBadRequestErrorSchema:
+  valsevalPostBadRequestErrorSchema:
     properties:
       type: literal<"error">
       error: string
     source:
       openapi: ../openapi.yml
-  vals.ymlevalGetBadRequestErrorSchema:
+  valsevalGetBadRequestErrorSchema:
     docs: The function throw an error or had invalid syntax
     properties:
       type: literal<"error">
       error: string
     source:
       openapi: ../openapi.yml
-  emails.ymlsendInternalServerErrorSchema:
+  emailssendInternalServerErrorSchema:
     properties:
       error: string
     source:
@@ -936,23 +963,41 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
     source:
       openapi: ../openapi.yml
 errors:
-  BadRequestError:
+  valsevalPostBadRequestError:
     status-code: 400
-    type: unknown
+    type: valsevalPostBadRequestErrorSchema
+    docs: Default Response
     examples:
       - value:
           type: error
           error: error
-  InternalServerError:
+  valsevalGetBadRequestError:
+    status-code: 400
+    type: valsevalGetBadRequestErrorSchema
+    docs: The function throw an error or had invalid syntax
+    examples:
+      - value:
+          type: error
+          error: error
+  emailssendInternalServerError:
     status-code: 500
-    type: emails.ymlsendInternalServerErrorSchema
+    type: emailssendInternalServerErrorSchema
     docs: Default Response
     examples:
       - value:
           error: error
-  NotFoundError:
+  valsdeleteNotFoundError:
     status-code: 404
     type: unknown
+    docs: The val was not found
+  valsdeleteVersionNotFoundError:
+    status-code: 404
+    type: unknown
+    docs: The val was not found
+  valscancelNotFoundError:
+    status-code: 404
+    type: string
+    docs: Default Response
     examples:
       - value: string
 navigation:
@@ -1733,7 +1778,7 @@ docs: Blobs
               "auth": true,
               "docs": "Send emails",
               "errors": [
-                "root.InternalServerError",
+                "root.emailssendInternalServerError",
               ],
               "examples": [
                 {
@@ -2016,7 +2061,7 @@ service:
         type: EmailsSendResponse
         status-code: 200
       errors:
-        - root.InternalServerError
+        - root.emailssendInternalServerError
       examples:
         - request:
             subject: An important message
@@ -4002,7 +4047,7 @@ let you get, create, and run vals.",
               "auth": true,
               "docs": "Cancel a running val",
               "errors": [
-                "root.NotFoundError",
+                "root.valscancelNotFoundError",
               ],
               "examples": [
                 {
@@ -4254,7 +4299,7 @@ let you get, create, and run vals.",
               "auth": true,
               "docs": "Delete a val",
               "errors": [
-                "root.NotFoundError",
+                "root.valsdeleteNotFoundError",
               ],
               "examples": [
                 {
@@ -4280,7 +4325,7 @@ let you get, create, and run vals.",
               "auth": true,
               "docs": "Delete a specific version of a val",
               "errors": [
-                "root.NotFoundError",
+                "root.valsdeleteVersionNotFoundError",
               ],
               "examples": [
                 {
@@ -4311,7 +4356,7 @@ let you get, create, and run vals.",
               "auth": false,
               "docs": "Run JavaScript or TypeScript without saving it permanently as a val",
               "errors": [
-                "root.BadRequestError",
+                "root.valsevalGetBadRequestError",
               ],
               "examples": [
                 {
@@ -4351,7 +4396,7 @@ let you get, create, and run vals.",
               "auth": false,
               "docs": "Run JavaScript or TypeScript without saving it permanently as a val",
               "errors": [
-                "root.BadRequestError",
+                "root.valsevalPostBadRequestError",
               ],
               "examples": [
                 {
@@ -5161,7 +5206,7 @@ service:
         type: optional<EvalPostResponse>
         status-code: 200
       errors:
-        - root.BadRequestError
+        - root.valsevalPostBadRequestError
       examples:
         - name: example1
           request:
@@ -5195,7 +5240,7 @@ service:
         type: optional<EvalGetResponse>
         status-code: 200
       errors:
-        - root.BadRequestError
+        - root.valsevalGetBadRequestError
       examples:
         - path-parameters:
             code: code
@@ -5450,7 +5495,7 @@ service:
           type: string
           docs: Id of a val
       errors:
-        - root.NotFoundError
+        - root.valsdeleteNotFoundError
       examples:
         - path-parameters:
             val_id: val_id
@@ -5657,7 +5702,7 @@ service:
           type: integer
           docs: The val version
       errors:
-        - root.NotFoundError
+        - root.valsdeleteVersionNotFoundError
       examples:
         - path-parameters:
             val_id: val_id
@@ -5685,7 +5730,7 @@ service:
         type: ValsCancelResponse
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.valscancelNotFoundError
       examples:
         - path-parameters:
             val_id: val_id

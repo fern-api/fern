@@ -6,23 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "BadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "code": "code",
-                  "message": "message",
-                  "status": 1.1,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ApiErrorResponse",
-          },
-          "NotFoundError": {
+          "attemptsgetAttemptNotFoundError": {
             "docs": "Not Found",
             "examples": [
               {
@@ -38,7 +22,2455 @@
             "status-code": 404,
             "type": "ApiErrorResponse",
           },
-          "UnprocessableEntityError": {
+          "attemptsgetAttemptsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "attemptsgetAttemptsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarkscreateBookmarkBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarkscreateBookmarkUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarksdeleteBookmarkNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarksgetBookmarkNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarksgetBookmarksBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarksgetBookmarksUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarkstriggerBookmarkBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarkstriggerBookmarkNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarkstriggerBookmarkUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarksupdateBookmarkBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarksupdateBookmarkNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bookmarksupdateBookmarkUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryEventscancelEventBulkRetryNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryEventscreateEventBulkRetryBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryEventscreateEventBulkRetryUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryEventsgenerateEventBulkRetryPlanBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryEventsgenerateEventBulkRetryPlanUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryEventsgetEventBulkRetriesBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryEventsgetEventBulkRetriesUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryEventsgetEventBulkRetryNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryIgnoredEventscancelIgnoredEventBulkRetryNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryIgnoredEventscreateIgnoredEventBulkRetryBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryIgnoredEventscreateIgnoredEventBulkRetryUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryIgnoredEventsgenerateIgnoredEventBulkRetryPlanBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryIgnoredEventsgenerateIgnoredEventBulkRetryPlanUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryIgnoredEventsgetIgnoredEventBulkRetriesBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryIgnoredEventsgetIgnoredEventBulkRetriesUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryIgnoredEventsgetIgnoredEventBulkRetryNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryRequestscancelRequestBulkRetryNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryRequestscreateRequestBulkRetryBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryRequestscreateRequestBulkRetryUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryRequestsgenerateRequestBulkRetryPlanBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryRequestsgenerateRequestBulkRetryPlanUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryRequestsgetRequestBulkRetriesBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryRequestsgetRequestBulkRetriesUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "bulkRetryRequestsgetRequestBulkRetryNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsarchiveConnectionNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "connectionscreateConnectionBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "connectionscreateConnectionUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsgetConnectionNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsgetConnectionsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsgetConnectionsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "connectionspauseConnectionNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsunarchiveConnectionNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsunpauseConnectionNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsupdateConnectionBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsupdateConnectionNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsupdateConnectionUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsupsertConnectionBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "connectionsupsertConnectionUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsarchiveDestinationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "destinationscreateDestinationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "destinationscreateDestinationUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsgetDestinationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsgetDestinationsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsgetDestinationsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsunarchiveDestinationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsupdateDestinationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsupdateDestinationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsupdateDestinationUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsupsertDestinationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "destinationsupsertDestinationUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "eventsgetEventNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "eventsgetEventsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "eventsgetEventsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "eventsgetRequestRawBodyNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "eventsmuteEventNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "eventsretryEventNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsattachIntegrationToSourceBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsattachIntegrationToSourceNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "integrationscreateIntegrationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "integrationscreateIntegrationUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsdeleteIntegrationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsdetachIntegrationToSourceBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsdetachIntegrationToSourceNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsgetIntegrationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsgetIntegrationsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsgetIntegrationsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsupdateIntegrationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsupdateIntegrationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "integrationsupdateIntegrationUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggerscreateIssueTriggerBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggerscreateIssueTriggerUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersdeleteIssueTriggerNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersdisableIssueTriggerNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersenableIssueTriggerNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersgetIssueTriggerNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersgetIssueTriggersBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersgetIssueTriggersUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersupdateIssueTriggerBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersupdateIssueTriggerUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersupsertIssueTriggerBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "issueTriggersupsertIssueTriggerUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "issuesdismissIssueNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "issuesgetIssueCountUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "issuesgetIssueNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "issuesgetIssuesBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "issuesgetIssuesUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "issuesupdateIssueBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "issuesupdateIssueUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestEventsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestEventsNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestEventsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestIgnoredEventsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestIgnoredEventsNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestIgnoredEventsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestRawBodyNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "requestsgetRequestsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "requestsretryRequestBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "requestsretryRequestNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "requestsretryRequestUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsarchiveRulesetNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetscreateRulesetBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetscreateRulesetUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsgetRulesetNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsgetRulesetsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsgetRulesetsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsunarchiveRulesetNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsupdateRulesetBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsupdateRulesetNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsupdateRulesetUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsupsertRulesetBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "rulesetsupsertRulesetUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesarchiveSourceNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "sourcescreateSourceBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "sourcescreateSourceUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesgetSourceNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesgetSourcesBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesgetSourcesUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesunarchiveSourceNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesupdateSourceBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesupdateSourceNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesupdateSourceUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesupsertSourceBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "sourcesupsertSourceUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "transformationscreateTransformationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "transformationscreateTransformationUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsgetTransformationExecutionNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsgetTransformationExecutionsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsgetTransformationExecutionsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsgetTransformationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsgetTransformationsBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsgetTransformationsUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "transformationstestTransformationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "transformationstestTransformationUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsupdateTransformationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsupdateTransformationNotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsupdateTransformationUnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsupsertTransformationBadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "code",
+                  "message": "message",
+                  "status": 1.1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ApiErrorResponse",
+          },
+          "transformationsupsertTransformationUnprocessableEntityError": {
             "docs": "Unprocessable Entity",
             "examples": [
               {
@@ -2536,7 +4968,7 @@
         },
       },
       "rawContents": "errors:
-  BadRequestError:
+  issueTriggersgetIssueTriggersBadRequestError:
     status-code: 400
     type: ApiErrorResponse
     docs: Bad Request
@@ -2545,7 +4977,7 @@
           code: code
           status: 1.1
           message: message
-  UnprocessableEntityError:
+  issueTriggersgetIssueTriggersUnprocessableEntityError:
     status-code: 422
     type: ApiErrorResponse
     docs: Unprocessable Entity
@@ -2554,7 +4986,1375 @@
           code: code
           status: 1.1
           message: message
-  NotFoundError:
+  issueTriggerscreateIssueTriggerBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggerscreateIssueTriggerUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggersupsertIssueTriggerBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggersupsertIssueTriggerUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggersgetIssueTriggerNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggersupdateIssueTriggerBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggersupdateIssueTriggerUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggersdeleteIssueTriggerNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggersdisableIssueTriggerNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issueTriggersenableIssueTriggerNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  attemptsgetAttemptsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  attemptsgetAttemptsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  attemptsgetAttemptNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarksgetBookmarksBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarksgetBookmarksUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarkscreateBookmarkBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarkscreateBookmarkUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarksgetBookmarkNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarksupdateBookmarkBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarksupdateBookmarkNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarksupdateBookmarkUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarksdeleteBookmarkNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarkstriggerBookmarkBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarkstriggerBookmarkNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bookmarkstriggerBookmarkUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsgetDestinationsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsgetDestinationsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationscreateDestinationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationscreateDestinationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsupsertDestinationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsupsertDestinationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsgetDestinationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsupdateDestinationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsupdateDestinationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsupdateDestinationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsarchiveDestinationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  destinationsunarchiveDestinationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  eventsgetEventsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  eventsgetEventsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  eventsgetEventNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  eventsgetRequestRawBodyNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  eventsretryEventNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  eventsmuteEventNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryEventsgetEventBulkRetriesBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryEventsgetEventBulkRetriesUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryEventscreateEventBulkRetryBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryEventscreateEventBulkRetryUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryEventsgenerateEventBulkRetryPlanBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryEventsgenerateEventBulkRetryPlanUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryEventsgetEventBulkRetryNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryEventscancelEventBulkRetryNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryIgnoredEventsgetIgnoredEventBulkRetriesBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryIgnoredEventsgetIgnoredEventBulkRetriesUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryIgnoredEventscreateIgnoredEventBulkRetryBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryIgnoredEventscreateIgnoredEventBulkRetryUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryIgnoredEventsgenerateIgnoredEventBulkRetryPlanBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryIgnoredEventsgenerateIgnoredEventBulkRetryPlanUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryIgnoredEventsgetIgnoredEventBulkRetryNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryIgnoredEventscancelIgnoredEventBulkRetryNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsgetIntegrationsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsgetIntegrationsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationscreateIntegrationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationscreateIntegrationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsgetIntegrationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsupdateIntegrationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsupdateIntegrationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsupdateIntegrationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsdeleteIntegrationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsattachIntegrationToSourceBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsattachIntegrationToSourceNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsdetachIntegrationToSourceBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  integrationsdetachIntegrationToSourceNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issuesgetIssuesBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issuesgetIssuesUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issuesgetIssueCountUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issuesgetIssueNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issuesupdateIssueBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issuesupdateIssueUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  issuesdismissIssueNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestRawBodyNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsretryRequestBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsretryRequestNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsretryRequestUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestEventsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestEventsNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestEventsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestIgnoredEventsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestIgnoredEventsNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  requestsgetRequestIgnoredEventsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryRequestsgetRequestBulkRetriesBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryRequestsgetRequestBulkRetriesUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryRequestscreateRequestBulkRetryBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryRequestscreateRequestBulkRetryUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryRequestsgenerateRequestBulkRetryPlanBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryRequestsgenerateRequestBulkRetryPlanUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryRequestsgetRequestBulkRetryNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  bulkRetryRequestscancelRequestBulkRetryNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsgetRulesetsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsgetRulesetsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetscreateRulesetBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetscreateRulesetUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsupsertRulesetBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsupsertRulesetUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsgetRulesetNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsupdateRulesetBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsupdateRulesetNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsupdateRulesetUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsarchiveRulesetNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  rulesetsunarchiveRulesetNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesgetSourcesBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesgetSourcesUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcescreateSourceBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcescreateSourceUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesupsertSourceBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesupsertSourceUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesgetSourceNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesupdateSourceBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesupdateSourceNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesupdateSourceUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesarchiveSourceNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  sourcesunarchiveSourceNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsgetTransformationsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsgetTransformationsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationscreateTransformationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationscreateTransformationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsupsertTransformationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsupsertTransformationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsgetTransformationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsupdateTransformationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsupdateTransformationNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsupdateTransformationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationstestTransformationBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationstestTransformationUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsgetTransformationExecutionsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsgetTransformationExecutionsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  transformationsgetTransformationExecutionNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsgetConnectionsBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsgetConnectionsUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionscreateConnectionBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionscreateConnectionUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsupsertConnectionBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsupsertConnectionUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsgetConnectionNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsupdateConnectionBadRequestError:
+    status-code: 400
+    type: ApiErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsupdateConnectionNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsupdateConnectionUnprocessableEntityError:
+    status-code: 422
+    type: ApiErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsarchiveConnectionNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsunarchiveConnectionNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionspauseConnectionNotFoundError:
+    status-code: 404
+    type: ApiErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          code: code
+          status: 1.1
+          message: message
+  connectionsunpauseConnectionNotFoundError:
     status-code: 404
     type: ApiErrorResponse
     docs: Not Found
@@ -4272,7 +8072,7 @@ types:
               "display-name": "Get a single attempt",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.attemptsgetAttemptNotFoundError",
               ],
               "examples": [
                 {
@@ -4325,8 +8125,8 @@ types:
               "display-name": "Get attempts",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.attemptsgetAttemptsBadRequestError",
+                "root.attemptsgetAttemptsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4459,8 +8259,8 @@ service:
         type: root.EventAttemptPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.attemptsgetAttemptsBadRequestError
+        - root.attemptsgetAttemptsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -4507,7 +8307,7 @@ service:
         type: optional<root.EventAttempt>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.attemptsgetAttemptNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -4556,8 +8356,8 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "display-name": "Create a bookmark",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bookmarkscreateBookmarkBadRequestError",
+                "root.bookmarkscreateBookmarkUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4657,7 +8457,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "display-name": "Delete a bookmark",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.bookmarksdeleteBookmarkNotFoundError",
               ],
               "examples": [
                 {
@@ -4691,7 +8491,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "display-name": "Get a single bookmark",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.bookmarksgetBookmarkNotFoundError",
               ],
               "examples": [
                 {
@@ -4741,8 +8541,8 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "display-name": "Get bookmarks",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bookmarksgetBookmarksBadRequestError",
+                "root.bookmarksgetBookmarksUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4854,9 +8654,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "display-name": "Trigger a bookmark",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.bookmarkstriggerBookmarkBadRequestError",
+                "root.bookmarkstriggerBookmarkNotFoundError",
+                "root.bookmarkstriggerBookmarkUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4933,9 +8733,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "display-name": "Update a bookmark",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.bookmarksupdateBookmarkBadRequestError",
+                "root.bookmarksupdateBookmarkNotFoundError",
+                "root.bookmarksupdateBookmarkUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5132,8 +8932,8 @@ service:
         type: root.BookmarkPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bookmarksgetBookmarksBadRequestError
+        - root.bookmarksgetBookmarksUnprocessableEntityError
       examples:
         - response:
             body:
@@ -5195,8 +8995,8 @@ service:
         type: root.Bookmark
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bookmarkscreateBookmarkBadRequestError
+        - root.bookmarkscreateBookmarkUnprocessableEntityError
       examples:
         - request:
             event_data_id: event_data_id
@@ -5235,7 +9035,7 @@ service:
         type: root.Bookmark
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.bookmarksgetBookmarkNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -5298,9 +9098,9 @@ service:
         type: root.Bookmark
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.bookmarksupdateBookmarkBadRequestError
+        - root.bookmarksupdateBookmarkNotFoundError
+        - root.bookmarksupdateBookmarkUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -5338,7 +9138,7 @@ service:
         type: root.DeletedBookmarkResponse
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.bookmarksdeleteBookmarkNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -5368,9 +9168,9 @@ service:
         type: root.EventArray
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.bookmarkstriggerBookmarkBadRequestError
+        - root.bookmarkstriggerBookmarkNotFoundError
+        - root.bookmarkstriggerBookmarkUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -5425,7 +9225,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "display-name": "Cancel an events bulk retry",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.bulkRetryEventscancelEventBulkRetryNotFoundError",
               ],
               "examples": [
                 {
@@ -5475,8 +9275,8 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "display-name": "Create an events bulk retry",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryEventscreateEventBulkRetryBadRequestError",
+                "root.bulkRetryEventscreateEventBulkRetryUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5536,8 +9336,8 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "display-name": "Generate an events bulk retry plan",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryEventsgenerateEventBulkRetryPlanBadRequestError",
+                "root.bulkRetryEventsgenerateEventBulkRetryPlanUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5567,8 +9367,8 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "display-name": "Get events bulk retries",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryEventsgetEventBulkRetriesBadRequestError",
+                "root.bulkRetryEventsgetEventBulkRetriesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5649,7 +9449,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "display-name": "Get an events bulk retry",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.bulkRetryEventsgetEventBulkRetryNotFoundError",
               ],
               "examples": [
                 {
@@ -6724,8 +10524,8 @@ service:
         type: root.BatchOperationPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bulkRetryEventsgetEventBulkRetriesBadRequestError
+        - root.bulkRetryEventsgetEventBulkRetriesUnprocessableEntityError
       examples:
         - response:
             body:
@@ -6776,8 +10576,8 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bulkRetryEventscreateEventBulkRetryBadRequestError
+        - root.bulkRetryEventscreateEventBulkRetryUnprocessableEntityError
       examples:
         - request: {}
           response:
@@ -6811,8 +10611,8 @@ service:
         type: root.BatchOperationPlan
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bulkRetryEventsgenerateEventBulkRetryPlanBadRequestError
+        - root.bulkRetryEventsgenerateEventBulkRetryPlanUnprocessableEntityError
       examples:
         - response:
             body:
@@ -6834,7 +10634,7 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.bulkRetryEventsgetEventBulkRetryNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -6871,7 +10671,7 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.bulkRetryEventscancelEventBulkRetryNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -6916,7 +10716,7 @@ docs: ''
               "display-name": "Cancel an ignored events bulk retry",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.bulkRetryIgnoredEventscancelIgnoredEventBulkRetryNotFoundError",
               ],
               "examples": [
                 {
@@ -6966,8 +10766,8 @@ docs: ''
               "display-name": "Create an ignored events bulk retry",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryIgnoredEventscreateIgnoredEventBulkRetryBadRequestError",
+                "root.bulkRetryIgnoredEventscreateIgnoredEventBulkRetryUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7027,8 +10827,8 @@ docs: ''
               "display-name": "Generate an ignored events bulk retry plan",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryIgnoredEventsgenerateIgnoredEventBulkRetryPlanBadRequestError",
+                "root.bulkRetryIgnoredEventsgenerateIgnoredEventBulkRetryPlanUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7058,8 +10858,8 @@ docs: ''
               "display-name": "Get ignored events bulk retries",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryIgnoredEventsgetIgnoredEventBulkRetriesBadRequestError",
+                "root.bulkRetryIgnoredEventsgetIgnoredEventBulkRetriesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7140,7 +10940,7 @@ docs: ''
               "display-name": "Get an ignored events bulk retry",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.bulkRetryIgnoredEventsgetIgnoredEventBulkRetryNotFoundError",
               ],
               "examples": [
                 {
@@ -7359,8 +11159,9 @@ service:
         type: root.BatchOperationPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bulkRetryIgnoredEventsgetIgnoredEventBulkRetriesBadRequestError
+        - >-
+          root.bulkRetryIgnoredEventsgetIgnoredEventBulkRetriesUnprocessableEntityError
       examples:
         - response:
             body:
@@ -7409,8 +11210,9 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bulkRetryIgnoredEventscreateIgnoredEventBulkRetryBadRequestError
+        - >-
+          root.bulkRetryIgnoredEventscreateIgnoredEventBulkRetryUnprocessableEntityError
       examples:
         - request: {}
           response:
@@ -7444,8 +11246,10 @@ service:
         type: root.BatchOperationPlan
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - >-
+          root.bulkRetryIgnoredEventsgenerateIgnoredEventBulkRetryPlanBadRequestError
+        - >-
+          root.bulkRetryIgnoredEventsgenerateIgnoredEventBulkRetryPlanUnprocessableEntityError
       examples:
         - response:
             body:
@@ -7467,7 +11271,7 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.bulkRetryIgnoredEventsgetIgnoredEventBulkRetryNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -7504,7 +11308,7 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.bulkRetryIgnoredEventscancelIgnoredEventBulkRetryNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -7549,7 +11353,7 @@ docs: ''
               "display-name": "Cancel a requests bulk retry",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.bulkRetryRequestscancelRequestBulkRetryNotFoundError",
               ],
               "examples": [
                 {
@@ -7599,8 +11403,8 @@ docs: ''
               "display-name": "Create a requests bulk retry",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryRequestscreateRequestBulkRetryBadRequestError",
+                "root.bulkRetryRequestscreateRequestBulkRetryUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7660,8 +11464,8 @@ docs: ''
               "display-name": "Generate a requests bulk retry plan",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryRequestsgenerateRequestBulkRetryPlanBadRequestError",
+                "root.bulkRetryRequestsgenerateRequestBulkRetryPlanUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7691,8 +11495,8 @@ docs: ''
               "display-name": "Get request bulk retries",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.bulkRetryRequestsgetRequestBulkRetriesBadRequestError",
+                "root.bulkRetryRequestsgetRequestBulkRetriesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7773,7 +11577,7 @@ docs: ''
               "display-name": "Get a requests bulk retry",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.bulkRetryRequestsgetRequestBulkRetryNotFoundError",
               ],
               "examples": [
                 {
@@ -8572,8 +12376,8 @@ service:
         type: root.BatchOperationPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bulkRetryRequestsgetRequestBulkRetriesBadRequestError
+        - root.bulkRetryRequestsgetRequestBulkRetriesUnprocessableEntityError
       examples:
         - response:
             body:
@@ -8624,8 +12428,8 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bulkRetryRequestscreateRequestBulkRetryBadRequestError
+        - root.bulkRetryRequestscreateRequestBulkRetryUnprocessableEntityError
       examples:
         - request: {}
           response:
@@ -8659,8 +12463,9 @@ service:
         type: root.BatchOperationPlan
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.bulkRetryRequestsgenerateRequestBulkRetryPlanBadRequestError
+        - >-
+          root.bulkRetryRequestsgenerateRequestBulkRetryPlanUnprocessableEntityError
       examples:
         - response:
             body:
@@ -8682,7 +12487,7 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.bulkRetryRequestsgetRequestBulkRetryNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -8719,7 +12524,7 @@ service:
         type: root.BatchOperation
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.bulkRetryRequestscancelRequestBulkRetryNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -8764,7 +12569,7 @@ docs: ''
               "display-name": "Archive a connection",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.connectionsarchiveConnectionNotFoundError",
               ],
               "examples": [
                 {
@@ -8862,8 +12667,8 @@ docs: ''
               "display-name": "Create a connection",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.connectionscreateConnectionBadRequestError",
+                "root.connectionscreateConnectionUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9025,7 +12830,7 @@ docs: ''
               "display-name": "Get a single connection",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.connectionsgetConnectionNotFoundError",
               ],
               "examples": [
                 {
@@ -9123,8 +12928,8 @@ docs: ''
               "display-name": "Get connections",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.connectionsgetConnectionsBadRequestError",
+                "root.connectionsgetConnectionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9256,7 +13061,7 @@ docs: ''
               "display-name": "Pause a connection",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.connectionspauseConnectionNotFoundError",
               ],
               "examples": [
                 {
@@ -9354,7 +13159,7 @@ docs: ''
               "display-name": "Unarchive a connection",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.connectionsunarchiveConnectionNotFoundError",
               ],
               "examples": [
                 {
@@ -9452,7 +13257,7 @@ docs: ''
               "display-name": "Unpause a connection",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.connectionsunpauseConnectionNotFoundError",
               ],
               "examples": [
                 {
@@ -9550,9 +13355,9 @@ docs: ''
               "display-name": "Update a connection",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.connectionsupdateConnectionBadRequestError",
+                "root.connectionsupdateConnectionNotFoundError",
+                "root.connectionsupdateConnectionUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9690,8 +13495,8 @@ docs: ''
               "display-name": "Update or create a connection",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.connectionsupsertConnectionBadRequestError",
+                "root.connectionsupsertConnectionUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10268,8 +14073,8 @@ service:
         type: root.ConnectionPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.connectionsgetConnectionsBadRequestError
+        - root.connectionsgetConnectionsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -10370,8 +14175,8 @@ service:
         type: root.Connection
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.connectionscreateConnectionBadRequestError
+        - root.connectionscreateConnectionUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -10481,8 +14286,8 @@ service:
         type: root.Connection
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.connectionsupsertConnectionBadRequestError
+        - root.connectionsupsertConnectionUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -10554,7 +14359,7 @@ service:
         type: root.Connection
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.connectionsgetConnectionNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -10650,9 +14455,9 @@ service:
         type: root.Connection
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.connectionsupdateConnectionBadRequestError
+        - root.connectionsupdateConnectionNotFoundError
+        - root.connectionsupdateConnectionUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10725,7 +14530,7 @@ service:
         type: root.Connection
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.connectionsarchiveConnectionNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -10797,7 +14602,7 @@ service:
         type: root.Connection
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.connectionsunarchiveConnectionNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -10869,7 +14674,7 @@ service:
         type: root.Connection
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.connectionspauseConnectionNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -10941,7 +14746,7 @@ service:
         type: root.Connection
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.connectionsunpauseConnectionNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -11023,7 +14828,7 @@ docs: >-
               "display-name": "Archive a destination",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.destinationsarchiveDestinationNotFoundError",
               ],
               "examples": [
                 {
@@ -11067,8 +14872,8 @@ docs: >-
               "display-name": "Create a destination",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.destinationscreateDestinationBadRequestError",
+                "root.destinationscreateDestinationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11147,7 +14952,7 @@ docs: >-
               "display-name": "Get a destination",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.destinationsgetDestinationNotFoundError",
               ],
               "examples": [
                 {
@@ -11191,8 +14996,8 @@ docs: >-
               "display-name": "Get destinations",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.destinationsgetDestinationsBadRequestError",
+                "root.destinationsgetDestinationsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11270,7 +15075,7 @@ docs: >-
               "display-name": "Unarchive a destination",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.destinationsunarchiveDestinationNotFoundError",
               ],
               "examples": [
                 {
@@ -11314,9 +15119,9 @@ docs: >-
               "display-name": "Update a destination",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.destinationsupdateDestinationBadRequestError",
+                "root.destinationsupdateDestinationNotFoundError",
+                "root.destinationsupdateDestinationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11405,8 +15210,8 @@ docs: >-
               "display-name": "Update or create a destination",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.destinationsupsertDestinationBadRequestError",
+                "root.destinationsupsertDestinationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11609,8 +15414,8 @@ service:
         type: root.DestinationPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.destinationsgetDestinationsBadRequestError
+        - root.destinationsgetDestinationsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -11670,8 +15475,8 @@ service:
         type: root.Destination
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.destinationscreateDestinationBadRequestError
+        - root.destinationscreateDestinationUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -11725,8 +15530,8 @@ service:
         type: root.Destination
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.destinationsupsertDestinationBadRequestError
+        - root.destinationsupsertDestinationUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -11758,7 +15563,7 @@ service:
         type: root.Destination
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.destinationsgetDestinationNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -11817,9 +15622,9 @@ service:
         type: root.Destination
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.destinationsupdateDestinationBadRequestError
+        - root.destinationsupdateDestinationNotFoundError
+        - root.destinationsupdateDestinationUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -11853,7 +15658,7 @@ service:
         type: root.Destination
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.destinationsarchiveDestinationNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -11885,7 +15690,7 @@ service:
         type: root.Destination
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.destinationsunarchiveDestinationNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -11925,7 +15730,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "display-name": "Get an event",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.eventsgetEventNotFoundError",
               ],
               "examples": [
                 {
@@ -11984,8 +15789,8 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "display-name": "Get events",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.eventsgetEventsBadRequestError",
+                "root.eventsgetEventsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12151,7 +15956,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "display-name": "Get a event raw body data",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.eventsgetRequestRawBodyNotFoundError",
               ],
               "examples": [
                 {
@@ -12185,7 +15990,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "display-name": "Mute an event",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.eventsmuteEventNotFoundError",
               ],
               "examples": [
                 {
@@ -12244,7 +16049,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "display-name": "Retry an event",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.eventsretryEventNotFoundError",
               ],
               "examples": [
                 {
@@ -12435,8 +16240,8 @@ service:
         type: root.EventPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.eventsgetEventsBadRequestError
+        - root.eventsgetEventsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -12483,7 +16288,7 @@ service:
         type: root.Event
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.eventsgetEventNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -12529,7 +16334,7 @@ service:
         type: root.RawBody
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.eventsgetRequestRawBodyNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -12551,7 +16356,7 @@ service:
         type: root.RetriedEvent
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.eventsretryEventNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -12619,7 +16424,7 @@ service:
         type: root.Event
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.eventsmuteEventNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -12673,8 +16478,8 @@ docs: An event is any request that Hookdeck receives from a source.
               "display-name": "Attach an integration to a source",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
+                "root.integrationsattachIntegrationToSourceBadRequestError",
+                "root.integrationsattachIntegrationToSourceNotFoundError",
               ],
               "examples": [
                 {
@@ -12710,8 +16515,8 @@ docs: An event is any request that Hookdeck receives from a source.
               "display-name": "Create an integration",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.integrationscreateIntegrationBadRequestError",
+                "root.integrationscreateIntegrationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12793,7 +16598,7 @@ docs: An event is any request that Hookdeck receives from a source.
               "display-name": "Delete an integration",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.integrationsdeleteIntegrationNotFoundError",
               ],
               "examples": [
                 {
@@ -12827,8 +16632,8 @@ docs: An event is any request that Hookdeck receives from a source.
               "display-name": "Detach an integration from a source",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
+                "root.integrationsdetachIntegrationToSourceBadRequestError",
+                "root.integrationsdetachIntegrationToSourceNotFoundError",
               ],
               "examples": [
                 {
@@ -12862,7 +16667,7 @@ docs: An event is any request that Hookdeck receives from a source.
               "display-name": "Get an integration",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.integrationsgetIntegrationNotFoundError",
               ],
               "examples": [
                 {
@@ -12913,8 +16718,8 @@ docs: An event is any request that Hookdeck receives from a source.
               "display-name": "Get integrations",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.integrationsgetIntegrationsBadRequestError",
+                "root.integrationsgetIntegrationsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12978,9 +16783,9 @@ docs: An event is any request that Hookdeck receives from a source.
               "display-name": "Update an integration",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.integrationsupdateIntegrationBadRequestError",
+                "root.integrationsupdateIntegrationNotFoundError",
+                "root.integrationsupdateIntegrationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13115,8 +16920,8 @@ service:
         type: root.IntegrationPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.integrationsgetIntegrationsBadRequestError
+        - root.integrationsgetIntegrationsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -13173,8 +16978,8 @@ service:
         type: root.Integration
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.integrationscreateIntegrationBadRequestError
+        - root.integrationscreateIntegrationUnprocessableEntityError
       examples:
         - request:
             label: label
@@ -13218,7 +17023,7 @@ service:
         type: root.Integration
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.integrationsgetIntegrationNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -13271,9 +17076,9 @@ service:
         type: root.Integration
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.integrationsupdateIntegrationBadRequestError
+        - root.integrationsupdateIntegrationNotFoundError
+        - root.integrationsupdateIntegrationUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -13310,7 +17115,7 @@ service:
         type: root.DeletedIntegration
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.integrationsdeleteIntegrationNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -13333,8 +17138,8 @@ service:
         type: root.AttachedIntegrationToSource
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
+        - root.integrationsattachIntegrationToSourceBadRequestError
+        - root.integrationsattachIntegrationToSourceNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -13358,8 +17163,8 @@ service:
         type: root.DetachedIntegrationFromSource
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
+        - root.integrationsdetachIntegrationToSourceBadRequestError
+        - root.integrationsdetachIntegrationToSourceNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -13420,8 +17225,8 @@ types:
               "display-name": "Create an issue trigger",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.issueTriggerscreateIssueTriggerBadRequestError",
+                "root.issueTriggerscreateIssueTriggerUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13495,7 +17300,7 @@ types:
               "display-name": "Delete an issue trigger",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.issueTriggersdeleteIssueTriggerNotFoundError",
               ],
               "examples": [
                 {
@@ -13529,7 +17334,7 @@ types:
               "display-name": "Disable an issue trigger",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.issueTriggersdisableIssueTriggerNotFoundError",
               ],
               "examples": [
                 {
@@ -13579,7 +17384,7 @@ types:
               "display-name": "Enable an issue trigger",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.issueTriggersenableIssueTriggerNotFoundError",
               ],
               "examples": [
                 {
@@ -13629,7 +17434,7 @@ types:
               "display-name": "Get a single issue trigger",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.issueTriggersgetIssueTriggerNotFoundError",
               ],
               "examples": [
                 {
@@ -13679,8 +17484,8 @@ types:
               "display-name": "Get issue triggers",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.issueTriggersgetIssueTriggersBadRequestError",
+                "root.issueTriggersgetIssueTriggersUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13744,8 +17549,8 @@ types:
               "display-name": "Update an issue trigger",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.issueTriggersupdateIssueTriggerBadRequestError",
+                "root.issueTriggersupdateIssueTriggerUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13826,8 +17631,8 @@ types:
               "display-name": "Create or update an issue trigger",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.issueTriggersupsertIssueTriggerBadRequestError",
+                "root.issueTriggersupsertIssueTriggerUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14028,8 +17833,8 @@ service:
         type: root.IssueTriggerPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.issueTriggersgetIssueTriggersBadRequestError
+        - root.issueTriggersgetIssueTriggersUnprocessableEntityError
       examples:
         - response:
             body:
@@ -14080,8 +17885,8 @@ service:
         type: root.IssueTrigger
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.issueTriggerscreateIssueTriggerBadRequestError
+        - root.issueTriggerscreateIssueTriggerUnprocessableEntityError
       examples:
         - request:
             type: delivery
@@ -14129,8 +17934,8 @@ service:
         type: root.IssueTrigger
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.issueTriggersupsertIssueTriggerBadRequestError
+        - root.issueTriggersupsertIssueTriggerUnprocessableEntityError
       examples:
         - request:
             type: delivery
@@ -14166,7 +17971,7 @@ service:
         type: root.IssueTrigger
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.issueTriggersgetIssueTriggerNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -14218,8 +18023,8 @@ service:
         type: root.IssueTrigger
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.issueTriggersupdateIssueTriggerBadRequestError
+        - root.issueTriggersupdateIssueTriggerUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -14255,7 +18060,7 @@ service:
         type: root.DeletedIssueTriggerResponse
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.issueTriggersdeleteIssueTriggerNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -14277,7 +18082,7 @@ service:
         type: root.IssueTrigger
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.issueTriggersdisableIssueTriggerNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -14312,7 +18117,7 @@ service:
         type: root.IssueTrigger
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.issueTriggersenableIssueTriggerNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -14357,7 +18162,7 @@ docs: >-
               "display-name": "Dismiss an issue",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.issuesdismissIssueNotFoundError",
               ],
               "examples": [
                 {
@@ -14413,7 +18218,7 @@ docs: >-
               "display-name": "Get a single issue",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.issuesgetIssueNotFoundError",
               ],
               "examples": [
                 {
@@ -14517,7 +18322,7 @@ docs: >-
               "display-name": "Get the number of issues",
               "docs": "",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.issuesgetIssueCountUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14590,8 +18395,8 @@ docs: >-
               "display-name": "Get issues",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.issuesgetIssuesBadRequestError",
+                "root.issuesgetIssuesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14716,8 +18521,8 @@ docs: >-
               "display-name": "Update issue",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.issuesupdateIssueBadRequestError",
+                "root.issuesupdateIssueUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14968,8 +18773,8 @@ service:
         type: root.IssueWithDataPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.issuesgetIssuesBadRequestError
+        - root.issuesgetIssuesUnprocessableEntityError
       examples:
         - query-parameters:
             id: iss_YXKv5OdJXCiVwkPhGy
@@ -15058,7 +18863,7 @@ service:
         type: root.IssueCount
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.issuesgetIssueCountUnprocessableEntityError
       examples:
         - query-parameters:
             id: iss_YXKv5OdJXCiVwkPhGy
@@ -15082,7 +18887,7 @@ service:
         type: root.IssueWithData
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.issuesgetIssueNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -15171,8 +18976,8 @@ service:
         type: root.Issue
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.issuesupdateIssueBadRequestError
+        - root.issuesupdateIssueUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -15215,7 +19020,7 @@ service:
         type: root.Issue
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.issuesdismissIssueNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -15383,7 +19188,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "display-name": "Get a request",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.requestsgetRequestNotFoundError",
               ],
               "examples": [
                 {
@@ -15440,9 +19245,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "display-name": "Get request events",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.requestsgetRequestEventsBadRequestError",
+                "root.requestsgetRequestEventsNotFoundError",
+                "root.requestsgetRequestEventsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15614,9 +19419,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "display-name": "Get request ignored events",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.requestsgetRequestIgnoredEventsBadRequestError",
+                "root.requestsgetRequestIgnoredEventsNotFoundError",
+                "root.requestsgetRequestIgnoredEventsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15689,7 +19494,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "display-name": "Get a request raw body data",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.requestsgetRequestRawBodyNotFoundError",
               ],
               "examples": [
                 {
@@ -15723,8 +19528,8 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "display-name": "Get requests",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.requestsgetRequestsBadRequestError",
+                "root.requestsgetRequestsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15834,9 +19639,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "display-name": "Retry a request",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.requestsretryRequestBadRequestError",
+                "root.requestsretryRequestNotFoundError",
+                "root.requestsretryRequestUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16074,8 +19879,8 @@ service:
         type: root.RequestPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.requestsgetRequestsBadRequestError
+        - root.requestsgetRequestsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -16120,7 +19925,7 @@ service:
         type: root.Request
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.requestsgetRequestNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -16164,7 +19969,7 @@ service:
         type: root.RawBody
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.requestsgetRequestRawBodyNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -16196,9 +20001,9 @@ service:
         type: root.RetryRequest
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.requestsretryRequestBadRequestError
+        - root.requestsretryRequestNotFoundError
+        - root.requestsretryRequestUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16330,9 +20135,9 @@ service:
         type: root.EventPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.requestsgetRequestEventsBadRequestError
+        - root.requestsgetRequestEventsNotFoundError
+        - root.requestsgetRequestEventsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16394,9 +20199,9 @@ service:
         type: root.IgnoredEventPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.requestsgetRequestIgnoredEventsBadRequestError
+        - root.requestsgetRequestIgnoredEventsNotFoundError
+        - root.requestsgetRequestIgnoredEventsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16441,7 +20246,7 @@ docs: A request represent a webhook received by Hookdeck.
               "display-name": "Archive a ruleset",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.rulesetsarchiveRulesetNotFoundError",
               ],
               "examples": [
                 {
@@ -16487,8 +20292,8 @@ docs: A request represent a webhook received by Hookdeck.
               "display-name": "Create a ruleset",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.rulesetscreateRulesetBadRequestError",
+                "root.rulesetscreateRulesetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16557,7 +20362,7 @@ docs: A request represent a webhook received by Hookdeck.
               "display-name": "Get a ruleset",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.rulesetsgetRulesetNotFoundError",
               ],
               "examples": [
                 {
@@ -16603,8 +20408,8 @@ docs: A request represent a webhook received by Hookdeck.
               "display-name": "Get rulesets",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.rulesetsgetRulesetsBadRequestError",
+                "root.rulesetsgetRulesetsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16679,7 +20484,7 @@ docs: A request represent a webhook received by Hookdeck.
               "display-name": "Unarchive a ruleset",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.rulesetsunarchiveRulesetNotFoundError",
               ],
               "examples": [
                 {
@@ -16725,9 +20530,9 @@ docs: A request represent a webhook received by Hookdeck.
               "display-name": "Update a ruleset",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.rulesetsupdateRulesetBadRequestError",
+                "root.rulesetsupdateRulesetNotFoundError",
+                "root.rulesetsupdateRulesetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16804,8 +20609,8 @@ docs: A request represent a webhook received by Hookdeck.
               "display-name": "Update or create a ruleset",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.rulesetsupsertRulesetBadRequestError",
+                "root.rulesetsupsertRulesetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16931,8 +20736,8 @@ service:
         type: root.RulesetPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.rulesetsgetRulesetsBadRequestError
+        - root.rulesetsgetRulesetsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -16982,8 +20787,8 @@ service:
         type: optional<root.Ruleset>
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.rulesetscreateRulesetBadRequestError
+        - root.rulesetscreateRulesetUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -17027,8 +20832,8 @@ service:
         type: optional<root.Ruleset>
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.rulesetsupsertRulesetBadRequestError
+        - root.rulesetsupsertRulesetUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -17059,7 +20864,7 @@ service:
         type: optional<root.Ruleset>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.rulesetsgetRulesetNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -17108,9 +20913,9 @@ service:
         type: optional<root.Ruleset>
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.rulesetsupdateRulesetBadRequestError
+        - root.rulesetsupdateRulesetNotFoundError
+        - root.rulesetsupdateRulesetUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -17142,7 +20947,7 @@ service:
         type: optional<root.Ruleset>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.rulesetsarchiveRulesetNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -17173,7 +20978,7 @@ service:
         type: optional<root.Ruleset>
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.rulesetsunarchiveRulesetNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -17212,7 +21017,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "display-name": "Archive a source",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.sourcesarchiveSourceNotFoundError",
               ],
               "examples": [
                 {
@@ -17261,8 +21066,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "display-name": "Create a source",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.sourcescreateSourceBadRequestError",
+                "root.sourcescreateSourceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17329,7 +21134,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "display-name": "Get a source",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.sourcesgetSourceNotFoundError",
               ],
               "examples": [
                 {
@@ -17378,8 +21183,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "display-name": "Get sources",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.sourcesgetSourcesBadRequestError",
+                "root.sourcesgetSourcesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17458,7 +21263,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "display-name": "Unarchive a source",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.sourcesunarchiveSourceNotFoundError",
               ],
               "examples": [
                 {
@@ -17507,9 +21312,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "display-name": "Update a source",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.sourcesupdateSourceBadRequestError",
+                "root.sourcesupdateSourceNotFoundError",
+                "root.sourcesupdateSourceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17584,8 +21389,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "display-name": "Update or create a source",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.sourcesupsertSourceBadRequestError",
+                "root.sourcesupsertSourceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17710,8 +21515,8 @@ service:
         type: root.SourcePaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.sourcesgetSourcesBadRequestError
+        - root.sourcesgetSourcesUnprocessableEntityError
       examples:
         - response:
             body:
@@ -17761,8 +21566,8 @@ service:
         type: root.Source
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.sourcescreateSourceBadRequestError
+        - root.sourcescreateSourceUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -17806,8 +21611,8 @@ service:
         type: root.Source
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.sourcesupsertSourceBadRequestError
+        - root.sourcesupsertSourceUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -17842,7 +21647,7 @@ service:
         type: root.Source
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.sourcesgetSourceNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -17891,9 +21696,9 @@ service:
         type: root.Source
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.sourcesupdateSourceBadRequestError
+        - root.sourcesupdateSourceNotFoundError
+        - root.sourcesupdateSourceUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -17929,7 +21734,7 @@ service:
         type: root.Source
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.sourcesarchiveSourceNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -17964,7 +21769,7 @@ service:
         type: root.Source
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.sourcesunarchiveSourceNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -18007,8 +21812,8 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "display-name": "Create a transformation",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.transformationscreateTransformationBadRequestError",
+                "root.transformationscreateTransformationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18079,7 +21884,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "display-name": "Get a transformation",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.transformationsgetTransformationNotFoundError",
               ],
               "examples": [
                 {
@@ -18123,7 +21928,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "display-name": "Get a transformation execution",
               "docs": "",
               "errors": [
-                "root.NotFoundError",
+                "root.transformationsgetTransformationExecutionNotFoundError",
               ],
               "examples": [
                 {
@@ -18190,8 +21995,8 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "display-name": "Get transformation executions",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.transformationsgetTransformationExecutionsBadRequestError",
+                "root.transformationsgetTransformationExecutionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18290,8 +22095,8 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "display-name": "Get transformations",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.transformationsgetTransformationsBadRequestError",
+                "root.transformationsgetTransformationsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18359,8 +22164,8 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "display-name": "Test a transformation code",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.transformationstestTransformationBadRequestError",
+                "root.transformationstestTransformationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18436,9 +22241,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "display-name": "Update a transformation",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.UnprocessableEntityError",
+                "root.transformationsupdateTransformationBadRequestError",
+                "root.transformationsupdateTransformationNotFoundError",
+                "root.transformationsupdateTransformationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18512,8 +22317,8 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "display-name": "Update or create a transformation",
               "docs": "",
               "errors": [
-                "root.BadRequestError",
-                "root.UnprocessableEntityError",
+                "root.transformationsupsertTransformationBadRequestError",
+                "root.transformationsupsertTransformationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18849,8 +22654,8 @@ service:
         type: root.TransformationPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.transformationsgetTransformationsBadRequestError
+        - root.transformationsgetTransformationsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -18902,8 +22707,8 @@ service:
         type: root.Transformation
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.transformationscreateTransformationBadRequestError
+        - root.transformationscreateTransformationUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -18952,8 +22757,8 @@ service:
         type: root.Transformation
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.transformationsupsertTransformationBadRequestError
+        - root.transformationsupsertTransformationUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -18985,7 +22790,7 @@ service:
         type: root.Transformation
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.transformationsgetTransformationNotFoundError
       examples:
         - path-parameters:
             id: id
@@ -19035,9 +22840,9 @@ service:
         type: root.Transformation
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.UnprocessableEntityError
+        - root.transformationsupdateTransformationBadRequestError
+        - root.transformationsupdateTransformationNotFoundError
+        - root.transformationsupdateTransformationUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -19090,8 +22895,8 @@ service:
         type: root.TransformationExecutorOutput
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.transformationstestTransformationBadRequestError
+        - root.transformationstestTransformationUnprocessableEntityError
       examples:
         - request: {}
           response:
@@ -19143,8 +22948,9 @@ service:
         type: root.TransformationExecutionPaginatedResult
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnprocessableEntityError
+        - root.transformationsgetTransformationExecutionsBadRequestError
+        - >-
+          root.transformationsgetTransformationExecutionsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -19191,7 +22997,7 @@ service:
         type: root.TransformationExecution
         status-code: 200
       errors:
-        - root.NotFoundError
+        - root.transformationsgetTransformationExecutionNotFoundError
       examples:
         - path-parameters:
             id: id

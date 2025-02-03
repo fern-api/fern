@@ -6,12 +6,1302 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "BadRequestError": {
+          "access_codes,simulatecreate_unmanaged_access_codeBadRequestError": {
             "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
-          "UnauthorizedError": {
+          "access_codes,simulatecreate_unmanaged_access_codeUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codes,unmanagedconvert_to_managedBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codes,unmanagedconvert_to_managedUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codes,unmanageddeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codes,unmanageddeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codes,unmanagedgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codes,unmanagedgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codes,unmanagedlistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codes,unmanagedlistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codes,unmanagedupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codes,unmanagedupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codescreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codescreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codescreate_multipleBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codescreate_multipleUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codesdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codesdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codesgenerate_codeBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codesgenerate_codeUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codesgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codesgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codeslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codeslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codespull_backup_access_codeBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codespull_backup_access_codeUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "access_codesupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "access_codesupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,access_groupsadd_userBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,access_groupsadd_userUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,access_groupsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,access_groupsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,access_groupslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,access_groupslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,access_groupslist_usersBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,access_groupslist_usersUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,access_groupsremove_userBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,access_groupsremove_userUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credential_poolslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credential_poolslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credential_provisioning_automationslaunchBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credential_provisioning_automationslaunchUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credentialsassignBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credentialsassignUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credentialscreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credentialscreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credentialsdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credentialsdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credentialsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credentialsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credentialslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credentialslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credentialslist_accessible_entrancesBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credentialslist_accessible_entrancesUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credentialsunassignBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credentialsunassignUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,credentialsupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,credentialsupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,entrancesgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,entrancesgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,entrancesgrant_accessBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,entrancesgrant_accessUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,entranceslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,entranceslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,entranceslist_credentials_with_accessBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,entranceslist_credentials_with_accessUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,systemsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,systemsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,systemslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,systemslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,systemslist_compatible_credential_manager_acs_systemsBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,systemslist_compatible_credential_manager_acs_systemsUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,usersadd_to_access_groupBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,usersadd_to_access_groupUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,userscreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,userscreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,usersdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,usersdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,usersgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,usersgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,userslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,userslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,userslist_accessible_entrancesBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,userslist_accessible_entrancesUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,usersremove_from_access_groupBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,usersremove_from_access_groupUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,usersrevoke_access_to_all_entrancesBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,usersrevoke_access_to_all_entrancesUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,userssuspendBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,userssuspendUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,usersunsuspendBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,usersunsuspendUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "acs,usersupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "acs,usersupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "action_attemptsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "action_attemptsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "action_attemptslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "action_attemptslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "client_sessionscreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "client_sessionscreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "client_sessionsdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "client_sessionsdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "client_sessionsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "client_sessionsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "client_sessionsget_or_createBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "client_sessionsget_or_createUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "client_sessionsgrant_accessBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "client_sessionsgrant_accessUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "client_sessionslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "client_sessionslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "client_sessionsrevokeBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "client_sessionsrevokeUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "connect_webviewscreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "connect_webviewscreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "connect_webviewsdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "connect_webviewsdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "connect_webviewsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "connect_webviewsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "connect_webviewslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "connect_webviewslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "connected_accountsdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "connected_accountsdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "connected_accountsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "connected_accountsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "connected_accountslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "connected_accountslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "connected_accountsupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "connected_accountsupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devices,simulateconnectBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devices,simulateconnectUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devices,simulatedisconnectBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devices,simulatedisconnectUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devices,simulateremoveBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devices,simulateremoveUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devices,unmanagedgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devices,unmanagedgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devices,unmanagedlistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devices,unmanagedlistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devices,unmanagedupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devices,unmanagedupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devicesdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devicesdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devicesgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devicesgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "deviceslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "deviceslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "deviceslist_device_providersBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "deviceslist_device_providersUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "devicesupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "devicesupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "eventsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "eventsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "eventslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "eventslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "locksgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "locksgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "lockslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "lockslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "lockslock_doorBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "lockslock_doorUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "locksunlock_doorBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "locksunlock_doorUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "networksgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "networksgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "networkslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "networkslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdscreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdscreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdsdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdsdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdsupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "noise_sensors,noise_thresholdsupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "noise_sensors,simulatetrigger_noise_thresholdBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "noise_sensors,simulatetrigger_noise_thresholdUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "phones,simulatecreate_sandbox_phoneBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "phones,simulatecreate_sandbox_phoneUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "phonesdeactivateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "phonesdeactivateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "phoneslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "phoneslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_schedulescreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_schedulescreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_schedulesdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_schedulesdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_schedulesgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_schedulesgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_scheduleslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_scheduleslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_schedulesupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostats,climate_setting_schedulesupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostatscoolBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostatscoolUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostatsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostatsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostatsheatBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostatsheatUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostatsheat_coolBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostatsheat_coolUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostatslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostatslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostatsoffBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostatsoffUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostatsset_fan_modeBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostatsset_fan_modeUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "thermostatsupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "thermostatsupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identities,enrollment_automationsdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identities,enrollment_automationsdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identities,enrollment_automationsgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identities,enrollment_automationsgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identities,enrollment_automationslaunchBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identities,enrollment_automationslaunchUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identities,enrollment_automationslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identities,enrollment_automationslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitiesadd_acs_userBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitiesadd_acs_userUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitiescreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitiescreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitiesdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitiesdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitiesgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitiesgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitiesgrant_access_to_deviceBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitiesgrant_access_to_deviceUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitieslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitieslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitieslist_accessible_devicesBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitieslist_accessible_devicesUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitieslist_acs_systemsBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitieslist_acs_systemsUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitieslist_acs_usersBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitieslist_acs_usersUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitiesremove_acs_userBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitiesremove_acs_userUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitiesrevoke_access_to_deviceBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitiesrevoke_access_to_deviceUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "user_identitiesupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "user_identitiesupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "webhookscreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "webhookscreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "webhooksdeleteBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "webhooksdeleteUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "webhooksgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "webhooksgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "webhookslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "webhookslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "webhooksupdateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "webhooksupdateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "workspacescreateBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "workspacescreateUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "workspacesgetBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "workspacesgetUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "workspaceslistBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "workspaceslistUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "workspacesreset_sandboxBadRequestError": {
+            "docs": "Bad Request",
+            "status-code": 400,
+            "type": "unknown",
+          },
+          "workspacesreset_sandboxUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
@@ -4694,11 +5984,1043 @@
         },
       },
       "rawContents": "errors:
-  BadRequestError:
+  access_codescreateBadRequestError:
     status-code: 400
     type: unknown
     docs: Bad Request
-  UnauthorizedError:
+  access_codescreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codescreate_multipleBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codescreate_multipleUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codesdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codesdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codesgenerate_codeBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codesgenerate_codeUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codesgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codesgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codeslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codeslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codespull_backup_access_codeBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codespull_backup_access_codeUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codesupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codesupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  action_attemptsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  action_attemptsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  action_attemptslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  action_attemptslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  client_sessionscreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  client_sessionscreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  client_sessionsdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  client_sessionsdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  client_sessionsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  client_sessionsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  client_sessionsget_or_createBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  client_sessionsget_or_createUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  client_sessionsgrant_accessBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  client_sessionsgrant_accessUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  client_sessionslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  client_sessionslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  client_sessionsrevokeBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  client_sessionsrevokeUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  connect_webviewscreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  connect_webviewscreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  connect_webviewsdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  connect_webviewsdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  connect_webviewsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  connect_webviewsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  connect_webviewslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  connect_webviewslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  connected_accountsdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  connected_accountsdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  connected_accountsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  connected_accountsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  connected_accountslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  connected_accountslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  connected_accountsupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  connected_accountsupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devicesdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devicesdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devicesgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devicesgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  deviceslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  deviceslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  deviceslist_device_providersBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  deviceslist_device_providersUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devicesupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devicesupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  eventsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  eventsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  eventslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  eventslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  locksgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  locksgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  lockslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  lockslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  lockslock_doorBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  lockslock_doorUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  locksunlock_doorBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  locksunlock_doorUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  networksgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  networksgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  networkslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  networkslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  phonesdeactivateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  phonesdeactivateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  phoneslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  phoneslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostatscoolBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostatscoolUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostatsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostatsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostatsheatBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostatsheatUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostatsheat_coolBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostatsheat_coolUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostatslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostatslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostatsoffBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostatsoffUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostatsset_fan_modeBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostatsset_fan_modeUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostatsupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostatsupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitiesadd_acs_userBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitiesadd_acs_userUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitiescreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitiescreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitiesdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitiesdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitiesgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitiesgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitiesgrant_access_to_deviceBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitiesgrant_access_to_deviceUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitieslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitieslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitieslist_accessible_devicesBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitieslist_accessible_devicesUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitieslist_acs_systemsBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitieslist_acs_systemsUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitieslist_acs_usersBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitieslist_acs_usersUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitiesremove_acs_userBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitiesremove_acs_userUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitiesrevoke_access_to_deviceBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitiesrevoke_access_to_deviceUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identitiesupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identitiesupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  webhookscreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  webhookscreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  webhooksdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  webhooksdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  webhooksgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  webhooksgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  webhookslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  webhookslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  webhooksupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  webhooksupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  workspacescreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  workspacescreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  workspacesgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  workspacesgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  workspaceslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  workspaceslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  workspacesreset_sandboxBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  workspacesreset_sandboxUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codes,simulatecreate_unmanaged_access_codeBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codes,simulatecreate_unmanaged_access_codeUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codes,unmanagedconvert_to_managedBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codes,unmanagedconvert_to_managedUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codes,unmanageddeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codes,unmanageddeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codes,unmanagedgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codes,unmanagedgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codes,unmanagedlistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codes,unmanagedlistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  access_codes,unmanagedupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  access_codes,unmanagedupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,access_groupsadd_userBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,access_groupsadd_userUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,access_groupsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,access_groupsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,access_groupslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,access_groupslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,access_groupslist_usersBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,access_groupslist_usersUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,access_groupsremove_userBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,access_groupsremove_userUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credential_poolslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credential_poolslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credential_provisioning_automationslaunchBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credential_provisioning_automationslaunchUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credentialsassignBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credentialsassignUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credentialscreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credentialscreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credentialsdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credentialsdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credentialsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credentialsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credentialslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credentialslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credentialslist_accessible_entrancesBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credentialslist_accessible_entrancesUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credentialsunassignBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credentialsunassignUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,credentialsupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,credentialsupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,entrancesgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,entrancesgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,entrancesgrant_accessBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,entrancesgrant_accessUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,entranceslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,entranceslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,entranceslist_credentials_with_accessBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,entranceslist_credentials_with_accessUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,systemsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,systemsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,systemslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,systemslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,systemslist_compatible_credential_manager_acs_systemsBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,systemslist_compatible_credential_manager_acs_systemsUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,usersadd_to_access_groupBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,usersadd_to_access_groupUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,userscreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,userscreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,usersdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,usersdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,usersgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,usersgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,userslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,userslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,userslist_accessible_entrancesBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,userslist_accessible_entrancesUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,usersremove_from_access_groupBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,usersremove_from_access_groupUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,usersrevoke_access_to_all_entrancesBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,usersrevoke_access_to_all_entrancesUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,userssuspendBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,userssuspendUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,usersunsuspendBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,usersunsuspendUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  acs,usersupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  acs,usersupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devices,simulateconnectBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devices,simulateconnectUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devices,simulatedisconnectBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devices,simulatedisconnectUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devices,simulateremoveBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devices,simulateremoveUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devices,unmanagedgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devices,unmanagedgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devices,unmanagedlistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devices,unmanagedlistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  devices,unmanagedupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  devices,unmanagedupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  noise_sensors,noise_thresholdscreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  noise_sensors,noise_thresholdscreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  noise_sensors,noise_thresholdsdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  noise_sensors,noise_thresholdsdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  noise_sensors,noise_thresholdsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  noise_sensors,noise_thresholdsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  noise_sensors,noise_thresholdslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  noise_sensors,noise_thresholdslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  noise_sensors,noise_thresholdsupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  noise_sensors,noise_thresholdsupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  noise_sensors,simulatetrigger_noise_thresholdBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  noise_sensors,simulatetrigger_noise_thresholdUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  phones,simulatecreate_sandbox_phoneBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  phones,simulatecreate_sandbox_phoneUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostats,climate_setting_schedulescreateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostats,climate_setting_schedulescreateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostats,climate_setting_schedulesdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostats,climate_setting_schedulesdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostats,climate_setting_schedulesgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostats,climate_setting_schedulesgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostats,climate_setting_scheduleslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostats,climate_setting_scheduleslistUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  thermostats,climate_setting_schedulesupdateBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  thermostats,climate_setting_schedulesupdateUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identities,enrollment_automationsdeleteBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identities,enrollment_automationsdeleteUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identities,enrollment_automationsgetBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identities,enrollment_automationsgetUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identities,enrollment_automationslaunchBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identities,enrollment_automationslaunchUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  user_identities,enrollment_automationslistBadRequestError:
+    status-code: 400
+    type: unknown
+    docs: Bad Request
+  user_identities,enrollment_automationslistUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
@@ -8042,8 +10364,8 @@ types:
               "display-name": "/access_codes/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codescreateBadRequestError",
+                "root.access_codescreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -8161,8 +10483,8 @@ types:
               "display-name": "/access_codes/create_multiple",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codescreate_multipleBadRequestError",
+                "root.access_codescreate_multipleUnauthorizedError",
               ],
               "examples": [
                 {
@@ -8269,8 +10591,8 @@ types:
               "display-name": "/access_codes/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codesdeleteBadRequestError",
+                "root.access_codesdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -8341,8 +10663,8 @@ types:
               "display-name": "/access_codes/generate_code",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codesgenerate_codeBadRequestError",
+                "root.access_codesgenerate_codeUnauthorizedError",
               ],
               "examples": [
                 {
@@ -8421,8 +10743,8 @@ types:
               "display-name": "/access_codes/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codesgetBadRequestError",
+                "root.access_codesgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -8509,8 +10831,8 @@ types:
               "display-name": "/access_codes/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codeslistBadRequestError",
+                "root.access_codeslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -8591,8 +10913,8 @@ types:
               "display-name": "/access_codes/pull_backup_access_code",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codespull_backup_access_codeBadRequestError",
+                "root.access_codespull_backup_access_codeUnauthorizedError",
               ],
               "examples": [
                 {
@@ -8671,8 +10993,8 @@ types:
               "display-name": "/access_codes/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codesupdateBadRequestError",
+                "root.access_codesupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -9121,8 +11443,8 @@ service:
         status-code: 200
         property: access_code
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codescreateBadRequestError
+        - root.access_codescreateUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -9205,8 +11527,8 @@ service:
         status-code: 200
         property: access_codes
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codescreate_multipleBadRequestError
+        - root.access_codescreate_multipleUnauthorizedError
       examples:
         - request:
             device_ids:
@@ -9266,8 +11588,8 @@ service:
         type: AccessCodesDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codesdeleteBadRequestError
+        - root.access_codesdeleteUnauthorizedError
       examples:
         - request:
             access_code_id: access_code_id
@@ -9302,8 +11624,8 @@ service:
         status-code: 200
         property: generated_code
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codesgenerate_codeBadRequestError
+        - root.access_codesgenerate_codeUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -9361,8 +11683,8 @@ service:
         status-code: 200
         property: access_code
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codesgetBadRequestError
+        - root.access_codesgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -9416,8 +11738,8 @@ service:
         status-code: 200
         property: access_codes
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codeslistBadRequestError
+        - root.access_codeslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -9469,8 +11791,8 @@ service:
         status-code: 200
         property: backup_access_code
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codespull_backup_access_codeBadRequestError
+        - root.access_codespull_backup_access_codeUnauthorizedError
       examples:
         - request:
             access_code_id: access_code_id
@@ -9553,8 +11875,8 @@ service:
         type: AccessCodesUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codesupdateBadRequestError
+        - root.access_codesupdateUnauthorizedError
       examples:
         - request:
             access_code_id: access_code_id
@@ -9586,8 +11908,8 @@ service:
               "display-name": "/access_codes/simulate/create_unmanaged_access_code",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codes,simulatecreate_unmanaged_access_codeBadRequestError",
+                "root.access_codes,simulatecreate_unmanaged_access_codeUnauthorizedError",
               ],
               "examples": [
                 {
@@ -9725,8 +12047,9 @@ service:
         status-code: 200
         property: access_code
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codes,simulatecreate_unmanaged_access_codeBadRequestError
+        - >-
+          root.access_codes,simulatecreate_unmanaged_access_codeUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -9769,8 +12092,8 @@ service:
               "display-name": "/access_codes/unmanaged/convert_to_managed",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codes,unmanagedconvert_to_managedBadRequestError",
+                "root.access_codes,unmanagedconvert_to_managedUnauthorizedError",
               ],
               "examples": [
                 {
@@ -9828,8 +12151,8 @@ service:
               "display-name": "/access_codes/unmanaged/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codes,unmanageddeleteBadRequestError",
+                "root.access_codes,unmanageddeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -9891,8 +12214,8 @@ service:
               "display-name": "/access_codes/unmanaged/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codes,unmanagedgetBadRequestError",
+                "root.access_codes,unmanagedgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -9970,8 +12293,8 @@ service:
               "display-name": "/access_codes/unmanaged/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codes,unmanagedlistBadRequestError",
+                "root.access_codes,unmanagedlistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -10044,8 +12367,8 @@ service:
               "display-name": "/access_codes/unmanaged/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.access_codes,unmanagedupdateBadRequestError",
+                "root.access_codes,unmanagedupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -10219,8 +12542,8 @@ service:
         type: UnmanagedConvertToManagedResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codes,unmanagedconvert_to_managedBadRequestError
+        - root.access_codes,unmanagedconvert_to_managedUnauthorizedError
       examples:
         - request:
             access_code_id: access_code_id
@@ -10251,8 +12574,8 @@ service:
         type: UnmanagedDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codes,unmanageddeleteBadRequestError
+        - root.access_codes,unmanageddeleteUnauthorizedError
       examples:
         - request:
             access_code_id: access_code_id
@@ -10292,8 +12615,8 @@ service:
         status-code: 200
         property: access_code
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codes,unmanagedgetBadRequestError
+        - root.access_codes,unmanagedgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -10337,8 +12660,8 @@ service:
         status-code: 200
         property: access_codes
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codes,unmanagedlistBadRequestError
+        - root.access_codes,unmanagedlistUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -10385,8 +12708,8 @@ service:
         type: UnmanagedUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.access_codes,unmanagedupdateBadRequestError
+        - root.access_codes,unmanagedupdateUnauthorizedError
       examples:
         - request:
             access_code_id: access_code_id
@@ -10413,8 +12736,8 @@ service:
               "display-name": "/acs/access_groups/add_user",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,access_groupsadd_userBadRequestError",
+                "root.acs,access_groupsadd_userUnauthorizedError",
               ],
               "examples": [
                 {
@@ -10475,8 +12798,8 @@ service:
               "display-name": "/acs/access_groups/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,access_groupsgetBadRequestError",
+                "root.acs,access_groupsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -10540,8 +12863,8 @@ service:
               "display-name": "/acs/access_groups/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,access_groupslistBadRequestError",
+                "root.acs,access_groupslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -10614,8 +12937,8 @@ service:
               "display-name": "/acs/access_groups/list_users",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,access_groupslist_usersBadRequestError",
+                "root.acs,access_groupslist_usersUnauthorizedError",
               ],
               "examples": [
                 {
@@ -10692,8 +13015,8 @@ service:
               "display-name": "/acs/access_groups/remove_user",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,access_groupsremove_userBadRequestError",
+                "root.acs,access_groupsremove_userUnauthorizedError",
               ],
               "examples": [
                 {
@@ -10870,8 +13193,8 @@ service:
         type: AccessGroupsAddUserResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,access_groupsadd_userBadRequestError
+        - root.acs,access_groupsadd_userUnauthorizedError
       examples:
         - request:
             acs_access_group_id: acs_access_group_id
@@ -10901,8 +13224,8 @@ service:
         status-code: 200
         property: acs_access_group
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,access_groupsgetBadRequestError
+        - root.acs,access_groupsgetUnauthorizedError
       examples:
         - request:
             acs_access_group_id: acs_access_group_id
@@ -10946,8 +13269,8 @@ service:
         status-code: 200
         property: acs_access_groups
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,access_groupslistBadRequestError
+        - root.acs,access_groupslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -10986,8 +13309,8 @@ service:
         status-code: 200
         property: acs_users
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,access_groupslist_usersBadRequestError
+        - root.acs,access_groupslist_usersUnauthorizedError
       examples:
         - request:
             acs_access_group_id: acs_access_group_id
@@ -11040,8 +13363,8 @@ service:
         type: AccessGroupsRemoveUserResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,access_groupsremove_userBadRequestError
+        - root.acs,access_groupsremove_userUnauthorizedError
       examples:
         - request:
             acs_access_group_id: acs_access_group_id
@@ -11068,8 +13391,8 @@ service:
               "display-name": "/acs/credential_pools/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credential_poolslistBadRequestError",
+                "root.acs,credential_poolslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -11181,8 +13504,8 @@ service:
         status-code: 200
         property: acs_credential_pools
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credential_poolslistBadRequestError
+        - root.acs,credential_poolslistUnauthorizedError
       examples:
         - request:
             acs_system_id: acs_system_id
@@ -11216,8 +13539,8 @@ service:
               "display-name": "/acs/credential_provisioning_automations/launch",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credential_provisioning_automationslaunchBadRequestError",
+                "root.acs,credential_provisioning_automationslaunchUnauthorizedError",
               ],
               "examples": [
                 {
@@ -11367,8 +13690,8 @@ service:
         status-code: 200
         property: acs_credential_provisioning_automation
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credential_provisioning_automationslaunchBadRequestError
+        - root.acs,credential_provisioning_automationslaunchUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -11401,8 +13724,8 @@ service:
               "display-name": "/acs/credentials/assign",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credentialsassignBadRequestError",
+                "root.acs,credentialsassignUnauthorizedError",
               ],
               "examples": [
                 {
@@ -11506,8 +13829,8 @@ service:
               "display-name": "/acs/credentials/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credentialscreateBadRequestError",
+                "root.acs,credentialscreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -11630,8 +13953,8 @@ service:
               "display-name": "/acs/credentials/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credentialsdeleteBadRequestError",
+                "root.acs,credentialsdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -11682,8 +14005,8 @@ service:
               "display-name": "/acs/credentials/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credentialsgetBadRequestError",
+                "root.acs,credentialsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -11778,8 +14101,8 @@ service:
               "display-name": "/acs/credentials/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credentialslistBadRequestError",
+                "root.acs,credentialslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -11857,8 +14180,8 @@ service:
               "display-name": "/acs/credentials/list_accessible_entrances",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credentialslist_accessible_entrancesBadRequestError",
+                "root.acs,credentialslist_accessible_entrancesUnauthorizedError",
               ],
               "examples": [
                 {
@@ -11934,8 +14257,8 @@ service:
               "display-name": "/acs/credentials/unassign",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credentialsunassignBadRequestError",
+                "root.acs,credentialsunassignUnauthorizedError",
               ],
               "examples": [
                 {
@@ -12039,8 +14362,8 @@ service:
               "display-name": "/acs/credentials/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,credentialsupdateBadRequestError",
+                "root.acs,credentialsupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -12416,8 +14739,8 @@ service:
         type: CredentialsAssignResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credentialsassignBadRequestError
+        - root.acs,credentialsassignUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -12495,8 +14818,8 @@ service:
         status-code: 200
         property: acs_credential
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credentialscreateBadRequestError
+        - root.acs,credentialscreateUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -12557,8 +14880,8 @@ service:
         type: CredentialsDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credentialsdeleteBadRequestError
+        - root.acs,credentialsdeleteUnauthorizedError
       examples:
         - request:
             acs_credential_id: acs_credential_id
@@ -12587,8 +14910,8 @@ service:
         status-code: 200
         property: acs_credential
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credentialsgetBadRequestError
+        - root.acs,credentialsgetUnauthorizedError
       examples:
         - request:
             acs_credential_id: acs_credential_id
@@ -12646,8 +14969,8 @@ service:
         status-code: 200
         property: acs_credentials
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credentialslistBadRequestError
+        - root.acs,credentialslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -12701,8 +15024,8 @@ service:
         status-code: 200
         property: acs_entrances
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credentialslist_accessible_entrancesBadRequestError
+        - root.acs,credentialslist_accessible_entrancesUnauthorizedError
       examples:
         - request:
             acs_credential_id: acs_credential_id
@@ -12750,8 +15073,8 @@ service:
         type: CredentialsUnassignResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credentialsunassignBadRequestError
+        - root.acs,credentialsunassignUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -12814,8 +15137,8 @@ service:
         type: CredentialsUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,credentialsupdateBadRequestError
+        - root.acs,credentialsupdateUnauthorizedError
       examples:
         - request:
             acs_credential_id: acs_credential_id
@@ -12873,8 +15196,8 @@ service:
               "display-name": "/acs/entrances/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,entrancesgetBadRequestError",
+                "root.acs,entrancesgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -12954,8 +15277,8 @@ service:
               "display-name": "/acs/entrances/grant_access",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,entrancesgrant_accessBadRequestError",
+                "root.acs,entrancesgrant_accessUnauthorizedError",
               ],
               "examples": [
                 {
@@ -13016,8 +15339,8 @@ service:
               "display-name": "/acs/entrances/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,entranceslistBadRequestError",
+                "root.acs,entranceslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -13100,8 +15423,8 @@ service:
               "display-name": "/acs/entrances/list_credentials_with_access",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,entranceslist_credentials_with_accessBadRequestError",
+                "root.acs,entranceslist_credentials_with_accessUnauthorizedError",
               ],
               "examples": [
                 {
@@ -13288,8 +15611,8 @@ service:
         status-code: 200
         property: acs_entrance
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,entrancesgetBadRequestError
+        - root.acs,entrancesgetUnauthorizedError
       examples:
         - request:
             acs_entrance_id: acs_entrance_id
@@ -13340,8 +15663,8 @@ service:
         type: EntrancesGrantAccessResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,entrancesgrant_accessBadRequestError
+        - root.acs,entrancesgrant_accessUnauthorizedError
       examples:
         - request:
             acs_entrance_id: acs_entrance_id
@@ -13375,8 +15698,8 @@ service:
         status-code: 200
         property: acs_entrances
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,entranceslistBadRequestError
+        - root.acs,entranceslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -13421,8 +15744,8 @@ service:
         status-code: 200
         property: acs_credentials
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,entranceslist_credentials_with_accessBadRequestError
+        - root.acs,entranceslist_credentials_with_accessUnauthorizedError
       examples:
         - request:
             acs_entrance_id: acs_entrance_id
@@ -13474,8 +15797,8 @@ service:
               "display-name": "/acs/systems/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,systemsgetBadRequestError",
+                "root.acs,systemsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -13556,8 +15879,8 @@ service:
               "display-name": "/acs/systems/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,systemslistBadRequestError",
+                "root.acs,systemslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -13638,8 +15961,8 @@ service:
               "display-name": "/acs/systems/list_compatible_credential_manager_acs_systems",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,systemslist_compatible_credential_manager_acs_systemsBadRequestError",
+                "root.acs,systemslist_compatible_credential_manager_acs_systemsUnauthorizedError",
               ],
               "examples": [
                 {
@@ -13805,8 +16128,8 @@ service:
         status-code: 200
         property: acs_system
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,systemsgetBadRequestError
+        - root.acs,systemsgetUnauthorizedError
       examples:
         - request:
             acs_system_id: acs_system_id
@@ -13858,8 +16181,8 @@ service:
         status-code: 200
         property: acs_systems
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,systemslistBadRequestError
+        - root.acs,systemslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -13910,8 +16233,10 @@ service:
         status-code: 200
         property: acs_systems
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - >-
+          root.acs,systemslist_compatible_credential_manager_acs_systemsBadRequestError
+        - >-
+          root.acs,systemslist_compatible_credential_manager_acs_systemsUnauthorizedError
       examples:
         - request:
             acs_system_id: acs_system_id
@@ -13960,8 +16285,8 @@ service:
               "display-name": "/acs/users/add_to_access_group",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,usersadd_to_access_groupBadRequestError",
+                "root.acs,usersadd_to_access_groupUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14022,8 +16347,8 @@ service:
               "display-name": "/acs/users/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,userscreateBadRequestError",
+                "root.acs,userscreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14134,8 +16459,8 @@ service:
               "display-name": "/acs/users/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,usersdeleteBadRequestError",
+                "root.acs,usersdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14186,8 +16511,8 @@ service:
               "display-name": "/acs/users/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,usersgetBadRequestError",
+                "root.acs,usersgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14262,8 +16587,8 @@ service:
               "display-name": "/acs/users/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,userslistBadRequestError",
+                "root.acs,userslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14349,8 +16674,8 @@ service:
               "display-name": "/acs/users/list_accessible_entrances",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,userslist_accessible_entrancesBadRequestError",
+                "root.acs,userslist_accessible_entrancesUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14426,8 +16751,8 @@ service:
               "display-name": "/acs/users/remove_from_access_group",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,usersremove_from_access_groupBadRequestError",
+                "root.acs,usersremove_from_access_groupUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14488,8 +16813,8 @@ service:
               "display-name": "/acs/users/revoke_access_to_all_entrances",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,usersrevoke_access_to_all_entrancesBadRequestError",
+                "root.acs,usersrevoke_access_to_all_entrancesUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14540,8 +16865,8 @@ service:
               "display-name": "/acs/users/suspend",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,userssuspendBadRequestError",
+                "root.acs,userssuspendUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14592,8 +16917,8 @@ service:
               "display-name": "/acs/users/unsuspend",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,usersunsuspendBadRequestError",
+                "root.acs,usersunsuspendUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14644,8 +16969,8 @@ service:
               "display-name": "/acs/users/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.acs,usersupdateBadRequestError",
+                "root.acs,usersupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -14975,8 +17300,8 @@ service:
         type: UsersAddToAccessGroupResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,usersadd_to_access_groupBadRequestError
+        - root.acs,usersadd_to_access_groupUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15028,8 +17353,8 @@ service:
         status-code: 200
         property: acs_user
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,userscreateBadRequestError
+        - root.acs,userscreateUnauthorizedError
       examples:
         - request:
             acs_system_id: acs_system_id
@@ -15078,8 +17403,8 @@ service:
         type: UsersDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,usersdeleteBadRequestError
+        - root.acs,usersdeleteUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15108,8 +17433,8 @@ service:
         status-code: 200
         property: acs_user
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,usersgetBadRequestError
+        - root.acs,usersgetUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15165,8 +17490,8 @@ service:
         status-code: 200
         property: acs_users
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,userslistBadRequestError
+        - root.acs,userslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -15215,8 +17540,8 @@ service:
         status-code: 200
         property: acs_entrances
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,userslist_accessible_entrancesBadRequestError
+        - root.acs,userslist_accessible_entrancesUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15264,8 +17589,8 @@ service:
         type: UsersRemoveFromAccessGroupResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,usersremove_from_access_groupBadRequestError
+        - root.acs,usersremove_from_access_groupUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15294,8 +17619,8 @@ service:
         type: UsersRevokeAccessToAllEntrancesResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,usersrevoke_access_to_all_entrancesBadRequestError
+        - root.acs,usersrevoke_access_to_all_entrancesUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15323,8 +17648,8 @@ service:
         type: UsersSuspendResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,userssuspendBadRequestError
+        - root.acs,userssuspendUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15352,8 +17677,8 @@ service:
         type: UsersUnsuspendResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,usersunsuspendBadRequestError
+        - root.acs,usersunsuspendUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15402,8 +17727,8 @@ service:
         type: UsersUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.acs,usersupdateBadRequestError
+        - root.acs,usersupdateUnauthorizedError
       examples:
         - request:
             acs_user_id: acs_user_id
@@ -15429,8 +17754,8 @@ service:
               "display-name": "/action_attempts/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.action_attemptsgetBadRequestError",
+                "root.action_attemptsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -15489,8 +17814,8 @@ service:
               "display-name": "/action_attempts/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.action_attemptslistBadRequestError",
+                "root.action_attemptslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -15611,8 +17936,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.action_attemptsgetBadRequestError
+        - root.action_attemptsgetUnauthorizedError
       examples:
         - request:
             action_attempt_id: action_attempt_id
@@ -15644,8 +17969,8 @@ service:
         status-code: 200
         property: action_attempts
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.action_attemptslistBadRequestError
+        - root.action_attemptslistUnauthorizedError
       examples:
         - request:
             action_attempt_ids:
@@ -15678,8 +18003,8 @@ service:
               "display-name": "/client_sessions/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.client_sessionscreateBadRequestError",
+                "root.client_sessionscreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -15750,8 +18075,8 @@ service:
               "display-name": "/client_sessions/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.client_sessionsdeleteBadRequestError",
+                "root.client_sessionsdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -15802,8 +18127,8 @@ service:
               "display-name": "/client_sessions/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.client_sessionsgetBadRequestError",
+                "root.client_sessionsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -15863,8 +18188,8 @@ service:
               "display-name": "/client_sessions/get_or_create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.client_sessionsget_or_createBadRequestError",
+                "root.client_sessionsget_or_createUnauthorizedError",
               ],
               "examples": [
                 {
@@ -15935,8 +18260,8 @@ service:
               "display-name": "/client_sessions/grant_access",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.client_sessionsgrant_accessBadRequestError",
+                "root.client_sessionsgrant_accessUnauthorizedError",
               ],
               "examples": [
                 {
@@ -15998,8 +18323,8 @@ service:
               "display-name": "/client_sessions/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.client_sessionslistBadRequestError",
+                "root.client_sessionslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -16064,8 +18389,8 @@ service:
               "display-name": "/client_sessions/revoke",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.client_sessionsrevokeBadRequestError",
+                "root.client_sessionsrevokeUnauthorizedError",
               ],
               "examples": [
                 {
@@ -16267,8 +18592,8 @@ service:
         status-code: 200
         property: client_session
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.client_sessionscreateBadRequestError
+        - root.client_sessionscreateUnauthorizedError
       examples:
         - request: {}
           response:
@@ -16308,8 +18633,8 @@ service:
         type: ClientSessionsDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.client_sessionsdeleteBadRequestError
+        - root.client_sessionsdeleteUnauthorizedError
       examples:
         - request:
             client_session_id: client_session_id
@@ -16336,8 +18661,8 @@ service:
         status-code: 200
         property: client_session
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.client_sessionsgetBadRequestError
+        - root.client_sessionsgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -16382,8 +18707,8 @@ service:
         status-code: 200
         property: client_session
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.client_sessionsget_or_createBadRequestError
+        - root.client_sessionsget_or_createUnauthorizedError
       examples:
         - request: {}
           response:
@@ -16424,8 +18749,8 @@ service:
         type: ClientSessionsGrantAccessResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.client_sessionsgrant_accessBadRequestError
+        - root.client_sessionsgrant_accessUnauthorizedError
       examples:
         - request: {}
           response:
@@ -16467,8 +18792,8 @@ service:
         status-code: 200
         property: client_sessions
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.client_sessionslistBadRequestError
+        - root.client_sessionslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -16508,8 +18833,8 @@ service:
         type: ClientSessionsRevokeResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.client_sessionsrevokeBadRequestError
+        - root.client_sessionsrevokeUnauthorizedError
       examples:
         - request:
             client_session_id: client_session_id
@@ -16535,8 +18860,8 @@ service:
               "display-name": "/connect_webviews/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.connect_webviewscreateBadRequestError",
+                "root.connect_webviewscreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -16618,8 +18943,8 @@ service:
               "display-name": "/connect_webviews/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.connect_webviewsdeleteBadRequestError",
+                "root.connect_webviewsdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -16670,8 +18995,8 @@ service:
               "display-name": "/connect_webviews/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.connect_webviewsgetBadRequestError",
+                "root.connect_webviewsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -16750,8 +19075,8 @@ service:
               "display-name": "/connect_webviews/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.connect_webviewslistBadRequestError",
+                "root.connect_webviewslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -17129,8 +19454,8 @@ service:
         status-code: 200
         property: connect_webview
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.connect_webviewscreateBadRequestError
+        - root.connect_webviewscreateUnauthorizedError
       examples:
         - request: {}
           response:
@@ -17180,8 +19505,8 @@ service:
         type: ConnectWebviewsDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.connect_webviewsdeleteBadRequestError
+        - root.connect_webviewsdeleteUnauthorizedError
       examples:
         - request:
             connect_webview_id: connect_webview_id
@@ -17210,8 +19535,8 @@ service:
         status-code: 200
         property: connect_webview
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.connect_webviewsgetBadRequestError
+        - root.connect_webviewsgetUnauthorizedError
       examples:
         - request:
             connect_webview_id: connect_webview_id
@@ -17270,8 +19595,8 @@ service:
         status-code: 200
         property: connect_webviews
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.connect_webviewslistBadRequestError
+        - root.connect_webviewslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -17319,8 +19644,8 @@ service:
               "display-name": "/connected_accounts/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.connected_accountsdeleteBadRequestError",
+                "root.connected_accountsdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -17375,8 +19700,8 @@ service:
               "display-name": "/connected_accounts/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.connected_accountsgetBadRequestError",
+                "root.connected_accountsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -17435,8 +19760,8 @@ service:
               "display-name": "/connected_accounts/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.connected_accountslistBadRequestError",
+                "root.connected_accountslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -17499,8 +19824,8 @@ service:
               "display-name": "/connected_accounts/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.connected_accountsupdateBadRequestError",
+                "root.connected_accountsupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -17805,8 +20130,8 @@ service:
         type: ConnectedAccountsDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.connected_accountsdeleteBadRequestError
+        - root.connected_accountsdeleteUnauthorizedError
       examples:
         - request:
             connected_account_id: connected_account_id
@@ -17829,8 +20154,8 @@ service:
         status-code: 200
         property: connected_account
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.connected_accountsgetBadRequestError
+        - root.connected_accountsgetUnauthorizedError
       examples:
         - request:
             connected_account_id: connected_account_id
@@ -17880,8 +20205,8 @@ service:
         status-code: 200
         property: connected_accounts
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.connected_accountslistBadRequestError
+        - root.connected_accountslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -17925,8 +20250,8 @@ service:
         status-code: 200
         property: connected_account
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.connected_accountsupdateBadRequestError
+        - root.connected_accountsupdateUnauthorizedError
       examples:
         - request:
             connected_account_id: connected_account_id
@@ -17970,8 +20295,8 @@ service:
               "display-name": "/devices/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devicesdeleteBadRequestError",
+                "root.devicesdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -18022,8 +20347,8 @@ service:
               "display-name": "/devices/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devicesgetBadRequestError",
+                "root.devicesgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -18327,8 +20652,8 @@ service:
               "display-name": "/devices/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.deviceslistBadRequestError",
+                "root.deviceslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -18450,8 +20775,8 @@ service:
               "display-name": "/devices/list_device_providers",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.deviceslist_device_providersBadRequestError",
+                "root.deviceslist_device_providersUnauthorizedError",
               ],
               "examples": [
                 {
@@ -18503,8 +20828,8 @@ service:
               "display-name": "/devices/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devicesupdateBadRequestError",
+                "root.devicesupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -19060,8 +21385,8 @@ service:
         type: DevicesDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devicesdeleteBadRequestError
+        - root.devicesdeleteUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -19091,8 +21416,8 @@ service:
         status-code: 200
         property: device
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devicesgetBadRequestError
+        - root.devicesgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -19333,8 +21658,8 @@ service:
         status-code: 200
         property: devices
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.deviceslistBadRequestError
+        - root.deviceslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -19393,8 +21718,8 @@ service:
         status-code: 200
         property: device_providers
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.deviceslist_device_providersBadRequestError
+        - root.deviceslist_device_providersUnauthorizedError
       examples:
         - request: {}
           response:
@@ -19435,8 +21760,8 @@ service:
         type: DevicesUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devicesupdateBadRequestError
+        - root.devicesupdateUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -19462,8 +21787,8 @@ service:
               "display-name": "/devices/simulate/connect",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devices,simulateconnectBadRequestError",
+                "root.devices,simulateconnectUnauthorizedError",
               ],
               "examples": [
                 {
@@ -19514,8 +21839,8 @@ service:
               "display-name": "/devices/simulate/disconnect",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devices,simulatedisconnectBadRequestError",
+                "root.devices,simulatedisconnectUnauthorizedError",
               ],
               "examples": [
                 {
@@ -19566,8 +21891,8 @@ service:
               "display-name": "/devices/simulate/remove",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devices,simulateremoveBadRequestError",
+                "root.devices,simulateremoveUnauthorizedError",
               ],
               "examples": [
                 {
@@ -19694,8 +22019,8 @@ service:
         type: SimulateConnectResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devices,simulateconnectBadRequestError
+        - root.devices,simulateconnectUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -19723,8 +22048,8 @@ service:
         type: SimulateDisconnectResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devices,simulatedisconnectBadRequestError
+        - root.devices,simulatedisconnectUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -19752,8 +22077,8 @@ service:
         type: SimulateRemoveResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devices,simulateremoveBadRequestError
+        - root.devices,simulateremoveUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -19779,8 +22104,8 @@ service:
               "display-name": "/devices/unmanaged/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devices,unmanagedgetBadRequestError",
+                "root.devices,unmanagedgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -19882,8 +22207,8 @@ service:
               "display-name": "/devices/unmanaged/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devices,unmanagedlistBadRequestError",
+                "root.devices,unmanagedlistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -19997,8 +22322,8 @@ service:
               "display-name": "/devices/unmanaged/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.devices,unmanagedupdateBadRequestError",
+                "root.devices,unmanagedupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -20447,8 +22772,8 @@ service:
         status-code: 200
         property: device
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devices,unmanagedgetBadRequestError
+        - root.devices,unmanagedgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -20533,8 +22858,8 @@ service:
         status-code: 200
         property: devices
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devices,unmanagedlistBadRequestError
+        - root.devices,unmanagedlistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -20590,8 +22915,8 @@ service:
         type: UnmanagedUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.devices,unmanagedupdateBadRequestError
+        - root.devices,unmanagedupdateUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -20618,8 +22943,8 @@ service:
               "display-name": "/events/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.eventsgetBadRequestError",
+                "root.eventsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -20694,8 +23019,8 @@ service:
               "display-name": "/events/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.eventslistBadRequestError",
+                "root.eventslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -21605,8 +23930,8 @@ service:
         status-code: 200
         property: event
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.eventsgetBadRequestError
+        - root.eventsgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -21665,8 +23990,8 @@ service:
         status-code: 200
         property: events
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.eventslistBadRequestError
+        - root.eventslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -21704,8 +24029,8 @@ service:
               "display-name": "/locks/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.locksgetBadRequestError",
+                "root.locksgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -22262,8 +24587,8 @@ service:
               "display-name": "/locks/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.lockslistBadRequestError",
+                "root.lockslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -22433,8 +24758,8 @@ service:
               "display-name": "/locks/lock_door",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.lockslock_doorBadRequestError",
+                "root.lockslock_doorUnauthorizedError",
               ],
               "examples": [
                 {
@@ -22497,8 +24822,8 @@ service:
               "display-name": "/locks/unlock_door",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.locksunlock_doorBadRequestError",
+                "root.locksunlock_doorUnauthorizedError",
               ],
               "examples": [
                 {
@@ -22980,8 +25305,8 @@ service:
         status-code: 200
         property: device
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.locksgetBadRequestError
+        - root.locksgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -23417,8 +25742,8 @@ service:
         status-code: 200
         property: devices
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.lockslistBadRequestError
+        - root.lockslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -23517,8 +25842,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.lockslock_doorBadRequestError
+        - root.lockslock_doorUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -23556,8 +25881,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.locksunlock_doorBadRequestError
+        - root.locksunlock_doorUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -23589,8 +25914,8 @@ service:
               "display-name": "/networks/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.networksgetBadRequestError",
+                "root.networksgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -23648,8 +25973,8 @@ service:
               "display-name": "/networks/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.networkslistBadRequestError",
+                "root.networkslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -23763,8 +26088,8 @@ service:
         status-code: 200
         property: network
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.networksgetBadRequestError
+        - root.networksgetUnauthorizedError
       examples:
         - request:
             network_id: network_id
@@ -23794,8 +26119,8 @@ service:
         status-code: 200
         property: networks
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.networkslistBadRequestError
+        - root.networkslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -23825,8 +26150,8 @@ service:
               "display-name": "/noise_sensors/noise_thresholds/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.noise_sensors,noise_thresholdscreateBadRequestError",
+                "root.noise_sensors,noise_thresholdscreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -23905,8 +26230,8 @@ service:
               "display-name": "/noise_sensors/noise_thresholds/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.noise_sensors,noise_thresholdsdeleteBadRequestError",
+                "root.noise_sensors,noise_thresholdsdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -23978,8 +26303,8 @@ service:
               "display-name": "/noise_sensors/noise_thresholds/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.noise_sensors,noise_thresholdsgetBadRequestError",
+                "root.noise_sensors,noise_thresholdsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -24040,8 +26365,8 @@ service:
               "display-name": "/noise_sensors/noise_thresholds/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.noise_sensors,noise_thresholdslistBadRequestError",
+                "root.noise_sensors,noise_thresholdslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -24105,8 +26430,8 @@ service:
               "display-name": "/noise_sensors/noise_thresholds/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.noise_sensors,noise_thresholdsupdateBadRequestError",
+                "root.noise_sensors,noise_thresholdsupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -24310,8 +26635,8 @@ service:
         status-code: 200
         property: noise_threshold
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.noise_sensors,noise_thresholdscreateBadRequestError
+        - root.noise_sensors,noise_thresholdscreateUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -24362,8 +26687,8 @@ service:
         type: NoiseThresholdsDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.noise_sensors,noise_thresholdsdeleteBadRequestError
+        - root.noise_sensors,noise_thresholdsdeleteUnauthorizedError
       examples:
         - request:
             noise_threshold_id: noise_threshold_id
@@ -24399,8 +26724,8 @@ service:
         status-code: 200
         property: noise_threshold
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.noise_sensors,noise_thresholdsgetBadRequestError
+        - root.noise_sensors,noise_thresholdsgetUnauthorizedError
       examples:
         - request:
             noise_threshold_id: noise_threshold_id
@@ -24438,8 +26763,8 @@ service:
         status-code: 200
         property: noise_thresholds
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.noise_sensors,noise_thresholdslistBadRequestError
+        - root.noise_sensors,noise_thresholdslistUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -24487,8 +26812,8 @@ service:
         type: NoiseThresholdsUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.noise_sensors,noise_thresholdsupdateBadRequestError
+        - root.noise_sensors,noise_thresholdsupdateUnauthorizedError
       examples:
         - request:
             noise_threshold_id: noise_threshold_id
@@ -24521,8 +26846,8 @@ service:
               "display-name": "/noise_sensors/simulate/trigger_noise_threshold",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.noise_sensors,simulatetrigger_noise_thresholdBadRequestError",
+                "root.noise_sensors,simulatetrigger_noise_thresholdUnauthorizedError",
               ],
               "examples": [
                 {
@@ -24619,8 +26944,8 @@ service:
         type: SimulateTriggerNoiseThresholdResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.noise_sensors,simulatetrigger_noise_thresholdBadRequestError
+        - root.noise_sensors,simulatetrigger_noise_thresholdUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -24646,8 +26971,8 @@ service:
               "display-name": "/phones/deactivate",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.phonesdeactivateBadRequestError",
+                "root.phonesdeactivateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -24690,8 +27015,8 @@ service:
               "display-name": "/phones/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.phoneslistBadRequestError",
+                "root.phoneslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -24838,8 +27163,8 @@ service:
         type: PhonesDeactivateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.phonesdeactivateBadRequestError
+        - root.phonesdeactivateUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -24868,8 +27193,8 @@ service:
         status-code: 200
         property: phones
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.phoneslistBadRequestError
+        - root.phoneslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -24920,8 +27245,8 @@ service:
               "display-name": "/phones/simulate/create_sandbox_phone",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.phones,simulatecreate_sandbox_phoneBadRequestError",
+                "root.phones,simulatecreate_sandbox_phoneUnauthorizedError",
               ],
               "examples": [
                 {
@@ -25195,8 +27520,8 @@ service:
         status-code: 200
         property: phone
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.phones,simulatecreate_sandbox_phoneBadRequestError
+        - root.phones,simulatecreate_sandbox_phoneUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -25256,8 +27581,8 @@ service:
               "display-name": "/thermostats/cool",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostatscoolBadRequestError",
+                "root.thermostatscoolUnauthorizedError",
               ],
               "examples": [
                 {
@@ -25322,8 +27647,8 @@ service:
               "display-name": "/thermostats/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostatsgetBadRequestError",
+                "root.thermostatsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -25627,8 +27952,8 @@ service:
               "display-name": "/thermostats/heat",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostatsheatBadRequestError",
+                "root.thermostatsheatUnauthorizedError",
               ],
               "examples": [
                 {
@@ -25693,8 +28018,8 @@ service:
               "display-name": "/thermostats/heat_cool",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostatsheat_coolBadRequestError",
+                "root.thermostatsheat_coolUnauthorizedError",
               ],
               "examples": [
                 {
@@ -25761,8 +28086,8 @@ service:
               "display-name": "/thermostats/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostatslistBadRequestError",
+                "root.thermostatslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -25884,8 +28209,8 @@ service:
               "display-name": "/thermostats/off",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostatsoffBadRequestError",
+                "root.thermostatsoffUnauthorizedError",
               ],
               "examples": [
                 {
@@ -25948,8 +28273,8 @@ service:
               "display-name": "/thermostats/set_fan_mode",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostatsset_fan_modeBadRequestError",
+                "root.thermostatsset_fan_modeUnauthorizedError",
               ],
               "examples": [
                 {
@@ -26014,8 +28339,8 @@ service:
               "display-name": "/thermostats/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostatsupdateBadRequestError",
+                "root.thermostatsupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -26638,8 +28963,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostatscoolBadRequestError
+        - root.thermostatscoolUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -26675,8 +29000,8 @@ service:
         status-code: 200
         property: thermostat
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostatsgetBadRequestError
+        - root.thermostatsgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -26904,8 +29229,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostatsheatBadRequestError
+        - root.thermostatsheatUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -26947,8 +29272,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostatsheat_coolBadRequestError
+        - root.thermostatsheat_coolUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -27003,8 +29328,8 @@ service:
         status-code: 200
         property: thermostats
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostatslistBadRequestError
+        - root.thermostatslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -27069,8 +29394,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostatsoffBadRequestError
+        - root.thermostatsoffUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -27110,8 +29435,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostatsset_fan_modeBadRequestError
+        - root.thermostatsset_fan_modeUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -27146,8 +29471,8 @@ service:
         type: ThermostatsUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostatsupdateBadRequestError
+        - root.thermostatsupdateUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -27174,8 +29499,8 @@ service:
               "display-name": "/thermostats/climate_setting_schedules/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostats,climate_setting_schedulescreateBadRequestError",
+                "root.thermostats,climate_setting_schedulescreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -27253,8 +29578,8 @@ service:
               "display-name": "/thermostats/climate_setting_schedules/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostats,climate_setting_schedulesdeleteBadRequestError",
+                "root.thermostats,climate_setting_schedulesdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -27305,8 +29630,8 @@ service:
               "display-name": "/thermostats/climate_setting_schedules/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostats,climate_setting_schedulesgetBadRequestError",
+                "root.thermostats,climate_setting_schedulesgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -27385,8 +29710,8 @@ service:
               "display-name": "/thermostats/climate_setting_schedules/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostats,climate_setting_scheduleslistBadRequestError",
+                "root.thermostats,climate_setting_scheduleslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -27461,8 +29786,8 @@ service:
               "display-name": "/thermostats/climate_setting_schedules/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.thermostats,climate_setting_schedulesupdateBadRequestError",
+                "root.thermostats,climate_setting_schedulesupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -27711,8 +30036,8 @@ service:
         status-code: 200
         property: climate_setting_schedule
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostats,climate_setting_schedulescreateBadRequestError
+        - root.thermostats,climate_setting_schedulescreateUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -27760,8 +30085,8 @@ service:
         type: ClimateSettingSchedulesDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostats,climate_setting_schedulesdeleteBadRequestError
+        - root.thermostats,climate_setting_schedulesdeleteUnauthorizedError
       examples:
         - request:
             climate_setting_schedule_id: climate_setting_schedule_id
@@ -27794,8 +30119,8 @@ service:
         status-code: 200
         property: climate_setting_schedule
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostats,climate_setting_schedulesgetBadRequestError
+        - root.thermostats,climate_setting_schedulesgetUnauthorizedError
       examples:
         - request: {}
           response:
@@ -27842,8 +30167,8 @@ service:
         status-code: 200
         property: climate_setting_schedules
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostats,climate_setting_scheduleslistBadRequestError
+        - root.thermostats,climate_setting_scheduleslistUnauthorizedError
       examples:
         - request:
             device_id: device_id
@@ -27901,8 +30226,8 @@ service:
         type: ClimateSettingSchedulesUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.thermostats,climate_setting_schedulesupdateBadRequestError
+        - root.thermostats,climate_setting_schedulesupdateUnauthorizedError
       examples:
         - request:
             climate_setting_schedule_id: climate_setting_schedule_id
@@ -27946,8 +30271,8 @@ service:
               "display-name": "/user_identities/add_acs_user",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitiesadd_acs_userBadRequestError",
+                "root.user_identitiesadd_acs_userUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28008,8 +30333,8 @@ service:
               "display-name": "/user_identities/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitiescreateBadRequestError",
+                "root.user_identitiescreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28088,8 +30413,8 @@ service:
               "display-name": "/user_identities/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitiesdeleteBadRequestError",
+                "root.user_identitiesdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28140,8 +30465,8 @@ service:
               "display-name": "/user_identities/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitiesgetBadRequestError",
+                "root.user_identitiesgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28187,8 +30512,8 @@ service:
               "display-name": "/user_identities/grant_access_to_device",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitiesgrant_access_to_deviceBadRequestError",
+                "root.user_identitiesgrant_access_to_deviceUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28249,8 +30574,8 @@ service:
               "display-name": "/user_identities/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitieslistBadRequestError",
+                "root.user_identitieslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28312,8 +30637,8 @@ service:
               "display-name": "/user_identities/list_accessible_devices",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitieslist_accessible_devicesBadRequestError",
+                "root.user_identitieslist_accessible_devicesUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28461,8 +30786,8 @@ service:
               "display-name": "/user_identities/list_acs_systems",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitieslist_acs_systemsBadRequestError",
+                "root.user_identitieslist_acs_systemsUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28545,8 +30870,8 @@ service:
               "display-name": "/user_identities/list_acs_users",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitieslist_acs_usersBadRequestError",
+                "root.user_identitieslist_acs_usersUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28623,8 +30948,8 @@ service:
               "display-name": "/user_identities/remove_acs_user",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitiesremove_acs_userBadRequestError",
+                "root.user_identitiesremove_acs_userUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28685,8 +31010,8 @@ service:
               "display-name": "/user_identities/revoke_access_to_device",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitiesrevoke_access_to_deviceBadRequestError",
+                "root.user_identitiesrevoke_access_to_deviceUnauthorizedError",
               ],
               "examples": [
                 {
@@ -28747,8 +31072,8 @@ service:
               "display-name": "/user_identities/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identitiesupdateBadRequestError",
+                "root.user_identitiesupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -29133,8 +31458,8 @@ service:
         type: UserIdentitiesAddAcsUserResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitiesadd_acs_userBadRequestError
+        - root.user_identitiesadd_acs_userUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29173,8 +31498,8 @@ service:
         status-code: 200
         property: user_identity
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitiescreateBadRequestError
+        - root.user_identitiescreateUnauthorizedError
       examples:
         - request: {}
           response:
@@ -29210,8 +31535,8 @@ service:
         type: UserIdentitiesDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitiesdeleteBadRequestError
+        - root.user_identitiesdeleteUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29234,8 +31559,8 @@ service:
         status-code: 200
         property: user_identity
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitiesgetBadRequestError
+        - root.user_identitiesgetUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29276,8 +31601,8 @@ service:
         type: UserIdentitiesGrantAccessToDeviceResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitiesgrant_access_to_deviceBadRequestError
+        - root.user_identitiesgrant_access_to_deviceUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29307,8 +31632,8 @@ service:
         status-code: 200
         property: user_identities
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitieslistBadRequestError
+        - root.user_identitieslistUnauthorizedError
       examples:
         - request: {}
           response:
@@ -29345,8 +31670,8 @@ service:
         status-code: 200
         property: devices
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitieslist_accessible_devicesBadRequestError
+        - root.user_identitieslist_accessible_devicesUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29443,8 +31768,8 @@ service:
         status-code: 200
         property: acs_systems
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitieslist_acs_systemsBadRequestError
+        - root.user_identitieslist_acs_systemsUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29496,8 +31821,8 @@ service:
         status-code: 200
         property: acs_users
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitieslist_acs_usersBadRequestError
+        - root.user_identitieslist_acs_usersUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29550,8 +31875,8 @@ service:
         type: UserIdentitiesRemoveAcsUserResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitiesremove_acs_userBadRequestError
+        - root.user_identitiesremove_acs_userUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29584,8 +31909,8 @@ service:
         type: UserIdentitiesRevokeAccessToDeviceResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitiesrevoke_access_to_deviceBadRequestError
+        - root.user_identitiesrevoke_access_to_deviceUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29627,8 +31952,8 @@ service:
         type: UserIdentitiesUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identitiesupdateBadRequestError
+        - root.user_identitiesupdateUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -29654,8 +31979,8 @@ service:
               "display-name": "/user_identities/enrollment_automations/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identities,enrollment_automationsdeleteBadRequestError",
+                "root.user_identities,enrollment_automationsdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -29706,8 +32031,8 @@ service:
               "display-name": "/user_identities/enrollment_automations/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identities,enrollment_automationsgetBadRequestError",
+                "root.user_identities,enrollment_automationsgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -29766,8 +32091,8 @@ service:
               "display-name": "/user_identities/enrollment_automations/launch",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identities,enrollment_automationslaunchBadRequestError",
+                "root.user_identities,enrollment_automationslaunchUnauthorizedError",
               ],
               "examples": [
                 {
@@ -29856,8 +32181,8 @@ service:
               "display-name": "/user_identities/enrollment_automations/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.user_identities,enrollment_automationslistBadRequestError",
+                "root.user_identities,enrollment_automationslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30096,8 +32421,8 @@ service:
         type: EnrollmentAutomationsDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identities,enrollment_automationsdeleteBadRequestError
+        - root.user_identities,enrollment_automationsdeleteUnauthorizedError
       examples:
         - request:
             enrollment_automation_id: enrollment_automation_id
@@ -30126,8 +32451,8 @@ service:
         status-code: 200
         property: enrollment_automation
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identities,enrollment_automationsgetBadRequestError
+        - root.user_identities,enrollment_automationsgetUnauthorizedError
       examples:
         - request:
             enrollment_automation_id: enrollment_automation_id
@@ -30175,8 +32500,8 @@ service:
         status-code: 200
         property: enrollment_automation
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identities,enrollment_automationslaunchBadRequestError
+        - root.user_identities,enrollment_automationslaunchUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -30213,8 +32538,8 @@ service:
         status-code: 200
         property: enrollment_automations
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.user_identities,enrollment_automationslistBadRequestError
+        - root.user_identities,enrollment_automationslistUnauthorizedError
       examples:
         - request:
             user_identity_id: user_identity_id
@@ -30246,8 +32571,8 @@ service:
               "display-name": "/webhooks/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.webhookscreateBadRequestError",
+                "root.webhookscreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30308,8 +32633,8 @@ service:
               "display-name": "/webhooks/delete",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.webhooksdeleteBadRequestError",
+                "root.webhooksdeleteUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30352,8 +32677,8 @@ service:
               "display-name": "/webhooks/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.webhooksgetBadRequestError",
+                "root.webhooksgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30405,8 +32730,8 @@ service:
               "display-name": "/webhooks/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.webhookslistBadRequestError",
+                "root.webhookslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30445,8 +32770,8 @@ service:
               "display-name": "/webhooks/update",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.webhooksupdateBadRequestError",
+                "root.webhooksupdateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30607,8 +32932,8 @@ service:
         status-code: 200
         property: webhook
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.webhookscreateBadRequestError
+        - root.webhookscreateUnauthorizedError
       examples:
         - request:
             url: url
@@ -30639,8 +32964,8 @@ service:
         type: WebhooksDeleteResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.webhooksdeleteBadRequestError
+        - root.webhooksdeleteUnauthorizedError
       examples:
         - request:
             webhook_id: webhook_id
@@ -30666,8 +32991,8 @@ service:
         status-code: 200
         property: webhook
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.webhooksgetBadRequestError
+        - root.webhooksgetUnauthorizedError
       examples:
         - request:
             webhook_id: webhook_id
@@ -30693,8 +33018,8 @@ service:
         status-code: 200
         property: webhooks
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.webhookslistBadRequestError
+        - root.webhookslistUnauthorizedError
       examples:
         - response:
             body:
@@ -30724,8 +33049,8 @@ service:
         type: WebhooksUpdateResponse
         status-code: 200
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.webhooksupdateBadRequestError
+        - root.webhooksupdateUnauthorizedError
       examples:
         - request:
             webhook_id: webhook_id
@@ -30753,8 +33078,8 @@ service:
               "display-name": "/workspaces/create",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.workspacescreateBadRequestError",
+                "root.workspacescreateUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30820,8 +33145,8 @@ service:
               "display-name": "/workspaces/get",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.workspacesgetBadRequestError",
+                "root.workspacesgetUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30857,8 +33182,8 @@ service:
               "display-name": "/workspaces/list",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.workspaceslistBadRequestError",
+                "root.workspaceslistUnauthorizedError",
               ],
               "examples": [
                 {
@@ -30896,8 +33221,8 @@ service:
               "display-name": "/workspaces/reset_sandbox",
               "docs": undefined,
               "errors": [
-                "root.BadRequestError",
-                "root.UnauthorizedError",
+                "root.workspacesreset_sandboxBadRequestError",
+                "root.workspacesreset_sandboxUnauthorizedError",
               ],
               "examples": [
                 {
@@ -31061,8 +33386,8 @@ service:
         status-code: 200
         property: workspace
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.workspacescreateBadRequestError
+        - root.workspacescreateUnauthorizedError
       examples:
         - request:
             name: name
@@ -31088,8 +33413,8 @@ service:
         status-code: 200
         property: workspace
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.workspacesgetBadRequestError
+        - root.workspacesgetUnauthorizedError
       examples:
         - response:
             body:
@@ -31113,8 +33438,8 @@ service:
         status-code: 200
         property: workspaces
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.workspaceslistBadRequestError
+        - root.workspaceslistUnauthorizedError
       examples:
         - response:
             body:
@@ -31138,8 +33463,8 @@ service:
         status-code: 200
         property: action_attempt
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
+        - root.workspacesreset_sandboxBadRequestError
+        - root.workspacesreset_sandboxUnauthorizedError
       examples:
         - response:
             body:

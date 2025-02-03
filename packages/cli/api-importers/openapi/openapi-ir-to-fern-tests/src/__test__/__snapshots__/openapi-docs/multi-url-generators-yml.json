@@ -6,12 +6,27 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "NotFoundError": {
+          "__package__getAuthenticationTokenUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "__package__getUserInformationNotFoundError": {
             "docs": "User not found",
             "status-code": 404,
             "type": "unknown",
           },
-          "UnauthorizedError": {
+          "__package__getUserInformationUnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "unknown",
+          },
+          "__package__listUsersNotFoundError": {
+            "docs": "User not found",
+            "status-code": 404,
+            "type": "unknown",
+          },
+          "__package__listUsersUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
@@ -26,7 +41,7 @@
               "display-name": "Get authentication token",
               "docs": "Retrieve an authentication token for the API",
               "errors": [
-                "UnauthorizedError",
+                "__package__getAuthenticationTokenUnauthorizedError",
               ],
               "examples": [
                 {
@@ -56,8 +71,8 @@
               "display-name": "Get user information",
               "docs": "Retrieve detailed information about a specific user",
               "errors": [
-                "UnauthorizedError",
-                "NotFoundError",
+                "__package__getUserInformationUnauthorizedError",
+                "__package__getUserInformationNotFoundError",
               ],
               "examples": [
                 {
@@ -94,8 +109,8 @@
               "display-name": "List Users",
               "docs": "List information about all users",
               "errors": [
-                "UnauthorizedError",
-                "NotFoundError",
+                "__package__listUsersUnauthorizedError",
+                "__package__listUsersNotFoundError",
               ],
               "examples": [
                 {
@@ -155,14 +170,26 @@
         },
       },
       "rawContents": "errors:
-  UnauthorizedError:
+  __package__listUsersUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  NotFoundError:
+  __package__listUsersNotFoundError:
     status-code: 404
     type: unknown
     docs: User not found
+  __package__getUserInformationUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
+  __package__getUserInformationNotFoundError:
+    status-code: 404
+    type: unknown
+    docs: User not found
+  __package__getAuthenticationTokenUnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Unauthorized
 service:
   auth: false
   base-path: ''
@@ -180,8 +207,8 @@ service:
         type: User
         status-code: 200
       errors:
-        - UnauthorizedError
-        - NotFoundError
+        - __package__listUsersUnauthorizedError
+        - __package__listUsersNotFoundError
       examples:
         - response:
             body:
@@ -204,8 +231,8 @@ service:
         type: User
         status-code: 200
       errors:
-        - UnauthorizedError
-        - NotFoundError
+        - __package__getUserInformationUnauthorizedError
+        - __package__getUserInformationNotFoundError
       examples:
         - path-parameters:
             userId: userId
@@ -228,7 +255,7 @@ service:
         type: Token
         status-code: 200
       errors:
-        - UnauthorizedError
+        - __package__getAuthenticationTokenUnauthorizedError
       examples:
         - response:
             body:

@@ -6,20 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "BadRequestError": {
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "ConflictError": {
+          "__package__generate-streamBadRequestError": {
             "docs": "",
             "examples": [
               {
@@ -30,10 +17,10 @@
                 },
               },
             ],
-            "status-code": 409,
-            "type": "RegisterPromptErrorResponse",
+            "status-code": 400,
+            "type": "GenerateErrorResponse",
           },
-          "ForbiddenError": {
+          "__package__generate-streamForbiddenError": {
             "docs": "",
             "examples": [
               {
@@ -47,7 +34,8 @@
             "status-code": 403,
             "type": "GenerateErrorResponse",
           },
-          "InternalServerError": {
+          "__package__generate-streamInternalServerError": {
+            "docs": "",
             "examples": [
               {
                 "docs": undefined,
@@ -58,9 +46,10 @@
               },
             ],
             "status-code": 500,
-            "type": "unknown",
+            "type": "GenerateErrorResponse",
           },
-          "NotFoundError": {
+          "__package__generate-streamNotFoundError": {
+            "docs": "",
             "examples": [
               {
                 "docs": undefined,
@@ -71,7 +60,203 @@
               },
             ],
             "status-code": 404,
-            "type": "unknown",
+            "type": "GenerateErrorResponse",
+          },
+          "__package__generateBadRequestError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "GenerateErrorResponse",
+          },
+          "__package__generateForbiddenError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 403,
+            "type": "GenerateErrorResponse",
+          },
+          "__package__generateInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 500,
+            "type": "GenerateErrorResponse",
+          },
+          "__package__generateNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "GenerateErrorResponse",
+          },
+          "__package__searchBadRequestError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "SearchErrorResponse",
+          },
+          "__package__searchInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 500,
+            "type": "SearchErrorResponse",
+          },
+          "__package__searchNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "SearchErrorResponse",
+          },
+          "__package__submit-completion-actualsBadRequestError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "SubmitCompletionActualsErrorResponse",
+          },
+          "__package__submit-completion-actualsInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 500,
+            "type": "SubmitCompletionActualsErrorResponse",
+          },
+          "__package__submit-completion-actualsNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "SubmitCompletionActualsErrorResponse",
+          },
+          "documentsuploadBadRequestError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "UploadDocumentErrorResponse",
+          },
+          "documentsuploadInternalServerError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 500,
+            "type": "UploadDocumentErrorResponse",
+          },
+          "documentsuploadNotFoundError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "UploadDocumentErrorResponse",
+          },
+          "registeredPromptsregister_promptConflictError": {
+            "docs": "",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "detail": "detail",
+                },
+              },
+            ],
+            "status-code": 409,
+            "type": "RegisterPromptErrorResponse",
           },
         },
         "service": {
@@ -209,10 +394,10 @@ Generate a completion using a previously defined deployment.
 
 **Note:** Uses a base url of `https://predict.vellum.ai`.",
               "errors": [
-                "BadRequestError",
-                "ForbiddenError",
-                "NotFoundError",
-                "InternalServerError",
+                "__package__generateBadRequestError",
+                "__package__generateForbiddenError",
+                "__package__generateNotFoundError",
+                "__package__generateInternalServerError",
               ],
               "examples": [
                 {
@@ -307,10 +492,10 @@ Generate a stream of completions using a previously defined deployment.
 
 **Note:** Uses a base url of `https://predict.vellum.ai`.",
               "errors": [
-                "BadRequestError",
-                "ForbiddenError",
-                "NotFoundError",
-                "InternalServerError",
+                "__package__generate-streamBadRequestError",
+                "__package__generate-streamForbiddenError",
+                "__package__generate-streamNotFoundError",
+                "__package__generate-streamInternalServerError",
               ],
               "examples": [
                 {
@@ -405,9 +590,9 @@ Perform a search against a document index.
 
 **Note:** Uses a base url of `https://predict.vellum.ai`.",
               "errors": [
-                "BadRequestError",
-                "NotFoundError",
-                "InternalServerError",
+                "__package__searchBadRequestError",
+                "__package__searchNotFoundError",
+                "__package__searchInternalServerError",
               ],
               "examples": [
                 {
@@ -499,9 +684,9 @@ Used to submit feedback regarding the quality of previously generated completion
 
 **Note:** Uses a base url of `https://predict.vellum.ai`.",
               "errors": [
-                "BadRequestError",
-                "NotFoundError",
-                "InternalServerError",
+                "__package__submit-completion-actualsBadRequestError",
+                "__package__submit-completion-actualsNotFoundError",
+                "__package__submit-completion-actualsInternalServerError",
               ],
               "examples": [
                 {
@@ -2724,10 +2909,10 @@ Used to submit feedback regarding the quality of previously generated completion
         status-code: 200
       url: Predict
       errors:
-        - BadRequestError
-        - ForbiddenError
-        - NotFoundError
-        - InternalServerError
+        - __package__generateBadRequestError
+        - __package__generateForbiddenError
+        - __package__generateNotFoundError
+        - __package__generateInternalServerError
       examples:
         - request:
             requests:
@@ -2793,10 +2978,10 @@ Used to submit feedback regarding the quality of previously generated completion
         format: json
       url: Predict
       errors:
-        - BadRequestError
-        - ForbiddenError
-        - NotFoundError
-        - InternalServerError
+        - __package__generate-streamBadRequestError
+        - __package__generate-streamForbiddenError
+        - __package__generate-streamNotFoundError
+        - __package__generate-streamInternalServerError
       examples:
         - request:
             requests:
@@ -2862,9 +3047,9 @@ Used to submit feedback regarding the quality of previously generated completion
         status-code: 200
       url: Predict
       errors:
-        - BadRequestError
-        - NotFoundError
-        - InternalServerError
+        - __package__searchBadRequestError
+        - __package__searchNotFoundError
+        - __package__searchInternalServerError
       examples:
         - request:
             query: query
@@ -2920,9 +3105,9 @@ Used to submit feedback regarding the quality of previously generated completion
         content-type: application/json
       url: Predict
       errors:
-        - BadRequestError
-        - NotFoundError
-        - InternalServerError
+        - __package__submit-completion-actualsBadRequestError
+        - __package__submit-completion-actualsNotFoundError
+        - __package__submit-completion-actualsInternalServerError
       examples:
         - request:
             actuals:
@@ -2930,34 +3115,128 @@ Used to submit feedback regarding the quality of previously generated completion
   source:
     openapi: ../openapi.yml
 errors:
-  BadRequestError:
+  __package__generateBadRequestError:
     status-code: 400
-    type: unknown
+    type: GenerateErrorResponse
+    docs: ''
     examples:
       - value:
           detail: detail
-  ForbiddenError:
+  __package__generateForbiddenError:
     status-code: 403
     type: GenerateErrorResponse
     docs: ''
     examples:
       - value:
           detail: detail
-  NotFoundError:
+  __package__generateNotFoundError:
     status-code: 404
-    type: unknown
+    type: GenerateErrorResponse
+    docs: ''
     examples:
       - value:
           detail: detail
-  InternalServerError:
+  __package__generateInternalServerError:
     status-code: 500
-    type: unknown
+    type: GenerateErrorResponse
+    docs: ''
     examples:
       - value:
           detail: detail
-  ConflictError:
+  __package__generate-streamBadRequestError:
+    status-code: 400
+    type: GenerateErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__generate-streamForbiddenError:
+    status-code: 403
+    type: GenerateErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__generate-streamNotFoundError:
+    status-code: 404
+    type: GenerateErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__generate-streamInternalServerError:
+    status-code: 500
+    type: GenerateErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  registeredPromptsregister_promptConflictError:
     status-code: 409
     type: RegisterPromptErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__searchBadRequestError:
+    status-code: 400
+    type: SearchErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__searchNotFoundError:
+    status-code: 404
+    type: SearchErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__searchInternalServerError:
+    status-code: 500
+    type: SearchErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__submit-completion-actualsBadRequestError:
+    status-code: 400
+    type: SubmitCompletionActualsErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__submit-completion-actualsNotFoundError:
+    status-code: 404
+    type: SubmitCompletionActualsErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  __package__submit-completion-actualsInternalServerError:
+    status-code: 500
+    type: SubmitCompletionActualsErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  documentsuploadBadRequestError:
+    status-code: 400
+    type: UploadDocumentErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  documentsuploadNotFoundError:
+    status-code: 404
+    type: UploadDocumentErrorResponse
+    docs: ''
+    examples:
+      - value:
+          detail: detail
+  documentsuploadInternalServerError:
+    status-code: 500
+    type: UploadDocumentErrorResponse
     docs: ''
     examples:
       - value:
@@ -4840,9 +5119,9 @@ Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of `https://documents.vellum.ai`.",
               "errors": [
-                "root.BadRequestError",
-                "root.NotFoundError",
-                "root.InternalServerError",
+                "root.documentsuploadBadRequestError",
+                "root.documentsuploadNotFoundError",
+                "root.documentsuploadInternalServerError",
               ],
               "examples": [
                 {
@@ -5033,9 +5312,9 @@ service:
         status-code: 201
       url: Documents
       errors:
-        - root.BadRequestError
-        - root.NotFoundError
-        - root.InternalServerError
+        - root.documentsuploadBadRequestError
+        - root.documentsuploadNotFoundError
+        - root.documentsuploadInternalServerError
       examples:
         - request:
             label: label
@@ -5337,7 +5616,7 @@ partners, not directly by Vellum users.
 
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
               "errors": [
-                "root.ConflictError",
+                "root.registeredPromptsregister_promptConflictError",
               ],
               "examples": [
                 {
@@ -5561,7 +5840,7 @@ service:
         status-code: 200
       url: Default
       errors:
-        - root.ConflictError
+        - root.registeredPromptsregister_promptConflictError
       examples:
         - request:
             label: label

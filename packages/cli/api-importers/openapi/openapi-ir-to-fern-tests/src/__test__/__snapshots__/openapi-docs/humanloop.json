@@ -6,7 +6,643 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "UnprocessableEntityError": {
+          "datasetscommitUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "datasetscreateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "datasetsdeleteUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "datasetsdeployUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "datasetsgetUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "datasetslistUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "datasetslistdatapointsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "datasetslistversionsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "datasetsupdateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluationscreateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluationsdeleteUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluationsgetUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluationsgetstatsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluationslistUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluationsupdateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluationsupdatestatusUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorscommitUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorscreateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorsdebugUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorsdeleteUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorsdeployUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorsgetUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorslistUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorslistdefaultUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorslistversionsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "evaluatorsupdateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "logsdeleteUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "logsgetUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "logslistLogsForFileUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptscallUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptscommitUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptscreateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptsdeleteUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptsdeployUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptsgetUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptslistUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptslistversionsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptslogUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptsupdateEvaluatorsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptsupdateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "sessionsdeleteUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "sessionsgetUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "sessionslistUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolscommitUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolscreateUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolsdeleteUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolsdeployUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolsgetUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolslistTemplatesUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolslistUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolslistversionsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolslogUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolsupdateEvaluatorsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolsupdateUnprocessableEntityError": {
             "docs": "Validation Error",
             "examples": [
               {
@@ -3453,7 +4089,325 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         },
       },
       "rawContents": "errors:
-  UnprocessableEntityError:
+  promptslistUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptscreateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptsgetUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptsdeleteUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptsupdateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptslistversionsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptsdeployUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptscommitUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptslogUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptscallUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptsupdateEvaluatorsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolslistUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolscreateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolsgetUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolsdeleteUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolsupdateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolslistversionsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolsdeployUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolscommitUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolslogUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolsupdateEvaluatorsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolslistTemplatesUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetslistUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetscreateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetsgetUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetsdeleteUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetsupdateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetslistdatapointsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetslistversionsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetscommitUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  datasetsdeployUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluationslistUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluationscreateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluationsgetUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluationsdeleteUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluationsupdateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluationsupdatestatusUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluationsgetstatsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorslistUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorscreateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorsgetUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorsdeleteUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorsupdateUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorslistversionsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorsdeployUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorscommitUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorslistdefaultUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  evaluatorsdebugUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  logslistLogsForFileUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  logsdeleteUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  logsgetUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  sessionsgetUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  sessionsdeleteUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  sessionslistUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
@@ -6192,7 +7146,7 @@ deployed to the default Environment will be used.
               "display-name": "Commit",
               "docs": "Commit the Dataset Version with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetscommitUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6298,7 +7252,7 @@ the new version on. If neither is provided, the default deployed version will be
 Humanloop also deduplicates Datapoints. If you try to add a Datapoint that already
 exists, it will be ignored.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetscreateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6410,7 +7364,7 @@ If `"add"` or `"remove"`, one of the `version_id` or `environment` query paramet
               "display-name": "Delete Dataset",
               "docs": "Delete the Dataset with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetsdeleteUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6439,7 +7393,7 @@ If `"add"` or `"remove"`, one of the `version_id` or `environment` query paramet
 
 Set the deployed Version for the specified Environment.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetsdeployUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6538,7 +7492,7 @@ retrieve Datapoints for a large Dataset.
 By default the deployed version of the Dataset is returned. Use the query parameters
 `version_id` or `environment` to target a specific version of the Dataset.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetsgetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6630,7 +7584,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               "display-name": "List ",
               "docs": "Get a list of Datasets.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetslistUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6735,7 +7689,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               "display-name": "List Datapoints",
               "docs": "List all Datapoints for the Dataset with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetslistdatapointsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6827,7 +7781,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               "display-name": "List Versions",
               "docs": "Get a list of the versions for a Dataset.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetslistversionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6907,7 +7861,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               "display-name": "Update Dataset",
               "docs": "Update the Dataset with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.datasetsupdateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7046,7 +8000,7 @@ service:
         type: root.PaginatedDataDatasetResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetslistUnprocessableEntityError
       examples:
         - response:
             body:
@@ -7168,7 +8122,7 @@ service:
         type: root.DatasetResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetscreateUnprocessableEntityError
       examples:
         - request:
             datapoints:
@@ -7252,7 +8206,7 @@ service:
         type: root.DatasetResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetsgetUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -7297,7 +8251,7 @@ service:
           docs: Unique identifier for Dataset.
       display-name: Delete Dataset
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetsdeleteUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -7326,7 +8280,7 @@ service:
         type: root.DatasetResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetsupdateUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -7397,7 +8351,7 @@ service:
         type: root.PaginatedDataDatapointResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetslistdatapointsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -7445,7 +8399,7 @@ service:
         type: root.ListDatasets
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetslistversionsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -7495,7 +8449,7 @@ service:
         type: root.DatasetResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetscommitUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -7559,7 +8513,7 @@ service:
         type: root.DatasetResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.datasetsdeployUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -7673,7 +8627,7 @@ Humanloop will automatically start generating Logs and running Evaluators.
 To keep updated on the progress of the Evaluation, you can poll the Evaluation
 and check its status.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluationscreateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7811,7 +8765,7 @@ and check its status.",
 Remove an Evaluation from Humanloop. The Logs and Versions used in the Evaluation
 will not be deleted.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluationsdeleteUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7840,7 +8794,7 @@ will not be deleted.",
 
 Retrieve the Evaluation with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluationsgetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7967,7 +8921,7 @@ Retrieve aggregate stats for the specified Evaluation.
 This includes the number of generated Logs for every evaluatee and Evaluator metrics
 (such as the mean and percentiles for numeric Evaluators for every evaluatee).",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluationsgetstatsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8034,7 +8988,7 @@ This includes the number of generated Logs for every evaluatee and Evaluator met
 
 Retrieve a list of Evaluations that evaluate versions of the specified File.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluationslistUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8172,7 +9126,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
 
 Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Evaluators.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluationsupdateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8319,7 +9273,7 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
 Can be used to cancel a running Evaluation, or mark an Evaluation that uses external or human evaluators
 as completed.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluationsupdatestatusUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8504,7 +9458,7 @@ service:
         type: root.PaginatedDataEvaluationResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluationslistUnprocessableEntityError
       examples:
         - query-parameters:
             file_id: file_id
@@ -8594,7 +9548,7 @@ service:
         type: root.EvaluationResponse
         status-code: 201
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluationscreateUnprocessableEntityError
       examples:
         - request:
             dataset:
@@ -8688,7 +9642,7 @@ service:
         type: root.EvaluationResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluationsgetUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -8777,7 +9731,7 @@ service:
           docs: Unique identifier for Evaluation.
       display-name: Delete Evaluation
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluationsdeleteUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -8807,7 +9761,7 @@ service:
         type: root.EvaluationResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluationsupdateUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -8914,7 +9868,7 @@ service:
         type: root.EvaluationResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluationsupdatestatusUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -9012,7 +9966,7 @@ service:
         type: root.EvaluationStats
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluationsgetstatsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -9083,7 +10037,7 @@ docs: >+
               "display-name": "Commit",
               "docs": "Commit the Evaluator Version with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorscommitUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9175,7 +10129,7 @@ If you provide a commit message, then the new version will be committed;
 otherwise it will be uncommitted. If you try to commit an already committed version,
 an exception will be raised.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorscreateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9270,7 +10224,7 @@ an exception will be raised.",
               "display-name": "Debug",
               "docs": "Run a synchronous evaluator execution on a collection of datapoints.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorsdebugUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9534,7 +10488,7 @@ an exception will be raised.",
               "display-name": "Delete Evaluator",
               "docs": "Delete the Evaluator with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorsdeleteUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9564,7 +10518,7 @@ an exception will be raised.",
 Set the deployed Version for the specified Environment. This Evaluator Version
 will be used for calls made to the Evaluator in this Environment.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorsdeployUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9654,7 +10608,7 @@ will be used for calls made to the Evaluator in this Environment.",
 By default the deployed version of the Evaluator is returned. Use the query parameters
 `version_id` or `environment` to target a specific version of the Evaluator.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorsgetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9737,7 +10691,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "display-name": "List ",
               "docs": "Get a list of Evaluators.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorslistUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9839,7 +10793,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "display-name": "List Default Evaluators",
               "docs": "Get a list of default evaluators for the organization.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorslistdefaultUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9902,7 +10856,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "display-name": "List Versions",
               "docs": "Get a list of all the versions of an Evaluator.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorslistversionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9989,7 +10943,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "display-name": "Update Evaluator",
               "docs": "Update the Evaluator with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.evaluatorsupdateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10170,7 +11124,7 @@ service:
         type: root.ListEvaluators
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorslistUnprocessableEntityError
       examples:
         - response:
             body:
@@ -10246,7 +11200,7 @@ service:
         type: root.EvaluatorResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorscreateUnprocessableEntityError
       examples:
         - request:
             spec:
@@ -10315,7 +11269,7 @@ service:
         type: root.EvaluatorResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorsgetUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10360,7 +11314,7 @@ service:
           docs: Unique identifier for Evaluator.
       display-name: Delete Evaluator
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorsdeleteUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10392,7 +11346,7 @@ service:
         type: root.EvaluatorResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorsupdateUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10456,7 +11410,7 @@ service:
         type: root.ListEvaluators
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorslistversionsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10521,7 +11475,7 @@ service:
         type: root.EvaluatorResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorsdeployUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10580,7 +11534,7 @@ service:
         type: root.EvaluatorResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorscommitUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10628,7 +11582,7 @@ service:
         type: list<root.EvaluatorResponse>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorslistdefaultUnprocessableEntityError
       examples:
         - response:
             body:
@@ -10703,7 +11657,7 @@ service:
         type: list<root.EvaluationDebugResultResponse>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.evaluatorsdebugUnprocessableEntityError
       examples:
         - request:
             file_id: file_id
@@ -10915,7 +11869,7 @@ You can manually create Logs through the API.
               "display-name": "Delete",
               "docs": "Delete Logs with the given IDs.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.logsdeleteUnprocessableEntityError",
               ],
               "method": "DELETE",
               "pagination": undefined,
@@ -10939,7 +11893,7 @@ You can manually create Logs through the API.
               "display-name": "Get Log",
               "docs": "Retrieve the Log with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.logsgetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11103,7 +12057,7 @@ You can manually create Logs through the API.
               "display-name": "List",
               "docs": "List Logs.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.logslistLogsForFileUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11324,7 +12278,7 @@ service:
         type: root.PaginatedDataPromptLogResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.logslistLogsForFileUnprocessableEntityError
       examples:
         - query-parameters:
             file_id: file_id
@@ -11396,7 +12350,7 @@ service:
             allow-multiple: true
             docs: Unique identifiers for the Logs to delete.
       errors:
-        - root.UnprocessableEntityError
+        - root.logsdeleteUnprocessableEntityError
     get:
       path: /logs/{id}
       method: GET
@@ -11414,7 +12368,7 @@ service:
         type: root.PromptLogResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.logsgetUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -11584,7 +12538,7 @@ Prompt details in the request body. In this case, we will check if the details c
 to an existing version of the Prompt, if not we will create a new version. This is helpful
 in the case where you are storing or deriving your Prompt details in code.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptscallUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11841,7 +12795,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               "display-name": "Commit",
               "docs": "Commit the Prompt Version with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptscommitUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11964,7 +12918,7 @@ If you provide a commit message, then the new version will be committed;
 otherwise it will be uncommitted. If you try to commit an already committed version,
 an exception will be raised.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptscreateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12148,7 +13102,7 @@ an exception will be raised.",
               "display-name": "Delete Prompt",
               "docs": "Delete the Prompt with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptsdeleteUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12178,7 +13132,7 @@ an exception will be raised.",
 Set the deployed Version for the specified Environment. This Prompt Version
 will be used for calls made to the Prompt in this Environment.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptsdeployUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12300,7 +13254,7 @@ will be used for calls made to the Prompt in this Environment.",
 By default the deployed version of the Prompt is returned. Use the query parameters
 `version_id` or `environment` to target a specific version of the Prompt.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptsgetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12415,7 +13369,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               "display-name": "List ",
               "docs": "Get a list of Prompts.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptslistUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12550,7 +13504,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               "display-name": "List Versions",
               "docs": "Get a list of all the versions of a Prompt.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptslistversionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12671,7 +13625,7 @@ Prompt details in the request body. In this case, we will check if the details c
 to an existing version of the Prompt, if not we will create a new version. This is helpful
 in the case where you are storing or deriving your Prompt details in code.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptslogUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12842,7 +13796,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               "display-name": "Update Prompt",
               "docs": "Update the Prompt with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptsupdateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12967,7 +13921,7 @@ in the case where you are storing or deriving your Prompt details in code.",
 An activated Evaluator will automatically be run on all new Logs
 within the Prompt for monitoring purposes.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptsupdateEvaluatorsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13209,7 +14163,7 @@ service:
         type: root.ListPrompts
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptslistUnprocessableEntityError
       examples:
         - response:
             body:
@@ -13380,7 +14334,7 @@ service:
         type: root.PromptResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptscreateUnprocessableEntityError
       examples:
         - request:
             model: model
@@ -13469,7 +14423,7 @@ service:
         type: root.PromptResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptsgetUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -13537,7 +14491,7 @@ service:
           docs: Unique identifier for Prompt.
       display-name: Delete Prompt
       errors:
-        - root.UnprocessableEntityError
+        - root.promptsdeleteUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -13569,7 +14523,7 @@ service:
         type: root.PromptResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptsupdateUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -13656,7 +14610,7 @@ service:
         type: root.ListPrompts
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptslistversionsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -13740,7 +14694,7 @@ service:
         type: root.PromptResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptsdeployUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -13822,7 +14776,7 @@ service:
         type: root.PromptResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptscommitUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -14046,7 +15000,7 @@ service:
         type: root.CreatePromptLogResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptslogUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -14220,7 +15174,7 @@ service:
         type: PromptsCallResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptscallUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -14335,7 +15289,7 @@ service:
         type: root.PromptResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptsupdateEvaluatorsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -14543,7 +15497,7 @@ Log is in, nested within the evaluated Log.
               "display-name": "Delete",
               "docs": "Delete the Session with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.sessionsdeleteUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14570,7 +15524,7 @@ Log is in, nested within the evaluated Log.
               "display-name": "Get",
               "docs": "Retrieve the Session with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.sessionsgetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14672,7 +15626,7 @@ Log is in, nested within the evaluated Log.
               "display-name": "List ",
               "docs": "Get a list of Sessions.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.sessionslistUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14792,7 +15746,7 @@ service:
         type: root.SessionResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.sessionsgetUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -14861,7 +15815,7 @@ service:
           docs: Unique identifier for Session.
       display-name: Delete
       errors:
-        - root.UnprocessableEntityError
+        - root.sessionsdeleteUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -14903,7 +15857,7 @@ service:
         type: root.PaginatedDataSessionResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.sessionslistUnprocessableEntityError
       examples:
         - response:
             body:
@@ -14970,7 +15924,7 @@ docs: >+
               "display-name": "Commit",
               "docs": "Commit the Tool Version with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolscommitUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15070,7 +16024,7 @@ If you provide a commit message, then the new version will be committed;
 otherwise it will be uncommitted. If you try to commit an already committed version,
 an exception will be raised.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolscreateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15179,7 +16133,7 @@ an exception will be raised.",
               "display-name": "Delete Tool",
               "docs": "Delete the Tool with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolsdeleteUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15209,7 +16163,7 @@ an exception will be raised.",
 Set the deployed Version for the specified Environment. This Tool Version
 will be used for calls made to the Tool in this Environment.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolsdeployUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15307,7 +16261,7 @@ will be used for calls made to the Tool in this Environment.",
 By default the deployed version of the Tool is returned. Use the query parameters
 `version_id` or `environment` to target a specific version of the Tool.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolsgetUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15398,7 +16352,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               "display-name": "List ",
               "docs": "Get a list of Tools.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolslistUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15505,7 +16459,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               "display-name": "List Templates",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolslistTemplatesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15552,7 +16506,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               "display-name": "List Versions",
               "docs": "Get a list of all the versions of a Tool.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolslistversionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15652,7 +16606,7 @@ Tool details in the request body. In this case, we will check if the details cor
 to an existing version of the Tool, if not we will create a new version. This is helpful
 in the case where you are storing or deriving your Tool details in code.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolslogUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15787,7 +16741,7 @@ in the case where you are storing or deriving your Tool details in code.",
               "display-name": "Update Tool",
               "docs": "Update the Tool with the given ID.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolsupdateUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15888,7 +16842,7 @@ in the case where you are storing or deriving your Tool details in code.",
 An activated Evaluator will automatically be run on all new Logs
 within the Tool for monitoring purposes.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolsupdateEvaluatorsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16017,7 +16971,7 @@ service:
         type: root.ListTools
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolslistUnprocessableEntityError
       examples:
         - response:
             body:
@@ -16110,7 +17064,7 @@ service:
         type: root.ToolResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolscreateUnprocessableEntityError
       examples:
         - request: {}
           response:
@@ -16180,7 +17134,7 @@ service:
         type: root.ToolResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolsgetUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16231,7 +17185,7 @@ service:
           docs: Unique identifier for Tool.
       display-name: Delete Tool
       errors:
-        - root.UnprocessableEntityError
+        - root.toolsdeleteUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16263,7 +17217,7 @@ service:
         type: root.ToolResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolsupdateUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16333,7 +17287,7 @@ service:
         type: root.ListTools
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolslistversionsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16402,7 +17356,7 @@ service:
         type: root.ToolResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolsdeployUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16467,7 +17421,7 @@ service:
         type: root.ToolResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolscommitUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16633,7 +17587,7 @@ service:
         type: root.CreateToolLogResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolslogUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16667,7 +17621,7 @@ service:
         type: root.ToolResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolsupdateEvaluatorsUnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -16724,7 +17678,7 @@ service:
         type: list<root.ToolTemplateResponse>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolslistTemplatesUnprocessableEntityError
       examples:
         - response:
             body:

@@ -6,7 +6,1219 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "UnprocessableEntityError": {
+          "bulkOperationsbulk_create_tenantsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "bulkOperationsbulk_create_usersUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "bulkOperationsbulk_delete_tenantsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "bulkOperationsbulk_delete_usersUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "bulkOperationsbulk_replace_usersUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetRulesassign_set_permissionsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetRuleslist_set_permissionsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetRulesunassign_set_permissionsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetscreate_condition_setUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetsdelete_condition_setUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetsget_condition_setUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetsget_condition_set_ancestorsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetsget_condition_set_descendantsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetslist_condition_setsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "conditionSetsupdate_condition_setUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "environmentscopy_environmentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "environmentscreate_environmentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "environmentsdelete_environmentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "environmentsget_environmentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "environmentslist_environmentsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "environmentsstats_environmentsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "environmentsupdate_environmentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "organizationscreate_organizationUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "organizationsdelete_organizationUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "organizationsget_active_organizationUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "organizationsget_organizationUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "organizationslist_organizationsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "organizationsupdate_organizationUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "projectscreate_projectUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "projectsdelete_projectUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "projectsget_projectUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "projectslist_projectsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "projectsupdate_projectUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionGroupscreate_resource_action_groupUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionGroupsdelete_resource_action_groupUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionGroupsget_resource_action_groupUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionGroupslist_resource_action_groupsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionGroupsupdate_resource_action_groupUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionscreate_resource_actionUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionsdelete_resource_actionUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionsget_resource_actionUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionslist_resource_actionsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceActionsupdate_resource_actionUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceAttributescreate_resource_attributeUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceAttributesdelete_resource_attributeUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceAttributesget_resource_attributeUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceAttributeslist_resource_attributesUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceAttributesupdate_resource_attributeUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceInstancescreate_resource_instanceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceInstancesdelete_resource_instanceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceInstancesget_resource_instanceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceInstanceslist_resource_instancesUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceInstancesupdate_resource_instanceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRolesassign_permissions_to_resource_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRolescreate_resource_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRolesdelete_resource_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRolesget_resource_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRolesget_resource_role_ancestorsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRolesget_resource_role_descendantsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRoleslist_resource_rolesUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRolesremove_permissions_from_resource_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceRolesupdate_resource_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourcescreate_resourceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourcesdelete_resourceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourcesget_resourceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourceslist_resourcesUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourcesreplace_resourceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "resourcesupdate_resourceUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "roleAssignmentsassign_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "roleAssignmentsbulk_assign_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "roleAssignmentsbulk_unassign_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "roleAssignmentslist_role_assignmentsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "roleAssignmentsunassign_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "rolesassign_permissions_to_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "rolescreate_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "rolesdelete_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "rolesget_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "rolesget_role_ancestorsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "rolesget_role_descendantsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "roleslist_rolesUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "rolesremove_permissions_from_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "rolesupdate_roleUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "tenantscreate_tenantUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "tenantsdelete_tenantUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "tenantsdelete_tenant_userUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "tenantsget_tenantUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "tenantslist_tenant_usersUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "tenantslist_tenantsUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "tenantsupdate_tenantUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "userAttributescreate_user_attributeUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "userAttributesdelete_user_attributeUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "userAttributesget_user_attributeUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "userAttributeslist_user_attributesUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "userAttributesupdate_user_attributeUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "usersassign_role_to_userUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "userscreate_userUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "usersdelete_userUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "usersget_userUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "userslist_usersUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "usersreplace_userUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "usersunassign_role_from_userUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "usersupdate_userUnprocessableEntityError": {
             "docs": "Validation Error",
             "examples": [
               {
@@ -2674,7 +3886,613 @@ The actions represents the ways you can interact with a protected resource.",
         },
       },
       "rawContents": "errors:
-  UnprocessableEntityError:
+  organizationslist_organizationsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  organizationscreate_organizationUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  organizationsget_organizationUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  organizationsdelete_organizationUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  organizationsupdate_organizationUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  organizationsget_active_organizationUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  projectslist_projectsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  projectscreate_projectUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  projectsget_projectUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  projectsdelete_projectUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  projectsupdate_projectUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  environmentsstats_environmentsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  environmentslist_environmentsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  environmentscreate_environmentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  environmentsget_environmentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  environmentsdelete_environmentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  environmentsupdate_environmentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  environmentscopy_environmentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceslist_resourcesUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourcescreate_resourceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourcesget_resourceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourcesreplace_resourceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourcesdelete_resourceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourcesupdate_resourceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionslist_resource_actionsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionscreate_resource_actionUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionsget_resource_actionUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionsdelete_resource_actionUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionsupdate_resource_actionUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionGroupslist_resource_action_groupsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionGroupscreate_resource_action_groupUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionGroupsget_resource_action_groupUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionGroupsdelete_resource_action_groupUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceActionGroupsupdate_resource_action_groupUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRoleslist_resource_rolesUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRolescreate_resource_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRolesget_resource_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRolesdelete_resource_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRolesupdate_resource_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRolesassign_permissions_to_resource_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRolesremove_permissions_from_resource_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRolesget_resource_role_ancestorsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceRolesget_resource_role_descendantsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceAttributeslist_resource_attributesUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceAttributescreate_resource_attributeUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceAttributesget_resource_attributeUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceAttributesdelete_resource_attributeUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceAttributesupdate_resource_attributeUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  userAttributeslist_user_attributesUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  userAttributescreate_user_attributeUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  userAttributesget_user_attributeUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  userAttributesdelete_user_attributeUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  userAttributesupdate_user_attributeUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  roleslist_rolesUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  rolescreate_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  rolesget_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  rolesdelete_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  rolesupdate_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  rolesassign_permissions_to_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  rolesremove_permissions_from_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  rolesget_role_ancestorsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  rolesget_role_descendantsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetslist_condition_setsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetscreate_condition_setUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetsget_condition_setUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetsdelete_condition_setUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetsupdate_condition_setUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetsget_condition_set_ancestorsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetsget_condition_set_descendantsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  userslist_usersUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  userscreate_userUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  usersget_userUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  usersreplace_userUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  usersdelete_userUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  usersupdate_userUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  usersassign_role_to_userUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  usersunassign_role_from_userUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  tenantslist_tenant_usersUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  tenantslist_tenantsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  tenantscreate_tenantUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  tenantsget_tenantUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  tenantsdelete_tenantUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  tenantsupdate_tenantUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  tenantsdelete_tenant_userUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  roleAssignmentslist_role_assignmentsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  roleAssignmentsassign_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  roleAssignmentsunassign_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  roleAssignmentsbulk_assign_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  roleAssignmentsbulk_unassign_roleUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetRuleslist_set_permissionsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetRulesassign_set_permissionsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  conditionSetRulesunassign_set_permissionsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceInstanceslist_resource_instancesUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceInstancescreate_resource_instanceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceInstancesget_resource_instanceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceInstancesdelete_resource_instanceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  resourceInstancesupdate_resource_instanceUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  bulkOperationsbulk_create_usersUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  bulkOperationsbulk_replace_usersUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  bulkOperationsbulk_delete_usersUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  bulkOperationsbulk_create_tenantsUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  bulkOperationsbulk_delete_tenantsUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
@@ -4443,7 +6261,7 @@ types:
               "display-name": "Bulk Create Tenants",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.bulkOperationsbulk_create_tenantsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4511,7 +6329,7 @@ types:
               "display-name": "Bulk Create Users",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.bulkOperationsbulk_create_usersUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4583,7 +6401,7 @@ types:
               "display-name": "Bulk Delete Tenants",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.bulkOperationsbulk_delete_tenantsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4642,7 +6460,7 @@ types:
               "display-name": "Bulk Delete Users",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.bulkOperationsbulk_delete_usersUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4701,7 +6519,7 @@ types:
               "display-name": "Bulk Replace Users",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.bulkOperationsbulk_replace_usersUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4810,7 +6628,7 @@ service:
         type: root.UserCreateBulkOperationResult
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.bulkOperationsbulk_create_usersUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -4859,7 +6677,7 @@ service:
         type: root.UserReplaceBulkOperationResult
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.bulkOperationsbulk_replace_usersUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -4908,7 +6726,7 @@ service:
         type: root.UserDeleteBulkOperationResult
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.bulkOperationsbulk_delete_usersUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -4948,7 +6766,7 @@ service:
         type: root.TenantCreateBulkOperationResult
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.bulkOperationsbulk_create_tenantsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -4993,7 +6811,7 @@ service:
         type: root.TenantDeleteBulkOperationResult
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.bulkOperationsbulk_delete_tenantsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -5039,7 +6857,7 @@ Example:
 
 If the permission is already granted, it is skipped.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetRulesassign_set_permissionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5133,7 +6951,7 @@ If the permission is already granted, it is skipped.",
 - If the `permission` filter is present, will only return the permissions sets that equals to the queried permission.
 - If the `resource_set` filter is present, will only return the permissions set of that resource set.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetRuleslist_set_permissionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5229,7 +7047,7 @@ If the permission is already granted, it is skipped.",
 
 If the permission is not granted, it is skipped.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetRulesunassign_set_permissionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5371,7 +7189,7 @@ service:
         type: list<root.ConditionSetRuleRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetRuleslist_set_permissionsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -5449,7 +7267,7 @@ service:
         type: list<root.ConditionSetRuleRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetRulesassign_set_permissionsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -5528,7 +7346,7 @@ service:
               default: false
         content-type: application/json
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetRulesunassign_set_permissionsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -5589,7 +7407,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
               "display-name": "Create Condition Set",
               "docs": "Creates a new condition set (can be either a user set or a resource set).",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetscreate_condition_setUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5783,7 +7601,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
               "docs": "Deletes a condition set and all its related data.
 This includes any permissions granted to said condition set (i.e: any matching condition set rules).",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetsdelete_condition_setUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5820,7 +7638,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "display-name": "Get Condition Set",
               "docs": "Gets a single condition set, if such condition set exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetsget_condition_setUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5936,7 +7754,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "display-name": "Get Condition Set Ancestors",
               "docs": "Gets all ancestors (parent, parent of parent, and so on)",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetsget_condition_set_ancestorsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6083,7 +7901,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "display-name": "Get Condition Set Descendants",
               "docs": "Gets all descendants (children, children of children, and so on)",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetsget_condition_set_descendantsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6230,7 +8048,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "display-name": "List Condition Sets",
               "docs": "Lists all condition sets matching a filter.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetslist_condition_setsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6385,7 +8203,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "docs": "Partially updates a condition set.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.conditionSetsupdate_condition_setUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6636,7 +8454,7 @@ service:
         type: ListConditionSetsResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetslist_condition_setsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -6763,7 +8581,7 @@ service:
         type: root.ConditionSetRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetscreate_condition_setUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -6862,7 +8680,7 @@ service:
         type: root.ConditionSetRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetsget_condition_setUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -6950,7 +8768,7 @@ service:
             of the condition set (i.e: the "slug").
       display-name: Delete Condition Set
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetsdelete_condition_setUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -7009,7 +8827,7 @@ service:
         type: root.ConditionSetRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetsupdate_condition_setUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -7123,7 +8941,7 @@ service:
         type: list<root.ConditionSetRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.conditionSetsget_condition_set_ancestorsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -7230,7 +9048,8 @@ service:
         type: list<root.ConditionSetRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.conditionSetsget_condition_set_descendantsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -7374,7 +9193,7 @@ the user must have write permissions to the target environment.
 Copying environments across projects or organizations is not
 allowed.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.environmentscopy_environmentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7461,7 +9280,7 @@ allowed.",
               "display-name": "Create Environment",
               "docs": "Creates a new environment under a given project.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.environmentscreate_environmentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7526,7 +9345,7 @@ allowed.",
               "display-name": "Delete Environment",
               "docs": "Deletes an environment and all its related data.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.environmentsdelete_environmentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7558,7 +9377,7 @@ allowed.",
               "display-name": "Get Environment",
               "docs": "Gets a single environment matching the given env_id, if such environment exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.environmentsget_environmentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7618,7 +9437,7 @@ allowed.",
               "display-name": "List Environments",
               "docs": "Lists all the environments under a given project.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.environmentslist_environmentsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7704,7 +9523,7 @@ allowed.",
               "display-name": "Stats Environments",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.environmentsstats_environmentsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7833,7 +9652,7 @@ allowed.",
               "display-name": "Update Environment",
               "docs": "Updates the environment.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.environmentsupdate_environmentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7969,7 +9788,7 @@ service:
         type: root.EnvironmentStats
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.environmentsstats_environmentsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -8078,7 +9897,7 @@ service:
         type: list<root.EnvironmentRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.environmentslist_environmentsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -8121,7 +9940,7 @@ service:
         type: root.EnvironmentRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.environmentscreate_environmentUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -8170,7 +9989,7 @@ service:
         type: root.EnvironmentRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.environmentsget_environmentUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -8211,7 +10030,7 @@ service:
             the environment (i.e: the "slug").
       display-name: Delete Environment
       errors:
-        - root.UnprocessableEntityError
+        - root.environmentsdelete_environmentUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -8262,7 +10081,7 @@ service:
         type: root.EnvironmentRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.environmentsupdate_environmentUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -8353,7 +10172,7 @@ service:
         type: root.EnvironmentRead
         status-code: 201
       errors:
-        - root.UnprocessableEntityError
+        - root.environmentscopy_environmentUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -8437,7 +10256,7 @@ may control an organization simultaniously (each member has access according to 
               "docs": "Creates a new organization that will be owned by the
 authenticated actor (i.e: human team member or api key).",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.organizationscreate_organizationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8514,7 +10333,7 @@ authenticated actor (i.e: human team member or api key).",
               "display-name": "Delete Organization",
               "docs": "Deletes an organization (Permit.io account) and all its related data.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.organizationsdelete_organizationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8542,7 +10361,7 @@ authenticated actor (i.e: human team member or api key).",
               "docs": "Gets a single organization (Permit.io account) matching the given org_id,
 if such org exists and can be accessed by the authenticated actor.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.organizationsget_active_organizationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8579,7 +10398,7 @@ if such org exists and can be accessed by the authenticated actor.",
               "docs": "Gets a single organization (Permit.io account) matching the given org_id,
 if such org exists and can be accessed by the authenticated actor.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.organizationsget_organizationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8625,7 +10444,7 @@ if such org exists and can be accessed by the authenticated actor.",
               "docs": "Lists all the organizations that can be accessed by the
 authenticated actor (i.e: human team member or api key).",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.organizationslist_organizationsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8692,7 +10511,7 @@ authenticated actor (i.e: human team member or api key).",
               "display-name": "Update Organization",
               "docs": "Updates the organization's profile.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.organizationsupdate_organizationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8801,7 +10620,7 @@ service:
         type: list<root.OrganizationRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.organizationslist_organizationsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -8849,7 +10668,7 @@ service:
         type: root.OrganizationReadWithAPIKey
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.organizationscreate_organizationUnprocessableEntityError
       examples:
         - request:
             key: key
@@ -8889,7 +10708,7 @@ service:
         type: root.OrganizationRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.organizationsget_organizationUnprocessableEntityError
       examples:
         - path-parameters:
             org_id: org_id
@@ -8918,7 +10737,7 @@ service:
             the organization (i.e: the "slug").
       display-name: Delete Organization
       errors:
-        - root.UnprocessableEntityError
+        - root.organizationsdelete_organizationUnprocessableEntityError
       examples:
         - path-parameters:
             org_id: org_id
@@ -8954,7 +10773,7 @@ service:
         type: root.OrganizationRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.organizationsupdate_organizationUnprocessableEntityError
       examples:
         - path-parameters:
             org_id: org_id
@@ -8986,7 +10805,7 @@ service:
         type: root.OrganizationRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.organizationsget_active_organizationUnprocessableEntityError
       examples:
         - response:
             body:
@@ -9039,7 +10858,7 @@ Every project is a separate silo, and has its own unique set of environments and
               "display-name": "Create Project",
               "docs": "Creates a new project under the active organization.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.projectscreate_projectUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9135,7 +10954,7 @@ Every project is a separate silo, and has its own unique set of environments and
               "display-name": "Delete Project",
               "docs": "Deletes the project and all its related data.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.projectsdelete_projectUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9162,7 +10981,7 @@ Every project is a separate silo, and has its own unique set of environments and
               "display-name": "Get Project",
               "docs": "Gets a single project matching the given proj_id, if such project exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.projectsget_projectUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9210,7 +11029,7 @@ Every project is a separate silo, and has its own unique set of environments and
               "display-name": "List Projects",
               "docs": "Lists all the projects under the active organization.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.projectslist_projectsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9280,7 +11099,7 @@ Every project is a separate silo, and has its own unique set of environments and
               "display-name": "Update Project",
               "docs": "Updates the project.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.projectsupdate_projectUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9398,7 +11217,7 @@ service:
         type: list<root.ProjectRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.projectslist_projectsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -9460,7 +11279,7 @@ service:
         type: root.ProjectRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.projectscreate_projectUnprocessableEntityError
       examples:
         - request:
             key: key
@@ -9499,7 +11318,7 @@ service:
         type: root.ProjectRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.projectsget_projectUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -9531,7 +11350,7 @@ service:
             project (i.e: the "slug").
       display-name: Delete Project
       errors:
-        - root.UnprocessableEntityError
+        - root.projectsdelete_projectUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -9573,7 +11392,7 @@ service:
         type: root.ProjectRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.projectsupdate_projectUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -9627,7 +11446,7 @@ to a role as one action.
               "display-name": "Create Resource Action Group",
               "docs": "Creates a new action group that can affect the resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionGroupscreate_resource_action_groupUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9736,7 +11555,7 @@ to a role as one action.
               "docs": "Deletes the action and all its related data.
 This includes any permissions granted to perform the action.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionGroupsdelete_resource_action_groupUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9778,7 +11597,7 @@ This includes any permissions granted to perform the action.",
               "display-name": "Get Resource Action Group",
               "docs": "Gets a single action group defined on the resource, if such action exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionGroupsget_resource_action_groupUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9846,7 +11665,7 @@ This includes any permissions granted to perform the action.",
               "display-name": "List Resource Action Groups",
               "docs": "Lists all the action groups defined on the resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionGroupslist_resource_action_groupsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9941,7 +11760,7 @@ This includes any permissions granted to perform the action.",
               "docs": "Partially updates the action defined on a resource.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionGroupsupdate_resource_action_groupUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10088,7 +11907,8 @@ service:
         type: list<root.ResourceActionGroupRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceActionGroupslist_resource_action_groupsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -10170,7 +11990,8 @@ service:
         type: root.ResourceActionGroupRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceActionGroupscreate_resource_action_groupUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -10237,7 +12058,8 @@ service:
         type: root.ResourceActionGroupRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceActionGroupsget_resource_action_groupUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -10294,7 +12116,8 @@ service:
             the action group (i.e: the "slug").
       display-name: Delete Resource Action Group
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceActionGroupsdelete_resource_action_groupUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -10360,7 +12183,8 @@ service:
         type: root.ResourceActionGroupRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceActionGroupsupdate_resource_action_groupUnprocessableEntityError
       examples:
         - path-parameters:
             resource_id: resource_id
@@ -10414,7 +12238,7 @@ Each (resource, action) pair defines a unique permission level.
               "display-name": "Create Resource Action",
               "docs": "Creates a new action that can affect the resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionscreate_resource_actionUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10513,7 +12337,7 @@ Each (resource, action) pair defines a unique permission level.
               "docs": "Deletes the action and all its related data.
 This includes any permissions granted to perform the action.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionsdelete_resource_actionUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10555,7 +12379,7 @@ This includes any permissions granted to perform the action.",
               "display-name": "Get Resource Action",
               "docs": "Gets a single action defined on the resource, if such action exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionsget_resource_actionUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10620,7 +12444,7 @@ This includes any permissions granted to perform the action.",
               "display-name": "List Resource Actions",
               "docs": "Lists all the actions defined on the resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionslist_resource_actionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10712,7 +12536,7 @@ This includes any permissions granted to perform the action.",
               "docs": "Partially updates the action defined on a resource.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceActionsupdate_resource_actionUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10855,7 +12679,7 @@ service:
         type: list<root.ResourceActionRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceActionslist_resource_actionsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -10932,7 +12756,7 @@ service:
         type: root.ResourceActionRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceActionscreate_resource_actionUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -10992,7 +12816,7 @@ service:
         type: root.ResourceActionRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceActionsget_resource_actionUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -11047,7 +12871,7 @@ service:
             action (i.e: the "slug").
       display-name: Delete Resource Action
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceActionsdelete_resource_actionUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -11110,7 +12934,7 @@ service:
         type: root.ResourceActionRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceActionsupdate_resource_actionUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -11171,7 +12995,7 @@ define a boolean `private` attributes that we can now use in our policies.
               "display-name": "Create Resource Attribute",
               "docs": "Creates a new attribute as part of the resource definition.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceAttributescreate_resource_attributeUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11243,7 +13067,7 @@ define a boolean `private` attributes that we can now use in our policies.
 Note: If the attribute is used by policies, removing it will cause the
 attribute to evaluate as `undefined`.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceAttributesdelete_resource_attributeUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11314,7 +13138,7 @@ attribute to evaluate as `undefined`.",
               "display-name": "Get Resource Attribute",
               "docs": "Gets a single attribute defined on the resource, if such attribute exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceAttributesget_resource_attributeUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11377,7 +13201,7 @@ attribute to evaluate as `undefined`.",
               "display-name": "List Resource Attributes",
               "docs": "Lists all the attributes defined on the resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceAttributeslist_resource_attributesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11467,7 +13291,7 @@ attribute to evaluate as `undefined`.",
               "docs": "Partially updates the attribute defined on a resource.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceAttributesupdate_resource_attributeUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11591,7 +13415,8 @@ service:
         type: list<root.ResourceAttributeRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceAttributeslist_resource_attributesUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -11644,7 +13469,8 @@ service:
         type: root.ResourceAttributeRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceAttributescreate_resource_attributeUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -11705,7 +13531,7 @@ service:
         type: root.ResourceAttributeRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceAttributesget_resource_attributeUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -11777,7 +13603,8 @@ service:
               min: 1
               max: 100
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceAttributesdelete_resource_attributeUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -11825,7 +13652,8 @@ service:
         type: root.ResourceAttributeRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceAttributesupdate_resource_attributeUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -11896,7 +13724,7 @@ You can use this API to store tenancy data (tenant) and arbitraty data (attribut
 If the instance is already created: will return 200 instead of 201,
 and will return the existing instance object in the response body.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceInstancescreate_resource_instanceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -11994,7 +13822,7 @@ and will return the existing instance object in the response body.",
               "display-name": "Delete Resource Instance",
               "docs": "Deletes the instance and all its related data.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceInstancesdelete_resource_instanceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12031,7 +13859,7 @@ and will return the existing instance object in the response body.",
               "display-name": "Get Resource Instance",
               "docs": "Gets a instance, if such instance exists. Otherwise returns 404.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceInstancesget_resource_instanceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12092,7 +13920,7 @@ and will return the existing instance object in the response body.",
               "display-name": "List Resource Instances",
               "docs": "Lists all the resource instances defined within an environment.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceInstanceslist_resource_instancesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12180,7 +14008,7 @@ and will return the existing instance object in the response body.",
               "docs": "Partially updates the instance definition.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceInstancesupdate_resource_instanceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12309,7 +14137,7 @@ service:
         type: list<root.ResourceInstanceRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceInstanceslist_resource_instancesUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -12390,7 +14218,7 @@ service:
         type: root.ResourceInstanceRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceInstancescreate_resource_instanceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -12447,7 +14275,7 @@ service:
         type: root.ResourceInstanceRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceInstancesget_resource_instanceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -12494,7 +14322,7 @@ service:
             key of the resource instance (i.e: the "slug").
       display-name: Delete Resource Instance
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceInstancesdelete_resource_instanceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -12541,7 +14369,7 @@ service:
         type: root.ResourceInstanceRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceInstancesupdate_resource_instanceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -12610,7 +14438,7 @@ define hierarchy (inheritance) between two roles or define relationships between
 
 If some of the permissions specified are already assigned, will skip them.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRolesassign_permissions_to_resource_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12691,7 +14519,7 @@ If some of the permissions specified are already assigned, will skip them.",
               "display-name": "Create Resource Role",
               "docs": "Creates a new role associated with the resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRolescreate_resource_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12809,7 +14637,7 @@ If some of the permissions specified are already assigned, will skip them.",
               "docs": "Deletes the role and all its related data.
 This includes any permissions granted to said role.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRolesdelete_resource_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12851,7 +14679,7 @@ This includes any permissions granted to said role.",
               "display-name": "Get Resource Role",
               "docs": "Gets a single role defined on the resource, if such role exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRolesget_resource_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12921,7 +14749,7 @@ This includes any permissions granted to said role.",
               "display-name": "Get Resource Role Ancestors",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRolesget_resource_role_ancestorsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -12995,7 +14823,7 @@ This includes any permissions granted to said role.",
               "display-name": "Get Resource Role Descendants",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRolesget_resource_role_descendantsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13069,7 +14897,7 @@ This includes any permissions granted to said role.",
               "display-name": "List Resource Roles",
               "docs": "Lists all the roles defined on the resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRoleslist_resource_rolesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13167,7 +14995,7 @@ This includes any permissions granted to said role.",
 
 If some of the permissions specified are already unassigned, will skip them.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRolesremove_permissions_from_resource_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13249,7 +15077,7 @@ If some of the permissions specified are already unassigned, will skip them.",
               "docs": "Partially updates the role defined on a resource.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceRolesupdate_resource_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13408,7 +15236,7 @@ service:
         type: list<root.ResourceRoleRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceRoleslist_resource_rolesUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -13499,7 +15327,7 @@ service:
         type: root.ResourceRoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceRolescreate_resource_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -13565,7 +15393,7 @@ service:
         type: root.ResourceRoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceRolesget_resource_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -13622,7 +15450,7 @@ service:
             role (i.e: the "slug").
       display-name: Delete Resource Role
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceRolesdelete_resource_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -13696,7 +15524,7 @@ service:
         type: root.ResourceRoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceRolesupdate_resource_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -13769,7 +15597,8 @@ service:
         type: root.ResourceRoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceRolesassign_permissions_to_resource_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -13841,7 +15670,8 @@ service:
         type: root.ResourceRoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceRolesremove_permissions_from_resource_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -13903,7 +15733,7 @@ service:
         type: root.ResourceRoleList
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceRolesget_resource_role_ancestorsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -13963,7 +15793,8 @@ service:
         type: root.ResourceRoleList
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - >-
+          root.resourceRolesget_resource_role_descendantsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -14041,7 +15872,7 @@ A resource may also contain:
               "display-name": "Create Resource",
               "docs": "Creates a new resource (a type of object you may protect with permissions).",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourcescreate_resourceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14203,7 +16034,7 @@ A resource may also contain:
               "display-name": "Delete Resource",
               "docs": "Deletes the resource and all its related data.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourcesdelete_resourceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14240,7 +16071,7 @@ A resource may also contain:
               "display-name": "Get Resource",
               "docs": "Gets a single resource, if such resource exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourcesget_resourceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14344,7 +16175,7 @@ A resource may also contain:
               "display-name": "List Resources",
               "docs": "Lists all the resources defined in your schema.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourceslist_resourcesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14478,7 +16309,7 @@ role and permissions assignments for these actions will be revoked.
 
 TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT completely while there are permissions that can be affected.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourcesreplace_resourceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14623,7 +16454,7 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
               "docs": "Partially updates the resource definition.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.resourcesupdate_resourceUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14845,7 +16676,7 @@ service:
         type: ListResourcesResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourceslist_resourcesUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -14950,7 +16781,7 @@ service:
         type: root.ResourceRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourcescreate_resourceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -15046,7 +16877,7 @@ service:
         type: root.ResourceRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourcesget_resourceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -15173,7 +17004,7 @@ service:
         type: root.ResourceRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourcesreplace_resourceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -15256,7 +17087,7 @@ service:
             resource (i.e: the "slug").
       display-name: Delete Resource
       errors:
-        - root.UnprocessableEntityError
+        - root.resourcesdelete_resourceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -15323,7 +17154,7 @@ service:
         type: root.ResourceRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.resourcesupdate_resourceUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -15433,7 +17264,7 @@ Role assignment define the relationship between users and tenants.
 
 The tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.roleAssignmentsassign_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15496,7 +17327,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               "display-name": "Bulk Assign Role",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.roleAssignmentsbulk_assign_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15551,7 +17382,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               "display-name": "Bulk Unassign Role",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.roleAssignmentsbulk_unassign_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15610,7 +17441,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
 - If the `tenant` filter is present, will only return the role assignments in that tenant.
 - If the `role` filter is present, will only return role assignments that are granting that role.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.roleAssignmentslist_role_assignmentsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15709,7 +17540,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
 
 If the role is not actually assigned, will return 404.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.roleAssignmentsunassign_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15825,7 +17656,7 @@ service:
         type: list<root.RoleAssignmentRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.roleAssignmentslist_role_assignmentsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -15876,7 +17707,7 @@ service:
         type: root.RoleAssignmentRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.roleAssignmentsassign_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -15930,7 +17761,7 @@ service:
           type: root.RoleAssignmentRemove
         content-type: application/json
       errors:
-        - root.UnprocessableEntityError
+        - root.roleAssignmentsunassign_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -15966,7 +17797,7 @@ service:
         type: root.BulkRoleAssignmentReport
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.roleAssignmentsbulk_assign_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -16005,7 +17836,7 @@ service:
         type: root.BulkRoleUnAssignmentReport
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.roleAssignmentsbulk_unassign_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -16058,7 +17889,7 @@ assigned on a tenant.
 
 If some of the permissions specified are already assigned, will skip them.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.rolesassign_permissions_to_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16133,7 +17964,7 @@ If some of the permissions specified are already assigned, will skip them.",
               "display-name": "Create Role",
               "docs": "Creates a new tenant role.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.rolescreate_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16245,7 +18076,7 @@ If some of the permissions specified are already assigned, will skip them.",
               "docs": "Deletes a tenant role and all its related data.
 This includes any permissions granted to said role.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.rolesdelete_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16282,7 +18113,7 @@ This includes any permissions granted to said role.",
               "display-name": "Get Role",
               "docs": "Gets a single tenant role, if such role exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.rolesget_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16346,7 +18177,7 @@ This includes any permissions granted to said role.",
               "display-name": "Get Role Ancestors",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.rolesget_role_ancestorsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16414,7 +18245,7 @@ This includes any permissions granted to said role.",
               "display-name": "Get Role Descendants",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.rolesget_role_descendantsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16482,7 +18313,7 @@ This includes any permissions granted to said role.",
               "display-name": "List Roles",
               "docs": "Lists all tenant roles.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.roleslist_rolesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16587,7 +18418,7 @@ This includes any permissions granted to said role.",
 
 If some of the permissions specified are already unassigned, will skip them.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.rolesremove_permissions_from_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16663,7 +18494,7 @@ If some of the permissions specified are already unassigned, will skip them.",
               "docs": "Partially updates a tenant role.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.rolesupdate_roleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16843,7 +18674,7 @@ service:
         type: ListRolesResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.roleslist_rolesUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -16930,7 +18761,7 @@ service:
         type: root.RoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.rolescreate_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -16989,7 +18820,7 @@ service:
         type: root.RoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.rolesget_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -17039,7 +18870,7 @@ service:
             role (i.e: the "slug").
       display-name: Delete Role
       errors:
-        - root.UnprocessableEntityError
+        - root.rolesdelete_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -17107,7 +18938,7 @@ service:
         type: root.RoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.rolesupdate_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -17172,7 +19003,7 @@ service:
         type: root.RoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.rolesassign_permissions_to_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -17236,7 +19067,7 @@ service:
         type: root.RoleRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.rolesremove_permissions_from_roleUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -17290,7 +19121,7 @@ service:
         type: root.RoleList
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.rolesget_role_ancestorsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -17342,7 +19173,7 @@ service:
         type: root.RoleList
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.rolesget_role_descendantsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -17416,7 +19247,7 @@ multi-tenancy straight out of the box.
 If the tenant is already created: will return 200 instead of 201,
 and will return the existing tenant object in the response body.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.tenantscreate_tenantUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17489,7 +19320,7 @@ and will return the existing tenant object in the response body.",
               "display-name": "Delete Tenant",
               "docs": "Deletes the tenant and all its related data.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.tenantsdelete_tenantUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17526,7 +19357,7 @@ and will return the existing tenant object in the response body.",
               "display-name": "Delete Tenant User",
               "docs": "Deletes a user under a tenant.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.tenantsdelete_tenant_userUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17568,7 +19399,7 @@ and will return the existing tenant object in the response body.",
               "display-name": "Get Tenant",
               "docs": "Gets a tenant, if such tenant exists. Otherwise returns 404.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.tenantsget_tenantUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17630,7 +19461,7 @@ and will return the existing tenant object in the response body.",
               "display-name": "List Tenant Users",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.tenantslist_tenant_usersUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17761,7 +19592,7 @@ and will return the existing tenant object in the response body.",
               "display-name": "List Tenants",
               "docs": "Lists all the tenants defined within an environment.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.tenantslist_tenantsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -17863,7 +19694,7 @@ and will return the existing tenant object in the response body.",
               "docs": "Partially updates the tenant definition.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.tenantsupdate_tenantUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18023,7 +19854,7 @@ service:
         type: root.PaginatedResultUserRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.tenantslist_tenant_usersUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18109,7 +19940,7 @@ service:
         type: ListTenantsResponse
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.tenantslist_tenantsUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18165,7 +19996,7 @@ service:
         type: root.TenantRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.tenantscreate_tenantUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18222,7 +20053,7 @@ service:
         type: root.TenantRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.tenantsget_tenantUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18269,7 +20100,7 @@ service:
             tenant (i.e: the "slug").
       display-name: Delete Tenant
       errors:
-        - root.UnprocessableEntityError
+        - root.tenantsdelete_tenantUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18322,7 +20153,7 @@ service:
         type: root.TenantRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.tenantsupdate_tenantUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18375,7 +20206,7 @@ service:
             user (i.e: the "slug").
       display-name: Delete Tenant User
       errors:
-        - root.UnprocessableEntityError
+        - root.tenantsdelete_tenant_userUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18445,7 +20276,7 @@ define a string `owner` attribute that we can now use in our policies.
               "display-name": "Create User Attribute",
               "docs": "Creates a new attribute for the User resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.userAttributescreate_user_attributeUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18516,7 +20347,7 @@ define a string `owner` attribute that we can now use in our policies.
 Note: If the attribute is used by policies, removing it will cause the
 attribute to evaluate as `undefined`.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.userAttributesdelete_user_attributeUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18583,7 +20414,7 @@ attribute to evaluate as `undefined`.",
               "display-name": "Get User Attribute",
               "docs": "Gets a single attribute defined on the User resource, if such attribute exists.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.userAttributesget_user_attributeUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18647,7 +20478,7 @@ attribute to evaluate as `undefined`.",
               "display-name": "List User Attributes",
               "docs": "Lists all the attributes defined on the User resource.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.userAttributeslist_user_attributesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18733,7 +20564,7 @@ attribute to evaluate as `undefined`.",
               "docs": "Partially updates the attribute defined on the User resource.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.userAttributesupdate_user_attributeUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -18852,7 +20683,7 @@ service:
         type: list<root.ResourceAttributeRead>
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.userAttributeslist_user_attributesUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18902,7 +20733,7 @@ service:
         type: root.ResourceAttributeRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.userAttributescreate_user_attributeUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -18960,7 +20791,7 @@ service:
         type: root.ResourceAttributeRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.userAttributesget_user_attributeUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -19026,7 +20857,7 @@ service:
               min: 1
               max: 100
       errors:
-        - root.UnprocessableEntityError
+        - root.userAttributesdelete_user_attributeUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -19070,7 +20901,7 @@ service:
         type: root.ResourceAttributeRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.userAttributesupdate_user_attributeUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -19145,7 +20976,7 @@ You may create users via the API (shown below), with one of the SDKs, or via the
 
 The tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.usersassign_role_to_userUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -19229,7 +21060,7 @@ you may run permission checks on that user.
 If the user is already created: will return 200 instead of 201,
 and will return the existing user object in the response body.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.userscreate_userUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -19332,7 +21163,7 @@ and will return the existing user object in the response body.",
               "display-name": "Delete User",
               "docs": "Deletes the user and all its related data.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.usersdelete_userUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -19369,7 +21200,7 @@ and will return the existing user object in the response body.",
               "display-name": "Get User",
               "docs": "Gets a user, if such user exists. Otherwise returns 404.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.usersget_userUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -19457,7 +21288,7 @@ and will return the existing user object in the response body.",
               "display-name": "List Users",
               "docs": "Lists all the users defined within an environment.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.userslist_usersUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -19583,7 +21414,7 @@ and will return the existing user object in the response body.",
               "display-name": "Replace User",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.usersreplace_userUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -19695,7 +21526,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
 
 If the role is not actually assigned, will return 404.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.usersunassign_role_from_userUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -19756,7 +21587,7 @@ If the role is not actually assigned, will return 404.",
               "docs": "Partially updates the user definition.
 Fields that will be provided will be completely overwritten.",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.usersupdate_userUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -19931,7 +21762,7 @@ service:
         type: root.PaginatedResultUserRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.userslist_usersUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -20002,7 +21833,7 @@ service:
         type: root.UserRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.userscreate_userUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -20077,7 +21908,7 @@ service:
         type: root.UserRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.usersget_userUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -20145,7 +21976,7 @@ service:
         type: root.UserRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.usersreplace_userUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -20217,7 +22048,7 @@ service:
             user (i.e: the "slug").
       display-name: Delete User
       errors:
-        - root.UnprocessableEntityError
+        - root.usersdelete_userUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -20277,7 +22108,7 @@ service:
         type: root.UserRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.usersupdate_userUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -20363,7 +22194,7 @@ service:
         type: root.RoleAssignmentRead
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.usersassign_role_to_userUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id
@@ -20433,7 +22264,7 @@ service:
                 tenant id or the tenant key)
         content-type: application/json
       errors:
-        - root.UnprocessableEntityError
+        - root.usersunassign_role_from_userUnprocessableEntityError
       examples:
         - path-parameters:
             proj_id: proj_id

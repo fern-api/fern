@@ -1,4 +1,3 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { MediaType, assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
@@ -272,15 +271,12 @@ export function buildEndpoint({
 
     Object.entries(endpoint.errors).forEach(([statusCode, httpError]) => {
         let errorName = httpError.generatedName;
-        const fileContainingReference = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
         if (context.builder.enableUniqueErrorsPerEndpoint) {
-            let errorName = undefined;
-
             if (endpoint.sdkName != null) {
                 errorName = `${endpoint.sdkName.groupName}${endpoint.sdkName.methodName}${httpError.generatedName}`
             } else {
-                const location = getEndpointLocation(endpoint);
-                errorName = `${location.file}${location.endpointId}${httpError.generatedName}`
+                const { endpointId, file} = getEndpointLocation(endpoint);
+                errorName = `${file.split(".")[0]}${endpointId}${httpError.generatedName}`
             }
             if (httpError.schema != null) {
                 if (httpError.schema.type !== "reference" && httpError.schema.type !== "oneOf") {
@@ -289,7 +285,6 @@ export function buildEndpoint({
                     httpError.schema.value.generatedName = `${errorName}Schema`;;
                 }
             }
-            // fileContainingReference = declarationFile;
         }
 
         const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {

@@ -6,7 +6,247 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "UnprocessableEntityError": {
+          "agentcreateAgentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "agentdeleteAgentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "agentgetAgentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "agentpatchAgentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "agentpromptAgentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "apiTokencreateApiTokenUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "apiTokendeleteApiTokenUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "apiTokengetApiTokenUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "authsignInUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "authsignUpUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "documentscreateDocumentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "documentsdeleteDocumentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "documentsgetDocumentUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptscreateAPromptUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptsdeletePromptUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptsgetPromptUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "promptspatchPromptUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolscreateAToolUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolsdeleteToolUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "toolsgetToolUnprocessableEntityError": {
+            "docs": "Validation Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 422,
+            "type": "HTTPValidationError",
+          },
+          "userreadUserUnprocessableEntityError": {
             "docs": "Validation Error",
             "examples": [
               {
@@ -62,7 +302,127 @@
         },
       },
       "rawContents": "errors:
-  UnprocessableEntityError:
+  agentcreateAgentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  agentgetAgentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  agentdeleteAgentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  agentpatchAgentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  agentpromptAgentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  authsignInUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  authsignUpUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  userreadUserUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  apiTokencreateApiTokenUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  apiTokengetApiTokenUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  apiTokendeleteApiTokenUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  documentscreateDocumentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  documentsgetDocumentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  documentsdeleteDocumentUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptscreateAPromptUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptsgetPromptUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptsdeletePromptUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  promptspatchPromptUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolscreateAToolUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolsgetToolUnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+    examples:
+      - value: {}
+  toolsdeleteToolUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
@@ -108,7 +468,7 @@ types:
               "display-name": "Create Agent",
               "docs": "Create a new agent",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.agentcreateAgentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -169,7 +529,7 @@ types:
               "display-name": "Delete Agent",
               "docs": "Delete a specific agent",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.agentdeleteAgentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -203,7 +563,7 @@ types:
               "display-name": "Get Agent",
               "docs": "Get a specific agent",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.agentgetAgentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -262,7 +622,7 @@ types:
               "display-name": "Patch Agent",
               "docs": "Patch a specific agent",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.agentpatchAgentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -305,7 +665,7 @@ types:
               "display-name": "Prompt Agent",
               "docs": "Invoke a specific agent",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.agentpromptAgentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -414,7 +774,7 @@ types:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.agentcreateAgentUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -437,7 +797,7 @@ types:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.agentgetAgentUnprocessableEntityError
       examples:
         - path-parameters:
             agentId: agentId
@@ -459,7 +819,7 @@ types:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.agentdeleteAgentUnprocessableEntityError
       examples:
         - path-parameters:
             agentId: agentId
@@ -485,7 +845,7 @@ types:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.agentpatchAgentUnprocessableEntityError
       examples:
         - path-parameters:
             agentId: agentId
@@ -519,7 +879,7 @@ types:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.agentpromptAgentUnprocessableEntityError
       examples:
         - path-parameters:
             agentId: agentId
@@ -550,7 +910,7 @@ imports:
               "display-name": "Create Api Token",
               "docs": "Create a new API token",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.apiTokencreateApiTokenUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -593,7 +953,7 @@ imports:
               "display-name": "Delete Api Token",
               "docs": "Delete a specific API token",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.apiTokendeleteApiTokenUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -627,7 +987,7 @@ imports:
               "display-name": "Get Api Token",
               "docs": "Get a specific API token",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.apiTokengetApiTokenUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -726,7 +1086,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.apiTokencreateApiTokenUnprocessableEntityError
       examples:
         - request:
             description: description
@@ -748,7 +1108,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.apiTokengetApiTokenUnprocessableEntityError
       examples:
         - path-parameters:
             tokenId: tokenId
@@ -770,7 +1130,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.apiTokendeleteApiTokenUnprocessableEntityError
       examples:
         - path-parameters:
             tokenId: tokenId
@@ -798,7 +1158,7 @@ imports:
               "display-name": "Sign In",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.authsignInUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -843,7 +1203,7 @@ imports:
               "display-name": "Sign Up",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.authsignUpUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -920,7 +1280,7 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.authsignInUnprocessableEntityError
       examples:
         - request:
             email: email
@@ -951,7 +1311,7 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.authsignUpUnprocessableEntityError
       examples:
         - request:
             email: email
@@ -978,7 +1338,7 @@ service:
               "display-name": "Create Document",
               "docs": "Create a new document",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.documentscreateDocumentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1040,7 +1400,7 @@ service:
               "display-name": "Delete Document",
               "docs": "Delete a specific document",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.documentsdeleteDocumentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1074,7 +1434,7 @@ service:
               "display-name": "Get Document",
               "docs": "Get a specific document",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.documentsgetDocumentUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1185,7 +1545,7 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.documentscreateDocumentUnprocessableEntityError
       examples:
         - request:
             type: type
@@ -1209,7 +1569,7 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.documentsgetDocumentUnprocessableEntityError
       examples:
         - path-parameters:
             documentId: documentId
@@ -1231,7 +1591,7 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.documentsdeleteDocumentUnprocessableEntityError
       examples:
         - path-parameters:
             documentId: documentId
@@ -1259,7 +1619,7 @@ imports:
               "display-name": "Create A Prompt",
               "docs": "Create a new prompt",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptscreateAPromptUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1308,7 +1668,7 @@ imports:
               "display-name": "Delete Prompt",
               "docs": "Delete a specific prompt",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptsdeletePromptUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1342,7 +1702,7 @@ imports:
               "display-name": "Get Prompt",
               "docs": "Get a specific prompt",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptsgetPromptUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1401,7 +1761,7 @@ imports:
               "display-name": "Patch Prompt",
               "docs": "Patch a specific prompt",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.promptspatchPromptUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1487,7 +1847,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptscreateAPromptUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -1511,7 +1871,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptsgetPromptUnprocessableEntityError
       examples:
         - path-parameters:
             promptId: promptId
@@ -1533,7 +1893,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptsdeletePromptUnprocessableEntityError
       examples:
         - path-parameters:
             promptId: promptId
@@ -1559,7 +1919,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.promptspatchPromptUnprocessableEntityError
       examples:
         - path-parameters:
             promptId: promptId
@@ -1589,7 +1949,7 @@ imports:
               "display-name": "Create A Tool",
               "docs": "Create a new tool",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolscreateAToolUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1637,7 +1997,7 @@ imports:
               "display-name": "Delete Tool",
               "docs": "Delete a specific tool",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolsdeleteToolUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1671,7 +2031,7 @@ imports:
               "display-name": "Get Tool",
               "docs": "Get a specific tool",
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.toolsgetToolUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -1773,7 +2133,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolscreateAToolUnprocessableEntityError
       examples:
         - request:
             name: name
@@ -1796,7 +2156,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolsgetToolUnprocessableEntityError
       examples:
         - path-parameters:
             toolId: toolId
@@ -1818,7 +2178,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.toolsdeleteToolUnprocessableEntityError
       examples:
         - path-parameters:
             toolId: toolId
@@ -1908,7 +2268,7 @@ imports:
               "display-name": "Read User",
               "docs": undefined,
               "errors": [
-                "root.UnprocessableEntityError",
+                "root.userreadUserUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -2001,7 +2361,7 @@ imports:
         type: unknown
         status-code: 200
       errors:
-        - root.UnprocessableEntityError
+        - root.userreadUserUnprocessableEntityError
       examples:
         - path-parameters:
             userId: userId
