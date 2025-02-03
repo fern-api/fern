@@ -22,58 +22,58 @@ the Fern Definition.
       See below for how to specify the contract for your WebSocket channel 
       using AsyncAPI.
 
-      ```yaml maxLines={0}
+```yaml maxLines={0}
 asyncapi: 2.6.0
 info:
-title: Chat API
-version: 1.1.2
+  title: Chat API
+  version: 1.1.2
 servers:
-production:
-  host: wss.chat.com
+  production:
+    host: wss.chat.com
 channels:
-/:
-  bindings:
-    ws:
-      query:
-        type: object
-        properties:
-          channel_id:
-            type: string
-            description: Unique identifier assigned to the channel
-  publish:
-    description: Send messages to the WebSocket
-    operationId: sendMessage
-    message:
-      oneOf:
-        - $ref: "#/components/messages/SendChat"
-  subscribe:
-    description: Receive messages from the WebSocket
-    operationId: receiveMessage
-    message:
-      oneOf:
-        - $ref: "#/components/messages/ReceiveChat"
+  /:
+    bindings:
+      ws:
+        query:
+          type: object
+          properties:
+            channel_id:
+              type: string
+              description: Unique identifier assigned to the channel
+    publish:
+      description: Send messages to the WebSocket
+      operationId: sendMessage
+      message:
+        oneOf:
+          - $ref: "#/components/messages/SendChat"
+    subscribe:
+      description: Receive messages from the WebSocket
+      operationId: receiveMessage
+      message:
+        oneOf:
+          - $ref: "#/components/messages/ReceiveChat"
 components:
-messages:
-  SendChat:
-    summary: Action triggered when the channel receives a new reaction-added event
-    payload:
-      $ref: '#/components/schemas/SendChat'
-  ReceiveChat:
-    summary: Action triggered when a successful WebSocket connection is established
-    payload:
-      $ref: '#/components/schemas/ReceiveChat'
-schemas:
-SendChat:
-  type: object
-  properties:
-    message:
-      type: string
-ReceiveChat:
-  type: object
-  properties:
-    message:
-      type: string
-      ```
+  messages:
+    SendChat:
+      summary: Action triggered when the channel receives a new reaction-added event
+      payload:
+        $ref: '#/components/schemas/SendChat'
+    ReceiveChat:
+      summary: Action triggered when a successful WebSocket connection is established
+      payload:
+        $ref: '#/components/schemas/ReceiveChat'
+  schemas:
+    SendChat:
+      type: object
+      properties:
+        message:
+          type: string
+    ReceiveChat:
+      type: object
+      properties:
+        message:
+          type: string
+```
     </Accordion>
 
     <Accordion title="Fern Definition">
@@ -83,50 +83,50 @@ ReceiveChat:
       <CodeBlocks>
         <CodeBlock title="chat.yml">
           ```yaml maxLines={0}
-channel:
-  path: /chat
-  auth: false
-  query-parameters:
-    model_id:
-      type: optional<string>
-      docs: The unique identifier of the model.
-    model_version:
-      type: optional<integer>
-      docs: The version number of the model.
-  messages:
-    publish:
-      origin: client
-      body: PublishEvent
-    subscribe:
-      origin: server
-      body: SubscribeEvent
-  examples: 
-    - query-parameters: 
-        model_id: "123"
-      messages: 
-        - type: publish
-          body:
-            text: "Hello, world."
-        - type: subscribe
-          body: 
-            id: "23823049"
-            message: "Hello there, how are you?"
-types:
-  PublishEvent:
-    docs: The input from the user to send through the WebSocket. 
-    properties: 
-      text: 
-        type: string
-        docs: The user text to send into the conversation. 
-  SubscribeEvent:
-    docs: The response from the server sent through the WebSocket.
-    properties: 
-      id: 
-        type: string
-        docs: The id of the message. 
-      message:
-        type: string
-        docs: The message sent through the socket. 
+          channel:
+            path: /chat
+            auth: false
+            query-parameters:
+              model_id:
+                type: optional<string>
+                docs: The unique identifier of the model.
+              model_version:
+                type: optional<integer>
+                docs: The version number of the model.
+            messages:
+              publish:
+                origin: client
+                body: PublishEvent
+              subscribe:
+                origin: server
+                body: SubscribeEvent
+            examples: 
+              - query-parameters: 
+                  model_id: "123"
+                messages: 
+                  - type: publish
+                    body:
+                      text: "Hello, world."
+                  - type: subscribe
+                    body: 
+                      id: "23823049"
+                      message: "Hello there, how are you?"
+          types:
+            PublishEvent:
+              docs: The input from the user to send through the WebSocket. 
+              properties: 
+                text: 
+                  type: string
+                  docs: The user text to send into the conversation. 
+            SubscribeEvent:
+              docs: The response from the server sent through the WebSocket.
+              properties: 
+                id: 
+                  type: string
+                  docs: The id of the message. 
+                message:
+                  type: string
+                  docs: The message sent through the socket. 
           ```
         </CodeBlock>
       </CodeBlocks>
