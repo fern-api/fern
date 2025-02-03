@@ -38,7 +38,6 @@ public class StringEnumSerializerTests
         Assert.That(obj.EnumProperty, Is.EqualTo(KnownEnumValue2));
     }
 
-
     [Test]
     public void ShouldParseUnknownEnum()
     {
@@ -50,8 +49,10 @@ public class StringEnumSerializerTests
     [Test]
     public void ShouldSerializeKnownEnumValue2()
     {
-        var json = JsonSerializer.SerializeToElement(new DummyObject { EnumProperty = KnownEnumValue2 },
-            JsonOptions);
+        var json = JsonSerializer.SerializeToElement(
+            new DummyObject { EnumProperty = KnownEnumValue2 },
+            JsonOptions
+        );
         TestContext.Out.WriteLine("Serialized JSON: \n" + json);
         var enumString = json.GetProperty("enum_property").GetString();
         Assert.That(enumString, Is.Not.Null);
@@ -61,8 +62,10 @@ public class StringEnumSerializerTests
     [Test]
     public void ShouldSerializeUnknownEnum()
     {
-        var json = JsonSerializer.SerializeToElement(new DummyObject { EnumProperty = UnknownEnumValue },
-            JsonOptions);
+        var json = JsonSerializer.SerializeToElement(
+            new DummyObject { EnumProperty = UnknownEnumValue },
+            JsonOptions
+        );
         TestContext.Out.WriteLine("Serialized JSON: \n" + json);
         var enumString = json.GetProperty("enum_property").GetString();
         Assert.That(enumString, Is.Not.Null);
