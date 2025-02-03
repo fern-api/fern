@@ -6,27 +6,12 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "GetTokenRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "status-code": 401,
-            "type": "unknown",
-          },
-          "GetUsersRequestNotFoundError": {
+          "NotFoundError": {
             "docs": "User not found",
             "status-code": 404,
             "type": "unknown",
           },
-          "GetUsersRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "status-code": 401,
-            "type": "unknown",
-          },
-          "GetUsersUserIdRequestNotFoundError": {
-            "docs": "User not found",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetUsersUserIdRequestUnauthorizedError": {
+          "UnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
@@ -41,7 +26,7 @@
               "display-name": "Get authentication token",
               "docs": "Retrieve an authentication token for the API",
               "errors": [
-                "GetTokenRequestUnauthorizedError",
+                "UnauthorizedError",
               ],
               "examples": [
                 {
@@ -71,8 +56,8 @@
               "display-name": "Get user information",
               "docs": "Retrieve detailed information about a specific user",
               "errors": [
-                "GetUsersUserIdRequestUnauthorizedError",
-                "GetUsersUserIdRequestNotFoundError",
+                "UnauthorizedError",
+                "NotFoundError",
               ],
               "examples": [
                 {
@@ -109,8 +94,8 @@
               "display-name": "List Users",
               "docs": "List information about all users",
               "errors": [
-                "GetUsersRequestUnauthorizedError",
-                "GetUsersRequestNotFoundError",
+                "UnauthorizedError",
+                "NotFoundError",
               ],
               "examples": [
                 {
@@ -170,26 +155,14 @@
         },
       },
       "rawContents": "errors:
-  GetUsersRequestUnauthorizedError:
+  UnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  GetUsersRequestNotFoundError:
+  NotFoundError:
     status-code: 404
     type: unknown
     docs: User not found
-  GetUsersUserIdRequestUnauthorizedError:
-    status-code: 401
-    type: unknown
-    docs: Unauthorized
-  GetUsersUserIdRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: User not found
-  GetTokenRequestUnauthorizedError:
-    status-code: 401
-    type: unknown
-    docs: Unauthorized
 service:
   auth: false
   base-path: ''
@@ -207,8 +180,8 @@ service:
         type: User
         status-code: 200
       errors:
-        - GetUsersRequestUnauthorizedError
-        - GetUsersRequestNotFoundError
+        - UnauthorizedError
+        - NotFoundError
       examples:
         - response:
             body:
@@ -231,8 +204,8 @@ service:
         type: User
         status-code: 200
       errors:
-        - GetUsersUserIdRequestUnauthorizedError
-        - GetUsersUserIdRequestNotFoundError
+        - UnauthorizedError
+        - NotFoundError
       examples:
         - path-parameters:
             userId: userId
@@ -255,7 +228,7 @@ service:
         type: Token
         status-code: 200
       errors:
-        - GetTokenRequestUnauthorizedError
+        - UnauthorizedError
       examples:
         - response:
             body:

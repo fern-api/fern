@@ -6,920 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "BookingAmendmentCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/booking_amendments",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "BookingAmendmentCreateRequestBadRequestErrorBody",
-          },
-          "BookingCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/bookings",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "BookingCreateRequestBadRequestErrorBody",
-          },
-          "BookingLineItemCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/booking_line_items",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "BookingLineItemCreateRequestBadRequestErrorBody",
-          },
-          "BookingLineItemIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/booking_line_items",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "BookingLineItemIndexRequestBadRequestErrorBody",
-          },
-          "BookingLineItemShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/booking_line_items/123456",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "BookingLineItemShowRequestBadRequestErrorBody",
-          },
-          "BookingShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/bookings/123456",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "BookingShowRequestBadRequestErrorBody",
-          },
-          "BookingsIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/bookings",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "BookingsIndexRequestBadRequestErrorBody",
-          },
-          "CarbonCalculationCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/carbon_calculation",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "CarbonCalculationCreateRequestBadRequestErrorBody",
-          },
-          "CommercialInvoicesCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/commercial_invoices",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "CommercialInvoicesCreateRequestBadRequestErrorBody",
-          },
-          "CommercialInvoicesShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/commercial_invoices/abcxyz-23456-def",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "CommercialInvoicesShowRequestBadRequestErrorBody",
-          },
-          "CommercialInvoicesUpdateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/commercial_invoices",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "CommercialInvoicesUpdateRequestBadRequestErrorBody",
-          },
-          "CompanyEntityIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/company_entities",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "CompanyEntityIndexRequestBadRequestErrorBody",
-          },
-          "ContainerListRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ocean/shipment_containers",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ContainerListRequestBadRequestErrorBody",
-          },
-          "ContainerShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ocean/shipment_containers/1234",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ContainerShowRequestBadRequestErrorBody",
-          },
-          "CustomsEntriesShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/customs_entries/abcdefg-1234567-hijk",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "CustomsEntriesShowRequestBadRequestErrorBody",
-          },
-          "CustomsEntryIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/custom_entries",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "CustomsEntryIndexRequestBadRequestErrorBody",
-          },
-          "DocumentsCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/documents",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "DocumentsCreateRequestBadRequestErrorBody",
-          },
-          "DocumentsDownloadRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/documents/ABC123/download",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "DocumentsDownloadRequestBadRequestErrorBody",
-          },
-          "DocumentsIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/documents",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "DocumentsIndexRequestBadRequestErrorBody",
-          },
-          "DocumentsShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/documents/ABC123",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "DocumentsShowRequestBadRequestErrorBody",
-          },
-          "EventsIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/events",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "EventsIndexRequestBadRequestErrorBody",
-          },
-          "EventsShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/events/123456",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "EventsShowRequestBadRequestErrorBody",
-          },
-          "InvoiceIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/invoices",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "InvoiceIndexRequestBadRequestErrorBody",
-          },
-          "InvoicesShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/invoices/abcdef123",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "InvoicesShowRequestBadRequestErrorBody",
-          },
-          "LocationIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/locations",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "LocationIndexRequestBadRequestErrorBody",
-          },
-          "LocationUpdateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/locations/abdef123",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "LocationUpdateRequestBadRequestErrorBody",
-          },
-          "NetworkCompanyCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/companies",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkCompanyCreateRequestBadRequestErrorBody",
-          },
-          "NetworkCompanyEntityCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/company_entities",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkCompanyEntityCreateRequestBadRequestErrorBody",
-          },
-          "NetworkCompanyEntityShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/company_entities/9281",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkCompanyEntityShowRequestBadRequestErrorBody",
-          },
-          "NetworkCompanyEntityUpdateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/company_entities/9281",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkCompanyEntityUpdateRequestBadRequestErrorBody",
-          },
-          "NetworkCompanyIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/companies",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkCompanyIndexRequestBadRequestErrorBody",
-          },
-          "NetworkCompanyMeRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/me/companies",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkCompanyMeRequestBadRequestErrorBody",
-          },
-          "NetworkCompanyUpdateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/companies/ABC123",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkCompanyUpdateRequestBadRequestErrorBody",
-          },
-          "NetworkContactCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/contacts",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkContactCreateRequestBadRequestErrorBody",
-          },
-          "NetworkContactIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/contacts",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkContactIndexRequestBadRequestErrorBody",
-          },
-          "NetworkContactShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/contacts/ABC123",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkContactShowRequestBadRequestErrorBody",
-          },
-          "NetworkContactUpdateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/contacts/ABC123",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkContactUpdateRequestBadRequestErrorBody",
-          },
-          "NetworkLocationCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/locations",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkLocationCreateRequestBadRequestErrorBody",
-          },
-          "NetworkLocationShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/network/locations/abdef123",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "NetworkLocationShowRequestBadRequestErrorBody",
-          },
-          "OceanContainerLegsIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ocean/shipment_container_legs",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "OceanContainerLegsIndexRequestBadRequestErrorBody",
-          },
-          "OceanContainerLegsShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ocean/shipment_container_legs/1234",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "OceanContainerLegsShowRequestBadRequestErrorBody",
-          },
-          "PortsIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/ports",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "PortsIndexRequestBadRequestErrorBody",
-          },
-          "ProductCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/products",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ProductCreateRequestBadRequestErrorBody",
-          },
-          "ProductIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/products",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ProductIndexRequestBadRequestErrorBody",
-          },
-          "ProductShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/products/84291",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ProductShowRequestBadRequestErrorBody",
-          },
-          "ProductUpdateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/products/84291",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ProductUpdateRequestBadRequestErrorBody",
-          },
-          "PurchaseOrderCreateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_orders",
-                  "version": 3,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "PurchaseOrderCreateRequestBadRequestErrorBody",
-          },
-          "PurchaseOrderIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_orders",
-                  "version": 3,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "PurchaseOrderIndexRequestBadRequestErrorBody",
-          },
-          "PurchaseOrderLineItemIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_order_line_items",
-                  "version": 3,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "PurchaseOrderLineItemIndexRequestBadRequestErrorBody",
-          },
-          "PurchaseOrderLineItemShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_order_line_items/123456",
-                  "version": 3,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "PurchaseOrderLineItemShowRequestBadRequestErrorBody",
-          },
-          "PurchaseOrderShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_orders/12345",
-                  "version": 3,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "PurchaseOrderShowRequestBadRequestErrorBody",
-          },
-          "PurchaseOrderUpdateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/purchase_orders/12345",
-                  "version": 3,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "PurchaseOrderUpdateRequestBadRequestErrorBody",
-          },
-          "ShipmentIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipments",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ShipmentIndexRequestBadRequestErrorBody",
-          },
-          "ShipmentLegIndexRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipment_legs",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ShipmentLegIndexRequestBadRequestErrorBody",
-          },
-          "ShipmentLegShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipment_legs/948211",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ShipmentLegShowRequestBadRequestErrorBody",
-          },
-          "ShipmentShowRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipments/1234",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ShipmentShowRequestBadRequestErrorBody",
-          },
-          "ShipmentUpdateRequestBadRequestError": {
-            "docs": "error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "_object": "/api/response",
-                  "self": "https://api.flexport.com/shipments/1234",
-                  "version": 2,
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "ShipmentUpdateRequestBadRequestErrorBody",
-          },
-          "ShipmentsShareableRequestBadRequestError": {
-            "docs": "error",
+          "BadRequestError": {
             "examples": [
               {
                 "docs": undefined,
@@ -932,7 +19,7 @@
               },
             ],
             "status-code": 400,
-            "type": "ShipmentsShareableRequestBadRequestErrorBody",
+            "type": "unknown",
           },
         },
         "types": {
@@ -1251,20 +338,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "BookingAmendmentCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "BookingAmendmentHsCode": {
             "docs": undefined,
             "inline": undefined,
@@ -1282,20 +355,6 @@
                 "type": "optional<string>",
               },
               "hs_code": "optional<HsCode>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "BookingCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1371,48 +430,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "BookingLineItemCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "BookingLineItemIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "BookingLineItemShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "BookingQuoteStatus": {
             "enum": [
               "pending_quote",
@@ -1444,20 +461,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "BookingShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "BookingStatus": {
             "enum": [
               "archived",
@@ -1471,20 +474,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "BookingsIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "CarbonCalculation": {
             "docs": undefined,
             "inline": undefined,
@@ -1494,20 +483,6 @@
                 "type": "optional<string>",
               },
               "co2e_emissions": "optional<Weight>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CarbonCalculationCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1701,48 +676,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "CommercialInvoicesCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CommercialInvoicesShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CommercialInvoicesUpdateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Company": {
             "docs": undefined,
             "inline": undefined,
@@ -1780,20 +713,6 @@
               "name": "optional<string>",
               "ref": "optional<string>",
               "vat_numbers": "optional<list<VatNumber>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CompanyEntityIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1921,20 +840,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ContainerListRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ContainerRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
             "inline": undefined,
@@ -1943,20 +848,6 @@
               "id": "optional<integer>",
               "link": "optional<string>",
               "ref_type": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ContainerShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3115,20 +2006,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "CustomsEntriesShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "CustomsEntry": {
             "docs": undefined,
             "inline": undefined,
@@ -3169,20 +2046,6 @@
               "_object": "optional<string>",
               "link": "optional<string>",
               "ref_type": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CustomsEntryIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3305,62 +2168,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "DocumentsCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "DocumentsDownloadRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "DocumentsIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "DocumentsShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Error": {
             "docs": undefined,
             "inline": undefined,
@@ -3381,34 +2188,6 @@
                 "docs": "The HTTP status code (client or server error) made available for consumption from the body of the response.",
                 "type": "optional<integer>",
               },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EventsIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EventsShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3627,20 +2406,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "InvoiceIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "InvoiceItem": {
             "docs": undefined,
             "inline": undefined,
@@ -3751,20 +2516,6 @@
               "Client",
             ],
             "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "InvoicesShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3925,34 +2676,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "LocationIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "LocationUpdateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Manufacturer": {
             "docs": undefined,
             "inline": undefined,
@@ -4034,188 +2757,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "NetworkCompanyCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkCompanyEntityCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkCompanyEntityShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkCompanyEntityUpdateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkCompanyIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkCompanyMeRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkCompanyUpdateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkContactCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkContactIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkContactShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkContactUpdateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkLocationCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "NetworkLocationShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "OceanBookingDetail": {
             "docs": undefined,
             "inline": undefined,
@@ -4253,34 +2794,6 @@
               "DPU",
             ],
             "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "OceanContainerLegsIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "OceanContainerLegsShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4463,20 +2976,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "PortsIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Product": {
             "docs": undefined,
             "inline": undefined,
@@ -4554,34 +3053,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ProductCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ProductIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ProductProperty": {
             "docs": undefined,
             "inline": undefined,
@@ -4611,34 +3082,6 @@
               "id": "optional<integer>",
               "link": "optional<string>",
               "ref_type": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ProductShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ProductUpdateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4724,20 +3167,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "PurchaseOrderCreateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "PurchaseOrderFreightPaymnetTerms": {
             "enum": [
               "freight_collect",
@@ -4764,20 +3193,6 @@
               "DPU",
             ],
             "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PurchaseOrderIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4901,20 +3316,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "PurchaseOrderLineItemIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "PurchaseOrderLineItemLineType": {
             "default": "main_line",
             "enum": [
@@ -4935,20 +3336,6 @@
               "id": "optional<integer>",
               "link": "optional<string>",
               "ref_type": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PurchaseOrderLineItemShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5101,20 +3488,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "PurchaseOrderShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "PurchaseOrderStatus": {
             "default": "open",
             "docs": "The status of the purchase order. Open POs denote POs that are ready to be booked. Closed POs are ones that you'd like to mark as done (typically because they've finished shipping), while Cancelled POs denote POs that were mistakenly uploaded or that should not be used.",
@@ -5124,20 +3497,6 @@
               "cancelled",
             ],
             "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PurchaseOrderUpdateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5507,20 +3866,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ShipmentIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ShipmentItem": {
             "docs": undefined,
             "inline": undefined,
@@ -5582,34 +3927,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ShipmentLegIndexRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ShipmentLegShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ShipmentNode": {
             "docs": undefined,
             "inline": undefined,
@@ -5662,20 +3979,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ShipmentShowRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ShipmentStatus": {
             "enum": [
               "seller_location",
@@ -5693,34 +3996,6 @@
               "final_destination",
             ],
             "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ShipmentUpdateRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ShipmentsShareableRequestBadRequestErrorBody": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "_object": "optional<string>",
-              "data": "optional<map<string, unknown>>",
-              "error": "optional<Error>",
-              "self": "optional<string>",
-              "version": "optional<integer>",
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6077,10 +4352,822 @@
               "openapi": "../openapi.yml",
             },
           },
+          "booking.ymlbookings_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "booking.ymlcreateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "booking.ymlshowBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "bookingAmendment.ymlbooking_amendment_createBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "bookingLineItem.ymlbooking_line_item_createBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "bookingLineItem.ymlbooking_line_item_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "bookingLineItem.ymlbooking_line_item_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "carbonCalculation.ymlcreateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "commercialInvoices.ymlcreateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "commercialInvoices.ymlshowBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "commercialInvoices.ymlupdateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "company.ymlnetwork_company_createBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "company.ymlnetwork_company_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "company.ymlnetwork_company_meBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "company.ymlnetwork_company_updateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "companyEntity.ymlcompany_entity_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "companyEntity.ymlnetwork_company_entity_createBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "companyEntity.ymlnetwork_company_entity_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "companyEntity.ymlnetwork_company_entity_updateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "contact.ymlnetwork_contact_createBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "contact.ymlnetwork_contact_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "contact.ymlnetwork_contact_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "contact.ymlnetwork_contact_updateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "container.ymllistBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "container.ymlshowBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "containerLeg.ymlocean_container_legs_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "containerLeg.ymlocean_container_legs_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "customsEntries.ymlcustoms_entry_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "customsEntries.ymlshowBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "document.ymldocuments_createBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "document.ymldocuments_downloadBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "document.ymldocuments_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "document.ymldocuments_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "event.ymlevents_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "event.ymlevents_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "invoices.ymlinvoice_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "invoices.ymlshowBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "location.ymlindexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "location.ymlnetwork_location_createBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "location.ymlnetwork_location_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "location.ymlupdateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ports.ymlindexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "product.ymlcreateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "product.ymlindexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "product.ymlshowBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "product.ymlupdateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "purchaseOrder.ymlpurchase_order_createBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "purchaseOrder.ymlpurchase_order_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "purchaseOrder.ymlpurchase_order_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "purchaseOrder.ymlpurchase_order_updateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "purchaseOrderLineItem.ymlpurchase_order_line_item_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "purchaseOrderLineItem.ymlpurchase_order_line_item_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "shipment.ymlindexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "shipment.ymlshipments_shareableBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "shipment.ymlshowBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "shipment.ymlupdateBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "shipmentLeg.ymlshipment_leg_indexBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "shipmentLeg.ymlshipment_leg_showBadRequestErrorSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "_object": "optional<string>",
+              "data": "optional<map<string, unknown>>",
+              "error": "optional<Error>",
+              "self": "optional<string>",
+              "version": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
-  BookingAmendmentCreateRequestBadRequestErrorBody:
+  bookingAmendment.ymlbooking_amendment_createBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6089,7 +5176,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  BookingLineItemIndexRequestBadRequestErrorBody:
+  bookingLineItem.ymlbooking_line_item_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6098,7 +5185,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  BookingLineItemCreateRequestBadRequestErrorBody:
+  bookingLineItem.ymlbooking_line_item_createBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6107,7 +5194,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  BookingLineItemShowRequestBadRequestErrorBody:
+  bookingLineItem.ymlbooking_line_item_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6116,7 +5203,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  BookingsIndexRequestBadRequestErrorBody:
+  booking.ymlbookings_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6125,7 +5212,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  BookingCreateRequestBadRequestErrorBody:
+  booking.ymlcreateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6134,7 +5221,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  BookingShowRequestBadRequestErrorBody:
+  booking.ymlshowBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6143,7 +5230,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  CarbonCalculationCreateRequestBadRequestErrorBody:
+  carbonCalculation.ymlcreateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6152,7 +5239,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  CommercialInvoicesCreateRequestBadRequestErrorBody:
+  commercialInvoices.ymlcreateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6161,7 +5248,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  CommercialInvoicesUpdateRequestBadRequestErrorBody:
+  commercialInvoices.ymlupdateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6170,7 +5257,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  CommercialInvoicesShowRequestBadRequestErrorBody:
+  commercialInvoices.ymlshowBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6179,7 +5266,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  CustomsEntryIndexRequestBadRequestErrorBody:
+  customsEntries.ymlcustoms_entry_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6188,7 +5275,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  CustomsEntriesShowRequestBadRequestErrorBody:
+  customsEntries.ymlshowBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6197,7 +5284,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  DocumentsIndexRequestBadRequestErrorBody:
+  document.ymldocuments_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6206,7 +5293,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  DocumentsCreateRequestBadRequestErrorBody:
+  document.ymldocuments_createBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6215,7 +5302,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  DocumentsShowRequestBadRequestErrorBody:
+  document.ymldocuments_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6224,7 +5311,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  DocumentsDownloadRequestBadRequestErrorBody:
+  document.ymldocuments_downloadBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6233,7 +5320,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  EventsIndexRequestBadRequestErrorBody:
+  event.ymlevents_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6242,7 +5329,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  EventsShowRequestBadRequestErrorBody:
+  event.ymlevents_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6251,7 +5338,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  InvoiceIndexRequestBadRequestErrorBody:
+  invoices.ymlinvoice_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6260,7 +5347,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  InvoicesShowRequestBadRequestErrorBody:
+  invoices.ymlshowBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6269,7 +5356,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkCompanyIndexRequestBadRequestErrorBody:
+  company.ymlnetwork_company_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6278,7 +5365,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkCompanyCreateRequestBadRequestErrorBody:
+  company.ymlnetwork_company_createBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6287,7 +5374,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkCompanyUpdateRequestBadRequestErrorBody:
+  company.ymlnetwork_company_updateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6296,7 +5383,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  CompanyEntityIndexRequestBadRequestErrorBody:
+  companyEntity.ymlcompany_entity_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6305,7 +5392,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkCompanyEntityCreateRequestBadRequestErrorBody:
+  companyEntity.ymlnetwork_company_entity_createBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6314,7 +5401,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkCompanyEntityShowRequestBadRequestErrorBody:
+  companyEntity.ymlnetwork_company_entity_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6323,7 +5410,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkCompanyEntityUpdateRequestBadRequestErrorBody:
+  companyEntity.ymlnetwork_company_entity_updateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6332,7 +5419,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkContactIndexRequestBadRequestErrorBody:
+  contact.ymlnetwork_contact_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6341,7 +5428,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkContactCreateRequestBadRequestErrorBody:
+  contact.ymlnetwork_contact_createBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6350,7 +5437,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkContactShowRequestBadRequestErrorBody:
+  contact.ymlnetwork_contact_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6359,7 +5446,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkContactUpdateRequestBadRequestErrorBody:
+  contact.ymlnetwork_contact_updateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6368,7 +5455,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  LocationIndexRequestBadRequestErrorBody:
+  location.ymlindexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6377,7 +5464,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkLocationCreateRequestBadRequestErrorBody:
+  location.ymlnetwork_location_createBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6386,7 +5473,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkLocationShowRequestBadRequestErrorBody:
+  location.ymlnetwork_location_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6395,7 +5482,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  LocationUpdateRequestBadRequestErrorBody:
+  location.ymlupdateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6404,7 +5491,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  NetworkCompanyMeRequestBadRequestErrorBody:
+  company.ymlnetwork_company_meBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6413,7 +5500,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  OceanContainerLegsIndexRequestBadRequestErrorBody:
+  containerLeg.ymlocean_container_legs_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6422,7 +5509,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  OceanContainerLegsShowRequestBadRequestErrorBody:
+  containerLeg.ymlocean_container_legs_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6431,7 +5518,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ContainerListRequestBadRequestErrorBody:
+  container.ymllistBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6440,7 +5527,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ContainerShowRequestBadRequestErrorBody:
+  container.ymlshowBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6449,7 +5536,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  PortsIndexRequestBadRequestErrorBody:
+  ports.ymlindexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6458,7 +5545,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ProductIndexRequestBadRequestErrorBody:
+  product.ymlindexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6467,7 +5554,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ProductCreateRequestBadRequestErrorBody:
+  product.ymlcreateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6476,7 +5563,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ProductShowRequestBadRequestErrorBody:
+  product.ymlshowBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6485,7 +5572,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ProductUpdateRequestBadRequestErrorBody:
+  product.ymlupdateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6494,7 +5581,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  PurchaseOrderLineItemIndexRequestBadRequestErrorBody:
+  purchaseOrderLineItem.ymlpurchase_order_line_item_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6503,7 +5590,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  PurchaseOrderLineItemShowRequestBadRequestErrorBody:
+  purchaseOrderLineItem.ymlpurchase_order_line_item_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6512,7 +5599,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  PurchaseOrderIndexRequestBadRequestErrorBody:
+  purchaseOrder.ymlpurchase_order_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6521,7 +5608,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  PurchaseOrderCreateRequestBadRequestErrorBody:
+  purchaseOrder.ymlpurchase_order_createBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6530,7 +5617,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  PurchaseOrderShowRequestBadRequestErrorBody:
+  purchaseOrder.ymlpurchase_order_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6539,7 +5626,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  PurchaseOrderUpdateRequestBadRequestErrorBody:
+  purchaseOrder.ymlpurchase_order_updateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6548,7 +5635,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ShipmentLegIndexRequestBadRequestErrorBody:
+  shipmentLeg.ymlshipment_leg_indexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6557,7 +5644,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ShipmentLegShowRequestBadRequestErrorBody:
+  shipmentLeg.ymlshipment_leg_showBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6566,7 +5653,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ShipmentIndexRequestBadRequestErrorBody:
+  shipment.ymlindexBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6575,7 +5662,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ShipmentShowRequestBadRequestErrorBody:
+  shipment.ymlshowBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6584,7 +5671,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ShipmentUpdateRequestBadRequestErrorBody:
+  shipment.ymlupdateBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -6593,7 +5680,7 @@
       error: optional<Error>
     source:
       openapi: ../openapi.yml
-  ShipmentsShareableRequestBadRequestErrorBody:
+  shipment.ymlshipments_shareableBadRequestErrorSchema:
     properties:
       _object: optional<string>
       self: optional<string>
@@ -9987,523 +9074,9 @@
     source:
       openapi: ../openapi.yml
 errors:
-  BookingAmendmentCreateRequestBadRequestError:
+  BadRequestError:
     status-code: 400
-    type: BookingAmendmentCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/booking_amendments
-          version: 2
-  BookingLineItemIndexRequestBadRequestError:
-    status-code: 400
-    type: BookingLineItemIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/booking_line_items
-          version: 2
-  BookingLineItemCreateRequestBadRequestError:
-    status-code: 400
-    type: BookingLineItemCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/booking_line_items
-          version: 2
-  BookingLineItemShowRequestBadRequestError:
-    status-code: 400
-    type: BookingLineItemShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/booking_line_items/123456
-          version: 2
-  BookingsIndexRequestBadRequestError:
-    status-code: 400
-    type: BookingsIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/bookings
-          version: 2
-  BookingCreateRequestBadRequestError:
-    status-code: 400
-    type: BookingCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/bookings
-          version: 2
-  BookingShowRequestBadRequestError:
-    status-code: 400
-    type: BookingShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/bookings/123456
-          version: 2
-  CarbonCalculationCreateRequestBadRequestError:
-    status-code: 400
-    type: CarbonCalculationCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/carbon_calculation
-          version: 2
-  CommercialInvoicesCreateRequestBadRequestError:
-    status-code: 400
-    type: CommercialInvoicesCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/commercial_invoices
-          version: 2
-  CommercialInvoicesUpdateRequestBadRequestError:
-    status-code: 400
-    type: CommercialInvoicesUpdateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/commercial_invoices
-          version: 2
-  CommercialInvoicesShowRequestBadRequestError:
-    status-code: 400
-    type: CommercialInvoicesShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/commercial_invoices/abcxyz-23456-def
-          version: 2
-  CustomsEntryIndexRequestBadRequestError:
-    status-code: 400
-    type: CustomsEntryIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/custom_entries
-          version: 2
-  CustomsEntriesShowRequestBadRequestError:
-    status-code: 400
-    type: CustomsEntriesShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/customs_entries/abcdefg-1234567-hijk
-          version: 2
-  DocumentsIndexRequestBadRequestError:
-    status-code: 400
-    type: DocumentsIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/documents
-          version: 2
-  DocumentsCreateRequestBadRequestError:
-    status-code: 400
-    type: DocumentsCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/documents
-          version: 2
-  DocumentsShowRequestBadRequestError:
-    status-code: 400
-    type: DocumentsShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/documents/ABC123
-          version: 2
-  DocumentsDownloadRequestBadRequestError:
-    status-code: 400
-    type: DocumentsDownloadRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/documents/ABC123/download
-          version: 2
-  EventsIndexRequestBadRequestError:
-    status-code: 400
-    type: EventsIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/events
-          version: 2
-  EventsShowRequestBadRequestError:
-    status-code: 400
-    type: EventsShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/events/123456
-          version: 2
-  InvoiceIndexRequestBadRequestError:
-    status-code: 400
-    type: InvoiceIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/invoices
-          version: 2
-  InvoicesShowRequestBadRequestError:
-    status-code: 400
-    type: InvoicesShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/invoices/abcdef123
-          version: 2
-  NetworkCompanyIndexRequestBadRequestError:
-    status-code: 400
-    type: NetworkCompanyIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/companies
-          version: 2
-  NetworkCompanyCreateRequestBadRequestError:
-    status-code: 400
-    type: NetworkCompanyCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/companies
-          version: 2
-  NetworkCompanyUpdateRequestBadRequestError:
-    status-code: 400
-    type: NetworkCompanyUpdateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/companies/ABC123
-          version: 2
-  CompanyEntityIndexRequestBadRequestError:
-    status-code: 400
-    type: CompanyEntityIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/company_entities
-          version: 2
-  NetworkCompanyEntityCreateRequestBadRequestError:
-    status-code: 400
-    type: NetworkCompanyEntityCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/company_entities
-          version: 2
-  NetworkCompanyEntityShowRequestBadRequestError:
-    status-code: 400
-    type: NetworkCompanyEntityShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/company_entities/9281
-          version: 2
-  NetworkCompanyEntityUpdateRequestBadRequestError:
-    status-code: 400
-    type: NetworkCompanyEntityUpdateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/company_entities/9281
-          version: 2
-  NetworkContactIndexRequestBadRequestError:
-    status-code: 400
-    type: NetworkContactIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/contacts
-          version: 2
-  NetworkContactCreateRequestBadRequestError:
-    status-code: 400
-    type: NetworkContactCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/contacts
-          version: 2
-  NetworkContactShowRequestBadRequestError:
-    status-code: 400
-    type: NetworkContactShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/contacts/ABC123
-          version: 2
-  NetworkContactUpdateRequestBadRequestError:
-    status-code: 400
-    type: NetworkContactUpdateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/contacts/ABC123
-          version: 2
-  LocationIndexRequestBadRequestError:
-    status-code: 400
-    type: LocationIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/locations
-          version: 2
-  NetworkLocationCreateRequestBadRequestError:
-    status-code: 400
-    type: NetworkLocationCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/locations
-          version: 2
-  NetworkLocationShowRequestBadRequestError:
-    status-code: 400
-    type: NetworkLocationShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/locations/abdef123
-          version: 2
-  LocationUpdateRequestBadRequestError:
-    status-code: 400
-    type: LocationUpdateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/locations/abdef123
-          version: 2
-  NetworkCompanyMeRequestBadRequestError:
-    status-code: 400
-    type: NetworkCompanyMeRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/network/me/companies
-          version: 2
-  OceanContainerLegsIndexRequestBadRequestError:
-    status-code: 400
-    type: OceanContainerLegsIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ocean/shipment_container_legs
-          version: 2
-  OceanContainerLegsShowRequestBadRequestError:
-    status-code: 400
-    type: OceanContainerLegsShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ocean/shipment_container_legs/1234
-          version: 2
-  ContainerListRequestBadRequestError:
-    status-code: 400
-    type: ContainerListRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ocean/shipment_containers
-          version: 2
-  ContainerShowRequestBadRequestError:
-    status-code: 400
-    type: ContainerShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ocean/shipment_containers/1234
-          version: 2
-  PortsIndexRequestBadRequestError:
-    status-code: 400
-    type: PortsIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/ports
-          version: 2
-  ProductIndexRequestBadRequestError:
-    status-code: 400
-    type: ProductIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/products
-          version: 2
-  ProductCreateRequestBadRequestError:
-    status-code: 400
-    type: ProductCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/products
-          version: 2
-  ProductShowRequestBadRequestError:
-    status-code: 400
-    type: ProductShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/products/84291
-          version: 2
-  ProductUpdateRequestBadRequestError:
-    status-code: 400
-    type: ProductUpdateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/products/84291
-          version: 2
-  PurchaseOrderLineItemIndexRequestBadRequestError:
-    status-code: 400
-    type: PurchaseOrderLineItemIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_order_line_items
-          version: 3
-  PurchaseOrderLineItemShowRequestBadRequestError:
-    status-code: 400
-    type: PurchaseOrderLineItemShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_order_line_items/123456
-          version: 3
-  PurchaseOrderIndexRequestBadRequestError:
-    status-code: 400
-    type: PurchaseOrderIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_orders
-          version: 3
-  PurchaseOrderCreateRequestBadRequestError:
-    status-code: 400
-    type: PurchaseOrderCreateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_orders
-          version: 3
-  PurchaseOrderShowRequestBadRequestError:
-    status-code: 400
-    type: PurchaseOrderShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_orders/12345
-          version: 3
-  PurchaseOrderUpdateRequestBadRequestError:
-    status-code: 400
-    type: PurchaseOrderUpdateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/purchase_orders/12345
-          version: 3
-  ShipmentLegIndexRequestBadRequestError:
-    status-code: 400
-    type: ShipmentLegIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipment_legs
-          version: 2
-  ShipmentLegShowRequestBadRequestError:
-    status-code: 400
-    type: ShipmentLegShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipment_legs/948211
-          version: 2
-  ShipmentIndexRequestBadRequestError:
-    status-code: 400
-    type: ShipmentIndexRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipments
-          version: 2
-  ShipmentShowRequestBadRequestError:
-    status-code: 400
-    type: ShipmentShowRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipments/1234
-          version: 2
-  ShipmentUpdateRequestBadRequestError:
-    status-code: 400
-    type: ShipmentUpdateRequestBadRequestErrorBody
-    docs: error
-    examples:
-      - value:
-          _object: /api/response
-          self: https://api.flexport.com/shipments/1234
-          version: 2
-  ShipmentsShareableRequestBadRequestError:
-    status-code: 400
-    type: ShipmentsShareableRequestBadRequestErrorBody
-    docs: error
+    type: unknown
     examples:
       - value:
           _object: /api/response
@@ -10528,7 +9101,7 @@ errors:
               "display-name": "List all bookings",
               "docs": "Returns a list of bookings.",
               "errors": [
-                "root.BookingsIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -10872,7 +9445,7 @@ errors:
               "display-name": "Create and return a booking",
               "docs": undefined,
               "errors": [
-                "root.BookingCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -11320,7 +9893,7 @@ errors:
               "docs": "Retrieves the details of a single booking.
 ",
               "errors": [
-                "root.BookingShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -11871,7 +10444,7 @@ service:
         type: BookingsIndexResponse
         status-code: 200
       errors:
-        - root.BookingsIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -12153,7 +10726,7 @@ service:
         type: BookingCreateResponse
         status-code: 200
       errors:
-        - root.BookingCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request:
@@ -12435,7 +11008,7 @@ service:
         type: BookingShowResponse
         status-code: 200
       errors:
-        - root.BookingShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -12657,7 +11230,7 @@ docs: Endpoints relating to Booking objects
               "display-name": "Create a new booking amendment.",
               "docs": undefined,
               "errors": [
-                "root.BookingAmendmentCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -13051,7 +11624,7 @@ service:
         type: BookingAmendmentCreateResponse
         status-code: 200
       errors:
-        - root.BookingAmendmentCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request:
@@ -13238,7 +11811,7 @@ docs: >-
               "display-name": "Create a booking line item",
               "docs": "Creates and returns a booking line item",
               "errors": [
-                "root.BookingLineItemCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -13314,7 +11887,7 @@ docs: >-
               "display-name": "List all booking line items",
               "docs": "Returns a list of booking line items linked to submitted bookings",
               "errors": [
-                "root.BookingLineItemIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -13421,7 +11994,7 @@ docs: >-
               "display-name": "Retrieves the details of a single booking line item.",
               "docs": "Returns a list of booking line items",
               "errors": [
-                "root.BookingLineItemShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -13637,7 +12210,7 @@ service:
         type: BookingLineItemIndexResponse
         status-code: 200
       errors:
-        - root.BookingLineItemIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -13698,7 +12271,7 @@ service:
         type: BookingLineItemCreateResponse
         status-code: 200
       errors:
-        - root.BookingLineItemCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request:
@@ -13741,7 +12314,7 @@ service:
         type: BookingLineItemShowResponse
         status-code: 200
       errors:
-        - root.BookingLineItemShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -13791,7 +12364,7 @@ docs: >-
               "display-name": "Calculate carbon emissions",
               "docs": "Rate limited to 2,000 requests per hour",
               "errors": [
-                "root.CarbonCalculationCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -14137,7 +12710,7 @@ service:
         type: CarbonCalculationCreateResponse
         status-code: 200
       errors:
-        - root.CarbonCalculationCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           request:
@@ -14183,7 +12756,7 @@ docs: Endpoints relating to Carbon Calculations
               "display-name": "Create and return a new commercial invoice",
               "docs": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
               "errors": [
-                "root.CommercialInvoicesCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -14564,7 +13137,7 @@ docs: Endpoints relating to Carbon Calculations
               "display-name": "Retrieve a commercial invoice",
               "docs": "Retrieves the details of a single commercial invoice.",
               "errors": [
-                "root.CommercialInvoicesShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -14714,7 +13287,7 @@ docs: Endpoints relating to Carbon Calculations
               "display-name": "Update an existing commercial invoice",
               "docs": "**The Commercial Invoices PATCH endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
               "errors": [
-                "root.CommercialInvoicesUpdateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -15189,7 +13762,7 @@ service:
         type: CommercialInvoicesCreateResponse
         status-code: 200
       errors:
-        - root.CommercialInvoicesCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request:
@@ -15332,7 +13905,7 @@ service:
         type: CommercialInvoicesUpdateResponse
         status-code: 200
       errors:
-        - root.CommercialInvoicesUpdateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request: {}
@@ -15442,7 +14015,7 @@ service:
         type: CommercialInvoicesShowResponse
         status-code: 200
       errors:
-        - root.CommercialInvoicesShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -15559,7 +14132,7 @@ docs: Endpoints relating to Commercial Invoice objects
               "display-name": "Create a new company object",
               "docs": undefined,
               "errors": [
-                "root.NetworkCompanyCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -15665,7 +14238,7 @@ docs: Endpoints relating to Commercial Invoice objects
               "display-name": "List company objects",
               "docs": "Returns a list of companies in the network.",
               "errors": [
-                "root.NetworkCompanyIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -15792,7 +14365,7 @@ docs: Endpoints relating to Commercial Invoice objects
               "display-name": "Retrieve your company",
               "docs": "Retrieves the details of your own organization.",
               "errors": [
-                "root.NetworkCompanyMeRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -15961,7 +14534,7 @@ docs: Endpoints relating to Commercial Invoice objects
               "display-name": "Update an existing company",
               "docs": undefined,
               "errors": [
-                "root.NetworkCompanyUpdateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -16255,7 +14828,7 @@ service:
         type: NetworkCompanyIndexResponse
         status-code: 200
       errors:
-        - root.NetworkCompanyIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -16330,7 +14903,7 @@ service:
         type: NetworkCompanyCreateResponse
         status-code: 200
       errors:
-        - root.NetworkCompanyCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           request:
@@ -16471,7 +15044,7 @@ service:
         type: NetworkCompanyUpdateResponse
         status-code: 200
       errors:
-        - root.NetworkCompanyUpdateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           path-parameters:
@@ -16537,7 +15110,7 @@ service:
         type: NetworkCompanyMeResponse
         status-code: 200
       errors:
-        - root.NetworkCompanyMeRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           response:
@@ -16608,7 +15181,7 @@ docs: Endpoints relating to Company objects
               "display-name": "List of company entity objects",
               "docs": "Returns a list of the company entity objects in the network.",
               "errors": [
-                "root.CompanyEntityIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -16717,7 +15290,7 @@ docs: Endpoints relating to Company objects
               "display-name": "Create and return a new company entity",
               "docs": undefined,
               "errors": [
-                "root.NetworkCompanyEntityCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -16813,7 +15386,7 @@ docs: Endpoints relating to Company objects
               "display-name": "Retrieve a company entity",
               "docs": "Retrieves the details of a single company entity",
               "errors": [
-                "root.NetworkCompanyEntityShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -16879,7 +15452,7 @@ docs: Endpoints relating to Company objects
               "display-name": "Update a company entity",
               "docs": undefined,
               "errors": [
-                "root.NetworkCompanyEntityUpdateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -17128,7 +15701,7 @@ service:
         type: CompanyEntityIndexResponse
         status-code: 200
       errors:
-        - root.CompanyEntityIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -17210,7 +15783,7 @@ service:
         type: NetworkCompanyEntityCreateResponse
         status-code: 200
       errors:
-        - root.NetworkCompanyEntityCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           request:
@@ -17259,7 +15832,7 @@ service:
         type: NetworkCompanyEntityShowResponse
         status-code: 200
       errors:
-        - root.NetworkCompanyEntityShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           path-parameters:
@@ -17323,7 +15896,7 @@ service:
         type: NetworkCompanyEntityUpdateResponse
         status-code: 200
       errors:
-        - root.NetworkCompanyEntityUpdateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           path-parameters:
@@ -17378,7 +15951,7 @@ docs: Endpoints relating to CompanyEntity objects
               "display-name": "Create a new contact object",
               "docs": undefined,
               "errors": [
-                "root.NetworkContactCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -17459,7 +16032,7 @@ docs: Endpoints relating to CompanyEntity objects
               "display-name": "List contact objects",
               "docs": "Returns a list of contacts in the network.",
               "errors": [
-                "root.NetworkContactIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -17560,7 +16133,7 @@ docs: Endpoints relating to CompanyEntity objects
               "display-name": "Retrieve a contact",
               "docs": "Retrieves the details of a single contact.",
               "errors": [
-                "root.NetworkContactShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -17618,7 +16191,7 @@ docs: Endpoints relating to CompanyEntity objects
               "display-name": "Update an existing contact",
               "docs": undefined,
               "errors": [
-                "root.NetworkContactUpdateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -17858,7 +16431,7 @@ service:
         type: NetworkContactIndexResponse
         status-code: 200
       errors:
-        - root.NetworkContactIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -17920,7 +16493,7 @@ service:
         type: NetworkContactCreateResponse
         status-code: 200
       errors:
-        - root.NetworkContactCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           request:
@@ -17966,7 +16539,7 @@ service:
         type: NetworkContactShowResponse
         status-code: 200
       errors:
-        - root.NetworkContactShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -18022,7 +16595,7 @@ service:
         type: NetworkContactUpdateResponse
         status-code: 200
       errors:
-        - root.NetworkContactUpdateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           path-parameters:
@@ -18073,7 +16646,7 @@ docs: Endpoints relating to Contact objects
               "display-name": "List all containers.",
               "docs": "Returns a list of containers. The containers are sorted descending by creation date.",
               "errors": [
-                "root.ContainerListRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -18220,7 +16793,7 @@ docs: Endpoints relating to Contact objects
               "display-name": "Retrieve a container.",
               "docs": "Retrieves the details of a single container.",
               "errors": [
-                "root.ContainerShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -18448,7 +17021,7 @@ service:
         type: ContainerListResponse
         status-code: 200
       errors:
-        - root.ContainerListRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -18535,7 +17108,7 @@ service:
         type: ContainerShowResponse
         status-code: 200
       errors:
-        - root.ContainerShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -18624,7 +17197,7 @@ docs: Endpoints relating to Container objects
               "display-name": "List all container legs",
               "docs": undefined,
               "errors": [
-                "root.OceanContainerLegsIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -18727,7 +17300,7 @@ docs: Endpoints relating to Container objects
               "display-name": "Retrieve a container leg on an Ocean shipment",
               "docs": undefined,
               "errors": [
-                "root.OceanContainerLegsShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -18906,7 +17479,7 @@ service:
         type: OceanContainerLegsIndexResponse
         status-code: 200
       errors:
-        - root.OceanContainerLegsIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -18951,7 +17524,7 @@ service:
         type: OceanContainerLegsShowResponse
         status-code: 200
       errors:
-        - root.OceanContainerLegsShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -18998,7 +17571,7 @@ docs: Endpoints relating to ContainerLeg objects
               "display-name": "List customs entry objects",
               "docs": "Returns a list of customs entries.",
               "errors": [
-                "root.CustomsEntryIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -19085,7 +17658,7 @@ docs: Endpoints relating to ContainerLeg objects
               "display-name": "Retrieve a customs entry",
               "docs": "Retrieves the details of a single customs entry.",
               "errors": [
-                "root.CustomsEntriesShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -19246,7 +17819,7 @@ service:
         type: CustomsEntryIndexResponse
         status-code: 200
       errors:
-        - root.CustomsEntryIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -19288,7 +17861,7 @@ service:
         type: CustomsEntriesShowResponse
         status-code: 200
       errors:
-        - root.CustomsEntriesShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -19332,7 +17905,7 @@ docs: Endpoints relating to Customs Entry objects
               "display-name": "Create a document",
               "docs": "Create a new document for this client using the request payload",
               "errors": [
-                "root.DocumentsCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -19383,7 +17956,7 @@ docs: Endpoints relating to Customs Entry objects
               "display-name": "Download a document",
               "docs": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
               "errors": [
-                "root.DocumentsDownloadRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -19408,7 +17981,7 @@ docs: Endpoints relating to Customs Entry objects
               "display-name": "List document objects",
               "docs": "Returns a list of all documents associated with shipments.",
               "errors": [
-                "root.DocumentsIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -19525,7 +18098,7 @@ docs: Endpoints relating to Customs Entry objects
               "display-name": "Retrieve a document",
               "docs": "Retrieves the details of a single document.",
               "errors": [
-                "root.DocumentsShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -19740,7 +18313,7 @@ service:
         type: DocumentsIndexResponse
         status-code: 200
       errors:
-        - root.DocumentsIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -19786,7 +18359,7 @@ service:
         type: DocumentsCreateResponse
         status-code: 200
       errors:
-        - root.DocumentsCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request:
@@ -19825,7 +18398,7 @@ service:
         type: DocumentsShowResponse
         status-code: 200
       errors:
-        - root.DocumentsShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -19869,7 +18442,7 @@ service:
         type: file
         status-code: 200
       errors:
-        - root.DocumentsDownloadRequestBadRequestError
+        - root.BadRequestError
   source:
     openapi: ../openapi.yml
   display-name: Document
@@ -19893,7 +18466,7 @@ docs: Endpoints relating to Document objects
               "display-name": "List all webhook events",
               "docs": "Returns a list of all events delivered to any webhook registered by this client",
               "errors": [
-                "root.EventsIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -19968,7 +18541,7 @@ docs: Endpoints relating to Document objects
               "display-name": "Retrieve a single webhook event",
               "docs": "Returns the webhook event with ID ":id"",
               "errors": [
-                "root.EventsShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -20250,7 +18823,7 @@ service:
         type: EventsIndexResponse
         status-code: 200
       errors:
-        - root.EventsIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - query-parameters:
             f.type: /shipment_leg#departed
@@ -20289,7 +18862,7 @@ service:
         type: EventsShowResponse
         status-code: 200
       errors:
-        - root.EventsShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - path-parameters:
             id: 1
@@ -20388,7 +18961,7 @@ docs: Endpoints relating to Event objects
               "display-name": "List all invoices",
               "docs": "Returns a list of invoices.",
               "errors": [
-                "root.InvoiceIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -20752,7 +19325,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "display-name": "Retrieve an invoice",
               "docs": "Retrieves the details of a single invoice",
               "errors": [
-                "root.InvoicesShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -21220,7 +19793,7 @@ service:
         type: InvoiceIndexResponse
         status-code: 200
       errors:
-        - root.InvoiceIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -21436,7 +20009,7 @@ service:
         type: InvoicesShowResponse
         status-code: 200
       errors:
-        - root.InvoicesShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -21643,7 +20216,7 @@ docs: Endpoints relating to Invoice objects
               "display-name": "List of location objects",
               "docs": "Returns a list of location objects in the network.",
               "errors": [
-                "root.LocationIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -21767,7 +20340,7 @@ docs: Endpoints relating to Invoice objects
               "display-name": "Create and return a new location",
               "docs": undefined,
               "errors": [
-                "root.NetworkLocationCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -21870,7 +20443,7 @@ docs: Endpoints relating to Invoice objects
               "display-name": "Retrieve a location by id",
               "docs": "Retrieves the details of a single location",
               "errors": [
-                "root.NetworkLocationShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -21945,7 +20518,7 @@ docs: Endpoints relating to Invoice objects
               "display-name": "Update a network location",
               "docs": undefined,
               "errors": [
-                "root.LocationUpdateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -22217,7 +20790,7 @@ service:
         type: LocationIndexResponse
         status-code: 200
       errors:
-        - root.LocationIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -22296,7 +20869,7 @@ service:
         type: NetworkLocationCreateResponse
         status-code: 200
       errors:
-        - root.NetworkLocationCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           request:
@@ -22356,7 +20929,7 @@ service:
         type: NetworkLocationShowResponse
         status-code: 200
       errors:
-        - root.NetworkLocationShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           path-parameters:
@@ -22435,7 +21008,7 @@ service:
         type: LocationUpdateResponse
         status-code: 200
       errors:
-        - root.LocationUpdateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           path-parameters:
@@ -22499,7 +21072,7 @@ docs: Endpoints relating to Location objects
               "display-name": "List of ports",
               "docs": undefined,
               "errors": [
-                "root.PortsIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -22751,7 +21324,7 @@ service:
         type: PortsIndexResponse
         status-code: 200
       errors:
-        - root.PortsIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -22834,7 +21407,7 @@ docs: Endpoints relating to Ports objects
               "display-name": "Create a product",
               "docs": "Create a new product for this client using the request payload",
               "errors": [
-                "root.ProductCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -22953,7 +21526,7 @@ docs: Endpoints relating to Ports objects
               "display-name": "List all products for a client",
               "docs": "Returns a list of all products belonging to this client",
               "errors": [
-                "root.ProductIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -23042,7 +21615,7 @@ docs: Endpoints relating to Ports objects
               "display-name": "Retrieve a single product",
               "docs": "Returns the client's product with this ID",
               "errors": [
-                "root.ProductShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -23116,7 +21689,7 @@ docs: Endpoints relating to Ports objects
               "display-name": "Update a product",
               "docs": "Update this product to represent the request payload",
               "errors": [
-                "root.ProductUpdateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -23388,7 +21961,7 @@ service:
         type: ProductIndexResponse
         status-code: 200
       errors:
-        - root.ProductIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           response:
@@ -23476,7 +22049,7 @@ service:
         type: ProductCreateResponse
         status-code: 200
       errors:
-        - root.ProductCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request:
@@ -23529,7 +22102,7 @@ service:
         type: ProductShowResponse
         status-code: 200
       errors:
-        - root.ProductShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -23618,7 +22191,7 @@ service:
         type: ProductUpdateResponse
         status-code: 200
       errors:
-        - root.ProductUpdateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -23675,7 +22248,7 @@ docs: Endpoints relating to Product objects
               "display-name": "Create and return a purchase order",
               "docs": undefined,
               "errors": [
-                "root.PurchaseOrderCreateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -23965,7 +22538,7 @@ docs: Endpoints relating to Product objects
               "display-name": "List all purchase orders",
               "docs": "Returns a list of purchase orders",
               "errors": [
-                "root.PurchaseOrderIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -24292,7 +22865,7 @@ docs: Endpoints relating to Product objects
               "docs": "Retrieves the details of a single purchase order.
 ",
               "errors": [
-                "root.PurchaseOrderShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -24444,7 +23017,7 @@ docs: Endpoints relating to Product objects
               "display-name": "Update and return a purchase order",
               "docs": undefined,
               "errors": [
-                "root.PurchaseOrderUpdateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -24900,7 +23473,7 @@ service:
         type: PurchaseOrderIndexResponse
         status-code: 200
       errors:
-        - root.PurchaseOrderIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -25076,7 +23649,7 @@ service:
         type: root.PurchaseOrder
         status-code: 200
       errors:
-        - root.PurchaseOrderCreateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request:
@@ -25308,7 +23881,7 @@ service:
         type: PurchaseOrderShowResponse
         status-code: 200
       errors:
-        - root.PurchaseOrderShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -25421,7 +23994,7 @@ service:
         type: root.PurchaseOrder
         status-code: 200
       errors:
-        - root.PurchaseOrderUpdateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -25604,7 +24177,7 @@ docs: >-
               "display-name": "List all purchase order line items.",
               "docs": "Returns a list of purchase order line items",
               "errors": [
-                "root.PurchaseOrderLineItemIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -25798,7 +24371,7 @@ docs: >-
               "display-name": "Retrieve a purchase order line item",
               "docs": "Returns the details of a purchase order line item",
               "errors": [
-                "root.PurchaseOrderLineItemShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -26080,7 +24653,7 @@ service:
         type: PurchaseOrderLineItemIndexResponse
         status-code: 200
       errors:
-        - root.PurchaseOrderLineItemIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -26193,7 +24766,7 @@ service:
         type: PurchaseOrderLineItemShowResponse
         status-code: 200
       errors:
-        - root.PurchaseOrderLineItemShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -26309,7 +24882,7 @@ docs: >-
               "display-name": "List all shipments",
               "docs": "Returns a list of shipments.",
               "errors": [
-                "root.ShipmentIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -26764,7 +25337,7 @@ docs: >-
               "display-name": "Create shareable URLs for shipments",
               "docs": "Returns a list of shipments status shareable url",
               "errors": [
-                "root.ShipmentsShareableRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -26832,7 +25405,7 @@ docs: >-
               "docs": "Retrieves the details of a single shipment.
 ",
               "errors": [
-                "root.ShipmentShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -27139,7 +25712,7 @@ docs: >-
               "display-name": "Update an existing shipment",
               "docs": undefined,
               "errors": [
-                "root.ShipmentUpdateRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -27835,7 +26408,7 @@ service:
         type: ShipmentIndexResponse
         status-code: 200
       errors:
-        - root.ShipmentIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -28085,7 +26658,7 @@ service:
         type: ShipmentShowResponse
         status-code: 200
       errors:
-        - root.ShipmentShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:
@@ -28337,7 +26910,7 @@ service:
         type: ShipmentUpdateResponse
         status-code: 200
       errors:
-        - root.ShipmentUpdateRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: response
           path-parameters:
@@ -28597,7 +27170,7 @@ service:
         type: ShipmentsShareableResponse
         status-code: 200
       errors:
-        - root.ShipmentsShareableRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           request:
@@ -28641,7 +27214,7 @@ docs: Endpoints relating to Shipment objects
               "display-name": "List all shipment route legs",
               "docs": "Returns a list of shipment route legs. The legs are sorted descending by creation date.",
               "errors": [
-                "root.ShipmentLegIndexRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -28851,7 +27424,7 @@ docs: Endpoints relating to Shipment objects
               "display-name": "Retrieve a shipment route leg",
               "docs": undefined,
               "errors": [
-                "root.ShipmentLegShowRequestBadRequestError",
+                "root.BadRequestError",
               ],
               "examples": [
                 {
@@ -29146,7 +27719,7 @@ service:
         type: ShipmentLegIndexResponse
         status-code: 200
       errors:
-        - root.ShipmentLegIndexRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           query-parameters:
@@ -29286,7 +27859,7 @@ service:
         type: ShipmentLegShowResponse
         status-code: 200
       errors:
-        - root.ShipmentLegShowRequestBadRequestError
+        - root.BadRequestError
       examples:
         - name: Success
           path-parameters:

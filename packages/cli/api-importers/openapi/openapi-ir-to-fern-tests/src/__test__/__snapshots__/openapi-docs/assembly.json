@@ -6,7 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "FilesUploadRequestBadRequestError": {
+          "BadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -20,12 +20,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "FilesUploadRequestGatewayTimeoutError": {
+          "GatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "FilesUploadRequestInternalServerError": {
+          "InternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -39,7 +39,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "FilesUploadRequestNotFoundError": {
+          "NotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -53,12 +53,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "FilesUploadRequestServiceUnavailableError": {
+          "ServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "FilesUploadRequestTooManyRequestsError": {
+          "TooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -72,1207 +72,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "FilesUploadRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "LemurActionItemsRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "LemurActionItemsRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "LemurActionItemsRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "LemurActionItemsRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "LemurActionItemsRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "LemurActionItemsRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "LemurActionItemsRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "LemurPurgeRequestDataRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "LemurPurgeRequestDataRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "LemurPurgeRequestDataRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "LemurPurgeRequestDataRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "LemurPurgeRequestDataRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "LemurPurgeRequestDataRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "LemurPurgeRequestDataRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "LemurQuestionAnswerRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "LemurQuestionAnswerRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "LemurQuestionAnswerRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "LemurQuestionAnswerRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "LemurQuestionAnswerRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "LemurQuestionAnswerRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "LemurQuestionAnswerRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "LemurSummaryRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "LemurSummaryRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "LemurSummaryRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "LemurSummaryRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "LemurSummaryRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "LemurSummaryRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "LemurSummaryRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "LemurTaskRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "LemurTaskRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "LemurTaskRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "LemurTaskRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "LemurTaskRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "LemurTaskRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "LemurTaskRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "RealtimeCreateTemporaryTokenRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "RealtimeCreateTemporaryTokenRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "RealtimeCreateTemporaryTokenRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "RealtimeCreateTemporaryTokenRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "RealtimeCreateTemporaryTokenRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "RealtimeCreateTemporaryTokenRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "RealtimeCreateTemporaryTokenRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptCreateRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptCreateRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptCreateRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptCreateRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptCreateRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptCreateRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptCreateRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptDeleteRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptDeleteRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptDeleteRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptDeleteRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptDeleteRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptDeleteRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptDeleteRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptGetParagraphsRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptGetParagraphsRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptGetParagraphsRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptGetParagraphsRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptGetParagraphsRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptGetParagraphsRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptGetParagraphsRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptGetRedactedAudioRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptGetRedactedAudioRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptGetRedactedAudioRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptGetRedactedAudioRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptGetRedactedAudioRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptGetRedactedAudioRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptGetRedactedAudioRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptGetRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptGetRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptGetRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptGetRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptGetRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptGetRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptGetRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptGetSentencesRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptGetSentencesRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptGetSentencesRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptGetSentencesRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptGetSentencesRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptGetSentencesRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptGetSentencesRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptGetSubtitlesRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptGetSubtitlesRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptGetSubtitlesRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptGetSubtitlesRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptGetSubtitlesRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptGetSubtitlesRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptGetSubtitlesRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptListRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptListRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptListRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptListRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptListRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptListRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptListRequestUnauthorizedError": {
-            "docs": "Unauthorized",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 401,
-            "type": "Error",
-          },
-          "TranscriptWordSearchRequestBadRequestError": {
-            "docs": "Bad Request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "Error",
-          },
-          "TranscriptWordSearchRequestGatewayTimeoutError": {
-            "docs": "Gateway Timeout",
-            "status-code": 504,
-            "type": "unknown",
-          },
-          "TranscriptWordSearchRequestInternalServerError": {
-            "docs": "An error occurred while processing the request",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "Error",
-          },
-          "TranscriptWordSearchRequestNotFoundError": {
-            "docs": "Not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "Error",
-          },
-          "TranscriptWordSearchRequestServiceUnavailableError": {
-            "docs": "Service Unavailable",
-            "status-code": 503,
-            "type": "unknown",
-          },
-          "TranscriptWordSearchRequestTooManyRequestsError": {
-            "docs": "Too Many Requests",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "error": "error",
-                },
-              },
-            ],
-            "status-code": 429,
-            "type": "Error",
-          },
-          "TranscriptWordSearchRequestUnauthorizedError": {
+          "UnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -2906,691 +1706,46 @@ The default value is 'en_us'.
         },
       },
       "rawContents": "errors:
-  FilesUploadRequestBadRequestError:
+  BadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  FilesUploadRequestUnauthorizedError:
+  UnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  FilesUploadRequestNotFoundError:
+  NotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  FilesUploadRequestTooManyRequestsError:
+  TooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  FilesUploadRequestInternalServerError:
+  InternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  FilesUploadRequestServiceUnavailableError:
+  ServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  FilesUploadRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptListRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptListRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptListRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptListRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptListRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptListRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptListRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptCreateRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptCreateRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptCreateRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptCreateRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptCreateRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptCreateRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptCreateRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptGetRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptGetRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptGetRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptGetRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptGetRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptGetRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptGetRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptDeleteRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptDeleteRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptDeleteRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptDeleteRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptDeleteRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptDeleteRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptDeleteRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptGetSubtitlesRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptGetSubtitlesRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptGetSubtitlesRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptGetSubtitlesRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptGetSubtitlesRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptGetSubtitlesRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptGetSubtitlesRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptGetSentencesRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptGetSentencesRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptGetSentencesRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptGetSentencesRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptGetSentencesRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptGetSentencesRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptGetSentencesRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptGetParagraphsRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptGetParagraphsRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptGetParagraphsRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptGetParagraphsRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptGetParagraphsRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptGetParagraphsRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptGetParagraphsRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptWordSearchRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptWordSearchRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptWordSearchRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptWordSearchRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptWordSearchRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptWordSearchRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptWordSearchRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  TranscriptGetRedactedAudioRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  TranscriptGetRedactedAudioRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  TranscriptGetRedactedAudioRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  TranscriptGetRedactedAudioRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  TranscriptGetRedactedAudioRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  TranscriptGetRedactedAudioRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  TranscriptGetRedactedAudioRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  RealtimeCreateTemporaryTokenRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  RealtimeCreateTemporaryTokenRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  RealtimeCreateTemporaryTokenRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  RealtimeCreateTemporaryTokenRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  RealtimeCreateTemporaryTokenRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  RealtimeCreateTemporaryTokenRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  RealtimeCreateTemporaryTokenRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  LemurSummaryRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  LemurSummaryRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  LemurSummaryRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  LemurSummaryRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  LemurSummaryRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  LemurSummaryRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  LemurSummaryRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  LemurQuestionAnswerRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  LemurQuestionAnswerRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  LemurQuestionAnswerRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  LemurQuestionAnswerRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  LemurQuestionAnswerRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  LemurQuestionAnswerRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  LemurQuestionAnswerRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  LemurActionItemsRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  LemurActionItemsRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  LemurActionItemsRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  LemurActionItemsRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  LemurActionItemsRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  LemurActionItemsRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  LemurActionItemsRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  LemurTaskRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  LemurTaskRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  LemurTaskRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  LemurTaskRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  LemurTaskRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  LemurTaskRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  LemurTaskRequestGatewayTimeoutError:
-    status-code: 504
-    type: unknown
-    docs: Gateway Timeout
-  LemurPurgeRequestDataRequestBadRequestError:
-    status-code: 400
-    type: Error
-    docs: Bad Request
-    examples:
-      - value:
-          error: error
-  LemurPurgeRequestDataRequestUnauthorizedError:
-    status-code: 401
-    type: Error
-    docs: Unauthorized
-    examples:
-      - value:
-          error: error
-  LemurPurgeRequestDataRequestNotFoundError:
-    status-code: 404
-    type: Error
-    docs: Not found
-    examples:
-      - value:
-          error: error
-  LemurPurgeRequestDataRequestTooManyRequestsError:
-    status-code: 429
-    type: Error
-    docs: Too Many Requests
-    examples:
-      - value:
-          error: error
-  LemurPurgeRequestDataRequestInternalServerError:
-    status-code: 500
-    type: Error
-    docs: An error occurred while processing the request
-    examples:
-      - value:
-          error: error
-  LemurPurgeRequestDataRequestServiceUnavailableError:
-    status-code: 503
-    type: unknown
-    docs: Service Unavailable
-  LemurPurgeRequestDataRequestGatewayTimeoutError:
+  GatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
@@ -4963,13 +3118,13 @@ types:
               "display-name": "Upload an audio or video file which can be transcribed.",
               "docs": "Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.",
               "errors": [
-                "root.FilesUploadRequestBadRequestError",
-                "root.FilesUploadRequestUnauthorizedError",
-                "root.FilesUploadRequestNotFoundError",
-                "root.FilesUploadRequestTooManyRequestsError",
-                "root.FilesUploadRequestInternalServerError",
-                "root.FilesUploadRequestServiceUnavailableError",
-                "root.FilesUploadRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "method": "POST",
               "pagination": undefined,
@@ -5017,13 +3172,13 @@ service:
         type: root.UploadedFile
         status-code: 200
       errors:
-        - root.FilesUploadRequestBadRequestError
-        - root.FilesUploadRequestUnauthorizedError
-        - root.FilesUploadRequestNotFoundError
-        - root.FilesUploadRequestTooManyRequestsError
-        - root.FilesUploadRequestInternalServerError
-        - root.FilesUploadRequestServiceUnavailableError
-        - root.FilesUploadRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
   source:
     openapi: ../openapi.yml
 ",
@@ -5045,13 +3200,13 @@ service:
               "display-name": "Extract action items from one or more meeting transcripts.",
               "docs": "Use LeMUR to generate a list of Action Items from a transcript",
               "errors": [
-                "root.LemurActionItemsRequestBadRequestError",
-                "root.LemurActionItemsRequestUnauthorizedError",
-                "root.LemurActionItemsRequestNotFoundError",
-                "root.LemurActionItemsRequestTooManyRequestsError",
-                "root.LemurActionItemsRequestInternalServerError",
-                "root.LemurActionItemsRequestServiceUnavailableError",
-                "root.LemurActionItemsRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5091,13 +3246,13 @@ service:
 The LLM response data, as well as any context provided in the original request will be removed.
 ",
               "errors": [
-                "root.LemurPurgeRequestDataRequestBadRequestError",
-                "root.LemurPurgeRequestDataRequestUnauthorizedError",
-                "root.LemurPurgeRequestDataRequestNotFoundError",
-                "root.LemurPurgeRequestDataRequestTooManyRequestsError",
-                "root.LemurPurgeRequestDataRequestInternalServerError",
-                "root.LemurPurgeRequestDataRequestServiceUnavailableError",
-                "root.LemurPurgeRequestDataRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5136,13 +3291,13 @@ The LLM response data, as well as any context provided in the original request w
               "display-name": "Create answers to one or more questions about one or more transcripts.",
               "docs": "Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.",
               "errors": [
-                "root.LemurQuestionAnswerRequestBadRequestError",
-                "root.LemurQuestionAnswerRequestUnauthorizedError",
-                "root.LemurQuestionAnswerRequestNotFoundError",
-                "root.LemurQuestionAnswerRequestTooManyRequestsError",
-                "root.LemurQuestionAnswerRequestInternalServerError",
-                "root.LemurQuestionAnswerRequestServiceUnavailableError",
-                "root.LemurQuestionAnswerRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5204,13 +3359,13 @@ The LLM response data, as well as any context provided in the original request w
               "display-name": "Generate a custom summary from one or more transcripts.",
               "docs": "Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.",
               "errors": [
-                "root.LemurSummaryRequestBadRequestError",
-                "root.LemurSummaryRequestUnauthorizedError",
-                "root.LemurSummaryRequestNotFoundError",
-                "root.LemurSummaryRequestTooManyRequestsError",
-                "root.LemurSummaryRequestInternalServerError",
-                "root.LemurSummaryRequestServiceUnavailableError",
-                "root.LemurSummaryRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5263,13 +3418,13 @@ The LLM response data, as well as any context provided in the original request w
               "display-name": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
               "docs": "Use LeMUR to ask anything with Custom Task",
               "errors": [
-                "root.LemurTaskRequestBadRequestError",
-                "root.LemurTaskRequestUnauthorizedError",
-                "root.LemurTaskRequestNotFoundError",
-                "root.LemurTaskRequestTooManyRequestsError",
-                "root.LemurTaskRequestInternalServerError",
-                "root.LemurTaskRequestServiceUnavailableError",
-                "root.LemurTaskRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5358,13 +3513,13 @@ service:
         type: root.LemurSummaryResponse
         status-code: 200
       errors:
-        - root.LemurSummaryRequestBadRequestError
-        - root.LemurSummaryRequestUnauthorizedError
-        - root.LemurSummaryRequestNotFoundError
-        - root.LemurSummaryRequestTooManyRequestsError
-        - root.LemurSummaryRequestInternalServerError
-        - root.LemurSummaryRequestServiceUnavailableError
-        - root.LemurSummaryRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - request:
             transcript_ids:
@@ -5401,13 +3556,13 @@ service:
         type: root.LemurQuestionAnswerResponse
         status-code: 200
       errors:
-        - root.LemurQuestionAnswerRequestBadRequestError
-        - root.LemurQuestionAnswerRequestUnauthorizedError
-        - root.LemurQuestionAnswerRequestNotFoundError
-        - root.LemurQuestionAnswerRequestTooManyRequestsError
-        - root.LemurQuestionAnswerRequestInternalServerError
-        - root.LemurQuestionAnswerRequestServiceUnavailableError
-        - root.LemurQuestionAnswerRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - request:
             transcript_ids:
@@ -5436,13 +3591,13 @@ service:
         type: root.LemurActionItemsResponse
         status-code: 200
       errors:
-        - root.LemurActionItemsRequestBadRequestError
-        - root.LemurActionItemsRequestUnauthorizedError
-        - root.LemurActionItemsRequestNotFoundError
-        - root.LemurActionItemsRequestTooManyRequestsError
-        - root.LemurActionItemsRequestInternalServerError
-        - root.LemurActionItemsRequestServiceUnavailableError
-        - root.LemurActionItemsRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - request:
             transcript_ids:
@@ -5478,13 +3633,13 @@ service:
         type: root.LemurTaskResponse
         status-code: 200
       errors:
-        - root.LemurTaskRequestBadRequestError
-        - root.LemurTaskRequestUnauthorizedError
-        - root.LemurTaskRequestNotFoundError
-        - root.LemurTaskRequestTooManyRequestsError
-        - root.LemurTaskRequestInternalServerError
-        - root.LemurTaskRequestServiceUnavailableError
-        - root.LemurTaskRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - request:
             transcript_ids:
@@ -5517,13 +3672,13 @@ service:
         type: root.PurgeLemurRequestDataResponse
         status-code: 200
       errors:
-        - root.LemurPurgeRequestDataRequestBadRequestError
-        - root.LemurPurgeRequestDataRequestUnauthorizedError
-        - root.LemurPurgeRequestDataRequestNotFoundError
-        - root.LemurPurgeRequestDataRequestTooManyRequestsError
-        - root.LemurPurgeRequestDataRequestInternalServerError
-        - root.LemurPurgeRequestDataRequestServiceUnavailableError
-        - root.LemurPurgeRequestDataRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - path-parameters:
             request_id: request_id
@@ -5555,13 +3710,13 @@ docs: LeMUR related operations
               "display-name": "Create a temporary authentication token for real-time transcription",
               "docs": "Create a temporary authentication token for real-time transcription",
               "errors": [
-                "root.RealtimeCreateTemporaryTokenRequestBadRequestError",
-                "root.RealtimeCreateTemporaryTokenRequestUnauthorizedError",
-                "root.RealtimeCreateTemporaryTokenRequestNotFoundError",
-                "root.RealtimeCreateTemporaryTokenRequestTooManyRequestsError",
-                "root.RealtimeCreateTemporaryTokenRequestInternalServerError",
-                "root.RealtimeCreateTemporaryTokenRequestServiceUnavailableError",
-                "root.RealtimeCreateTemporaryTokenRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5644,13 +3799,13 @@ service:
         type: root.RealtimeTemporaryTokenResponse
         status-code: 200
       errors:
-        - root.RealtimeCreateTemporaryTokenRequestBadRequestError
-        - root.RealtimeCreateTemporaryTokenRequestUnauthorizedError
-        - root.RealtimeCreateTemporaryTokenRequestNotFoundError
-        - root.RealtimeCreateTemporaryTokenRequestTooManyRequestsError
-        - root.RealtimeCreateTemporaryTokenRequestInternalServerError
-        - root.RealtimeCreateTemporaryTokenRequestServiceUnavailableError
-        - root.RealtimeCreateTemporaryTokenRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - request:
             expires_in: 1
@@ -5680,13 +3835,13 @@ docs: Real-time transcription
               "display-name": "Create a transcript from an audio file",
               "docs": "Create a transcript from an audio or video file that is accessible via a URL.",
               "errors": [
-                "root.TranscriptCreateRequestBadRequestError",
-                "root.TranscriptCreateRequestUnauthorizedError",
-                "root.TranscriptCreateRequestNotFoundError",
-                "root.TranscriptCreateRequestTooManyRequestsError",
-                "root.TranscriptCreateRequestInternalServerError",
-                "root.TranscriptCreateRequestServiceUnavailableError",
-                "root.TranscriptCreateRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5904,13 +4059,13 @@ docs: Real-time transcription
               "display-name": "Delete the transcript",
               "docs": "Delete the transcript",
               "errors": [
-                "root.TranscriptDeleteRequestBadRequestError",
-                "root.TranscriptDeleteRequestUnauthorizedError",
-                "root.TranscriptDeleteRequestNotFoundError",
-                "root.TranscriptDeleteRequestTooManyRequestsError",
-                "root.TranscriptDeleteRequestInternalServerError",
-                "root.TranscriptDeleteRequestServiceUnavailableError",
-                "root.TranscriptDeleteRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6116,13 +4271,13 @@ docs: Real-time transcription
               "display-name": "Get the transcript",
               "docs": "Get the transcript resource. The transcript is ready when the "status" is "completed".",
               "errors": [
-                "root.TranscriptGetRequestBadRequestError",
-                "root.TranscriptGetRequestUnauthorizedError",
-                "root.TranscriptGetRequestNotFoundError",
-                "root.TranscriptGetRequestTooManyRequestsError",
-                "root.TranscriptGetRequestInternalServerError",
-                "root.TranscriptGetRequestServiceUnavailableError",
-                "root.TranscriptGetRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6328,13 +4483,13 @@ docs: Real-time transcription
               "display-name": "Get the transcript split by paragraphs",
               "docs": "Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.",
               "errors": [
-                "root.TranscriptGetParagraphsRequestBadRequestError",
-                "root.TranscriptGetParagraphsRequestUnauthorizedError",
-                "root.TranscriptGetParagraphsRequestNotFoundError",
-                "root.TranscriptGetParagraphsRequestTooManyRequestsError",
-                "root.TranscriptGetParagraphsRequestInternalServerError",
-                "root.TranscriptGetParagraphsRequestServiceUnavailableError",
-                "root.TranscriptGetParagraphsRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6389,13 +4544,13 @@ docs: Real-time transcription
               "display-name": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
               "docs": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
               "errors": [
-                "root.TranscriptGetRedactedAudioRequestBadRequestError",
-                "root.TranscriptGetRedactedAudioRequestUnauthorizedError",
-                "root.TranscriptGetRedactedAudioRequestNotFoundError",
-                "root.TranscriptGetRedactedAudioRequestTooManyRequestsError",
-                "root.TranscriptGetRedactedAudioRequestInternalServerError",
-                "root.TranscriptGetRedactedAudioRequestServiceUnavailableError",
-                "root.TranscriptGetRedactedAudioRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6433,13 +4588,13 @@ docs: Real-time transcription
               "display-name": "Get the transcript split by sentences",
               "docs": "Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.",
               "errors": [
-                "root.TranscriptGetSentencesRequestBadRequestError",
-                "root.TranscriptGetSentencesRequestUnauthorizedError",
-                "root.TranscriptGetSentencesRequestNotFoundError",
-                "root.TranscriptGetSentencesRequestTooManyRequestsError",
-                "root.TranscriptGetSentencesRequestInternalServerError",
-                "root.TranscriptGetSentencesRequestServiceUnavailableError",
-                "root.TranscriptGetSentencesRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6494,13 +4649,13 @@ docs: Real-time transcription
               "display-name": "Export transcript as SRT or VTT captions.",
               "docs": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
               "errors": [
-                "root.TranscriptGetSubtitlesRequestBadRequestError",
-                "root.TranscriptGetSubtitlesRequestUnauthorizedError",
-                "root.TranscriptGetSubtitlesRequestNotFoundError",
-                "root.TranscriptGetSubtitlesRequestTooManyRequestsError",
-                "root.TranscriptGetSubtitlesRequestInternalServerError",
-                "root.TranscriptGetSubtitlesRequestServiceUnavailableError",
-                "root.TranscriptGetSubtitlesRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -6538,13 +4693,13 @@ docs: Real-time transcription
               "display-name": "List transcripts",
               "docs": "Retrieve a list of transcripts you have created.",
               "errors": [
-                "root.TranscriptListRequestBadRequestError",
-                "root.TranscriptListRequestUnauthorizedError",
-                "root.TranscriptListRequestNotFoundError",
-                "root.TranscriptListRequestTooManyRequestsError",
-                "root.TranscriptListRequestInternalServerError",
-                "root.TranscriptListRequestServiceUnavailableError",
-                "root.TranscriptListRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6624,13 +4779,13 @@ docs: Real-time transcription
               "display-name": "Search the given transcript for words, numbers, or phrases",
               "docs": "Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.",
               "errors": [
-                "root.TranscriptWordSearchRequestBadRequestError",
-                "root.TranscriptWordSearchRequestUnauthorizedError",
-                "root.TranscriptWordSearchRequestNotFoundError",
-                "root.TranscriptWordSearchRequestTooManyRequestsError",
-                "root.TranscriptWordSearchRequestInternalServerError",
-                "root.TranscriptWordSearchRequestServiceUnavailableError",
-                "root.TranscriptWordSearchRequestGatewayTimeoutError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
+                "root.ServiceUnavailableError",
+                "root.GatewayTimeoutError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -6752,13 +4907,13 @@ service:
         type: root.TranscriptList
         status-code: 200
       errors:
-        - root.TranscriptListRequestBadRequestError
-        - root.TranscriptListRequestUnauthorizedError
-        - root.TranscriptListRequestNotFoundError
-        - root.TranscriptListRequestTooManyRequestsError
-        - root.TranscriptListRequestInternalServerError
-        - root.TranscriptListRequestServiceUnavailableError
-        - root.TranscriptListRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - response:
             body:
@@ -6800,13 +4955,13 @@ service:
         type: root.Transcript
         status-code: 201
       errors:
-        - root.TranscriptCreateRequestBadRequestError
-        - root.TranscriptCreateRequestUnauthorizedError
-        - root.TranscriptCreateRequestNotFoundError
-        - root.TranscriptCreateRequestTooManyRequestsError
-        - root.TranscriptCreateRequestInternalServerError
-        - root.TranscriptCreateRequestServiceUnavailableError
-        - root.TranscriptCreateRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - request:
             audio_url: audio_url
@@ -6953,13 +5108,13 @@ service:
         type: root.Transcript
         status-code: 200
       errors:
-        - root.TranscriptGetRequestBadRequestError
-        - root.TranscriptGetRequestUnauthorizedError
-        - root.TranscriptGetRequestNotFoundError
-        - root.TranscriptGetRequestTooManyRequestsError
-        - root.TranscriptGetRequestInternalServerError
-        - root.TranscriptGetRequestServiceUnavailableError
-        - root.TranscriptGetRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7104,13 +5259,13 @@ service:
         type: root.Transcript
         status-code: 200
       errors:
-        - root.TranscriptDeleteRequestBadRequestError
-        - root.TranscriptDeleteRequestUnauthorizedError
-        - root.TranscriptDeleteRequestNotFoundError
-        - root.TranscriptDeleteRequestTooManyRequestsError
-        - root.TranscriptDeleteRequestInternalServerError
-        - root.TranscriptDeleteRequestServiceUnavailableError
-        - root.TranscriptDeleteRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7266,13 +5421,13 @@ service:
         type: text
         status-code: 200
       errors:
-        - root.TranscriptGetSubtitlesRequestBadRequestError
-        - root.TranscriptGetSubtitlesRequestUnauthorizedError
-        - root.TranscriptGetSubtitlesRequestNotFoundError
-        - root.TranscriptGetSubtitlesRequestTooManyRequestsError
-        - root.TranscriptGetSubtitlesRequestInternalServerError
-        - root.TranscriptGetSubtitlesRequestServiceUnavailableError
-        - root.TranscriptGetSubtitlesRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
     getSentences:
       path: /v2/transcript/{transcript_id}/sentences
       method: GET
@@ -7293,13 +5448,13 @@ service:
         type: root.SentencesResponse
         status-code: 200
       errors:
-        - root.TranscriptGetSentencesRequestBadRequestError
-        - root.TranscriptGetSentencesRequestUnauthorizedError
-        - root.TranscriptGetSentencesRequestNotFoundError
-        - root.TranscriptGetSentencesRequestTooManyRequestsError
-        - root.TranscriptGetSentencesRequestInternalServerError
-        - root.TranscriptGetSentencesRequestServiceUnavailableError
-        - root.TranscriptGetSentencesRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7338,13 +5493,13 @@ service:
         type: root.ParagraphsResponse
         status-code: 200
       errors:
-        - root.TranscriptGetParagraphsRequestBadRequestError
-        - root.TranscriptGetParagraphsRequestUnauthorizedError
-        - root.TranscriptGetParagraphsRequestNotFoundError
-        - root.TranscriptGetParagraphsRequestTooManyRequestsError
-        - root.TranscriptGetParagraphsRequestInternalServerError
-        - root.TranscriptGetParagraphsRequestServiceUnavailableError
-        - root.TranscriptGetParagraphsRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7390,13 +5545,13 @@ service:
         type: root.WordSearchResponse
         status-code: 200
       errors:
-        - root.TranscriptWordSearchRequestBadRequestError
-        - root.TranscriptWordSearchRequestUnauthorizedError
-        - root.TranscriptWordSearchRequestNotFoundError
-        - root.TranscriptWordSearchRequestTooManyRequestsError
-        - root.TranscriptWordSearchRequestInternalServerError
-        - root.TranscriptWordSearchRequestServiceUnavailableError
-        - root.TranscriptWordSearchRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
     getRedactedAudio:
       path: /v2/transcript/{transcript_id}/redacted-audio
       method: GET
@@ -7420,13 +5575,13 @@ service:
         type: root.RedactedAudioResponse
         status-code: 200
       errors:
-        - root.TranscriptGetRedactedAudioRequestBadRequestError
-        - root.TranscriptGetRedactedAudioRequestUnauthorizedError
-        - root.TranscriptGetRedactedAudioRequestNotFoundError
-        - root.TranscriptGetRedactedAudioRequestTooManyRequestsError
-        - root.TranscriptGetRedactedAudioRequestInternalServerError
-        - root.TranscriptGetRedactedAudioRequestServiceUnavailableError
-        - root.TranscriptGetRedactedAudioRequestGatewayTimeoutError
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+        - root.GatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id

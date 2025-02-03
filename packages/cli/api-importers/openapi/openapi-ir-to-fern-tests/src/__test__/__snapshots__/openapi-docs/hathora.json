@@ -6,67 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "CreateAppRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreateAppRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "CreateBuildRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreateBuildRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "CreateBuildRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "CreateDeploymentRequestBadRequestError": {
+          "BadRequestError": {
             "docs": "",
             "examples": [
               {
@@ -78,7 +18,7 @@
             "status-code": 400,
             "type": "string",
           },
-          "CreateDeploymentRequestInternalServerError": {
+          "InternalServerError": {
             "docs": "",
             "examples": [
               {
@@ -90,7 +30,7 @@
             "status-code": 500,
             "type": "string",
           },
-          "CreateDeploymentRequestNotFoundError": {
+          "NotFoundError": {
             "docs": "",
             "examples": [
               {
@@ -102,31 +42,7 @@
             "status-code": 404,
             "type": "string",
           },
-          "CreateLobbyRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreateLobbyRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "CreateLobbyRequestTooManyRequestsError": {
+          "TooManyRequestsError": {
             "docs": "",
             "examples": [
               {
@@ -138,7 +54,7 @@
             "status-code": 429,
             "type": "string",
           },
-          "CreateLobbyRequestUnauthorizedError": {
+          "UnauthorizedError": {
             "docs": "",
             "examples": [
               {
@@ -150,7 +66,7 @@
             "status-code": 401,
             "type": "string",
           },
-          "CreateLobbyRequestUnprocessableEntityError": {
+          "UnprocessableEntityError": {
             "docs": "",
             "examples": [
               {
@@ -160,822 +76,6 @@
               },
             ],
             "status-code": 422,
-            "type": "string",
-          },
-          "CreateLocalLobbyRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreateLocalLobbyRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "CreateLocalLobbyRequestTooManyRequestsError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 429,
-            "type": "string",
-          },
-          "CreateLocalLobbyRequestUnauthorizedError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 401,
-            "type": "string",
-          },
-          "CreateLocalLobbyRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "CreatePrivateLobbyDeprecatedRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreatePrivateLobbyDeprecatedRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "CreatePrivateLobbyDeprecatedRequestTooManyRequestsError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 429,
-            "type": "string",
-          },
-          "CreatePrivateLobbyDeprecatedRequestUnauthorizedError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 401,
-            "type": "string",
-          },
-          "CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "CreatePrivateLobbyRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreatePrivateLobbyRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "CreatePrivateLobbyRequestTooManyRequestsError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 429,
-            "type": "string",
-          },
-          "CreatePrivateLobbyRequestUnauthorizedError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 401,
-            "type": "string",
-          },
-          "CreatePrivateLobbyRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "CreatePublicLobbyDeprecatedRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreatePublicLobbyDeprecatedRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "CreatePublicLobbyDeprecatedRequestTooManyRequestsError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 429,
-            "type": "string",
-          },
-          "CreatePublicLobbyDeprecatedRequestUnauthorizedError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 401,
-            "type": "string",
-          },
-          "CreatePublicLobbyDeprecatedRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "CreatePublicLobbyRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreatePublicLobbyRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "CreatePublicLobbyRequestTooManyRequestsError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 429,
-            "type": "string",
-          },
-          "CreatePublicLobbyRequestUnauthorizedError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 401,
-            "type": "string",
-          },
-          "CreatePublicLobbyRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "CreateRoomRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreateRoomRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "DeleteAppRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "DeleteAppRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "DeleteBuildRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "DeleteBuildRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "DeleteBuildRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "DestroyRoomRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "DestroyRoomRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetActiveRoomsForProcessRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetAppInfoRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetBuildInfoRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetBuildsRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetConnectionInfoRequestBadRequestError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 400,
-            "type": "string",
-          },
-          "GetConnectionInfoRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "GetConnectionInfoRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetDeploymentInfoRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetDeploymentsRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetInactiveRoomsForProcessRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetLobbyInfoRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetLogsForAppRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetLogsForDeploymentRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetLogsForProcessRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetMetricsRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetMetricsRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "GetProcessInfoRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetRoomInfoRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetRunningProcessesRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetStoppedProcessesRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "ListActivePublicLobbiesDeprecatedRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "ListActivePublicLobbiesDeprecatedRequestUnauthorizedError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 401,
-            "type": "string",
-          },
-          "LoginAnonymousRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "LoginGoogleRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "LoginGoogleRequestUnauthorizedError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 401,
-            "type": "string",
-          },
-          "LoginNicknameRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "RunBuildRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "RunBuildRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "SetLobbyStateRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "SetLobbyStateRequestUnprocessableEntityError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 422,
-            "type": "string",
-          },
-          "SuspendRoomRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "SuspendRoomRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "UpdateAppRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "UpdateAppRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
             "type": "string",
           },
         },
@@ -1475,488 +575,38 @@
         },
       },
       "rawContents": "errors:
-  CreateAppRequestUnprocessableEntityError:
+  UnprocessableEntityError:
     status-code: 422
     type: string
     docs: ''
     examples:
       - value: string
-  CreateAppRequestInternalServerError:
+  InternalServerError:
     status-code: 500
     type: string
     docs: ''
     examples:
       - value: string
-  UpdateAppRequestNotFoundError:
+  NotFoundError:
     status-code: 404
     type: string
     docs: ''
     examples:
       - value: string
-  UpdateAppRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetAppInfoRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  DeleteAppRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  DeleteAppRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  LoginAnonymousRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  LoginNicknameRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  LoginGoogleRequestUnauthorizedError:
+  UnauthorizedError:
     status-code: 401
     type: string
     docs: ''
     examples:
       - value: string
-  LoginGoogleRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetBuildsRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetBuildInfoRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateBuildRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateBuildRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateBuildRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  RunBuildRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  RunBuildRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  DeleteBuildRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  DeleteBuildRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  DeleteBuildRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetDeploymentsRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetDeploymentInfoRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateDeploymentRequestBadRequestError:
+  BadRequestError:
     status-code: 400
     type: string
     docs: ''
     examples:
       - value: string
-  CreateDeploymentRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateDeploymentRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyDeprecatedRequestUnauthorizedError:
-    status-code: 401
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyDeprecatedRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyDeprecatedRequestTooManyRequestsError:
+  TooManyRequestsError:
     status-code: 429
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyDeprecatedRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyDeprecatedRequestUnauthorizedError:
-    status-code: 401
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyDeprecatedRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyDeprecatedRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyDeprecatedRequestTooManyRequestsError:
-    status-code: 429
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyDeprecatedRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  ListActivePublicLobbiesDeprecatedRequestUnauthorizedError:
-    status-code: 401
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  ListActivePublicLobbiesDeprecatedRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyRequestUnauthorizedError:
-    status-code: 401
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyRequestTooManyRequestsError:
-    status-code: 429
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePrivateLobbyRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyRequestUnauthorizedError:
-    status-code: 401
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyRequestTooManyRequestsError:
-    status-code: 429
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreatePublicLobbyRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLocalLobbyRequestUnauthorizedError:
-    status-code: 401
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLocalLobbyRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLocalLobbyRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLocalLobbyRequestTooManyRequestsError:
-    status-code: 429
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLocalLobbyRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLobbyRequestUnauthorizedError:
-    status-code: 401
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLobbyRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLobbyRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLobbyRequestTooManyRequestsError:
-    status-code: 429
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateLobbyRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetLobbyInfoRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  SetLobbyStateRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  SetLobbyStateRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetLogsForAppRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetLogsForProcessRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetLogsForDeploymentRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetMetricsRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetMetricsRequestUnprocessableEntityError:
-    status-code: 422
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetRunningProcessesRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetStoppedProcessesRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetProcessInfoRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateRoomRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  CreateRoomRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetRoomInfoRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetActiveRoomsForProcessRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetInactiveRoomsForProcessRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  DestroyRoomRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  DestroyRoomRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  SuspendRoomRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  SuspendRoomRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetConnectionInfoRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetConnectionInfoRequestNotFoundError:
-    status-code: 404
-    type: string
-    docs: ''
-    examples:
-      - value: string
-  GetConnectionInfoRequestInternalServerError:
-    status-code: 500
     type: string
     docs: ''
     examples:
@@ -2297,8 +947,8 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.CreateAppRequestUnprocessableEntityError",
-                "root.CreateAppRequestInternalServerError",
+                "root.UnprocessableEntityError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -2345,8 +995,8 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.DeleteAppRequestNotFoundError",
-                "root.DeleteAppRequestInternalServerError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -2369,7 +1019,7 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetAppInfoRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -2471,8 +1121,8 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.UpdateAppRequestNotFoundError",
-                "root.UpdateAppRequestInternalServerError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -2586,8 +1236,8 @@ service:
         type: root.Application
         status-code: 201
       errors:
-        - root.CreateAppRequestUnprocessableEntityError
-        - root.CreateAppRequestInternalServerError
+        - root.UnprocessableEntityError
+        - root.InternalServerError
       examples:
         - request:
             authConfiguration: {}
@@ -2621,8 +1271,8 @@ service:
         type: root.Application
         status-code: 200
       errors:
-        - root.UpdateAppRequestNotFoundError
-        - root.UpdateAppRequestInternalServerError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -2655,7 +1305,7 @@ service:
         type: root.Application
         status-code: 200
       errors:
-        - root.GetAppInfoRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -2681,8 +1331,8 @@ service:
       path-parameters:
         appId: root.AppId
       errors:
-        - root.DeleteAppRequestNotFoundError
-        - root.DeleteAppRequestInternalServerError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -2704,7 +1354,7 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.LoginAnonymousRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -2737,8 +1387,8 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.LoginGoogleRequestUnauthorizedError",
-                "root.LoginGoogleRequestNotFoundError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -2786,7 +1436,7 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.LoginNicknameRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -2903,7 +1553,7 @@ service:
         type: LoginAnonymousResponse
         status-code: 200
       errors:
-        - root.LoginAnonymousRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -2929,7 +1579,7 @@ service:
         type: LoginNicknameResponse
         status-code: 200
       errors:
-        - root.LoginNicknameRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -2957,8 +1607,8 @@ service:
         type: LoginGoogleResponse
         status-code: 200
       errors:
-        - root.LoginGoogleRequestUnauthorizedError
-        - root.LoginGoogleRequestNotFoundError
+        - root.UnauthorizedError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -2985,9 +1635,9 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.CreateBuildRequestNotFoundError",
-                "root.CreateBuildRequestUnprocessableEntityError",
-                "root.CreateBuildRequestInternalServerError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -3034,9 +1684,9 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.DeleteBuildRequestNotFoundError",
-                "root.DeleteBuildRequestUnprocessableEntityError",
-                "root.DeleteBuildRequestInternalServerError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -3061,7 +1711,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetBuildInfoRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -3110,7 +1760,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetBuildsRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -3159,8 +1809,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.RunBuildRequestNotFoundError",
-                "root.RunBuildRequestInternalServerError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "method": "POST",
               "pagination": undefined,
@@ -3215,7 +1865,7 @@ service:
         type: list<root.Build>
         status-code: 200
       errors:
-        - root.GetBuildsRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -3247,7 +1897,7 @@ service:
         type: root.Build
         status-code: 200
       errors:
-        - root.GetBuildInfoRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -3279,9 +1929,9 @@ service:
         type: root.Build
         status-code: 201
       errors:
-        - root.CreateBuildRequestNotFoundError
-        - root.CreateBuildRequestUnprocessableEntityError
-        - root.CreateBuildRequestInternalServerError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -3319,8 +1969,8 @@ service:
         type: file
         status-code: 200
       errors:
-        - root.RunBuildRequestNotFoundError
-        - root.RunBuildRequestInternalServerError
+        - root.NotFoundError
+        - root.InternalServerError
     DeleteBuild:
       path: /builds/v1/{appId}/delete/{buildId}
       method: DELETE
@@ -3331,9 +1981,9 @@ service:
         appId: root.AppId
         buildId: root.BuildId
       errors:
-        - root.DeleteBuildRequestNotFoundError
-        - root.DeleteBuildRequestUnprocessableEntityError
-        - root.DeleteBuildRequestInternalServerError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -3356,9 +2006,9 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.CreateDeploymentRequestBadRequestError",
-                "root.CreateDeploymentRequestNotFoundError",
-                "root.CreateDeploymentRequestInternalServerError",
+                "root.BadRequestError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -3425,7 +2075,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetDeploymentInfoRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -3476,7 +2126,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetDeploymentsRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -3548,7 +2198,7 @@ service:
         type: list<root.Deployment>
         status-code: 200
       errors:
-        - root.GetDeploymentsRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -3582,7 +2232,7 @@ service:
         type: root.Deployment
         status-code: 200
       errors:
-        - root.GetDeploymentInfoRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -3620,9 +2270,9 @@ service:
         type: root.Deployment
         status-code: 201
       errors:
-        - root.CreateDeploymentRequestBadRequestError
-        - root.CreateDeploymentRequestNotFoundError
-        - root.CreateDeploymentRequestInternalServerError
+        - root.BadRequestError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -3740,11 +2390,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.CreatePrivateLobbyDeprecatedRequestUnauthorizedError",
-                "root.CreatePrivateLobbyDeprecatedRequestNotFoundError",
-                "root.CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError",
-                "root.CreatePrivateLobbyDeprecatedRequestTooManyRequestsError",
-                "root.CreatePrivateLobbyDeprecatedRequestInternalServerError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -3792,11 +2442,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.CreatePublicLobbyDeprecatedRequestUnauthorizedError",
-                "root.CreatePublicLobbyDeprecatedRequestNotFoundError",
-                "root.CreatePublicLobbyDeprecatedRequestUnprocessableEntityError",
-                "root.CreatePublicLobbyDeprecatedRequestTooManyRequestsError",
-                "root.CreatePublicLobbyDeprecatedRequestInternalServerError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -3844,8 +2494,8 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.ListActivePublicLobbiesDeprecatedRequestUnauthorizedError",
-                "root.ListActivePublicLobbiesDeprecatedRequestNotFoundError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -3939,11 +2589,11 @@ service:
         status-code: 200
       availability: deprecated
       errors:
-        - root.CreatePrivateLobbyDeprecatedRequestUnauthorizedError
-        - root.CreatePrivateLobbyDeprecatedRequestNotFoundError
-        - root.CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError
-        - root.CreatePrivateLobbyDeprecatedRequestTooManyRequestsError
-        - root.CreatePrivateLobbyDeprecatedRequestInternalServerError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.TooManyRequestsError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -3974,11 +2624,11 @@ service:
         status-code: 200
       availability: deprecated
       errors:
-        - root.CreatePublicLobbyDeprecatedRequestUnauthorizedError
-        - root.CreatePublicLobbyDeprecatedRequestNotFoundError
-        - root.CreatePublicLobbyDeprecatedRequestUnprocessableEntityError
-        - root.CreatePublicLobbyDeprecatedRequestTooManyRequestsError
-        - root.CreatePublicLobbyDeprecatedRequestInternalServerError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.TooManyRequestsError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -4009,8 +2659,8 @@ service:
         status-code: 200
       availability: deprecated
       errors:
-        - root.ListActivePublicLobbiesDeprecatedRequestUnauthorizedError
-        - root.ListActivePublicLobbiesDeprecatedRequestNotFoundError
+        - root.UnauthorizedError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -4047,11 +2697,11 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.CreateLobbyRequestUnauthorizedError",
-                "root.CreateLobbyRequestNotFoundError",
-                "root.CreateLobbyRequestUnprocessableEntityError",
-                "root.CreateLobbyRequestTooManyRequestsError",
-                "root.CreateLobbyRequestInternalServerError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -4128,11 +2778,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.CreateLocalLobbyRequestUnauthorizedError",
-                "root.CreateLocalLobbyRequestNotFoundError",
-                "root.CreateLocalLobbyRequestUnprocessableEntityError",
-                "root.CreateLocalLobbyRequestTooManyRequestsError",
-                "root.CreateLocalLobbyRequestInternalServerError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -4207,11 +2857,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.CreatePrivateLobbyRequestUnauthorizedError",
-                "root.CreatePrivateLobbyRequestNotFoundError",
-                "root.CreatePrivateLobbyRequestUnprocessableEntityError",
-                "root.CreatePrivateLobbyRequestTooManyRequestsError",
-                "root.CreatePrivateLobbyRequestInternalServerError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -4286,11 +2936,11 @@ service:
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
-                "root.CreatePublicLobbyRequestUnauthorizedError",
-                "root.CreatePublicLobbyRequestNotFoundError",
-                "root.CreatePublicLobbyRequestUnprocessableEntityError",
-                "root.CreatePublicLobbyRequestTooManyRequestsError",
-                "root.CreatePublicLobbyRequestInternalServerError",
+                "root.UnauthorizedError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
+                "root.TooManyRequestsError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -4364,7 +3014,7 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.GetLobbyInfoRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -4461,8 +3111,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.SetLobbyStateRequestNotFoundError",
-                "root.SetLobbyStateRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4574,11 +3224,11 @@ service:
         status-code: 201
       availability: deprecated
       errors:
-        - root.CreatePrivateLobbyRequestUnauthorizedError
-        - root.CreatePrivateLobbyRequestNotFoundError
-        - root.CreatePrivateLobbyRequestUnprocessableEntityError
-        - root.CreatePrivateLobbyRequestTooManyRequestsError
-        - root.CreatePrivateLobbyRequestInternalServerError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.TooManyRequestsError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -4628,11 +3278,11 @@ service:
         status-code: 201
       availability: deprecated
       errors:
-        - root.CreatePublicLobbyRequestUnauthorizedError
-        - root.CreatePublicLobbyRequestNotFoundError
-        - root.CreatePublicLobbyRequestUnprocessableEntityError
-        - root.CreatePublicLobbyRequestTooManyRequestsError
-        - root.CreatePublicLobbyRequestInternalServerError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.TooManyRequestsError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -4682,11 +3332,11 @@ service:
         status-code: 201
       availability: deprecated
       errors:
-        - root.CreateLocalLobbyRequestUnauthorizedError
-        - root.CreateLocalLobbyRequestNotFoundError
-        - root.CreateLocalLobbyRequestUnprocessableEntityError
-        - root.CreateLocalLobbyRequestTooManyRequestsError
-        - root.CreateLocalLobbyRequestInternalServerError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.TooManyRequestsError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -4736,11 +3386,11 @@ service:
         type: root.Lobby
         status-code: 201
       errors:
-        - root.CreateLobbyRequestUnauthorizedError
-        - root.CreateLobbyRequestNotFoundError
-        - root.CreateLobbyRequestUnprocessableEntityError
-        - root.CreateLobbyRequestTooManyRequestsError
-        - root.CreateLobbyRequestInternalServerError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.TooManyRequestsError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -4810,7 +3460,7 @@ service:
         type: root.Lobby
         status-code: 200
       errors:
-        - root.GetLobbyInfoRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -4848,8 +3498,8 @@ service:
         type: root.Lobby
         status-code: 200
       errors:
-        - root.SetLobbyStateRequestNotFoundError
-        - root.SetLobbyStateRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             appId: appId
@@ -4897,7 +3547,7 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetLogsForAppRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -4926,7 +3576,7 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetLogsForDeploymentRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -4955,7 +3605,7 @@ types:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetLogsForProcessRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -5011,7 +3661,7 @@ service:
         type: file
         status-code: 200
       errors:
-        - root.GetLogsForAppRequestNotFoundError
+        - root.NotFoundError
     GetLogsForProcess:
       path: /logs/v1/{appId}/process/{processId}
       method: GET
@@ -5031,7 +3681,7 @@ service:
         type: file
         status-code: 200
       errors:
-        - root.GetLogsForProcessRequestNotFoundError
+        - root.NotFoundError
     GetLogsForDeployment:
       path: /logs/v1/{appId}/deployment/{deploymentId}
       method: GET
@@ -5051,7 +3701,7 @@ service:
         type: text
         status-code: 200
       errors:
-        - root.GetLogsForDeploymentRequestNotFoundError
+        - root.NotFoundError
   source:
     openapi: ../openapi.json
 ",
@@ -5070,8 +3720,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetMetricsRequestNotFoundError",
-                "root.GetMetricsRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5172,8 +3822,8 @@ service:
         type: root.MetricsResponse
         status-code: 200
       errors:
-        - root.GetMetricsRequestNotFoundError
-        - root.GetMetricsRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             appId: appId
@@ -5210,7 +3860,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetProcessInfoRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -5260,7 +3910,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetRunningProcessesRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -5324,7 +3974,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetStoppedProcessesRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -5405,7 +4055,7 @@ service:
         type: list<root.ProcessWithRooms>
         status-code: 200
       errors:
-        - root.GetRunningProcessesRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -5449,7 +4099,7 @@ service:
         type: list<root.Process>
         status-code: 200
       errors:
-        - root.GetStoppedProcessesRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -5485,7 +4135,7 @@ service:
         type: root.Process
         status-code: 200
       errors:
-        - root.GetProcessInfoRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -5526,8 +4176,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.CreateRoomRequestNotFoundError",
-                "root.CreateRoomRequestInternalServerError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -5573,8 +4223,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.DestroyRoomRequestNotFoundError",
-                "root.DestroyRoomRequestInternalServerError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -5599,7 +4249,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetActiveRoomsForProcessRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -5644,9 +4294,9 @@ service:
               "auth": false,
               "docs": undefined,
               "errors": [
-                "root.GetConnectionInfoRequestBadRequestError",
-                "root.GetConnectionInfoRequestNotFoundError",
-                "root.GetConnectionInfoRequestInternalServerError",
+                "root.BadRequestError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -5685,7 +4335,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetInactiveRoomsForProcessRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -5730,7 +4380,7 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.GetRoomInfoRequestNotFoundError",
+                "root.NotFoundError",
               ],
               "examples": [
                 {
@@ -5781,8 +4431,8 @@ service:
               "auth": true,
               "docs": undefined,
               "errors": [
-                "root.SuspendRoomRequestNotFoundError",
-                "root.SuspendRoomRequestInternalServerError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -5834,8 +4484,8 @@ service:
         type: root.RoomId
         status-code: 201
       errors:
-        - root.CreateRoomRequestNotFoundError
-        - root.CreateRoomRequestInternalServerError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -5857,7 +4507,7 @@ service:
         type: root.Room
         status-code: 200
       errors:
-        - root.GetRoomInfoRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -5891,7 +4541,7 @@ service:
         type: list<root.RoomWithoutAllocations>
         status-code: 200
       errors:
-        - root.GetActiveRoomsForProcessRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -5920,7 +4570,7 @@ service:
         type: list<root.RoomWithoutAllocations>
         status-code: 200
       errors:
-        - root.GetInactiveRoomsForProcessRequestNotFoundError
+        - root.NotFoundError
       examples:
         - path-parameters:
             appId: appId
@@ -5945,8 +4595,8 @@ service:
         appId: root.AppId
         roomId: root.RoomId
       errors:
-        - root.DestroyRoomRequestNotFoundError
-        - root.DestroyRoomRequestInternalServerError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -5961,8 +4611,8 @@ service:
         appId: root.AppId
         roomId: root.RoomId
       errors:
-        - root.SuspendRoomRequestNotFoundError
-        - root.SuspendRoomRequestInternalServerError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId
@@ -5981,9 +4631,9 @@ service:
         type: root.ConnectionInfo
         status-code: 200
       errors:
-        - root.GetConnectionInfoRequestBadRequestError
-        - root.GetConnectionInfoRequestNotFoundError
-        - root.GetConnectionInfoRequestInternalServerError
+        - root.BadRequestError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - path-parameters:
             appId: appId

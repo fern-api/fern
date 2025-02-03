@@ -6,12 +6,12 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "AuthGetTokenRequestBadRequestError": {
+          "BadRequestError": {
             "docs": "Bad request",
             "status-code": 400,
             "type": "unknown",
           },
-          "AuthGetTokenRequestUnauthorizedError": {
+          "UnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
@@ -19,11 +19,11 @@
         },
       },
       "rawContents": "errors:
-  AuthGetTokenRequestBadRequestError:
+  BadRequestError:
     status-code: 400
     type: unknown
     docs: Bad request
-  AuthGetTokenRequestUnauthorizedError:
+  UnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
@@ -44,8 +44,8 @@
               "display-name": "Request an access token",
               "docs": "Exchange credentials or refresh token for an access token",
               "errors": [
-                "root.AuthGetTokenRequestBadRequestError",
-                "root.AuthGetTokenRequestUnauthorizedError",
+                "root.BadRequestError",
+                "root.UnauthorizedError",
               ],
               "examples": [
                 {
@@ -209,8 +209,8 @@ service:
         type: AuthGetTokenResponse
         status-code: 200
       errors:
-        - root.AuthGetTokenRequestBadRequestError
-        - root.AuthGetTokenRequestUnauthorizedError
+        - root.BadRequestError
+        - root.UnauthorizedError
       examples:
         - request:
             grant_type: password

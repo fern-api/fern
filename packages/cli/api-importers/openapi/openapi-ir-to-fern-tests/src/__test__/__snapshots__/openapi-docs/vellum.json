@@ -6,8 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "DocumentsUploadRequestBadRequestError": {
-            "docs": "",
+          "BadRequestError": {
             "examples": [
               {
                 "docs": undefined,
@@ -18,149 +17,9 @@
               },
             ],
             "status-code": 400,
-            "type": "UploadDocumentErrorResponse",
+            "type": "unknown",
           },
-          "DocumentsUploadRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "UploadDocumentErrorResponse",
-          },
-          "DocumentsUploadRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "UploadDocumentErrorResponse",
-          },
-          "GenerateRequestBadRequestError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "GenerateErrorResponse",
-          },
-          "GenerateRequestForbiddenError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 403,
-            "type": "GenerateErrorResponse",
-          },
-          "GenerateRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "GenerateErrorResponse",
-          },
-          "GenerateRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "GenerateErrorResponse",
-          },
-          "GenerateStreamRequestBadRequestError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "GenerateErrorResponse",
-          },
-          "GenerateStreamRequestForbiddenError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 403,
-            "type": "GenerateErrorResponse",
-          },
-          "GenerateStreamRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "GenerateErrorResponse",
-          },
-          "GenerateStreamRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "GenerateErrorResponse",
-          },
-          "RegisterPromptRequestConflictError": {
+          "ConflictError": {
             "docs": "",
             "examples": [
               {
@@ -174,7 +33,7 @@
             "status-code": 409,
             "type": "RegisterPromptErrorResponse",
           },
-          "SearchRequestBadRequestError": {
+          "ForbiddenError": {
             "docs": "",
             "examples": [
               {
@@ -185,11 +44,10 @@
                 },
               },
             ],
-            "status-code": 400,
-            "type": "SearchErrorResponse",
+            "status-code": 403,
+            "type": "GenerateErrorResponse",
           },
-          "SearchRequestInternalServerError": {
-            "docs": "",
+          "InternalServerError": {
             "examples": [
               {
                 "docs": undefined,
@@ -200,10 +58,9 @@
               },
             ],
             "status-code": 500,
-            "type": "SearchErrorResponse",
+            "type": "unknown",
           },
-          "SearchRequestNotFoundError": {
-            "docs": "",
+          "NotFoundError": {
             "examples": [
               {
                 "docs": undefined,
@@ -214,49 +71,7 @@
               },
             ],
             "status-code": 404,
-            "type": "SearchErrorResponse",
-          },
-          "SubmitCompletionActualsRequestBadRequestError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 400,
-            "type": "SubmitCompletionActualsErrorResponse",
-          },
-          "SubmitCompletionActualsRequestInternalServerError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 500,
-            "type": "SubmitCompletionActualsErrorResponse",
-          },
-          "SubmitCompletionActualsRequestNotFoundError": {
-            "docs": "",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {
-                  "detail": "detail",
-                },
-              },
-            ],
-            "status-code": 404,
-            "type": "SubmitCompletionActualsErrorResponse",
+            "type": "unknown",
           },
         },
         "service": {
@@ -394,10 +209,10 @@ Generate a completion using a previously defined deployment.
 
 **Note:** Uses a base url of `https://predict.vellum.ai`.",
               "errors": [
-                "GenerateRequestBadRequestError",
-                "GenerateRequestForbiddenError",
-                "GenerateRequestNotFoundError",
-                "GenerateRequestInternalServerError",
+                "BadRequestError",
+                "ForbiddenError",
+                "NotFoundError",
+                "InternalServerError",
               ],
               "examples": [
                 {
@@ -492,10 +307,10 @@ Generate a stream of completions using a previously defined deployment.
 
 **Note:** Uses a base url of `https://predict.vellum.ai`.",
               "errors": [
-                "GenerateStreamRequestBadRequestError",
-                "GenerateStreamRequestForbiddenError",
-                "GenerateStreamRequestNotFoundError",
-                "GenerateStreamRequestInternalServerError",
+                "BadRequestError",
+                "ForbiddenError",
+                "NotFoundError",
+                "InternalServerError",
               ],
               "examples": [
                 {
@@ -590,9 +405,9 @@ Perform a search against a document index.
 
 **Note:** Uses a base url of `https://predict.vellum.ai`.",
               "errors": [
-                "SearchRequestBadRequestError",
-                "SearchRequestNotFoundError",
-                "SearchRequestInternalServerError",
+                "BadRequestError",
+                "NotFoundError",
+                "InternalServerError",
               ],
               "examples": [
                 {
@@ -684,9 +499,9 @@ Used to submit feedback regarding the quality of previously generated completion
 
 **Note:** Uses a base url of `https://predict.vellum.ai`.",
               "errors": [
-                "SubmitCompletionActualsRequestBadRequestError",
-                "SubmitCompletionActualsRequestNotFoundError",
-                "SubmitCompletionActualsRequestInternalServerError",
+                "BadRequestError",
+                "NotFoundError",
+                "InternalServerError",
               ],
               "examples": [
                 {
@@ -2909,10 +2724,10 @@ Used to submit feedback regarding the quality of previously generated completion
         status-code: 200
       url: Predict
       errors:
-        - GenerateRequestBadRequestError
-        - GenerateRequestForbiddenError
-        - GenerateRequestNotFoundError
-        - GenerateRequestInternalServerError
+        - BadRequestError
+        - ForbiddenError
+        - NotFoundError
+        - InternalServerError
       examples:
         - request:
             requests:
@@ -2978,10 +2793,10 @@ Used to submit feedback regarding the quality of previously generated completion
         format: json
       url: Predict
       errors:
-        - GenerateStreamRequestBadRequestError
-        - GenerateStreamRequestForbiddenError
-        - GenerateStreamRequestNotFoundError
-        - GenerateStreamRequestInternalServerError
+        - BadRequestError
+        - ForbiddenError
+        - NotFoundError
+        - InternalServerError
       examples:
         - request:
             requests:
@@ -3047,9 +2862,9 @@ Used to submit feedback regarding the quality of previously generated completion
         status-code: 200
       url: Predict
       errors:
-        - SearchRequestBadRequestError
-        - SearchRequestNotFoundError
-        - SearchRequestInternalServerError
+        - BadRequestError
+        - NotFoundError
+        - InternalServerError
       examples:
         - request:
             query: query
@@ -3105,9 +2920,9 @@ Used to submit feedback regarding the quality of previously generated completion
         content-type: application/json
       url: Predict
       errors:
-        - SubmitCompletionActualsRequestBadRequestError
-        - SubmitCompletionActualsRequestNotFoundError
-        - SubmitCompletionActualsRequestInternalServerError
+        - BadRequestError
+        - NotFoundError
+        - InternalServerError
       examples:
         - request:
             actuals:
@@ -3115,128 +2930,34 @@ Used to submit feedback regarding the quality of previously generated completion
   source:
     openapi: ../openapi.yml
 errors:
-  GenerateRequestBadRequestError:
+  BadRequestError:
     status-code: 400
-    type: GenerateErrorResponse
-    docs: ''
+    type: unknown
     examples:
       - value:
           detail: detail
-  GenerateRequestForbiddenError:
+  ForbiddenError:
     status-code: 403
     type: GenerateErrorResponse
     docs: ''
     examples:
       - value:
           detail: detail
-  GenerateRequestNotFoundError:
+  NotFoundError:
     status-code: 404
-    type: GenerateErrorResponse
-    docs: ''
+    type: unknown
     examples:
       - value:
           detail: detail
-  GenerateRequestInternalServerError:
+  InternalServerError:
     status-code: 500
-    type: GenerateErrorResponse
-    docs: ''
+    type: unknown
     examples:
       - value:
           detail: detail
-  GenerateStreamRequestBadRequestError:
-    status-code: 400
-    type: GenerateErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  GenerateStreamRequestForbiddenError:
-    status-code: 403
-    type: GenerateErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  GenerateStreamRequestNotFoundError:
-    status-code: 404
-    type: GenerateErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  GenerateStreamRequestInternalServerError:
-    status-code: 500
-    type: GenerateErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  RegisterPromptRequestConflictError:
+  ConflictError:
     status-code: 409
     type: RegisterPromptErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  SearchRequestBadRequestError:
-    status-code: 400
-    type: SearchErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  SearchRequestNotFoundError:
-    status-code: 404
-    type: SearchErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  SearchRequestInternalServerError:
-    status-code: 500
-    type: SearchErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  SubmitCompletionActualsRequestBadRequestError:
-    status-code: 400
-    type: SubmitCompletionActualsErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  SubmitCompletionActualsRequestNotFoundError:
-    status-code: 404
-    type: SubmitCompletionActualsErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  SubmitCompletionActualsRequestInternalServerError:
-    status-code: 500
-    type: SubmitCompletionActualsErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  DocumentsUploadRequestBadRequestError:
-    status-code: 400
-    type: UploadDocumentErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  DocumentsUploadRequestNotFoundError:
-    status-code: 404
-    type: UploadDocumentErrorResponse
-    docs: ''
-    examples:
-      - value:
-          detail: detail
-  DocumentsUploadRequestInternalServerError:
-    status-code: 500
-    type: UploadDocumentErrorResponse
     docs: ''
     examples:
       - value:
@@ -5119,9 +4840,9 @@ Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of `https://documents.vellum.ai`.",
               "errors": [
-                "root.DocumentsUploadRequestBadRequestError",
-                "root.DocumentsUploadRequestNotFoundError",
-                "root.DocumentsUploadRequestInternalServerError",
+                "root.BadRequestError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -5312,9 +5033,9 @@ service:
         status-code: 201
       url: Documents
       errors:
-        - root.DocumentsUploadRequestBadRequestError
-        - root.DocumentsUploadRequestNotFoundError
-        - root.DocumentsUploadRequestInternalServerError
+        - root.BadRequestError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - request:
             label: label
@@ -5616,7 +5337,7 @@ partners, not directly by Vellum users.
 
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
               "errors": [
-                "root.RegisterPromptRequestConflictError",
+                "root.ConflictError",
               ],
               "examples": [
                 {
@@ -5840,7 +5561,7 @@ service:
         status-code: 200
       url: Default
       errors:
-        - root.RegisterPromptRequestConflictError
+        - root.ConflictError
       examples:
         - request:
             label: label

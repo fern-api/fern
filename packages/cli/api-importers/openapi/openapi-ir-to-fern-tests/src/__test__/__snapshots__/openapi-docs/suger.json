@@ -6,8 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "AddEntitlementCreditRequestBadRequestError": {
-            "docs": "Bad Request",
+          "BadRequestError": {
             "examples": [
               {
                 "docs": undefined,
@@ -16,390 +15,9 @@
               },
             ],
             "status-code": 400,
-            "type": "string",
-          },
-          "AddEntitlementCreditRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CancelOfferRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
             "type": "unknown",
           },
-          "CancelOfferRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "CreateIntegrationRequestBadRequestError": {
-            "docs": "Bad request error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 400,
-            "type": "string",
-          },
-          "CreateIntegrationRequestInternalServerError": {
-            "docs": "internal error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "CreateOfferRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "CreateOfferRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "CreateOrUpdateDraftOfferRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "CreateOrUpdateDraftOfferRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "DeleteIntegrationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "DeleteOfferRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "DeleteProductRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetApiClientAccessTokenRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetBuyerRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetEntitlementRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetEntitlementTermRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetIntegrationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetIntegrationRequestNotFoundError": {
-            "docs": "Integration not found",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 404,
-            "type": "string",
-          },
-          "GetOfferRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetProductRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetRevenueReportRequestBadRequestError": {
-            "docs": "Bad request error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 400,
-            "type": "string",
-          },
-          "GetRevenueReportRequestInternalServerError": {
-            "docs": "internal error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "GetUsageRecordGroupRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetUsageRecordReportRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "GetUsageReportRequestBadRequestError": {
-            "docs": "Bad request error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 400,
-            "type": "string",
-          },
-          "GetUsageReportRequestInternalServerError": {
-            "docs": "internal error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "ListBuyersByOrganizationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListEntitlementTermsRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListEntitlementsByBuyerRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListEntitlementsByOfferRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListEntitlementsByPartnerRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListEntitlementsByProductRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListEntitlementsRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListIntegrationsByOrganizationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListOffersByOrganizationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListOffersByPartnerRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListOffersByProductRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListOperationsRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListProductMeteringDimensionsRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListProductsByOrganizationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListProductsByPartnerRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListRevenueRecordDetailsRequestBadRequestError": {
-            "docs": "Bad request error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 400,
-            "type": "string",
-          },
-          "ListRevenueRecordDetailsRequestInternalServerError": {
-            "docs": "internal error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "ListRevenueRecordsRequestBadRequestError": {
-            "docs": "Bad request error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 400,
-            "type": "string",
-          },
-          "ListRevenueRecordsRequestInternalServerError": {
-            "docs": "internal error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "ListUsageRecordGroupsByEntitlementRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "ListUsageRecordGroupsByEntitlementRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListUsageRecordGroupsByOrganizationRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "ListUsageRecordGroupsByOrganizationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListUsageRecordGroupsByProductRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "ListUsageRecordGroupsByProductRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListUsageRecordReportsByEntitlementRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "ListUsageRecordReportsByEntitlementRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListUsageRecordReportsByOrganizationRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "ListUsageRecordReportsByOrganizationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ListUsageRecordReportsByProductRequestBadRequestError": {
-            "docs": "Bad Request",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "ListUsageRecordReportsByProductRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "ReportUsageRecordGroupRequestBadRequestError": {
-            "docs": "all the quantity of usage records are zero",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 400,
-            "type": "string",
-          },
-          "ReportUsageRecordGroupRequestConflictError": {
+          "ConflictError": {
             "docs": "Conflict request error description",
             "examples": [
               {
@@ -411,8 +29,7 @@
             "status-code": 409,
             "type": "string",
           },
-          "ReportUsageRecordGroupRequestInternalServerError": {
-            "docs": "internal error description",
+          "InternalServerError": {
             "examples": [
               {
                 "docs": undefined,
@@ -421,20 +38,10 @@
               },
             ],
             "status-code": 500,
-            "type": "string",
-          },
-          "UpdateBuyerNameDescriptionRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
             "type": "unknown",
           },
-          "UpdateEntitlementNameRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "UpdateIntegrationRequestBadRequestError": {
-            "docs": "Bad request error description",
+          "NotFoundError": {
+            "docs": "Integration not found",
             "examples": [
               {
                 "docs": undefined,
@@ -442,30 +49,8 @@
                 "value": "string",
               },
             ],
-            "status-code": 400,
+            "status-code": 404,
             "type": "string",
-          },
-          "UpdateIntegrationRequestInternalServerError": {
-            "docs": "internal error description",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "string",
-              },
-            ],
-            "status-code": 500,
-            "type": "string",
-          },
-          "UpdateProductRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
-          },
-          "VerifyIntegrationRequestInternalServerError": {
-            "docs": "Internal Server Error",
-            "status-code": 500,
-            "type": "unknown",
           },
         },
         "types": {
@@ -4476,310 +4061,28 @@ the same customer, dimension, and time, but a different quantity.",
         },
       },
       "rawContents": "errors:
-  ListBuyersByOrganizationRequestInternalServerError:
+  InternalServerError:
     status-code: 500
     type: unknown
-    docs: Internal Server Error
-  GetBuyerRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  UpdateBuyerNameDescriptionRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListEntitlementsByBuyerRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  CreateOrUpdateDraftOfferRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-  CreateOrUpdateDraftOfferRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListEntitlementsRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  GetEntitlementRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  AddEntitlementCreditRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: Bad Request
     examples:
       - value: string
-  AddEntitlementCreditRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: Internal Server Error
-    examples:
-      - value: string
-  UpdateEntitlementNameRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListEntitlementTermsRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  GetEntitlementTermRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListUsageRecordGroupsByEntitlementRequestBadRequestError:
+  BadRequestError:
     status-code: 400
     type: unknown
-    docs: Bad Request
-  ListUsageRecordGroupsByEntitlementRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ReportUsageRecordGroupRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: all the quantity of usage records are zero
     examples:
       - value: string
-  ReportUsageRecordGroupRequestConflictError:
+  ConflictError:
     status-code: 409
     type: string
     docs: Conflict request error description
     examples:
       - value: string
-  ReportUsageRecordGroupRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: internal error description
-    examples:
-      - value: string
-  ListUsageRecordReportsByEntitlementRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-  ListUsageRecordReportsByEntitlementRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListIntegrationsByOrganizationRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  CreateIntegrationRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: Bad request error description
-    examples:
-      - value: string
-  CreateIntegrationRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: internal error description
-    examples:
-      - value: string
-  GetIntegrationRequestNotFoundError:
+  NotFoundError:
     status-code: 404
     type: string
     docs: Integration not found
     examples:
       - value: string
-  GetIntegrationRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  DeleteIntegrationRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  UpdateIntegrationRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: Bad request error description
-    examples:
-      - value: string
-  UpdateIntegrationRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: internal error description
-    examples:
-      - value: string
-  VerifyIntegrationRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListOffersByOrganizationRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  CreateOfferRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-  CreateOfferRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  GetOfferRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  DeleteOfferRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  CancelOfferRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-  CancelOfferRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListEntitlementsByOfferRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListOperationsRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListEntitlementsByPartnerRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListOffersByPartnerRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListProductsByPartnerRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListRevenueRecordsRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: Bad request error description
-    examples:
-      - value: string
-  ListRevenueRecordsRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: internal error description
-    examples:
-      - value: string
-  ListRevenueRecordDetailsRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: Bad request error description
-    examples:
-      - value: string
-  ListRevenueRecordDetailsRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: internal error description
-    examples:
-      - value: string
-  ListProductsByOrganizationRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  GetProductRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  DeleteProductRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  UpdateProductRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListProductMeteringDimensionsRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListEntitlementsByProductRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListOffersByProductRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListUsageRecordGroupsByProductRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-  ListUsageRecordGroupsByProductRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListUsageRecordReportsByProductRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-  ListUsageRecordReportsByProductRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  GetRevenueReportRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: Bad request error description
-    examples:
-      - value: string
-  GetRevenueReportRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: internal error description
-    examples:
-      - value: string
-  ListUsageRecordGroupsByOrganizationRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-  ListUsageRecordGroupsByOrganizationRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  GetUsageRecordGroupRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  ListUsageRecordReportsByOrganizationRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-  ListUsageRecordReportsByOrganizationRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  GetUsageRecordReportRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-  GetUsageReportRequestBadRequestError:
-    status-code: 400
-    type: string
-    docs: Bad request error description
-    examples:
-      - value: string
-  GetUsageReportRequestInternalServerError:
-    status-code: 500
-    type: string
-    docs: internal error description
-    examples:
-      - value: string
-  GetApiClientAccessTokenRequestInternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
 types:
   AzureAudience:
     properties:
@@ -7836,7 +7139,7 @@ types:
               "display-name": "get api access token",
               "docs": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
               "errors": [
-                "root.GetApiClientAccessTokenRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -7923,7 +7226,7 @@ types:
         type: root.SharedApiClientAccessToken
         status-code: 200
       errors:
-        - root.GetApiClientAccessTokenRequestInternalServerError
+        - root.InternalServerError
       examples:
         - request:
             id: id
@@ -7953,7 +7256,7 @@ types:
               "display-name": "get buyer",
               "docs": "get buyer by the given organization and buyer id",
               "errors": [
-                "root.GetBuyerRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8032,7 +7335,7 @@ types:
               "display-name": "list buyers by organization",
               "docs": "list all buyers by the given organization",
               "errors": [
-                "root.ListBuyersByOrganizationRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8083,7 +7386,7 @@ types:
               "display-name": "update buyer name and description",
               "docs": "update buyer name and description by the given organization and buyer id",
               "errors": [
-                "root.UpdateBuyerNameDescriptionRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8202,7 +7505,7 @@ service:
         type: list<root.SharedIdentityBuyer>
         status-code: 200
       errors:
-        - root.ListBuyersByOrganizationRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -8240,7 +7543,7 @@ service:
         type: root.SharedIdentityBuyer
         status-code: 200
       errors:
-        - root.GetBuyerRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -8309,7 +7612,7 @@ service:
         type: root.SharedIdentityBuyer
         status-code: 200
       errors:
-        - root.UpdateBuyerNameDescriptionRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -8368,8 +7671,8 @@ service:
               "display-name": "add entitlement credit",
               "docs": "Add the credit amount to the given Entitlement. The credit amount is accumulated & saved in the current Entitlement Term of the gvien Entitlement.",
               "errors": [
-                "root.AddEntitlementCreditRequestBadRequestError",
-                "root.AddEntitlementCreditRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8437,7 +7740,7 @@ service:
               "display-name": "get entitlement",
               "docs": "Get the entitlement by ID",
               "errors": [
-                "root.GetEntitlementRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8530,7 +7833,7 @@ service:
               "display-name": "list entitlements",
               "docs": "List all entitlements under the organization",
               "errors": [
-                "root.ListEntitlementsRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8620,7 +7923,7 @@ service:
               "display-name": "list entitlements by buyer",
               "docs": "List all entitlements of the given buyer",
               "errors": [
-                "root.ListEntitlementsByBuyerRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8715,7 +8018,7 @@ service:
               "display-name": "list entitlements by offer",
               "docs": "List all entitlements under the given offer",
               "errors": [
-                "root.ListEntitlementsByOfferRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8810,7 +8113,7 @@ service:
               "display-name": "list entitlements by partner",
               "docs": "List all entitlements under the given partner",
               "errors": [
-                "root.ListEntitlementsByPartnerRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -8905,7 +8208,7 @@ service:
               "display-name": "list entitlements by product",
               "docs": "List all entitlements under the given product",
               "errors": [
-                "root.ListEntitlementsByProductRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -9000,7 +8303,7 @@ service:
               "display-name": "update entitlement name",
               "docs": "Update the name of the given Entitlement",
               "errors": [
-                "root.UpdateEntitlementNameRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -9148,7 +8451,7 @@ service:
         type: list<root.SharedWorkloadEntitlement>
         status-code: 200
       errors:
-        - root.ListEntitlementsByBuyerRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -9216,7 +8519,7 @@ service:
         type: list<root.SharedWorkloadEntitlement>
         status-code: 200
       errors:
-        - root.ListEntitlementsRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -9286,7 +8589,7 @@ service:
         type: root.SharedWorkloadEntitlement
         status-code: 200
       errors:
-        - root.GetEntitlementRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -9370,8 +8673,8 @@ service:
         type: root.SharedAddEntitlementCreditResponse
         status-code: 200
       errors:
-        - root.AddEntitlementCreditRequestBadRequestError
-        - root.AddEntitlementCreditRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -9415,7 +8718,7 @@ service:
         type: root.SharedWorkloadEntitlement
         status-code: 200
       errors:
-        - root.UpdateEntitlementNameRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -9487,7 +8790,7 @@ service:
         type: list<root.SharedWorkloadEntitlement>
         status-code: 200
       errors:
-        - root.ListEntitlementsByOfferRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -9558,7 +8861,7 @@ service:
         type: list<root.SharedWorkloadEntitlement>
         status-code: 200
       errors:
-        - root.ListEntitlementsByPartnerRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -9629,7 +8932,7 @@ service:
         type: list<root.SharedWorkloadEntitlement>
         status-code: 200
       errors:
-        - root.ListEntitlementsByProductRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -9707,7 +9010,7 @@ types:
               "display-name": "get entitlement term",
               "docs": "Get the entitlement term by ID",
               "errors": [
-                "root.GetEntitlementTermRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -9805,7 +9108,7 @@ types:
               "display-name": "list entitlement terms",
               "docs": "List all Entitlement Terms of the given Entitlement",
               "errors": [
-                "root.ListEntitlementTermsRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -9927,7 +9230,7 @@ service:
         type: list<root.SharedWorkloadEntitlementTerm>
         status-code: 200
       errors:
-        - root.ListEntitlementTermsRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -10001,7 +9304,7 @@ service:
         type: root.SharedWorkloadEntitlementTerm
         status-code: 200
       errors:
-        - root.GetEntitlementTermRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -10071,8 +9374,8 @@ service:
               "display-name": "create integration",
               "docs": "For each organization, partner & service, there should be at most one integration.",
               "errors": [
-                "root.CreateIntegrationRequestBadRequestError",
-                "root.CreateIntegrationRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -10204,7 +9507,7 @@ service:
               "display-name": "delete integration",
               "docs": "delete the integration for the given orgId, partner and service.",
               "errors": [
-                "root.DeleteIntegrationRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -10249,8 +9552,8 @@ service:
               "display-name": "get integration",
               "docs": "Get the integration for the given organization, partner & service.",
               "errors": [
-                "root.GetIntegrationRequestNotFoundError",
-                "root.GetIntegrationRequestInternalServerError",
+                "root.NotFoundError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -10370,7 +9673,7 @@ service:
               "display-name": "list integrations by organization",
               "docs": "List all integrations for the given organization.",
               "errors": [
-                "root.ListIntegrationsByOrganizationRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -10416,8 +9719,8 @@ service:
               "display-name": "update integration",
               "docs": "Update the given integration.",
               "errors": [
-                "root.UpdateIntegrationRequestBadRequestError",
-                "root.UpdateIntegrationRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -10566,7 +9869,7 @@ service:
               "display-name": "verify integration",
               "docs": "Verify the given integration, check whether it works correctly.",
               "errors": [
-                "root.VerifyIntegrationRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -10743,7 +10046,7 @@ service:
         type: list<root.SharedIdentityIntegration>
         status-code: 200
       errors:
-        - root.ListIntegrationsByOrganizationRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -10786,8 +10089,8 @@ service:
         type: root.SharedIdentityIntegration
         status-code: 200
       errors:
-        - root.CreateIntegrationRequestBadRequestError
-        - root.CreateIntegrationRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -10884,8 +10187,8 @@ service:
         type: root.SharedIdentityIntegration
         status-code: 200
       errors:
-        - root.GetIntegrationRequestNotFoundError
-        - root.GetIntegrationRequestInternalServerError
+        - root.NotFoundError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -10979,7 +10282,7 @@ service:
         type: string
         status-code: 200
       errors:
-        - root.DeleteIntegrationRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -11023,8 +10326,8 @@ service:
         type: root.SharedIdentityIntegration
         status-code: 200
       errors:
-        - root.UpdateIntegrationRequestBadRequestError
-        - root.UpdateIntegrationRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -11123,7 +10426,7 @@ service:
         type: boolean
         status-code: 200
       errors:
-        - root.VerifyIntegrationRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -11219,7 +10522,7 @@ types:
               "display-name": "get usageRecordGroup",
               "docs": "get UsageRecordGroup for the given organization and usageRecordGroup ID",
               "errors": [
-                "root.GetUsageRecordGroupRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11276,7 +10579,7 @@ types:
               "display-name": "get usageRecordReport",
               "docs": "get the usageRecordReport for a given organization and usageRecordReport ID.",
               "errors": [
-                "root.GetUsageRecordReportRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11372,8 +10675,8 @@ types:
               "display-name": "list usageRecordGroups by entitlement",
               "docs": "list UsageRecordGroups for the given organization and entitlement",
               "errors": [
-                "root.ListUsageRecordGroupsByEntitlementRequestBadRequestError",
-                "root.ListUsageRecordGroupsByEntitlementRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11451,8 +10754,8 @@ types:
               "display-name": "list usageRecordGroups by organization",
               "docs": "list UsageRecordGroups under the given organization.",
               "errors": [
-                "root.ListUsageRecordGroupsByOrganizationRequestBadRequestError",
-                "root.ListUsageRecordGroupsByOrganizationRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11525,8 +10828,8 @@ types:
               "display-name": "list usageRecordGroups by product",
               "docs": "list UsageRecordGroups for the given organization and product",
               "errors": [
-                "root.ListUsageRecordGroupsByProductRequestBadRequestError",
-                "root.ListUsageRecordGroupsByProductRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11604,8 +10907,8 @@ types:
               "display-name": "list usageRecordReports by entitlement",
               "docs": "List usageRecordReports for the given organization and entitlement. Filter by entitlementTermId if it is given.",
               "errors": [
-                "root.ListUsageRecordReportsByEntitlementRequestBadRequestError",
-                "root.ListUsageRecordReportsByEntitlementRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11682,8 +10985,8 @@ types:
               "display-name": "list usageRecordReports by organization",
               "docs": "List usageRecordReports under the given organization",
               "errors": [
-                "root.ListUsageRecordReportsByOrganizationRequestBadRequestError",
-                "root.ListUsageRecordReportsByOrganizationRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11751,8 +11054,8 @@ types:
               "display-name": "list usageRecordReports by product",
               "docs": "List usageRecordReports for the given organization and product",
               "errors": [
-                "root.ListUsageRecordReportsByProductRequestBadRequestError",
-                "root.ListUsageRecordReportsByProductRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11825,9 +11128,9 @@ types:
               "display-name": "report usageRecordGroup",
               "docs": "It is recommended to provide the ID in the request body CreateUsageRecordGroupParams, so the report can be deduplicated. All duplicate report will return error code 409.",
               "errors": [
-                "root.ReportUsageRecordGroupRequestBadRequestError",
-                "root.ReportUsageRecordGroupRequestConflictError",
-                "root.ReportUsageRecordGroupRequestInternalServerError",
+                "root.BadRequestError",
+                "root.ConflictError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -11957,8 +11260,8 @@ service:
         type: root.SharedListUsageRecordGroupsResponse
         status-code: 200
       errors:
-        - root.ListUsageRecordGroupsByEntitlementRequestBadRequestError
-        - root.ListUsageRecordGroupsByEntitlementRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12016,9 +11319,9 @@ service:
         type: root.SharedMeteringUsageRecordGroup
         status-code: 200
       errors:
-        - root.ReportUsageRecordGroupRequestBadRequestError
-        - root.ReportUsageRecordGroupRequestConflictError
-        - root.ReportUsageRecordGroupRequestInternalServerError
+        - root.BadRequestError
+        - root.ConflictError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12087,8 +11390,8 @@ service:
         type: root.SharedListUsageRecordReportsResponse
         status-code: 200
       errors:
-        - root.ListUsageRecordReportsByEntitlementRequestBadRequestError
-        - root.ListUsageRecordReportsByEntitlementRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12140,8 +11443,8 @@ service:
         type: root.SharedListUsageRecordGroupsResponse
         status-code: 200
       errors:
-        - root.ListUsageRecordGroupsByProductRequestBadRequestError
-        - root.ListUsageRecordGroupsByProductRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12197,8 +11500,8 @@ service:
         type: root.SharedListUsageRecordReportsResponse
         status-code: 200
       errors:
-        - root.ListUsageRecordReportsByProductRequestBadRequestError
-        - root.ListUsageRecordReportsByProductRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12247,8 +11550,8 @@ service:
         type: root.SharedListUsageRecordGroupsResponse
         status-code: 200
       errors:
-        - root.ListUsageRecordGroupsByOrganizationRequestBadRequestError
-        - root.ListUsageRecordGroupsByOrganizationRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12286,7 +11589,7 @@ service:
         type: root.SharedMeteringUsageRecordGroup
         status-code: 200
       errors:
-        - root.GetUsageRecordGroupRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12340,8 +11643,8 @@ service:
         type: root.SharedListUsageRecordReportsResponse
         status-code: 200
       errors:
-        - root.ListUsageRecordReportsByOrganizationRequestBadRequestError
-        - root.ListUsageRecordReportsByOrganizationRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12377,7 +11680,7 @@ service:
         type: root.SharedMeteringUsageRecordReport
         status-code: 200
       errors:
-        - root.GetUsageRecordReportRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -12444,8 +11747,8 @@ service:
               "display-name": "cancel offer",
               "docs": "Only the offer with status = "PENDING_ACCEPTANCE" or "PENDING_CANCEL" is allowed to cancel.",
               "errors": [
-                "root.CancelOfferRequestBadRequestError",
-                "root.CancelOfferRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -12485,8 +11788,8 @@ service:
               "display-name": "create offer",
               "docs": "Create a private offer under the given organization.",
               "errors": [
-                "root.CreateOfferRequestBadRequestError",
-                "root.CreateOfferRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -12648,8 +11951,8 @@ service:
               "display-name": "create or update draft offer",
               "docs": "Create a new draft offer or update the existing draft offer. When updating draft offer, the offer.ID is required.",
               "errors": [
-                "root.CreateOrUpdateDraftOfferRequestBadRequestError",
-                "root.CreateOrUpdateDraftOfferRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -12811,7 +12114,7 @@ service:
               "display-name": "delete offer",
               "docs": "Only the offer with status = "DRAFT" or "CREATE_FAILED" is allowed to be deleted.",
               "errors": [
-                "root.DeleteOfferRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -12851,7 +12154,7 @@ service:
               "display-name": "get offer",
               "docs": "Get the offer by the given offer ID.",
               "errors": [
-                "root.GetOfferRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -13013,7 +12316,7 @@ service:
               "display-name": "list offers by organization",
               "docs": "List all offers under the given organization.",
               "errors": [
-                "root.ListOffersByOrganizationRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -13108,7 +12411,7 @@ service:
               "display-name": "list offers by partner",
               "docs": "List all offers under the given organization & cloud partner.",
               "errors": [
-                "root.ListOffersByPartnerRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -13209,7 +12512,7 @@ service:
               "display-name": "list offers by product",
               "docs": "List all offers under the given organization & product.",
               "errors": [
-                "root.ListOffersByProductRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -13351,8 +12654,8 @@ service:
         type: root.SharedWorkloadOffer
         status-code: 200
       errors:
-        - root.CreateOrUpdateDraftOfferRequestBadRequestError
-        - root.CreateOrUpdateDraftOfferRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -13473,7 +12776,7 @@ service:
         type: list<root.SharedWorkloadOffer>
         status-code: 200
       errors:
-        - root.ListOffersByOrganizationRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -13545,8 +12848,8 @@ service:
         type: root.SharedWorkloadOffer
         status-code: 200
       errors:
-        - root.CreateOfferRequestBadRequestError
-        - root.CreateOfferRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -13670,7 +12973,7 @@ service:
         type: root.SharedWorkloadOffer
         status-code: 200
       errors:
-        - root.GetOfferRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -13796,7 +13099,7 @@ service:
         type: string
         status-code: 200
       errors:
-        - root.DeleteOfferRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -13825,8 +13128,8 @@ service:
         type: string
         status-code: 200
       errors:
-        - root.CancelOfferRequestBadRequestError
-        - root.CancelOfferRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -13853,7 +13156,7 @@ service:
         type: list<root.SharedWorkloadOffer>
         status-code: 200
       errors:
-        - root.ListOffersByPartnerRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -13927,7 +13230,7 @@ service:
         type: list<root.SharedWorkloadOffer>
         status-code: 200
       errors:
-        - root.ListOffersByProductRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -14007,7 +13310,7 @@ types:
               "display-name": "list operations",
               "docs": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
               "errors": [
-                "root.ListOperationsRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -14115,7 +13418,7 @@ service:
         type: list<root.SharedOperation>
         status-code: 200
       errors:
-        - root.ListOperationsRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -14147,7 +13450,7 @@ service:
               "display-name": "delete product",
               "docs": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
               "errors": [
-                "root.DeleteProductRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -14187,7 +13490,7 @@ service:
               "display-name": "get product",
               "docs": "get product by product id",
               "errors": [
-                "root.GetProductRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -14306,7 +13609,7 @@ service:
               "display-name": "list metering dimensions of product",
               "docs": "list all metering dimensions of the given product",
               "errors": [
-                "root.ListProductMeteringDimensionsRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -14356,7 +13659,7 @@ service:
               "display-name": "list products by organization",
               "docs": "list all products under the given organization",
               "errors": [
-                "root.ListProductsByOrganizationRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -14425,7 +13728,7 @@ service:
               "display-name": "list products by partner",
               "docs": "list all products under the given organization and cloud partner",
               "errors": [
-                "root.ListProductsByPartnerRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -14499,7 +13802,7 @@ service:
               "display-name": "update product",
               "docs": "currently only the Fulfillment URL is allowed to update via this API.",
               "errors": [
-                "root.UpdateProductRequestInternalServerError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -14685,7 +13988,7 @@ service:
         type: list<root.SharedWorkloadProduct>
         status-code: 200
       errors:
-        - root.ListProductsByPartnerRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -14735,7 +14038,7 @@ service:
         type: list<root.SharedWorkloadProduct>
         status-code: 200
       errors:
-        - root.ListProductsByOrganizationRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -14787,7 +14090,7 @@ service:
         type: root.SharedWorkloadProduct
         status-code: 200
       errors:
-        - root.GetProductRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -14874,7 +14177,7 @@ service:
         type: string
         status-code: 200
       errors:
-        - root.DeleteProductRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -14909,7 +14212,7 @@ service:
         type: root.SharedWorkloadProduct
         status-code: 200
       errors:
-        - root.UpdateProductRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -15000,7 +14303,7 @@ service:
         type: list<root.SharedAwsSaasProductDimension>
         status-code: 200
       errors:
-        - root.ListProductMeteringDimensionsRequestInternalServerError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -15032,8 +14335,8 @@ service:
               "display-name": "get revenue report",
               "docs": "Get the revenue report of the given organization, product, entitlement, or buyer.",
               "errors": [
-                "root.GetRevenueReportRequestBadRequestError",
-                "root.GetRevenueReportRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -15143,8 +14446,8 @@ service:
               "display-name": "get usage report",
               "docs": "get the daily usage report of the given entitlement, the default timespan is lifetime.",
               "errors": [
-                "root.GetUsageReportRequestBadRequestError",
-                "root.GetUsageReportRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -15214,8 +14517,8 @@ service:
               "display-name": "list revenue record details",
               "docs": "list the raw revenue record details for the given organization, product, entitlement, or buyer.",
               "errors": [
-                "root.ListRevenueRecordDetailsRequestBadRequestError",
-                "root.ListRevenueRecordDetailsRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -15293,8 +14596,8 @@ service:
               "display-name": "list revenue records",
               "docs": "list the revenue records for the given organization, product, entitlement, or buyer.",
               "errors": [
-                "root.ListRevenueRecordsRequestBadRequestError",
-                "root.ListRevenueRecordsRequestInternalServerError",
+                "root.BadRequestError",
+                "root.InternalServerError",
               ],
               "examples": [
                 {
@@ -15508,8 +14811,8 @@ service:
         type: root.SharedListRevenueRecordsResponse
         status-code: 200
       errors:
-        - root.ListRevenueRecordsRequestBadRequestError
-        - root.ListRevenueRecordsRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -15586,8 +14889,8 @@ service:
         type: root.SharedListRevenueRecordDetailsResponse
         status-code: 200
       errors:
-        - root.ListRevenueRecordDetailsRequestBadRequestError
-        - root.ListRevenueRecordDetailsRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -15642,8 +14945,8 @@ service:
         type: root.SharedRevenueReport
         status-code: 200
       errors:
-        - root.GetRevenueReportRequestBadRequestError
-        - root.GetRevenueReportRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId
@@ -15709,8 +15012,8 @@ service:
         type: root.SharedUsageReport
         status-code: 200
       errors:
-        - root.GetUsageReportRequestBadRequestError
-        - root.GetUsageReportRequestInternalServerError
+        - root.BadRequestError
+        - root.InternalServerError
       examples:
         - path-parameters:
             orgId: orgId

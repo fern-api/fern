@@ -6,593 +6,27 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "CreateAccountHolderV3AccountHoldersPostRequestBadRequestError": {
+          "BadRequestError": {
             "docs": "Account holder with the provided id already exists.",
             "status-code": 400,
             "type": "unknown",
           },
-          "CreateAccountHolderV3AccountHoldersPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "CustomCategoriesPostV3CategoriesAccountHolderTypePostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "DeleteAccountHolderV3AccountHoldersIdDeleteRequestNotFoundError": {
-            "docs": "Account holder with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "DeleteAccountHolderV3AccountHoldersIdDeleteRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "DeleteBankStatementV3BankStatementsIdDeleteRequestNotFoundError": {
-            "docs": "Bank statement with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "DeleteBankStatementV3BankStatementsIdDeleteRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "DeleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "DeleteReportV3ReportsIdDeleteRequestNotFoundError": {
-            "docs": "Report with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "DeleteReportV3ReportsIdDeleteRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "DeleteTransactionV3TransactionsIdDeleteRequestNotFoundError": {
-            "docs": "Transaction with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "DeleteTransactionV3TransactionsIdDeleteRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "DeleteWebhookV3WebhooksIdDeleteRequestNotFoundError": {
-            "docs": "Webhook with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "DeleteWebhookV3WebhooksIdDeleteRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "FilterAppendV3RulesAppendPostRequestBadRequestError": {
-            "docs": "Provided rule has invalid structure",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "FilterAppendV3RulesAppendPostRequestContentTooLargeError": {
-            "docs": "Ruleset after append was larger than 50KiB",
-            "status-code": 413,
-            "type": "unknown",
-          },
-          "FilterAppendV3RulesAppendPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "FilterDeleteV3RulesIndexDeleteRequestBadRequestError": {
-            "docs": "Provided index does not exist in ruleset",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "FilterDeleteV3RulesIndexDeleteRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "FilterGetV3RulesGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "FilterPatchV3RulesIndexPatchRequestBadRequestError": {
-            "docs": "Provided index does not exist in ruleset",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "FilterPatchV3RulesIndexPatchRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "FilterPostV3RulesPostRequestBadRequestError": {
-            "docs": "Provided ruleset has invalid structure",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "FilterPostV3RulesPostRequestContentTooLargeError": {
+          "ContentTooLargeError": {
             "docs": "Ruleset was larger than 50KiB",
             "status-code": 413,
             "type": "unknown",
           },
-          "FilterPostV3RulesPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestNotFoundError": {
-            "docs": "Account holder with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetAccountHolderV3AccountHoldersIdGetRequestNotFoundError": {
-            "docs": "Account holder with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetAccountHolderV3AccountHoldersIdGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetAccountHoldersV3AccountHoldersGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetBankStatementResultV3BankStatementsIdResultsGetRequestNotFoundError": {
-            "docs": "Bank statement with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetBankStatementResultV3BankStatementsIdResultsGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestNotFoundError": {
-            "docs": "Bank statement with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetBankStatementV3BankStatementsIdGetRequestNotFoundError": {
-            "docs": "Bank statement with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetBankStatementV3BankStatementsIdGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetBankStatementsV3BankStatementsGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetBatchResultsV3BatchesIdResultsGetRequestNotFoundError": {
-            "docs": "Batch with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetBatchResultsV3BatchesIdResultsGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetBatchesV3BatchesGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetCategorySetV3CategoriesAccountHolderTypeGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetEntityByIdV3EntitiesIdGetRequestBadRequestError": {
-            "docs": "Bad request.",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "GetEntityByIdV3EntitiesIdGetRequestNotFoundError": {
-            "docs": "Entity does not exist for ID",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetEntityByIdV3EntitiesIdGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetReportV3ReportsIdGetRequestNotFoundError": {
-            "docs": "Report with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetReportV3ReportsIdGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetReportsV3ReportsGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetSingleBatchV3BatchesIdGetRequestNotFoundError": {
-            "docs": "Batch with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetSingleBatchV3BatchesIdGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetTransactionV3TransactionsIdGetRequestNotFoundError": {
-            "docs": "Transaction with the provided id not found.",
-            "status-code": 404,
-            "type": "unknown",
-          },
-          "GetTransactionV3TransactionsIdGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetWebhookV3WebhooksIdGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "GetWebhooksV3WebhooksGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "ListTransactionsV3TransactionsGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "PatchWebhookV3WebhooksIdPatchRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "PostBankStatementV3BankStatementsPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "PostBatchV3BatchesPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "PostReportV3ReportsPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "PostTransactionsV3TransactionsPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "PostWebhookV3WebhooksPostRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "SearchEntityV3EntitiesLookupGetRequestBadRequestError": {
-            "docs": "Bad request.",
-            "status-code": 400,
-            "type": "unknown",
-          },
-          "SearchEntityV3EntitiesLookupGetRequestLockedError": {
+          "LockedError": {
             "docs": "Not enough credits.",
             "status-code": 423,
             "type": "unknown",
           },
-          "SearchEntityV3EntitiesLookupGetRequestUnprocessableEntityError": {
-            "docs": "Validation Error",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": {},
-              },
-            ],
-            "status-code": 422,
-            "type": "HTTPValidationError",
-          },
-          "SetTransactionAhV3TransactionsIdAssignPostRequestNotFoundError": {
-            "docs": "Transaction or account holder with the provided id not found.",
+          "NotFoundError": {
+            "docs": "Transaction with the provided id not found.",
             "status-code": 404,
             "type": "unknown",
           },
-          "SetTransactionAhV3TransactionsIdAssignPostRequestUnprocessableEntityError": {
+          "UnprocessableEntityError": {
             "docs": "Validation Error",
             "examples": [
               {
@@ -2897,344 +2331,28 @@ whether a transaction is a one-time event or a part of a recurring series.",
         },
       },
       "rawContents": "errors:
-  GetTransactionV3TransactionsIdGetRequestNotFoundError:
+  NotFoundError:
     status-code: 404
     type: unknown
     docs: Transaction with the provided id not found.
-  GetTransactionV3TransactionsIdGetRequestUnprocessableEntityError:
+  UnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
     docs: Validation Error
     examples:
       - value: {}
-  DeleteTransactionV3TransactionsIdDeleteRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Transaction with the provided id not found.
-  DeleteTransactionV3TransactionsIdDeleteRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  ListTransactionsV3TransactionsGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  PostTransactionsV3TransactionsPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  SetTransactionAhV3TransactionsIdAssignPostRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Transaction or account holder with the provided id not found.
-  SetTransactionAhV3TransactionsIdAssignPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetBatchesV3BatchesGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  PostBatchV3BatchesPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetSingleBatchV3BatchesIdGetRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Batch with the provided id not found.
-  GetSingleBatchV3BatchesIdGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetBatchResultsV3BatchesIdResultsGetRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Batch with the provided id not found.
-  GetBatchResultsV3BatchesIdResultsGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetBankStatementsV3BankStatementsGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  PostBankStatementV3BankStatementsPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetBankStatementV3BankStatementsIdGetRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Bank statement with the provided id not found.
-  GetBankStatementV3BankStatementsIdGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  DeleteBankStatementV3BankStatementsIdDeleteRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Bank statement with the provided id not found.
-  DeleteBankStatementV3BankStatementsIdDeleteRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Bank statement with the provided id not found.
-  GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetBankStatementResultV3BankStatementsIdResultsGetRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Bank statement with the provided id not found.
-  GetBankStatementResultV3BankStatementsIdResultsGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetAccountHolderV3AccountHoldersIdGetRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Account holder with the provided id not found.
-  GetAccountHolderV3AccountHoldersIdGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  DeleteAccountHolderV3AccountHoldersIdDeleteRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Account holder with the provided id not found.
-  DeleteAccountHolderV3AccountHoldersIdDeleteRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetAccountHoldersV3AccountHoldersGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  CreateAccountHolderV3AccountHoldersPostRequestBadRequestError:
+  BadRequestError:
     status-code: 400
     type: unknown
     docs: Account holder with the provided id already exists.
-  CreateAccountHolderV3AccountHoldersPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Account holder with the provided id not found.
-  GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetWebhooksV3WebhooksGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  PostWebhookV3WebhooksPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetWebhookV3WebhooksIdGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  DeleteWebhookV3WebhooksIdDeleteRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Webhook with the provided id not found.
-  DeleteWebhookV3WebhooksIdDeleteRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  PatchWebhookV3WebhooksIdPatchRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  FilterGetV3RulesGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  FilterPostV3RulesPostRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Provided ruleset has invalid structure
-  FilterPostV3RulesPostRequestContentTooLargeError:
+  ContentTooLargeError:
     status-code: 413
     type: unknown
     docs: Ruleset was larger than 50KiB
-  FilterPostV3RulesPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  FilterAppendV3RulesAppendPostRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Provided rule has invalid structure
-  FilterAppendV3RulesAppendPostRequestContentTooLargeError:
-    status-code: 413
-    type: unknown
-    docs: Ruleset after append was larger than 50KiB
-  FilterAppendV3RulesAppendPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  FilterDeleteV3RulesIndexDeleteRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Provided index does not exist in ruleset
-  FilterDeleteV3RulesIndexDeleteRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  FilterPatchV3RulesIndexPatchRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Provided index does not exist in ruleset
-  FilterPatchV3RulesIndexPatchRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetReportsV3ReportsGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  PostReportV3ReportsPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetReportV3ReportsIdGetRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Report with the provided id not found.
-  GetReportV3ReportsIdGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  DeleteReportV3ReportsIdDeleteRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Report with the provided id not found.
-  DeleteReportV3ReportsIdDeleteRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  GetCategorySetV3CategoriesAccountHolderTypeGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  CustomCategoriesPostV3CategoriesAccountHolderTypePostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  DeleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  SearchEntityV3EntitiesLookupGetRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad request.
-  SearchEntityV3EntitiesLookupGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
-  SearchEntityV3EntitiesLookupGetRequestLockedError:
+  LockedError:
     status-code: 423
     type: unknown
     docs: Not enough credits.
-  GetEntityByIdV3EntitiesIdGetRequestBadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad request.
-  GetEntityByIdV3EntitiesIdGetRequestNotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Entity does not exist for ID
-  GetEntityByIdV3EntitiesIdGetRequestUnprocessableEntityError:
-    status-code: 422
-    type: HTTPValidationError
-    docs: Validation Error
-    examples:
-      - value: {}
 types:
   Account:
     properties:
@@ -4844,8 +3962,8 @@ Complete guide: [Account Holders](../../../account-holders).
               "display-name": "Create an account holder.",
               "docs": undefined,
               "errors": [
-                "root.CreateAccountHolderV3AccountHoldersPostRequestBadRequestError",
-                "root.CreateAccountHolderV3AccountHoldersPostRequestUnprocessableEntityError",
+                "root.BadRequestError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4942,8 +4060,8 @@ ah = sdk.account_holders.create(
               "display-name": "Deletes an account holder and their transactions",
               "docs": "Deletes all of the transactions in the account holder's history. This operation is permanent and irreversible",
               "errors": [
-                "root.DeleteAccountHolderV3AccountHoldersIdDeleteRequestNotFoundError",
-                "root.DeleteAccountHolderV3AccountHoldersIdDeleteRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -4989,8 +4107,8 @@ ah = sdk.account_holders.delete("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
               "display-name": "Retrieve an account holder.",
               "docs": undefined,
               "errors": [
-                "root.GetAccountHolderV3AccountHoldersIdGetRequestNotFoundError",
-                "root.GetAccountHolderV3AccountHoldersIdGetRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5049,7 +4167,7 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
               "display-name": "List all account holders.",
               "docs": undefined,
               "errors": [
-                "root.GetAccountHoldersV3AccountHoldersGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5157,9 +4275,8 @@ service:
         type: root.AccountHolderExternal
         status-code: 200
       errors:
-        - root.GetAccountHolderV3AccountHoldersIdGetRequestNotFoundError
-        - >-
-          root.GetAccountHolderV3AccountHoldersIdGetRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -5200,9 +4317,8 @@ service:
         id: string
       display-name: Deletes an account holder and their transactions
       errors:
-        - root.DeleteAccountHolderV3AccountHoldersIdDeleteRequestNotFoundError
-        - >-
-          root.DeleteAccountHolderV3AccountHoldersIdDeleteRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -5255,8 +4371,7 @@ service:
         type: root.PagedResponseAccountHolderExternal
         status-code: 200
       errors:
-        - >-
-          root.GetAccountHoldersV3AccountHoldersGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - response:
             body:
@@ -5312,9 +4427,8 @@ service:
         type: root.AccountHolderExternal
         status-code: 200
       errors:
-        - root.CreateAccountHolderV3AccountHoldersPostRequestBadRequestError
-        - >-
-          root.CreateAccountHolderV3AccountHoldersPostRequestUnprocessableEntityError
+        - root.BadRequestError
+        - root.UnprocessableEntityError
       examples:
         - request:
             id: id
@@ -5411,8 +4525,8 @@ Complete guide: [Bank Statements](../../../bank-statements).
               "display-name": "Deletes a bank statement",
               "docs": undefined,
               "errors": [
-                "root.DeleteBankStatementV3BankStatementsIdDeleteRequestNotFoundError",
-                "root.DeleteBankStatementV3BankStatementsIdDeleteRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5436,8 +4550,8 @@ Complete guide: [Bank Statements](../../../bank-statements).
               "display-name": "Retrieve a bank statement",
               "docs": undefined,
               "errors": [
-                "root.GetBankStatementV3BankStatementsIdGetRequestNotFoundError",
-                "root.GetBankStatementV3BankStatementsIdGetRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5504,8 +4618,8 @@ bs = sdk.bank_statements.get("7f8dceac-2848-472d-b5c3-55cdbaf35a9b") ",
               "display-name": "Retrieve the extraction results",
               "docs": "Return the extracted account information and associated transactions from a bank statement PDF. The results are accessible once the statement's status is `completed`.",
               "errors": [
-                "root.GetBankStatementResultV3BankStatementsIdResultsGetRequestNotFoundError",
-                "root.GetBankStatementResultV3BankStatementsIdResultsGetRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5588,8 +4702,8 @@ results = sdk.bank_statements.wait_for_results(
 
 Complete guide: [Overview](../../../bank-statements)",
               "errors": [
-                "root.GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestNotFoundError",
-                "root.GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5669,7 +4783,7 @@ overview = sdk.bank_statements.overview(
               "display-name": "List all bank statements",
               "docs": "Return a list of submitted bank statements starting with the most recent one.",
               "errors": [
-                "root.GetBankStatementsV3BankStatementsGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5769,7 +4883,7 @@ for bs in sdk.bank_statements.list().auto_paginate():
               "display-name": "Submit a bank statement PDF",
               "docs": "Upload a PDF file and queue it for extraction.",
               "errors": [
-                "root.PostBankStatementV3BankStatementsPostRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -5891,8 +5005,7 @@ service:
         type: root.PagedResponseBankStatement
         status-code: 200
       errors:
-        - >-
-          root.GetBankStatementsV3BankStatementsGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - response:
             body:
@@ -5943,8 +5056,7 @@ service:
         type: root.BankStatement
         status-code: 200
       errors:
-        - >-
-          root.PostBankStatementV3BankStatementsPostRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - request: {}
           response:
@@ -5992,9 +5104,8 @@ service:
         type: root.BankStatement
         status-code: 200
       errors:
-        - root.GetBankStatementV3BankStatementsIdGetRequestNotFoundError
-        - >-
-          root.GetBankStatementV3BankStatementsIdGetRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -6038,9 +5149,8 @@ service:
         id: string
       display-name: Deletes a bank statement
       errors:
-        - root.DeleteBankStatementV3BankStatementsIdDeleteRequestNotFoundError
-        - >-
-          root.DeleteBankStatementV3BankStatementsIdDeleteRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -6065,10 +5175,8 @@ service:
         type: root.StatementInfo
         status-code: 200
       errors:
-        - >-
-          root.GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestNotFoundError
-        - >-
-          root.GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -6127,10 +5235,8 @@ service:
         type: root.BankStatementResults
         status-code: 200
       errors:
-        - >-
-          root.GetBankStatementResultV3BankStatementsIdResultsGetRequestNotFoundError
-        - >-
-          root.GetBankStatementResultV3BankStatementsIdResultsGetRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -6236,8 +5342,8 @@ docs: >
               "display-name": "Retrieve the results of a batch",
               "docs": "Returns the results of the enrichment request. The resulting enriched transactions are returned in the same order they were submitted. Results are available after the batch has finished processing.",
               "errors": [
-                "root.GetBatchResultsV3BatchesIdResultsGetRequestNotFoundError",
-                "root.GetBatchResultsV3BatchesIdResultsGetRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6346,7 +5452,7 @@ results = sdk.batches.wait_for_results("f203613d2-83c8-4130-8809-d14206eeec20")
               "display-name": "List all batches",
               "docs": "Returns a list of submitted batches starting with the most recent one.",
               "errors": [
-                "root.GetBatchesV3BatchesGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6439,8 +5545,8 @@ for batch in sdk.batches.list().auto_paginate():
               "display-name": "Retrieve a batch",
               "docs": undefined,
               "errors": [
-                "root.GetSingleBatchV3BatchesIdGetRequestNotFoundError",
-                "root.GetSingleBatchV3BatchesIdGetRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6508,7 +5614,7 @@ the respective notifications. Alternatively, you can
 
 This endpoints supports up to 24960 transactions.",
               "errors": [
-                "root.PostBatchV3BatchesPostRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -6662,7 +5768,7 @@ service:
         type: root.PagedResponseBatch
         status-code: 200
       errors:
-        - root.GetBatchesV3BatchesGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - response:
             body:
@@ -6725,7 +5831,7 @@ service:
         type: root.Batch
         status-code: 200
       errors:
-        - root.PostBatchV3BatchesPostRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - request:
             transactions:
@@ -6802,8 +5908,8 @@ service:
         type: root.Batch
         status-code: 200
       errors:
-        - root.GetSingleBatchV3BatchesIdGetRequestNotFoundError
-        - root.GetSingleBatchV3BatchesIdGetRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -6851,9 +5957,8 @@ service:
         type: root.BatchResult
         status-code: 200
       errors:
-        - root.GetBatchResultsV3BatchesIdResultsGetRequestNotFoundError
-        - >-
-          root.GetBatchResultsV3BatchesIdResultsGetRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -6936,7 +6041,7 @@ service:
               "display-name": "Set a custom set of categories",
               "docs": "Sets a custom set of categories. Transactions that don't match a category will be categorized `not enough information` regardless of whether it is present in the set.",
               "errors": [
-                "root.CustomCategoriesPostV3CategoriesAccountHolderTypePostRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7065,7 +6170,7 @@ sdk.categories.set("consumer", {
               "display-name": "Reset category set to original values",
               "docs": "Resets the set of categories of the specified account holder type to the original values.",
               "errors": [
-                "root.DeleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7148,7 +6253,7 @@ sdk.categories.reset("consumer")
               "display-name": "Retrieve category set",
               "docs": "Retrieves the set of categories. Category sets are different per account holder type.",
               "errors": [
-                "root.GetCategorySetV3CategoriesAccountHolderTypeGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7255,8 +6360,7 @@ service:
         type: root.CategorySet
         status-code: 200
       errors:
-        - >-
-          root.GetCategorySetV3CategoriesAccountHolderTypeGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             account_holder_type: consumer
@@ -7324,8 +6428,7 @@ service:
         type: root.CustomCategorySet
         status-code: 200
       errors:
-        - >-
-          root.CustomCategoriesPostV3CategoriesAccountHolderTypePostRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             account_holder_type: consumer
@@ -7425,8 +6528,7 @@ service:
         type: root.CategorySet
         status-code: 200
       errors:
-        - >-
-          root.DeleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             account_holder_type: consumer
@@ -7491,9 +6593,9 @@ service:
               "display-name": "Retrieve an entity",
               "docs": "Retrieve more information about an entity by using its unique ID.",
               "errors": [
-                "root.GetEntityByIdV3EntitiesIdGetRequestBadRequestError",
-                "root.GetEntityByIdV3EntitiesIdGetRequestNotFoundError",
-                "root.GetEntityByIdV3EntitiesIdGetRequestUnprocessableEntityError",
+                "root.BadRequestError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7560,9 +6662,9 @@ sdk.entities.lookup("d4bc3c80-ec1a-3da2-836e-2a4ca4758be5") ",
     The parameters `name` and `website` are mutually exclusive. Calls to this endpoint using 
     the `name` parameter are billed the same way transactions are.",
               "errors": [
-                "root.SearchEntityV3EntitiesLookupGetRequestBadRequestError",
-                "root.SearchEntityV3EntitiesLookupGetRequestUnprocessableEntityError",
-                "root.SearchEntityV3EntitiesLookupGetRequestLockedError",
+                "root.BadRequestError",
+                "root.UnprocessableEntityError",
+                "root.LockedError",
               ],
               "examples": [
                 {
@@ -7671,9 +6773,9 @@ service:
         type: root.Entity
         status-code: 200
       errors:
-        - root.SearchEntityV3EntitiesLookupGetRequestBadRequestError
-        - root.SearchEntityV3EntitiesLookupGetRequestUnprocessableEntityError
-        - root.SearchEntityV3EntitiesLookupGetRequestLockedError
+        - root.BadRequestError
+        - root.UnprocessableEntityError
+        - root.LockedError
       examples:
         - response:
             body:
@@ -7715,9 +6817,9 @@ service:
         type: root.Entity
         status-code: 200
       errors:
-        - root.GetEntityByIdV3EntitiesIdGetRequestBadRequestError
-        - root.GetEntityByIdV3EntitiesIdGetRequestNotFoundError
-        - root.GetEntityByIdV3EntitiesIdGetRequestUnprocessableEntityError
+        - root.BadRequestError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -7769,9 +6871,9 @@ uploading a set of rules. For more information, see our documentation on
               "display-name": "Append a rule.",
               "docs": "Append a rule to the personalization ruleset.",
               "errors": [
-                "root.FilterAppendV3RulesAppendPostRequestBadRequestError",
-                "root.FilterAppendV3RulesAppendPostRequestContentTooLargeError",
-                "root.FilterAppendV3RulesAppendPostRequestUnprocessableEntityError",
+                "root.BadRequestError",
+                "root.ContentTooLargeError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7834,8 +6936,8 @@ sdk.rules.append({"set": "logo", "to": "http://example.com/favicon.ico"})
               "display-name": "Delete a rule.",
               "docs": "Delete the rule at the specified index from the personalization ruleset.",
               "errors": [
-                "root.FilterDeleteV3RulesIndexDeleteRequestBadRequestError",
-                "root.FilterDeleteV3RulesIndexDeleteRequestUnprocessableEntityError",
+                "root.BadRequestError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7892,7 +6994,7 @@ sdk.rules.delete(0)
               "display-name": "Get the current personalization ruleset.",
               "docs": "Get the current personalization ruleset.",
               "errors": [
-                "root.FilterGetV3RulesGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -7947,8 +7049,8 @@ rules = sdk.rules.get()
               "display-name": "Modify an existing rule.",
               "docs": "Modify an existing rule at the specified index on the ruleset.",
               "errors": [
-                "root.FilterPatchV3RulesIndexPatchRequestBadRequestError",
-                "root.FilterPatchV3RulesIndexPatchRequestUnprocessableEntityError",
+                "root.BadRequestError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8017,9 +7119,9 @@ sdk.rules.patch(0, {"set": "logo", "to": "http://example.com/favicon.ico"})
               "display-name": "Set the personalization ruleset.",
               "docs": "Set the personalization ruleset.",
               "errors": [
-                "root.FilterPostV3RulesPostRequestBadRequestError",
-                "root.FilterPostV3RulesPostRequestContentTooLargeError",
-                "root.FilterPostV3RulesPostRequestUnprocessableEntityError",
+                "root.BadRequestError",
+                "root.ContentTooLargeError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8132,7 +7234,7 @@ service:
         type: root.Filter
         status-code: 200
       errors:
-        - root.FilterGetV3RulesGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - response:
             body:
@@ -8170,9 +7272,9 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.FilterPostV3RulesPostRequestBadRequestError
-        - root.FilterPostV3RulesPostRequestContentTooLargeError
-        - root.FilterPostV3RulesPostRequestUnprocessableEntityError
+        - root.BadRequestError
+        - root.ContentTooLargeError
+        - root.UnprocessableEntityError
       examples:
         - request:
             - if:
@@ -8240,9 +7342,9 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.FilterAppendV3RulesAppendPostRequestBadRequestError
-        - root.FilterAppendV3RulesAppendPostRequestContentTooLargeError
-        - root.FilterAppendV3RulesAppendPostRequestUnprocessableEntityError
+        - root.BadRequestError
+        - root.ContentTooLargeError
+        - root.UnprocessableEntityError
       examples:
         - request:
             if: true
@@ -8284,8 +7386,8 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.FilterDeleteV3RulesIndexDeleteRequestBadRequestError
-        - root.FilterDeleteV3RulesIndexDeleteRequestUnprocessableEntityError
+        - root.BadRequestError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             index: 1
@@ -8326,8 +7428,8 @@ service:
         type: unknown
         status-code: 200
       errors:
-        - root.FilterPatchV3RulesIndexPatchRequestBadRequestError
-        - root.FilterPatchV3RulesIndexPatchRequestUnprocessableEntityError
+        - root.BadRequestError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             index: 1
@@ -8394,8 +7496,8 @@ Complete guide: [Recurrence](../../../enrichment/recurrence).
               "display-name": "Find recurring groups in a transaction history",
               "docs": "Identifies and categorizes recurring patterns found in the transaction history of the account holder, such as periodic payments or subscriptions. These patterns are called recurrence groups.",
               "errors": [
-                "root.GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestNotFoundError",
-                "root.GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8505,10 +7607,8 @@ service:
         type: list<root.RecurrenceGroup>
         status-code: 200
       errors:
-        - >-
-          root.GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestNotFoundError
-        - >-
-          root.GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -8602,8 +7702,8 @@ report either through the API or using [webhooks](#tag/Webhooks).
               "display-name": "Delete a report",
               "docs": "Delete a report",
               "errors": [
-                "root.DeleteReportV3ReportsIdDeleteRequestNotFoundError",
-                "root.DeleteReportV3ReportsIdDeleteRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8627,8 +7727,8 @@ report either through the API or using [webhooks](#tag/Webhooks).
               "display-name": "Retrieve a report",
               "docs": "Retrieve a report",
               "errors": [
-                "root.GetReportV3ReportsIdGetRequestNotFoundError",
-                "root.GetReportV3ReportsIdGetRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8693,7 +7793,7 @@ report = sdk.reports.get("a652285d-de1b-4a6f-b6ce-45efa9be7952")
               "display-name": "List all reports",
               "docs": "List all reports",
               "errors": [
-                "root.GetReportsV3ReportsGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8790,7 +7890,7 @@ reports = sdk.reports.list()
               "display-name": "Create a report",
               "docs": "Report a transaction with incorrect fields.",
               "errors": [
-                "root.PostReportV3ReportsPostRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -8940,7 +8040,7 @@ service:
         type: root.PagedResponseReport
         status-code: 200
       errors:
-        - root.GetReportsV3ReportsGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - response:
             body:
@@ -8999,7 +8099,7 @@ service:
         type: root.Report
         status-code: 200
       errors:
-        - root.PostReportV3ReportsPostRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - request:
             transaction_id: xbx8YP14g565Xk
@@ -9059,8 +8159,8 @@ service:
         type: root.Report
         status-code: 200
       errors:
-        - root.GetReportV3ReportsIdGetRequestNotFoundError
-        - root.GetReportV3ReportsIdGetRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -9101,8 +8201,8 @@ service:
         id: string
       display-name: Delete a report
       errors:
-        - root.DeleteReportV3ReportsIdDeleteRequestNotFoundError
-        - root.DeleteReportV3ReportsIdDeleteRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -9138,8 +8238,8 @@ both the enrichment fields and the original input fields. They are made availabl
               "display-name": "Deletes a transaction",
               "docs": "Deleting a transaction will also delete it from our systems. This operation is permanent.",
               "errors": [
-                "root.DeleteTransactionV3TransactionsIdDeleteRequestNotFoundError",
-                "root.DeleteTransactionV3TransactionsIdDeleteRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9185,8 +8285,8 @@ tx = sdk.transactions.delete("xbx8YP14g565Xk") ",
               "display-name": "Retrieve a transaction",
               "docs": undefined,
               "errors": [
-                "root.GetTransactionV3TransactionsIdGetRequestNotFoundError",
-                "root.GetTransactionV3TransactionsIdGetRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9300,7 +8400,7 @@ tx = sdk.transactions.get("xbx8YP14g565Xk") ",
               "display-name": "List all transactions",
               "docs": "Return a list of enriched transactions starting with the most recent one.",
               "errors": [
-                "root.ListTransactionsV3TransactionsGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9451,7 +8551,7 @@ This endpoint supports up to 1000 transactions.
 If you want more throughput and live updates refer to the 
 [async enrichment endpoint](../batches/post-batch).",
               "errors": [
-                "root.PostTransactionsV3TransactionsPostRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9605,8 +8705,8 @@ enriched = sdk.transactions.create([
               "display-name": "Assign a transaction to an account holder",
               "docs": "Changes the account holder associated with the transaction. The old and new account holder must share the same categories",
               "errors": [
-                "root.SetTransactionAhV3TransactionsIdAssignPostRequestNotFoundError",
-                "root.SetTransactionAhV3TransactionsIdAssignPostRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -9764,8 +8864,8 @@ service:
         type: root.Transaction
         status-code: 200
       errors:
-        - root.GetTransactionV3TransactionsIdGetRequestNotFoundError
-        - root.GetTransactionV3TransactionsIdGetRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -9847,9 +8947,8 @@ service:
         id: string
       display-name: Deletes a transaction
       errors:
-        - root.DeleteTransactionV3TransactionsIdDeleteRequestNotFoundError
-        - >-
-          root.DeleteTransactionV3TransactionsIdDeleteRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -9905,7 +9004,7 @@ service:
         type: root.PagedResponseTransaction
         status-code: 200
       errors:
-        - root.ListTransactionsV3TransactionsGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - response:
             body:
@@ -10006,7 +9105,7 @@ service:
         type: root.SyncEnrichmentOutput
         status-code: 200
       errors:
-        - root.PostTransactionsV3TransactionsPostRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - request:
             transactions:
@@ -10122,9 +9221,8 @@ service:
         type: root.Transaction
         status-code: 200
       errors:
-        - root.SetTransactionAhV3TransactionsIdAssignPostRequestNotFoundError
-        - >-
-          root.SetTransactionAhV3TransactionsIdAssignPostRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10242,8 +9340,8 @@ seconds, so any processing of the event
               "display-name": "Delete a webhook",
               "docs": "Delete a webhook",
               "errors": [
-                "root.DeleteWebhookV3WebhooksIdDeleteRequestNotFoundError",
-                "root.DeleteWebhookV3WebhooksIdDeleteRequestUnprocessableEntityError",
+                "root.NotFoundError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10289,7 +9387,7 @@ sdk.webhooks.delete("e94a150d-40af-4e96-8aa7-2948a6b4d8d3") ",
               "display-name": "Retrieve a webhook",
               "docs": "Retrieve a webhook",
               "errors": [
-                "root.GetWebhookV3WebhooksIdGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10354,7 +9452,7 @@ webhook = sdk.webhooks.get("e94a150d-40af-4e96-8aa7-2948a6b4d8d3")
               "display-name": "List all webhooks",
               "docs": "List all webhooks",
               "errors": [
-                "root.GetWebhooksV3WebhooksGetRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10418,7 +9516,7 @@ for webhook in sdk.webhooks.list().auto_paginate():
               "display-name": "Update a webhook",
               "docs": "Update a webhook. Fields that aren't specified in the body will remain unchanged",
               "errors": [
-                "root.PatchWebhookV3WebhooksIdPatchRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10536,7 +9634,7 @@ wh = sdk.webhooks.patch(
               "display-name": "Create a webhook",
               "docs": "Create a webhook to be called when certain events occur.",
               "errors": [
-                "root.PostWebhookV3WebhooksPostRequestUnprocessableEntityError",
+                "root.UnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -10743,7 +9841,7 @@ service:
         type: root.PagedResponseWebhook
         status-code: 200
       errors:
-        - root.GetWebhooksV3WebhooksGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - response:
             body:
@@ -10809,7 +9907,7 @@ service:
         type: root.Webhook
         status-code: 200
       errors:
-        - root.PostWebhookV3WebhooksPostRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - request:
             url: url
@@ -10869,7 +9967,7 @@ service:
         type: root.Webhook
         status-code: 200
       errors:
-        - root.GetWebhookV3WebhooksIdGetRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10912,8 +10010,8 @@ service:
         id: string
       display-name: Delete a webhook
       errors:
-        - root.DeleteWebhookV3WebhooksIdDeleteRequestNotFoundError
-        - root.DeleteWebhookV3WebhooksIdDeleteRequestUnprocessableEntityError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
@@ -10975,7 +10073,7 @@ service:
         type: root.Webhook
         status-code: 200
       errors:
-        - root.PatchWebhookV3WebhooksIdPatchRequestUnprocessableEntityError
+        - root.UnprocessableEntityError
       examples:
         - path-parameters:
             id: id
