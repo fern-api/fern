@@ -1,7 +1,5 @@
 using SeedApi.Core;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class AClient

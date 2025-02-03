@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral;
 
 public partial class RequestOptions : IRequestOptions

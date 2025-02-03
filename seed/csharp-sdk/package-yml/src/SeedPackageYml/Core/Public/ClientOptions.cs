@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedPackageYml.Core;
 
-#nullable enable
-
 namespace SeedPackageYml;
 
 public partial class ClientOptions

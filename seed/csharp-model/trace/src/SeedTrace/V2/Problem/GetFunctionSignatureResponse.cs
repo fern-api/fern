@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using SeedTrace;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace.V2;
 
 public record GetFunctionSignatureResponse

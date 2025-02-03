@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedUnknownAsAny;
 using SeedUnknownAsAny.Core;
 
-#nullable enable
-
 namespace SeedUnknownAsAny.Test.Unit.MockServer;
 
 [TestFixture]

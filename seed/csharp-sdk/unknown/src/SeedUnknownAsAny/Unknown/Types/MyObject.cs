@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedUnknownAsAny.Core;
 
-#nullable enable
-
 namespace SeedUnknownAsAny;
 
 public record MyObject

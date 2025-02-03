@@ -4,8 +4,6 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-#nullable enable
-
 namespace SeedExamples.Test;
 
 [TestFixture]

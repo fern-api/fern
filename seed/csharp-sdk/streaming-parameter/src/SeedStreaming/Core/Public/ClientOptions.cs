@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedStreaming.Core;
 
-#nullable enable
-
 namespace SeedStreaming;
 
 public partial class ClientOptions

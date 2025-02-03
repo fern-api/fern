@@ -1,7 +1,5 @@
 using SeedAudiences.Core;
 
-#nullable enable
-
 namespace SeedAudiences.FolderA;
 
 public partial class FolderAClient

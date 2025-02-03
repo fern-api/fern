@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedFileDownload.Core;
 
-#nullable enable
-
 namespace SeedFileDownload;
 
 public partial class ServiceClient
@@ -21,16 +19,18 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new SeedFileDownloadApiException(
             $"Error with status code {response.StatusCode}",

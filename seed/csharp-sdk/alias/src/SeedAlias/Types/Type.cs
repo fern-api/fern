@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedAlias.Core;
 
-#nullable enable
-
 namespace SeedAlias;
 
 public record Type

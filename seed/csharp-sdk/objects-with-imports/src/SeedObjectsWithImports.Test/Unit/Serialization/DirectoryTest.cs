@@ -5,8 +5,6 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedObjectsWithImports.File;
 
-#nullable enable
-
 namespace SeedObjectsWithImports.Test;
 
 [TestFixture]

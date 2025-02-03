@@ -4,8 +4,6 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedBearerTokenEnvironmentVariable.Core;
 
-#nullable enable
-
 namespace SeedBearerTokenEnvironmentVariable.Test.Unit.MockServer;
 
 [TestFixture]

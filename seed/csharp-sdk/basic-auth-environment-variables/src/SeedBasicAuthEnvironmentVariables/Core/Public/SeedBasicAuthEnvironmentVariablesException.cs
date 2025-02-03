@@ -1,7 +1,5 @@
 using System;
 
-#nullable enable
-
 namespace SeedBasicAuthEnvironmentVariables;
 
 /// <summary>
@@ -10,4 +8,4 @@ namespace SeedBasicAuthEnvironmentVariables;
 public class SeedBasicAuthEnvironmentVariablesException(
     string message,
     Exception? innerException = null
-) : Exception(message, innerException) { }
+) : Exception(message, innerException);

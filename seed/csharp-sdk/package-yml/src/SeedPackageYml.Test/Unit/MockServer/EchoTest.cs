@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedPackageYml;
 using SeedPackageYml.Core;
 
-#nullable enable
-
 namespace SeedPackageYml.Test.Unit.MockServer;
 
 [TestFixture]

@@ -1,12 +1,10 @@
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
 public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedOauthClientCredentialsEnvironmentVariablesClient(
         string? clientId = null,

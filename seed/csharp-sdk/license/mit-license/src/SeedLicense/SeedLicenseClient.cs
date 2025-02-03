@@ -3,13 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedLicense.Core;
 
-#nullable enable
-
 namespace SeedLicense;
 
 public partial class SeedLicenseClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedLicenseClient(ClientOptions? clientOptions = null)
     {
@@ -43,16 +41,18 @@ public partial class SeedLicenseClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

@@ -36,15 +36,16 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
             class_.addField(
                 csharp.field({
                     access: csharp.Access.Public,
+                    static_: true,
+                    readonly: true,
                     name:
                         (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
-                    static_: true,
                     type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
                     initializer: csharp.codeblock((writer) => {
                         writer.writeNode(
-                            new csharp.ClassInstantiation({
+                            csharp.instantiateClass({
                                 classReference: class_.reference,
                                 arguments_: Object.entries(environment.urls).map(([id, url]) => {
                                     const baseUrl = this.multiUrlEnvironments.baseUrls.find((url) => url.id === id);

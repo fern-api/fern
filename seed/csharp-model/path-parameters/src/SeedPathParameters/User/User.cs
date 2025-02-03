@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedPathParameters.Core;
 
-#nullable enable
-
 namespace SeedPathParameters;
 
 public record User

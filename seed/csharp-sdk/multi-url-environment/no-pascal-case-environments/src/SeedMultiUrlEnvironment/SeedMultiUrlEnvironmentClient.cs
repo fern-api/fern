@@ -1,12 +1,10 @@
 using SeedMultiUrlEnvironment.Core;
 
-#nullable enable
-
 namespace SeedMultiUrlEnvironment;
 
 public partial class SeedMultiUrlEnvironmentClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedMultiUrlEnvironmentClient(string? token = null, ClientOptions? clientOptions = null)
     {

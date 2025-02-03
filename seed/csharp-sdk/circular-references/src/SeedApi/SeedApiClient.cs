@@ -1,12 +1,10 @@
 using SeedApi.Core;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class SeedApiClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {

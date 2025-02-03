@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedResponseProperty.Core;
 
-#nullable enable
-
 namespace SeedResponseProperty;
 
 public record Movie

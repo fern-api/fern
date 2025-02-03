@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace.V2.V3;
 
 public record TestCaseImplementationDescription

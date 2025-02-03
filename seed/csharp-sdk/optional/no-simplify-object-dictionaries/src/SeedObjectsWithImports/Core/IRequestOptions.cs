@@ -1,8 +1,6 @@
 using System;
 using System.Net.Http;
 
-#nullable enable
-
 namespace SeedObjectsWithImports.Core;
 
 internal interface IRequestOptions

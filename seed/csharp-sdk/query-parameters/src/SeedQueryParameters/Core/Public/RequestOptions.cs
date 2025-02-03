@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedQueryParameters.Core;
 
-#nullable enable
-
 namespace SeedQueryParameters;
 
 public partial class RequestOptions : IRequestOptions

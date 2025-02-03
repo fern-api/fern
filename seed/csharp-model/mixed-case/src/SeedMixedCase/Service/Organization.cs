@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedMixedCase.Core;
 
-#nullable enable
-
 namespace SeedMixedCase;
 
 public record Organization

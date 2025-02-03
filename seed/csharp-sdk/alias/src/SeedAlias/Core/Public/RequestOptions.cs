@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedAlias.Core;
 
-#nullable enable
-
 namespace SeedAlias;
 
 public partial class RequestOptions : IRequestOptions

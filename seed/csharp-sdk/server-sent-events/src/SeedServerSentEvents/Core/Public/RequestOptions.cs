@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedServerSentEvents.Core;
 
-#nullable enable
-
 namespace SeedServerSentEvents;
 
 public partial class RequestOptions : IRequestOptions
