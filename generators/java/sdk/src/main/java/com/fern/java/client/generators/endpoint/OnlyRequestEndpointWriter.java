@@ -269,12 +269,11 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
             CodeBlock requestBodyGetter = CodeBlock.of("request");
 
-            boolean requestBodyGetterPresent =
-                    clientGeneratorContext.getCustomConfig().inlinePathParameters()
-                            && generatedWrappedRequest != null
-                            && generatedWrappedRequest.requestBodyGetter().isPresent();
+            boolean requestBodyGetterPresent = generatedWrappedRequest != null
+                    && generatedWrappedRequest.requestBodyGetter().isPresent();
 
-            if (requestBodyGetterPresent
+            if (clientGeneratorContext.getCustomConfig().inlinePathParameters()
+                    && requestBodyGetterPresent
                     && (generatedWrappedRequest.requestBodyGetter().get()
                             instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter)) {
                 String getterName = ((GeneratedWrappedRequest.ReferencedRequestBodyGetter)
