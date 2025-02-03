@@ -13,7 +13,8 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId,
-    TypeId
+    TypeId,
+    UserAgent
 } from "@fern-fern/ir-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ErrorDeclaration, ErrorId } from "@fern-fern/ir-sdk/api";
@@ -189,6 +190,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getRootClientClassName(): string {
+        if (this.customConfig.clientName != null) {
+            return this.customConfig.clientName;
+        }
         if (this.customConfig["client-class-name"] != null) {
             return this.customConfig["client-class-name"];
         }
@@ -268,6 +272,19 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getEnvironmentName(name: Name): string {
         return name.pascalCase.safeName;
+    }
+
+    public getUserAgent(): UserAgent | undefined {
+        if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
+            return this.ir.sdkConfig.platformHeaders.userAgent;
+        }
+        if (this.version != null) {
+            return {
+                header: "User-Agent",
+                value: `${this.getPackageName()}/${this.version}`
+            };
+        }
+        return undefined;
     }
 
     public getRawAsIsFiles(): string[] {
