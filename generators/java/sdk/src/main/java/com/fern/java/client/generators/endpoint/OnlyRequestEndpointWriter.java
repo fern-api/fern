@@ -194,9 +194,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     @Override
                     public Void visitTypeReference(HttpRequestBodyReference typeReference) {
                         builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
-                        AbstractEndpointWriter.responseContentType(httpEndpoint.getResponse())
-                                .ifPresent(responseContentType -> builder.add(
-                                        ".addHeader($S, $S)\n", AbstractEndpointWriter.ACCEPT_HEADER, contentType));
+                        AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint, false)
+                                .ifPresent(builder::add);
                         return null;
                     }
 
@@ -230,9 +229,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             REQUEST_OPTIONS_PARAMETER_NAME);
             builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
-            AbstractEndpointWriter.responseContentType(httpEndpoint.getResponse())
-                    .ifPresent(responseContentType ->
-                            builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.ACCEPT_HEADER, contentType));
+            AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint, false).ifPresent(builder::add);
             return builder.add(".build();\n").unindent().build();
         }
     }
