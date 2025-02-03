@@ -6,122 +6,122 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "GetBusinessUserUserIdRequestTooManyRequestsError": {
+          "__package__get-business-user-userIdTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "GetBusinessUserUserIdRequestUnauthorizedError": {
+          "__package__get-business-user-userIdUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "GetConsumerTransactionRequestTooManyRequestsError": {
+          "__package__get-consumer-transactionTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "GetConsumerTransactionRequestUnauthorizedError": {
+          "__package__get-consumer-transactionUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "GetConsumerUserRequestTooManyRequestsError": {
+          "__package__get-consumer-userTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "GetConsumerUserRequestUnauthorizedError": {
+          "__package__get-consumer-userUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "PostBusinessUserEventRequestBadRequestError": {
+          "__package__post-business-user-eventBadRequestError": {
             "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
-          "PostBusinessUserEventRequestTooManyRequestsError": {
+          "__package__post-business-user-eventTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "PostBusinessUserEventRequestUnauthorizedError": {
+          "__package__post-business-user-eventUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "PostBusinessUserRequestBadRequestError": {
+          "__package__post-business-userBadRequestError": {
             "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
-          "PostBusinessUserRequestTooManyRequestsError": {
+          "__package__post-business-userTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "PostBusinessUserRequestUnauthorizedError": {
+          "__package__post-business-userUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "PostConsumerTransactionRequestBadRequestError": {
+          "__package__post-consumer-transactionBadRequestError": {
             "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
-          "PostConsumerTransactionRequestTooManyRequestsError": {
+          "__package__post-consumer-transactionTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "PostConsumerTransactionRequestUnauthorizedError": {
+          "__package__post-consumer-transactionUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "PostConsumerUserRequestBadRequestError": {
+          "__package__post-consumer-userBadRequestError": {
             "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
-          "PostConsumerUserRequestTooManyRequestsError": {
+          "__package__post-consumer-userTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "PostConsumerUserRequestUnauthorizedError": {
+          "__package__post-consumer-userUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "PostTransactionEventRequestBadRequestError": {
+          "__package__post-transaction-eventBadRequestError": {
             "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
-          "PostTransactionEventRequestTooManyRequestsError": {
+          "__package__post-transaction-eventTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "PostTransactionEventRequestUnauthorizedError": {
+          "__package__post-transaction-eventUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "PostUserEventRequestBadRequestError": {
+          "__package__post-user-eventBadRequestError": {
             "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
-          "PostUserEventRequestTooManyRequestsError": {
+          "__package__post-user-eventTooManyRequestsError": {
             "docs": "Too Many Requests",
             "status-code": 429,
             "type": "unknown",
           },
-          "PostUserEventRequestUnauthorizedError": {
+          "__package__post-user-eventUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
@@ -140,8 +140,8 @@
 
 Calling `GET /business/user/{userId}` will return the entire User payload and rule execution results for the User with the corresponding `userId`",
               "errors": [
-                "GetBusinessUserUserIdRequestUnauthorizedError",
-                "GetBusinessUserUserIdRequestTooManyRequestsError",
+                "__package__get-business-user-userIdUnauthorizedError",
+                "__package__get-business-user-userIdTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -493,8 +493,8 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
 
 Calling `GET /transactions/{transactionId}` will return the entire transaction payload and rule execution results for the transaction with the corresponding `transactionId`",
               "errors": [
-                "GetConsumerTransactionRequestUnauthorizedError",
-                "GetConsumerTransactionRequestTooManyRequestsError",
+                "__package__get-consumer-transactionUnauthorizedError",
+                "__package__get-consumer-transactionTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -649,8 +649,8 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
 
 Calling `GET /consumer/user/{userId}` will return the entire user payload and rule execution results for the user with the corresponding `userId`",
               "errors": [
-                "GetConsumerUserRequestUnauthorizedError",
-                "GetConsumerUserRequestTooManyRequestsError",
+                "__package__get-consumer-userUnauthorizedError",
+                "__package__get-consumer-userTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -817,9 +817,9 @@ Each consumer Business entity needs three mandatory fields:
 * `legalEntity` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only `legalName`in `CompanyGeneralDetails` is mandatory
 * `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system",
               "errors": [
-                "PostBusinessUserRequestBadRequestError",
-                "PostBusinessUserRequestUnauthorizedError",
-                "PostBusinessUserRequestTooManyRequestsError",
+                "__package__post-business-userBadRequestError",
+                "__package__post-business-userUnauthorizedError",
+                "__package__post-business-userTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -903,9 +903,9 @@ Each user event needs three mandatory fields:
 In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.
 ",
               "errors": [
-                "PostBusinessUserEventRequestBadRequestError",
-                "PostBusinessUserEventRequestUnauthorizedError",
-                "PostBusinessUserEventRequestTooManyRequestsError",
+                "__package__post-business-user-eventBadRequestError",
+                "__package__post-business-user-eventUnauthorizedError",
+                "__package__post-business-user-eventTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -1341,9 +1341,9 @@ Here are some of the most used payload fields explained (you can find the full p
 * `originPaymentDetails` - Payment details (if any) used at the origin (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.
 * `destinationPaymentDetails` - Payment details (if any) used at the destination (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
               "errors": [
-                "PostConsumerTransactionRequestBadRequestError",
-                "PostConsumerTransactionRequestUnauthorizedError",
-                "PostConsumerTransactionRequestTooManyRequestsError",
+                "__package__post-consumer-transactionBadRequestError",
+                "__package__post-consumer-transactionUnauthorizedError",
+                "__package__post-consumer-transactionTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -1500,9 +1500,9 @@ Each consumer User entity needs three mandatory fields:
 * `createdTimestamp` - UNIX timestamp in *milliseconds* for when the User is created in your system
 ",
               "errors": [
-                "PostConsumerUserRequestBadRequestError",
-                "PostConsumerUserRequestUnauthorizedError",
-                "PostConsumerUserRequestTooManyRequestsError",
+                "__package__post-consumer-userBadRequestError",
+                "__package__post-consumer-userUnauthorizedError",
+                "__package__post-consumer-userTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -1648,9 +1648,9 @@ Each transaction event needs three mandatory fields:
 In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.
 ",
               "errors": [
-                "PostTransactionEventRequestBadRequestError",
-                "PostTransactionEventRequestUnauthorizedError",
-                "PostTransactionEventRequestTooManyRequestsError",
+                "__package__post-transaction-eventBadRequestError",
+                "__package__post-transaction-eventUnauthorizedError",
+                "__package__post-transaction-eventTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -1877,9 +1877,9 @@ Each user event needs three mandatory fields:
 In order to make individual events retrievable, you also need to pass in a unique `eventId` to the request body.
 ",
               "errors": [
-                "PostUserEventRequestBadRequestError",
-                "PostUserEventRequestUnauthorizedError",
-                "PostUserEventRequestTooManyRequestsError",
+                "__package__post-user-eventBadRequestError",
+                "__package__post-user-eventUnauthorizedError",
+                "__package__post-user-eventTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -7571,99 +7571,99 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     source:
       openapi: ../openapi.yml
 errors:
-  PostConsumerTransactionRequestBadRequestError:
+  __package__post-consumer-transactionBadRequestError:
     status-code: 400
     type: unknown
     docs: Bad Request
-  PostConsumerTransactionRequestUnauthorizedError:
+  __package__post-consumer-transactionUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  PostConsumerTransactionRequestTooManyRequestsError:
+  __package__post-consumer-transactionTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
-  GetConsumerTransactionRequestUnauthorizedError:
+  __package__get-consumer-transactionUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  GetConsumerTransactionRequestTooManyRequestsError:
+  __package__get-consumer-transactionTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
-  PostTransactionEventRequestBadRequestError:
+  __package__post-transaction-eventBadRequestError:
     status-code: 400
     type: unknown
     docs: Bad Request
-  PostTransactionEventRequestUnauthorizedError:
+  __package__post-transaction-eventUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  PostTransactionEventRequestTooManyRequestsError:
+  __package__post-transaction-eventTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
-  PostConsumerUserRequestBadRequestError:
+  __package__post-consumer-userBadRequestError:
     status-code: 400
     type: unknown
     docs: Bad Request
-  PostConsumerUserRequestUnauthorizedError:
+  __package__post-consumer-userUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  PostConsumerUserRequestTooManyRequestsError:
+  __package__post-consumer-userTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
-  GetConsumerUserRequestUnauthorizedError:
+  __package__get-consumer-userUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  GetConsumerUserRequestTooManyRequestsError:
+  __package__get-consumer-userTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
-  PostBusinessUserRequestBadRequestError:
+  __package__post-business-userBadRequestError:
     status-code: 400
     type: unknown
     docs: Bad Request
-  PostBusinessUserRequestUnauthorizedError:
+  __package__post-business-userUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  PostBusinessUserRequestTooManyRequestsError:
+  __package__post-business-userTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
-  GetBusinessUserUserIdRequestUnauthorizedError:
+  __package__get-business-user-userIdUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  GetBusinessUserUserIdRequestTooManyRequestsError:
+  __package__get-business-user-userIdTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
-  PostUserEventRequestBadRequestError:
+  __package__post-user-eventBadRequestError:
     status-code: 400
     type: unknown
     docs: Bad Request
-  PostUserEventRequestUnauthorizedError:
+  __package__post-user-eventUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  PostUserEventRequestTooManyRequestsError:
+  __package__post-user-eventTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
-  PostBusinessUserEventRequestBadRequestError:
+  __package__post-business-user-eventBadRequestError:
     status-code: 400
     type: unknown
     docs: Bad Request
-  PostBusinessUserEventRequestUnauthorizedError:
+  __package__post-business-user-eventUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  PostBusinessUserEventRequestTooManyRequestsError:
+  __package__post-business-user-eventTooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too Many Requests
@@ -7766,9 +7766,9 @@ service:
         type: PostConsumerTransactionResponse
         status-code: 201
       errors:
-        - PostConsumerTransactionRequestBadRequestError
-        - PostConsumerTransactionRequestUnauthorizedError
-        - PostConsumerTransactionRequestTooManyRequestsError
+        - __package__post-consumer-transactionBadRequestError
+        - __package__post-consumer-transactionUnauthorizedError
+        - __package__post-consumer-transactionTooManyRequestsError
       examples:
         - name: example-1
           request:
@@ -7879,8 +7879,8 @@ service:
         type: TransactionWithRulesResult
         status-code: 200
       errors:
-        - GetConsumerTransactionRequestUnauthorizedError
-        - GetConsumerTransactionRequestTooManyRequestsError
+        - __package__get-consumer-transactionUnauthorizedError
+        - __package__get-consumer-transactionTooManyRequestsError
       examples:
         - name: example-1
           path-parameters:
@@ -8062,9 +8062,9 @@ service:
         type: TransactionEventMonitoringResult
         status-code: 201
       errors:
-        - PostTransactionEventRequestBadRequestError
-        - PostTransactionEventRequestUnauthorizedError
-        - PostTransactionEventRequestTooManyRequestsError
+        - __package__post-transaction-eventBadRequestError
+        - __package__post-transaction-eventUnauthorizedError
+        - __package__post-transaction-eventTooManyRequestsError
       examples:
         - name: example-1
           request:
@@ -8214,9 +8214,9 @@ service:
         type: PostConsumerUserResponse
         status-code: 201
       errors:
-        - PostConsumerUserRequestBadRequestError
-        - PostConsumerUserRequestUnauthorizedError
-        - PostConsumerUserRequestTooManyRequestsError
+        - __package__post-consumer-userBadRequestError
+        - __package__post-consumer-userUnauthorizedError
+        - __package__post-consumer-userTooManyRequestsError
       examples:
         - name: example-1
           request:
@@ -8313,8 +8313,8 @@ service:
         type: User
         status-code: 200
       errors:
-        - GetConsumerUserRequestUnauthorizedError
-        - GetConsumerUserRequestTooManyRequestsError
+        - __package__get-consumer-userUnauthorizedError
+        - __package__get-consumer-userTooManyRequestsError
       examples:
         - name: example-1
           path-parameters:
@@ -8445,9 +8445,9 @@ service:
         type: PostBusinessUserResponse
         status-code: 201
       errors:
-        - PostBusinessUserRequestBadRequestError
-        - PostBusinessUserRequestUnauthorizedError
-        - PostBusinessUserRequestTooManyRequestsError
+        - __package__post-business-userBadRequestError
+        - __package__post-business-userUnauthorizedError
+        - __package__post-business-userTooManyRequestsError
       examples:
         - name: example-1
           request:
@@ -8507,8 +8507,8 @@ service:
         type: Business
         status-code: 200
       errors:
-        - GetBusinessUserUserIdRequestUnauthorizedError
-        - GetBusinessUserUserIdRequestTooManyRequestsError
+        - __package__get-business-user-userIdUnauthorizedError
+        - __package__get-business-user-userIdTooManyRequestsError
       examples:
         - name: example-2
           path-parameters:
@@ -8791,9 +8791,9 @@ service:
         type: UserWithRulesResult
         status-code: 201
       errors:
-        - PostUserEventRequestBadRequestError
-        - PostUserEventRequestUnauthorizedError
-        - PostUserEventRequestTooManyRequestsError
+        - __package__post-user-eventBadRequestError
+        - __package__post-user-eventUnauthorizedError
+        - __package__post-user-eventTooManyRequestsError
       examples:
         - request:
             timestamp: 1.1
@@ -8980,9 +8980,9 @@ service:
         type: BusinessWithRulesResult
         status-code: 201
       errors:
-        - PostBusinessUserEventRequestBadRequestError
-        - PostBusinessUserEventRequestUnauthorizedError
-        - PostBusinessUserEventRequestTooManyRequestsError
+        - __package__post-business-user-eventBadRequestError
+        - __package__post-business-user-eventUnauthorizedError
+        - __package__post-business-user-eventTooManyRequestsError
       examples:
         - request:
             timestamp: 1.1

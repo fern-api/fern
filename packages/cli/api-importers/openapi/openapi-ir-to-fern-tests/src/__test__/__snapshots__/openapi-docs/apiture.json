@@ -6,7 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "AccountJointOwnersListAccountJointOwnersRequestBadRequestError": {
+          "accountJointOwnerslistAccountJointOwnersBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -43,7 +43,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "AccountJointOwnersListAccountJointOwnersRequestForbiddenError": {
+          "accountJointOwnerslistAccountJointOwnersForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -92,7 +92,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "AccountJointOwnersListAccountJointOwnersRequestNotFoundError": {
+          "accountJointOwnerslistAccountJointOwnersNotFoundError": {
             "docs": "Not found. There is no such resource at the request URL.
 
 This error response may have one of the following `type` values:
@@ -129,7 +129,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "AccountJointOwnersListAccountJointOwnersRequestUnauthorizedError": {
+          "accountJointOwnerslistAccountJointOwnersUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -198,7 +198,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "AccountsGetAccountRequestForbiddenError": {
+          "accountsgetAccountForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -247,7 +247,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "AccountsGetAccountRequestNotFoundError": {
+          "accountsgetAccountNotFoundError": {
             "docs": "Not Found. There is no such banking account resource at the specified `{accountId}`. The response body contains details about the request error.",
             "examples": [
               {
@@ -278,7 +278,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "AccountsGetAccountRequestUnauthorizedError": {
+          "accountsgetAccountUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -347,7 +347,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountBalancesRequestForbiddenError": {
+          "accountslistAccountBalancesForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -396,7 +396,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountBalancesRequestServiceUnavailableError": {
+          "accountslistAccountBalancesServiceUnavailableError": {
             "docs": "Service Unavailable. Could not fetch the account balance from the banking core.",
             "examples": [
               {
@@ -427,7 +427,7 @@ This error response may have one of the following `type` values:
             "status-code": 503,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountBalancesRequestTooManyRequestsError": {
+          "accountslistAccountBalancesTooManyRequestsError": {
             "docs": "Too Many Requests. The client has sent too many requests in a given amount of time.
 
 This error response may have one of the following `type` values:
@@ -464,7 +464,7 @@ This error response may have one of the following `type` values:
             "status-code": 429,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountBalancesRequestUnauthorizedError": {
+          "accountslistAccountBalancesUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -533,7 +533,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountBalancesRequestUnprocessableEntityError": {
+          "accountslistAccountBalancesUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well-formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -559,7 +559,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountsRequestBadRequestError": {
+          "accountslistAccountsBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -596,7 +596,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountsRequestForbiddenError": {
+          "accountslistAccountsForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -645,7 +645,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountsRequestUnauthorizedError": {
+          "accountslistAccountsUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -714,7 +714,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "AccountsListAccountsRequestUnprocessableEntityError": {
+          "accountslistAccountsUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well-formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -751,7 +751,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "AccountsListEligibleAchAccountsRequestBadRequestError": {
+          "accountslistEligibleAchAccountsBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -788,7 +788,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "AccountsListEligibleAchAccountsRequestForbiddenError": {
+          "accountslistEligibleAchAccountsForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -837,7 +837,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "AccountsListEligibleAchAccountsRequestUnauthorizedError": {
+          "accountslistEligibleAchAccountsUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -906,7 +906,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "AccountsListEligibleAchAccountsRequestUnprocessableEntityError": {
+          "accountslistEligibleAchAccountsUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well-formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -943,7 +943,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetCutoffTimesRequestBadRequestError": {
+          "institutionsgetCutoffTimesBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -980,7 +980,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetCutoffTimesRequestForbiddenError": {
+          "institutionsgetCutoffTimesForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -1029,7 +1029,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetCutoffTimesRequestNotFoundError": {
+          "institutionsgetCutoffTimesNotFoundError": {
             "docs": "Not found. There is no such resource at the request URL.
 
 This error response may have one of the following `type` values:
@@ -1066,7 +1066,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetCutoffTimesRequestPreconditionFailedError": {
+          "institutionsgetCutoffTimesPreconditionFailedError": {
             "docs": "Precondition Failed. One or more conditions given in the request header fields evaluated to false when tested on the server.
 
 This error response may have one of the following `type` values:
@@ -1103,7 +1103,7 @@ This error response may have one of the following `type` values:
             "status-code": 412,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetCutoffTimesRequestUnauthorizedError": {
+          "institutionsgetCutoffTimesUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -1172,7 +1172,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetCutoffTimesRequestUnprocessableEntityError": {
+          "institutionsgetCutoffTimesUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well formed but otherwise invalid.",
             "examples": [
               {
@@ -1203,7 +1203,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetTransferDateRestrictionsRequestBadRequestError": {
+          "institutionsgetTransferDateRestrictionsBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -1240,7 +1240,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetTransferDateRestrictionsRequestForbiddenError": {
+          "institutionsgetTransferDateRestrictionsForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -1289,7 +1289,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetTransferDateRestrictionsRequestNotFoundError": {
+          "institutionsgetTransferDateRestrictionsNotFoundError": {
             "docs": "Not found. There is no such resource at the request URL.
 
 This error response may have one of the following `type` values:
@@ -1326,7 +1326,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetTransferDateRestrictionsRequestUnauthorizedError": {
+          "institutionsgetTransferDateRestrictionsUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -1395,7 +1395,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "InstitutionsGetTransferDateRestrictionsRequestUnprocessableEntityError": {
+          "institutionsgetTransferDateRestrictionsUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well-formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -1436,7 +1436,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "InstitutionsListTransferScheduleRequestBadRequestError": {
+          "institutionslistTransferScheduleBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -1473,7 +1473,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "InstitutionsListTransferScheduleRequestForbiddenError": {
+          "institutionslistTransferScheduleForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -1522,7 +1522,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "InstitutionsListTransferScheduleRequestNotFoundError": {
+          "institutionslistTransferScheduleNotFoundError": {
             "docs": "Not found. There is no such resource at the request URL.
 
 This error response may have one of the following `type` values:
@@ -1559,7 +1559,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "InstitutionsListTransferScheduleRequestUnauthorizedError": {
+          "institutionslistTransferScheduleUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -1628,7 +1628,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "InstitutionsListTransferScheduleRequestUnprocessableEntityError": {
+          "institutionslistTransferScheduleUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well formed but otherwise invalid.",
             "examples": [
               {
@@ -1659,7 +1659,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "InstitutionsLookUpInstitutionByLocatorRequestBadRequestError": {
+          "institutionslookUpInstitutionByLocatorBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -1696,7 +1696,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "InstitutionsLookUpInstitutionByLocatorRequestForbiddenError": {
+          "institutionslookUpInstitutionByLocatorForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -1745,7 +1745,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "InstitutionsLookUpInstitutionByLocatorRequestUnauthorizedError": {
+          "institutionslookUpInstitutionByLocatorUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -1814,7 +1814,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "InstitutionsLookUpInstitutionByLocatorRequestUnprocessableEntityError": {
+          "institutionslookUpInstitutionByLocatorUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -1851,7 +1851,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "JointOwnersCreateJointOwnerInvitationRequestBadRequestError": {
+          "jointOwnerscreateJointOwnerInvitationBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -1888,7 +1888,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "JointOwnersCreateJointOwnerInvitationRequestForbiddenError": {
+          "jointOwnerscreateJointOwnerInvitationForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -1937,7 +1937,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "JointOwnersCreateJointOwnerInvitationRequestNotFoundError": {
+          "jointOwnerscreateJointOwnerInvitationNotFoundError": {
             "docs": "Not Found. There is no such banking account resource at the specified `{accountId}`. The response body contains details about the request error.",
             "examples": [
               {
@@ -1968,7 +1968,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "JointOwnersCreateJointOwnerInvitationRequestUnauthorizedError": {
+          "jointOwnerscreateJointOwnerInvitationUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -2037,7 +2037,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "JointOwnersCreateJointOwnerInvitationRequestUnprocessableEntityError": {
+          "jointOwnerscreateJointOwnerInvitationUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well-formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -2074,7 +2074,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionGetOverdraftProtectionRequestForbiddenError": {
+          "overdraftProtectiongetOverdraftProtectionForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -2123,7 +2123,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionGetOverdraftProtectionRequestNotFoundError": {
+          "overdraftProtectiongetOverdraftProtectionNotFoundError": {
             "docs": "Unprocessable Entity. There is no such banking account resource at the specified account `{id}`, the caller does not have access to that account, or that account is not eligible, or there are duplicate items. The response body contains details about the request error.
 
 This error response may have one of the following `type` values:
@@ -2160,7 +2160,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionGetOverdraftProtectionRequestUnauthorizedError": {
+          "overdraftProtectiongetOverdraftProtectionUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -2229,7 +2229,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionListEligibleOverdraftAccountsRequestBadRequestError": {
+          "overdraftProtectionlistEligibleOverdraftAccountsBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -2266,7 +2266,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionListEligibleOverdraftAccountsRequestForbiddenError": {
+          "overdraftProtectionlistEligibleOverdraftAccountsForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -2315,7 +2315,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionListEligibleOverdraftAccountsRequestNotFoundError": {
+          "overdraftProtectionlistEligibleOverdraftAccountsNotFoundError": {
             "docs": "Not Found. There is no such banking account resource at the specified `{accountId}`. The response body contains details about the request error.",
             "examples": [
               {
@@ -2346,7 +2346,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionListEligibleOverdraftAccountsRequestUnauthorizedError": {
+          "overdraftProtectionlistEligibleOverdraftAccountsUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -2415,7 +2415,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionListEligibleOverdraftAccountsRequestUnprocessableEntityError": {
+          "overdraftProtectionlistEligibleOverdraftAccountsUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well-formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -2452,7 +2452,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionPatchOverdraftAccountsRequestBadRequestError": {
+          "overdraftProtectionpatchOverdraftAccountsBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -2489,7 +2489,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionPatchOverdraftAccountsRequestForbiddenError": {
+          "overdraftProtectionpatchOverdraftAccountsForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -2538,7 +2538,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionPatchOverdraftAccountsRequestNotFoundError": {
+          "overdraftProtectionpatchOverdraftAccountsNotFoundError": {
             "docs": "Not Found. There is no such banking account resource at the specified `{accountId}`. The response body contains details about the request error.",
             "examples": [
               {
@@ -2569,7 +2569,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionPatchOverdraftAccountsRequestUnauthorizedError": {
+          "overdraftProtectionpatchOverdraftAccountsUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -2638,7 +2638,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "OverdraftProtectionPatchOverdraftAccountsRequestUnprocessableEntityError": {
+          "overdraftProtectionpatchOverdraftAccountsUnprocessableEntityError": {
             "docs": "Unprocessable Entity. There is no such banking account resource at the specified account `{id}`, the caller does not have access to that account, or that account is not eligible, or there are duplicate items. The response body contains details about the request error.
 
 This error response may have one of the following `type` values:
@@ -2687,7 +2687,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "TransactionCategoriesListTransactionCategoriesRequestBadRequestError": {
+          "transactionCategorieslistTransactionCategoriesBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -2724,7 +2724,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "TransactionCategoriesListTransactionCategoriesRequestForbiddenError": {
+          "transactionCategorieslistTransactionCategoriesForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -2773,7 +2773,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "TransactionCategoriesListTransactionCategoriesRequestUnauthorizedError": {
+          "transactionCategorieslistTransactionCategoriesUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -2842,7 +2842,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "TransactionCategoriesListTransactionCategoriesRequestUnprocessableEntityError": {
+          "transactionCategorieslistTransactionCategoriesUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well formed but otherwise invalid.",
             "examples": [
               {
@@ -2873,7 +2873,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "TransactionsListTransactionsRequestBadRequestError": {
+          "transactionslistTransactionsBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -2910,7 +2910,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "TransactionsListTransactionsRequestForbiddenError": {
+          "transactionslistTransactionsForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -2959,7 +2959,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "TransactionsListTransactionsRequestGatewayTimeoutError": {
+          "transactionslistTransactionsGatewayTimeoutError": {
             "docs": "Gateway Timeout. The server did not receive a timely response from an upstream server it needed to access in order to complete the request.
 
 This error response may have one of the following `type` values:
@@ -2996,7 +2996,7 @@ This error response may have one of the following `type` values:
             "status-code": 504,
             "type": "ProblemResponse",
           },
-          "TransactionsListTransactionsRequestNotFoundError": {
+          "transactionslistTransactionsNotFoundError": {
             "docs": "Not Found. There is no such banking account resource at the specified `{accountId}` or the customer does not have entitlement to that account.",
             "examples": [
               {
@@ -3027,7 +3027,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "TransactionsListTransactionsRequestTooManyRequestsError": {
+          "transactionslistTransactionsTooManyRequestsError": {
             "docs": "Too Many Requests. The client has sent too many requests in a given amount of time.
 
 This error response may have one of the following `type` values:
@@ -3064,7 +3064,7 @@ This error response may have one of the following `type` values:
             "status-code": 429,
             "type": "ProblemResponse",
           },
-          "TransactionsListTransactionsRequestUnauthorizedError": {
+          "transactionslistTransactionsUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -3133,7 +3133,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "TransactionsListTransactionsRequestUnprocessableEntityError": {
+          "transactionslistTransactionsUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -3170,7 +3170,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "TransfersCreateTransferRequestBadRequestError": {
+          "transferscreateTransferBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -3207,7 +3207,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "TransfersCreateTransferRequestForbiddenError": {
+          "transferscreateTransferForbiddenError": {
             "docs": "Forbidden. The user's permissions do not allow the transfer.
 
 This error response may have one of the following `type` values:
@@ -3248,7 +3248,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "TransfersCreateTransferRequestUnauthorizedError": {
+          "transferscreateTransferUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -3317,7 +3317,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "TransfersCreateTransferRequestUnprocessableEntityError": {
+          "transferscreateTransferUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -3378,7 +3378,7 @@ This error response may have one of the following `type` values:
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "TransfersDeleteTransferRequestConflictError": {
+          "transfersdeleteTransferConflictError": {
             "docs": "Conflict.
 
 This error response may have one of the following `type` values:
@@ -3415,7 +3415,7 @@ This error response may have one of the following `type` values:
             "status-code": 409,
             "type": "ProblemResponse",
           },
-          "TransfersDeleteTransferRequestForbiddenError": {
+          "transfersdeleteTransferForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -3464,7 +3464,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "TransfersDeleteTransferRequestNotFoundError": {
+          "transfersdeleteTransferNotFoundError": {
             "docs": "Not Found. There is no such transfer resource at the specified `{transferId}`.",
             "examples": [
               {
@@ -3495,7 +3495,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "TransfersDeleteTransferRequestUnauthorizedError": {
+          "transfersdeleteTransferUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -3564,7 +3564,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "TransfersGetTransferRequestForbiddenError": {
+          "transfersgetTransferForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -3613,7 +3613,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "TransfersGetTransferRequestNotFoundError": {
+          "transfersgetTransferNotFoundError": {
             "docs": "Not Found. There is no such transfer resource at the specified `{transferId}`.",
             "examples": [
               {
@@ -3644,7 +3644,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "TransfersGetTransferRequestUnauthorizedError": {
+          "transfersgetTransferUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -3713,7 +3713,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "TransfersListTransfersRequestBadRequestError": {
+          "transferslistTransfersBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -3750,7 +3750,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "TransfersListTransfersRequestForbiddenError": {
+          "transferslistTransfersForbiddenError": {
             "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
 
 This error response may have one of the following `type` values:
@@ -3799,7 +3799,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "TransfersListTransfersRequestUnauthorizedError": {
+          "transferslistTransfersUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -3868,7 +3868,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "TransfersListTransfersRequestUnprocessableEntityError": {
+          "transferslistTransfersUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well formed but otherwise invalid.",
             "examples": [
               {
@@ -3899,7 +3899,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 422,
             "type": "ProblemResponse",
           },
-          "TransfersPatchTransferRequestBadRequestError": {
+          "transferspatchTransferBadRequestError": {
             "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
 
 This error response may have one of the following `type` values:
@@ -3936,7 +3936,7 @@ This error response may have one of the following `type` values:
             "status-code": 400,
             "type": "ProblemResponse",
           },
-          "TransfersPatchTransferRequestForbiddenError": {
+          "transferspatchTransferForbiddenError": {
             "docs": "Forbidden. The user's permissions do not allow the transfer.
 
 This error response may have one of the following `type` values:
@@ -3977,7 +3977,7 @@ This error response may have one of the following `type` values:
             "status-code": 403,
             "type": "ProblemResponse",
           },
-          "TransfersPatchTransferRequestNotFoundError": {
+          "transferspatchTransferNotFoundError": {
             "docs": "Not Found. There is no such transfer resource at the specified `{transferId}`.",
             "examples": [
               {
@@ -4008,7 +4008,7 @@ This error response may have one of the following `type` values:
             "status-code": 404,
             "type": "ProblemResponse",
           },
-          "TransfersPatchTransferRequestUnauthorizedError": {
+          "transferspatchTransferUnauthorizedError": {
             "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
 
 This error response may have one of the following `type` values:
@@ -4077,7 +4077,7 @@ The `attributes` object in the error may have the properties defined by the [`re
             "status-code": 401,
             "type": "ProblemResponse",
           },
-          "TransfersPatchTransferRequestUnprocessableEntityError": {
+          "transferspatchTransferUnprocessableEntityError": {
             "docs": "Unprocessable Entity. The request body and/or query parameters were well formed but otherwise invalid.
 
 This error response may have one of the following `type` values:
@@ -6761,7 +6761,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
         },
       },
       "rawContents": "errors:
-  AccountsListAccountsRequestBadRequestError:
+  accountslistAccountsBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -6794,7 +6794,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListAccountsRequestUnauthorizedError:
+  accountslistAccountsUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -6870,7 +6870,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListAccountsRequestForbiddenError:
+  accountslistAccountsForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -6918,7 +6918,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListAccountsRequestUnprocessableEntityError:
+  accountslistAccountsUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -6951,7 +6951,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsGetAccountRequestUnauthorizedError:
+  accountsgetAccountUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -7027,7 +7027,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsGetAccountRequestForbiddenError:
+  accountsgetAccountForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -7075,7 +7075,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsGetAccountRequestNotFoundError:
+  accountsgetAccountNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >-
@@ -7100,7 +7100,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListAccountBalancesRequestUnauthorizedError:
+  accountslistAccountBalancesUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -7176,7 +7176,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListAccountBalancesRequestForbiddenError:
+  accountslistAccountBalancesForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -7224,7 +7224,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListAccountBalancesRequestUnprocessableEntityError:
+  accountslistAccountBalancesUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -7248,7 +7248,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
           detail: No such account exists for the given account ID.
           instance: >-
             https://production.api.apiture.com/banking/accountBalances?accounts=bb709151-575041fcd617
-  AccountsListAccountBalancesRequestTooManyRequestsError:
+  accountslistAccountBalancesTooManyRequestsError:
     status-code: 429
     type: ProblemResponse
     docs: >
@@ -7281,7 +7281,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListAccountBalancesRequestServiceUnavailableError:
+  accountslistAccountBalancesServiceUnavailableError:
     status-code: 503
     type: ProblemResponse
     docs: >-
@@ -7306,7 +7306,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountJointOwnersListAccountJointOwnersRequestBadRequestError:
+  accountJointOwnerslistAccountJointOwnersBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -7339,7 +7339,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountJointOwnersListAccountJointOwnersRequestUnauthorizedError:
+  accountJointOwnerslistAccountJointOwnersUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -7415,7 +7415,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountJointOwnersListAccountJointOwnersRequestForbiddenError:
+  accountJointOwnerslistAccountJointOwnersForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -7463,7 +7463,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountJointOwnersListAccountJointOwnersRequestNotFoundError:
+  accountJointOwnerslistAccountJointOwnersNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >
@@ -7495,7 +7495,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListEligibleAchAccountsRequestBadRequestError:
+  accountslistEligibleAchAccountsBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -7528,7 +7528,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListEligibleAchAccountsRequestUnauthorizedError:
+  accountslistEligibleAchAccountsUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -7604,7 +7604,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListEligibleAchAccountsRequestForbiddenError:
+  accountslistEligibleAchAccountsForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -7652,7 +7652,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  AccountsListEligibleAchAccountsRequestUnprocessableEntityError:
+  accountslistEligibleAchAccountsUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -7685,7 +7685,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionListEligibleOverdraftAccountsRequestBadRequestError:
+  overdraftProtectionlistEligibleOverdraftAccountsBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -7718,7 +7718,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionListEligibleOverdraftAccountsRequestUnauthorizedError:
+  overdraftProtectionlistEligibleOverdraftAccountsUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -7794,7 +7794,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionListEligibleOverdraftAccountsRequestForbiddenError:
+  overdraftProtectionlistEligibleOverdraftAccountsForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -7842,7 +7842,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionListEligibleOverdraftAccountsRequestNotFoundError:
+  overdraftProtectionlistEligibleOverdraftAccountsNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >-
@@ -7867,7 +7867,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionListEligibleOverdraftAccountsRequestUnprocessableEntityError:
+  overdraftProtectionlistEligibleOverdraftAccountsUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -7900,7 +7900,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionGetOverdraftProtectionRequestUnauthorizedError:
+  overdraftProtectiongetOverdraftProtectionUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -7976,7 +7976,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionGetOverdraftProtectionRequestForbiddenError:
+  overdraftProtectiongetOverdraftProtectionForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -8024,7 +8024,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionGetOverdraftProtectionRequestNotFoundError:
+  overdraftProtectiongetOverdraftProtectionNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >
@@ -8059,7 +8059,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionPatchOverdraftAccountsRequestBadRequestError:
+  overdraftProtectionpatchOverdraftAccountsBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -8092,7 +8092,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionPatchOverdraftAccountsRequestUnauthorizedError:
+  overdraftProtectionpatchOverdraftAccountsUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -8168,7 +8168,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionPatchOverdraftAccountsRequestForbiddenError:
+  overdraftProtectionpatchOverdraftAccountsForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -8216,7 +8216,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionPatchOverdraftAccountsRequestNotFoundError:
+  overdraftProtectionpatchOverdraftAccountsNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >-
@@ -8241,7 +8241,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  OverdraftProtectionPatchOverdraftAccountsRequestUnprocessableEntityError:
+  overdraftProtectionpatchOverdraftAccountsUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -8291,7 +8291,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  JointOwnersCreateJointOwnerInvitationRequestBadRequestError:
+  jointOwnerscreateJointOwnerInvitationBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -8324,7 +8324,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  JointOwnersCreateJointOwnerInvitationRequestUnauthorizedError:
+  jointOwnerscreateJointOwnerInvitationUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -8400,7 +8400,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  JointOwnersCreateJointOwnerInvitationRequestForbiddenError:
+  jointOwnerscreateJointOwnerInvitationForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -8448,7 +8448,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  JointOwnersCreateJointOwnerInvitationRequestNotFoundError:
+  jointOwnerscreateJointOwnerInvitationNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >-
@@ -8473,7 +8473,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  JointOwnersCreateJointOwnerInvitationRequestUnprocessableEntityError:
+  jointOwnerscreateJointOwnerInvitationUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -8506,7 +8506,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsLookUpInstitutionByLocatorRequestBadRequestError:
+  institutionslookUpInstitutionByLocatorBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -8539,7 +8539,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsLookUpInstitutionByLocatorRequestUnauthorizedError:
+  institutionslookUpInstitutionByLocatorUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -8615,7 +8615,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsLookUpInstitutionByLocatorRequestForbiddenError:
+  institutionslookUpInstitutionByLocatorForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -8663,7 +8663,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsLookUpInstitutionByLocatorRequestUnprocessableEntityError:
+  institutionslookUpInstitutionByLocatorUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -8696,7 +8696,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsListTransferScheduleRequestBadRequestError:
+  institutionslistTransferScheduleBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -8729,7 +8729,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsListTransferScheduleRequestUnauthorizedError:
+  institutionslistTransferScheduleUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -8805,7 +8805,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsListTransferScheduleRequestForbiddenError:
+  institutionslistTransferScheduleForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -8853,7 +8853,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsListTransferScheduleRequestNotFoundError:
+  institutionslistTransferScheduleNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >
@@ -8885,7 +8885,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsListTransferScheduleRequestUnprocessableEntityError:
+  institutionslistTransferScheduleUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >-
@@ -8910,7 +8910,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetCutoffTimesRequestBadRequestError:
+  institutionsgetCutoffTimesBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -8943,7 +8943,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetCutoffTimesRequestUnauthorizedError:
+  institutionsgetCutoffTimesUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -9019,7 +9019,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetCutoffTimesRequestForbiddenError:
+  institutionsgetCutoffTimesForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -9067,7 +9067,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetCutoffTimesRequestNotFoundError:
+  institutionsgetCutoffTimesNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >
@@ -9099,7 +9099,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetCutoffTimesRequestPreconditionFailedError:
+  institutionsgetCutoffTimesPreconditionFailedError:
     status-code: 412
     type: ProblemResponse
     docs: >
@@ -9132,7 +9132,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetCutoffTimesRequestUnprocessableEntityError:
+  institutionsgetCutoffTimesUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >-
@@ -9157,7 +9157,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetTransferDateRestrictionsRequestBadRequestError:
+  institutionsgetTransferDateRestrictionsBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -9190,7 +9190,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetTransferDateRestrictionsRequestUnauthorizedError:
+  institutionsgetTransferDateRestrictionsUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -9266,7 +9266,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetTransferDateRestrictionsRequestForbiddenError:
+  institutionsgetTransferDateRestrictionsForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -9314,7 +9314,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetTransferDateRestrictionsRequestNotFoundError:
+  institutionsgetTransferDateRestrictionsNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >
@@ -9346,7 +9346,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  InstitutionsGetTransferDateRestrictionsRequestUnprocessableEntityError:
+  institutionsgetTransferDateRestrictionsUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -9384,7 +9384,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionsListTransactionsRequestBadRequestError:
+  transactionslistTransactionsBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -9417,7 +9417,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionsListTransactionsRequestUnauthorizedError:
+  transactionslistTransactionsUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -9493,7 +9493,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionsListTransactionsRequestForbiddenError:
+  transactionslistTransactionsForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -9541,7 +9541,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionsListTransactionsRequestNotFoundError:
+  transactionslistTransactionsNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >-
@@ -9566,7 +9566,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionsListTransactionsRequestUnprocessableEntityError:
+  transactionslistTransactionsUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -9599,7 +9599,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionsListTransactionsRequestTooManyRequestsError:
+  transactionslistTransactionsTooManyRequestsError:
     status-code: 429
     type: ProblemResponse
     docs: >
@@ -9632,7 +9632,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionsListTransactionsRequestGatewayTimeoutError:
+  transactionslistTransactionsGatewayTimeoutError:
     status-code: 504
     type: ProblemResponse
     docs: >
@@ -9665,7 +9665,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionCategoriesListTransactionCategoriesRequestBadRequestError:
+  transactionCategorieslistTransactionCategoriesBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -9698,7 +9698,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionCategoriesListTransactionCategoriesRequestUnauthorizedError:
+  transactionCategorieslistTransactionCategoriesUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -9774,7 +9774,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionCategoriesListTransactionCategoriesRequestForbiddenError:
+  transactionCategorieslistTransactionCategoriesForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -9822,7 +9822,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransactionCategoriesListTransactionCategoriesRequestUnprocessableEntityError:
+  transactionCategorieslistTransactionCategoriesUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >-
@@ -9847,7 +9847,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersListTransfersRequestBadRequestError:
+  transferslistTransfersBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -9880,7 +9880,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersListTransfersRequestUnauthorizedError:
+  transferslistTransfersUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -9956,7 +9956,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersListTransfersRequestForbiddenError:
+  transferslistTransfersForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -10004,7 +10004,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersListTransfersRequestUnprocessableEntityError:
+  transferslistTransfersUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >-
@@ -10029,7 +10029,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersCreateTransferRequestBadRequestError:
+  transferscreateTransferBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -10062,7 +10062,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersCreateTransferRequestUnauthorizedError:
+  transferscreateTransferUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -10138,7 +10138,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersCreateTransferRequestForbiddenError:
+  transferscreateTransferForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -10175,7 +10175,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersCreateTransferRequestUnprocessableEntityError:
+  transferscreateTransferUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -10238,7 +10238,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersGetTransferRequestUnauthorizedError:
+  transfersgetTransferUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -10314,7 +10314,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersGetTransferRequestForbiddenError:
+  transfersgetTransferForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -10362,7 +10362,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersGetTransferRequestNotFoundError:
+  transfersgetTransferNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >-
@@ -10387,7 +10387,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersDeleteTransferRequestUnauthorizedError:
+  transfersdeleteTransferUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -10463,7 +10463,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersDeleteTransferRequestForbiddenError:
+  transfersdeleteTransferForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -10511,7 +10511,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersDeleteTransferRequestNotFoundError:
+  transfersdeleteTransferNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >-
@@ -10536,7 +10536,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersDeleteTransferRequestConflictError:
+  transfersdeleteTransferConflictError:
     status-code: 409
     type: ProblemResponse
     docs: >
@@ -10568,7 +10568,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersPatchTransferRequestBadRequestError:
+  transferspatchTransferBadRequestError:
     status-code: 400
     type: ProblemResponse
     docs: >
@@ -10601,7 +10601,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersPatchTransferRequestUnauthorizedError:
+  transferspatchTransferUnauthorizedError:
     status-code: 401
     type: ProblemResponse
     docs: >
@@ -10677,7 +10677,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersPatchTransferRequestForbiddenError:
+  transferspatchTransferForbiddenError:
     status-code: 403
     type: ProblemResponse
     docs: >
@@ -10714,7 +10714,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersPatchTransferRequestNotFoundError:
+  transferspatchTransferNotFoundError:
     status-code: 404
     type: ProblemResponse
     docs: >-
@@ -10739,7 +10739,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
                 https://production.api.apiture.com/banking/transfers/bb709151-575041fcd617
               id: 3fbad566-be86-4b22-9ba6-3ca99fdc0799
               occurredAt: '2022-04-25T12:42:21Z'
-  TransfersPatchTransferRequestUnprocessableEntityError:
+  transferspatchTransferUnprocessableEntityError:
     status-code: 422
     type: ProblemResponse
     docs: >
@@ -13225,10 +13225,10 @@ types:
               "display-name": "Return a collection of account joint owners",
               "docs": "Return a collection of account joint owners. The user must have the `account.manageJointOwners` permission to use this operation.",
               "errors": [
-                "root.AccountJointOwnersListAccountJointOwnersRequestBadRequestError",
-                "root.AccountJointOwnersListAccountJointOwnersRequestUnauthorizedError",
-                "root.AccountJointOwnersListAccountJointOwnersRequestForbiddenError",
-                "root.AccountJointOwnersListAccountJointOwnersRequestNotFoundError",
+                "root.accountJointOwnerslistAccountJointOwnersBadRequestError",
+                "root.accountJointOwnerslistAccountJointOwnersUnauthorizedError",
+                "root.accountJointOwnerslistAccountJointOwnersForbiddenError",
+                "root.accountJointOwnerslistAccountJointOwnersNotFoundError",
               ],
               "examples": [
                 {
@@ -13298,10 +13298,10 @@ service:
         type: root.AccountJointOwners
         status-code: 200
       errors:
-        - root.AccountJointOwnersListAccountJointOwnersRequestBadRequestError
-        - root.AccountJointOwnersListAccountJointOwnersRequestUnauthorizedError
-        - root.AccountJointOwnersListAccountJointOwnersRequestForbiddenError
-        - root.AccountJointOwnersListAccountJointOwnersRequestNotFoundError
+        - root.accountJointOwnerslistAccountJointOwnersBadRequestError
+        - root.accountJointOwnerslistAccountJointOwnersUnauthorizedError
+        - root.accountJointOwnerslistAccountJointOwnersForbiddenError
+        - root.accountJointOwnerslistAccountJointOwnersNotFoundError
       examples:
         - path-parameters:
             accountId: accountId
@@ -13333,9 +13333,9 @@ docs: Account Joint Owners
               "display-name": "Get an Account",
               "docs": "Return details of the customer's internal account.",
               "errors": [
-                "root.AccountsGetAccountRequestUnauthorizedError",
-                "root.AccountsGetAccountRequestForbiddenError",
-                "root.AccountsGetAccountRequestNotFoundError",
+                "root.accountsgetAccountUnauthorizedError",
+                "root.accountsgetAccountForbiddenError",
+                "root.accountsgetAccountNotFoundError",
               ],
               "examples": [
                 {
@@ -13396,11 +13396,11 @@ docs: Account Joint Owners
 
 The response may be incomplete. Given a `Retry-After` response header, the client can retry the operation after a short delay, requesting only the accounts which are incomplete; see the 202 Accepted response for details.",
               "errors": [
-                "root.AccountsListAccountBalancesRequestUnauthorizedError",
-                "root.AccountsListAccountBalancesRequestForbiddenError",
-                "root.AccountsListAccountBalancesRequestUnprocessableEntityError",
-                "root.AccountsListAccountBalancesRequestTooManyRequestsError",
-                "root.AccountsListAccountBalancesRequestServiceUnavailableError",
+                "root.accountslistAccountBalancesUnauthorizedError",
+                "root.accountslistAccountBalancesForbiddenError",
+                "root.accountslistAccountBalancesUnprocessableEntityError",
+                "root.accountslistAccountBalancesTooManyRequestsError",
+                "root.accountslistAccountBalancesServiceUnavailableError",
               ],
               "examples": [
                 {
@@ -13466,10 +13466,10 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               "display-name": "List Accounts",
               "docs": "Return a paginated list of the customer's accounts, consisting of internal accounts at this financial institution and accounts at other financial institutions, if any.",
               "errors": [
-                "root.AccountsListAccountsRequestBadRequestError",
-                "root.AccountsListAccountsRequestUnauthorizedError",
-                "root.AccountsListAccountsRequestForbiddenError",
-                "root.AccountsListAccountsRequestUnprocessableEntityError",
+                "root.accountslistAccountsBadRequestError",
+                "root.accountslistAccountsUnauthorizedError",
+                "root.accountslistAccountsForbiddenError",
+                "root.accountslistAccountsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -13591,10 +13591,10 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
 
 Optionally, an agent can access a business customer's ACH accounts when acting on behalf of that business customer via the optional `customerId` query parameter.",
               "errors": [
-                "root.AccountsListEligibleAchAccountsRequestBadRequestError",
-                "root.AccountsListEligibleAchAccountsRequestUnauthorizedError",
-                "root.AccountsListEligibleAchAccountsRequestForbiddenError",
-                "root.AccountsListEligibleAchAccountsRequestUnprocessableEntityError",
+                "root.accountslistEligibleAchAccountsBadRequestError",
+                "root.accountslistEligibleAchAccountsUnauthorizedError",
+                "root.accountslistEligibleAchAccountsForbiddenError",
+                "root.accountslistEligibleAchAccountsUnprocessableEntityError",
               ],
               "method": "GET",
               "pagination": undefined,
@@ -13743,10 +13743,10 @@ service:
         type: root.Accounts
         status-code: 200
       errors:
-        - root.AccountsListAccountsRequestBadRequestError
-        - root.AccountsListAccountsRequestUnauthorizedError
-        - root.AccountsListAccountsRequestForbiddenError
-        - root.AccountsListAccountsRequestUnprocessableEntityError
+        - root.accountslistAccountsBadRequestError
+        - root.accountslistAccountsUnauthorizedError
+        - root.accountslistAccountsForbiddenError
+        - root.accountslistAccountsUnprocessableEntityError
       examples:
         - response:
             body:
@@ -13812,9 +13812,9 @@ service:
         type: root.Account
         status-code: 200
       errors:
-        - root.AccountsGetAccountRequestUnauthorizedError
-        - root.AccountsGetAccountRequestForbiddenError
-        - root.AccountsGetAccountRequestNotFoundError
+        - root.accountsgetAccountUnauthorizedError
+        - root.accountsgetAccountForbiddenError
+        - root.accountsgetAccountNotFoundError
       examples:
         - path-parameters:
             accountId: accountId
@@ -13890,11 +13890,11 @@ service:
         type: root.AccountBalances
         status-code: 200
       errors:
-        - root.AccountsListAccountBalancesRequestUnauthorizedError
-        - root.AccountsListAccountBalancesRequestForbiddenError
-        - root.AccountsListAccountBalancesRequestUnprocessableEntityError
-        - root.AccountsListAccountBalancesRequestTooManyRequestsError
-        - root.AccountsListAccountBalancesRequestServiceUnavailableError
+        - root.accountslistAccountBalancesUnauthorizedError
+        - root.accountslistAccountBalancesForbiddenError
+        - root.accountslistAccountBalancesUnprocessableEntityError
+        - root.accountslistAccountBalancesTooManyRequestsError
+        - root.accountslistAccountBalancesServiceUnavailableError
       examples:
         - response:
             body:
@@ -13981,10 +13981,10 @@ service:
         type: root.Accounts
         status-code: 200
       errors:
-        - root.AccountsListEligibleAchAccountsRequestBadRequestError
-        - root.AccountsListEligibleAchAccountsRequestUnauthorizedError
-        - root.AccountsListEligibleAchAccountsRequestForbiddenError
-        - root.AccountsListEligibleAchAccountsRequestUnprocessableEntityError
+        - root.accountslistEligibleAchAccountsBadRequestError
+        - root.accountslistEligibleAchAccountsUnauthorizedError
+        - root.accountslistEligibleAchAccountsForbiddenError
+        - root.accountslistEligibleAchAccountsUnprocessableEntityError
   source:
     openapi: ../openapi.yml
   display-name: Accounts
@@ -14010,12 +14010,12 @@ docs: Banking Accounts
 
 Cutoff times are very slowly changing data. This is a _conditional operation_ when the `If-None-Match` header is used. If the client has a `getCutoffTimes` response and the `ETag` returned from a previous call to this operation, this operation returns a 304 Not Modified when called again if the cutoff times have not changed.",
               "errors": [
-                "root.InstitutionsGetCutoffTimesRequestBadRequestError",
-                "root.InstitutionsGetCutoffTimesRequestUnauthorizedError",
-                "root.InstitutionsGetCutoffTimesRequestForbiddenError",
-                "root.InstitutionsGetCutoffTimesRequestNotFoundError",
-                "root.InstitutionsGetCutoffTimesRequestPreconditionFailedError",
-                "root.InstitutionsGetCutoffTimesRequestUnprocessableEntityError",
+                "root.institutionsgetCutoffTimesBadRequestError",
+                "root.institutionsgetCutoffTimesUnauthorizedError",
+                "root.institutionsgetCutoffTimesForbiddenError",
+                "root.institutionsgetCutoffTimesNotFoundError",
+                "root.institutionsgetCutoffTimesPreconditionFailedError",
+                "root.institutionsgetCutoffTimesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14091,11 +14091,11 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
 
 This information provides hints to clients, allowing bank customers to select transfer dates from a calendar picker. However, these dates are not strictly enforced; a transfer can still be scheduled to occur on restricted dates but the financial institution may shift the date when funds are drafted to account for holidays, closures, or to adjust based on the risk level of the funding account.",
               "errors": [
-                "root.InstitutionsGetTransferDateRestrictionsRequestBadRequestError",
-                "root.InstitutionsGetTransferDateRestrictionsRequestUnauthorizedError",
-                "root.InstitutionsGetTransferDateRestrictionsRequestForbiddenError",
-                "root.InstitutionsGetTransferDateRestrictionsRequestNotFoundError",
-                "root.InstitutionsGetTransferDateRestrictionsRequestUnprocessableEntityError",
+                "root.institutionsgetTransferDateRestrictionsBadRequestError",
+                "root.institutionsgetTransferDateRestrictionsUnauthorizedError",
+                "root.institutionsgetTransferDateRestrictionsForbiddenError",
+                "root.institutionsgetTransferDateRestrictionsNotFoundError",
+                "root.institutionsgetTransferDateRestrictionsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14267,11 +14267,11 @@ This information provides hints to clients, allowing bank customers to select tr
               "display-name": "Return this institution's list of upcoming transfer schedule dates",
               "docs": "Return a transfer schedule list for this institution.",
               "errors": [
-                "root.InstitutionsListTransferScheduleRequestBadRequestError",
-                "root.InstitutionsListTransferScheduleRequestUnauthorizedError",
-                "root.InstitutionsListTransferScheduleRequestForbiddenError",
-                "root.InstitutionsListTransferScheduleRequestNotFoundError",
-                "root.InstitutionsListTransferScheduleRequestUnprocessableEntityError",
+                "root.institutionslistTransferScheduleBadRequestError",
+                "root.institutionslistTransferScheduleUnauthorizedError",
+                "root.institutionslistTransferScheduleForbiddenError",
+                "root.institutionslistTransferScheduleNotFoundError",
+                "root.institutionslistTransferScheduleUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14384,10 +14384,10 @@ This information provides hints to clients, allowing bank customers to select tr
               "display-name": "Look up institution by routing number, IBAN, or SWIFT/BIC code",
               "docs": "Look up a financial institution by their country code and either [American Bankers Association routing number](https://www.aba.com/about-us/routing-number), by [International Bank Account Number (IBAN)](https://www.ecbs.org/iban.htm), or by [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code). Optionally, include a list of intermediary institutions that may be necessary to complete international wire transfers.",
               "errors": [
-                "root.InstitutionsLookUpInstitutionByLocatorRequestBadRequestError",
-                "root.InstitutionsLookUpInstitutionByLocatorRequestUnauthorizedError",
-                "root.InstitutionsLookUpInstitutionByLocatorRequestForbiddenError",
-                "root.InstitutionsLookUpInstitutionByLocatorRequestUnprocessableEntityError",
+                "root.institutionslookUpInstitutionByLocatorBadRequestError",
+                "root.institutionslookUpInstitutionByLocatorUnauthorizedError",
+                "root.institutionslookUpInstitutionByLocatorForbiddenError",
+                "root.institutionslookUpInstitutionByLocatorUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -14540,11 +14540,10 @@ service:
         type: root.InstitutionLookupResult
         status-code: 200
       errors:
-        - root.InstitutionsLookUpInstitutionByLocatorRequestBadRequestError
-        - root.InstitutionsLookUpInstitutionByLocatorRequestUnauthorizedError
-        - root.InstitutionsLookUpInstitutionByLocatorRequestForbiddenError
-        - >-
-          root.InstitutionsLookUpInstitutionByLocatorRequestUnprocessableEntityError
+        - root.institutionslookUpInstitutionByLocatorBadRequestError
+        - root.institutionslookUpInstitutionByLocatorUnauthorizedError
+        - root.institutionslookUpInstitutionByLocatorForbiddenError
+        - root.institutionslookUpInstitutionByLocatorUnprocessableEntityError
       examples:
         - query-parameters:
             locator: locator
@@ -14633,11 +14632,11 @@ service:
         type: root.TransferSchedules
         status-code: 200
       errors:
-        - root.InstitutionsListTransferScheduleRequestBadRequestError
-        - root.InstitutionsListTransferScheduleRequestUnauthorizedError
-        - root.InstitutionsListTransferScheduleRequestForbiddenError
-        - root.InstitutionsListTransferScheduleRequestNotFoundError
-        - root.InstitutionsListTransferScheduleRequestUnprocessableEntityError
+        - root.institutionslistTransferScheduleBadRequestError
+        - root.institutionslistTransferScheduleUnauthorizedError
+        - root.institutionslistTransferScheduleForbiddenError
+        - root.institutionslistTransferScheduleNotFoundError
+        - root.institutionslistTransferScheduleUnprocessableEntityError
       examples:
         - path-parameters:
             institutionId: TIBURON
@@ -14710,12 +14709,12 @@ service:
         type: root.CutoffTimes
         status-code: 200
       errors:
-        - root.InstitutionsGetCutoffTimesRequestBadRequestError
-        - root.InstitutionsGetCutoffTimesRequestUnauthorizedError
-        - root.InstitutionsGetCutoffTimesRequestForbiddenError
-        - root.InstitutionsGetCutoffTimesRequestNotFoundError
-        - root.InstitutionsGetCutoffTimesRequestPreconditionFailedError
-        - root.InstitutionsGetCutoffTimesRequestUnprocessableEntityError
+        - root.institutionsgetCutoffTimesBadRequestError
+        - root.institutionsgetCutoffTimesUnauthorizedError
+        - root.institutionsgetCutoffTimesForbiddenError
+        - root.institutionsgetCutoffTimesNotFoundError
+        - root.institutionsgetCutoffTimesPreconditionFailedError
+        - root.institutionsgetCutoffTimesUnprocessableEntityError
       examples:
         - path-parameters:
             institutionId: TIBURON
@@ -14798,12 +14797,11 @@ service:
         type: root.TransferDateRestrictions
         status-code: 200
       errors:
-        - root.InstitutionsGetTransferDateRestrictionsRequestBadRequestError
-        - root.InstitutionsGetTransferDateRestrictionsRequestUnauthorizedError
-        - root.InstitutionsGetTransferDateRestrictionsRequestForbiddenError
-        - root.InstitutionsGetTransferDateRestrictionsRequestNotFoundError
-        - >-
-          root.InstitutionsGetTransferDateRestrictionsRequestUnprocessableEntityError
+        - root.institutionsgetTransferDateRestrictionsBadRequestError
+        - root.institutionsgetTransferDateRestrictionsUnauthorizedError
+        - root.institutionsgetTransferDateRestrictionsForbiddenError
+        - root.institutionsgetTransferDateRestrictionsNotFoundError
+        - root.institutionsgetTransferDateRestrictionsUnprocessableEntityError
       examples:
         - path-parameters:
             institutionId: TIBURON
@@ -14901,11 +14899,11 @@ docs: Banking Institutions
 
 The authenticated user must have the `account.allows.manageJointOwners` permission to use this operation.",
               "errors": [
-                "root.JointOwnersCreateJointOwnerInvitationRequestBadRequestError",
-                "root.JointOwnersCreateJointOwnerInvitationRequestUnauthorizedError",
-                "root.JointOwnersCreateJointOwnerInvitationRequestForbiddenError",
-                "root.JointOwnersCreateJointOwnerInvitationRequestNotFoundError",
-                "root.JointOwnersCreateJointOwnerInvitationRequestUnprocessableEntityError",
+                "root.jointOwnerscreateJointOwnerInvitationBadRequestError",
+                "root.jointOwnerscreateJointOwnerInvitationUnauthorizedError",
+                "root.jointOwnerscreateJointOwnerInvitationForbiddenError",
+                "root.jointOwnerscreateJointOwnerInvitationNotFoundError",
+                "root.jointOwnerscreateJointOwnerInvitationUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15011,12 +15009,11 @@ service:
         type: root.JointOwnerInvitation
         status-code: 200
       errors:
-        - root.JointOwnersCreateJointOwnerInvitationRequestBadRequestError
-        - root.JointOwnersCreateJointOwnerInvitationRequestUnauthorizedError
-        - root.JointOwnersCreateJointOwnerInvitationRequestForbiddenError
-        - root.JointOwnersCreateJointOwnerInvitationRequestNotFoundError
-        - >-
-          root.JointOwnersCreateJointOwnerInvitationRequestUnprocessableEntityError
+        - root.jointOwnerscreateJointOwnerInvitationBadRequestError
+        - root.jointOwnerscreateJointOwnerInvitationUnauthorizedError
+        - root.jointOwnerscreateJointOwnerInvitationForbiddenError
+        - root.jointOwnerscreateJointOwnerInvitationNotFoundError
+        - root.jointOwnerscreateJointOwnerInvitationUnprocessableEntityError
       examples:
         - path-parameters:
             accountId: accountId
@@ -15056,9 +15053,9 @@ service:
               "display-name": "Fetch a representation of the account's overdraft protection settings",
               "docs": "Return the JSON representation of this account's overdraft protection settings.",
               "errors": [
-                "root.OverdraftProtectionGetOverdraftProtectionRequestUnauthorizedError",
-                "root.OverdraftProtectionGetOverdraftProtectionRequestForbiddenError",
-                "root.OverdraftProtectionGetOverdraftProtectionRequestNotFoundError",
+                "root.overdraftProtectiongetOverdraftProtectionUnauthorizedError",
+                "root.overdraftProtectiongetOverdraftProtectionForbiddenError",
+                "root.overdraftProtectiongetOverdraftProtectionNotFoundError",
               ],
               "examples": [
                 {
@@ -15102,11 +15099,11 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
 
 To obtain available balances for these accounts, use [`listAccountBalances`](#op-listAccountBalances).",
               "errors": [
-                "root.OverdraftProtectionListEligibleOverdraftAccountsRequestBadRequestError",
-                "root.OverdraftProtectionListEligibleOverdraftAccountsRequestUnauthorizedError",
-                "root.OverdraftProtectionListEligibleOverdraftAccountsRequestForbiddenError",
-                "root.OverdraftProtectionListEligibleOverdraftAccountsRequestNotFoundError",
-                "root.OverdraftProtectionListEligibleOverdraftAccountsRequestUnprocessableEntityError",
+                "root.overdraftProtectionlistEligibleOverdraftAccountsBadRequestError",
+                "root.overdraftProtectionlistEligibleOverdraftAccountsUnauthorizedError",
+                "root.overdraftProtectionlistEligibleOverdraftAccountsForbiddenError",
+                "root.overdraftProtectionlistEligibleOverdraftAccountsNotFoundError",
+                "root.overdraftProtectionlistEligibleOverdraftAccountsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15188,11 +15185,11 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
 
 The user must have the `allows.manageOverdraftAccounts` permission on the account to use this operation.",
               "errors": [
-                "root.OverdraftProtectionPatchOverdraftAccountsRequestBadRequestError",
-                "root.OverdraftProtectionPatchOverdraftAccountsRequestUnauthorizedError",
-                "root.OverdraftProtectionPatchOverdraftAccountsRequestForbiddenError",
-                "root.OverdraftProtectionPatchOverdraftAccountsRequestNotFoundError",
-                "root.OverdraftProtectionPatchOverdraftAccountsRequestUnprocessableEntityError",
+                "root.overdraftProtectionpatchOverdraftAccountsBadRequestError",
+                "root.overdraftProtectionpatchOverdraftAccountsUnauthorizedError",
+                "root.overdraftProtectionpatchOverdraftAccountsForbiddenError",
+                "root.overdraftProtectionpatchOverdraftAccountsNotFoundError",
+                "root.overdraftProtectionpatchOverdraftAccountsUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15312,16 +15309,12 @@ service:
         type: root.EligibleOverdraftAccounts
         status-code: 200
       errors:
+        - root.overdraftProtectionlistEligibleOverdraftAccountsBadRequestError
+        - root.overdraftProtectionlistEligibleOverdraftAccountsUnauthorizedError
+        - root.overdraftProtectionlistEligibleOverdraftAccountsForbiddenError
+        - root.overdraftProtectionlistEligibleOverdraftAccountsNotFoundError
         - >-
-          root.OverdraftProtectionListEligibleOverdraftAccountsRequestBadRequestError
-        - >-
-          root.OverdraftProtectionListEligibleOverdraftAccountsRequestUnauthorizedError
-        - >-
-          root.OverdraftProtectionListEligibleOverdraftAccountsRequestForbiddenError
-        - >-
-          root.OverdraftProtectionListEligibleOverdraftAccountsRequestNotFoundError
-        - >-
-          root.OverdraftProtectionListEligibleOverdraftAccountsRequestUnprocessableEntityError
+          root.overdraftProtectionlistEligibleOverdraftAccountsUnprocessableEntityError
       examples:
         - path-parameters:
             accountId: accountId
@@ -15360,9 +15353,9 @@ service:
         type: root.OverdraftProtection
         status-code: 200
       errors:
-        - root.OverdraftProtectionGetOverdraftProtectionRequestUnauthorizedError
-        - root.OverdraftProtectionGetOverdraftProtectionRequestForbiddenError
-        - root.OverdraftProtectionGetOverdraftProtectionRequestNotFoundError
+        - root.overdraftProtectiongetOverdraftProtectionUnauthorizedError
+        - root.overdraftProtectiongetOverdraftProtectionForbiddenError
+        - root.overdraftProtectiongetOverdraftProtectionNotFoundError
       examples:
         - path-parameters:
             accountId: accountId
@@ -15407,12 +15400,11 @@ service:
         type: root.OverdraftProtection
         status-code: 200
       errors:
-        - root.OverdraftProtectionPatchOverdraftAccountsRequestBadRequestError
-        - root.OverdraftProtectionPatchOverdraftAccountsRequestUnauthorizedError
-        - root.OverdraftProtectionPatchOverdraftAccountsRequestForbiddenError
-        - root.OverdraftProtectionPatchOverdraftAccountsRequestNotFoundError
-        - >-
-          root.OverdraftProtectionPatchOverdraftAccountsRequestUnprocessableEntityError
+        - root.overdraftProtectionpatchOverdraftAccountsBadRequestError
+        - root.overdraftProtectionpatchOverdraftAccountsUnauthorizedError
+        - root.overdraftProtectionpatchOverdraftAccountsForbiddenError
+        - root.overdraftProtectionpatchOverdraftAccountsNotFoundError
+        - root.overdraftProtectionpatchOverdraftAccountsUnprocessableEntityError
       examples:
         - path-parameters:
             accountId: accountId
@@ -15447,10 +15439,10 @@ docs: Overdraft Protection Settings
 
 This is a _conditional operation_ when the `If-None-Match` header is used. If the client has a `transactionCategories` response and the `ETag` returned from a previous call, this operation returns a 304 Not Modified if called again when the categories collection has not changed.",
               "errors": [
-                "root.TransactionCategoriesListTransactionCategoriesRequestBadRequestError",
-                "root.TransactionCategoriesListTransactionCategoriesRequestUnauthorizedError",
-                "root.TransactionCategoriesListTransactionCategoriesRequestForbiddenError",
-                "root.TransactionCategoriesListTransactionCategoriesRequestUnprocessableEntityError",
+                "root.transactionCategorieslistTransactionCategoriesBadRequestError",
+                "root.transactionCategorieslistTransactionCategoriesUnauthorizedError",
+                "root.transactionCategorieslistTransactionCategoriesForbiddenError",
+                "root.transactionCategorieslistTransactionCategoriesUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -15534,14 +15526,11 @@ service:
         type: root.TransactionCategories
         status-code: 200
       errors:
+        - root.transactionCategorieslistTransactionCategoriesBadRequestError
+        - root.transactionCategorieslistTransactionCategoriesUnauthorizedError
+        - root.transactionCategorieslistTransactionCategoriesForbiddenError
         - >-
-          root.TransactionCategoriesListTransactionCategoriesRequestBadRequestError
-        - >-
-          root.TransactionCategoriesListTransactionCategoriesRequestUnauthorizedError
-        - >-
-          root.TransactionCategoriesListTransactionCategoriesRequestForbiddenError
-        - >-
-          root.TransactionCategoriesListTransactionCategoriesRequestUnprocessableEntityError
+          root.transactionCategorieslistTransactionCategoriesUnprocessableEntityError
       examples:
         - response:
             body:
@@ -15576,13 +15565,13 @@ This operation returns a 403 Forbidden error if the customer does not have `view
 
 The default response lists only recent transactions. Normally, this is transactions for the most recent 30 days, although for high-volume accounts, it may be a shorter period.",
               "errors": [
-                "root.TransactionsListTransactionsRequestBadRequestError",
-                "root.TransactionsListTransactionsRequestUnauthorizedError",
-                "root.TransactionsListTransactionsRequestForbiddenError",
-                "root.TransactionsListTransactionsRequestNotFoundError",
-                "root.TransactionsListTransactionsRequestUnprocessableEntityError",
-                "root.TransactionsListTransactionsRequestTooManyRequestsError",
-                "root.TransactionsListTransactionsRequestGatewayTimeoutError",
+                "root.transactionslistTransactionsBadRequestError",
+                "root.transactionslistTransactionsUnauthorizedError",
+                "root.transactionslistTransactionsForbiddenError",
+                "root.transactionslistTransactionsNotFoundError",
+                "root.transactionslistTransactionsUnprocessableEntityError",
+                "root.transactionslistTransactionsTooManyRequestsError",
+                "root.transactionslistTransactionsGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -15937,13 +15926,13 @@ service:
         type: root.Transactions
         status-code: 200
       errors:
-        - root.TransactionsListTransactionsRequestBadRequestError
-        - root.TransactionsListTransactionsRequestUnauthorizedError
-        - root.TransactionsListTransactionsRequestForbiddenError
-        - root.TransactionsListTransactionsRequestNotFoundError
-        - root.TransactionsListTransactionsRequestUnprocessableEntityError
-        - root.TransactionsListTransactionsRequestTooManyRequestsError
-        - root.TransactionsListTransactionsRequestGatewayTimeoutError
+        - root.transactionslistTransactionsBadRequestError
+        - root.transactionslistTransactionsUnauthorizedError
+        - root.transactionslistTransactionsForbiddenError
+        - root.transactionslistTransactionsNotFoundError
+        - root.transactionslistTransactionsUnprocessableEntityError
+        - root.transactionslistTransactionsTooManyRequestsError
+        - root.transactionslistTransactionsGatewayTimeoutError
       examples:
         - path-parameters:
             accountId: accountId
@@ -16027,10 +16016,10 @@ docs: Banking Account Transactions
 
 Note: This operation requires an identity challenge if the financial institution requires the user to proove their identity for some types of transfers. See the "Challenges API".",
               "errors": [
-                "root.TransfersCreateTransferRequestBadRequestError",
-                "root.TransfersCreateTransferRequestUnauthorizedError",
-                "root.TransfersCreateTransferRequestForbiddenError",
-                "root.TransfersCreateTransferRequestUnprocessableEntityError",
+                "root.transferscreateTransferBadRequestError",
+                "root.transferscreateTransferUnauthorizedError",
+                "root.transferscreateTransferForbiddenError",
+                "root.transferscreateTransferUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16128,10 +16117,10 @@ Note: This operation requires an identity challenge if the financial institution
               "display-name": "Delete this transfer resource",
               "docs": "Delete this transfer resource and any resources that are owned by it. Only transfers that have not been processed may be deleted.",
               "errors": [
-                "root.TransfersDeleteTransferRequestUnauthorizedError",
-                "root.TransfersDeleteTransferRequestForbiddenError",
-                "root.TransfersDeleteTransferRequestNotFoundError",
-                "root.TransfersDeleteTransferRequestConflictError",
+                "root.transfersdeleteTransferUnauthorizedError",
+                "root.transfersdeleteTransferForbiddenError",
+                "root.transfersdeleteTransferNotFoundError",
+                "root.transfersdeleteTransferConflictError",
               ],
               "examples": [
                 {
@@ -16158,9 +16147,9 @@ Note: This operation requires an identity challenge if the financial institution
               "display-name": "Fetch a representation of this transfer",
               "docs": "Return the JSON representation of this transfer resource.",
               "errors": [
-                "root.TransfersGetTransferRequestUnauthorizedError",
-                "root.TransfersGetTransferRequestForbiddenError",
-                "root.TransfersGetTransferRequestNotFoundError",
+                "root.transfersgetTransferUnauthorizedError",
+                "root.transfersgetTransferForbiddenError",
+                "root.transfersgetTransferNotFoundError",
               ],
               "examples": [
                 {
@@ -16226,10 +16215,10 @@ Note: This operation requires an identity challenge if the financial institution
               "display-name": "Return a collection of transfers",
               "docs": "Return a [paginated](https://dx.apiture.com/docs/api-documentation/concepts/pagination) collection of transfers. The [nextPage_url](https://dx.apiture.com/docs/api-documentation/concepts/links) in the response is a pagination link.",
               "errors": [
-                "root.TransfersListTransfersRequestBadRequestError",
-                "root.TransfersListTransfersRequestUnauthorizedError",
-                "root.TransfersListTransfersRequestForbiddenError",
-                "root.TransfersListTransfersRequestUnprocessableEntityError",
+                "root.transferslistTransfersBadRequestError",
+                "root.transferslistTransfersUnauthorizedError",
+                "root.transferslistTransfersForbiddenError",
+                "root.transferslistTransfersUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16372,11 +16361,11 @@ Note: This operation requires an identity challenge if the financial institution
 
 Note: This operation requires an identity challenge if the financial institution requires the user to prove their identity for some types of transfers. See the "Challenges API".",
               "errors": [
-                "root.TransfersPatchTransferRequestBadRequestError",
-                "root.TransfersPatchTransferRequestUnauthorizedError",
-                "root.TransfersPatchTransferRequestForbiddenError",
-                "root.TransfersPatchTransferRequestNotFoundError",
-                "root.TransfersPatchTransferRequestUnprocessableEntityError",
+                "root.transferspatchTransferBadRequestError",
+                "root.transferspatchTransferUnauthorizedError",
+                "root.transferspatchTransferForbiddenError",
+                "root.transferspatchTransferNotFoundError",
+                "root.transferspatchTransferUnprocessableEntityError",
               ],
               "examples": [
                 {
@@ -16562,10 +16551,10 @@ service:
         type: root.Transfers
         status-code: 200
       errors:
-        - root.TransfersListTransfersRequestBadRequestError
-        - root.TransfersListTransfersRequestUnauthorizedError
-        - root.TransfersListTransfersRequestForbiddenError
-        - root.TransfersListTransfersRequestUnprocessableEntityError
+        - root.transferslistTransfersBadRequestError
+        - root.transferslistTransfersUnauthorizedError
+        - root.transferslistTransfersForbiddenError
+        - root.transferslistTransfersUnprocessableEntityError
       examples:
         - query-parameters:
             scheduledOn: '2022-05-19'
@@ -16675,10 +16664,10 @@ service:
         type: root.Transfer
         status-code: 201
       errors:
-        - root.TransfersCreateTransferRequestBadRequestError
-        - root.TransfersCreateTransferRequestUnauthorizedError
-        - root.TransfersCreateTransferRequestForbiddenError
-        - root.TransfersCreateTransferRequestUnprocessableEntityError
+        - root.transferscreateTransferBadRequestError
+        - root.transferscreateTransferUnauthorizedError
+        - root.transferscreateTransferForbiddenError
+        - root.transferscreateTransferUnprocessableEntityError
       examples:
         - request:
             amount: '275.00'
@@ -16738,9 +16727,9 @@ service:
         type: root.Transfer
         status-code: 200
       errors:
-        - root.TransfersGetTransferRequestUnauthorizedError
-        - root.TransfersGetTransferRequestForbiddenError
-        - root.TransfersGetTransferRequestNotFoundError
+        - root.transfersgetTransferUnauthorizedError
+        - root.transfersgetTransferForbiddenError
+        - root.transfersgetTransferNotFoundError
       examples:
         - path-parameters:
             transferId: transferId
@@ -16788,10 +16777,10 @@ service:
           docs: The unique identifier of this transfer. This is an opaque string.
       display-name: Delete this transfer resource
       errors:
-        - root.TransfersDeleteTransferRequestUnauthorizedError
-        - root.TransfersDeleteTransferRequestForbiddenError
-        - root.TransfersDeleteTransferRequestNotFoundError
-        - root.TransfersDeleteTransferRequestConflictError
+        - root.transfersdeleteTransferUnauthorizedError
+        - root.transfersdeleteTransferForbiddenError
+        - root.transfersdeleteTransferNotFoundError
+        - root.transfersdeleteTransferConflictError
       examples:
         - path-parameters:
             transferId: transferId
@@ -16845,11 +16834,11 @@ service:
         type: root.Transfer
         status-code: 200
       errors:
-        - root.TransfersPatchTransferRequestBadRequestError
-        - root.TransfersPatchTransferRequestUnauthorizedError
-        - root.TransfersPatchTransferRequestForbiddenError
-        - root.TransfersPatchTransferRequestNotFoundError
-        - root.TransfersPatchTransferRequestUnprocessableEntityError
+        - root.transferspatchTransferBadRequestError
+        - root.transferspatchTransferUnauthorizedError
+        - root.transferspatchTransferForbiddenError
+        - root.transferspatchTransferNotFoundError
+        - root.transferspatchTransferUnprocessableEntityError
       examples:
         - path-parameters:
             transferId: transferId

@@ -6,7 +6,157 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "BaseUploadRequestBadRequestError": {
+          "groupscreateFilesGroupBadRequestError": {
+            "docs": "Request failed input parameters validation.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": "request-fields-number-limit-exceeded",
+                "value": "The request contains too many HTTP POST fields.",
+              },
+              {
+                "docs": undefined,
+                "name": "post-request-parser-failed",
+                "value": "HTTP POST request parsing failed.",
+              },
+              {
+                "docs": undefined,
+                "name": "null-characters-forbidden",
+                "value": "Null characters are not allowed.",
+              },
+              {
+                "docs": undefined,
+                "name": "signature-required",
+                "value": "`signature` is required.",
+              },
+              {
+                "docs": undefined,
+                "name": "signature-expiration-required",
+                "value": "`expire` is required.",
+              },
+              {
+                "docs": undefined,
+                "name": "signature-expiration-invalid",
+                "value": "`expire` must be a UNIX timestamp.",
+              },
+              {
+                "docs": undefined,
+                "name": "group-files-invalid",
+                "value": "This is not valid file url: wrong-uuid.",
+              },
+              {
+                "docs": undefined,
+                "name": "group-file-url-parsing-failed",
+                "value": "No files[N] parameters found.",
+              },
+              {
+                "docs": undefined,
+                "name": "group-files-not-found",
+                "value": "Some files not found.",
+              },
+            ],
+            "status-code": 400,
+            "type": "groupscreateFilesGroupBadRequestErrorSchema",
+          },
+          "groupscreateFilesGroupForbiddenError": {
+            "docs": "Request was not allowed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": "public-key-is-required",
+                "value": "pub_key is required.",
+              },
+              {
+                "docs": undefined,
+                "name": "public-key-is-invalid",
+                "value": "pub_key is invalid.",
+              },
+              {
+                "docs": undefined,
+                "name": "project-public-key-removed",
+                "value": "Project 39e3eb895fdada95e7a9 is marked as removed.",
+              },
+              {
+                "docs": undefined,
+                "name": "account-blocked",
+                "value": "Account has been blocked.",
+              },
+              {
+                "docs": undefined,
+                "name": "account-unpaid",
+                "value": "Account has been blocked for non payment.",
+              },
+              {
+                "docs": undefined,
+                "name": "upload-failed",
+                "value": "Upload failed.",
+              },
+              {
+                "docs": undefined,
+                "name": "account-limits-exceeded",
+                "value": "Account has reached its limits.",
+              },
+              {
+                "docs": undefined,
+                "name": "signature-expiration",
+                "value": "Expired signature.",
+              },
+              {
+                "docs": undefined,
+                "name": "signature-invalid",
+                "value": "Invalid signature.",
+              },
+            ],
+            "status-code": 403,
+            "type": "groupscreateFilesGroupForbiddenErrorSchema",
+          },
+          "groupsfilesGroupInfoBadRequestError": {
+            "docs": "Request failed input parameters validation.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": "null-characters-forbidden",
+                "value": "Null characters are not allowed.",
+              },
+              {
+                "docs": undefined,
+                "name": "group-id-required",
+                "value": "group_id is required.",
+              },
+            ],
+            "status-code": 400,
+            "type": "groupsfilesGroupInfoBadRequestErrorSchema",
+          },
+          "groupsfilesGroupInfoForbiddenError": {
+            "docs": "Request was not allowed.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": "public-key-is-required",
+                "value": "pub_key is required.",
+              },
+              {
+                "docs": undefined,
+                "name": "public-key-is-invalid",
+                "value": "pub_key is invalid.",
+              },
+            ],
+            "status-code": 403,
+            "type": "groupsfilesGroupInfoForbiddenErrorSchema",
+          },
+          "groupsfilesGroupInfoNotFoundError": {
+            "docs": "Group with specified UUID was not found.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": "group-not-found",
+                "value": "group_id is invalid.",
+              },
+            ],
+            "status-code": 404,
+            "type": "GroupNotFoundError",
+          },
+          "uploadbaseUploadBadRequestError": {
             "docs": "Request failed input parameters validation.",
             "examples": [
               {
@@ -101,9 +251,9 @@
               },
             ],
             "status-code": 400,
-            "type": "BaseUploadRequestBadRequestErrorBody",
+            "type": "uploadbaseUploadBadRequestErrorSchema",
           },
-          "BaseUploadRequestContentTooLargeError": {
+          "uploadbaseUploadContentTooLargeError": {
             "docs": "The size of the request is too large.",
             "examples": [
               {
@@ -115,7 +265,7 @@
             "status-code": 413,
             "type": "string",
           },
-          "BaseUploadRequestForbiddenError": {
+          "uploadbaseUploadForbiddenError": {
             "docs": "Request was not allowed.",
             "examples": [
               {
@@ -170,9 +320,9 @@
               },
             ],
             "status-code": 403,
-            "type": "BaseUploadRequestForbiddenErrorBody",
+            "type": "uploadbaseUploadForbiddenErrorSchema",
           },
-          "BaseUploadRequestTooManyRequestsError": {
+          "uploadbaseUploadTooManyRequestsError": {
             "docs": "Request was throttled.",
             "examples": [
               {
@@ -184,111 +334,7 @@
             "status-code": 429,
             "type": "string",
           },
-          "CreateFilesGroupRequestBadRequestError": {
-            "docs": "Request failed input parameters validation.",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": "request-fields-number-limit-exceeded",
-                "value": "The request contains too many HTTP POST fields.",
-              },
-              {
-                "docs": undefined,
-                "name": "post-request-parser-failed",
-                "value": "HTTP POST request parsing failed.",
-              },
-              {
-                "docs": undefined,
-                "name": "null-characters-forbidden",
-                "value": "Null characters are not allowed.",
-              },
-              {
-                "docs": undefined,
-                "name": "signature-required",
-                "value": "`signature` is required.",
-              },
-              {
-                "docs": undefined,
-                "name": "signature-expiration-required",
-                "value": "`expire` is required.",
-              },
-              {
-                "docs": undefined,
-                "name": "signature-expiration-invalid",
-                "value": "`expire` must be a UNIX timestamp.",
-              },
-              {
-                "docs": undefined,
-                "name": "group-files-invalid",
-                "value": "This is not valid file url: wrong-uuid.",
-              },
-              {
-                "docs": undefined,
-                "name": "group-file-url-parsing-failed",
-                "value": "No files[N] parameters found.",
-              },
-              {
-                "docs": undefined,
-                "name": "group-files-not-found",
-                "value": "Some files not found.",
-              },
-            ],
-            "status-code": 400,
-            "type": "CreateFilesGroupRequestBadRequestErrorBody",
-          },
-          "CreateFilesGroupRequestForbiddenError": {
-            "docs": "Request was not allowed.",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": "public-key-is-required",
-                "value": "pub_key is required.",
-              },
-              {
-                "docs": undefined,
-                "name": "public-key-is-invalid",
-                "value": "pub_key is invalid.",
-              },
-              {
-                "docs": undefined,
-                "name": "project-public-key-removed",
-                "value": "Project 39e3eb895fdada95e7a9 is marked as removed.",
-              },
-              {
-                "docs": undefined,
-                "name": "account-blocked",
-                "value": "Account has been blocked.",
-              },
-              {
-                "docs": undefined,
-                "name": "account-unpaid",
-                "value": "Account has been blocked for non payment.",
-              },
-              {
-                "docs": undefined,
-                "name": "upload-failed",
-                "value": "Upload failed.",
-              },
-              {
-                "docs": undefined,
-                "name": "account-limits-exceeded",
-                "value": "Account has reached its limits.",
-              },
-              {
-                "docs": undefined,
-                "name": "signature-expiration",
-                "value": "Expired signature.",
-              },
-              {
-                "docs": undefined,
-                "name": "signature-invalid",
-                "value": "Invalid signature.",
-              },
-            ],
-            "status-code": 403,
-            "type": "CreateFilesGroupRequestForbiddenErrorBody",
-          },
-          "FileUploadInfoRequestBadRequestError": {
+          "uploadfileUploadInfoBadRequestError": {
             "docs": "Request failed input parameters validation.",
             "examples": [
               {
@@ -308,9 +354,9 @@
               },
             ],
             "status-code": 400,
-            "type": "FileUploadInfoRequestBadRequestErrorBody",
+            "type": "uploadfileUploadInfoBadRequestErrorSchema",
           },
-          "FileUploadInfoRequestForbiddenError": {
+          "uploadfileUploadInfoForbiddenError": {
             "docs": "Request was not allowed.",
             "examples": [
               {
@@ -325,9 +371,9 @@
               },
             ],
             "status-code": 403,
-            "type": "FileUploadInfoRequestForbiddenErrorBody",
+            "type": "uploadfileUploadInfoForbiddenErrorSchema",
           },
-          "FileUploadInfoRequestNotFoundError": {
+          "uploadfileUploadInfoNotFoundError": {
             "docs": "File with specified UUID was not found.",
             "examples": [
               {
@@ -339,53 +385,7 @@
             "status-code": 404,
             "type": "FileNotFoundError",
           },
-          "FilesGroupInfoRequestBadRequestError": {
-            "docs": "Request failed input parameters validation.",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": "null-characters-forbidden",
-                "value": "Null characters are not allowed.",
-              },
-              {
-                "docs": undefined,
-                "name": "group-id-required",
-                "value": "group_id is required.",
-              },
-            ],
-            "status-code": 400,
-            "type": "FilesGroupInfoRequestBadRequestErrorBody",
-          },
-          "FilesGroupInfoRequestForbiddenError": {
-            "docs": "Request was not allowed.",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": "public-key-is-required",
-                "value": "pub_key is required.",
-              },
-              {
-                "docs": undefined,
-                "name": "public-key-is-invalid",
-                "value": "pub_key is invalid.",
-              },
-            ],
-            "status-code": 403,
-            "type": "FilesGroupInfoRequestForbiddenErrorBody",
-          },
-          "FilesGroupInfoRequestNotFoundError": {
-            "docs": "Group with specified UUID was not found.",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": "group-not-found",
-                "value": "group_id is invalid.",
-              },
-            ],
-            "status-code": 404,
-            "type": "GroupNotFoundError",
-          },
-          "FromUrlUploadRequestBadRequestError": {
+          "uploadfromURLUploadBadRequestError": {
             "docs": "Request failed input parameters validation.",
             "examples": [
               {
@@ -505,9 +505,9 @@
               },
             ],
             "status-code": 400,
-            "type": "FromUrlUploadRequestBadRequestErrorBody",
+            "type": "uploadfromURLUploadBadRequestErrorSchema",
           },
-          "FromUrlUploadRequestForbiddenError": {
+          "uploadfromURLUploadForbiddenError": {
             "docs": "Request was not allowed.",
             "examples": [
               {
@@ -562,21 +562,9 @@
               },
             ],
             "status-code": 403,
-            "type": "FromUrlUploadRequestForbiddenErrorBody",
+            "type": "uploadfromURLUploadForbiddenErrorSchema",
           },
-          "FromUrlUploadRequestTooManyRequestsError": {
-            "docs": "Request was throttled.",
-            "examples": [
-              {
-                "docs": undefined,
-                "name": undefined,
-                "value": "Request was throttled.",
-              },
-            ],
-            "status-code": 429,
-            "type": "string",
-          },
-          "FromUrlUploadStatusRequestBadRequestError": {
+          "uploadfromURLUploadStatusBadRequestError": {
             "docs": "Request failed input parameters validation.",
             "examples": [
               {
@@ -588,7 +576,19 @@
             "status-code": 400,
             "type": "TokenRequiredError",
           },
-          "MultipartFileUploadCompleteRequestBadRequestError": {
+          "uploadfromURLUploadTooManyRequestsError": {
+            "docs": "Request was throttled.",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": "Request was throttled.",
+              },
+            ],
+            "status-code": 429,
+            "type": "string",
+          },
+          "uploadmultipartFileUploadCompleteBadRequestError": {
             "docs": "Request failed input parameters validation.",
             "examples": [
               {
@@ -648,9 +648,9 @@
               },
             ],
             "status-code": 400,
-            "type": "MultipartFileUploadCompleteRequestBadRequestErrorBody",
+            "type": "uploadmultipartFileUploadCompleteBadRequestErrorSchema",
           },
-          "MultipartFileUploadCompleteRequestForbiddenError": {
+          "uploadmultipartFileUploadCompleteForbiddenError": {
             "docs": "Request was not allowed.",
             "examples": [
               {
@@ -665,9 +665,9 @@
               },
             ],
             "status-code": 403,
-            "type": "MultipartFileUploadCompleteRequestForbiddenErrorBody",
+            "type": "uploadmultipartFileUploadCompleteForbiddenErrorSchema",
           },
-          "MultipartFileUploadCompleteRequestNotFoundError": {
+          "uploadmultipartFileUploadCompleteNotFoundError": {
             "docs": "File with specified UUID was not found.",
             "examples": [
               {
@@ -679,7 +679,7 @@
             "status-code": 404,
             "type": "FileNotFoundError",
           },
-          "MultipartFileUploadStartRequestBadRequestError": {
+          "uploadmultipartFileUploadStartBadRequestError": {
             "docs": "Request failed input parameters validation.",
             "examples": [
               {
@@ -789,9 +789,9 @@
               },
             ],
             "status-code": 400,
-            "type": "MultipartFileUploadStartRequestBadRequestErrorBody",
+            "type": "uploadmultipartFileUploadStartBadRequestErrorSchema",
           },
-          "MultipartFileUploadStartRequestForbiddenError": {
+          "uploadmultipartFileUploadStartForbiddenError": {
             "docs": "Request was not allowed.",
             "examples": [
               {
@@ -846,9 +846,9 @@
               },
             ],
             "status-code": 403,
-            "type": "MultipartFileUploadStartRequestForbiddenErrorBody",
+            "type": "uploadmultipartFileUploadStartForbiddenErrorSchema",
           },
-          "MultipartFileUploadStartRequestTooManyRequestsError": {
+          "uploadmultipartFileUploadStartTooManyRequestsError": {
             "docs": "Request was throttled.",
             "examples": [
               {
@@ -873,56 +873,6 @@
           },
           "AutoStoreDisabledError": {
             "type": "string",
-          },
-          "BaseUploadRequestBadRequestErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "RequestFiledsNumberLimitExceededError",
-              "PostRequestParserFailedError",
-              "NullCharactersForbiddenError",
-              "FileMetadataKeyDuplicatedError",
-              "FileMetadataKeyEmptyError",
-              "FileMetadataKeyForbiddenError",
-              "FileMetadataKeyLengthTooBigError",
-              "FileMetadataValueEmptyError",
-              "FileMetadataValueForbiddenError",
-              "FileMetadataValueLengthTooBigError",
-              "FileMetadataKeysNumberTooBigError",
-              "SignatureRequiredError",
-              "SignatureExpirationRequiredError",
-              "SignatureExpirationInvalidError",
-              "FilesRequiredError",
-              "FileSizeLimitExceededError",
-              "FileTypeForbiddenError",
-              "FileInfectedError",
-            ],
-          },
-          "BaseUploadRequestForbiddenErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "UploadcarePublicKeyRequiredError",
-              "UploadcarePublicKeyInvalidError",
-              "AutoStoreDisabledError",
-              "ProjectPublicKeyRemovedError",
-              "AccountBlockedError",
-              "AccountUnpaidError",
-              "UploadFailedError",
-              "AccountLimitsExceededError",
-              "SignatureExpirationError",
-              "SignatureInvalidError",
-            ],
           },
           "ContentInfo": {
             "docs": "Information about file content.",
@@ -959,46 +909,6 @@
             "source": {
               "openapi": "../openapi.json",
             },
-          },
-          "CreateFilesGroupRequestBadRequestErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "RequestFiledsNumberLimitExceededError",
-              "PostRequestParserFailedError",
-              "NullCharactersForbiddenError",
-              "SignatureRequiredError",
-              "SignatureExpirationRequiredError",
-              "SignatureExpirationInvalidError",
-              "GroupFilesInvalidError",
-              "GroupFileUrlParsingFailedError",
-              "GroupFilesNotFoundError",
-            ],
-          },
-          "CreateFilesGroupRequestForbiddenErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "PublicKeyRequiredError",
-              "PublicKeyInvalidError",
-              "ProjectPublicKeyRemovedError",
-              "AccountBlockedError",
-              "AccountUnpaidError",
-              "UploadFailedError",
-              "AccountLimitsExceededError",
-              "SignatureExpirationError",
-              "SignatureInvalidError",
-            ],
           },
           "ExpireType": {
             "docs": "`expire` must be sent along with your upload request if you would like to use signed uploads.
@@ -1190,33 +1100,6 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
               "openapi": "../openapi.json",
             },
           },
-          "FileUploadInfoRequestBadRequestErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "NullCharactersForbiddenError",
-              "FileIdRequiredError",
-              "FileIdInvalidError",
-            ],
-          },
-          "FileUploadInfoRequestForbiddenErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "PublicKeyRequiredError",
-              "PublicKeyInvalidError",
-            ],
-          },
           "FileUploadInfoSuccessStatus": {
             "docs": undefined,
             "extends": [
@@ -1265,89 +1148,8 @@ that are tool old (or that have not been created at all).
               "openapi": "../openapi.json",
             },
           },
-          "FilesGroupInfoRequestBadRequestErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "NullCharactersForbiddenError",
-              "GroupIdRequiredError",
-            ],
-          },
-          "FilesGroupInfoRequestForbiddenErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "PublicKeyRequiredError",
-              "PublicKeyInvalidError",
-            ],
-          },
           "FilesRequiredError": {
             "type": "string",
-          },
-          "FromUrlUploadRequestBadRequestErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "RequestFiledsNumberLimitExceededError",
-              "PostRequestParserFailedError",
-              "NullCharactersForbiddenError",
-              "FileMetadataKeyDuplicatedError",
-              "FileMetadataKeyEmptyError",
-              "FileMetadataKeyForbiddenError",
-              "FileMetadataKeyLengthTooBigError",
-              "FileMetadataValueEmptyError",
-              "FileMetadataValueForbiddenError",
-              "FileMetadataValueLengthTooBigError",
-              "FileMetadataKeysNumberTooBigError",
-              "SignatureRequiredError",
-              "SignatureExpirationRequiredError",
-              "SignatureExpirationInvalidError",
-              "SourceUrlRequiredError",
-              "UrlParsingFailedError",
-              "UrlSchemeRequiredError",
-              "UrlSchemeInvalidError",
-              "UrlHostRequiredError",
-              "UrlBlacklistedError",
-              "HostnameNotFoundError",
-              "UrlHostMalformedError",
-              "UrlHostPrivateIpForbiddenError",
-            ],
-          },
-          "FromUrlUploadRequestForbiddenErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "PublicKeyRequiredError",
-              "PublicKeyInvalidError",
-              "AutoStoreDisabledError",
-              "ProjectPublicKeyRemovedError",
-              "AccountBlockedError",
-              "AccountUnpaidError",
-              "UploadFailedError",
-              "AccountLimitsExceededError",
-              "SignatureExpirationError",
-              "SignatureInvalidError",
-            ],
           },
           "FromUrlUploadResponseSchema": {
             "docs": "`/from_url/` upload response.",
@@ -1640,94 +1442,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           },
           "MultipartFileSizeTooSmallError": {
             "type": "string",
-          },
-          "MultipartFileUploadCompleteRequestBadRequestErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "RequestFiledsNumberLimitExceededError",
-              "PostRequestParserFailedError",
-              "NullCharactersForbiddenError",
-              "MultipartFileIdRequiredError",
-              "UuidInvalidError",
-              "MultipartFileAlreadyUploadedError",
-              "MultipartUploadSizeTooLargeError",
-              "MultipartUploadSizeTooSmallError",
-              "MultipartFileCompletionFailedError",
-              "FileTypeForbiddenError",
-              "FileInfectedError",
-            ],
-          },
-          "MultipartFileUploadCompleteRequestForbiddenErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "UploadcarePublicKeyRequiredError",
-              "UploadcarePublicKeyInvalidError",
-            ],
-          },
-          "MultipartFileUploadStartRequestBadRequestErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "RequestFiledsNumberLimitExceededError",
-              "PostRequestParserFailedError",
-              "NullCharactersForbiddenError",
-              "FileMetadataKeyDuplicatedError",
-              "FileMetadataKeyEmptyError",
-              "FileMetadataKeyForbiddenError",
-              "FileMetadataKeyLengthTooBigError",
-              "FileMetadataValueEmptyError",
-              "FileMetadataValueForbiddenError",
-              "FileMetadataValueLengthTooBigError",
-              "FileMetadataKeysNumberTooBigError",
-              "SignatureRequiredError",
-              "SignatureExpirationRequiredError",
-              "SignatureExpirationInvalidError",
-              "RequestParamRequiredError",
-              "MultipartSizeInvalidError",
-              "MultipartFileSizeLimitExceededError",
-              "MultipartFileSizeTooSmallError",
-              "MultipartPartSizeInvalidError",
-              "MultipartPartSizeTooSmallError",
-              "MultipartPartSizeTooBigError",
-            ],
-          },
-          "MultipartFileUploadStartRequestForbiddenErrorBody": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-            "union": [
-              "UploadcarePublicKeyRequiredError",
-              "UploadcarePublicKeyInvalidError",
-              "AutoStoreDisabledError",
-              "ProjectPublicKeyRemovedError",
-              "AccountBlockedError",
-              "AccountUnpaidError",
-              "UploadFailedError",
-              "AccountLimitsExceededError",
-              "SignatureExpirationError",
-              "SignatureInvalidError",
-            ],
           },
           "MultipartPartSizeInvalidError": {
             "type": "string",
@@ -2036,10 +1750,296 @@ change the value to `auto`.
               "openapi": "../openapi.json",
             },
           },
+          "groupscreateFilesGroupBadRequestErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "RequestFiledsNumberLimitExceededError",
+              "PostRequestParserFailedError",
+              "NullCharactersForbiddenError",
+              "SignatureRequiredError",
+              "SignatureExpirationRequiredError",
+              "SignatureExpirationInvalidError",
+              "GroupFilesInvalidError",
+              "GroupFileUrlParsingFailedError",
+              "GroupFilesNotFoundError",
+            ],
+          },
+          "groupscreateFilesGroupForbiddenErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "PublicKeyRequiredError",
+              "PublicKeyInvalidError",
+              "ProjectPublicKeyRemovedError",
+              "AccountBlockedError",
+              "AccountUnpaidError",
+              "UploadFailedError",
+              "AccountLimitsExceededError",
+              "SignatureExpirationError",
+              "SignatureInvalidError",
+            ],
+          },
+          "groupsfilesGroupInfoBadRequestErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "NullCharactersForbiddenError",
+              "GroupIdRequiredError",
+            ],
+          },
+          "groupsfilesGroupInfoForbiddenErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "PublicKeyRequiredError",
+              "PublicKeyInvalidError",
+            ],
+          },
+          "uploadbaseUploadBadRequestErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "RequestFiledsNumberLimitExceededError",
+              "PostRequestParserFailedError",
+              "NullCharactersForbiddenError",
+              "FileMetadataKeyDuplicatedError",
+              "FileMetadataKeyEmptyError",
+              "FileMetadataKeyForbiddenError",
+              "FileMetadataKeyLengthTooBigError",
+              "FileMetadataValueEmptyError",
+              "FileMetadataValueForbiddenError",
+              "FileMetadataValueLengthTooBigError",
+              "FileMetadataKeysNumberTooBigError",
+              "SignatureRequiredError",
+              "SignatureExpirationRequiredError",
+              "SignatureExpirationInvalidError",
+              "FilesRequiredError",
+              "FileSizeLimitExceededError",
+              "FileTypeForbiddenError",
+              "FileInfectedError",
+            ],
+          },
+          "uploadbaseUploadForbiddenErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "UploadcarePublicKeyRequiredError",
+              "UploadcarePublicKeyInvalidError",
+              "AutoStoreDisabledError",
+              "ProjectPublicKeyRemovedError",
+              "AccountBlockedError",
+              "AccountUnpaidError",
+              "UploadFailedError",
+              "AccountLimitsExceededError",
+              "SignatureExpirationError",
+              "SignatureInvalidError",
+            ],
+          },
+          "uploadfileUploadInfoBadRequestErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "NullCharactersForbiddenError",
+              "FileIdRequiredError",
+              "FileIdInvalidError",
+            ],
+          },
+          "uploadfileUploadInfoForbiddenErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "PublicKeyRequiredError",
+              "PublicKeyInvalidError",
+            ],
+          },
+          "uploadfromURLUploadBadRequestErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "RequestFiledsNumberLimitExceededError",
+              "PostRequestParserFailedError",
+              "NullCharactersForbiddenError",
+              "FileMetadataKeyDuplicatedError",
+              "FileMetadataKeyEmptyError",
+              "FileMetadataKeyForbiddenError",
+              "FileMetadataKeyLengthTooBigError",
+              "FileMetadataValueEmptyError",
+              "FileMetadataValueForbiddenError",
+              "FileMetadataValueLengthTooBigError",
+              "FileMetadataKeysNumberTooBigError",
+              "SignatureRequiredError",
+              "SignatureExpirationRequiredError",
+              "SignatureExpirationInvalidError",
+              "SourceUrlRequiredError",
+              "UrlParsingFailedError",
+              "UrlSchemeRequiredError",
+              "UrlSchemeInvalidError",
+              "UrlHostRequiredError",
+              "UrlBlacklistedError",
+              "HostnameNotFoundError",
+              "UrlHostMalformedError",
+              "UrlHostPrivateIpForbiddenError",
+            ],
+          },
+          "uploadfromURLUploadForbiddenErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "PublicKeyRequiredError",
+              "PublicKeyInvalidError",
+              "AutoStoreDisabledError",
+              "ProjectPublicKeyRemovedError",
+              "AccountBlockedError",
+              "AccountUnpaidError",
+              "UploadFailedError",
+              "AccountLimitsExceededError",
+              "SignatureExpirationError",
+              "SignatureInvalidError",
+            ],
+          },
+          "uploadmultipartFileUploadCompleteBadRequestErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "RequestFiledsNumberLimitExceededError",
+              "PostRequestParserFailedError",
+              "NullCharactersForbiddenError",
+              "MultipartFileIdRequiredError",
+              "UuidInvalidError",
+              "MultipartFileAlreadyUploadedError",
+              "MultipartUploadSizeTooLargeError",
+              "MultipartUploadSizeTooSmallError",
+              "MultipartFileCompletionFailedError",
+              "FileTypeForbiddenError",
+              "FileInfectedError",
+            ],
+          },
+          "uploadmultipartFileUploadCompleteForbiddenErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "UploadcarePublicKeyRequiredError",
+              "UploadcarePublicKeyInvalidError",
+            ],
+          },
+          "uploadmultipartFileUploadStartBadRequestErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "RequestFiledsNumberLimitExceededError",
+              "PostRequestParserFailedError",
+              "NullCharactersForbiddenError",
+              "FileMetadataKeyDuplicatedError",
+              "FileMetadataKeyEmptyError",
+              "FileMetadataKeyForbiddenError",
+              "FileMetadataKeyLengthTooBigError",
+              "FileMetadataValueEmptyError",
+              "FileMetadataValueForbiddenError",
+              "FileMetadataValueLengthTooBigError",
+              "FileMetadataKeysNumberTooBigError",
+              "SignatureRequiredError",
+              "SignatureExpirationRequiredError",
+              "SignatureExpirationInvalidError",
+              "RequestParamRequiredError",
+              "MultipartSizeInvalidError",
+              "MultipartFileSizeLimitExceededError",
+              "MultipartFileSizeTooSmallError",
+              "MultipartPartSizeInvalidError",
+              "MultipartPartSizeTooSmallError",
+              "MultipartPartSizeTooBigError",
+            ],
+          },
+          "uploadmultipartFileUploadStartForbiddenErrorSchema": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": [
+              "UploadcarePublicKeyRequiredError",
+              "UploadcarePublicKeyInvalidError",
+              "AutoStoreDisabledError",
+              "ProjectPublicKeyRemovedError",
+              "AccountBlockedError",
+              "AccountUnpaidError",
+              "UploadFailedError",
+              "AccountLimitsExceededError",
+              "SignatureExpirationError",
+              "SignatureInvalidError",
+            ],
+          },
         },
       },
       "rawContents": "types:
-  BaseUploadRequestBadRequestErrorBody:
+  uploadbaseUploadBadRequestErrorSchema:
     discriminated: false
     union:
       - RequestFiledsNumberLimitExceededError
@@ -2062,7 +2062,7 @@ change the value to `auto`.
       - FileInfectedError
     source:
       openapi: ../openapi.json
-  BaseUploadRequestForbiddenErrorBody:
+  uploadbaseUploadForbiddenErrorSchema:
     discriminated: false
     union:
       - UploadcarePublicKeyRequiredError
@@ -2077,7 +2077,7 @@ change the value to `auto`.
       - SignatureInvalidError
     source:
       openapi: ../openapi.json
-  MultipartFileUploadStartRequestBadRequestErrorBody:
+  uploadmultipartFileUploadStartBadRequestErrorSchema:
     discriminated: false
     union:
       - RequestFiledsNumberLimitExceededError
@@ -2103,7 +2103,7 @@ change the value to `auto`.
       - MultipartPartSizeTooBigError
     source:
       openapi: ../openapi.json
-  MultipartFileUploadStartRequestForbiddenErrorBody:
+  uploadmultipartFileUploadStartForbiddenErrorSchema:
     discriminated: false
     union:
       - UploadcarePublicKeyRequiredError
@@ -2118,7 +2118,7 @@ change the value to `auto`.
       - SignatureInvalidError
     source:
       openapi: ../openapi.json
-  MultipartFileUploadCompleteRequestBadRequestErrorBody:
+  uploadmultipartFileUploadCompleteBadRequestErrorSchema:
     discriminated: false
     union:
       - RequestFiledsNumberLimitExceededError
@@ -2134,14 +2134,14 @@ change the value to `auto`.
       - FileInfectedError
     source:
       openapi: ../openapi.json
-  MultipartFileUploadCompleteRequestForbiddenErrorBody:
+  uploadmultipartFileUploadCompleteForbiddenErrorSchema:
     discriminated: false
     union:
       - UploadcarePublicKeyRequiredError
       - UploadcarePublicKeyInvalidError
     source:
       openapi: ../openapi.json
-  FromUrlUploadRequestBadRequestErrorBody:
+  uploadfromURLUploadBadRequestErrorSchema:
     discriminated: false
     union:
       - RequestFiledsNumberLimitExceededError
@@ -2169,7 +2169,7 @@ change the value to `auto`.
       - UrlHostPrivateIpForbiddenError
     source:
       openapi: ../openapi.json
-  FromUrlUploadRequestForbiddenErrorBody:
+  uploadfromURLUploadForbiddenErrorSchema:
     discriminated: false
     union:
       - PublicKeyRequiredError
@@ -2184,7 +2184,7 @@ change the value to `auto`.
       - SignatureInvalidError
     source:
       openapi: ../openapi.json
-  FileUploadInfoRequestBadRequestErrorBody:
+  uploadfileUploadInfoBadRequestErrorSchema:
     discriminated: false
     union:
       - NullCharactersForbiddenError
@@ -2192,14 +2192,14 @@ change the value to `auto`.
       - FileIdInvalidError
     source:
       openapi: ../openapi.json
-  FileUploadInfoRequestForbiddenErrorBody:
+  uploadfileUploadInfoForbiddenErrorSchema:
     discriminated: false
     union:
       - PublicKeyRequiredError
       - PublicKeyInvalidError
     source:
       openapi: ../openapi.json
-  CreateFilesGroupRequestBadRequestErrorBody:
+  groupscreateFilesGroupBadRequestErrorSchema:
     discriminated: false
     union:
       - RequestFiledsNumberLimitExceededError
@@ -2213,7 +2213,7 @@ change the value to `auto`.
       - GroupFilesNotFoundError
     source:
       openapi: ../openapi.json
-  CreateFilesGroupRequestForbiddenErrorBody:
+  groupscreateFilesGroupForbiddenErrorSchema:
     discriminated: false
     union:
       - PublicKeyRequiredError
@@ -2227,14 +2227,14 @@ change the value to `auto`.
       - SignatureInvalidError
     source:
       openapi: ../openapi.json
-  FilesGroupInfoRequestBadRequestErrorBody:
+  groupsfilesGroupInfoBadRequestErrorSchema:
     discriminated: false
     union:
       - NullCharactersForbiddenError
       - GroupIdRequiredError
     source:
       openapi: ../openapi.json
-  FilesGroupInfoRequestForbiddenErrorBody:
+  groupsfilesGroupInfoForbiddenErrorSchema:
     discriminated: false
     union:
       - PublicKeyRequiredError
@@ -2905,9 +2905,9 @@ change the value to `auto`.
     type: optional<map<string, unknown>>
     docs: Arbitrary metadata associated with a file.
 errors:
-  BaseUploadRequestBadRequestError:
+  uploadbaseUploadBadRequestError:
     status-code: 400
-    type: BaseUploadRequestBadRequestErrorBody
+    type: uploadbaseUploadBadRequestErrorSchema
     docs: Request failed input parameters validation.
     examples:
       - value: The request contains too many HTTP POST fields.
@@ -2952,9 +2952,9 @@ errors:
         name: file-type-forbidden
       - value: The file is infected by Win.Test.EICAR_HDB-1 virus.
         name: file-infected
-  BaseUploadRequestForbiddenError:
+  uploadbaseUploadForbiddenError:
     status-code: 403
-    type: BaseUploadRequestForbiddenErrorBody
+    type: uploadbaseUploadForbiddenErrorSchema
     docs: Request was not allowed.
     examples:
       - value: UPLOADCARE_PUB_KEY is required.
@@ -2977,21 +2977,21 @@ errors:
         name: signature-expiration
       - value: Invalid signature.
         name: signature-invalid
-  BaseUploadRequestContentTooLargeError:
+  uploadbaseUploadContentTooLargeError:
     status-code: 413
     type: string
     docs: The size of the request is too large.
     examples:
       - value: The size of the request is too large.
-  BaseUploadRequestTooManyRequestsError:
+  uploadbaseUploadTooManyRequestsError:
     status-code: 429
     type: string
     docs: Request was throttled.
     examples:
       - value: Request was throttled.
-  MultipartFileUploadStartRequestBadRequestError:
+  uploadmultipartFileUploadStartBadRequestError:
     status-code: 400
-    type: MultipartFileUploadStartRequestBadRequestErrorBody
+    type: uploadmultipartFileUploadStartBadRequestErrorSchema
     docs: Request failed input parameters validation.
     examples:
       - value: The request contains too many HTTP POST fields.
@@ -3044,9 +3044,9 @@ errors:
         name: multipart-part-size-too-small
       - value: Multipart Upload Part Size can not be more than 5368709120 bytes.
         name: multipart-part-size-too-big
-  MultipartFileUploadStartRequestForbiddenError:
+  uploadmultipartFileUploadStartForbiddenError:
     status-code: 403
-    type: MultipartFileUploadStartRequestForbiddenErrorBody
+    type: uploadmultipartFileUploadStartForbiddenErrorSchema
     docs: Request was not allowed.
     examples:
       - value: UPLOADCARE_PUB_KEY is required.
@@ -3069,15 +3069,15 @@ errors:
         name: signature-expiration
       - value: Invalid signature.
         name: signature-invalid
-  MultipartFileUploadStartRequestTooManyRequestsError:
+  uploadmultipartFileUploadStartTooManyRequestsError:
     status-code: 429
     type: string
     docs: Request was throttled.
     examples:
       - value: Request was throttled.
-  MultipartFileUploadCompleteRequestBadRequestError:
+  uploadmultipartFileUploadCompleteBadRequestError:
     status-code: 400
-    type: MultipartFileUploadCompleteRequestBadRequestErrorBody
+    type: uploadmultipartFileUploadCompleteBadRequestErrorSchema
     docs: Request failed input parameters validation.
     examples:
       - value: The request contains too many HTTP POST fields.
@@ -3102,25 +3102,25 @@ errors:
         name: file-type-forbidden
       - value: The file is infected by Win.Test.EICAR_HDB-1 virus.
         name: file-infected
-  MultipartFileUploadCompleteRequestForbiddenError:
+  uploadmultipartFileUploadCompleteForbiddenError:
     status-code: 403
-    type: MultipartFileUploadCompleteRequestForbiddenErrorBody
+    type: uploadmultipartFileUploadCompleteForbiddenErrorSchema
     docs: Request was not allowed.
     examples:
       - value: UPLOADCARE_PUB_KEY is required.
         name: public-key-is-required
       - value: UPLOADCARE_PUB_KEY is invalid.
         name: public-key-is-invalid
-  MultipartFileUploadCompleteRequestNotFoundError:
+  uploadmultipartFileUploadCompleteNotFoundError:
     status-code: 404
     type: FileNotFoundError
     docs: File with specified UUID was not found.
     examples:
       - value: File is not found.
         name: file-not-found
-  FromUrlUploadRequestBadRequestError:
+  uploadfromURLUploadBadRequestError:
     status-code: 400
-    type: FromUrlUploadRequestBadRequestErrorBody
+    type: uploadfromURLUploadBadRequestErrorSchema
     docs: Request failed input parameters validation.
     examples:
       - value: The request contains too many HTTP POST fields.
@@ -3175,9 +3175,9 @@ errors:
         name: url-host-malformed
       - value: Only public IPs are allowed.
         name: url-host-private-ip-forbidden
-  FromUrlUploadRequestForbiddenError:
+  uploadfromURLUploadForbiddenError:
     status-code: 403
-    type: FromUrlUploadRequestForbiddenErrorBody
+    type: uploadfromURLUploadForbiddenErrorSchema
     docs: Request was not allowed.
     examples:
       - value: pub_key is required.
@@ -3200,22 +3200,22 @@ errors:
         name: signature-expiration
       - value: Invalid signature.
         name: signature-invalid
-  FromUrlUploadRequestTooManyRequestsError:
+  uploadfromURLUploadTooManyRequestsError:
     status-code: 429
     type: string
     docs: Request was throttled.
     examples:
       - value: Request was throttled.
-  FromUrlUploadStatusRequestBadRequestError:
+  uploadfromURLUploadStatusBadRequestError:
     status-code: 400
     type: TokenRequiredError
     docs: Request failed input parameters validation.
     examples:
       - value: token is required.
         name: token-required
-  FileUploadInfoRequestBadRequestError:
+  uploadfileUploadInfoBadRequestError:
     status-code: 400
-    type: FileUploadInfoRequestBadRequestErrorBody
+    type: uploadfileUploadInfoBadRequestErrorSchema
     docs: Request failed input parameters validation.
     examples:
       - value: Null characters are not allowed.
@@ -3224,25 +3224,25 @@ errors:
         name: file-id-required
       - value: file_id is invalid.
         name: file-id-invalid
-  FileUploadInfoRequestForbiddenError:
+  uploadfileUploadInfoForbiddenError:
     status-code: 403
-    type: FileUploadInfoRequestForbiddenErrorBody
+    type: uploadfileUploadInfoForbiddenErrorSchema
     docs: Request was not allowed.
     examples:
       - value: pub_key is required.
         name: public-key-is-required
       - value: pub_key is invalid.
         name: public-key-is-invalid
-  FileUploadInfoRequestNotFoundError:
+  uploadfileUploadInfoNotFoundError:
     status-code: 404
     type: FileNotFoundError
     docs: File with specified UUID was not found.
     examples:
       - value: File is not found.
         name: file-not-found
-  CreateFilesGroupRequestBadRequestError:
+  groupscreateFilesGroupBadRequestError:
     status-code: 400
-    type: CreateFilesGroupRequestBadRequestErrorBody
+    type: groupscreateFilesGroupBadRequestErrorSchema
     docs: Request failed input parameters validation.
     examples:
       - value: The request contains too many HTTP POST fields.
@@ -3263,9 +3263,9 @@ errors:
         name: group-file-url-parsing-failed
       - value: Some files not found.
         name: group-files-not-found
-  CreateFilesGroupRequestForbiddenError:
+  groupscreateFilesGroupForbiddenError:
     status-code: 403
-    type: CreateFilesGroupRequestForbiddenErrorBody
+    type: groupscreateFilesGroupForbiddenErrorSchema
     docs: Request was not allowed.
     examples:
       - value: pub_key is required.
@@ -3286,25 +3286,25 @@ errors:
         name: signature-expiration
       - value: Invalid signature.
         name: signature-invalid
-  FilesGroupInfoRequestBadRequestError:
+  groupsfilesGroupInfoBadRequestError:
     status-code: 400
-    type: FilesGroupInfoRequestBadRequestErrorBody
+    type: groupsfilesGroupInfoBadRequestErrorSchema
     docs: Request failed input parameters validation.
     examples:
       - value: Null characters are not allowed.
         name: null-characters-forbidden
       - value: group_id is required.
         name: group-id-required
-  FilesGroupInfoRequestForbiddenError:
+  groupsfilesGroupInfoForbiddenError:
     status-code: 403
-    type: FilesGroupInfoRequestForbiddenErrorBody
+    type: groupsfilesGroupInfoForbiddenErrorSchema
     docs: Request was not allowed.
     examples:
       - value: pub_key is required.
         name: public-key-is-required
       - value: pub_key is invalid.
         name: public-key-is-invalid
-  FilesGroupInfoRequestNotFoundError:
+  groupsfilesGroupInfoNotFoundError:
     status-code: 404
     type: GroupNotFoundError
     docs: Group with specified UUID was not found.
@@ -3338,8 +3338,8 @@ multiple files at once and then wants to display them together.
 is to create a new one.
 ",
               "errors": [
-                "root.CreateFilesGroupRequestBadRequestError",
-                "root.CreateFilesGroupRequestForbiddenError",
+                "root.groupscreateFilesGroupBadRequestError",
+                "root.groupscreateFilesGroupForbiddenError",
               ],
               "examples": [
                 {
@@ -3551,9 +3551,9 @@ processing operations.
 number of the files in the group, etc).
 ",
               "errors": [
-                "root.FilesGroupInfoRequestBadRequestError",
-                "root.FilesGroupInfoRequestForbiddenError",
-                "root.FilesGroupInfoRequestNotFoundError",
+                "root.groupsfilesGroupInfoBadRequestError",
+                "root.groupsfilesGroupInfoForbiddenError",
+                "root.groupsfilesGroupInfoNotFoundError",
               ],
               "examples": [
                 {
@@ -3795,8 +3795,8 @@ service:
         type: root.GroupInfo
         status-code: 200
       errors:
-        - root.CreateFilesGroupRequestBadRequestError
-        - root.CreateFilesGroupRequestForbiddenError
+        - root.groupscreateFilesGroupBadRequestError
+        - root.groupscreateFilesGroupForbiddenError
       examples:
         - request:
             pub_key: caa9d29da887ee88ffe6
@@ -3977,9 +3977,9 @@ service:
         type: root.GroupInfo
         status-code: 200
       errors:
-        - root.FilesGroupInfoRequestBadRequestError
-        - root.FilesGroupInfoRequestForbiddenError
-        - root.FilesGroupInfoRequestNotFoundError
+        - root.groupsfilesGroupInfoBadRequestError
+        - root.groupsfilesGroupInfoForbiddenError
+        - root.groupsfilesGroupInfoNotFoundError
       examples:
         - query-parameters:
             pub_key: caa9d29da887ee88ffe6
@@ -4152,10 +4152,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
 ```
 ",
               "errors": [
-                "root.BaseUploadRequestBadRequestError",
-                "root.BaseUploadRequestForbiddenError",
-                "root.BaseUploadRequestContentTooLargeError",
-                "root.BaseUploadRequestTooManyRequestsError",
+                "root.uploadbaseUploadBadRequestError",
+                "root.uploadbaseUploadForbiddenError",
+                "root.uploadbaseUploadContentTooLargeError",
+                "root.uploadbaseUploadTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -4307,9 +4307,9 @@ Log.d("TAG", file.toString())
               "docs": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).
 ",
               "errors": [
-                "root.FileUploadInfoRequestBadRequestError",
-                "root.FileUploadInfoRequestForbiddenError",
-                "root.FileUploadInfoRequestNotFoundError",
+                "root.uploadfileUploadInfoBadRequestError",
+                "root.uploadfileUploadInfoForbiddenError",
+                "root.uploadfileUploadInfoNotFoundError",
               ],
               "examples": [
                 {
@@ -4551,9 +4551,9 @@ If you would like Uploadcare to keep track of the requested URLs and avoid the d
 uploads, pass the `save_URL_duplicates` and `check_URL_duplicates` parameters described below.
 ",
               "errors": [
-                "root.FromUrlUploadRequestBadRequestError",
-                "root.FromUrlUploadRequestForbiddenError",
-                "root.FromUrlUploadRequestTooManyRequestsError",
+                "root.uploadfromURLUploadBadRequestError",
+                "root.uploadfromURLUploadForbiddenError",
+                "root.uploadfromURLUploadTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -4961,7 +4961,7 @@ to the value of the `check_URL_duplicates` parameter.
     the `error` field is set to the cause of the error.
 ",
               "errors": [
-                "root.FromUrlUploadStatusRequestBadRequestError",
+                "root.uploadfromURLUploadStatusBadRequestError",
               ],
               "examples": [
                 {
@@ -5561,9 +5561,9 @@ Log.d("TAG", status.toString())
 upload session to assemble all the file parts into a single resulting file.
 ",
               "errors": [
-                "root.MultipartFileUploadCompleteRequestBadRequestError",
-                "root.MultipartFileUploadCompleteRequestForbiddenError",
-                "root.MultipartFileUploadCompleteRequestNotFoundError",
+                "root.uploadmultipartFileUploadCompleteBadRequestError",
+                "root.uploadmultipartFileUploadCompleteForbiddenError",
+                "root.uploadmultipartFileUploadCompleteNotFoundError",
               ],
               "examples": [
                 {
@@ -5953,9 +5953,9 @@ To upload large files, 3 requests are sent in sequence:
 **Note**: Multipart uploads support files larger than 10 megabytes only.
 ",
               "errors": [
-                "root.MultipartFileUploadStartRequestBadRequestError",
-                "root.MultipartFileUploadStartRequestForbiddenError",
-                "root.MultipartFileUploadStartRequestTooManyRequestsError",
+                "root.uploadmultipartFileUploadStartBadRequestError",
+                "root.uploadmultipartFileUploadStartForbiddenError",
+                "root.uploadmultipartFileUploadStartTooManyRequestsError",
               ],
               "examples": [
                 {
@@ -6395,10 +6395,10 @@ service:
         type: BaseUploadResponse
         status-code: 200
       errors:
-        - root.BaseUploadRequestBadRequestError
-        - root.BaseUploadRequestForbiddenError
-        - root.BaseUploadRequestContentTooLargeError
-        - root.BaseUploadRequestTooManyRequestsError
+        - root.uploadbaseUploadBadRequestError
+        - root.uploadbaseUploadForbiddenError
+        - root.uploadbaseUploadContentTooLargeError
+        - root.uploadbaseUploadTooManyRequestsError
       examples:
         - request:
             UPLOADCARE_PUB_KEY: caa9d29da887ee88ffe6
@@ -6593,9 +6593,9 @@ service:
         type: MultipartFileUploadStartResponse
         status-code: 200
       errors:
-        - root.MultipartFileUploadStartRequestBadRequestError
-        - root.MultipartFileUploadStartRequestForbiddenError
-        - root.MultipartFileUploadStartRequestTooManyRequestsError
+        - root.uploadmultipartFileUploadStartBadRequestError
+        - root.uploadmultipartFileUploadStartForbiddenError
+        - root.uploadmultipartFileUploadStartTooManyRequestsError
       examples:
         - request:
             UPLOADCARE_PUB_KEY: caa9d29da887ee88ffe6
@@ -6910,9 +6910,9 @@ service:
         type: root.FileUploadInfo
         status-code: 200
       errors:
-        - root.MultipartFileUploadCompleteRequestBadRequestError
-        - root.MultipartFileUploadCompleteRequestForbiddenError
-        - root.MultipartFileUploadCompleteRequestNotFoundError
+        - root.uploadmultipartFileUploadCompleteBadRequestError
+        - root.uploadmultipartFileUploadCompleteForbiddenError
+        - root.uploadmultipartFileUploadCompleteNotFoundError
       examples:
         - request:
             UPLOADCARE_PUB_KEY: caa9d29da887ee88ffe6
@@ -7222,9 +7222,9 @@ service:
         type: FromUrlUploadResponse
         status-code: 200
       errors:
-        - root.FromUrlUploadRequestBadRequestError
-        - root.FromUrlUploadRequestForbiddenError
-        - root.FromUrlUploadRequestTooManyRequestsError
+        - root.uploadfromURLUploadBadRequestError
+        - root.uploadfromURLUploadForbiddenError
+        - root.uploadfromURLUploadTooManyRequestsError
       examples:
         - name: type-token
           request:
@@ -7557,7 +7557,7 @@ service:
         type: FromUrlUploadStatusResponse
         status-code: 200
       errors:
-        - root.FromUrlUploadStatusRequestBadRequestError
+        - root.uploadfromURLUploadStatusBadRequestError
       examples:
         - name: status-waiting
           query-parameters:
@@ -8090,9 +8090,9 @@ service:
         type: root.FileUploadInfo
         status-code: 200
       errors:
-        - root.FileUploadInfoRequestBadRequestError
-        - root.FileUploadInfoRequestForbiddenError
-        - root.FileUploadInfoRequestNotFoundError
+        - root.uploadfileUploadInfoBadRequestError
+        - root.uploadfileUploadInfoForbiddenError
+        - root.uploadfileUploadInfoNotFoundError
       examples:
         - query-parameters:
             pub_key: caa9d29da887ee88ffe6

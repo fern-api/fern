@@ -1,4 +1,3 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { MediaType, assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
@@ -17,6 +16,7 @@ import { convertFullExample } from "./utils/convertFullExample";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
+import { getEndpointLocation } from "./utils/getEndpointLocation";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { isWriteMethod } from "./utils/isWriteMethod";
@@ -271,17 +271,20 @@ export function buildEndpoint({
 
     Object.entries(endpoint.errors).forEach(([statusCode, httpError]) => {
         let errorName = httpError.generatedName;
-        const fileContainingReference = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
         if (context.builder.enableUniqueErrorsPerEndpoint) {
-            errorName = `${endpoint.generatedRequestName}${httpError.generatedName}`;
+            if (endpoint.sdkName != null) {
+                errorName = `${endpoint.sdkName.groupName}${endpoint.sdkName.methodName}${httpError.generatedName}`
+            } else {
+                const { endpointId, file} = getEndpointLocation(endpoint);
+                errorName = `${file.split(".")[0]}${endpointId}${httpError.generatedName}`
+            }
             if (httpError.schema != null) {
                 if (httpError.schema.type !== "reference" && httpError.schema.type !== "oneOf") {
-                    httpError.schema.generatedName = `${endpoint.generatedRequestName}${httpError.schema.generatedName}`;
+                    httpError.schema.generatedName = `${errorName}Schema`;
                 } else if (httpError.schema.type === "oneOf") {
-                    httpError.schema.value.generatedName = `${endpoint.generatedRequestName}${httpError.schema.value.generatedName}`;
+                    httpError.schema.value.generatedName = `${errorName}Schema`;;
                 }
             }
-            // fileContainingReference = declarationFile;
         }
 
         const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {

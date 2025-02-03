@@ -6,7 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "GetEndUserByIdRequestInternalServerError": {
+          "endUsersgetEndUserByIdInternalServerError": {
             "docs": "Internal Server Error",
             "examples": [
               {
@@ -25,7 +25,7 @@
             "status-code": 500,
             "type": "Errors",
           },
-          "GetEndUserByIdRequestNotFoundError": {
+          "endUsersgetEndUserByIdNotFoundError": {
             "docs": "Not Found",
             "examples": [
               {
@@ -44,7 +44,7 @@
             "status-code": 404,
             "type": "Errors",
           },
-          "GetEndUserByIdRequestTooManyRequestsError": {
+          "endUsersgetEndUserByIdTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -63,7 +63,7 @@
             "status-code": 429,
             "type": "Errors",
           },
-          "GetEndUserByIdRequestUnauthorizedError": {
+          "endUsersgetEndUserByIdUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -82,7 +82,7 @@
             "status-code": 401,
             "type": "Errors",
           },
-          "GetEndUsersRequestBadRequestError": {
+          "endUsersgetEndUsersBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -101,7 +101,7 @@
             "status-code": 400,
             "type": "Errors",
           },
-          "GetEndUsersRequestInternalServerError": {
+          "endUsersgetEndUsersInternalServerError": {
             "docs": "Internal Server Error",
             "examples": [
               {
@@ -120,7 +120,7 @@
             "status-code": 500,
             "type": "Errors",
           },
-          "GetEndUsersRequestTooManyRequestsError": {
+          "endUsersgetEndUsersTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -139,7 +139,7 @@
             "status-code": 429,
             "type": "Errors",
           },
-          "GetEndUsersRequestUnauthorizedError": {
+          "endUsersgetEndUsersUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -158,7 +158,7 @@
             "status-code": 401,
             "type": "Errors",
           },
-          "UpdateEndUserByIdRequestBadRequestError": {
+          "endUsersupdateEndUserByIdBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -177,7 +177,7 @@
             "status-code": 400,
             "type": "Errors",
           },
-          "UpdateEndUserByIdRequestContentTooLargeError": {
+          "endUsersupdateEndUserByIdContentTooLargeError": {
             "docs": "Content Too Large",
             "examples": [
               {
@@ -196,7 +196,7 @@
             "status-code": 413,
             "type": "Errors",
           },
-          "UpdateEndUserByIdRequestInternalServerError": {
+          "endUsersupdateEndUserByIdInternalServerError": {
             "docs": "Internal Server Error",
             "examples": [
               {
@@ -215,7 +215,7 @@
             "status-code": 500,
             "type": "Errors",
           },
-          "UpdateEndUserByIdRequestNotFoundError": {
+          "endUsersupdateEndUserByIdNotFoundError": {
             "docs": "Not Found",
             "examples": [
               {
@@ -234,7 +234,7 @@
             "status-code": 404,
             "type": "Errors",
           },
-          "UpdateEndUserByIdRequestTooManyRequestsError": {
+          "endUsersupdateEndUserByIdTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -253,7 +253,7 @@
             "status-code": 429,
             "type": "Errors",
           },
-          "UpdateEndUserByIdRequestUnauthorizedError": {
+          "endUsersupdateEndUserByIdUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -544,7 +544,7 @@
         },
       },
       "rawContents": "errors:
-  GetEndUserByIdRequestUnauthorizedError:
+  endUsersgetEndUserByIdUnauthorizedError:
     status-code: 401
     type: Errors
     docs: Unauthorized
@@ -554,7 +554,7 @@
             - msg: unauthorized
               details: You are not authorized to access this resource
         name: UnauthorizedError
-  GetEndUserByIdRequestNotFoundError:
+  endUsersgetEndUserByIdNotFoundError:
     status-code: 404
     type: Errors
     docs: Not Found
@@ -566,7 +566,7 @@
                 The requested resource with ID 5f7e0e2c1e7c7e000f0f9c3a was not
                 found
         name: NotFoundError
-  GetEndUserByIdRequestTooManyRequestsError:
+  endUsersgetEndUserByIdTooManyRequestsError:
     status-code: 429
     type: Errors
     docs: Too Many Requests
@@ -576,7 +576,7 @@
             - msg: rate_limit_exceeded
               details: 50 requests allowed per second
         name: TooManyRequestsError
-  GetEndUserByIdRequestInternalServerError:
+  endUsersgetEndUserByIdInternalServerError:
     status-code: 500
     type: Errors
     docs: Internal Server Error
@@ -588,7 +588,7 @@
                 An unknown error occurred. error_id:
                 91d435a7-e0b4-4c56-a097-8907e9ed851e
         name: InternalServerError
-  UpdateEndUserByIdRequestBadRequestError:
+  endUsersupdateEndUserByIdBadRequestError:
     status-code: 400
     type: Errors
     docs: Bad Request
@@ -598,7 +598,7 @@
             - msg: bad_request
               details: '{''profile'': {''system_properties'': [''Unknown field.'']}}'
         name: BadRequestError
-  UpdateEndUserByIdRequestUnauthorizedError:
+  endUsersupdateEndUserByIdUnauthorizedError:
     status-code: 401
     type: Errors
     docs: Unauthorized
@@ -608,7 +608,7 @@
             - msg: unauthorized
               details: You are not authorized to access this resource
         name: UnauthorizedError
-  UpdateEndUserByIdRequestNotFoundError:
+  endUsersupdateEndUserByIdNotFoundError:
     status-code: 404
     type: Errors
     docs: Not Found
@@ -620,7 +620,7 @@
                 The requested resource with ID 5f7e0e2c1e7c7e000f0f9c3a was not
                 found
         name: NotFoundError
-  UpdateEndUserByIdRequestContentTooLargeError:
+  endUsersupdateEndUserByIdContentTooLargeError:
     status-code: 413
     type: Errors
     docs: Content Too Large
@@ -630,7 +630,7 @@
             - msg: content_too_large
               details: 'Maximum request size of 4.0 MB exceeded. Content length: 5.0 MB.'
         name: ContentTooLargeError
-  UpdateEndUserByIdRequestTooManyRequestsError:
+  endUsersupdateEndUserByIdTooManyRequestsError:
     status-code: 429
     type: Errors
     docs: Too Many Requests
@@ -640,7 +640,7 @@
             - msg: rate_limit_exceeded
               details: 50 requests allowed per second
         name: TooManyRequestsError
-  UpdateEndUserByIdRequestInternalServerError:
+  endUsersupdateEndUserByIdInternalServerError:
     status-code: 500
     type: Errors
     docs: Internal Server Error
@@ -652,7 +652,7 @@
                 An unknown error occurred. error_id:
                 91d435a7-e0b4-4c56-a097-8907e9ed851e
         name: InternalServerError
-  GetEndUsersRequestBadRequestError:
+  endUsersgetEndUsersBadRequestError:
     status-code: 400
     type: Errors
     docs: Bad Request
@@ -662,7 +662,7 @@
             - msg: bad_request
               details: '{''profile'': {''system_properties'': [''Unknown field.'']}}'
         name: BadRequestError
-  GetEndUsersRequestUnauthorizedError:
+  endUsersgetEndUsersUnauthorizedError:
     status-code: 401
     type: Errors
     docs: Unauthorized
@@ -672,7 +672,7 @@
             - msg: unauthorized
               details: You are not authorized to access this resource
         name: UnauthorizedError
-  GetEndUsersRequestTooManyRequestsError:
+  endUsersgetEndUsersTooManyRequestsError:
     status-code: 429
     type: Errors
     docs: Too Many Requests
@@ -682,7 +682,7 @@
             - msg: rate_limit_exceeded
               details: 50 requests allowed per second
         name: TooManyRequestsError
-  GetEndUsersRequestInternalServerError:
+  endUsersgetEndUsersInternalServerError:
     status-code: 500
     type: Errors
     docs: Internal Server Error
@@ -912,10 +912,10 @@ types:
               "display-name": "Get an end user by ID",
               "docs": "Get a specific end user",
               "errors": [
-                "root.GetEndUserByIdRequestUnauthorizedError",
-                "root.GetEndUserByIdRequestNotFoundError",
-                "root.GetEndUserByIdRequestTooManyRequestsError",
-                "root.GetEndUserByIdRequestInternalServerError",
+                "root.endUsersgetEndUserByIdUnauthorizedError",
+                "root.endUsersgetEndUserByIdNotFoundError",
+                "root.endUsersgetEndUserByIdTooManyRequestsError",
+                "root.endUsersgetEndUserByIdInternalServerError",
               ],
               "examples": [
                 {
@@ -979,10 +979,10 @@ types:
               "display-name": "Get multiple end users by ID",
               "docs": "Get multiple end users",
               "errors": [
-                "root.GetEndUsersRequestBadRequestError",
-                "root.GetEndUsersRequestUnauthorizedError",
-                "root.GetEndUsersRequestTooManyRequestsError",
-                "root.GetEndUsersRequestInternalServerError",
+                "root.endUsersgetEndUsersBadRequestError",
+                "root.endUsersgetEndUsersUnauthorizedError",
+                "root.endUsersgetEndUsersTooManyRequestsError",
+                "root.endUsersgetEndUsersInternalServerError",
               ],
               "examples": [
                 {
@@ -1068,12 +1068,12 @@ types:
               "display-name": "Update an end user by ID",
               "docs": "Update an end user. Request data is limited to 4KB in size total.",
               "errors": [
-                "root.UpdateEndUserByIdRequestBadRequestError",
-                "root.UpdateEndUserByIdRequestUnauthorizedError",
-                "root.UpdateEndUserByIdRequestNotFoundError",
-                "root.UpdateEndUserByIdRequestContentTooLargeError",
-                "root.UpdateEndUserByIdRequestTooManyRequestsError",
-                "root.UpdateEndUserByIdRequestInternalServerError",
+                "root.endUsersupdateEndUserByIdBadRequestError",
+                "root.endUsersupdateEndUserByIdUnauthorizedError",
+                "root.endUsersupdateEndUserByIdNotFoundError",
+                "root.endUsersupdateEndUserByIdContentTooLargeError",
+                "root.endUsersupdateEndUserByIdTooManyRequestsError",
+                "root.endUsersupdateEndUserByIdInternalServerError",
               ],
               "examples": [
                 {
@@ -1220,10 +1220,10 @@ service:
         type: root.EndUser
         status-code: 200
       errors:
-        - root.GetEndUserByIdRequestUnauthorizedError
-        - root.GetEndUserByIdRequestNotFoundError
-        - root.GetEndUserByIdRequestTooManyRequestsError
-        - root.GetEndUserByIdRequestInternalServerError
+        - root.endUsersgetEndUserByIdUnauthorizedError
+        - root.endUsersgetEndUserByIdNotFoundError
+        - root.endUsersgetEndUserByIdTooManyRequestsError
+        - root.endUsersgetEndUserByIdInternalServerError
       examples:
         - path-parameters:
             end_user_id: end_user_id
@@ -1282,12 +1282,12 @@ service:
         type: root.EndUser
         status-code: 200
       errors:
-        - root.UpdateEndUserByIdRequestBadRequestError
-        - root.UpdateEndUserByIdRequestUnauthorizedError
-        - root.UpdateEndUserByIdRequestNotFoundError
-        - root.UpdateEndUserByIdRequestContentTooLargeError
-        - root.UpdateEndUserByIdRequestTooManyRequestsError
-        - root.UpdateEndUserByIdRequestInternalServerError
+        - root.endUsersupdateEndUserByIdBadRequestError
+        - root.endUsersupdateEndUserByIdUnauthorizedError
+        - root.endUsersupdateEndUserByIdNotFoundError
+        - root.endUsersupdateEndUserByIdContentTooLargeError
+        - root.endUsersupdateEndUserByIdTooManyRequestsError
+        - root.endUsersupdateEndUserByIdInternalServerError
       examples:
         - path-parameters:
             end_user_id: end_user_id
@@ -1358,10 +1358,10 @@ service:
         type: root.EndUsers
         status-code: 200
       errors:
-        - root.GetEndUsersRequestBadRequestError
-        - root.GetEndUsersRequestUnauthorizedError
-        - root.GetEndUsersRequestTooManyRequestsError
-        - root.GetEndUsersRequestInternalServerError
+        - root.endUsersgetEndUsersBadRequestError
+        - root.endUsersgetEndUsersUnauthorizedError
+        - root.endUsersgetEndUsersTooManyRequestsError
+        - root.endUsersgetEndUsersInternalServerError
       examples:
         - query-parameters:
             cursor: 65a17e3f43bec88e2792d0eb

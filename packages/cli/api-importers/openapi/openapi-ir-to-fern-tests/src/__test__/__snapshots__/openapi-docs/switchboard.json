@@ -6,77 +6,77 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "ExtensionsGetByIdRequestInternalServerError": {
+          "extensionsgetByIdInternalServerError": {
             "docs": "Internal Server Error",
             "status-code": 500,
             "type": "ErrorEnvelope",
           },
-          "ExtensionsGetByIdRequestNotFoundError": {
+          "extensionsgetByIdNotFoundError": {
             "docs": "Not Found",
             "status-code": 404,
             "type": "ErrorEnvelope",
           },
-          "ExtensionsGetByIdRequestUnprocessableEntityError": {
+          "extensionsgetByIdUnprocessableEntityError": {
             "docs": "Unprocessable Entity",
             "status-code": 422,
             "type": "ErrorEnvelope",
           },
-          "ProfilesGetByIdRequestInternalServerError": {
+          "profilesgetByIdInternalServerError": {
             "docs": "Internal Server Error",
             "status-code": 500,
             "type": "ErrorEnvelope",
           },
-          "ProfilesGetByIdRequestNotFoundError": {
+          "profilesgetByIdNotFoundError": {
             "docs": "Not Found",
             "status-code": 404,
             "type": "ErrorEnvelope",
           },
-          "ProfilesGetByIdRequestUnprocessableEntityError": {
+          "profilesgetByIdUnprocessableEntityError": {
             "docs": "Unprocessable Entity",
             "status-code": 422,
             "type": "ErrorEnvelope",
           },
-          "SessionsEventsRequestInternalServerError": {
+          "sessionseventsInternalServerError": {
             "docs": "Internal Server Error",
             "status-code": 500,
             "type": "ErrorEnvelope",
           },
-          "SessionsEventsRequestNotFoundError": {
+          "sessionseventsNotFoundError": {
             "docs": "Not Found",
             "status-code": 404,
             "type": "ErrorEnvelope",
           },
-          "SessionsEventsRequestUnprocessableEntityError": {
+          "sessionseventsUnprocessableEntityError": {
             "docs": "Unprocessable Entity",
             "status-code": 422,
             "type": "ErrorEnvelope",
           },
-          "SessionsGetInfoRequestInternalServerError": {
+          "sessionsgetinfoInternalServerError": {
             "docs": "Internal Server Error",
             "status-code": 500,
             "type": "ErrorEnvelope",
           },
-          "SessionsGetInfoRequestNotFoundError": {
+          "sessionsgetinfoNotFoundError": {
             "docs": "Not Found",
             "status-code": 404,
             "type": "ErrorEnvelope",
           },
-          "SessionsGetInfoRequestUnprocessableEntityError": {
+          "sessionsgetinfoUnprocessableEntityError": {
             "docs": "Unprocessable Entity",
             "status-code": 422,
             "type": "ErrorEnvelope",
           },
-          "SessionsListRequestInternalServerError": {
+          "sessionslistInternalServerError": {
             "docs": "Internal Server Error",
             "status-code": 500,
             "type": "ErrorEnvelope",
           },
-          "SessionsListRequestNotFoundError": {
+          "sessionslistNotFoundError": {
             "docs": "Not Found",
             "status-code": 404,
             "type": "ErrorEnvelope",
           },
-          "SessionsListRequestUnprocessableEntityError": {
+          "sessionslistUnprocessableEntityError": {
             "docs": "Unprocessable Entity",
             "status-code": 422,
             "type": "ErrorEnvelope",
@@ -691,63 +691,63 @@
         },
       },
       "rawContents": "errors:
-  ExtensionsGetByIdRequestNotFoundError:
+  extensionsgetByIdNotFoundError:
     status-code: 404
     type: ErrorEnvelope
     docs: Not Found
-  ExtensionsGetByIdRequestUnprocessableEntityError:
+  extensionsgetByIdUnprocessableEntityError:
     status-code: 422
     type: ErrorEnvelope
     docs: Unprocessable Entity
-  ExtensionsGetByIdRequestInternalServerError:
+  extensionsgetByIdInternalServerError:
     status-code: 500
     type: ErrorEnvelope
     docs: Internal Server Error
-  ProfilesGetByIdRequestNotFoundError:
+  profilesgetByIdNotFoundError:
     status-code: 404
     type: ErrorEnvelope
     docs: Not Found
-  ProfilesGetByIdRequestUnprocessableEntityError:
+  profilesgetByIdUnprocessableEntityError:
     status-code: 422
     type: ErrorEnvelope
     docs: Unprocessable Entity
-  ProfilesGetByIdRequestInternalServerError:
+  profilesgetByIdInternalServerError:
     status-code: 500
     type: ErrorEnvelope
     docs: Internal Server Error
-  SessionsListRequestNotFoundError:
+  sessionslistNotFoundError:
     status-code: 404
     type: ErrorEnvelope
     docs: Not Found
-  SessionsListRequestUnprocessableEntityError:
+  sessionslistUnprocessableEntityError:
     status-code: 422
     type: ErrorEnvelope
     docs: Unprocessable Entity
-  SessionsListRequestInternalServerError:
+  sessionslistInternalServerError:
     status-code: 500
     type: ErrorEnvelope
     docs: Internal Server Error
-  SessionsGetInfoRequestNotFoundError:
+  sessionsgetinfoNotFoundError:
     status-code: 404
     type: ErrorEnvelope
     docs: Not Found
-  SessionsGetInfoRequestUnprocessableEntityError:
+  sessionsgetinfoUnprocessableEntityError:
     status-code: 422
     type: ErrorEnvelope
     docs: Unprocessable Entity
-  SessionsGetInfoRequestInternalServerError:
+  sessionsgetinfoInternalServerError:
     status-code: 500
     type: ErrorEnvelope
     docs: Internal Server Error
-  SessionsEventsRequestNotFoundError:
+  sessionseventsNotFoundError:
     status-code: 404
     type: ErrorEnvelope
     docs: Not Found
-  SessionsEventsRequestUnprocessableEntityError:
+  sessionseventsUnprocessableEntityError:
     status-code: 422
     type: ErrorEnvelope
     docs: Unprocessable Entity
-  SessionsEventsRequestInternalServerError:
+  sessionseventsInternalServerError:
     status-code: 500
     type: ErrorEnvelope
     docs: Internal Server Error
@@ -1330,9 +1330,9 @@ types:
               "display-name": "Get an extension",
               "docs": "Get an extension by ID",
               "errors": [
-                "root.ExtensionsGetByIdRequestNotFoundError",
-                "root.ExtensionsGetByIdRequestUnprocessableEntityError",
-                "root.ExtensionsGetByIdRequestInternalServerError",
+                "root.extensionsgetByIdNotFoundError",
+                "root.extensionsgetByIdUnprocessableEntityError",
+                "root.extensionsgetByIdInternalServerError",
               ],
               "examples": [
                 {
@@ -1595,9 +1595,9 @@ service:
         type: root.ExtensionV1EnvelopeDefaultMetaWrapper
         status-code: 200
       errors:
-        - root.ExtensionsGetByIdRequestNotFoundError
-        - root.ExtensionsGetByIdRequestUnprocessableEntityError
-        - root.ExtensionsGetByIdRequestInternalServerError
+        - root.extensionsgetByIdNotFoundError
+        - root.extensionsgetByIdUnprocessableEntityError
+        - root.extensionsgetByIdInternalServerError
       examples:
         - path-parameters:
             id: 4a61a55c-391b-4f73-957e-ffbd29ac7cba
@@ -1755,9 +1755,9 @@ service:
               "display-name": "Get a profile",
               "docs": "Get a profile by ID",
               "errors": [
-                "root.ProfilesGetByIdRequestNotFoundError",
-                "root.ProfilesGetByIdRequestUnprocessableEntityError",
-                "root.ProfilesGetByIdRequestInternalServerError",
+                "root.profilesgetByIdNotFoundError",
+                "root.profilesgetByIdUnprocessableEntityError",
+                "root.profilesgetByIdInternalServerError",
               ],
               "examples": [
                 {
@@ -2058,9 +2058,9 @@ service:
         type: root.ProfileV1EnvelopeDefaultMetaWrapper
         status-code: 200
       errors:
-        - root.ProfilesGetByIdRequestNotFoundError
-        - root.ProfilesGetByIdRequestUnprocessableEntityError
-        - root.ProfilesGetByIdRequestInternalServerError
+        - root.profilesgetByIdNotFoundError
+        - root.profilesgetByIdUnprocessableEntityError
+        - root.profilesgetByIdInternalServerError
       examples:
         - path-parameters:
             id: 4a61a55c-391b-4f73-957e-ffbd29ac7cba
@@ -2109,9 +2109,9 @@ service:
               "display-name": "Get a session event stream",
               "docs": "Get a session event stream for a given session ID",
               "errors": [
-                "root.SessionsEventsRequestNotFoundError",
-                "root.SessionsEventsRequestUnprocessableEntityError",
-                "root.SessionsEventsRequestInternalServerError",
+                "root.sessionseventsNotFoundError",
+                "root.sessionseventsUnprocessableEntityError",
+                "root.sessionseventsInternalServerError",
               ],
               "examples": [
                 {
@@ -2163,9 +2163,9 @@ service:
               "display-name": "Get info for a session",
               "docs": "Get a session by ID",
               "errors": [
-                "root.SessionsGetInfoRequestNotFoundError",
-                "root.SessionsGetInfoRequestUnprocessableEntityError",
-                "root.SessionsGetInfoRequestInternalServerError",
+                "root.sessionsgetinfoNotFoundError",
+                "root.sessionsgetinfoUnprocessableEntityError",
+                "root.sessionsgetinfoInternalServerError",
               ],
               "examples": [
                 {
@@ -2249,9 +2249,9 @@ service:
               "display-name": "Get a list of sessions",
               "docs": "Get a list of sessions by ID",
               "errors": [
-                "root.SessionsListRequestNotFoundError",
-                "root.SessionsListRequestUnprocessableEntityError",
-                "root.SessionsListRequestInternalServerError",
+                "root.sessionslistNotFoundError",
+                "root.sessionslistUnprocessableEntityError",
+                "root.sessionslistInternalServerError",
               ],
               "examples": [
                 {
@@ -2621,9 +2621,9 @@ service:
         type: root.SessionsWithPaginationEnvelopeDefaultMetaWrapper
         status-code: 200
       errors:
-        - root.SessionsListRequestNotFoundError
-        - root.SessionsListRequestUnprocessableEntityError
-        - root.SessionsListRequestInternalServerError
+        - root.sessionslistNotFoundError
+        - root.sessionslistUnprocessableEntityError
+        - root.sessionslistInternalServerError
       examples:
         - query-parameters:
             offset: 1
@@ -2736,9 +2736,9 @@ service:
         type: root.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper
         status-code: 200
       errors:
-        - root.SessionsGetInfoRequestNotFoundError
-        - root.SessionsGetInfoRequestUnprocessableEntityError
-        - root.SessionsGetInfoRequestInternalServerError
+        - root.sessionsgetinfoNotFoundError
+        - root.sessionsgetinfoUnprocessableEntityError
+        - root.sessionsgetinfoInternalServerError
       examples:
         - path-parameters:
             id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
@@ -2814,9 +2814,9 @@ service:
         type: SessionsEventsResponse
         format: sse
       errors:
-        - root.SessionsEventsRequestNotFoundError
-        - root.SessionsEventsRequestUnprocessableEntityError
-        - root.SessionsEventsRequestInternalServerError
+        - root.sessionseventsNotFoundError
+        - root.sessionseventsUnprocessableEntityError
+        - root.sessionseventsInternalServerError
       examples:
         - path-parameters:
             id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b

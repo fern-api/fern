@@ -6,27 +6,27 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "GetTokenRequestUnauthorizedError": {
+          "__package__getAuthenticationTokenUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "GetUsersRequestNotFoundError": {
+          "__package__getUserInformationNotFoundError": {
             "docs": "User not found",
             "status-code": 404,
             "type": "unknown",
           },
-          "GetUsersRequestUnauthorizedError": {
+          "__package__getUserInformationUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
           },
-          "GetUsersUserIdRequestNotFoundError": {
+          "__package__listUsersNotFoundError": {
             "docs": "User not found",
             "status-code": 404,
             "type": "unknown",
           },
-          "GetUsersUserIdRequestUnauthorizedError": {
+          "__package__listUsersUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
@@ -41,7 +41,7 @@
               "display-name": "Get authentication token",
               "docs": "Retrieve an authentication token for the API",
               "errors": [
-                "GetTokenRequestUnauthorizedError",
+                "__package__getAuthenticationTokenUnauthorizedError",
               ],
               "examples": [
                 {
@@ -71,8 +71,8 @@
               "display-name": "Get user information",
               "docs": "Retrieve detailed information about a specific user",
               "errors": [
-                "GetUsersUserIdRequestUnauthorizedError",
-                "GetUsersUserIdRequestNotFoundError",
+                "__package__getUserInformationUnauthorizedError",
+                "__package__getUserInformationNotFoundError",
               ],
               "examples": [
                 {
@@ -109,8 +109,8 @@
               "display-name": "List Users",
               "docs": "List information about all users",
               "errors": [
-                "GetUsersRequestUnauthorizedError",
-                "GetUsersRequestNotFoundError",
+                "__package__listUsersUnauthorizedError",
+                "__package__listUsersNotFoundError",
               ],
               "examples": [
                 {
@@ -170,23 +170,23 @@
         },
       },
       "rawContents": "errors:
-  GetUsersRequestUnauthorizedError:
+  __package__listUsersUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  GetUsersRequestNotFoundError:
+  __package__listUsersNotFoundError:
     status-code: 404
     type: unknown
     docs: User not found
-  GetUsersUserIdRequestUnauthorizedError:
+  __package__getUserInformationUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
-  GetUsersUserIdRequestNotFoundError:
+  __package__getUserInformationNotFoundError:
     status-code: 404
     type: unknown
     docs: User not found
-  GetTokenRequestUnauthorizedError:
+  __package__getAuthenticationTokenUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
@@ -207,8 +207,8 @@ service:
         type: User
         status-code: 200
       errors:
-        - GetUsersRequestUnauthorizedError
-        - GetUsersRequestNotFoundError
+        - __package__listUsersUnauthorizedError
+        - __package__listUsersNotFoundError
       examples:
         - response:
             body:
@@ -231,8 +231,8 @@ service:
         type: User
         status-code: 200
       errors:
-        - GetUsersUserIdRequestUnauthorizedError
-        - GetUsersUserIdRequestNotFoundError
+        - __package__getUserInformationUnauthorizedError
+        - __package__getUserInformationNotFoundError
       examples:
         - path-parameters:
             userId: userId
@@ -255,7 +255,7 @@ service:
         type: Token
         status-code: 200
       errors:
-        - GetTokenRequestUnauthorizedError
+        - __package__getAuthenticationTokenUnauthorizedError
       examples:
         - response:
             body:
