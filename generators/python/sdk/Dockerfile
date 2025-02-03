@@ -1,10 +1,16 @@
-FROM node:18.20-alpine3.21 AS node
-FROM python:3.9.14
+FROM node:20.18-alpine3.20 AS node
 
+RUN mkdir -p /nodejs-libs && \
+    ldd $(which node) | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -L '{}' /nodejs-libs/
+
+FROM python:3.9.14-alpine3.16
+
+## Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/
+COPY --from=node /nodejs-libs/* /usr/local/lib/
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
-    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
