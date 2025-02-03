@@ -1,9 +1,9 @@
-import { Node18UniversalStreamWrapper } from "../../stream-wrappers/Node18UniversalStreamWrapper";
+import { NodeUniversalStreamWrapper } from "../../stream-wrappers/NodeUniversalStreamWrapper";
 
-describe("Node18UniversalStreamWrapper", () => {
+describe("NodeUniversalStreamWrapper", () => {
     it("should set encoding to utf-8", async () => {
         const rawStream = new ReadableStream();
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         const setEncodingSpy = jest.spyOn(stream, "setEncoding");
 
         stream.setEncoding("utf-8");
@@ -13,7 +13,7 @@ describe("Node18UniversalStreamWrapper", () => {
 
     it("should register an event listener for readable", async () => {
         const rawStream = new ReadableStream();
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         const onSpy = jest.spyOn(stream, "on");
 
         stream.on("readable", () => {});
@@ -23,7 +23,7 @@ describe("Node18UniversalStreamWrapper", () => {
 
     it("should remove an event listener for data", async () => {
         const rawStream = new ReadableStream();
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         const offSpy = jest.spyOn(stream, "off");
 
         const fn = () => {};
@@ -41,7 +41,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.close();
             }
         });
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         const dest = new WritableStream({
             write(chunk) {
                 expect(chunk).toEqual(new TextEncoder().encode("test"));
@@ -59,7 +59,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.close();
             }
         });
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         const dest = new (await import("readable-stream")).Writable({
             write(chunk, encoding, callback) {
                 expect(chunk.toString()).toEqual("test");
@@ -78,7 +78,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.close();
             }
         });
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         const buffer: Uint8Array[] = [];
         const dest = new WritableStream({
             write(chunk) {
@@ -93,7 +93,7 @@ describe("Node18UniversalStreamWrapper", () => {
 
     it("should destroy the stream", async () => {
         const rawStream = new ReadableStream();
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         const destroySpy = jest.spyOn(stream, "destroy");
 
         stream.destroy();
@@ -103,7 +103,7 @@ describe("Node18UniversalStreamWrapper", () => {
 
     it("should pause and resume the stream", async () => {
         const rawStream = new ReadableStream();
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         const pauseSpy = jest.spyOn(stream, "pause");
         const resumeSpy = jest.spyOn(stream, "resume");
 
@@ -124,7 +124,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.close();
             }
         });
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
 
         expect(await stream.read()).toEqual(new TextEncoder().encode("test"));
         expect(await stream.read()).toEqual(new TextEncoder().encode("test"));
@@ -138,7 +138,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.close();
             }
         });
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
 
         const data = await stream.text();
 
@@ -152,7 +152,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.close();
             }
         });
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
 
         const data = await stream.json();
 
@@ -168,7 +168,7 @@ describe("Node18UniversalStreamWrapper", () => {
             }
         });
         let data = "";
-        const stream = new Node18UniversalStreamWrapper(rawStream);
+        const stream = new NodeUniversalStreamWrapper(rawStream);
         for await (const chunk of stream) {
             data += new TextDecoder().decode(chunk);
         }

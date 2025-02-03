@@ -2,9 +2,8 @@ import type { Writable } from "readable-stream";
 
 import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
 
-export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
-    implements
-        StreamWrapper<Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>, ReadFormat>
+export class NodeUniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
+    implements StreamWrapper<NodeUniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>, ReadFormat>
 {
     private readableStream: ReadableStream<ReadFormat>;
     private reader: ReadableStreamDefaultReader<ReadFormat>;
@@ -39,10 +38,10 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     public pipe(
-        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
-    ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
+        dest: NodeUniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
+    ): NodeUniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
         this.on("data", async (chunk) => {
-            if (dest instanceof Node18UniversalStreamWrapper) {
+            if (dest instanceof NodeUniversalStreamWrapper) {
                 dest._write(chunk);
             } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
@@ -53,7 +52,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         });
 
         this.on("end", async () => {
-            if (dest instanceof Node18UniversalStreamWrapper) {
+            if (dest instanceof NodeUniversalStreamWrapper) {
                 dest._end();
             } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
@@ -64,7 +63,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         });
 
         this.on("error", async (error) => {
-            if (dest instanceof Node18UniversalStreamWrapper) {
+            if (dest instanceof NodeUniversalStreamWrapper) {
                 dest._error(error);
             } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
@@ -80,14 +79,14 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     public pipeTo(
-        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
-    ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
+        dest: NodeUniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
+    ): NodeUniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
         return this.pipe(dest);
     }
 
-    public unpipe(dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>): void {
+    public unpipe(dest: NodeUniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>): void {
         this.off("data", async (chunk) => {
-            if (dest instanceof Node18UniversalStreamWrapper) {
+            if (dest instanceof NodeUniversalStreamWrapper) {
                 dest._write(chunk);
             } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
@@ -98,7 +97,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         });
 
         this.off("end", async () => {
-            if (dest instanceof Node18UniversalStreamWrapper) {
+            if (dest instanceof NodeUniversalStreamWrapper) {
                 dest._end();
             } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
@@ -109,7 +108,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         });
 
         this.off("error", async (error) => {
-            if (dest instanceof Node18UniversalStreamWrapper) {
+            if (dest instanceof NodeUniversalStreamWrapper) {
                 dest._error(error);
             } else if (dest instanceof WritableStream) {
                 const writer = dest.getWriter();
@@ -172,6 +171,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     public async text(): Promise<string> {
         const chunks: ReadFormat[] = [];
 
+        // eslint-disable-next-line no-constant-condition
         while (true) {
             const { done, value } = await this.reader.read();
             if (done) {
@@ -214,6 +214,8 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     private async _startReading(): Promise<void> {
         try {
             this._emit("readable");
+
+            // eslint-disable-next-line no-constant-condition
             while (true) {
                 if (this.paused) {
                     await new Promise((resolve) => {

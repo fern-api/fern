@@ -24,10 +24,8 @@ export interface CrossPlatformFormData {
 
 export async function newFormData(): Promise<CrossPlatformFormData> {
     let formdata: CrossPlatformFormData;
-    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
-        formdata = new Node18FormData();
-    } else if (RUNTIME.type === "node") {
-        formdata = new Node16FormData();
+    if (RUNTIME.type === "node") {
+        formdata = new NodeFormData();
     } else {
         formdata = new WebFormData();
     }
@@ -35,17 +33,17 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
     return formdata;
 }
 
-export type Node18FormDataFd =
+export type NodeFormDataFd =
     | {
           append(name: string, value: unknown, fileName?: string): void;
       }
     | undefined;
 
 /**
- * Form Data Implementation for Node.js 18+
+ * Form Data Implementation for Node.js
  */
-export class Node18FormData implements CrossPlatformFormData {
-    private fd: Node18FormDataFd;
+export class NodeFormData implements CrossPlatformFormData {
+    private fd: NodeFormDataFd;
 
     public async setup() {
         this.fd = new (await import("formdata-node")).FormData();
@@ -80,67 +78,6 @@ export class Node18FormData implements CrossPlatformFormData {
             body: (await import("readable-stream")).Readable.from(encoder),
             headers: encoder.headers,
             duplex: "half"
-        };
-    }
-}
-
-export type Node16FormDataFd =
-    | {
-          append(
-              name: string,
-              value: unknown,
-              options?:
-                  | string
-                  | {
-                        header?: string | Headers;
-                        knownLength?: number;
-                        filename?: string;
-                        filepath?: string;
-                        contentType?: string;
-                    }
-          ): void;
-
-          getHeaders(): Record<string, string>;
-      }
-    | undefined;
-
-/**
- * Form Data Implementation for Node.js 16-18
- */
-export class Node16FormData implements CrossPlatformFormData {
-    private fd: Node16FormDataFd;
-
-    public async setup(): Promise<void> {
-        this.fd = new (await import("form-data")).default();
-    }
-
-    public append(key: string, value: any): void {
-        this.fd?.append(key, value);
-    }
-
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        if (fileName == null && isNamedValue(value)) {
-            fileName = value.name;
-        }
-
-        let bufferedValue;
-        if (value instanceof Blob) {
-            bufferedValue = Buffer.from(await (value as any).arrayBuffer());
-        } else {
-            bufferedValue = value;
-        }
-
-        if (fileName == null) {
-            this.fd?.append(key, bufferedValue);
-        } else {
-            this.fd?.append(key, bufferedValue, { filename: fileName });
-        }
-    }
-
-    public getRequest(): FormDataRequest<Node16FormDataFd> {
-        return {
-            body: this.fd,
-            headers: this.fd ? this.fd.getHeaders() : {}
         };
     }
 }
