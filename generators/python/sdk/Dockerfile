@@ -12,17 +12,19 @@ ENV HTTPX_LOG_LEVEL=trace
 
 COPY pyproject.toml ./pyproject.toml
 COPY poetry.lock ./poetry.lock
-COPY ./core_utilities/sdk /assets/core_utilities
-COPY ./core_utilities/shared /assets/core_utilities
 
 RUN pip3 install poetry==1.8.5 &&\
   poetry config virtualenvs.create false &&\
   poetry install
 
 COPY ./sdk/features.yml /assets/features.yml
+COPY ./core_utilities/sdk /assets/core_utilities
+COPY ./core_utilities/shared /assets/core_utilities
 COPY ./tests /assets/tests
 
 COPY ./src ./src
+
+RUN poetry install
 
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]
 
