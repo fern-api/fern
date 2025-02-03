@@ -3,6 +3,13 @@
         The OpenRPC parser now supports generating code snippets in the API Explorer.
       type: fix
   irVersion: 55
+  version: 0.51.20
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now supports generating code snippets in the API Explorer.
+      type: fix
+  irVersion: 55
   version: 0.51.19
 
 - changelogEntry:
