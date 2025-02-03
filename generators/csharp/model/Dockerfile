@@ -1,11 +1,15 @@
 FROM node:20.18-alpine3.20 AS node
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18
 
+ENV PATH="$PATH:/root/.dotnet/tools"
+ENV YARN_CACHE_FOLDER=/.yarn
+ENV DOTNET_NOLOGO=1
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
 RUN apk --no-cache add bash curl git zip && git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
 RUN dotnet tool install -g csharpier
-ENV PATH="$PATH:/root/.dotnet/tools"
-ENV YARN_CACHE_FOLDER=/.yarn
 
 COPY generators/csharp/model/dist /dist
 
