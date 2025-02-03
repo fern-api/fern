@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Node18FormData, WebFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
+import { NodeFormData, WebFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
 
 describe("CrossPlatformFormData", () => {
-    describe("Node18FormData", () => {
+    describe("NodeFormData", () => {
         let formData: any;
 
         beforeEach(async () => {
-            formData = new Node18FormData();
+            formData = new NodeFormData();
             await formData.setup();
         });
 
