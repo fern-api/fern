@@ -15,6 +15,8 @@ import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -54,6 +56,10 @@ public class InlinedRequestsClient {
         } catch (JsonProcessingException e) {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("string", request.getString());
+        properties.put("integer", request.getInteger());
+        properties.put("NestedObject", request.getNestedObject());
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
