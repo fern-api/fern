@@ -56,7 +56,22 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
                 && (type.Name.StartsWith("OneOf`") || type.Name.StartsWith("OneOfBase`"))
             )
             {
-                return type.GetGenericArguments()
+                var genericArguments = type.GetGenericArguments();
+                if (genericArguments.Length == 1)
+                {
+                    return [(genericArguments[0], casts[0])];
+                }
+
+                // if object type is present, make sure it is last
+                var indexOfObjectType = Array.IndexOf(genericArguments, typeof(object));
+                if (indexOfObjectType != -1 && genericArguments.Length - 1 != indexOfObjectType)
+                {
+                    genericArguments = genericArguments
+                        .OrderBy(t => t == typeof(object) ? 1 : 0)
+                        .ToArray();
+                }
+
+                return genericArguments
                     .Select(t => (t, casts.First(c => c.GetParameters()[0].ParameterType == t)))
                     .ToArray();
             }

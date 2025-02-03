@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using NUnit.Framework;
 using OneOf;
@@ -214,6 +215,96 @@ public class OneOfSerializerTests
                 Assert.That(result.Index, Is.EqualTo(oneOf.Index));
                 Assert.That(json, Is.EqualTo(JsonUtils.Serialize(result.Value)));
             }
+        });
+    }
+
+    [Test]
+    public void Serialize_OneOfWithObjectLast_Should_Return_Expected_String()
+    {
+        var oneOfWithObjectLast = OneOf<string, int, Foo, Bar, object>.FromT4(
+            new { random = "data" }
+        );
+        const string oneOfWithObjectLastString = "{\n  \"random\": \"data\"\n}";
+
+        var result = JsonUtils.Serialize(oneOfWithObjectLast);
+        Assert.That(result, Is.EqualTo(oneOfWithObjectLastString));
+    }
+
+    [Test]
+    public void OneOfWithObjectLast_Should_Deserialize_From_String()
+    {
+        const string oneOfWithObjectLastString = "{\n  \"random\": \"data\"\n}";
+        var result = JsonUtils.Deserialize<OneOf<string, int, Foo, Bar, object>>(
+            oneOfWithObjectLastString
+        );
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Index, Is.EqualTo(4));
+            Assert.That(result.Value, Is.InstanceOf<object>());
+            Assert.That(JsonUtils.Serialize(result.Value), Is.EqualTo(oneOfWithObjectLastString));
+        });
+    }
+
+    [Test]
+    public void Serialize_OneOfWithObjectNotLast_Should_Return_Expected_String()
+    {
+        var oneOfWithObjectNotLast = OneOf<string, object, int, Foo, Bar>.FromT1(
+            new { random = "data" }
+        );
+        const string oneOfWithObjectNotLastString = "{\n  \"random\": \"data\"\n}";
+
+        var result = JsonUtils.Serialize(oneOfWithObjectNotLast);
+        Assert.That(result, Is.EqualTo(oneOfWithObjectNotLastString));
+    }
+
+    [Test]
+    public void OneOfWithObjectNotLast_Should_Deserialize_From_String()
+    {
+        const string oneOfWithObjectNotLastString = "{\n  \"random\": \"data\"\n}";
+        var result = JsonUtils.Deserialize<OneOf<string, object, int, Foo, Bar>>(
+            oneOfWithObjectNotLastString
+        );
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Index, Is.EqualTo(1));
+            Assert.That(result.Value, Is.InstanceOf<object>());
+            Assert.That(
+                JsonUtils.Serialize(result.Value),
+                Is.EqualTo(oneOfWithObjectNotLastString)
+            );
+        });
+    }
+
+    [Test]
+    public void Serialize_OneOfSingleType_Should_Return_Expected_String()
+    {
+        var oneOfSingle = OneOf<string>.FromT0("single");
+        const string oneOfSingleString = "\"single\"";
+
+        var result = JsonUtils.Serialize(oneOfSingle);
+        Assert.That(result, Is.EqualTo(oneOfSingleString));
+    }
+
+    [Test]
+    public void OneOfSingleType_Should_Deserialize_From_String()
+    {
+        const string oneOfSingleString = "\"single\"";
+        var result = JsonUtils.Deserialize<OneOf<string>>(oneOfSingleString);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Index, Is.EqualTo(0));
+            Assert.That(result.Value, Is.EqualTo("single"));
+        });
+    }
+
+    [Test]
+    public void Deserialize_InvalidData_Should_Throw_Exception()
+    {
+        const string invalidJson = "{\"invalid\": \"data\"}";
+
+        Assert.Throws<JsonException>(() =>
+        {
+            JsonUtils.Deserialize<OneOf<string, int>>(invalidJson);
         });
     }
 }
