@@ -135,11 +135,6 @@ export class CsharpProtobufTypeMapper {
     }
 }
 
-const enumerableClassReference = csharp.classReference({
-    namespace: "System.Linq",
-    name: "Enumerable"
-});
-
 class ToProtoPropertyMapper {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
 
@@ -443,6 +438,10 @@ class ToProtoPropertyMapper {
 
 class FromProtoPropertyMapper {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private readonly enumerableClassReference = csharp.classReference({
+        namespace: "System.Linq",
+        name: "Enumerable"
+    });
 
     constructor({ context }: { context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema> }) {
         this.context = context;
@@ -573,7 +572,7 @@ class FromProtoPropertyMapper {
                     writer.write(" ?? ");
                     writer.writeNode(
                         csharp.invokeMethod({
-                            on: enumerableClassReference,
+                            on: this.enumerableClassReference,
                             method: "Empty",
                             generics: [this.context.csharpTypeMapper.convert({ reference: listType })],
                             arguments_: []
