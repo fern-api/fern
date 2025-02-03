@@ -1,7 +1,8 @@
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
+import path from "path";
 
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
@@ -45,8 +46,8 @@ export async function replaceReferencedMarkdown({
         }
 
         const filepath = resolve(
-            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-            RelativeFilePath.of(src.replace(/^\//, ""))
+            path.isAbsolute(src) ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
+            path.normalize(src)
         );
 
         try {
