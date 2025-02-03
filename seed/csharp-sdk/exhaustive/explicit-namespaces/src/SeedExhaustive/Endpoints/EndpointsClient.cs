@@ -8,8 +8,6 @@ using SeedExhaustive.Endpoints.Params;
 using SeedExhaustive.Endpoints.Primitive;
 using SeedExhaustive.Endpoints.Union;
 
-#nullable enable
-
 namespace SeedExhaustive.Endpoints;
 
 public partial class EndpointsClient

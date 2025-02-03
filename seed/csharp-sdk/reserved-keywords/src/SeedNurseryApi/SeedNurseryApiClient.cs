@@ -1,12 +1,10 @@
 using SeedNurseryApi.Core;
 
-#nullable enable
-
 namespace SeedNurseryApi;
 
 public partial class SeedNurseryApiClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedNurseryApiClient(ClientOptions? clientOptions = null)
     {

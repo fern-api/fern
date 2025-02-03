@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedAnyAuth;
 using SeedAnyAuth.Core;
 
-#nullable enable
-
 namespace SeedAnyAuth.Test.Unit.MockServer;
 
 [TestFixture]

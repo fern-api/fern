@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedUnions.Core;
 
-#nullable enable
-
 namespace SeedUnions;
 
 public record Square

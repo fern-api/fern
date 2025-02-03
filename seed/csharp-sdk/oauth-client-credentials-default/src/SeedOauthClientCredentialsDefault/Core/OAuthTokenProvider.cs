@@ -1,7 +1,5 @@
 using SeedOauthClientCredentialsDefault;
 
-#nullable enable
-
 namespace SeedOauthClientCredentialsDefault.Core;
 
 public partial class OAuthTokenProvider
@@ -27,9 +25,11 @@ public partial class OAuthTokenProvider
     {
         if (_accessToken == null)
         {
-            var tokenResponse = await _client.GetTokenAsync(
-                new GetTokenRequest { ClientId = _clientId, ClientSecret = _clientSecret }
-            );
+            var tokenResponse = await _client
+                .GetTokenAsync(
+                    new GetTokenRequest { ClientId = _clientId, ClientSecret = _clientSecret }
+                )
+                .ConfigureAwait(false);
             _accessToken = tokenResponse.AccessToken;
         }
         return $"Bearer {_accessToken}";

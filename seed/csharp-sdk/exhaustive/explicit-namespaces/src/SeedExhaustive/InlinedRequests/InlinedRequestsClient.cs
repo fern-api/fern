@@ -6,8 +6,6 @@ using SeedExhaustive.Core;
 using SeedExhaustive.GeneralErrors;
 using SeedExhaustive.Types.Object;
 
-#nullable enable
-
 namespace SeedExhaustive.InlinedRequests;
 
 public partial class InlinedRequestsClient
@@ -55,17 +53,19 @@ public partial class InlinedRequestsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/req-bodies/object",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/req-bodies/object",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

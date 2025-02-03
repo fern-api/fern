@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
 
-#nullable enable
-
 namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 
 [TestFixture]

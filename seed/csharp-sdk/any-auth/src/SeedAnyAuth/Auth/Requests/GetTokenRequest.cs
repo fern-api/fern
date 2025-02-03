@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedAnyAuth.Core;
 
-#nullable enable
-
 namespace SeedAnyAuth;
 
 public record GetTokenRequest

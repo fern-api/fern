@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace;
 
 public partial class MigrationClient
@@ -32,17 +30,19 @@ public partial class MigrationClient
         var _headers = new Headers(
             new Dictionary<string, string>() { { "admin-key-header", request.AdminKeyHeader } }
         );
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/migration-info/all",
-                Headers = _headers,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/migration-info/all",
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

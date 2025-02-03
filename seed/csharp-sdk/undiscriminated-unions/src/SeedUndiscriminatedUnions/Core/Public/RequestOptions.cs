@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedUndiscriminatedUnions.Core;
 
-#nullable enable
-
 namespace SeedUndiscriminatedUnions;
 
 public partial class RequestOptions : IRequestOptions

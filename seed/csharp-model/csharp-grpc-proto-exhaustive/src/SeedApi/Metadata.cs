@@ -1,8 +1,6 @@
 using SeedApi.Core;
 using Proto = Google.Protobuf.WellKnownTypes;
 
-#nullable enable
-
 namespace SeedApi;
 
 public sealed class Metadata : Dictionary<string, MetadataValue?>

@@ -3,8 +3,6 @@ using Grpc.Core;
 using SeedApi.Core;
 using User.V1;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class UserserviceClient

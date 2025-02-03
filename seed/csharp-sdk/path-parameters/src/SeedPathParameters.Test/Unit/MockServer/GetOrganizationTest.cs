@@ -4,8 +4,6 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPathParameters.Core;
 
-#nullable enable
-
 namespace SeedPathParameters.Test.Unit.MockServer;
 
 [TestFixture]

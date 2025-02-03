@@ -1,7 +1,5 @@
 using SeedFileUpload.Core;
 
-#nullable enable
-
 namespace SeedFileUpload;
 
 public record JustFileRequest

@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedErrorProperty.Core;
 
-#nullable enable
-
 namespace SeedErrorProperty;
 
 public partial class RequestOptions : IRequestOptions

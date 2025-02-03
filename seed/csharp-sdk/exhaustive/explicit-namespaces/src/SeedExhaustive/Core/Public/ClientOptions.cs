@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive;
 
 public partial class ClientOptions

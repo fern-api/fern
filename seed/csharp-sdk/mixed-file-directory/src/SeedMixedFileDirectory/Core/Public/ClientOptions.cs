@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedMixedFileDirectory.Core;
 
-#nullable enable
-
 namespace SeedMixedFileDirectory;
 
 public partial class ClientOptions

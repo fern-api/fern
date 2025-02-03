@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedAudiences.Core;
 
-#nullable enable
-
 namespace SeedAudiences.FolderC;
 
 public record FolderCFoo

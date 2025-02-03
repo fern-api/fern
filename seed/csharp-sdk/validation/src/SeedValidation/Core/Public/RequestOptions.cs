@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedValidation.Core;
 
-#nullable enable
-
 namespace SeedValidation;
 
 public partial class RequestOptions : IRequestOptions

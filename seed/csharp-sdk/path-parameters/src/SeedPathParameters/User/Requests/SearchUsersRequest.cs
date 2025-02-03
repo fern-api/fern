@@ -1,7 +1,5 @@
 using SeedPathParameters.Core;
 
-#nullable enable
-
 namespace SeedPathParameters;
 
 public record SearchUsersRequest

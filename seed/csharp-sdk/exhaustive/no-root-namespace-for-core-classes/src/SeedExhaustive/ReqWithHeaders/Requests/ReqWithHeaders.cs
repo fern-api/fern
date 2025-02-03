@@ -1,7 +1,5 @@
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive;
 
 public record ReqWithHeaders

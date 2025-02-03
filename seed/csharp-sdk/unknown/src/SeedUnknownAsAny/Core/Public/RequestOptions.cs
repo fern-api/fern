@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedUnknownAsAny.Core;
 
-#nullable enable
-
 namespace SeedUnknownAsAny;
 
 public partial class RequestOptions : IRequestOptions

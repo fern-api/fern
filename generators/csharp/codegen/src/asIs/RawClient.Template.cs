@@ -5,8 +5,6 @@ using System.Net.Http.Headers;
 
 namespace <%= namespace%>;
 
-#nullable enable
-
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
@@ -28,64 +26,61 @@ internal class RawClient(ClientOptions clientOptions)
     /// </summary>
     public readonly ClientOptions Options = clientOptions;
 
-public async Task<ApiResponse> MakeRequestAsync(
-    BaseApiRequest request,
-    CancellationToken cancellationToken = default
-)
-{
-    // Apply the request timeout.
-    var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-    var timeout = request.Options?.Timeout ?? Options.Timeout;
-    cts.CancelAfter(timeout);
+    public async Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
+    {
+        // Apply the request timeout.
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var timeout = request.Options?.Timeout ?? Options.Timeout;
+        cts.CancelAfter(timeout);
 
-    // Send the request.
-    return await SendWithRetriesAsync(
-        request,
-        cts.Token
-    );
-}
+        // Send the request.
+        return await SendWithRetriesAsync(request, cts.Token).ConfigureAwait(false);
+    }
 
-public record BaseApiRequest
-{
-    public required string BaseUrl { get; init; }
+    public record BaseApiRequest
+    {
+        public required string BaseUrl { get; init; }
 
-    public required HttpMethod Method { get; init; }
+        public required HttpMethod Method { get; init; }
 
-    public required string Path { get; init; }
+        public required string Path { get; init; }
 
-    public string? ContentType { get; init; }
+        public string? ContentType { get; init; }
 
-    public Dictionary<string, object> Query { get; init; } = new();
+        public Dictionary<string, object> Query { get; init; } = new();
 
-    public Headers Headers { get; init; } = new();
+        public Headers Headers { get; init; } = new();
 
-    public IRequestOptions? Options { get; init; }
-}
+        public IRequestOptions? Options { get; init; }
+    }
 
-/// <summary>
-/// The request object to be sent for streaming uploads.
-/// </summary>
-public record StreamApiRequest : BaseApiRequest
-{
-    public Stream? Body { get; init; }
-}
+    /// <summary>
+    /// The request object to be sent for streaming uploads.
+    /// </summary>
+    public record StreamApiRequest : BaseApiRequest
+    {
+        public Stream? Body { get; init; }
+    }
 
-/// <summary>
-/// The request object to be sent for JSON APIs.
-/// </summary>
-public record JsonApiRequest : BaseApiRequest
-{
-    public object? Body { get; init; }
-}
+    /// <summary>
+    /// The request object to be sent for JSON APIs.
+    /// </summary>
+    public record JsonApiRequest : BaseApiRequest
+    {
+        public object? Body { get; init; }
+    }
 
-/// <summary>
-/// The response object returned from the API.
-/// </summary>
-public record ApiResponse
-{
-    public required int StatusCode { get; init; }
+    /// <summary>
+    /// The response object returned from the API.
+    /// </summary>
+    public record ApiResponse
+    {
+        public required int StatusCode { get; init; }
 
-    public required HttpResponseMessage Raw { get; init; }
+        public required HttpResponseMessage Raw { get; init; }
     }
 
     private async Task<ApiResponse> SendWithRetriesAsync(
@@ -95,7 +90,7 @@ public record ApiResponse
     {
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
         var maxRetries = request.Options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
+        var response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken).ConfigureAwait(false);
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
@@ -103,8 +98,8 @@ public record ApiResponse
                 break;
             }
             var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
-            await System.Threading.Tasks.Task.Delay(delayMs, cancellationToken);
-            response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
+            await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+            response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken).ConfigureAwait(false);
         }
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
@@ -123,24 +118,26 @@ public record ApiResponse
         {
             // Add the request body to the request.
             case JsonApiRequest jsonRequest:
+            {
+                if (jsonRequest.Body != null)
                 {
-                    if (jsonRequest.Body != null)
-                    {
-                        httpRequest.Content = new StringContent(
-                            JsonUtils.Serialize(jsonRequest.Body),
-                            Encoding.UTF8,
-                            "application/json"
-                        );
-                    }
-                    break;
+                    httpRequest.Content = new StringContent(
+                        JsonUtils.Serialize(jsonRequest.Body),
+                        Encoding.UTF8,
+                        "application/json"
+                    );
                 }
+                break;
+            }
             case StreamApiRequest { Body: not null } streamRequest:
                 httpRequest.Content = new StreamContent(streamRequest.Body);
                 break;
         }
         if (request.ContentType != null)
         {
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(request.ContentType);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(
+                request.ContentType
+            );
         }
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);

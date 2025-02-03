@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using OneOf;
 using SeedUndiscriminatedUnions.Core;
 
-#nullable enable
-
 namespace SeedUndiscriminatedUnions;
 
 public record TypeWithOptionalUnion

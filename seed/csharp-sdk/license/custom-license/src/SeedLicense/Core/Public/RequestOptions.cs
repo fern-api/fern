@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedLicense.Core;
 
-#nullable enable
-
 namespace SeedLicense;
 
 public partial class RequestOptions : IRequestOptions

@@ -118,7 +118,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
                     writer.writeLine("RequestOptions = ");
                     writer.writeNodeStatement(
-                        new csharp.ClassInstantiation({
+                        csharp.instantiateClass({
                             classReference: this.context.getRequestOptionsClassReference(),
                             arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
                         })
@@ -127,7 +127,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     if (this.context.hasIdempotencyHeaders()) {
                         writer.writeLine("IdempotentRequestOptions = ");
                         writer.writeNodeStatement(
-                            new csharp.ClassInstantiation({
+                            csharp.instantiateClass({
                                 classReference: this.context.getIdempotentRequestOptionsClassReference(),
                                 arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
                             })

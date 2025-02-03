@@ -1,7 +1,5 @@
 using SeedQueryParameters.Core;
 
-#nullable enable
-
 namespace SeedQueryParameters;
 
 public record GetUsersRequest

@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
 public record TokenResponse

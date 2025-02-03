@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedMixedFileDirectory.Core;
 
-#nullable enable
-
 namespace SeedMixedFileDirectory;
 
 public record User

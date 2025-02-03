@@ -1,7 +1,5 @@
 using SeedCsharpNamespaceConflict.Core;
 
-#nullable enable
-
 namespace SeedCsharpNamespaceConflict.B;
 
 public partial class BClient

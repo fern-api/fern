@@ -676,11 +676,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         getEndpointReturnType({ context: this.context, endpoint });
-        return new csharp.MethodInvocation({
+        return csharp.invokeMethod({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on,
             async: false,
+            configureAwait: true,
             generics: []
         });
     }

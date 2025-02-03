@@ -1,12 +1,10 @@
 using SeedSingleUrlEnvironmentDefault.Core;
 
-#nullable enable
-
 namespace SeedSingleUrlEnvironmentDefault;
 
 public partial class SeedSingleUrlEnvironmentDefaultClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedSingleUrlEnvironmentDefaultClient(
         string? token = null,

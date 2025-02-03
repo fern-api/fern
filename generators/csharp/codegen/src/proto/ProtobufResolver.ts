@@ -48,7 +48,7 @@ export class ProtobufResolver {
                 );
             }
             case "userDefined": {
-                return new csharp.ClassReference({
+                return csharp.classReference({
                     name: this.context.getPascalCaseSafeName(protobufType.name),
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file),
                     namespaceAlias: "Proto"

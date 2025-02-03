@@ -5,7 +5,6 @@ import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { EndpointGenerator } from "../endpoint/EndpointGenerator";
 import { RawClient } from "../endpoint/http/RawClient";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 

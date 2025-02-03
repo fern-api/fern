@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedSingleUrlEnvironmentNoDefault.Core;
 
-#nullable enable
-
 namespace SeedSingleUrlEnvironmentNoDefault;
 
 public partial class DummyClient
@@ -26,16 +24,18 @@ public partial class DummyClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "dummy",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "dummy",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

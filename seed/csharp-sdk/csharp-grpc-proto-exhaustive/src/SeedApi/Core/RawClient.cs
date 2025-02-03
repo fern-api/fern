@@ -5,8 +5,6 @@ using System.Threading;
 
 namespace SeedApi.Core;
 
-#nullable enable
-
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
@@ -38,7 +36,7 @@ internal class RawClient(ClientOptions clientOptions)
         cts.CancelAfter(timeout);
 
         // Send the request.
-        return await SendWithRetriesAsync(request, cts.Token);
+        return await SendWithRetriesAsync(request, cts.Token).ConfigureAwait(false);
     }
 
     public record BaseApiRequest
@@ -91,7 +89,9 @@ internal class RawClient(ClientOptions clientOptions)
     {
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
         var maxRetries = request.Options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
+        var response = await httpClient
+            .SendAsync(BuildHttpRequest(request), cancellationToken)
+            .ConfigureAwait(false);
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
@@ -99,8 +99,10 @@ internal class RawClient(ClientOptions clientOptions)
                 break;
             }
             var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
-            await System.Threading.Tasks.Task.Delay(delayMs, cancellationToken);
-            response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
+            await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+            response = await httpClient
+                .SendAsync(BuildHttpRequest(request), cancellationToken)
+                .ConfigureAwait(false);
         }
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }

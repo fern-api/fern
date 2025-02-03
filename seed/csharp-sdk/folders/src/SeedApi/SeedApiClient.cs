@@ -5,13 +5,11 @@ using SeedApi.A;
 using SeedApi.Core;
 using SeedApi.Folder;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class SeedApiClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
@@ -51,16 +49,18 @@ public partial class SeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

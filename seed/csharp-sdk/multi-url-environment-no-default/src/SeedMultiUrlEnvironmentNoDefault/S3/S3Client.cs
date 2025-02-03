@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
-#nullable enable
-
 namespace SeedMultiUrlEnvironmentNoDefault;
 
 public partial class S3Client
@@ -27,17 +25,19 @@ public partial class S3Client
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.Environment.S3,
-                Method = HttpMethod.Post,
-                Path = "/s3/presigned-url",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.Environment.S3,
+                    Method = HttpMethod.Post,
+                    Path = "/s3/presigned-url",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

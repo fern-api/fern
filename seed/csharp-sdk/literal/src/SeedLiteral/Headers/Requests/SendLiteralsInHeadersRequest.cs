@@ -1,7 +1,5 @@
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral;
 
 public record SendLiteralsInHeadersRequest

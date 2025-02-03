@@ -1,12 +1,11 @@
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using NUnit.Framework;
 using <%= namespace%>.Core;
 
-namespace <%= namespace%>.Test.Core
-{
-    [TestFixture]
+namespace <%= namespace%>.Test.Core;
+
+[TestFixture]
 public class StringEnumSerializerTests
 {
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -134,5 +133,3 @@ public readonly record struct DummyEnum : IStringEnum
 
     public static bool operator !=(DummyEnum value1, string value2) => !value1.Value.Equals(value2);
 }
-}
-

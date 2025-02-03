@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedStreaming;
 using SeedStreaming.Core;
 
-#nullable enable
-
 namespace SeedStreaming.Test.Unit.MockServer;
 
 [TestFixture]

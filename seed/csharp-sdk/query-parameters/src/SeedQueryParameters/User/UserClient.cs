@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedQueryParameters.Core;
 
-#nullable enable
-
 namespace SeedQueryParameters;
 
 public partial class UserClient
@@ -50,17 +48,19 @@ public partial class UserClient
         {
             _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/user",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/user",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

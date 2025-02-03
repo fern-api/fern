@@ -268,6 +268,11 @@ export class Class extends AstNode {
                 }
             });
         }
+        if (!this.hasBody()) {
+            writer.write(";");
+            return;
+        }
+
         writer.writeNewLineIfLastLineNot();
         writer.writeLine("{");
 
@@ -341,6 +346,17 @@ export class Class extends AstNode {
         writer.dedent();
 
         writer.writeLine("}");
+    }
+
+    private hasBody(): boolean {
+        return (
+            this.fields.length > 0 ||
+            this.constructors.length > 0 ||
+            this.nestedClasses.length > 0 ||
+            this.nestedInterfaces.length > 0 ||
+            this.methods.length > 0 ||
+            this.operators.length > 0
+        );
     }
 
     private writeConstructors({ writer, constructors }: { writer: Writer; constructors: Class.Constructor[] }): void {

@@ -1,12 +1,10 @@
 using SeedBasicAuthEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedBasicAuthEnvironmentVariables;
 
 public partial class SeedBasicAuthEnvironmentVariablesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedBasicAuthEnvironmentVariablesClient(
         string? username = null,
