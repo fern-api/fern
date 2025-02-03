@@ -160,11 +160,11 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         customConfig: RubySdkCustomConfigConsumed,
         repoUrl?: string
     ) {
-        generatorContext.logger.debug("[Ruby] Generating Ruby project boilerplate.");
+        generatorContext.logger.debug("Generating Ruby project boilerplate.");
         this.generateRubyBoilerPlate(gemName, clientName, config, intermediateRepresentation, customConfig, repoUrl);
-        generatorContext.logger.debug("[Ruby] Generating Ruby classes.");
+        generatorContext.logger.debug("Generating Ruby classes.");
         this.generateTypes(gemName, clientName, generatorContext, intermediateRepresentation, customConfig);
-        generatorContext.logger.debug("[Ruby] Generating HTTP client classes.");
+        generatorContext.logger.debug("Generating HTTP client classes.");
         this.generateClients(gemName, clientName, config, generatorContext, intermediateRepresentation, customConfig);
     }
 
@@ -194,9 +194,9 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName
         );
-        generatorContext.logger.debug("[Ruby] Generating repository boilerplate.");
+        generatorContext.logger.debug("Generating repository boilerplate.");
         this.generateRepositoryBoilerPlate(gemName, githubOutputMode);
-        generatorContext.logger.debug("[Ruby] Generating Ruby project.");
+        generatorContext.logger.debug("Generating Ruby project.");
         this.generateProject(
             gemName,
             clientName,
@@ -207,17 +207,17 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             githubOutputMode.repoUrl
         );
 
-        generatorContext.logger.debug("[Ruby] Writing files to disk.");
+        generatorContext.logger.debug("Writing files to disk.");
         const outputDir = AbsoluteFilePath.of("/fern/ruby_output");
         for (const file of this.generatedFiles) {
-            generatorContext.logger.debug(`[Ruby] Writing file ${file.filename}.`);
+            generatorContext.logger.debug(`Writing file ${file.filename}.`);
             await file.write(AbsoluteFilePath.of(outputDir));
-            generatorContext.logger.debug("[Ruby] Finished writing file.");
+            generatorContext.logger.debug("Finished writing file.");
         }
-        generatorContext.logger.debug("[Ruby] Done writing files to disk.");
+        generatorContext.logger.debug("Done writing files to disk.");
         // Run lint and generate lockfile
         try {
-            generatorContext.logger.debug("[Ruby] Running linting and formatting via Rubocop.");
+            generatorContext.logger.debug("Running linting and formatting via Rubocop.");
             await loggingExeca(generatorContext.logger, "rubocop", [
                 "--server",
                 "-A",
@@ -228,12 +228,12 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             ]);
         } catch {
             // NOOP, ignore warns
-            generatorContext.logger.debug("[Ruby] Could not run linting, step skipped.");
+            generatorContext.logger.debug("Could not run linting, step skipped.");
         }
 
-        generatorContext.logger.debug("[Ruby] Copying files to output directory.");
+        generatorContext.logger.debug("Copying files to output directory.");
         await cp(outputDir, AbsoluteFilePath.of(config.output.path), { recursive: true });
-        generatorContext.logger.debug("[Ruby] Done copying files to output directory.");
+        generatorContext.logger.debug("Done copying files to output directory.");
 
         return;
     }
@@ -254,18 +254,18 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName
         );
-        generatorContext.logger.debug("[Ruby] Generating Ruby project.");
+        generatorContext.logger.debug("Generating Ruby project.");
         this.generateProject(gemName, clientName, config, generatorContext, intermediateRepresentation, customConfig);
 
-        generatorContext.logger.debug("[Ruby] Writing files to disk.");
+        generatorContext.logger.debug("Writing files to disk.");
         const outputDir = AbsoluteFilePath.of("/fern/ruby_output");
         for (const file of this.generatedFiles) {
             await file.write(AbsoluteFilePath.of(outputDir));
         }
-        generatorContext.logger.debug("[Ruby] Done writing files to disk.");
+        generatorContext.logger.debug("Done writing files to disk.");
         // Run lint and generate lockfile
         try {
-            generatorContext.logger.debug("[Ruby] Running linting and formatting via Rubocop.");
+            generatorContext.logger.debug("Running linting and formatting via Rubocop.");
             await loggingExeca(generatorContext.logger, "rubocop", [
                 "--server",
                 "-A",
@@ -276,11 +276,11 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             ]);
         } catch {
             // NOOP, ignore warns
-            generatorContext.logger.debug("[Ruby] Could not run linting, step skipped.");
+            generatorContext.logger.debug("Could not run linting, step skipped.");
         }
-        generatorContext.logger.debug("[Ruby] Copying files to output directory.");
+        generatorContext.logger.debug("Copying files to output directory.");
         await cp(outputDir, AbsoluteFilePath.of(config.output.path), { recursive: true });
-        generatorContext.logger.debug("[Ruby] Done copying files to output directory.");
+        generatorContext.logger.debug("Done copying files to output directory.");
 
         return;
     }
