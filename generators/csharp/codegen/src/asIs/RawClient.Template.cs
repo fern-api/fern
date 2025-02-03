@@ -1,5 +1,6 @@
 using System.Text;
 using System.Threading;
+using SystemTask = System.Threading.Tasks.Task;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -98,7 +99,7 @@ internal class RawClient(ClientOptions clientOptions)
                 break;
             }
             var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
-            await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+            await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken).ConfigureAwait(false);
         }
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };

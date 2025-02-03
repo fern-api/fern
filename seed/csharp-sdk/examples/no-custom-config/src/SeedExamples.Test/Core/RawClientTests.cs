@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SeedExamples.Core;
 using WireMock.Server;
+using SystemTask = System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 
@@ -31,7 +32,7 @@ public class RawClientTests
     [TestCase(429)]
     [TestCase(500)]
     [TestCase(504)]
-    public async Task MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
+    public async SystemTask MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
     {
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
@@ -71,7 +72,7 @@ public class RawClientTests
     [Test]
     [TestCase(400)]
     [TestCase(409)]
-    public async Task MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(int statusCode)
+    public async SystemTask MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(int statusCode)
     {
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())

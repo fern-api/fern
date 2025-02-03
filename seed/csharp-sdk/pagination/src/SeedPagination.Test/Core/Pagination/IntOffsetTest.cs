@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SeedPagination.Core;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -7,7 +8,7 @@ namespace SeedPagination.Test.Core.Pagination;
 public class IntOffsetTest
 {
     [Test]
-    public async Task OffsetPagerShouldWorkWithIntPage()
+    public async SystemTask OffsetPagerShouldWorkWithIntPage()
     {
         var pager = CreatePager();
         await AssertPager(pager);
@@ -27,7 +28,7 @@ public class IntOffsetTest
             (_, _, _) =>
             {
                 responses.MoveNext();
-                return Task.FromResult(responses.Current);
+                return SystemTask.FromResult(responses.Current);
             },
             request => request.Pagination.Page,
             (request, offset) =>
@@ -42,7 +43,7 @@ public class IntOffsetTest
         return pager;
     }
 
-    public async Task AssertPager(Pager<object> pager)
+    public async SystemTask AssertPager(Pager<object> pager)
     {
         var pageCounter = 0;
         var itemCounter = 0;
