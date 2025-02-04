@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The CLI now considers `false` and `true` as keywords for the Java generators.
+      type: fix
+  irVersion: 55
+  version: 0.51.23
+
+- changelogEntry:
+    - summary: |
         The OpenAPI parser now ignores request bodies on `GET` requests since Fern does not support that.
         This is not a breaking change, since previously the `fern check` would just fail.
       type: fix
