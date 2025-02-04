@@ -7,8 +7,8 @@ export declare namespace Parameter {
     interface Args {
         /* The name of the parameter */
         name: string;
-        /* The type of the parameter */
-        type?: Type;
+        /* The type of the parameter. Set to undefined if you explicitly do not want a type hint. */
+        type: Type | undefined;
         /* The initializer for the parameter */
         initializer?: AstNode;
     }

@@ -12,6 +12,6 @@ export declare namespace LambdaParameter {
 
 export class LambdaParameter extends Parameter {
     constructor({ name, initializer }: LambdaParameter.Args) {
-        super({ name, initializer });
+        super({ name, initializer, type: undefined });
     }
 }
