@@ -24,12 +24,12 @@ export interface FailedLoadOpenAPI {
 
 export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<LoadOpenAPIResult> {
     try {
-        const yamlData = await fetchOpenAPIFromUrl({ url, logger });
+        const data = await fetchOpenAPIFromUrl({ url, logger });
         const tmpDir = await tmp.dir();
-        const filePath = join(tmpDir.path, "openapi.yml");
+        const filePath = join(tmpDir.path, url.endsWith(".json") ? "openapi.json" : "openapi.yaml");
         logger.debug("tmpDir", tmpDir.path);
         logger.debug("filePath", filePath);
-        await writeFile(filePath, yamlData);
+        await writeFile(filePath, data);
         return {
             status: LoadOpenAPIStatus.Success,
             filePath
@@ -47,12 +47,15 @@ export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger:
 async function fetchOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<string> {
     const response = await axios.get(url);
     const contentType = response.headers["content-type"] ?? "";
-    if (contentType.includes("json")) {
-        return dump(response.data);
+
+    if (contentType.includes("json") || url.endsWith(".json")) {
+        return typeof response.data === "string" ? response.data : JSON.stringify(response.data, null, 2);
     }
-    if (contentType.includes("yaml")) {
-        return response.data;
+
+    if (contentType.includes("yaml") || url.endsWith(".yml") || url.endsWith(".yaml")) {
+        return typeof response.data === "string" ? response.data : dump(response.data);
     }
+
     logger.warn(
         `Unrecognized Content-Type "${contentType}" from endpoint ${url}. Please ensure you're pointing to a URL that returns JSON or YAML and not HTML (e.g. Swagger UI webpage)`
     );
