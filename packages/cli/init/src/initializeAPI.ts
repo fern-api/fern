@@ -48,7 +48,7 @@ export async function initializeAPI({
     } else {
         await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context });
 
-        context.logger.info(chalk.green("Created new Fern folder"));
+        context.logger.info(chalk.green("Created new fern folder"));
     }
 }
 
