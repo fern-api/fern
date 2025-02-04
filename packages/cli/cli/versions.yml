@@ -1,5 +1,14 @@
 - changelogEntry:
     - summary: |
+        Literal property values are now accepted as deep object query parameters. Previously, if a query parameter was a deep object
+        with a literal property value (e.g. `{ type: "foo" }`), the CLI would reject it as too complex. Now literal values are
+        allowed since they can be safely serialized.
+      type: fix
+  irVersion: 55
+  version: 0.51.25
+
+- changelogEntry:
+    - summary: |
         The OpenAPI parser now parses path parameters that are present in the URL but not explicitly declared in the OpenAPI spec.
         Previously, if a path parameter was used in the URL (e.g. `/users/{userId}`) but not declared in the `parameters` section,
         the parser would fail. Now it automatically adds these path parameters as required string parameters.
