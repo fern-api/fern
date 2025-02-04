@@ -138,15 +138,19 @@ export class ApiReferenceNodeConverterLatest {
 
     #findSubpackageByLocator(locator: string): FdrAPI.api.latest.SubpackageMetadata | undefined {
         return (
-            this.#api?.subpackages[FdrAPI.api.v1.SubpackageId(locator)] ??
-            this.#api?.subpackages[
+            this.#api?.subpackages?.[FdrAPI.api.v1.SubpackageId(locator)] ??
+            this.#api?.subpackages?.[
                 FdrAPI.api.v1.SubpackageId(locator.replace(".yml", "").replace(".yaml", "").split(".").pop() ?? "")
             ] ??
-            this.#api?.subpackages[FdrAPI.api.v1.SubpackageId(locator.split("/").pop() ?? "")]
+            this.#api?.subpackages?.[FdrAPI.api.v1.SubpackageId(locator.split("/").pop() ?? "")]
         );
     }
 
     #findEndpointByLocator(locator: string): FdrAPI.api.latest.endpoint.EndpointDefinition | undefined {
+        const oaiLocator = locator
+            .split("/")
+            .map((part) => (part.startsWith(":") ? `{${part.slice(1)}}` : part))
+            .join("/");
         return (
             this.#api?.endpoints[FdrAPI.EndpointId(locator)] ??
             this.#api?.endpoints[FdrAPI.EndpointId(locator.split(".").pop() ?? "")] ??
@@ -157,6 +161,12 @@ export class ApiReferenceNodeConverterLatest {
             ) ??
             Object.values(this.#api?.endpoints ?? {}).find(
                 (endpoint) => `STREAM ${stringifyEndpointPathParts(endpoint.path)}` === locator
+            ) ??
+            Object.values(this.#api?.endpoints ?? {}).find(
+                (endpoint) => `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path)}` === oaiLocator
+            ) ??
+            Object.values(this.#api?.endpoints ?? {}).find(
+                (endpoint) => `STREAM ${stringifyEndpointPathParts(endpoint.path)}` === oaiLocator
             )
         );
     }
