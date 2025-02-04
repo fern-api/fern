@@ -19,6 +19,7 @@ export enum AsIsFiles {
     JsonProperty = "Json/JsonProperty.Template.php",
     JsonSerializer = "Json/JsonSerializer.Template.php",
     JsonSerializableType = "Json/JsonSerializableType.Template.php",
+    JsonSkip = "Json/JsonSkip.Template.php",
     Utils = "Json/Utils.Template.php",
 
     // Core/Multipart files.
@@ -44,6 +45,8 @@ export enum AsIsFiles {
     ArrayType = "Types/ArrayType.Template.php",
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
+    Discriminant = "Types/Discriminant.Template.php",
+    DiscriminatedUnion = "Types/DiscriminatedUnion.Template.php",
     Union = "Types/Union.Template.php",
 
     // Utils files.
