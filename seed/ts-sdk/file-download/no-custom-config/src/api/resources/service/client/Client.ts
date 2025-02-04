@@ -3,7 +3,6 @@
  */
 
 import * as core from "../../../../core";
-import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
@@ -28,8 +27,14 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async downloadFile(requestOptions?: Service.RequestOptions): Promise<stream.Readable> {
-        const _response = await core.fetcher<stream.Readable>({
+    public async downloadFile(requestOptions?: Service.RequestOptions): Promise<{
+        readonly body: ReadableStream<Uint8Array> | null;
+        readonly bodyUsed: boolean;
+        arrayBuffer(): Promise<ArrayBuffer>;
+        blob(): Promise<Blob>;
+        bytes(): Promise<Uint8Array>;
+    }> {
+        const _response = await core.fetcher<core.Fetcher.FileResponseBody>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
@@ -45,7 +50,7 @@ export class Service {
             },
             contentType: "application/json",
             requestType: "json",
-            responseType: "streaming",
+            responseType: "file",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

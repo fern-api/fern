@@ -2,6 +2,7 @@ import fs from "fs";
 import { join } from "path";
 
 import { Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
+import { chooseStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
 
 describe("Test fetcherImpl", () => {
     it("should handle successful request", async () => {
@@ -69,6 +70,88 @@ describe("Test fetcherImpl", () => {
         expect(result.ok).toBe(true);
         if (result.ok) {
             expect(result.body).toEqual({ data: "test" });
+        }
+    });
+
+    it("should handle file download as blob", async () => {
+        const url = "https://httpbin.org/image/png";
+        const mockArgs: Fetcher.Args = {
+            url,
+            method: "GET",
+            responseType: "file",
+        };
+
+        const mockBlob = new Blob(["mock image content"], { type: "image/png" });
+
+        global.fetch = jest.fn().mockResolvedValue(new Response(mockBlob));
+
+        const result = await fetcherImpl<Fetcher.FileResponseBody>(mockArgs);
+        expect(result.ok).toBe(true);
+        if (result.ok) {
+            const blob = await result.body.blob();
+            expect(blob).toBeInstanceOf(Blob);
+            expect(result.body.bodyUsed).toBe(true);
+        }
+    });
+
+    it("should handle file download as arraybuffer", async () => {
+        const url = "https://httpbin.org/image/png";
+        const mockArgs: Fetcher.Args = {
+            url,
+            method: "GET",
+            responseType: "file",
+        };
+
+        const mockBlob = new Blob(["mock image content"], { type: "image/png" });
+
+        global.fetch = jest.fn().mockResolvedValue(new Response(mockBlob));
+
+        const result = await fetcherImpl<Fetcher.FileResponseBody>(mockArgs);
+        expect(result.ok).toBe(true);
+        if (result.ok) {
+            const arrayBuffer = await result.body.arrayBuffer();
+            expect(arrayBuffer).toBeInstanceOf(ArrayBuffer);
+            expect(result.body.bodyUsed).toBe(true);
+        }
+    });
+
+    it("should handle file download as bytes", async () => {
+        const url = "https://httpbin.org/image/png";
+        const mockArgs: Fetcher.Args = {
+            url,
+            method: "GET",
+            responseType: "file",
+        };
+
+        const mockBlob = new Blob(["mock image content"], { type: "image/png" });
+
+        global.fetch = jest.fn().mockResolvedValue(new Response(mockBlob));
+
+        const result = await fetcherImpl<Fetcher.FileResponseBody>(mockArgs);
+        expect(result.ok).toBe(true);
+        if (result.ok) {
+            const bytes = await result.body.bytes();
+            expect(bytes).toBeInstanceOf(Uint8Array);
+            expect(result.body.bodyUsed).toBe(true);
+        }
+    });
+
+    it("should handle file download as stream", async () => {
+        const url = "https://httpbin.org/image/png";
+        const mockArgs: Fetcher.Args = {
+            url,
+            method: "GET",
+            responseType: "file",
+        };
+
+        const mockBlob = new Blob(["mock image content"], { type: "image/png" });
+
+        global.fetch = jest.fn().mockResolvedValue(new Response(mockBlob));
+
+        const result = await fetcherImpl<Fetcher.FileResponseBody>(mockArgs);
+        expect(result.ok).toBe(true);
+        if (result.ok) {
+            expect(result.body.body).toBeInstanceOf(ReadableStream);
         }
     });
 });

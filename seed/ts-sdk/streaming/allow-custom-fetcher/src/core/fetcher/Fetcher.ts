@@ -1,5 +1,4 @@
 import { toJson } from "../json";
-import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
 import { createRequestUrl } from "./createRequestUrl";
 import { getFetchFn } from "./getFetchFn";
@@ -23,7 +22,7 @@ export declare namespace Fetcher {
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
         requestType?: "json" | "file" | "bytes";
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer";
+        responseType?: "json" | "file" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer";
         duplex?: "half";
     }
 
@@ -48,6 +47,14 @@ export declare namespace Fetcher {
     export interface UnknownError {
         reason: "unknown";
         errorMessage: string;
+    }
+
+    export interface FileResponseBody {
+        readonly body: ReadableStream<Uint8Array> | null;
+        readonly bodyUsed: boolean;
+        arrayBuffer(): Promise<ArrayBuffer>;
+        blob(): Promise<Blob>;
+        bytes(): Promise<Uint8Array>;
     }
 }
 
@@ -88,8 +95,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ),
             args.maxRetries,
         );
-        const responseBody = await getResponseBody(response, args.responseType);
 
+        const responseBody = await getResponseBody(response, args.responseType);
         if (response.status >= 200 && response.status < 400) {
             return {
                 ok: true,

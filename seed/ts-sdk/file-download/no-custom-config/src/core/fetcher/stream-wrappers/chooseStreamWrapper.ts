@@ -21,7 +21,7 @@ export interface StreamWrapper<WritableStream, ReadFormat> {
     [Symbol.asyncIterator](): AsyncIterableIterator<ReadFormat>;
 }
 
-export async function chooseStreamWrapper(responseBody: any): Promise<Promise<StreamWrapper<any, any>>> {
+export async function chooseStreamWrapper(responseBody: any): Promise<StreamWrapper<any, any>> {
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
         return new (await import("./Node18UniversalStreamWrapper")).Node18UniversalStreamWrapper(
             responseBody as ReadableStream,
