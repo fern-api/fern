@@ -239,8 +239,8 @@ export class ComplexQueryParamTypeDetector {
     }): boolean {
         switch (type._type) {
             case "literal":
-                // For now, we consider complex objects to be those that define any literals.
-                return true;
+                // NOTE: this may cause SDK generation to fail in Go (and some other languages)
+                return false;
             case "map":
                 return (
                     this.isComplex({
