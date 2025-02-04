@@ -191,10 +191,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 )
             }),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
-            responseType: visitJavaScriptRuntime(context.targetRuntime, {
-                browser: () => "blob",
-                node: () => "streaming"
-            })
+            responseType: "file"
         };
 
         return [
@@ -208,10 +205,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                cast: visitJavaScriptRuntime(context.targetRuntime, {
-                                    browser: () => ts.factory.createTypeReferenceNode("Blob"),
-                                    node: () => context.externalDependencies.stream.Readable._getReferenceToType()
-                                })
+                                cast: context.coreUtilities.fetcher.Fetcher.FileResponseBody._getReferenceToType()
                             })
                         )
                     ],

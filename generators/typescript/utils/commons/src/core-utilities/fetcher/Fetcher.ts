@@ -32,6 +32,15 @@ export interface Fetcher {
             _reasonLiteralValue: "unknown";
             message: "errorMessage";
         };
+        FileResponseBody: {
+            _getReferenceToType: () => ts.TypeNode;
+            body: string;
+            bodyUsed: string;
+            arrayBuffer: string;
+            blob: string;
+            bytes: string;
+            stream: string;
+        };
     };
 
     readonly fetcher: {
@@ -95,7 +104,7 @@ export declare namespace Fetcher {
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
         requestType?: "json" | "file" | "bytes" | "other";
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text";
+        responseType?: "json" | "file" | "blob" | "sse" | "streaming" | "text";
         duplex?: ts.Expression;
     }
 }

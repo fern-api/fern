@@ -1,4 +1,3 @@
-import { JavaScriptRuntime, visitJavaScriptRuntime } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -24,7 +23,6 @@ export function getSuccessReturnType(
     switch (response.type) {
         case "fileDownload": {
             return getFileType({
-                targetRuntime: context.targetRuntime,
                 context,
                 includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse
             });
@@ -55,31 +53,68 @@ export function getSuccessReturnType(
 }
 
 export const CONTENT_LENGTH_VARIABLE_NAME = "_contentLength";
-export const READABLE_RESPONSE_KEY = "data";
 export const CONTENT_TYPE_RESPONSE_KEY = "contentType";
 export const CONTENT_LENGTH_RESPONSE_KEY = "contentLengthInBytes";
 
 function getFileType({
-    targetRuntime,
     context,
     includeContentHeadersOnResponse
 }: {
-    targetRuntime: JavaScriptRuntime;
     context: SdkContext;
     includeContentHeadersOnResponse: boolean;
 }): ts.TypeNode {
-    const fileType = visitJavaScriptRuntime(targetRuntime, {
-        browser: () => ts.factory.createTypeReferenceNode("Blob"),
-        node: () => context.externalDependencies.stream.Readable._getReferenceToType()
-    });
+    let signature = [
+        ts.factory.createPropertySignature(
+            [ts.factory.createToken(ts.SyntaxKind.ReadonlyKeyword)],
+            ts.factory.createIdentifier("body"),
+            undefined,
+            ts.factory.createUnionTypeNode([
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("ReadableStream"), [
+                    ts.factory.createTypeReferenceNode("Uint8Array")
+                ]),
+                ts.factory.createLiteralTypeNode(ts.factory.createNull())
+            ])
+        ),
+        ts.factory.createPropertySignature(
+            [ts.factory.createToken(ts.SyntaxKind.ReadonlyKeyword)],
+            ts.factory.createIdentifier("bodyUsed"),
+            undefined,
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
+        ),
+        ts.factory.createMethodSignature(
+            undefined,
+            ts.factory.createIdentifier("arrayBuffer"),
+            undefined,
+            undefined,
+            [],
+            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                ts.factory.createTypeReferenceNode("ArrayBuffer")
+            ])
+        ),
+        ts.factory.createMethodSignature(
+            undefined,
+            ts.factory.createIdentifier("blob"),
+            undefined,
+            undefined,
+            [],
+            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                ts.factory.createTypeReferenceNode("Blob")
+            ])
+        ),
+        ts.factory.createMethodSignature(
+            undefined,
+            ts.factory.createIdentifier("bytes"),
+            undefined,
+            undefined,
+            [],
+            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                ts.factory.createTypeReferenceNode("Uint8Array")
+            ])
+        )
+    ];
     if (includeContentHeadersOnResponse) {
-        return ts.factory.createTypeLiteralNode([
-            ts.factory.createPropertySignature(
-                undefined,
-                READABLE_RESPONSE_KEY,
-                undefined,
-                context.externalDependencies.stream.Readable._getReferenceToType()
-            ),
+        signature = [
+            ...signature,
             ts.factory.createPropertySignature(
                 undefined,
                 CONTENT_LENGTH_RESPONSE_KEY,
@@ -92,7 +127,8 @@ function getFileType({
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
             )
-        ]);
+        ];
     }
-    return fileType;
+
+    return ts.factory.createTypeLiteralNode(signature);
 }

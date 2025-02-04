@@ -3,11 +3,47 @@ import { getResponseBody } from "../getResponseBody";
 import { chooseStreamWrapper } from "../stream-wrappers/chooseStreamWrapper";
 
 describe("Test getResponseBody", () => {
+    it("should read arraybuffer from file response type", async () => {
+        const mockBuffer = new ArrayBuffer(8);
+        const mockResponse = new Response(mockBuffer);
+        const result = await getResponseBody(mockResponse, "file");
+        const arrayBuffer = await result.arrayBuffer();
+
+        expect(arrayBuffer).toBeInstanceOf(ArrayBuffer);
+        expect(result.bodyUsed).toBe(true);
+    });
+
+    it("should read blob from file response type", async () => {
+        const mockBuffer = new ArrayBuffer(8);
+        const mockResponse = new Response(mockBuffer);
+        const result = await getResponseBody(mockResponse, "file");
+        const blob = await result.blob();
+
+        expect(blob).toBeInstanceOf(Blob);
+        expect(result.bodyUsed).toBe(true);
+    });
+
+    it("should read bytes from file response type", async () => {
+        const mockBuffer = new ArrayBuffer(8);
+        const mockResponse = new Response(mockBuffer);
+        const result = await getResponseBody(mockResponse, "file");
+        const bytes = await result.bytes();
+
+        expect(bytes).toBeInstanceOf(Uint8Array);
+        expect(result.bodyUsed).toBe(true);
+    });
+
+    it("should read body from file response type", async () => {
+        const mockBuffer = new ArrayBuffer(8);
+        const mockResponse = new Response(mockBuffer);
+        const result = await getResponseBody(mockResponse, "file");
+        expect(result.body).toBeInstanceOf(ReadableStream);
+    });
+
     it("should handle blob response type", async () => {
         const mockBlob = new Blob(["test"], { type: "text/plain" });
         const mockResponse = new Response(mockBlob);
         const result = await getResponseBody(mockResponse, "blob");
-        // @ts-expect-error
         expect(result.constructor.name).toBe("Blob");
     });
 

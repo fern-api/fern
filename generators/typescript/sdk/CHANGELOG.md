@@ -10,6 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Breaking: Remove dependency on `node-fetch` which was used for versions older than Node.js 18.
   Users on old unsupported versions of Node.js can still polyfill fetch or pass in a custom fetch to the root client.
 
+- Breaking: File download endpoints now return an object with properties and methods to get the file data.
+
+  ```typescript
+  const response = await client.downloadFile();
+  const arrayBuffer: ArrayBuffer = await response.arrayBuffer();
+  /**
+   * const blob: Blob = await response.blob();
+   * const bytes: Uint8Array = await response.bytes();
+   * const body: ReadableStream<Uint8Array> | null = response.body;
+   * const bodyUsed: boolean = response.bodyUsed;
+  **/
+  ```
+
 ## [0.48.5] - 2025-01-28
 
 - Fix: Don't double wrap a blob if a user uploads a blob to a multi-part form.

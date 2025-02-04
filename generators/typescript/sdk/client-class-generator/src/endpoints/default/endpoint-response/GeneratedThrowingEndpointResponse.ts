@@ -26,7 +26,6 @@ import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
     CONTENT_TYPE_RESPONSE_KEY,
-    READABLE_RESPONSE_KEY,
     getSuccessReturnType
 } from "./getSuccessReturnType";
 
@@ -476,8 +475,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ts.factory.createReturnStatement(
                     ts.factory.createObjectLiteralExpression(
                         [
-                            ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier(READABLE_RESPONSE_KEY),
+                            ts.factory.createSpreadAssignment(
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createIdentifier(
                                         GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME

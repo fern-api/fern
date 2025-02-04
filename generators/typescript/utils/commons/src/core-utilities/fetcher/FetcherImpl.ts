@@ -100,6 +100,15 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("UnknownError"),
             _reasonLiteralValue: "unknown",
             message: "errorMessage"
+        },
+        FileResponseBody: {
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule("FileResponseBody"),
+            body: "body",
+            bodyUsed: "body",
+            arrayBuffer: "arrayBuffer",
+            blob: "blob",
+            bytes: "bytes",
+            stream: "stream"
         }
     };
 
