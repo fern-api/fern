@@ -588,7 +588,7 @@ describe("parseImagePaths", () => {
             const result = parseImagePaths(page, TEST_PATHS);
             expect(result.filepaths).toEqual(["/Volume/git/fern/absolute/path/image.png"]);
             expect(result.markdown.trim()).toMatchInlineSnapshot(
-                '"This is a test page with an image ![image](file:absolute-file-id)"'
+                "\"This is a test page with an image ![image](/Volume/git/fern/absolute/path/image.png)\""
             );
         });
 
@@ -597,7 +597,7 @@ describe("parseImagePaths", () => {
             const result = parseImagePaths(page, TEST_PATHS);
             expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/relative/path/image.png"]);
             expect(result.markdown.trim()).toMatchInlineSnapshot(
-                '"This is a test page with an image ![image](file:relative-file-id)"'
+                "\"This is a test page with an image ![image](/Volume/git/fern/my/docs/folder/relative/path/image.png)\""
             );
         });
 
@@ -606,7 +606,7 @@ describe("parseImagePaths", () => {
             const result = parseImagePaths(page, TEST_PATHS);
             expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/relative/path/image.png"]);
             expect(result.markdown.trim()).toMatchInlineSnapshot(
-                '"This is a test page with an image ![image](file:parent-relative-file-id)"'
+                "\"This is a test page with an image ![image](/Volume/git/fern/my/docs/relative/path/image.png)\""
             );
         });
 
@@ -615,7 +615,7 @@ describe("parseImagePaths", () => {
             const result = parseImagePaths(page, TEST_PATHS);
             expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/current/image.png"]);
             expect(result.markdown.trim()).toMatchInlineSnapshot(
-                '"This is a test page with an image ![image](file:current-file-id)"'
+                "\"This is a test page with an image ![image](/Volume/git/fern/my/docs/folder/current/image.png)\""
             );
         });
 
@@ -624,7 +624,7 @@ describe("parseImagePaths", () => {
             const result = parseImagePaths(page, TEST_PATHS);
             expect(result.filepaths).toEqual(["/Volume/git/fern/non/existent/path/image.png"]);
             expect(result.markdown.trim()).toMatchInlineSnapshot(
-                '"This is a test page with an image ![image](/non/existent/path/image.png)"'
+                "\"This is a test page with an image ![image](/Volume/git/fern/non/existent/path/image.png)\""
             );
         });
 
@@ -644,11 +644,11 @@ describe("parseImagePaths", () => {
                 "/Volume/git/fern/my/docs/folder/current/image.png"
             ]);
             expect(result.markdown.trim()).toMatchInlineSnapshot(`
-                "This is a test page with multiple images:
-                ![absolute](file:absolute-file-id)
-                ![relative](file:relative-file-id)
-                ![parent](file:parent-relative-file-id)
-                ![current](file:current-file-id)"
+              "This is a test page with multiple images:
+                              ![absolute](/Volume/git/fern/absolute/path/image.png)
+                              ![relative](/Volume/git/fern/my/docs/folder/relative/path/image.png)
+                              ![parent](/Volume/git/fern/my/docs/relative/path/image.png)
+                              ![current](/Volume/git/fern/my/docs/folder/current/image.png)"
             `);
         });
     });

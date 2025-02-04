@@ -1,5 +1,4 @@
 import { readFile } from "fs/promises";
-import { join } from "path";
 import { v4 as uuidv4 } from "uuid";
 
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
@@ -122,7 +121,6 @@ export async function getPreviewDocsDefinition({
                     type: "url",
                     url: FernNavigation.Url(`/_local${convertToFernHostAbsoluteFilePath(file.absoluteFilePath)}`)
                 };
-
                 return {
                     absoluteFilePath: file.absoluteFilePath,
                     relativeFilePath: file.relativeFilePath,
