@@ -5,6 +5,7 @@ import { Comment } from "./Comment";
 import { Decorator } from "./Decorator";
 import { Field } from "./Field";
 import { Lambda } from "./Lambda";
+import { LambdaParameter } from "./LambdaParameter";
 import { Method } from "./Method";
 import { MethodArgument } from "./MethodArgument";
 import { MethodInvocation } from "./MethodInvocation";
@@ -22,6 +23,7 @@ export { Comment } from "./Comment";
 export { Decorator } from "./Decorator";
 export { Field } from "./Field";
 export { Lambda } from "./Lambda";
+export { LambdaParameter } from "./LambdaParameter";
 export { Method } from "./Method";
 export { MethodArgument } from "./MethodArgument";
 export { MethodInvocation } from "./MethodInvocation";
@@ -71,6 +73,10 @@ export function comment(args: Comment.Args): Comment {
 
 export function lambda(args: Lambda.Args): Lambda {
     return new Lambda(args);
+}
+
+export function lambdaParameter(args: LambdaParameter.Args): LambdaParameter {
+    return new LambdaParameter(args);
 }
 
 export function method(args: Method.Args): Method {

@@ -1,18 +1,18 @@
-import { Parameter } from "./Parameter";
+import { LambdaParameter } from "./LambdaParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Lambda {
     interface Args {
         /* The parameter names of the lambda */
-        parameters?: string[];
+        parameters?: LambdaParameter[];
         /* The body of the lambda */
         body: AstNode;
     }
 }
 
 export class Lambda extends AstNode {
-    private readonly parameters: string[];
+    private readonly parameters: LambdaParameter[];
     private readonly body: AstNode;
 
     constructor({ parameters, body }: Lambda.Args) {
@@ -29,7 +29,7 @@ export class Lambda extends AstNode {
         if (this.parameters && this.parameters.length) {
             writer.write(" ");
             this.parameters.forEach((param, index) => {
-                writer.write(param);
+                param.write(writer);
                 if (index < this.parameters.length - 1) {
                     writer.write(", ");
                 }
