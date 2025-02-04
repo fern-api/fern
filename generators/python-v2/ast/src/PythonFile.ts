@@ -88,10 +88,32 @@ export class PythonFile extends AstNode {
         // Build up a map of refs to their name overrides, keeping track of names that have been used as we go.
         const completeRefPathsToNameOverrides: Record<string, ImportedName> = {};
         const usedNames = this.getInitialUsedNames();
+        const handledReferences = new Set<Reference>();
 
+        // Perform a first pass, reserving any names of references that are defined in the file itself.
+        references.forEach((reference) => {
+            if (this.isDefinedInFile(reference.modulePath)) {
+                const fullyQualifiedModulePath = reference.getFullyQualifiedModulePath();
+                const name = reference.name;
+
+                completeRefPathsToNameOverrides[fullyQualifiedModulePath] = {
+                    name,
+                    isAlias: false
+                };
+                usedNames.add(reference.name);
+                handledReferences.add(reference);
+            }
+        });
+
+        // Continue on to resolving names for references that must be imported
         references.forEach((reference) => {
             // Skip star imports since we should never override their import alias
             if (reference instanceof StarImport) {
+                return;
+            }
+
+            // Skip references that have already been handled
+            if (handledReferences.has(reference)) {
                 return;
             }
 
@@ -196,10 +218,7 @@ export class PythonFile extends AstNode {
             const refModulePath = modulePath;
 
             // Check to see if the reference is defined in this same file and if so, skip its import
-            if (
-                refModulePath.length === this.path.length &&
-                refModulePath.every((part, idx) => part === this.path[idx])
-            ) {
+            if (this.isDefinedInFile(refModulePath)) {
                 continue;
             }
 
@@ -248,5 +267,9 @@ export class PythonFile extends AstNode {
         if (Object.keys(uniqueReferences).length > 0) {
             writer.newLine();
         }
+    }
+
+    private isDefinedInFile(modulePath: readonly string[]): boolean {
+        return modulePath.length === this.path.length && modulePath.every((part, idx) => part === this.path[idx]);
     }
 }

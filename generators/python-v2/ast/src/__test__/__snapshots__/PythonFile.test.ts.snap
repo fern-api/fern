@@ -45,7 +45,7 @@ exports[`PythonFile > Add a class with a reference to itself 1`] = `
 class TestClass(ParentTestClass):
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):
-        instance = TestModuleTestClass(data)
+        instance = TestClass(data)
         return instance
 "
 `;
