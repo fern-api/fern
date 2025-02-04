@@ -146,9 +146,6 @@ export function buildEndpoint({
             usedNames: names,
             namespace: maybeEndpointNamespace
         });
-        if (endpoint.method === "GET" && convertedRequest.value.body != null) {
-            convertedRequest.value.body = undefined;
-        }
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
         context.unsetInState(State.Request);
