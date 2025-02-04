@@ -3,10 +3,8 @@
 package core
 
 import (
-	fmt "fmt"
 	http "net/http"
 	url "net/url"
-	os "os"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -25,9 +23,7 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
-	ApiKey          string
-	XAnotherHeader  string
-	XApiVersion     string
+	Token           string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -50,27 +46,18 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	if r.ApiKey != "" {
-		header.Set("X-FERN-API-KEY", fmt.Sprintf("%v", r.ApiKey))
+	if r.Token != "" {
+		header.Set("Authorization", "Bearer "+r.Token)
 	}
-	header.Set("X-Another-Header", fmt.Sprintf("%v", r.XAnotherHeader))
-	xApiVersion := fmt.Sprintf("%v", "01-01-2000")
-	if envValue := os.Getenv("VERSION"); envValue != "" {
-		xApiVersion = envValue
-	}
-	if r.XApiVersion != "" {
-		xApiVersion = r.XApiVersion
-	}
-	header.Set("X-API-Version", xApiVersion)
 	return header
 }
 
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
 	headers.Set("X-Fern-Language", "Go")
-	headers.Set("X-Fern-SDK-Name", "github.com/auth-environment-variables/fern")
+	headers.Set("X-Fern-SDK-Name", "github.com/accept-header/fern")
 	headers.Set("X-Fern-SDK-Version", "0.0.1")
-	headers.Set("User-Agent", "github.com/auth-environment-variables/fern/0.0.1")
+	headers.Set("User-Agent", "github.com/accept-header/fern/0.0.1")
 	return headers
 }
 
@@ -128,29 +115,11 @@ func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
 }
 
-// ApiKeyOption implements the RequestOption interface.
-type ApiKeyOption struct {
-	ApiKey string
+// TokenOption implements the RequestOption interface.
+type TokenOption struct {
+	Token string
 }
 
-func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ApiKey = a.ApiKey
-}
-
-// XAnotherHeaderOption implements the RequestOption interface.
-type XAnotherHeaderOption struct {
-	XAnotherHeader string
-}
-
-func (x *XAnotherHeaderOption) applyRequestOptions(opts *RequestOptions) {
-	opts.XAnotherHeader = x.XAnotherHeader
-}
-
-// XApiVersionOption implements the RequestOption interface.
-type XApiVersionOption struct {
-	XApiVersion string
-}
-
-func (x *XApiVersionOption) applyRequestOptions(opts *RequestOptions) {
-	opts.XApiVersion = x.XApiVersion
+func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Token = t.Token
 }
