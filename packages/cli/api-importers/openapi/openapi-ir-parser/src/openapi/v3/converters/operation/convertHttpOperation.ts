@@ -73,7 +73,7 @@ export function convertHttpOperation({
                         format: undefined,
                         maxLength: undefined,
                         minLength: undefined,
-                        pattern: undefined,
+                        pattern: undefined
                     }),
                     description: undefined,
                     generatedName: "",
