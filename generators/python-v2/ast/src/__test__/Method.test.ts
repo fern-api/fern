@@ -56,7 +56,7 @@ describe("Method", () => {
         it("should generate a method with one argument without a type", async () => {
             const method = python.method({
                 name: "one_arg",
-                parameters: [python.parameter({ name: "arg1" })]
+                parameters: [python.parameter({ name: "arg1", type: undefined })]
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
