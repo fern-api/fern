@@ -4,6 +4,7 @@ import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { Decorator } from "./Decorator";
 import { Field } from "./Field";
+import { Lambda } from "./Lambda";
 import { Method } from "./Method";
 import { MethodArgument } from "./MethodArgument";
 import { MethodInvocation } from "./MethodInvocation";
@@ -20,6 +21,7 @@ export { CodeBlock } from "./CodeBlock";
 export { Comment } from "./Comment";
 export { Decorator } from "./Decorator";
 export { Field } from "./Field";
+export { Lambda } from "./Lambda";
 export { Method } from "./Method";
 export { MethodArgument } from "./MethodArgument";
 export { MethodInvocation } from "./MethodInvocation";
@@ -65,6 +67,10 @@ export function codeBlock(args: CodeBlock.Arg): CodeBlock {
 
 export function comment(args: Comment.Args): Comment {
     return new Comment(args);
+}
+
+export function lambda(args: Lambda.Args): Lambda {
+    return new Lambda(args);
 }
 
 export function method(args: Method.Args): Method {
