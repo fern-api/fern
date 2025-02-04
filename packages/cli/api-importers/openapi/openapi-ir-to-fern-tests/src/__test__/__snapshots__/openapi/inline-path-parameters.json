@@ -164,6 +164,7 @@ types:
                 {
                   "path-parameters": {
                     "id": "id",
+                    "organization_id": "organization_id",
                   },
                   "request": {},
                   "response": {
@@ -192,6 +193,7 @@ types:
                 "name": "SearchRequest",
                 "path-parameters": {
                   "id": "string",
+                  "organization_id": "string",
                 },
                 "query-parameters": undefined,
               },
@@ -263,6 +265,7 @@ service:
         name: SearchRequest
         path-parameters:
           id: string
+          organization_id: string
         body:
           properties:
             access:
@@ -276,6 +279,7 @@ service:
       examples:
         - path-parameters:
             id: id
+            organization_id: organization_id
           request: {}
           response:
             body:
