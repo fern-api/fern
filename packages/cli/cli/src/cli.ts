@@ -251,7 +251,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             if (argv.organization == null) {
                 const projectConfig = await getOrganization(cliContext);
-                if (projectConfig) {
+                if (projectConfig != null) {
                     argv.organization = projectConfig;
                 } else {
                     argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
