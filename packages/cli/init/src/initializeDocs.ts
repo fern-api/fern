@@ -47,14 +47,16 @@ export async function initializeDocs({
                     return;
                 } catch (writeError) {
                     const errorMessage = writeError instanceof Error ? writeError.message : String(writeError);
-                    taskContext.logger.error(chalk.red(`Failed to write docs configuration: ${errorMessage}`));
+                    taskContext.logger.debug(`Encountered an error while writing docs configuration: ${errorMessage}`);
+                    taskContext.logger.error(chalk.red("Failed to write docs configuration"));
                     throw writeError;
                 }
             }
 
             // Handle unexpected errors
             const errorMessage = error instanceof Error ? error.message : String(error);
-            taskContext.logger.error(chalk.red(`Failed to check docs configuration: ${errorMessage}`));
+            taskContext.logger.debug(`Encountered an error when checking the docs configuration: ${errorMessage}`);
+            taskContext.logger.error(chalk.red("Failed to check docs configuration"));
             throw error;
         }
     }
