@@ -206,7 +206,7 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
     return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
 }
 
-async function getOrganization(cliContext: CliContext): Promise<string | null> {
+async function getOrganization(cliContext: CliContext): Promise<string | undefined> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory != null) {
         const projectConfig = await cliContext.runTask((context) =>
@@ -214,7 +214,7 @@ async function getOrganization(cliContext: CliContext): Promise<string | null> {
         );
         return projectConfig.organization;
     }
-    return null;
+    return undefined;
 }
 
 function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
