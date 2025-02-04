@@ -104,6 +104,11 @@ export function convertHttpOperation({
         source
     });
 
+    // Fern doesn't support GET requests with bodies
+    if (operationContext.method === "GET") {
+        convertedRequest = undefined;
+    }
+
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);

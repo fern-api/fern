@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI parser now ignores request bodies on `GET` requests since Fern does not support that.
+        This is not a breaking change, since previously the `fern check` would just fail.
+      type: fix
+  irVersion: 55
+  version: 0.51.22
+
+- changelogEntry:
+    - summary: |
         The `fern init` command now respects JSON formatting when parsing from an external URL.
       type: fix
   irVersion: 55

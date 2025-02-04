@@ -8,7 +8,7 @@
     },
     "paths": {
       "/user/{userId}": {
-        "get": {
+        "post": {
           "x-fern-sdk-group-name": "user",
           "x-fern-sdk-method-name": "get",
           "x-fern-streaming": {
