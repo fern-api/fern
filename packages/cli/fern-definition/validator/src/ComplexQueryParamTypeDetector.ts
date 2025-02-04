@@ -239,7 +239,6 @@ export class ComplexQueryParamTypeDetector {
     }): boolean {
         switch (type._type) {
             case "literal":
-                // NOTE: this may cause SDK generation to fail in Go (and some other languages)
                 return false;
             case "map":
                 return (
