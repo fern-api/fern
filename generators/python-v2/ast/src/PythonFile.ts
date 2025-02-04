@@ -83,16 +83,20 @@ export class PythonFile extends AstNode {
         writer: Writer;
         uniqueReferences: Map<string, UniqueReferenceValue>;
     }): void {
-        const references: Reference[] = Array.from(uniqueReferences.values()).flatMap(({ references }) => references);
+        // Clone the map so that we can mutate its copy.
+        const referencesToHandle = new Map(uniqueReferences);
 
         // Build up a map of refs to their name overrides, keeping track of names that have been used as we go.
         const completeRefPathsToNameOverrides: Record<string, ImportedName> = {};
         const usedNames = this.getInitialUsedNames();
-        const handledReferences = new Set<Reference>();
 
-        // Perform a first pass, reserving any names of references that are defined in the file itself.
-        references.forEach((reference) => {
-            if (this.isDefinedInFile(reference.modulePath)) {
+        // First, reserve the names of any references that are defined in the file itself and that don't need importing.
+        const filePath = this.path.join(".");
+        const fileReferences = uniqueReferences.get(filePath);
+        if (fileReferences) {
+            const { references } = fileReferences;
+
+            references.forEach((reference) => {
                 const fullyQualifiedModulePath = reference.getFullyQualifiedModulePath();
                 const name = reference.name;
 
@@ -101,19 +105,18 @@ export class PythonFile extends AstNode {
                     isAlias: false
                 };
                 usedNames.add(reference.name);
-                handledReferences.add(reference);
-            }
-        });
+            });
+
+            referencesToHandle.delete(filePath);
+        }
 
         // Continue on to resolving names for references that must be imported
-        references.forEach((reference) => {
+        const importedReferences: Reference[] = Array.from(referencesToHandle.values()).flatMap(
+            ({ references }) => references
+        );
+        importedReferences.forEach((reference) => {
             // Skip star imports since we should never override their import alias
             if (reference instanceof StarImport) {
-                return;
-            }
-
-            // Skip references that have already been handled
-            if (handledReferences.has(reference)) {
                 return;
             }
 
