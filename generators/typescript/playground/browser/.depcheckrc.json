@@ -10,11 +10,9 @@
     "@types/react",
     "form-data",
     "js-base64",
-    "node-fetch",
     "url-join",
     "qs",
     "@types/node",
-    "@types/node-fetch",
     "@types/qs",
     "@types/url-join",
     "@trivago/prettier-plugin-sort-imports"

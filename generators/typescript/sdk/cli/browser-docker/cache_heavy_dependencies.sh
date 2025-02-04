@@ -11,7 +11,6 @@ yarn init --yes
 
 yarn add \
   @types/jest@^29.5.14 \
-  @types/node-fetch@^2.6.12 \
   @types/node@^18.19.70 \
   @types/qs@^6.9.17 \
   @types/url-join@4.0.1 \
@@ -19,7 +18,6 @@ yarn add \
   jest-environment-jsdom@^29.7.0 \
   jest@^29.7.0 \
   js-base64@^3.7.7 \
-  node-fetch@^2.7.0 \
   prettier@^3.4.2 \
   qs@^6.13.1 \
   ts-jest@^29.1.1 \

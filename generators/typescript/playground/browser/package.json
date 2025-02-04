@@ -34,14 +34,12 @@
   "dependencies": {
     "form-data": "4.0.1",
     "js-base64": "^3.7.6",
-    "node-fetch": "2.7.0",
     "qs": "6.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "url-join": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node-fetch": "2.6.9",
     "@types/qs": "6.9.15",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",

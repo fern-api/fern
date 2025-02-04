@@ -2548,9 +2548,6 @@ importers:
       js-base64:
         specifier: ^3.7.6
         version: 3.7.7
-      node-fetch:
-        specifier: 2.7.0
-        version: 2.7.0
       qs:
         specifier: 6.12.1
         version: 6.12.1
@@ -2573,9 +2570,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/node-fetch':
-        specifier: 2.6.9
-        version: 2.6.9
       '@types/qs':
         specifier: 6.9.15
         version: 6.9.15
@@ -3642,9 +3636,6 @@ importers:
       formdata-node:
         specifier: ^6.0.3
         version: 6.0.3
-      node-fetch:
-        specifier: 2.7.0
-        version: 2.7.0
       qs:
         specifier: 6.12.1
         version: 6.12.1
@@ -3670,9 +3661,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/node-fetch':
-        specifier: 2.6.9
-        version: 2.6.9
       '@types/qs':
         specifier: 6.9.15
         version: 6.9.15
