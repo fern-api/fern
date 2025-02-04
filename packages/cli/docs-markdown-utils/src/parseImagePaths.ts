@@ -227,18 +227,31 @@ export function replaceImagePathsAndUrls(
     let offset = 0;
 
     function mapImage(image: string | undefined) {
-        if (image != null && !isExternalUrl(image) && !isDataUrl(image)) {
-            try {
-                const fileId = fileIdsMap.get(AbsoluteFilePath.of(image));
-                if (fileId != null) {
-                    return `file:${fileId}`;
-                }
-            } catch (e) {
-                // do nothing
-                return;
-            }
+        if (image == null || isExternalUrl(image) || isDataUrl(image)) {
+            return undefined;
         }
-        return;
+
+        // Check if it's an absolute path
+        if (image.startsWith("/")) {
+            const absolutePath = AbsoluteFilePath.of(image);
+            const fileId = fileIdsMap.get(absolutePath);
+            return fileId ? `file:${fileId}` : undefined;
+        }
+
+        // Handle relative path
+        const resolvedPath = resolvePath(image, metadata);
+        if (resolvedPath) {
+            const fileId = fileIdsMap.get(resolvedPath);
+            context.logger.info(
+                "image - resolvedPath - fileId",
+                image || "undefined",
+                resolvedPath.toString() || "undefined",
+                fileId || "undefined"
+            );
+            return fileId ? `file:${fileId}` : undefined;
+        }
+
+        return undefined;
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
