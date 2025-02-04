@@ -17,6 +17,9 @@ const UTILS_DIRECTORY_NAME = "Utils";
 const SRC_DIRECTORY_NAME = "src";
 const TESTS_DIRECTORY_NAME = "tests";
 
+// https://github.com/composer/spdx-licenses/blob/614a1b86ff628ca7e0713f733ee09f94569548b0/src/SpdxLicenses.php#L317
+const CUSTOM_LICENSE_NAME = "LicenseRef-LICENSE";
+
 const COMPOSER_JSON_FILENAME = "composer.json";
 
 /**
@@ -73,7 +76,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
                 basic: (val) => {
                     return val.id;
                 },
-                custom: () => undefined, // composer doesn't support custom license filepaths.
+                custom: () => CUSTOM_LICENSE_NAME,
                 _other: () => undefined
             }),
             context: this.context
@@ -111,8 +114,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }
 
     private async createGitHubWorkflowsDirectory(): Promise<void> {
-        const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString();
-        const githubWorkflow = template(githubWorkflowTemplate)(/* TODO: Add publish job */).replaceAll("\\{", "{");
+        const githubWorkflow = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString();
         const githubWorkflowsDirectoryPath = join(
             this.absolutePathToOutputDirectory,
             RelativeFilePath.of(".github/workflows")
@@ -267,10 +269,9 @@ class ComposerJson {
     }
 
     public toString(): string {
-        const composerProjectName = `${this.context.config.organization}/${this.context.config.organization}`;
         return `
 {
-  "name": "${composerProjectName}",
+  "name": "${this.context.getPackageName()}",
   "version": ${this.context.version != null ? `"${this.context.version}"` : '"0.0.0"'},
   "description": "${this.projectName} PHP Library",
   "keywords": [
@@ -278,11 +279,11 @@ class ComposerJson {
     "api",
     "sdk"
   ],
-  "license": ${this.license != null ? `[\n    "${this.license}"\n  ]` : "[]"},
+  "license": ${this.license != null ? `"${this.license}"` : "[]"},
   "require": {
     "php": "^8.1",
     "ext-json": "*",
-    "guzzlehttp/guzzle": "^7.9"
+    "guzzlehttp/guzzle": "^7.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.0",
@@ -305,7 +306,7 @@ class ComposerJson {
       "@php -l ${TESTS_DIRECTORY_NAME}"
     ],
     "test": "phpunit",
-    "analyze": "phpstan analyze src tests"
+    "analyze": "phpstan analyze src tests --memory-limit=1G"
   }
 }
 `;

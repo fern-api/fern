@@ -1,3 +1,27 @@
+- version: 0.3.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for customizing the package name, which is used in the `User-Agent` header.
+        Users can configure this like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.3.0
+          config:
+            packageName: acme/acme-php
+        ```
+  irVersion: 53
+- version: 0.2.3
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Updates a variety of properties in the generated composer.json file, including:
+
+          - Pin guzzlehttp/guzzle to version ^7.4.
+          - Custom license support.
+          - Set `memory-limit` to 1G in the `analyze` script.
+  irVersion: 53
 - version: 0.2.2
   changelogEntry:
     - type: fix

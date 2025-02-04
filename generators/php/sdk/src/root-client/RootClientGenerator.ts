@@ -176,10 +176,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 value: php.codeblock(`'${this.context.version}'`)
             });
         }
-        if (platformHeaders.userAgent != null) {
+        const userAgent = this.context.getUserAgent();
+        if (userAgent != null) {
             headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.userAgent.header}'`),
-                value: php.codeblock(`'${platformHeaders.userAgent.value}'`)
+                key: php.codeblock(`'${userAgent.header}'`),
+                value: php.codeblock(`'${userAgent.value}'`)
             });
         }
         const headers = php.map({

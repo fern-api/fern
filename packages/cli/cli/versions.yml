@@ -1,5 +1,33 @@
 - changelogEntry:
     - summary: |
+        OpenAPI v2 parser now provides better naming and more robust payloads for examples.
+      type: fix
+  irVersion: 55
+  version: 0.51.22
+
+- changelogEntry:
+    - summary: |
+        The `fern init` command now respects JSON formatting when parsing from an external URL.
+      type: fix
+  irVersion: 55
+  version: 0.51.21
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now supports generating code snippets in the API Explorer.
+      type: fix
+  irVersion: 55
+  version: 0.51.20
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now supports generating code snippets in the API Explorer.
+      type: fix
+  irVersion: 55
+  version: 0.51.19
+
+- changelogEntry:
+    - summary: |
         The docs will now display errors by default. Previously, errors were hidden by default and needed to be explicitly 
         enabled with `displayErrors: true`.
       type: fix

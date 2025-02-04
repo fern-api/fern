@@ -190,9 +190,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             requestBodyCodeBlock.add(
                     ".method($S, $L)\n", httpEndpoint.getMethod().toString(), getOkhttpRequestBodyName());
         }
-        Optional<String> acceptContentType = AbstractEndpointWriter.responseContentType(httpEndpoint.getResponse());
+        Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint, true);
         if (sendContentType && !isFileUpload) {
-            if (acceptContentType.isPresent()) {
+            if (maybeAcceptsHeader.isPresent()) {
 
                 requestBodyCodeBlock
                         .add(
@@ -202,7 +202,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 ClientOptionsGenerator.HEADERS_METHOD_NAME,
                                 AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
                         .add(".addHeader($S, $S)", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType)
-                        .add(".addHeader($S, $S);\n", AbstractEndpointWriter.ACCEPT_HEADER, contentType);
+                        .add(maybeAcceptsHeader.get());
             } else {
 
                 requestBodyCodeBlock
@@ -215,7 +215,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         .add(".addHeader($S, $S);\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
             }
         } else {
-            if (acceptContentType.isPresent()) {
+            if (maybeAcceptsHeader.isPresent()) {
                 requestBodyCodeBlock
                         .add(
                                 ".headers($T.of($L.$L($L)));\n",
@@ -224,7 +224,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 ClientOptionsGenerator.HEADERS_METHOD_NAME,
                                 AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
                         .add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType)
-                        .add(".addHeader($S, $S);\n", AbstractEndpointWriter.ACCEPT_HEADER, contentType);
+                        .add(maybeAcceptsHeader.get());
             } else {
                 requestBodyCodeBlock.add(
                         ".headers($T.of($L.$L($L)));\n",

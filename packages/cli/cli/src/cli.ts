@@ -206,6 +206,17 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
     return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
 }
 
+async function getOrganization(cliContext: CliContext): Promise<string | undefined> {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory != null) {
+        const projectConfig = await cliContext.runTask((context) =>
+            loadProjectConfig({ directory: fernDirectory, context })
+        );
+        return projectConfig.organization;
+    }
+    return undefined;
+}
+
 function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "init",
@@ -239,7 +250,12 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             if (argv.organization == null) {
-                argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+                const projectConfig = await getOrganization(cliContext);
+                if (projectConfig != null) {
+                    argv.organization = projectConfig;
+                } else {
+                    argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+                }
             }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");

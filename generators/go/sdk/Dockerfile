@@ -1,9 +1,8 @@
 # Stage 1: Build Node CLI
 FROM node:20.18-alpine3.20 AS node
 
-RUN apk --no-cache add git zip \
-  && git config --global user.name "fern" \
-  && git config --global user.email "hey@buildwithfern.com"
+RUN apk --no-cache add git zip
+RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
 COPY generators/go-v2/sdk/dist/cli.cjs /dist/cli.cjs
 
@@ -13,6 +12,7 @@ FROM golang:1.22.7-alpine3.19
 WORKDIR /workspace
 
 RUN apk add --no-cache ca-certificates git nodejs
+RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
 COPY generators/go/go.mod generators/go/go.sum /workspace/
 RUN go mod download

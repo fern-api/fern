@@ -1,0 +1,7 @@
+*
+!generators/go-v2/sdk/dist/cli.cjs
+!generators/go/go.mod
+!generators/go/go.sum
+!generators/go/cmd
+!generators/go/internal
+!generators/go/version.go
