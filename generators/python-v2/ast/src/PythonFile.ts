@@ -194,6 +194,15 @@ export class PythonFile extends AstNode {
     }): void {
         for (const [fullyQualifiedPath, { modulePath, references }] of uniqueReferences) {
             const refModulePath = modulePath;
+
+            // Check to see if the reference is defined in this same file and if so, skip its import
+            if (
+                refModulePath.length === this.path.length &&
+                refModulePath.every((part, idx) => part === this.path[idx])
+            ) {
+                continue;
+            }
+
             if (refModulePath[0] === this.path[0]) {
                 // Relativize the import
                 // Calculate the common prefix length
