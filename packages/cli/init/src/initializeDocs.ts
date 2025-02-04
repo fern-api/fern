@@ -6,6 +6,7 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
+import { titleCase } from "../../../commons/core-utils/src";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
 
 export async function initializeDocs({
@@ -36,8 +37,8 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
                 url: `https://${organization}.${process.env.DOCS_DOMAIN_SUFFIX}`
             }
         ],
-        title: `${organization} | Documentation`,
-        navigation: [{ api: "API Reference" }],
+        title: `${titleCase(organization)} | Documentation`,
+        navigation: [{ api: "API Reference", paginated: true }],
         colors: {
             accentPrimary: "#ffffff",
             background: "#000000"
