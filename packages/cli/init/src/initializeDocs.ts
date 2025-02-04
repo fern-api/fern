@@ -1,3 +1,5 @@
+import chalk from "chalk";
+import fs from "fs-extra";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
@@ -23,10 +25,39 @@ export async function initializeDocs({
         taskContext
     });
 
-    await writeFile(
-        join(createDirectoryResponse.absolutePathToFernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
-        yaml.dump(getDocsConfig(createDirectoryResponse.organization))
-    );
+    if (createDirectoryResponse.absolutePathToFernDirectory) {
+        const docsYmlPath = join(
+            createDirectoryResponse.absolutePathToFernDirectory,
+            RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)
+        );
+
+        try {
+            // File already exists
+            const stats = await fs.promises.stat(docsYmlPath);
+            if (stats.isFile()) {
+                taskContext.logger.info(chalk.yellow(`Docs configuration already exists at: ${docsYmlPath}`));
+                return;
+            }
+        } catch (error: unknown) {
+            // File doesn't exist - create new docs configuration
+            if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") {
+                try {
+                    await writeFile(docsYmlPath, yaml.dump(getDocsConfig(createDirectoryResponse.organization)));
+                    taskContext.logger.info(chalk.green("Created docs configuration"));
+                    return;
+                } catch (writeError) {
+                    const errorMessage = writeError instanceof Error ? writeError.message : String(writeError);
+                    taskContext.logger.error(chalk.red(`Failed to write docs configuration: ${errorMessage}`));
+                    throw writeError;
+                }
+            }
+
+            // Handle unexpected errors
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            taskContext.logger.error(chalk.red(`Failed to check docs configuration: ${errorMessage}`));
+            throw error;
+        }
+    }
 }
 
 function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfiguration {
