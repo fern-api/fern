@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI v2 parser now provides better naming and more robust payloads for examples.
+      type: fix
+  irVersion: 55
+  version: 0.51.30
+
+- changelogEntry:
+    - summary: |
         The images will be rendered to browser in the format of image ID that matches FileV2.
         It ensure images will be displayed properly in dev environment.
       type: fix
