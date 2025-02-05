@@ -1,3 +1,9 @@
+- version: 0.0.24
+  createdAt: '2025-02-06'
+  changelogEntry:
+    - type: internal
+      summary: Fix import reference generation.
+  irVersion: 33
 - version: 0.0.23
   createdAt: '2025-02-06'
   changelogEntry:
