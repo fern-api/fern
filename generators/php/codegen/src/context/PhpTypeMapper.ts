@@ -81,6 +81,8 @@ export class PhpTypeMapper {
                 return Type.array(this.convert({ reference: container.set, preserveEnums }));
             case "optional":
                 return Type.optional(this.convert({ reference: container.optional, preserveEnums }));
+            case "nullable":
+                return Type.optional(this.convert({ reference: container.nullable, preserveEnums }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:

@@ -1,3 +1,9 @@
+- version: 0.3.2
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Upgrade to IRv55 to recognize nullable types.
+  irVersion: 55
 - version: 0.3.1
   changelogEntry:
     - type: fix

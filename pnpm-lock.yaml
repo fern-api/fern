@@ -813,8 +813,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^53.15.0
-        version: 53.24.0
+        specifier: ^55.0.0
+        version: 55.0.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -868,8 +868,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^53.15.0
-        version: 53.24.0
+        specifier: ^55.0.0
+        version: 55.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -931,8 +931,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: ^53.15.0
-        version: 53.24.0
+        specifier: ^55.0.0
+        version: 55.0.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)

@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The IR migrator now recognizes that the PHP SDK generator requires IR version 55.
+      type: fix
+  irVersion: 55
+  version: 0.51.29
+
+- changelogEntry:
+    - summary: |
         The IR generator now optimizes SDK generation by skipping automatic example generation when manual examples are provided.
         Previously, it would generate additional examples even when manual examples were specified for an operation.
         This change improves generation performance by avoiding unnecessary example generation work.
