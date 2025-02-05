@@ -9122,7 +9122,36 @@ docs: >+
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
+                        "code": "code",
                         "evaluator_type": "human",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -9214,7 +9243,36 @@ an exception will be raised.",
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
+                        "code": "code",
                         "evaluator_type": "human",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -9292,9 +9350,15 @@ an exception will be raised.",
                             "batch_ids",
                           ],
                           "config": {
-                            "id": "config",
-                            "name": "config",
-                            "status": "config",
+                            "agent_class": "agent_class",
+                            "evaluator_type": "evaluator_type",
+                            "id": "id",
+                            "model": "model",
+                            "model_config": {
+                              "model": "model",
+                            },
+                            "name": "name",
+                            "status": "status",
                             "type": "generic",
                           },
                           "config_id": "config_id",
@@ -9386,9 +9450,15 @@ an exception will be raised.",
                             "batch_ids",
                           ],
                           "config": {
-                            "id": "config",
-                            "name": "config",
-                            "status": "config",
+                            "agent_class": "agent_class",
+                            "evaluator_type": "evaluator_type",
+                            "id": "id",
+                            "model": "model",
+                            "model_config": {
+                              "model": "model",
+                            },
+                            "name": "name",
+                            "status": "status",
                             "type": "generic",
                           },
                           "config_id": "config_id",
@@ -9603,7 +9673,36 @@ will be used for calls made to the Evaluator in this Environment.",
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
+                        "code": "code",
                         "evaluator_type": "human",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -9689,7 +9788,36 @@ By default the deployed version of the Evaluator is returned. Use the query para
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
+                        "code": "code",
                         "evaluator_type": "human",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -9872,7 +10000,11 @@ By default the deployed version of the Evaluator is returned. Use the query para
                         "name": "name",
                         "spec": {
                           "arguments_type": "target_free",
+                          "code": "code",
                           "evaluator_type": "human",
+                          "prompt": {
+                            "model": "model",
+                          },
                           "return_type": "boolean",
                         },
                         "status": "uncommitted",
@@ -10025,7 +10157,36 @@ By default the deployed version of the Evaluator is returned. Use the query para
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
+                        "code": "code",
                         "evaluator_type": "human",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -10277,6 +10438,28 @@ service:
                 evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                code: code
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10343,6 +10526,28 @@ service:
                 evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                code: code
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10421,6 +10626,28 @@ service:
                 evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                code: code
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10552,6 +10779,28 @@ service:
                 evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                code: code
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10611,6 +10860,28 @@ service:
                 evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                code: code
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10654,6 +10925,9 @@ service:
                   evaluator_type: human
                   arguments_type: target_free
                   return_type: boolean
+                  prompt:
+                    model: model
+                  code: code
                 version_logs_count: 1
                 total_logs_count: 1
                 inputs:
@@ -10738,9 +11012,14 @@ service:
                   config_id: config_id
                   config:
                     type: generic
-                    id: config
-                    status: config
-                    name: config
+                    id: id
+                    model: model
+                    status: status
+                    name: name
+                    evaluator_type: evaluator_type
+                    agent_class: agent_class
+                    model_config:
+                      model: model
                   environment: environment
                   feedback:
                     - type: rating
@@ -10810,9 +11089,14 @@ service:
                   config_id: config_id
                   config:
                     type: generic
-                    id: config
-                    status: config
-                    name: config
+                    id: id
+                    model: model
+                    status: status
+                    name: name
+                    evaluator_type: evaluator_type
+                    agent_class: agent_class
+                    model_config:
+                      model: model
                   environment: environment
                   feedback:
                     - type: rating

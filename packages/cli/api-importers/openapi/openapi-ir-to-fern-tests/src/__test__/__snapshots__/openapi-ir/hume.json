@@ -308,9 +308,23 @@
                             },
                             "type": "primitive"
                           },
+                          "num_predictions": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "num_errors": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
                           "message": {
                             "value": {
-                              "value": "state",
+                              "value": "message",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -514,23 +528,30 @@
                             },
                             "type": "primitive"
                           },
+                          "url": {
+                            "value": {
+                              "value": "url",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
                           "filename": {
                             "value": {
-                              "value": "source",
+                              "value": "filename",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "content_type": {
                             "value": {
-                              "value": "source",
+                              "value": "content_type",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "md5sum": {
                             "value": {
-                              "value": "source",
+                              "value": "md5sum",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -884,9 +905,23 @@
                         },
                         "type": "primitive"
                       },
+                      "num_predictions": {
+                        "value": {
+                          "value": 1,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "num_errors": {
+                        "value": {
+                          "value": 1,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
                       "message": {
                         "value": {
-                          "value": "state",
+                          "value": "message",
                           "type": "string"
                         },
                         "type": "primitive"

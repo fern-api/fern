@@ -233,10 +233,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -538,10 +542,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -845,10 +853,43 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "multipleRolesNotAllowedError": {
+                      "properties": {
+                        "roles": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "roles",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "invalidMemberError": {
                       "properties": {},
@@ -918,10 +959,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -1226,7 +1271,52 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "reason": {
+                      "value": {
+                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "message",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidMemberError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -1284,10 +1374,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -1872,10 +1966,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -2130,10 +2228,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -2372,10 +2474,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -2688,10 +2794,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -2956,7 +3066,70 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "reason": {
+                      "value": {
+                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "message",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "organizationInviteAlreadyExistsError": {
+                      "properties": {
+                        "organization_id": {
+                          "value": {
+                            "value": "organization_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "email_address": {
+                          "value": {
+                            "value": "email_address",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "organizationMemberAlreadyExistsError": {
+                      "properties": {
+                        "organization_id": {
+                          "value": {
+                            "value": "organization_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "member_id": {
+                          "value": {
+                            "value": "member_id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -3014,10 +3187,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -3261,10 +3438,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -3473,10 +3654,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -3756,10 +3941,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -4012,10 +4201,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -4269,10 +4462,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -4957,10 +5154,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -5258,10 +5459,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -5533,10 +5738,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -5924,10 +6133,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -6432,10 +6645,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -6765,10 +6982,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -7080,10 +7301,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -7411,10 +7636,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -7744,10 +7973,43 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "multipleRolesNotAllowedError": {
+                      "properties": {
+                        "roles": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "roles",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "invalidMemberError": {
                       "properties": {},
@@ -7817,10 +8079,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -8151,7 +8417,52 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "reason": {
+                      "value": {
+                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "message",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidMemberError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -8209,10 +8520,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -8581,10 +8896,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -8946,10 +9265,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -9306,10 +9629,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -9683,10 +10010,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -10052,10 +10383,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -10410,10 +10745,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -10787,10 +11126,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -11076,10 +11419,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -11379,10 +11726,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -11775,10 +12126,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -12189,10 +12544,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -12546,10 +12905,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -12905,10 +13268,43 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "multipleRolesNotAllowedError": {
+                      "properties": {
+                        "roles": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "roles",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "invalidMemberError": {
                       "properties": {},
@@ -12978,10 +13374,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -13338,7 +13738,52 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "reason": {
+                      "value": {
+                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "message",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidMemberError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -13396,10 +13841,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -13910,10 +14359,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -14330,10 +14783,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -14676,10 +15133,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -15058,10 +15519,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -15401,10 +15866,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -15701,10 +16170,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -16116,10 +16589,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -16519,10 +16996,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -16839,10 +17320,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -17397,10 +17882,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -17754,10 +18243,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -18113,10 +18606,43 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "multipleRolesNotAllowedError": {
+                      "properties": {
+                        "roles": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "roles",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "invalidMemberError": {
                       "properties": {},
@@ -18186,10 +18712,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -18546,7 +19076,52 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "reason": {
+                      "value": {
+                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "message",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidMemberError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -18604,10 +19179,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -19085,10 +19664,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -19378,10 +19961,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -19664,10 +20251,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -19967,10 +20558,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -20256,10 +20851,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -20555,10 +21154,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -20842,10 +21445,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -21147,10 +21754,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -21454,10 +22065,43 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "multipleRolesNotAllowedError": {
+                      "properties": {
+                        "roles": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "roles",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "invalidMemberError": {
                       "properties": {},
@@ -21527,10 +22171,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -21835,7 +22483,52 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "reason": {
+                      "value": {
+                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "message",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidMemberError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -21893,10 +22586,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -22795,10 +23492,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -23048,10 +23749,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -23290,10 +23995,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -23612,10 +24321,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -23994,10 +24707,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -24390,10 +25107,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -24689,10 +25410,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -25704,10 +26429,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -25957,10 +26686,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -26199,10 +26932,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -26521,10 +27258,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -26903,10 +27644,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -27299,10 +28044,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -27598,10 +28347,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -28613,10 +29366,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -28866,10 +29623,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -29108,10 +29869,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -29430,10 +30195,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -29812,10 +30581,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -30208,10 +30981,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -30507,10 +31284,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -31522,10 +32303,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -31775,10 +32560,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -32017,10 +32806,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -32339,10 +33132,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -32721,10 +33518,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -33117,10 +33918,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -33416,10 +34221,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -34431,10 +35240,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -34684,10 +35497,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -34926,10 +35743,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -35248,10 +36069,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -35630,10 +36455,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -36026,10 +36855,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -36325,10 +37158,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -37340,10 +38177,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -37593,10 +38434,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -37835,10 +38680,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -38157,10 +39006,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -38539,10 +39392,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -38935,10 +39792,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -39234,10 +40095,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -40249,10 +41114,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -40502,10 +41371,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -40744,10 +41617,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -41066,10 +41943,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -41448,10 +42329,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -41844,10 +42729,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -42143,10 +43032,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -42710,10 +43603,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -44362,10 +45259,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -44637,10 +45538,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -44946,10 +45851,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -45269,10 +46178,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -45573,10 +46486,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -45915,10 +46832,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -46374,10 +47295,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -46934,10 +47859,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -47420,10 +48349,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -47962,10 +48895,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -48482,10 +49419,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -48777,10 +49718,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -49134,10 +50079,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -49493,10 +50442,43 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "multipleRolesNotAllowedError": {
+                      "properties": {
+                        "roles": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": "roles",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "invalidMemberError": {
                       "properties": {},
@@ -49566,10 +50548,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -49926,7 +50912,52 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "examples": []
+          "examples": [
+            {
+              "example": {
+                "value": {
+                  "value": {
+                    "reason": {
+                      "value": {
+                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "message": {
+                      "value": {
+                        "value": "message",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "invalidSubjectTypeError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidMemberError": {
+                      "properties": {},
+                      "type": "object"
+                    },
+                    "invalidRoleError": {
+                      "properties": {
+                        "role": {
+                          "value": {
+                            "value": "role",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            }
+          ]
         },
         "403": {
           "generatedName": "ForbiddenError",
@@ -49984,10 +51015,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -50360,10 +51395,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -50729,10 +51768,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -51107,10 +52150,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -51470,10 +52517,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -51838,10 +52889,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {
@@ -52275,10 +53330,14 @@
                     },
                     "message": {
                       "value": {
-                        "value": "string",
+                        "value": "message",
                         "type": "string"
                       },
                       "type": "primitive"
+                    },
+                    "missingAuthenticationError": {
+                      "properties": {},
+                      "type": "object"
                     },
                     "permissionCheckFailedError": {
                       "properties": {

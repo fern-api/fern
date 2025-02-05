@@ -25701,6 +25701,7 @@ docs: Employee of Record (EOR).
                     "contract": {
                       "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
                       "employment_type": "FULL_TIME",
+                      "part_time_percentage": 1.1,
                       "start_date": "1999-12-31",
                     },
                     "employee_details": {
@@ -25732,6 +25733,7 @@ docs: Employee of Record (EOR).
                           "employee_number": 1.1,
                           "employment_type": "FULL_TIME",
                           "end_date": "1999-12-31",
+                          "part_time_percentage": 1.1,
                           "start_date": "1999-12-31",
                         },
                         "employee_details": {
@@ -25832,6 +25834,7 @@ service:
               employment_type: FULL_TIME
               contract_oid: pdcMQe0cXCCXWTkqkdytw
               start_date: '1999-12-31'
+              part_time_percentage: 1.1
           response:
             body:
               data:
@@ -25858,6 +25861,7 @@ service:
                   start_date: '1999-12-31'
                   employee_number: 1.1
                   end_date: '1999-12-31'
+                  part_time_percentage: 1.1
                 vacation_info:
                   vacation_accrual_start_date: vacation_accrual_start_date
                   vacation_yearly_policy: 1.1

@@ -15766,7 +15766,7 @@ service:
                           {
                             "created_at": "2024-01-15T09:30:00Z",
                             "error_code": "visionline_instance_unreachable",
-                            "message": "errors",
+                            "message": "message",
                           },
                         ],
                         "external_type": "pti_site",
@@ -15847,7 +15847,7 @@ service:
                             {
                               "created_at": "2024-01-15T09:30:00Z",
                               "error_code": "visionline_instance_unreachable",
-                              "message": "errors",
+                              "message": "message",
                             },
                           ],
                           "external_type": "pti_site",
@@ -15931,7 +15931,7 @@ service:
                             {
                               "created_at": "2024-01-15T09:30:00Z",
                               "error_code": "visionline_instance_unreachable",
-                              "message": "errors",
+                              "message": "message",
                             },
                           ],
                           "external_type": "pti_site",
@@ -16096,7 +16096,7 @@ service:
                 errors:
                   - error_code: visionline_instance_unreachable
                     created_at: '2024-01-15T09:30:00Z'
-                    message: errors
+                    message: message
                 warnings:
                   - {}
                 can_automate_enrollment: true
@@ -16148,7 +16148,7 @@ service:
                   errors:
                     - error_code: visionline_instance_unreachable
                       created_at: '2024-01-15T09:30:00Z'
-                      message: errors
+                      message: message
                   warnings:
                     - {}
                   can_automate_enrollment: true
@@ -16203,7 +16203,7 @@ service:
                   errors:
                     - error_code: visionline_instance_unreachable
                       created_at: '2024-01-15T09:30:00Z'
-                      message: errors
+                      message: message
                   warnings:
                     - {}
                   can_automate_enrollment: true
@@ -30756,7 +30756,7 @@ service:
                             {
                               "created_at": "2024-01-15T09:30:00Z",
                               "error_code": "visionline_instance_unreachable",
-                              "message": "errors",
+                              "message": "message",
                             },
                           ],
                           "external_type": "pti_site",
@@ -31736,7 +31736,7 @@ service:
                   errors:
                     - error_code: visionline_instance_unreachable
                       created_at: '2024-01-15T09:30:00Z'
-                      message: errors
+                      message: message
                   warnings:
                     - {}
                   can_automate_enrollment: true

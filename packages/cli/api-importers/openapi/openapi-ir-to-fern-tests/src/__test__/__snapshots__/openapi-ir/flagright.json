@@ -316,77 +316,62 @@
                       },
                       "type": "primitive"
                     },
-                    "shippingAddress": {
-                      "properties": {
-                        "addressLines": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": {
-                                  "value": "Klara-Franke Str 20",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "postcode": {
-                          "value": {
-                            "value": "10557",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "city": {
-                          "value": {
-                            "value": "Berlin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "Berlin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "Germany",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tags": {
-                          "value": [
-                            {
-                              "properties": {
-                                "key": {
-                                  "value": {
-                                    "value": "customKey",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "value": {
-                                  "value": {
-                                    "value": "customValue",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
+                    "cardFingerprint": {
+                      "value": {
+                        "value": "20ac00fed8ef913aefb17cfae1097cce",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
+                    },
+                    "cardIssuedCountry": {
+                      "value": "TR",
+                      "type": "enum"
+                    },
+                    "transactionReferenceField": {
+                      "value": {
+                        "value": "Deposit",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "3dsDone": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "businessShortCode": {
+                      "value": {
+                        "value": "businessShortCode",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "transactionType": {
+                      "value": "CustomerPayBillOnline",
+                      "type": "enum"
+                    },
+                    "phoneNumber": {
+                      "value": {
+                        "value": "phoneNumber",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "upiID": {
+                      "value": {
+                        "value": "upiID",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "walletType": {
+                      "value": {
+                        "value": "walletType",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -403,77 +388,62 @@
                       },
                       "type": "primitive"
                     },
-                    "shippingAddress": {
-                      "properties": {
-                        "addressLines": {
-                          "value": [
-                            {
-                              "value": {
-                                "value": {
-                                  "value": "Klara-Franke Str 20",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "type": "unknown"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "postcode": {
-                          "value": {
-                            "value": "10557",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "city": {
-                          "value": {
-                            "value": "Berlin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "state": {
-                          "value": {
-                            "value": "Berlin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "country": {
-                          "value": {
-                            "value": "Germany",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tags": {
-                          "value": [
-                            {
-                              "properties": {
-                                "key": {
-                                  "value": {
-                                    "value": "customKey",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "value": {
-                                  "value": {
-                                    "value": "customValue",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        }
+                    "cardFingerprint": {
+                      "value": {
+                        "value": "20ac00fed8ef913aefb17cfae1097cce",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
+                    },
+                    "cardIssuedCountry": {
+                      "value": "TR",
+                      "type": "enum"
+                    },
+                    "transactionReferenceField": {
+                      "value": {
+                        "value": "Deposit",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "3dsDone": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "upiID": {
+                      "value": {
+                        "value": "upiID",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "walletType": {
+                      "value": {
+                        "value": "walletType",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "businessShortCode": {
+                      "value": {
+                        "value": "businessShortCode",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "transactionType": {
+                      "value": "CustomerPayBillOnline",
+                      "type": "enum"
+                    },
+                    "phoneNumber": {
+                      "value": {
+                        "value": "phoneNumber",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -1001,23 +971,412 @@
                         },
                         "type": "primitive"
                       },
-                      "checkNumber": {
+                      "cardFingerprint": {
                         "value": {
-                          "value": "originPaymentDetails",
+                          "value": "20ac00fed8ef913aefb17cfae1097cce",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "checkIdentifier": {
+                      "cardIssuedCountry": {
+                        "value": "TR",
+                        "type": "enum"
+                      },
+                      "transactionReferenceField": {
                         "value": {
-                          "value": "originPaymentDetails",
+                          "value": "Deposit",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "3dsDone": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "nameOnCard": {
+                        "properties": {
+                          "firstName": {
+                            "value": {
+                              "value": "Baran",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "middleName": {
+                            "value": {
+                              "value": "Realblood",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "lastName": {
+                            "value": {
+                              "value": "Ozkan",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "cardExpiry": {
+                        "properties": {
+                          "month": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "year": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "cardLast4Digits": {
+                        "value": {
+                          "value": "cardLast4Digits",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cardBrand": {
+                        "value": "VISA",
+                        "type": "enum"
+                      },
+                      "cardFunding": {
+                        "value": "CREDIT",
+                        "type": "enum"
+                      },
+                      "cardAuthenticated": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "paymentChannel": {
+                        "value": {
+                          "value": "paymentChannel",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cardType": {
+                        "value": "VIRTUAL",
+                        "type": "enum"
+                      },
+                      "merchantDetails": {
+                        "properties": {
+                          "id": {
+                            "value": {
+                              "value": "id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "category": {
+                            "value": {
+                              "value": "category",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "MCC": {
+                            "value": {
+                              "value": "MCC",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "city": {
+                            "value": {
+                              "value": "city",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country": {
+                            "value": {
+                              "value": "country",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "state": {
+                            "value": {
+                              "value": "state",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "postCode": {
+                            "value": {
+                              "value": "postCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "accountNumber": {
+                        "value": {
+                          "value": "accountNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "accountType": {
+                        "value": {
+                          "value": "accountType",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "bankName": {
+                        "value": {
+                          "value": "bankName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "bankCode": {
+                        "value": {
+                          "value": "bankCode",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "name": {
                         "value": {
-                          "value": "originPaymentDetails",
+                          "value": "name",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "bankAddress": {
+                        "properties": {
+                          "addressLines": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": {
+                                    "value": "Klara-Franke Str 20",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "unknown"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "postcode": {
+                            "value": {
+                              "value": "10557",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "city": {
+                            "value": {
+                              "value": "Berlin",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "state": {
+                            "value": {
+                              "value": "Berlin",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country": {
+                            "value": {
+                              "value": "Germany",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "tags": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "key": {
+                                    "value": {
+                                      "value": "customKey",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "customValue",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "specialInstructions": {
+                        "value": {
+                          "value": "specialInstructions",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "BIC": {
+                        "value": {
+                          "value": "BIC",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "country": {
+                        "value": "AF",
+                        "type": "enum"
+                      },
+                      "IBAN": {
+                        "value": {
+                          "value": "IBAN",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "tags": {
+                        "properties": {
+                          "key": {
+                            "value": {
+                              "value": "customKey",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "value": {
+                            "value": {
+                              "value": "customValue",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "bankBranchCode": {
+                        "value": {
+                          "value": "bankBranchCode",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "routingNumber": {
+                        "value": {
+                          "value": "routingNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "beneficiaryName": {
+                        "value": {
+                          "value": "beneficiaryName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "swiftCode": {
+                        "value": {
+                          "value": "swiftCode",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "businessShortCode": {
+                        "value": {
+                          "value": "businessShortCode",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "transactionType": {
+                        "value": "CustomerPayBillOnline",
+                        "type": "enum"
+                      },
+                      "phoneNumber": {
+                        "value": {
+                          "value": "phoneNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "upiID": {
+                        "value": {
+                          "value": "upiID",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "bankProvider": {
+                        "value": {
+                          "value": "bankProvider",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "interfaceProvider": {
+                        "value": {
+                          "value": "interfaceProvider",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "walletType": {
+                        "value": {
+                          "value": "walletType",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "walletId": {
+                        "value": {
+                          "value": "walletId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "walletPhoneNumber": {
+                        "value": {
+                          "value": "walletPhoneNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "checkNumber": {
+                        "value": {
+                          "value": "checkNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "checkIdentifier": {
+                        "value": {
+                          "value": "checkIdentifier",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -1120,23 +1479,412 @@
                         },
                         "type": "primitive"
                       },
-                      "checkNumber": {
+                      "cardFingerprint": {
                         "value": {
-                          "value": "destinationPaymentDetails",
+                          "value": "20ac00fed8ef913aefb17cfae1097cce",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "checkIdentifier": {
+                      "cardIssuedCountry": {
+                        "value": "TR",
+                        "type": "enum"
+                      },
+                      "transactionReferenceField": {
                         "value": {
-                          "value": "destinationPaymentDetails",
+                          "value": "Deposit",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "3dsDone": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "nameOnCard": {
+                        "properties": {
+                          "firstName": {
+                            "value": {
+                              "value": "Baran",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "middleName": {
+                            "value": {
+                              "value": "Realblood",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "lastName": {
+                            "value": {
+                              "value": "Ozkan",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "cardExpiry": {
+                        "properties": {
+                          "month": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "year": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "cardLast4Digits": {
+                        "value": {
+                          "value": "cardLast4Digits",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cardBrand": {
+                        "value": "VISA",
+                        "type": "enum"
+                      },
+                      "cardFunding": {
+                        "value": "CREDIT",
+                        "type": "enum"
+                      },
+                      "cardAuthenticated": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "paymentChannel": {
+                        "value": {
+                          "value": "paymentChannel",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cardType": {
+                        "value": "VIRTUAL",
+                        "type": "enum"
+                      },
+                      "merchantDetails": {
+                        "properties": {
+                          "id": {
+                            "value": {
+                              "value": "id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "category": {
+                            "value": {
+                              "value": "category",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "MCC": {
+                            "value": {
+                              "value": "MCC",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "city": {
+                            "value": {
+                              "value": "city",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country": {
+                            "value": {
+                              "value": "country",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "state": {
+                            "value": {
+                              "value": "state",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "postCode": {
+                            "value": {
+                              "value": "postCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "accountNumber": {
+                        "value": {
+                          "value": "accountNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "accountType": {
+                        "value": {
+                          "value": "accountType",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "bankName": {
+                        "value": {
+                          "value": "bankName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "bankCode": {
+                        "value": {
+                          "value": "bankCode",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "name": {
                         "value": {
-                          "value": "destinationPaymentDetails",
+                          "value": "name",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "bankAddress": {
+                        "properties": {
+                          "addressLines": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": {
+                                    "value": "Klara-Franke Str 20",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "unknown"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "postcode": {
+                            "value": {
+                              "value": "10557",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "city": {
+                            "value": {
+                              "value": "Berlin",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "state": {
+                            "value": {
+                              "value": "Berlin",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country": {
+                            "value": {
+                              "value": "Germany",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "tags": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "key": {
+                                    "value": {
+                                      "value": "customKey",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "customValue",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "specialInstructions": {
+                        "value": {
+                          "value": "specialInstructions",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "BIC": {
+                        "value": {
+                          "value": "BIC",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "country": {
+                        "value": "AF",
+                        "type": "enum"
+                      },
+                      "IBAN": {
+                        "value": {
+                          "value": "IBAN",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "tags": {
+                        "properties": {
+                          "key": {
+                            "value": {
+                              "value": "customKey",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "value": {
+                            "value": {
+                              "value": "customValue",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "bankBranchCode": {
+                        "value": {
+                          "value": "bankBranchCode",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "routingNumber": {
+                        "value": {
+                          "value": "routingNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "beneficiaryName": {
+                        "value": {
+                          "value": "beneficiaryName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "upiID": {
+                        "value": {
+                          "value": "upiID",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "bankProvider": {
+                        "value": {
+                          "value": "bankProvider",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "interfaceProvider": {
+                        "value": {
+                          "value": "interfaceProvider",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "walletType": {
+                        "value": {
+                          "value": "walletType",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "walletId": {
+                        "value": {
+                          "value": "walletId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "walletPhoneNumber": {
+                        "value": {
+                          "value": "walletPhoneNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "swiftCode": {
+                        "value": {
+                          "value": "swiftCode",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "businessShortCode": {
+                        "value": {
+                          "value": "businessShortCode",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "transactionType": {
+                        "value": "CustomerPayBillOnline",
+                        "type": "enum"
+                      },
+                      "phoneNumber": {
+                        "value": {
+                          "value": "phoneNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "checkNumber": {
+                        "value": {
+                          "value": "checkNumber",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "checkIdentifier": {
+                        "value": {
+                          "value": "checkIdentifier",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -1981,23 +2729,339 @@
                             },
                             "type": "primitive"
                           },
-                          "checkNumber": {
+                          "cardFingerprint": {
                             "value": {
-                              "value": "originPaymentDetails",
+                              "value": "20ac00fed8ef913aefb17cfae1097cce",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "checkIdentifier": {
+                          "cardIssuedCountry": {
+                            "value": "TR",
+                            "type": "enum"
+                          },
+                          "transactionReferenceField": {
                             "value": {
-                              "value": "originPaymentDetails",
+                              "value": "Deposit",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "3dsDone": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "nameOnCard": {
+                            "properties": {
+                              "firstName": {
+                                "value": {
+                                  "value": "Baran",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "middleName": {
+                                "value": {
+                                  "value": "Realblood",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "lastName": {
+                                "value": {
+                                  "value": "Ozkan",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "cardLast4Digits": {
+                            "value": {
+                              "value": "cardLast4Digits",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardBrand": {
+                            "value": "VISA",
+                            "type": "enum"
+                          },
+                          "cardFunding": {
+                            "value": "CREDIT",
+                            "type": "enum"
+                          },
+                          "cardAuthenticated": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "paymentChannel": {
+                            "value": {
+                              "value": "paymentChannel",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardType": {
+                            "value": "VIRTUAL",
+                            "type": "enum"
+                          },
+                          "accountNumber": {
+                            "value": {
+                              "value": "accountNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "accountType": {
+                            "value": {
+                              "value": "accountType",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankName": {
+                            "value": {
+                              "value": "bankName",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankCode": {
+                            "value": {
+                              "value": "bankCode",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "name": {
                             "value": {
-                              "value": "originPaymentDetails",
+                              "value": "name",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankAddress": {
+                            "properties": {
+                              "addressLines": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": {
+                                        "value": "Klara-Franke Str 20",
+                                        "type": "string"
+                                      },
+                                      "type": "primitive"
+                                    },
+                                    "type": "unknown"
+                                  }
+                                ],
+                                "type": "array"
+                              },
+                              "postcode": {
+                                "value": {
+                                  "value": "10557",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "city": {
+                                "value": {
+                                  "value": "Berlin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "state": {
+                                "value": {
+                                  "value": "Berlin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "country": {
+                                "value": {
+                                  "value": "Germany",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "tags": {
+                                "value": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "value": {
+                                          "value": "customKey",
+                                          "type": "string"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": "customValue",
+                                          "type": "string"
+                                        },
+                                        "type": "primitive"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                ],
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "specialInstructions": {
+                            "value": {
+                              "value": "specialInstructions",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "BIC": {
+                            "value": {
+                              "value": "BIC",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country": {
+                            "value": "AF",
+                            "type": "enum"
+                          },
+                          "IBAN": {
+                            "value": {
+                              "value": "IBAN",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "tags": {
+                            "properties": {
+                              "key": {
+                                "value": {
+                                  "value": "customKey",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "customValue",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "bankBranchCode": {
+                            "value": {
+                              "value": "bankBranchCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "routingNumber": {
+                            "value": {
+                              "value": "routingNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "beneficiaryName": {
+                            "value": {
+                              "value": "beneficiaryName",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "swiftCode": {
+                            "value": {
+                              "value": "swiftCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "businessShortCode": {
+                            "value": {
+                              "value": "businessShortCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "transactionType": {
+                            "value": "CustomerPayBillOnline",
+                            "type": "enum"
+                          },
+                          "phoneNumber": {
+                            "value": {
+                              "value": "phoneNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "upiID": {
+                            "value": {
+                              "value": "upiID",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankProvider": {
+                            "value": {
+                              "value": "bankProvider",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "interfaceProvider": {
+                            "value": {
+                              "value": "interfaceProvider",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletType": {
+                            "value": {
+                              "value": "walletType",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletId": {
+                            "value": {
+                              "value": "walletId",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletPhoneNumber": {
+                            "value": {
+                              "value": "walletPhoneNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "checkNumber": {
+                            "value": {
+                              "value": "checkNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "checkIdentifier": {
+                            "value": {
+                              "value": "checkIdentifier",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -2100,23 +3164,339 @@
                             },
                             "type": "primitive"
                           },
-                          "checkNumber": {
+                          "cardFingerprint": {
                             "value": {
-                              "value": "destinationPaymentDetails",
+                              "value": "20ac00fed8ef913aefb17cfae1097cce",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "checkIdentifier": {
+                          "cardIssuedCountry": {
+                            "value": "TR",
+                            "type": "enum"
+                          },
+                          "transactionReferenceField": {
                             "value": {
-                              "value": "destinationPaymentDetails",
+                              "value": "Deposit",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "3dsDone": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "nameOnCard": {
+                            "properties": {
+                              "firstName": {
+                                "value": {
+                                  "value": "Baran",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "middleName": {
+                                "value": {
+                                  "value": "Realblood",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "lastName": {
+                                "value": {
+                                  "value": "Ozkan",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "cardLast4Digits": {
+                            "value": {
+                              "value": "cardLast4Digits",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardBrand": {
+                            "value": "VISA",
+                            "type": "enum"
+                          },
+                          "cardFunding": {
+                            "value": "CREDIT",
+                            "type": "enum"
+                          },
+                          "cardAuthenticated": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "paymentChannel": {
+                            "value": {
+                              "value": "paymentChannel",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardType": {
+                            "value": "VIRTUAL",
+                            "type": "enum"
+                          },
+                          "accountNumber": {
+                            "value": {
+                              "value": "accountNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "accountType": {
+                            "value": {
+                              "value": "accountType",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankName": {
+                            "value": {
+                              "value": "bankName",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankCode": {
+                            "value": {
+                              "value": "bankCode",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "name": {
                             "value": {
-                              "value": "destinationPaymentDetails",
+                              "value": "name",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankAddress": {
+                            "properties": {
+                              "addressLines": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": {
+                                        "value": "Klara-Franke Str 20",
+                                        "type": "string"
+                                      },
+                                      "type": "primitive"
+                                    },
+                                    "type": "unknown"
+                                  }
+                                ],
+                                "type": "array"
+                              },
+                              "postcode": {
+                                "value": {
+                                  "value": "10557",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "city": {
+                                "value": {
+                                  "value": "Berlin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "state": {
+                                "value": {
+                                  "value": "Berlin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "country": {
+                                "value": {
+                                  "value": "Germany",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "tags": {
+                                "value": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "value": {
+                                          "value": "customKey",
+                                          "type": "string"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": "customValue",
+                                          "type": "string"
+                                        },
+                                        "type": "primitive"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                ],
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "specialInstructions": {
+                            "value": {
+                              "value": "specialInstructions",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "BIC": {
+                            "value": {
+                              "value": "BIC",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country": {
+                            "value": "AF",
+                            "type": "enum"
+                          },
+                          "IBAN": {
+                            "value": {
+                              "value": "IBAN",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "tags": {
+                            "properties": {
+                              "key": {
+                                "value": {
+                                  "value": "customKey",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "customValue",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "bankBranchCode": {
+                            "value": {
+                              "value": "bankBranchCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "routingNumber": {
+                            "value": {
+                              "value": "routingNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "beneficiaryName": {
+                            "value": {
+                              "value": "beneficiaryName",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "upiID": {
+                            "value": {
+                              "value": "upiID",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankProvider": {
+                            "value": {
+                              "value": "bankProvider",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "interfaceProvider": {
+                            "value": {
+                              "value": "interfaceProvider",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletType": {
+                            "value": {
+                              "value": "walletType",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletId": {
+                            "value": {
+                              "value": "walletId",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletPhoneNumber": {
+                            "value": {
+                              "value": "walletPhoneNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "swiftCode": {
+                            "value": {
+                              "value": "swiftCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "businessShortCode": {
+                            "value": {
+                              "value": "businessShortCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "transactionType": {
+                            "value": "CustomerPayBillOnline",
+                            "type": "enum"
+                          },
+                          "phoneNumber": {
+                            "value": {
+                              "value": "phoneNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "checkNumber": {
+                            "value": {
+                              "value": "checkNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "checkIdentifier": {
+                            "value": {
+                              "value": "checkIdentifier",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -5464,23 +6844,339 @@
                             },
                             "type": "primitive"
                           },
-                          "checkNumber": {
+                          "cardFingerprint": {
                             "value": {
-                              "value": "savedPaymentDetails",
+                              "value": "20ac00fed8ef913aefb17cfae1097cce",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "checkIdentifier": {
+                          "cardIssuedCountry": {
+                            "value": "TR",
+                            "type": "enum"
+                          },
+                          "transactionReferenceField": {
                             "value": {
-                              "value": "savedPaymentDetails",
+                              "value": "Deposit",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "3dsDone": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "nameOnCard": {
+                            "properties": {
+                              "firstName": {
+                                "value": {
+                                  "value": "Baran",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "middleName": {
+                                "value": {
+                                  "value": "Realblood",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "lastName": {
+                                "value": {
+                                  "value": "Ozkan",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "cardLast4Digits": {
+                            "value": {
+                              "value": "cardLast4Digits",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardBrand": {
+                            "value": "VISA",
+                            "type": "enum"
+                          },
+                          "cardFunding": {
+                            "value": "CREDIT",
+                            "type": "enum"
+                          },
+                          "cardAuthenticated": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "paymentChannel": {
+                            "value": {
+                              "value": "paymentChannel",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardType": {
+                            "value": "VIRTUAL",
+                            "type": "enum"
+                          },
+                          "accountNumber": {
+                            "value": {
+                              "value": "accountNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "accountType": {
+                            "value": {
+                              "value": "accountType",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankName": {
+                            "value": {
+                              "value": "bankName",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankCode": {
+                            "value": {
+                              "value": "bankCode",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "name": {
                             "value": {
-                              "value": "savedPaymentDetails",
+                              "value": "name",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankAddress": {
+                            "properties": {
+                              "addressLines": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": {
+                                        "value": "Klara-Franke Str 20",
+                                        "type": "string"
+                                      },
+                                      "type": "primitive"
+                                    },
+                                    "type": "unknown"
+                                  }
+                                ],
+                                "type": "array"
+                              },
+                              "postcode": {
+                                "value": {
+                                  "value": "10557",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "city": {
+                                "value": {
+                                  "value": "Berlin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "state": {
+                                "value": {
+                                  "value": "Berlin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "country": {
+                                "value": {
+                                  "value": "Germany",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "tags": {
+                                "value": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "value": {
+                                          "value": "customKey",
+                                          "type": "string"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": "customValue",
+                                          "type": "string"
+                                        },
+                                        "type": "primitive"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                ],
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "specialInstructions": {
+                            "value": {
+                              "value": "specialInstructions",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "BIC": {
+                            "value": {
+                              "value": "DE761234561",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country": {
+                            "value": "AF",
+                            "type": "enum"
+                          },
+                          "IBAN": {
+                            "value": {
+                              "value": "1234321",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "tags": {
+                            "properties": {
+                              "key": {
+                                "value": {
+                                  "value": "customKey",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "customValue",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "bankBranchCode": {
+                            "value": {
+                              "value": "bankBranchCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "routingNumber": {
+                            "value": {
+                              "value": "routingNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "beneficiaryName": {
+                            "value": {
+                              "value": "beneficiaryName",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "swiftCode": {
+                            "value": {
+                              "value": "swiftCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "businessShortCode": {
+                            "value": {
+                              "value": "businessShortCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "transactionType": {
+                            "value": "CustomerPayBillOnline",
+                            "type": "enum"
+                          },
+                          "phoneNumber": {
+                            "value": {
+                              "value": "phoneNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "upiID": {
+                            "value": {
+                              "value": "upiID",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankProvider": {
+                            "value": {
+                              "value": "bankProvider",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "interfaceProvider": {
+                            "value": {
+                              "value": "interfaceProvider",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletType": {
+                            "value": {
+                              "value": "walletType",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletId": {
+                            "value": {
+                              "value": "walletId",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletPhoneNumber": {
+                            "value": {
+                              "value": "walletPhoneNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "checkNumber": {
+                            "value": {
+                              "value": "checkNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "checkIdentifier": {
+                            "value": {
+                              "value": "checkIdentifier",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -7656,23 +9352,339 @@
                             },
                             "type": "primitive"
                           },
-                          "checkNumber": {
+                          "cardFingerprint": {
                             "value": {
-                              "value": "savedPaymentDetails",
+                              "value": "20ac00fed8ef913aefb17cfae1097cce",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
-                          "checkIdentifier": {
+                          "cardIssuedCountry": {
+                            "value": "TR",
+                            "type": "enum"
+                          },
+                          "transactionReferenceField": {
                             "value": {
-                              "value": "savedPaymentDetails",
+                              "value": "Deposit",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "3dsDone": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "nameOnCard": {
+                            "properties": {
+                              "firstName": {
+                                "value": {
+                                  "value": "Baran",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "middleName": {
+                                "value": {
+                                  "value": "Realblood",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "lastName": {
+                                "value": {
+                                  "value": "Ozkan",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "cardLast4Digits": {
+                            "value": {
+                              "value": "cardLast4Digits",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardBrand": {
+                            "value": "VISA",
+                            "type": "enum"
+                          },
+                          "cardFunding": {
+                            "value": "CREDIT",
+                            "type": "enum"
+                          },
+                          "cardAuthenticated": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "paymentChannel": {
+                            "value": {
+                              "value": "paymentChannel",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "cardType": {
+                            "value": "VIRTUAL",
+                            "type": "enum"
+                          },
+                          "accountNumber": {
+                            "value": {
+                              "value": "accountNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "accountType": {
+                            "value": {
+                              "value": "accountType",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankName": {
+                            "value": {
+                              "value": "bankName",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankCode": {
+                            "value": {
+                              "value": "bankCode",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "name": {
                             "value": {
-                              "value": "savedPaymentDetails",
+                              "value": "name",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankAddress": {
+                            "properties": {
+                              "addressLines": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": {
+                                        "value": "Klara-Franke Str 20",
+                                        "type": "string"
+                                      },
+                                      "type": "primitive"
+                                    },
+                                    "type": "unknown"
+                                  }
+                                ],
+                                "type": "array"
+                              },
+                              "postcode": {
+                                "value": {
+                                  "value": "10557",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "city": {
+                                "value": {
+                                  "value": "Berlin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "state": {
+                                "value": {
+                                  "value": "Berlin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "country": {
+                                "value": {
+                                  "value": "Germany",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "tags": {
+                                "value": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "value": {
+                                          "value": "customKey",
+                                          "type": "string"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": "customValue",
+                                          "type": "string"
+                                        },
+                                        "type": "primitive"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                ],
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "specialInstructions": {
+                            "value": {
+                              "value": "specialInstructions",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "BIC": {
+                            "value": {
+                              "value": "DE761234561",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "country": {
+                            "value": "AF",
+                            "type": "enum"
+                          },
+                          "IBAN": {
+                            "value": {
+                              "value": "1234321",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "tags": {
+                            "properties": {
+                              "key": {
+                                "value": {
+                                  "value": "customKey",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "customValue",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "bankBranchCode": {
+                            "value": {
+                              "value": "bankBranchCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "routingNumber": {
+                            "value": {
+                              "value": "routingNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "beneficiaryName": {
+                            "value": {
+                              "value": "beneficiaryName",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "swiftCode": {
+                            "value": {
+                              "value": "swiftCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "businessShortCode": {
+                            "value": {
+                              "value": "businessShortCode",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "transactionType": {
+                            "value": "CustomerPayBillOnline",
+                            "type": "enum"
+                          },
+                          "phoneNumber": {
+                            "value": {
+                              "value": "phoneNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "upiID": {
+                            "value": {
+                              "value": "upiID",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "bankProvider": {
+                            "value": {
+                              "value": "bankProvider",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "interfaceProvider": {
+                            "value": {
+                              "value": "interfaceProvider",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletType": {
+                            "value": {
+                              "value": "walletType",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletId": {
+                            "value": {
+                              "value": "walletId",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "walletPhoneNumber": {
+                            "value": {
+                              "value": "walletPhoneNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "checkNumber": {
+                            "value": {
+                              "value": "checkNumber",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "checkIdentifier": {
+                            "value": {
+                              "value": "checkIdentifier",
                               "type": "string"
                             },
                             "type": "primitive"

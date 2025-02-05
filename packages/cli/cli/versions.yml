@@ -1,5 +1,14 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI parser now correctly generates examples for discriminated unions where a variant may itself be a union.
+        Previously, if a discriminated union variant was itself a union (e.g. `{ type: "foo", value: { type: "bar" } }`),
+        the example generation would skip. Now it recursively handles nested unions to generate valid examples.
+      type: fix
+  irVersion: 55
+  version: 0.51.26
+
+- changelogEntry:
+    - summary: |
         Literal property values are now accepted as deep object query parameters. Previously, if a query parameter was a deep object
         with a literal property value (e.g. `{ type: "foo" }`), the CLI would reject it as too complex. Now literal values are
         allowed since they can be safely serialized.

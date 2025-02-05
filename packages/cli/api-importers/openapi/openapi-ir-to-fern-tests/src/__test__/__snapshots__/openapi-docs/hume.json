@@ -37,10 +37,11 @@
                           ],
                         },
                         "source": {
-                          "content_type": "source",
-                          "filename": "source",
-                          "md5sum": "source",
+                          "content_type": "content_type",
+                          "filename": "filename",
+                          "md5sum": "md5sum",
                           "type": "file",
+                          "url": "url",
                         },
                       },
                     ],
@@ -87,7 +88,9 @@
                         "state": {
                           "created_timestamp_ms": 1000000,
                           "ended_timestamp_ms": 1000000,
-                          "message": "state",
+                          "message": "message",
+                          "num_errors": 1,
+                          "num_predictions": 1,
                           "started_timestamp_ms": 1000000,
                           "status": "FAILED",
                         },
@@ -1377,7 +1380,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   created_timestamp_ms: 1000000
                   started_timestamp_ms: 1000000
                   ended_timestamp_ms: 1000000
-                  message: state
+                  num_predictions: 1
+                  num_errors: 1
+                  message: message
     Start Job:
       path: /v0/batch/jobs
       method: POST
@@ -1446,9 +1451,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             body:
               - source:
                   type: file
-                  filename: source
-                  content_type: source
-                  md5sum: source
+                  url: url
+                  filename: filename
+                  content_type: content_type
+                  md5sum: md5sum
                 results:
                   predictions:
                     - file: file
@@ -2285,7 +2291,9 @@ types:
                       "state": {
                         "created_timestamp_ms": 1000000,
                         "ended_timestamp_ms": 1000000,
-                        "message": "state",
+                        "message": "message",
+                        "num_errors": 1,
+                        "num_predictions": 1,
                         "started_timestamp_ms": 1000000,
                         "status": "FAILED",
                       },
@@ -2392,7 +2400,9 @@ types:
                 created_timestamp_ms: 1000000
                 started_timestamp_ms: 1000000
                 ended_timestamp_ms: 1000000
-                message: state
+                num_predictions: 1
+                num_errors: 1
+                message: message
   source:
     openapi: ../openapi.yaml
   display-name: Get Job Predictions

@@ -1386,21 +1386,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -1419,14 +1419,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -1434,6 +1434,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -1473,21 +1502,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -1506,14 +1535,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -1521,6 +1550,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -1905,7 +1963,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "created_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -1948,7 +2006,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "modified_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -2540,21 +2598,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -2573,14 +2631,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -2588,6 +2646,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -2627,21 +2714,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -2660,14 +2747,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -2675,6 +2762,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -3001,21 +3117,59 @@
                       },
                       "client_id": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "client_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "client_secret": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "client_secret",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
+                      "tenant_domain": {
+                        "value": {
+                          "value": "tenant_domain",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "issuer": {
+                        "value": {
+                          "value": "issuer",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "sign_in_endpoint": {
+                        "value": {
+                          "value": "sign_in_endpoint",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "signing_cert": {
+                        "value": {
+                          "value": "signing_cert",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "key": {
+                        "value": {
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "unknown"
+                      },
                       "domain": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "domain",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -3558,21 +3712,59 @@
                       },
                       "client_id": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "client_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "client_secret": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "client_secret",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
+                      "tenant_domain": {
+                        "value": {
+                          "value": "tenant_domain",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "issuer": {
+                        "value": {
+                          "value": "issuer",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "sign_in_endpoint": {
+                        "value": {
+                          "value": "sign_in_endpoint",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "signing_cert": {
+                        "value": {
+                          "value": "signing_cert",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "key": {
+                        "value": {
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "unknown"
+                      },
                       "domain": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "domain",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -3826,21 +4018,59 @@
                           },
                           "client_id": {
                             "value": {
-                              "value": "auth_connections",
+                              "value": "client_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "client_secret": {
                             "value": {
-                              "value": "auth_connections",
+                              "value": "client_secret",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
+                          "tenant_domain": {
+                            "value": {
+                              "value": "tenant_domain",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "issuer": {
+                            "value": {
+                              "value": "issuer",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sign_in_endpoint": {
+                            "value": {
+                              "value": "sign_in_endpoint",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "signing_cert": {
+                            "value": {
+                              "value": "signing_cert",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "key": {
+                            "value": {
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "unknown"
+                          },
                           "domain": {
                             "value": {
-                              "value": "auth_connections",
+                              "value": "domain",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -4372,6 +4602,16 @@
                   },
                   "type": "primitive"
                 },
+                "key": {
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "unknown"
+                },
                 "id": {
                   "value": {
                     "value": "string",
@@ -4399,21 +4639,59 @@
                       },
                       "client_id": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "client_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "client_secret": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "client_secret",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
+                      "tenant_domain": {
+                        "value": {
+                          "value": "tenant_domain",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "issuer": {
+                        "value": {
+                          "value": "issuer",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "sign_in_endpoint": {
+                        "value": {
+                          "value": "sign_in_endpoint",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "signing_cert": {
+                        "value": {
+                          "value": "signing_cert",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "key": {
+                        "value": {
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "unknown"
+                      },
                       "domain": {
                         "value": {
-                          "value": "auth_connection",
+                          "value": "domain",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -4811,7 +5089,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "created_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -4854,7 +5132,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "modified_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -5188,21 +5466,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -5221,14 +5499,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -5236,6 +5514,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -5275,21 +5582,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -5308,14 +5615,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -5323,6 +5630,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -5650,7 +5986,7 @@
               "value": {
                 "type": {
                   "value": {
-                    "value": "feature",
+                    "value": "product",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -5666,6 +6002,16 @@
                     }
                   ],
                   "type": "array"
+                },
+                "key": {
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "unknown"
                 },
                 "name": {
                   "value": {
@@ -5716,21 +6062,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "part",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "part",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "part",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -5749,14 +6095,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "part",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "part",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -5764,6 +6110,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -5779,14 +6154,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "part",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "part",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -5803,21 +6178,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "part",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "part",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "part",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -5836,14 +6211,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "part",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "part",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -5851,6 +6226,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -5883,14 +6287,14 @@
                       },
                       "description": {
                         "value": {
-                          "value": "part",
+                          "value": "description",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "name": {
                         "value": {
-                          "value": "part",
+                          "value": "name",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -5909,7 +6313,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "part",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -5950,6 +6354,13 @@
                           }
                         ],
                         "type": "array"
+                      },
+                      "target_close_date": {
+                        "value": {
+                          "value": "2024-01-15T09:30:00Z",
+                          "type": "datetime"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -6520,21 +6931,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "part",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "part",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "part",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -6553,14 +6964,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "part",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "part",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -6568,6 +6979,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -6583,14 +7023,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "part",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "part",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -6607,21 +7047,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "part",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "part",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "part",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -6640,14 +7080,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "part",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "part",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -6655,6 +7095,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -6687,14 +7156,14 @@
                       },
                       "description": {
                         "value": {
-                          "value": "part",
+                          "value": "description",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "name": {
                         "value": {
-                          "value": "part",
+                          "value": "name",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -6713,7 +7182,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "part",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -6754,6 +7223,13 @@
                           }
                         ],
                         "type": "array"
+                      },
+                      "target_close_date": {
+                        "value": {
+                          "value": "2024-01-15T09:30:00Z",
+                          "type": "datetime"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -7168,7 +7644,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "parts",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -7187,14 +7663,14 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "parts",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "parts",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -7211,7 +7687,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "parts",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -7247,14 +7723,14 @@
                           },
                           "description": {
                             "value": {
-                              "value": "parts",
+                              "value": "description",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "name": {
                             "value": {
-                              "value": "parts",
+                              "value": "name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -7273,7 +7749,7 @@
                                     },
                                     "id": {
                                       "value": {
-                                        "value": "parts",
+                                        "value": "id",
                                         "type": "string"
                                       },
                                       "type": "primitive"
@@ -7314,6 +7790,13 @@
                               }
                             ],
                             "type": "array"
+                          },
+                          "target_close_date": {
+                            "value": {
+                              "value": "2024-01-15T09:30:00Z",
+                              "type": "datetime"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -7584,10 +8067,20 @@
               "value": {
                 "type": {
                   "value": {
-                    "value": "enhancement",
+                    "value": "product",
                     "type": "string"
                   },
                   "type": "primitive"
+                },
+                "key": {
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "unknown"
                 },
                 "id": {
                   "value": {
@@ -7626,21 +8119,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "part",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "part",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "part",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -7659,14 +8152,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "part",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "part",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -7674,6 +8167,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -7689,14 +8211,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "part",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "part",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -7713,21 +8235,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "part",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "part",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "part",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -7746,14 +8268,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "part",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "part",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -7761,6 +8283,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -7793,14 +8344,14 @@
                       },
                       "description": {
                         "value": {
-                          "value": "part",
+                          "value": "description",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "name": {
                         "value": {
-                          "value": "part",
+                          "value": "name",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -7819,7 +8370,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "part",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -7860,6 +8411,13 @@
                           }
                         ],
                         "type": "array"
+                      },
+                      "target_close_date": {
+                        "value": {
+                          "value": "2024-01-15T09:30:00Z",
+                          "type": "datetime"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -8119,21 +8677,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -8152,14 +8710,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -8167,6 +8725,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -8206,21 +8793,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -8239,14 +8826,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -8254,6 +8841,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -8854,21 +9470,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -8887,14 +9503,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -8902,6 +9518,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -8941,21 +9586,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -8974,14 +9619,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -8989,6 +9634,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -9522,7 +10196,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "created_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -9565,7 +10239,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "modified_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -9894,21 +10568,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -9927,14 +10601,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -9942,6 +10616,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -9981,21 +10684,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -10014,14 +10717,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -10029,6 +10732,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -10326,21 +11058,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -10359,14 +11091,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -10374,6 +11106,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -10413,21 +11174,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -10446,14 +11207,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -10461,6 +11222,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -11059,21 +11849,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -11092,14 +11882,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -11107,6 +11897,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -11146,21 +11965,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -11179,14 +11998,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -11194,6 +12013,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -11538,7 +12386,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "created_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -11581,7 +12429,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "modified_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -11908,21 +12756,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -11941,14 +12789,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -11956,6 +12804,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -11995,21 +12872,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -12028,14 +12905,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -12043,6 +12920,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -12356,21 +13262,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -12389,14 +13295,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -12404,6 +13310,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -12419,14 +13354,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -12443,21 +13378,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -12476,14 +13411,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -12491,6 +13426,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -12523,7 +13487,7 @@
                       },
                       "body": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "body",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -12841,21 +13805,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -12874,14 +13838,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -12889,6 +13853,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -12904,14 +13897,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -12928,21 +13921,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -12961,14 +13954,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -12976,6 +13969,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -13008,7 +14030,7 @@
                       },
                       "body": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "body",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -13406,7 +14428,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "timeline_entries",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -13425,14 +14447,14 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "timeline_entries",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "timeline_entries",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -13449,7 +14471,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "timeline_entries",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -13485,7 +14507,7 @@
                           },
                           "body": {
                             "value": {
-                              "value": "timeline_entries",
+                              "value": "body",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -13794,21 +14816,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -13827,14 +14849,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -13842,6 +14864,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -13857,14 +14908,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -13881,21 +14932,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -13914,14 +14965,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "timeline_entry",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -13929,6 +14980,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -13961,7 +15041,7 @@
                       },
                       "body": {
                         "value": {
-                          "value": "timeline_entry",
+                          "value": "body",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -14249,21 +15329,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -14282,14 +15362,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -14297,6 +15377,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -14336,21 +15445,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -14369,14 +15478,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -14384,6 +15493,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -14983,21 +16121,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -15016,14 +16154,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -15031,6 +16169,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -15070,21 +16237,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -15103,14 +16270,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -15118,6 +16285,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -15385,7 +16581,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "created_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -15428,7 +16624,7 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "modified_by",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -15756,21 +16952,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "created_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -15789,14 +16985,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "created_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "created_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -15804,6 +17000,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -15843,21 +17068,21 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "display_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "display_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -15876,14 +17101,14 @@
                           },
                           "email": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "email",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "full_name": {
                             "value": {
-                              "value": "modified_by",
+                              "value": "full_name",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -15891,6 +17116,35 @@
                           "state": {
                             "value": "active",
                             "type": "enum"
+                          },
+                          "external_ref": {
+                            "value": {
+                              "value": "external_ref",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "rev_org": {
+                            "value": {
+                              "value": {
+                                "type": {
+                                  "value": {
+                                    "value": "rev_org",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "id": {
+                                  "value": {
+                                    "value": "id",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "discriminated"
+                            },
+                            "type": "oneOf"
                           }
                         },
                         "type": "discriminated"
@@ -16168,13 +17422,6 @@
                   },
                   "type": "primitive"
                 },
-                "rev_org": {
-                  "value": {
-                    "value": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                    "type": "string"
-                  },
-                  "type": "primitive"
-                },
                 "applies_to_part": {
                   "value": {
                     "value": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
@@ -16248,21 +17495,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -16281,14 +17528,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "work",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "work",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -16296,6 +17543,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -16311,14 +17587,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "work",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "work",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -16335,21 +17611,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -16368,14 +17644,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "work",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "work",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -16383,6 +17659,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -16408,21 +17713,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "name": {
                               "value": {
-                                "value": "work",
+                                "value": "name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -16451,7 +17756,7 @@
                       },
                       "body": {
                         "value": {
-                          "value": "work",
+                          "value": "body",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -16470,7 +17775,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "work",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -16497,7 +17802,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "work",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -16560,10 +17865,14 @@
                       },
                       "title": {
                         "value": {
-                          "value": "work",
+                          "value": "title",
                           "type": "string"
                         },
                         "type": "primitive"
+                      },
+                      "priority": {
+                        "value": "p0",
+                        "type": "enum"
                       },
                       "group": {
                         "properties": {
@@ -16596,21 +17905,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -17400,7 +18709,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -17419,14 +18728,14 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "works",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "works",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -17443,7 +18752,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -17472,14 +18781,14 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
                                 },
                                 "name": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "name",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -17508,7 +18817,7 @@
                           },
                           "body": {
                             "value": {
-                              "value": "works",
+                              "value": "body",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -17527,7 +18836,7 @@
                                     },
                                     "id": {
                                       "value": {
-                                        "value": "works",
+                                        "value": "id",
                                         "type": "string"
                                       },
                                       "type": "primitive"
@@ -17554,7 +18863,7 @@
                                     },
                                     "id": {
                                       "value": {
-                                        "value": "works",
+                                        "value": "id",
                                         "type": "string"
                                       },
                                       "type": "primitive"
@@ -17617,10 +18926,14 @@
                           },
                           "title": {
                             "value": {
-                              "value": "works",
+                              "value": "title",
                               "type": "string"
                             },
                             "type": "primitive"
+                          },
+                          "priority": {
+                            "value": "p0",
+                            "type": "enum"
                           },
                           "group": {
                             "properties": {
@@ -17646,7 +18959,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -17952,21 +19265,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -17985,14 +19298,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "work",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "work",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -18000,6 +19313,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -18015,14 +19357,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "work",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "work",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -18039,21 +19381,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -18072,14 +19414,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "work",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "work",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -18087,6 +19429,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -18112,21 +19483,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "name": {
                               "value": {
-                                "value": "work",
+                                "value": "name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -18155,7 +19526,7 @@
                       },
                       "body": {
                         "value": {
-                          "value": "work",
+                          "value": "body",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -18174,7 +19545,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "work",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -18201,7 +19572,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "work",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -18264,10 +19635,14 @@
                       },
                       "title": {
                         "value": {
-                          "value": "work",
+                          "value": "title",
                           "type": "string"
                         },
                         "type": "primitive"
+                      },
+                      "priority": {
+                        "value": "p0",
+                        "type": "enum"
                       },
                       "group": {
                         "properties": {
@@ -18300,21 +19675,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -18880,7 +20255,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -18899,14 +20274,14 @@
                           },
                           "display_id": {
                             "value": {
-                              "value": "works",
+                              "value": "display_id",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "id": {
                             "value": {
-                              "value": "works",
+                              "value": "id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -18923,7 +20298,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -18952,14 +20327,14 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
                                 },
                                 "name": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "name",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -18988,7 +20363,7 @@
                           },
                           "body": {
                             "value": {
-                              "value": "works",
+                              "value": "body",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -19007,7 +20382,7 @@
                                     },
                                     "id": {
                                       "value": {
-                                        "value": "works",
+                                        "value": "id",
                                         "type": "string"
                                       },
                                       "type": "primitive"
@@ -19034,7 +20409,7 @@
                                     },
                                     "id": {
                                       "value": {
-                                        "value": "works",
+                                        "value": "id",
                                         "type": "string"
                                       },
                                       "type": "primitive"
@@ -19097,10 +20472,14 @@
                           },
                           "title": {
                             "value": {
-                              "value": "works",
+                              "value": "title",
                               "type": "string"
                             },
                             "type": "primitive"
+                          },
+                          "priority": {
+                            "value": "p0",
+                            "type": "enum"
                           },
                           "group": {
                             "properties": {
@@ -19126,7 +20505,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "works",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -19407,6 +20786,16 @@
                   },
                   "type": "primitive"
                 },
+                "key": {
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "unknown"
+                },
                 "applies_to_part": {
                   "value": {
                     "value": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
@@ -19451,21 +20840,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -19484,14 +20873,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "work",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "work",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -19499,6 +20888,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -19514,14 +20932,14 @@
                       },
                       "display_id": {
                         "value": {
-                          "value": "work",
+                          "value": "display_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
                       "id": {
                         "value": {
-                          "value": "work",
+                          "value": "id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -19538,21 +20956,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -19571,14 +20989,14 @@
                             },
                             "email": {
                               "value": {
-                                "value": "work",
+                                "value": "email",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "full_name": {
                               "value": {
-                                "value": "work",
+                                "value": "full_name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -19586,6 +21004,35 @@
                             "state": {
                               "value": "active",
                               "type": "enum"
+                            },
+                            "external_ref": {
+                              "value": {
+                                "value": "external_ref",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "rev_org": {
+                              "value": {
+                                "value": {
+                                  "type": {
+                                    "value": {
+                                      "value": "rev_org",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "id": {
+                                    "value": {
+                                      "value": "id",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "discriminated"
+                              },
+                              "type": "oneOf"
                             }
                           },
                           "type": "discriminated"
@@ -19611,21 +21058,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "name": {
                               "value": {
-                                "value": "work",
+                                "value": "name",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -19654,7 +21101,7 @@
                       },
                       "body": {
                         "value": {
-                          "value": "work",
+                          "value": "body",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -19673,7 +21120,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "work",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -19700,7 +21147,7 @@
                                 },
                                 "id": {
                                   "value": {
-                                    "value": "work",
+                                    "value": "id",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -19763,10 +21210,14 @@
                       },
                       "title": {
                         "value": {
-                          "value": "work",
+                          "value": "title",
                           "type": "string"
                         },
                         "type": "primitive"
+                      },
+                      "priority": {
+                        "value": "p0",
+                        "type": "enum"
                       },
                       "group": {
                         "properties": {
@@ -19799,21 +21250,21 @@
                             },
                             "display_id": {
                               "value": {
-                                "value": "work",
+                                "value": "display_id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "id": {
                               "value": {
-                                "value": "work",
+                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "display_name": {
                               "value": {
-                                "value": "work",
+                                "value": "display_name",
                                 "type": "string"
                               },
                               "type": "primitive"

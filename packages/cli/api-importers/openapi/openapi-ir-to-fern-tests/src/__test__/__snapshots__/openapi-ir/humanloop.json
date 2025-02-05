@@ -15702,6 +15702,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -16044,6 +16196,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -16443,6 +16747,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -17155,6 +17611,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -17503,6 +18111,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -17770,6 +18530,25 @@
                           "return_type": {
                             "value": "boolean",
                             "type": "enum"
+                          },
+                          "prompt": {
+                            "properties": {
+                              "model": {
+                                "value": {
+                                  "value": "model",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "code": {
+                            "value": {
+                              "value": "code",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -18138,24 +18917,57 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "id",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "model": {
+                                "value": {
+                                  "value": "model",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
                               "status": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "status",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
                               "name": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "name",
                                   "type": "string"
                                 },
                                 "type": "primitive"
+                              },
+                              "evaluator_type": {
+                                "value": {
+                                  "value": "evaluator_type",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "agent_class": {
+                                "value": {
+                                  "value": "agent_class",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "model_config": {
+                                "properties": {
+                                  "model": {
+                                    "value": {
+                                      "value": "model",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
                               }
                             },
                             "type": "discriminated"
@@ -18668,24 +19480,57 @@
                               },
                               "id": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "id",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "model": {
+                                "value": {
+                                  "value": "model",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
                               "status": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "status",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
                               "name": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "name",
                                   "type": "string"
                                 },
                                 "type": "primitive"
+                              },
+                              "evaluator_type": {
+                                "value": {
+                                  "value": "evaluator_type",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "agent_class": {
+                                "value": {
+                                  "value": "agent_class",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "model_config": {
+                                "properties": {
+                                  "model": {
+                                    "value": {
+                                      "value": "model",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
                               }
                             },
                             "type": "discriminated"

@@ -9683,6 +9683,13 @@
                     },
                     "type": "primitive"
                   },
+                  "roomId": {
+                    "value": {
+                      "value": "roomId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
                   "transportType": {
                     "value": "tcp",
                     "type": "enum"
@@ -9696,14 +9703,7 @@
                   },
                   "host": {
                     "value": {
-                      "value": "string",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "roomId": {
-                    "value": {
-                      "value": "string",
+                      "value": "host",
                       "type": "string"
                     },
                     "type": "primitive"

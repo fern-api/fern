@@ -14,8 +14,46 @@
                 "name": undefined,
                 "value": {
                   "invalidMemberError": {},
-                  "message": "string",
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
                   "reason": "INVALID_MEMBER",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "organizationInviteAlreadyExistsError": {
+                    "email_address": "email_address",
+                    "organization_id": "organization_id",
+                  },
+                  "organizationMemberAlreadyExistsError": {
+                    "member_id": "member_id",
+                    "organization_id": "organization_id",
+                  },
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
                 },
               },
             ],
@@ -29,7 +67,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2695,8 +2734,30 @@ errors:
     examples:
       - value:
           reason: INVALID_MEMBER
-          message: string
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          invalidRoleError:
+            role: role
+          invalidSubjectTypeError: {}
           invalidMemberError: {}
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          invalidSubjectTypeError: {}
+          invalidMemberError: {}
+          invalidRoleError:
+            role: role
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          organizationInviteAlreadyExistsError:
+            organization_id: organization_id
+            email_address: email_address
+          organizationMemberAlreadyExistsError:
+            organization_id: organization_id
+            member_id: member_id
   ForbiddenError:
     status-code: 403
     type: ForbiddenErrorBody
@@ -2704,7 +2765,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   UnprocessableEntityError:
