@@ -12,6 +12,7 @@ use Seed\Core\Types\ArrayType;
 use Seed\Core\Types\Date;
 use Seed\Core\Types\Discriminant;
 use Seed\Core\Types\DiscriminatedUnion;
+use Seed\Core\Types\DiscriminatedUnionType;
 use Seed\Core\Types\Union;
 
 /**
@@ -46,6 +47,8 @@ abstract class JsonSerializableType implements \JsonSerializable
         $result = [];
         $reflectionClass = new \ReflectionClass($this);
 
+        $discriminatedUnionTypeAttr = $reflectionClass->getAttributes(DiscriminatedUnionType::class)[0] ?? null;
+
         foreach ($reflectionClass->getProperties() as $property) {
             $jsonSkipAttr = $property->getAttributes(JsonSkip::class)[0] ?? null;
             if ($jsonSkipAttr) {
@@ -62,17 +65,9 @@ abstract class JsonSerializableType implements \JsonSerializable
             $arrayType = null;
             $unionType = null;
 
-            // Handle discriminated union
-            $discriminantAttr = $property->getAttributes(Discriminant::class)[0] ?? null;
-            if ($discriminantAttr && $this instanceof DiscriminatedUnion) {
-                if (count($discriminantAttr->getArguments()) !== 1) {
-                    throw new \InvalidArgumentException(
-                        "Discriminant attribute must have exactly one argument for a subclass of DiscriminatedUnion"
-                    );
-                }
-
+            if ($discriminatedUnionTypeAttr) {
                 $result[$jsonKey] = $value;
-                $existingTypes = $discriminantAttr->getArguments()[0];
+                $existingTypes = $discriminatedUnionTypeAttr->getArguments()[DiscriminatedUnionType::TYPES_INDEX];
                 $discriminatedType = $existingTypes[$value] ?? null;
 
                 if ($discriminatedType instanceof Date) {
@@ -84,7 +79,7 @@ abstract class JsonSerializableType implements \JsonSerializable
                 }
 
                 $jsonKey = $value;
-                $value = $this->value;
+                $value = $this->$discriminatedUnionTypeAttr->getArguments()[DiscriminatedUnionType::DISCRIMINANT_INDEX];
             }
 
             // Handle DateTime properties

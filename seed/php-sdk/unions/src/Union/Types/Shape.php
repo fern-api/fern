@@ -4,18 +4,24 @@ namespace Seed\Union\Types;
 
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Json\JsonSkip;
-use Seed\Core\Types\DiscriminatedUnion;
-use Seed\Core\Types\Discriminant;
 use Seed\Union\Types\Circle;
 use Seed\Union\Types\Square;
+use Seed\Core\Types\DiscriminatedUnionType;
+use Seed\Core\Json\JsonSerializableType;
 
-class Shape extends DiscriminatedUnion
+#[DiscriminatedUnionType(
+    'type',
+    [
+        'circle' => Circle::class,
+        'square' => Square::class,
+    ],
+)]
+class Shape extends JsonSerializableType
 {
     /**
      * @var 'circle'|'square'|'_unknown' $type 
      */
     #[JsonProperty('type')]
-    #[Discriminant(['circle' => Circle::class, 'square' => Square::class])]
     public string $type;
 
     /**
