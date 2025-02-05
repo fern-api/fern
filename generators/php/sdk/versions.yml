@@ -2,14 +2,14 @@
   changelogEntry:
     - type: feat
       summary: >-
-        Add retry for HTTP requests.
+        Retry HTTP requests on status codes 408, 429, 5XX.
         You can configure the maximum number of retries like this:
         ```php
         $client = new FooClient("token", ['maxRetries' => 3])
         $client->bar($request, ['maxRetries' => 5]);
         ```
-
-        The default for `maxRetries` is 3. Set `maxRetries` to 0 to disable retries.
+        The default for `maxRetries` is 2, meaning up to 3 HTTP requests may be sent.
+        Set `maxRetries` to 0 to disable retries.
   irVersion: 53
 - version: 0.3.0
   changelogEntry:

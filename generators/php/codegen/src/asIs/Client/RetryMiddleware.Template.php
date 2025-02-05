@@ -40,7 +40,7 @@ class RetryMiddleware
     {
         $this->nextHandler = $nextHandler;
         $this->options = array_merge([
-            'maxRetries' => 3,
+            'maxRetries' => 2,
             'baseDelay' => 1000,
         ], $options ?? []);
     }
