@@ -25844,13 +25844,6 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "transformation",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "id": {
                             "value": {
                               "value": "iss_YXKv5OdJXCiVwkPhGy",
@@ -25934,11 +25927,11 @@
                           },
                           "aggregation_keys": {
                             "properties": {
-                              "transformation_id": {
+                              "webhook_id": {
                                 "value": [
                                   {
                                     "value": {
-                                      "value": "transformation_id",
+                                      "value": "webhook_id",
                                       "type": "string"
                                     },
                                     "type": "primitive"
@@ -25946,18 +25939,42 @@
                                 ],
                                 "type": "array"
                               },
-                              "log_level": {
-                                "value": "debug",
-                                "type": "enum"
+                              "response_status": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": 1.1,
+                                      "type": "float"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                ],
+                                "type": "array"
+                              },
+                              "error_code": {
+                                "value": [
+                                  {
+                                    "value": "TIMEOUT",
+                                    "type": "enum"
+                                  }
+                                ],
+                                "type": "array"
                               }
                             },
                             "type": "object"
                           },
                           "reference": {
                             "properties": {
-                              "transformation_execution_id": {
+                              "event_id": {
                                 "value": {
-                                  "value": "transformation_execution_id",
+                                  "value": "event_id",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "attempt_id": {
+                                "value": {
+                                  "value": "attempt_id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -25965,96 +25982,12 @@
                             },
                             "type": "object"
                           },
-                          "data": {
-                            "properties": {
-                              "transformation_execution": {
-                                "properties": {
-                                  "id": {
-                                    "value": {
-                                      "value": "id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "transformed_event_data_id": {
-                                    "value": {
-                                      "value": "transformed_event_data_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "original_event_data_id": {
-                                    "value": {
-                                      "value": "original_event_data_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "transformation_id": {
-                                    "value": {
-                                      "value": "transformation_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "team_id": {
-                                    "value": {
-                                      "value": "team_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "webhook_id": {
-                                    "value": {
-                                      "value": "webhook_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "log_level": {
-                                    "value": "debug",
-                                    "type": "enum"
-                                  },
-                                  "logs": {
-                                    "value": [
-                                      {
-                                        "properties": {
-                                          "type": {
-                                            "value": "error",
-                                            "type": "enum"
-                                          },
-                                          "message": {
-                                            "value": {
-                                              "value": "message",
-                                              "type": "string"
-                                            },
-                                            "type": "primitive"
-                                          }
-                                        },
-                                        "type": "object"
-                                      }
-                                    ],
-                                    "type": "array"
-                                  },
-                                  "updated_at": {
-                                    "value": {
-                                      "value": "2024-01-15T09:30:00Z",
-                                      "type": "datetime"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "created_at": {
-                                    "value": {
-                                      "value": "2024-01-15T09:30:00Z",
-                                      "type": "datetime"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
-                              }
+                          "type": {
+                            "value": {
+                              "value": "delivery",
+                              "type": "string"
                             },
-                            "type": "object"
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -27783,13 +27716,6 @@
             "value": {
               "value": {
                 "value": {
-                  "type": {
-                    "value": {
-                      "value": "transformation",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "id": {
                     "value": {
                       "value": "iss_YXKv5OdJXCiVwkPhGy",
@@ -27873,11 +27799,11 @@
                   },
                   "aggregation_keys": {
                     "properties": {
-                      "transformation_id": {
+                      "webhook_id": {
                         "value": [
                           {
                             "value": {
-                              "value": "transformation_id",
+                              "value": "webhook_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -27885,25 +27811,42 @@
                         ],
                         "type": "array"
                       },
-                      "log_level": {
-                        "value": "debug",
-                        "type": "enum"
+                      "response_status": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": 1.1,
+                              "type": "float"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "error_code": {
+                        "value": [
+                          {
+                            "value": "TIMEOUT",
+                            "type": "enum"
+                          }
+                        ],
+                        "type": "array"
                       }
                     },
                     "type": "object"
                   },
                   "reference": {
                     "properties": {
-                      "transformation_execution_id": {
+                      "event_id": {
                         "value": {
-                          "value": "transformation_execution_id",
+                          "value": "event_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "trigger_event_request_transformation_id": {
+                      "attempt_id": {
                         "value": {
-                          "value": "trigger_event_request_transformation_id",
+                          "value": "attempt_id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -27913,32 +27856,11 @@
                   },
                   "data": {
                     "properties": {
-                      "transformation_execution": {
+                      "trigger_event": {
                         "properties": {
                           "id": {
                             "value": {
                               "value": "id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformed_event_data_id": {
-                            "value": {
-                              "value": "transformed_event_data_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "original_event_data_id": {
-                            "value": {
-                              "value": "original_event_data_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -27957,30 +27879,91 @@
                             },
                             "type": "primitive"
                           },
-                          "log_level": {
-                            "value": "debug",
+                          "source_id": {
+                            "value": {
+                              "value": "source_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "destination_id": {
+                            "value": {
+                              "value": "destination_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "event_data_id": {
+                            "value": {
+                              "value": "event_data_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "request_id": {
+                            "value": {
+                              "value": "request_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "attempts": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "data": {
+                            "properties": {
+                              "path": {
+                                "value": {
+                                  "value": "path",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "last_attempt_at": {
+                            "value": {
+                              "value": "2024-01-15T09:30:00Z",
+                              "type": "datetime"
+                            },
+                            "type": "primitive"
+                          },
+                          "next_attempt_at": {
+                            "value": {
+                              "value": "2024-01-15T09:30:00Z",
+                              "type": "datetime"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_status": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "status": {
+                            "value": "SCHEDULED",
                             "type": "enum"
                           },
-                          "logs": {
-                            "value": [
-                              {
-                                "properties": {
-                                  "type": {
-                                    "value": "error",
-                                    "type": "enum"
-                                  },
-                                  "message": {
-                                    "value": {
-                                      "value": "message",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
-                              }
-                            ],
-                            "type": "array"
+                          "successful_at": {
+                            "value": {
+                              "value": "2024-01-15T09:30:00Z",
+                              "type": "datetime"
+                            },
+                            "type": "primitive"
+                          },
+                          "cli_id": {
+                            "value": {
+                              "value": "cli_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           },
                           "updated_at": {
                             "value": {
@@ -27996,33 +27979,16 @@
                             },
                             "type": "primitive"
                           },
-                          "original_event_data": {
-                            "properties": {
-                              "path": {
-                                "value": {
-                                  "value": "path",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "transformed_event_data": {
-                            "properties": {
-                              "path": {
-                                "value": {
-                                  "value": "path",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "issue_id": {
+                          "created_at_id": {
                             "value": {
-                              "value": "issue_id",
+                              "value": "created_at_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "last_attempt_at_id": {
+                            "value": {
+                              "value": "last_attempt_at_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -28165,6 +28131,13 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "type": {
+                    "value": {
+                      "value": "delivery",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "discriminated"
@@ -28421,13 +28394,6 @@
             "value": {
               "value": {
                 "value": {
-                  "type": {
-                    "value": {
-                      "value": "transformation",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "id": {
                     "value": {
                       "value": "iss_YXKv5OdJXCiVwkPhGy",
@@ -28511,11 +28477,11 @@
                   },
                   "aggregation_keys": {
                     "properties": {
-                      "transformation_id": {
+                      "webhook_id": {
                         "value": [
                           {
                             "value": {
-                              "value": "transformation_id",
+                              "value": "webhook_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -28523,31 +28489,55 @@
                         ],
                         "type": "array"
                       },
-                      "log_level": {
-                        "value": "debug",
-                        "type": "enum"
+                      "response_status": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": 1.1,
+                              "type": "float"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "error_code": {
+                        "value": [
+                          {
+                            "value": "TIMEOUT",
+                            "type": "enum"
+                          }
+                        ],
+                        "type": "array"
                       }
                     },
                     "type": "object"
                   },
                   "reference": {
                     "properties": {
-                      "transformation_execution_id": {
+                      "event_id": {
                         "value": {
-                          "value": "transformation_execution_id",
+                          "value": "event_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "trigger_event_request_transformation_id": {
+                      "attempt_id": {
                         "value": {
-                          "value": "trigger_event_request_transformation_id",
+                          "value": "attempt_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       }
                     },
                     "type": "object"
+                  },
+                  "type": {
+                    "value": {
+                      "value": "delivery",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "discriminated"
@@ -28686,13 +28676,6 @@
             "value": {
               "value": {
                 "value": {
-                  "type": {
-                    "value": {
-                      "value": "transformation",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "id": {
                     "value": {
                       "value": "iss_YXKv5OdJXCiVwkPhGy",
@@ -28776,11 +28759,11 @@
                   },
                   "aggregation_keys": {
                     "properties": {
-                      "transformation_id": {
+                      "webhook_id": {
                         "value": [
                           {
                             "value": {
-                              "value": "transformation_id",
+                              "value": "webhook_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -28788,31 +28771,55 @@
                         ],
                         "type": "array"
                       },
-                      "log_level": {
-                        "value": "debug",
-                        "type": "enum"
+                      "response_status": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": 1.1,
+                              "type": "float"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "error_code": {
+                        "value": [
+                          {
+                            "value": "TIMEOUT",
+                            "type": "enum"
+                          }
+                        ],
+                        "type": "array"
                       }
                     },
                     "type": "object"
                   },
                   "reference": {
                     "properties": {
-                      "transformation_execution_id": {
+                      "event_id": {
                         "value": {
-                          "value": "transformation_execution_id",
+                          "value": "event_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "trigger_event_request_transformation_id": {
+                      "attempt_id": {
                         "value": {
-                          "value": "trigger_event_request_transformation_id",
+                          "value": "attempt_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       }
                     },
                     "type": "object"
+                  },
+                  "type": {
+                    "value": {
+                      "value": "delivery",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "discriminated"
@@ -41490,28 +41497,14 @@
                             {
                               "value": {
                                 "value": {
-                                  "type": {
-                                    "value": {
-                                      "value": "delay",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "strategy": {
-                                    "value": "each_attempt",
+                                    "value": "linear",
                                     "type": "enum"
                                   },
-                                  "transformation_id": {
+                                  "type": {
                                     "value": {
-                                      "value": "transformation_id",
+                                      "value": "retry",
                                       "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "delay": {
-                                    "value": {
-                                      "value": 1,
-                                      "type": "int"
                                     },
                                     "type": "primitive"
                                   }
@@ -41834,15 +41827,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -41859,45 +41845,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -42214,15 +42165,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -42239,45 +42183,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -42477,15 +42386,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -42502,45 +42404,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -42955,15 +42822,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -42980,45 +42840,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -43218,15 +43043,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -43243,45 +43061,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -43481,15 +43264,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -43506,45 +43282,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -51330,28 +51071,14 @@
                                 {
                                   "value": {
                                     "value": {
-                                      "type": {
-                                        "value": {
-                                          "value": "delay",
-                                          "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      },
                                       "strategy": {
-                                        "value": "each_attempt",
+                                        "value": "linear",
                                         "type": "enum"
                                       },
-                                      "transformation_id": {
+                                      "type": {
                                         "value": {
-                                          "value": "transformation_id",
+                                          "value": "retry",
                                           "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      },
-                                      "delay": {
-                                        "value": {
-                                          "value": 1,
-                                          "type": "int"
                                         },
                                         "type": "primitive"
                                       }
@@ -51392,28 +51119,14 @@
                             {
                               "value": {
                                 "value": {
-                                  "type": {
-                                    "value": {
-                                      "value": "delay",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "strategy": {
-                                    "value": "each_attempt",
+                                    "value": "linear",
                                     "type": "enum"
                                   },
-                                  "transformation_id": {
+                                  "type": {
                                     "value": {
-                                      "value": "transformation_id",
+                                      "value": "retry",
                                       "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "delay": {
-                                    "value": {
-                                      "value": 1,
-                                      "type": "int"
                                     },
                                     "type": "primitive"
                                   }
@@ -51430,28 +51143,14 @@
                             {
                               "value": {
                                 "value": {
-                                  "type": {
-                                    "value": {
-                                      "value": "delay",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "strategy": {
-                                    "value": "each_attempt",
+                                    "value": "linear",
                                     "type": "enum"
                                   },
-                                  "transformation_id": {
+                                  "type": {
                                     "value": {
-                                      "value": "transformation_id",
+                                      "value": "retry",
                                       "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "delay": {
-                                    "value": {
-                                      "value": 1,
-                                      "type": "int"
                                     },
                                     "type": "primitive"
                                   }
@@ -52341,28 +52040,14 @@
                         {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "delay",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "strategy": {
-                                "value": "each_attempt",
+                                "value": "linear",
                                 "type": "enum"
                               },
-                              "transformation_id": {
+                              "type": {
                                 "value": {
-                                  "value": "transformation_id",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -52410,15 +52095,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -52435,45 +52113,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -52490,15 +52133,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -52515,45 +52151,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -53437,28 +53038,14 @@
                         {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "delay",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "strategy": {
-                                "value": "each_attempt",
+                                "value": "linear",
                                 "type": "enum"
                               },
-                              "transformation_id": {
+                              "type": {
                                 "value": {
-                                  "value": "transformation_id",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -53506,15 +53093,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -53531,45 +53111,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -53586,15 +53131,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -53611,45 +53149,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -54044,28 +53547,14 @@
                         {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "delay",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "strategy": {
-                                "value": "each_attempt",
+                                "value": "linear",
                                 "type": "enum"
                               },
-                              "transformation_id": {
+                              "type": {
                                 "value": {
-                                  "value": "transformation_id",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -54113,15 +53602,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -54138,45 +53620,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -54193,15 +53640,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -54218,45 +53658,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -54936,28 +54341,14 @@
                         {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "delay",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "strategy": {
-                                "value": "each_attempt",
+                                "value": "linear",
                                 "type": "enum"
                               },
-                              "transformation_id": {
+                              "type": {
                                 "value": {
-                                  "value": "transformation_id",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -55005,15 +54396,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -55030,45 +54414,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -55085,15 +54434,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -55110,45 +54452,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -55543,28 +54850,14 @@
                         {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "delay",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "strategy": {
-                                "value": "each_attempt",
+                                "value": "linear",
                                 "type": "enum"
                               },
-                              "transformation_id": {
+                              "type": {
                                 "value": {
-                                  "value": "transformation_id",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -55612,15 +54905,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -55637,45 +54923,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -55692,15 +54943,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -55717,45 +54961,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -56150,28 +55359,14 @@
                         {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "delay",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "strategy": {
-                                "value": "each_attempt",
+                                "value": "linear",
                                 "type": "enum"
                               },
-                              "transformation_id": {
+                              "type": {
                                 "value": {
-                                  "value": "transformation_id",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -56219,15 +55414,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -56244,45 +55432,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -56299,15 +55452,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -56324,45 +55470,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -56757,28 +55868,14 @@
                         {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "delay",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "strategy": {
-                                "value": "each_attempt",
+                                "value": "linear",
                                 "type": "enum"
                               },
-                              "transformation_id": {
+                              "type": {
                                 "value": {
-                                  "value": "transformation_id",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -56826,15 +55923,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -56851,45 +55941,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -56906,15 +55961,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -56931,45 +55979,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -57364,28 +56377,14 @@
                         {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "delay",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "strategy": {
-                                "value": "each_attempt",
+                                "value": "linear",
                                 "type": "enum"
                               },
-                              "transformation_id": {
+                              "type": {
                                 "value": {
-                                  "value": "transformation_id",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -57433,15 +56432,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -57458,45 +56450,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }
@@ -57513,15 +56470,8 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "strategy": {
-                            "value": "each_attempt",
+                            "value": "linear",
                             "type": "enum"
                           },
                           "interval": {
@@ -57538,45 +56488,10 @@
                             },
                             "type": "primitive"
                           },
-                          "headers": {
+                          "type": {
                             "value": {
-                              "value": "headers",
+                              "value": "retry",
                               "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "body": {
-                            "value": {
-                              "value": "body",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "query": {
-                            "value": {
-                              "value": "query",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "path": {
-                            "value": {
-                              "value": "path",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "delay": {
-                            "value": {
-                              "value": 1,
-                              "type": "int"
                             },
                             "type": "primitive"
                           }

@@ -13497,7 +13497,7 @@ service:
                         "errors": [
                           {
                             "created_at": "2024-01-15T09:30:00Z",
-                            "error_code": "visionline_instance_unreachable",
+                            "error_code": "seam_bridge_disconnected",
                             "message": "message",
                           },
                         ],
@@ -13578,7 +13578,7 @@ service:
                           "errors": [
                             {
                               "created_at": "2024-01-15T09:30:00Z",
-                              "error_code": "visionline_instance_unreachable",
+                              "error_code": "seam_bridge_disconnected",
                               "message": "message",
                             },
                           ],
@@ -13662,7 +13662,7 @@ service:
                           "errors": [
                             {
                               "created_at": "2024-01-15T09:30:00Z",
-                              "error_code": "visionline_instance_unreachable",
+                              "error_code": "seam_bridge_disconnected",
                               "message": "message",
                             },
                           ],
@@ -13826,9 +13826,9 @@ service:
                 image_url: image_url
                 image_alt_text: image_alt_text
                 errors:
-                  - error_code: visionline_instance_unreachable
-                    created_at: '2024-01-15T09:30:00Z'
+                  - created_at: '2024-01-15T09:30:00Z'
                     message: message
+                    error_code: seam_bridge_disconnected
                 warnings:
                   - {}
                 can_automate_enrollment: true
@@ -13878,9 +13878,9 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   errors:
-                    - error_code: visionline_instance_unreachable
-                      created_at: '2024-01-15T09:30:00Z'
+                    - created_at: '2024-01-15T09:30:00Z'
                       message: message
+                      error_code: seam_bridge_disconnected
                   warnings:
                     - {}
                   can_automate_enrollment: true
@@ -13931,9 +13931,9 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   errors:
-                    - error_code: visionline_instance_unreachable
-                      created_at: '2024-01-15T09:30:00Z'
+                    - created_at: '2024-01-15T09:30:00Z'
                       message: message
+                      error_code: seam_bridge_disconnected
                   warnings:
                     - {}
                   can_automate_enrollment: true
@@ -28485,7 +28485,7 @@ service:
                           "errors": [
                             {
                               "created_at": "2024-01-15T09:30:00Z",
-                              "error_code": "visionline_instance_unreachable",
+                              "error_code": "seam_bridge_disconnected",
                               "message": "message",
                             },
                           ],
@@ -29464,9 +29464,9 @@ service:
                   image_url: image_url
                   image_alt_text: image_alt_text
                   errors:
-                    - error_code: visionline_instance_unreachable
-                      created_at: '2024-01-15T09:30:00Z'
+                    - created_at: '2024-01-15T09:30:00Z'
                       message: message
+                      error_code: seam_bridge_disconnected
                   warnings:
                     - {}
                   can_automate_enrollment: true

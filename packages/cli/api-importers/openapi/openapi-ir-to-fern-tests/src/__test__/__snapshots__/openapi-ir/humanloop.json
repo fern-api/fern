@@ -12200,13 +12200,6 @@
                                     "spec": {
                                       "value": {
                                         "value": {
-                                          "evaluator_type": {
-                                            "value": {
-                                              "value": "human",
-                                              "type": "string"
-                                            },
-                                            "type": "primitive"
-                                          },
                                           "arguments_type": {
                                             "value": "target_free",
                                             "type": "enum"
@@ -12214,6 +12207,13 @@
                                           "return_type": {
                                             "value": "boolean",
                                             "type": "enum"
+                                          },
+                                          "evaluator_type": {
+                                            "value": {
+                                              "value": "llm",
+                                              "type": "string"
+                                            },
+                                            "type": "primitive"
                                           }
                                         },
                                         "type": "discriminated"
@@ -12803,13 +12803,6 @@
                             "spec": {
                               "value": {
                                 "value": {
-                                  "evaluator_type": {
-                                    "value": {
-                                      "value": "human",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "arguments_type": {
                                     "value": "target_free",
                                     "type": "enum"
@@ -12817,6 +12810,13 @@
                                   "return_type": {
                                     "value": "boolean",
                                     "type": "enum"
+                                  },
+                                  "evaluator_type": {
+                                    "value": {
+                                      "value": "llm",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
                                   }
                                 },
                                 "type": "discriminated"
@@ -13346,13 +13346,6 @@
                             "spec": {
                               "value": {
                                 "value": {
-                                  "evaluator_type": {
-                                    "value": {
-                                      "value": "human",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "arguments_type": {
                                     "value": "target_free",
                                     "type": "enum"
@@ -13360,6 +13353,13 @@
                                   "return_type": {
                                     "value": "boolean",
                                     "type": "enum"
+                                  },
+                                  "evaluator_type": {
+                                    "value": {
+                                      "value": "llm",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
                                   }
                                 },
                                 "type": "discriminated"
@@ -14046,13 +14046,6 @@
                             "spec": {
                               "value": {
                                 "value": {
-                                  "evaluator_type": {
-                                    "value": {
-                                      "value": "human",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "arguments_type": {
                                     "value": "target_free",
                                     "type": "enum"
@@ -14060,6 +14053,13 @@
                                   "return_type": {
                                     "value": "boolean",
                                     "type": "enum"
+                                  },
+                                  "evaluator_type": {
+                                    "value": {
+                                      "value": "llm",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
                                   }
                                 },
                                 "type": "discriminated"
@@ -14617,13 +14617,6 @@
                             "spec": {
                               "value": {
                                 "value": {
-                                  "evaluator_type": {
-                                    "value": {
-                                      "value": "human",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "arguments_type": {
                                     "value": "target_free",
                                     "type": "enum"
@@ -14631,6 +14624,13 @@
                                   "return_type": {
                                     "value": "boolean",
                                     "type": "enum"
+                                  },
+                                  "evaluator_type": {
+                                    "value": {
+                                      "value": "llm",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
                                   }
                                 },
                                 "type": "discriminated"
@@ -15376,13 +15376,6 @@
                         "spec": {
                           "value": {
                             "value": {
-                              "evaluator_type": {
-                                "value": {
-                                  "value": "human",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "arguments_type": {
                                 "value": "target_free",
                                 "type": "enum"
@@ -15390,6 +15383,13 @@
                               "return_type": {
                                 "value": "boolean",
                                 "type": "enum"
+                              },
+                              "evaluator_type": {
+                                "value": {
+                                  "value": "llm",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
                               }
                             },
                             "type": "discriminated"
@@ -15538,13 +15538,6 @@
               "spec": {
                 "value": {
                   "value": {
-                    "evaluator_type": {
-                      "value": {
-                        "value": "human",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "arguments_type": {
                       "value": "target_free",
                       "type": "enum"
@@ -15552,6 +15545,13 @@
                     "return_type": {
                       "value": "boolean",
                       "type": "enum"
+                    },
+                    "evaluator_type": {
+                      "value": {
+                        "value": "llm",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -15688,13 +15688,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -15848,9 +15841,9 @@
                         },
                         "type": "object"
                       },
-                      "code": {
+                      "evaluator_type": {
                         "value": {
-                          "value": "code",
+                          "value": "llm",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -16182,13 +16175,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -16342,9 +16328,9 @@
                         },
                         "type": "object"
                       },
-                      "code": {
+                      "evaluator_type": {
                         "value": {
-                          "value": "code",
+                          "value": "llm",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -16733,13 +16719,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -16893,9 +16872,9 @@
                         },
                         "type": "object"
                       },
-                      "code": {
+                      "evaluator_type": {
                         "value": {
-                          "value": "code",
+                          "value": "llm",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -17244,13 +17223,6 @@
                         "spec": {
                           "value": {
                             "value": {
-                              "evaluator_type": {
-                                "value": {
-                                  "value": "human",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "arguments_type": {
                                 "value": "target_free",
                                 "type": "enum"
@@ -17258,6 +17230,13 @@
                               "return_type": {
                                 "value": "boolean",
                                 "type": "enum"
+                              },
+                              "evaluator_type": {
+                                "value": {
+                                  "value": "llm",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
                               }
                             },
                             "type": "discriminated"
@@ -17597,13 +17576,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -17757,9 +17729,9 @@
                         },
                         "type": "object"
                       },
-                      "code": {
+                      "evaluator_type": {
                         "value": {
-                          "value": "code",
+                          "value": "llm",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -18097,13 +18069,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -18257,9 +18222,9 @@
                         },
                         "type": "object"
                       },
-                      "code": {
+                      "evaluator_type": {
                         "value": {
-                          "value": "code",
+                          "value": "llm",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -18516,13 +18481,6 @@
                     "spec": {
                       "value": {
                         "value": {
-                          "evaluator_type": {
-                            "value": {
-                              "value": "human",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "arguments_type": {
                             "value": "target_free",
                             "type": "enum"
@@ -18543,9 +18501,9 @@
                             },
                             "type": "object"
                           },
-                          "code": {
+                          "evaluator_type": {
                             "value": {
-                              "value": "code",
+                              "value": "llm",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -18707,13 +18665,6 @@
               "evaluator": {
                 "value": {
                   "value": {
-                    "evaluator_type": {
-                      "value": {
-                        "value": "human",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "arguments_type": {
                       "value": "target_free",
                       "type": "enum"
@@ -18721,6 +18672,13 @@
                     "return_type": {
                       "value": "boolean",
                       "type": "enum"
+                    },
+                    "evaluator_type": {
+                      "value": {
+                        "value": "llm",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -18908,13 +18866,6 @@
                         "config": {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "generic",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "id": {
                                 "value": {
                                   "value": "id",
@@ -18929,45 +18880,12 @@
                                 },
                                 "type": "primitive"
                               },
-                              "status": {
+                              "type": {
                                 "value": {
-                                  "value": "status",
+                                  "value": "model",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "name": {
-                                "value": {
-                                  "value": "name",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "evaluator_type": {
-                                "value": {
-                                  "value": "evaluator_type",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "agent_class": {
-                                "value": {
-                                  "value": "agent_class",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "model_config": {
-                                "properties": {
-                                  "model": {
-                                    "value": {
-                                      "value": "model",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
                               }
                             },
                             "type": "discriminated"
@@ -19471,13 +19389,6 @@
                         "config": {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "generic",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "id": {
                                 "value": {
                                   "value": "id",
@@ -19492,45 +19403,12 @@
                                 },
                                 "type": "primitive"
                               },
-                              "status": {
+                              "type": {
                                 "value": {
-                                  "value": "status",
+                                  "value": "model",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "name": {
-                                "value": {
-                                  "value": "name",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "evaluator_type": {
-                                "value": {
-                                  "value": "evaluator_type",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "agent_class": {
-                                "value": {
-                                  "value": "agent_class",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "model_config": {
-                                "properties": {
-                                  "model": {
-                                    "value": {
-                                      "value": "model",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
                               }
                             },
                             "type": "discriminated"

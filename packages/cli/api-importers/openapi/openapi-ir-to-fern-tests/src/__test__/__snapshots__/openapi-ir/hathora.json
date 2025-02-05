@@ -9676,13 +9676,6 @@
             "value": {
               "value": {
                 "value": {
-                  "status": {
-                    "value": {
-                      "value": "active",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "roomId": {
                     "value": {
                       "value": "roomId",
@@ -9690,20 +9683,9 @@
                     },
                     "type": "primitive"
                   },
-                  "transportType": {
-                    "value": "tcp",
-                    "type": "enum"
-                  },
-                  "port": {
+                  "status": {
                     "value": {
-                      "value": 1.1,
-                      "type": "double"
-                    },
-                    "type": "primitive"
-                  },
-                  "host": {
-                    "value": {
-                      "value": "host",
+                      "value": "starting",
                       "type": "string"
                     },
                     "type": "primitive"

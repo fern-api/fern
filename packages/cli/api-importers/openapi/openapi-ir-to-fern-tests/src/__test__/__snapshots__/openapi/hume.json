@@ -37,10 +37,7 @@
                           ],
                         },
                         "source": {
-                          "content_type": "content_type",
-                          "filename": "filename",
-                          "md5sum": "md5sum",
-                          "type": "file",
+                          "type": "url",
                           "url": "url",
                         },
                       },
@@ -87,12 +84,7 @@
                         },
                         "state": {
                           "created_timestamp_ms": 1000000,
-                          "ended_timestamp_ms": 1000000,
-                          "message": "message",
-                          "num_errors": 1,
-                          "num_predictions": 1,
-                          "started_timestamp_ms": 1000000,
-                          "status": "FAILED",
+                          "status": "QUEUED",
                         },
                         "user_id": "user_id",
                       },
@@ -1376,13 +1368,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   files:
                     - md5sum: md5sum
                 state:
-                  status: FAILED
                   created_timestamp_ms: 1000000
-                  started_timestamp_ms: 1000000
-                  ended_timestamp_ms: 1000000
-                  num_predictions: 1
-                  num_errors: 1
-                  message: message
+                  status: QUEUED
     Start Job:
       path: /v0/batch/jobs
       method: POST
@@ -1450,11 +1437,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           response:
             body:
               - source:
-                  type: file
                   url: url
-                  filename: filename
-                  content_type: content_type
-                  md5sum: md5sum
+                  type: url
                 results:
                   predictions:
                     - file: file
@@ -2290,12 +2274,7 @@ types:
                       },
                       "state": {
                         "created_timestamp_ms": 1000000,
-                        "ended_timestamp_ms": 1000000,
-                        "message": "message",
-                        "num_errors": 1,
-                        "num_predictions": 1,
-                        "started_timestamp_ms": 1000000,
-                        "status": "FAILED",
+                        "status": "QUEUED",
                       },
                       "user_id": "user_id",
                     },
@@ -2396,13 +2375,8 @@ types:
                 files:
                   - md5sum: md5sum
               state:
-                status: FAILED
                 created_timestamp_ms: 1000000
-                started_timestamp_ms: 1000000
-                ended_timestamp_ms: 1000000
-                num_predictions: 1
-                num_errors: 1
-                message: message
+                status: QUEUED
   source:
     openapi: ../openapi.yaml
   display-name: Get Job Predictions
