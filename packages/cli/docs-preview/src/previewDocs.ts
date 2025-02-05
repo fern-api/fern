@@ -20,7 +20,7 @@ import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
-import { replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
+import { replaceImagePathsAndUrls, replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -60,8 +60,27 @@ export async function getPreviewDocsDefinition({
                 continue;
             }
 
+            const fileIdsMap = new Map(
+                Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
+                    const path = "/" + file.url.replace("/_local/", "");
+                    return [AbsoluteFilePath.of(path), id];
+                })
+            );
+
+            // Then replace image paths with file IDs
+            const finalMarkdown = replaceImagePathsAndUrls(
+                processedMarkdown,
+                fileIdsMap,
+                {}, // markdownFilesToPathName - empty object since we don't need it for images
+                {
+                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilePath
+                },
+                context
+            );
+
             previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
-                markdown: processedMarkdown,
+                markdown: finalMarkdown,
                 editThisPageUrl: previousValue.editThisPageUrl
             };
         }
