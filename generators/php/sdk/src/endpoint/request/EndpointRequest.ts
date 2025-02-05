@@ -93,6 +93,7 @@ export abstract class EndpointRequest {
             case "mixed":
             case "object":
             case "optional":
+            case "null":
             case "typeDict":
             case "enumString":
                 return bodyArgument;

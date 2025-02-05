@@ -7,8 +7,10 @@ use Seed\Core\Json\JsonSerializableType;
 class ListUsernamesRequest extends JsonSerializableType
 {
     /**
-     * @var ?string $startingAfter The cursor used for pagination in order to fetch
-    the next page of results.
+     * The cursor used for pagination in order to fetch
+     * the next page of results.
+     *
+     * @var ?string $startingAfter
      */
     public ?string $startingAfter;
 
