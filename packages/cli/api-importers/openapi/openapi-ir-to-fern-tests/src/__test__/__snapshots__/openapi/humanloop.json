@@ -7767,7 +7767,7 @@ and check its status.",
                             "name": "name",
                             "spec": {
                               "arguments_type": "target_free",
-                              "evaluator_type": "human",
+                              "evaluator_type": "llm",
                               "return_type": "boolean",
                             },
                             "status": "uncommitted",
@@ -7922,7 +7922,7 @@ Retrieve the Evaluation with the given ID.",
                             "name": "name",
                             "spec": {
                               "arguments_type": "target_free",
-                              "evaluator_type": "human",
+                              "evaluator_type": "llm",
                               "return_type": "boolean",
                             },
                             "status": "uncommitted",
@@ -8098,7 +8098,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                                 "name": "name",
                                 "spec": {
                                   "arguments_type": "target_free",
-                                  "evaluator_type": "human",
+                                  "evaluator_type": "llm",
                                   "return_type": "boolean",
                                 },
                                 "status": "uncommitted",
@@ -8269,7 +8269,7 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
                             "name": "name",
                             "spec": {
                               "arguments_type": "target_free",
-                              "evaluator_type": "human",
+                              "evaluator_type": "llm",
                               "return_type": "boolean",
                             },
                             "status": "uncommitted",
@@ -8404,7 +8404,7 @@ as completed.",
                             "name": "name",
                             "spec": {
                               "arguments_type": "target_free",
-                              "evaluator_type": "human",
+                              "evaluator_type": "llm",
                               "return_type": "boolean",
                             },
                             "status": "uncommitted",
@@ -8546,9 +8546,9 @@ service:
                         status: uncommitted
                         last_used_at: '2024-01-15T09:30:00Z'
                         spec:
-                          evaluator_type: human
                           arguments_type: target_free
                           return_type: boolean
+                          evaluator_type: llm
                         version_logs_count: 1
                         total_logs_count: 1
                         inputs:
@@ -8653,9 +8653,9 @@ service:
                     status: uncommitted
                     last_used_at: '2024-01-15T09:30:00Z'
                     spec:
-                      evaluator_type: human
                       arguments_type: target_free
                       return_type: boolean
+                      evaluator_type: llm
                     version_logs_count: 1
                     total_logs_count: 1
                     inputs:
@@ -8742,9 +8742,9 @@ service:
                     status: uncommitted
                     last_used_at: '2024-01-15T09:30:00Z'
                     spec:
-                      evaluator_type: human
                       arguments_type: target_free
                       return_type: boolean
+                      evaluator_type: llm
                     version_logs_count: 1
                     total_logs_count: 1
                     inputs:
@@ -8868,9 +8868,9 @@ service:
                     status: uncommitted
                     last_used_at: '2024-01-15T09:30:00Z'
                     spec:
-                      evaluator_type: human
                       arguments_type: target_free
                       return_type: boolean
+                      evaluator_type: llm
                     version_logs_count: 1
                     total_logs_count: 1
                     inputs:
@@ -8970,9 +8970,9 @@ service:
                     status: uncommitted
                     last_used_at: '2024-01-15T09:30:00Z'
                     spec:
-                      evaluator_type: human
                       arguments_type: target_free
                       return_type: boolean
+                      evaluator_type: llm
                     version_logs_count: 1
                     total_logs_count: 1
                     inputs:
@@ -9122,7 +9122,35 @@ docs: >+
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -9182,7 +9210,7 @@ an exception will be raised.",
                   "request": {
                     "spec": {
                       "arguments_type": "target_free",
-                      "evaluator_type": "human",
+                      "evaluator_type": "llm",
                       "return_type": "boolean",
                     },
                   },
@@ -9214,7 +9242,35 @@ an exception will be raised.",
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -9277,7 +9333,7 @@ an exception will be raised.",
                   "request": {
                     "evaluator": {
                       "arguments_type": "target_free",
-                      "evaluator_type": "human",
+                      "evaluator_type": "llm",
                       "return_type": "boolean",
                     },
                     "file_id": "file_id",
@@ -9292,10 +9348,9 @@ an exception will be raised.",
                             "batch_ids",
                           ],
                           "config": {
-                            "id": "config",
-                            "name": "config",
-                            "status": "config",
-                            "type": "generic",
+                            "id": "id",
+                            "model": "model",
+                            "type": "model",
                           },
                           "config_id": "config_id",
                           "created_at": "2024-01-15T09:30:00Z",
@@ -9386,10 +9441,9 @@ an exception will be raised.",
                             "batch_ids",
                           ],
                           "config": {
-                            "id": "config",
-                            "name": "config",
-                            "status": "config",
-                            "type": "generic",
+                            "id": "id",
+                            "model": "model",
+                            "type": "model",
                           },
                           "config_id": "config_id",
                           "created_at": "2024-01-15T09:30:00Z",
@@ -9603,7 +9657,35 @@ will be used for calls made to the Evaluator in this Environment.",
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -9689,7 +9771,35 @@ By default the deployed version of the Evaluator is returned. Use the query para
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -9770,7 +9880,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                           "name": "name",
                           "spec": {
                             "arguments_type": "target_free",
-                            "evaluator_type": "human",
+                            "evaluator_type": "llm",
                             "return_type": "boolean",
                           },
                           "status": "uncommitted",
@@ -9872,7 +9982,10 @@ By default the deployed version of the Evaluator is returned. Use the query para
                         "name": "name",
                         "spec": {
                           "arguments_type": "target_free",
-                          "evaluator_type": "human",
+                          "evaluator_type": "llm",
+                          "prompt": {
+                            "model": "model",
+                          },
                           "return_type": "boolean",
                         },
                         "status": "uncommitted",
@@ -9938,7 +10051,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                           "name": "name",
                           "spec": {
                             "arguments_type": "target_free",
-                            "evaluator_type": "human",
+                            "evaluator_type": "llm",
                             "return_type": "boolean",
                           },
                           "status": "uncommitted",
@@ -10025,7 +10138,35 @@ By default the deployed version of the Evaluator is returned. Use the query para
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -10193,9 +10334,9 @@ service:
                   last_used_at: '2024-01-15T09:30:00Z'
                   commit_message: commit_message
                   spec:
-                    evaluator_type: human
                     arguments_type: target_free
                     return_type: boolean
+                    evaluator_type: llm
                   version_logs_count: 1
                   total_logs_count: 1
                   inputs:
@@ -10250,9 +10391,9 @@ service:
       examples:
         - request:
             spec:
-              evaluator_type: human
               arguments_type: target_free
               return_type: boolean
+              evaluator_type: llm
           response:
             body:
               id: id
@@ -10274,9 +10415,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10340,9 +10502,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10418,9 +10601,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10481,9 +10685,9 @@ service:
                   last_used_at: '2024-01-15T09:30:00Z'
                   commit_message: commit_message
                   spec:
-                    evaluator_type: human
                     arguments_type: target_free
                     return_type: boolean
+                    evaluator_type: llm
                   version_logs_count: 1
                   total_logs_count: 1
                   inputs:
@@ -10549,9 +10753,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10608,9 +10833,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -10651,9 +10897,11 @@ service:
                 last_used_at: '2024-01-15T09:30:00Z'
                 commit_message: commit_message
                 spec:
-                  evaluator_type: human
                   arguments_type: target_free
                   return_type: boolean
+                  prompt:
+                    model: model
+                  evaluator_type: llm
                 version_logs_count: 1
                 total_logs_count: 1
                 inputs:
@@ -10708,9 +10956,9 @@ service:
         - request:
             file_id: file_id
             evaluator:
-              evaluator_type: human
               arguments_type: target_free
               return_type: boolean
+              evaluator_type: llm
           response:
             body:
               - log_id: log_id
@@ -10737,10 +10985,9 @@ service:
                   judgment: true
                   config_id: config_id
                   config:
-                    type: generic
-                    id: config
-                    status: config
-                    name: config
+                    id: id
+                    model: model
+                    type: model
                   environment: environment
                   feedback:
                     - type: rating
@@ -10809,10 +11056,9 @@ service:
                   judgment: true
                   config_id: config_id
                   config:
-                    type: generic
-                    id: config
-                    status: config
-                    name: config
+                    id: id
+                    model: model
+                    type: model
                   environment: environment
                   feedback:
                     - type: rating

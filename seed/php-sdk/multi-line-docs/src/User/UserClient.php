@@ -51,8 +51,10 @@ class UserClient
      * Retrieve a user.
      * This endpoint is used to retrieve a user.
      *
-     * @param string $userId The ID of the user to retrieve.
-    This ID is unique to each user.
+     * The ID of the user to retrieve.
+     * This ID is unique to each user.
+     *
+     * @param string $userId
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

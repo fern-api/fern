@@ -141,6 +141,8 @@ export class PhpAttributeMapper {
                     classReference: this.context.getUnionClassReference(),
                     arguments_: [this.getTypeAttributeArgument(type.internalType.value), php.codeblock("'null'")]
                 });
+            case "null":
+                return php.codeblock("'null'");
             case "reference": {
                 const reference = type.internalType.value;
                 return php.codeblock((writer) => {
