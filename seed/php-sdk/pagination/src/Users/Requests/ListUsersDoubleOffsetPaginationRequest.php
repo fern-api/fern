@@ -23,8 +23,10 @@ class ListUsersDoubleOffsetPaginationRequest extends JsonSerializableType
     public ?string $order;
 
     /**
-     * @var ?string $startingAfter The cursor used for pagination in order to fetch
-    the next page of results.
+     * The cursor used for pagination in order to fetch
+     * the next page of results.
+     *
+     * @var ?string $startingAfter
      */
     public ?string $startingAfter;
 

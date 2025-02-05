@@ -9,9 +9,11 @@ use Seed\Core\Json\JsonProperty;
 class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
 {
     /**
-     * @var ?WithPage $pagination The object that contains the offset used for pagination
-    in order to fetch the next page of results.
-
+     * The object that contains the offset used for pagination
+     * in order to fetch the next page of results.
+     *
+     *
+     * @var ?WithPage $pagination
      */
     #[JsonProperty('pagination')]
     public ?WithPage $pagination;
