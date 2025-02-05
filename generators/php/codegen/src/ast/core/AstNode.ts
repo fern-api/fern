@@ -13,9 +13,13 @@ export abstract class AstNode extends AbstractAstNode {
         customConfig: BasePhpCustomConfigSchema;
     }): string {
         if (param == null) {
-            throw new Error(
-                "param is required. You are likely implicitly calling toString() inside a string interpolation or concatenation."
-            );
+            // You are likely implicitly calling toString() inside a string interpolation or concatenation.
+            // Don't do this:
+            //  - astNode.toString()
+            //  - `${astNode}`
+            //  - "Foo<" + astNode + ">"
+
+            throw new Error("Internal error; AstNode.toString method called incorrectly.");
         }
         const { namespace, rootNamespace, customConfig } = param;
 
