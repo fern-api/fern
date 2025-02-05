@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The IR migrator now recognizes that the PHP SDK generator requires IR version 55.
+      type: internal
+  irVersion: 55
+  version: 0.51.31
+
+- changelogEntry:
+    - summary: |
         The OpenAPI v2 parser now provides better naming and more robust payloads for examples.
       type: fix
   irVersion: 55

@@ -69,7 +69,7 @@ export class Comment extends AstNode {
             docsSplit.forEach((line) => {
                 writer.writeLine(` * ${line}`);
             });
-            writer.writeLine(` *`);
+            writer.writeLine(" *");
         }
 
         writer.write(` * @${tag.tagType} `);
