@@ -161,6 +161,19 @@ describe("PythonFile", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
+    it("Add a reference with no module path", async () => {
+        const file = python.file({
+            path: ["test_module"]
+        });
+
+        const ref = python.reference({ name: "MyCar" });
+        file.addStatement(python.field({ name: "car", type: python.Type.reference(ref) }));
+
+        // There shouldn't be any import path added
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
     it("Add a class with an absolute import and alias", async () => {
         const file = python.file({
             path: ["test_module"]
