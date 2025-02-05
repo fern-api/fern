@@ -172,20 +172,34 @@ export class ApiReferenceNodeConverterLatest {
     }
 
     #findWebSocketByLocator(locator: string): FdrAPI.api.latest.websocket.WebSocketChannel | undefined {
+        const oaiLocator = locator
+            .split("/")
+            .map((part) => (part.startsWith(":") ? `{${part.slice(1)}}` : part))
+            .join("/");
         return (
             this.#api?.websockets[FdrAPI.WebSocketId(locator)] ??
             this.#api?.websockets[FdrAPI.WebSocketId(locator.split(".").pop() ?? "")] ??
             this.#api?.websockets[FdrAPI.WebSocketId(locator.split("/").pop() ?? "")] ??
-            Object.values(this.#api?.websockets ?? {}).find((endpoint) => endpoint.id.includes(locator))
+            Object.values(this.#api?.websockets ?? {}).find((websocket) => websocket.id.includes(locator)) ??
+            Object.values(this.#api?.websockets ?? {}).find(
+                (websocket) => `STREAM ${stringifyEndpointPathParts(websocket.path)}` === oaiLocator
+            )
         );
     }
 
     #findWebhookByLocator(locator: string): FdrAPI.api.latest.webhook.WebhookDefinition | undefined {
+        const oaiLocator = locator
+            .split("/")
+            .map((part) => (part.startsWith(":") ? `{${part.slice(1)}}` : part))
+            .join("/");
         return (
             this.#api?.webhooks[FdrAPI.WebhookId(locator)] ??
             this.#api?.webhooks[FdrAPI.WebhookId(locator.split(".").pop() ?? "")] ??
             this.#api?.webhooks[FdrAPI.WebhookId(locator.split("/").pop() ?? "")] ??
-            Object.values(this.#api?.webhooks ?? {}).find((endpoint) => endpoint.id.includes(locator))
+            Object.values(this.#api?.webhooks ?? {}).find((webhook) => webhook.id.includes(locator)) ??
+            Object.values(this.#api?.webhooks ?? {}).find(
+                (webhook) => `${webhook.method} ${webhook.path.join("/")}` === oaiLocator
+            )
         );
     }
 
@@ -366,7 +380,7 @@ export class ApiReferenceNodeConverterLatest {
             urlSlug
         });
         const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, slug);
-        return {
+        const sectionNode: FernNavigation.V1.ApiPackageNode = {
             id: nodeId,
             type: "apiPackage",
             children: convertedItems,
@@ -385,6 +399,12 @@ export class ApiReferenceNodeConverterLatest {
             orphaned: section.orphaned,
             featureFlags: section.featureFlags
         };
+
+        subpackageIds.forEach((subpackageId) => {
+            this.#topLevelSubpackages.set(subpackageId, sectionNode);
+        });
+
+        return sectionNode;
     }
 
     #convertUnknownIdentifier(
@@ -623,6 +643,7 @@ export class ApiReferenceNodeConverterLatest {
                 orphaned: undefined,
                 featureFlags: undefined
             };
+
             this.#topLevelSubpackages.set(subpackageId, subpackageNode);
             additionalChildren.push(subpackageNode);
         });
