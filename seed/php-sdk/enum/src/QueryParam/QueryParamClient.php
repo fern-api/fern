@@ -2,6 +2,7 @@
 
 namespace Seed\QueryParam;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\QueryParam\Requests\SendEnumAsQueryParamRequest;
 use Seed\Exceptions\SeedException;
@@ -14,29 +15,49 @@ use Seed\QueryParam\Requests\SendEnumListAsQueryParamRequest;
 class QueryParamClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param SendEnumAsQueryParamRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
@@ -54,6 +75,7 @@ class QueryParamClient
                     method: HttpMethod::POST,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -73,12 +95,14 @@ class QueryParamClient
      * @param SendEnumListAsQueryParamRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
@@ -96,6 +120,7 @@ class QueryParamClient
                     method: HttpMethod::POST,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

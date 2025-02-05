@@ -36,13 +36,14 @@ class SeedClient
     public ServiceClient $service;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -55,6 +56,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
@@ -81,15 +83,16 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->file = new FileClient($this->client);
-        $this->health = new HealthClient($this->client);
-        $this->service = new ServiceClient($this->client);
+        $this->file = new FileClient($this->client, $this->options);
+        $this->health = new HealthClient($this->client, $this->options);
+        $this->service = new ServiceClient($this->client, $this->options);
     }
 
     /**
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string
      * @throws SeedException
@@ -97,6 +100,7 @@ class SeedClient
      */
     public function echo_(string $request, ?array $options = null): string
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -105,6 +109,7 @@ class SeedClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -127,6 +132,7 @@ class SeedClient
      * @param value-of<BasicType>|value-of<ComplexType> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Identifier
      * @throws SeedException
@@ -134,6 +140,7 @@ class SeedClient
      */
     public function createType(string $request, ?array $options = null): Identifier
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -142,6 +149,7 @@ class SeedClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

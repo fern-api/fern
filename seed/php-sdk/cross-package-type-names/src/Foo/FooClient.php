@@ -2,6 +2,7 @@
 
 namespace Seed\Foo;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Foo\Requests\FindRequest;
 use Seed\Foo\Types\ImportingType;
@@ -15,23 +16,42 @@ use Psr\Http\Client\ClientExceptionInterface;
 class FooClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param FindRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ImportingType
      * @throws SeedException
@@ -39,6 +59,7 @@ class FooClient
      */
     public function find(FindRequest $request, ?array $options = null): ImportingType
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         if ($request->optionalString != null) {
             $query['optionalString'] = $request->optionalString;
@@ -52,6 +73,7 @@ class FooClient
                     query: $query,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
