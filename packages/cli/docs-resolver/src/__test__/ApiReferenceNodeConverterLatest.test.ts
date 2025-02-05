@@ -1,47 +1,61 @@
+/* eslint-disable jest/no-disabled-tests */
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { findEndpointByLocator, findSubpackageByLocator, findWebhookByLocator, findWebSocketByLocator, getOaiLocator } from "../ApiReferenceNodeConverterLatest";
 
-describe.skip("getOaiLocator", () => {
-    it("converts path parameters correctly", () => {
-        expect(getOaiLocator("/users/:id/posts/:postId")).toBe("/users/{id}/posts/{postId}");
-        expect(getOaiLocator("/simple/path")).toBe("/simple/path");
-        expect(getOaiLocator("/:param")).toBe("/{param}");
-    });
+import {
+    findEndpointByLocator,
+    findSubpackageByLocator,
+    findWebSocketByLocator,
+    findWebhookByLocator,
+    getOaiLocator
+} from "../ApiReferenceNodeConverterLatest";
+
+it.skip("converts path parameters correctly in getOaiLocator", () => {
+    expect(getOaiLocator("/users/:id/posts/:postId")).toBe("/users/{id}/posts/{postId}");
+    expect(getOaiLocator("/simple/path")).toBe("/simple/path");
+    expect(getOaiLocator("/:param")).toBe("/{param}");
 });
 
-describe.skip("findSubpackageByLocator", () => {
+it.skip("finds subpackage by exact match", () => {
     const mockSubpackages = {
-        [FdrAPI.api.v1.SubpackageId("test")]: { id: FdrAPI.api.v1.SubpackageId("test"), name: "test", displayName: "test" },
+        [FdrAPI.api.v1.SubpackageId("test")]: {
+            id: FdrAPI.api.v1.SubpackageId("test"),
+            name: "test",
+            displayName: "test"
+        },
         [FdrAPI.api.v1.SubpackageId("nested.package")]: {
             id: FdrAPI.api.v1.SubpackageId("nested.package"),
             name: "nested",
             displayName: "nested"
         }
     };
-
-    it("finds subpackage by exact match", () => {
-        expect(findSubpackageByLocator("test", mockSubpackages)).toEqual({
-            id: FdrAPI.api.v1.SubpackageId("test"),
-            name: "test",
-            displayName: "test"
-        });
-    });
-
-    it("finds subpackage from yaml file", () => {
-        expect(findSubpackageByLocator("test.yaml", mockSubpackages)).toEqual({
-            id: FdrAPI.api.v1.SubpackageId("test"),
-            name: "test",
-            displayName: "test"
-        });
-        expect(findSubpackageByLocator("test.yml", mockSubpackages)).toEqual({
-            id: FdrAPI.api.v1.SubpackageId("test"),
-            name: "test",
-            displayName: "test"
-        });
+    expect(findSubpackageByLocator("test", mockSubpackages)).toEqual({
+        id: FdrAPI.api.v1.SubpackageId("test"),
+        name: "test",
+        displayName: "test"
     });
 });
 
-describe.skip("findEndpointByLocator", () => {
+it.skip("finds subpackage from yaml/yml files", () => {
+    const mockSubpackages = {
+        [FdrAPI.api.v1.SubpackageId("test")]: {
+            id: FdrAPI.api.v1.SubpackageId("test"),
+            name: "test",
+            displayName: "test"
+        }
+    };
+    expect(findSubpackageByLocator("test.yaml", mockSubpackages)).toEqual({
+        id: FdrAPI.api.v1.SubpackageId("test"),
+        name: "test",
+        displayName: "test"
+    });
+    expect(findSubpackageByLocator("test.yml", mockSubpackages)).toEqual({
+        id: FdrAPI.api.v1.SubpackageId("test"),
+        name: "test",
+        displayName: "test"
+    });
+});
+
+it.skip("finds endpoint by id and by path/method", () => {
     const mockEndpoints = {
         [FdrAPI.EndpointId("getUser")]: {
             id: FdrAPI.EndpointId("getUser"),
@@ -66,18 +80,12 @@ describe.skip("findEndpointByLocator", () => {
             snippetTemplates: undefined
         }
     };
-
-    it("finds endpoint by id", () => {
-        expect(findEndpointByLocator("getUser", mockEndpoints)).toBeDefined();
-    });
-
-    it("finds endpoint by path and method", () => {
-        expect(findEndpointByLocator("GET /users/:id", mockEndpoints)).toBeDefined();
-        expect(findEndpointByLocator("GET /users/{id}", mockEndpoints)).toBeDefined();
-    });
+    expect(findEndpointByLocator("getUser", mockEndpoints)).toBeDefined();
+    expect(findEndpointByLocator("GET /users/:id", mockEndpoints)).toBeDefined();
+    expect(findEndpointByLocator("GET /users/{id}", mockEndpoints)).toBeDefined();
 });
 
-describe.skip("findWebSocketByLocator", () => {
+it.skip("finds websocket by id and by path", () => {
     const mockWebsockets = {
         [FdrAPI.WebSocketId("userStream")]: {
             id: FdrAPI.WebSocketId("userStream"),
@@ -94,20 +102,14 @@ describe.skip("findWebSocketByLocator", () => {
             namespace: [],
             operationId: "userStream",
             environments: [],
-            defaultEnvironment: FdrAPI.EnvironmentId("defaultEnvironment"),
+            defaultEnvironment: FdrAPI.EnvironmentId("defaultEnvironment")
         }
     };
-
-    it("finds websocket by id", () => {
-        expect(findWebSocketByLocator("userStream", mockWebsockets)).toBeDefined();
-    });
-
-    it("finds websocket by path", () => {
-        expect(findWebSocketByLocator("STREAM /users/stream", mockWebsockets)).toBeDefined();
-    });
+    expect(findWebSocketByLocator("userStream", mockWebsockets)).toBeDefined();
+    expect(findWebSocketByLocator("STREAM /users/stream", mockWebsockets)).toBeDefined();
 });
 
-describe.skip("findWebhookByLocator", () => {
+it.skip("finds webhook by id and by path/method", () => {
     const mockWebhooks = {
         [FdrAPI.WebhookId("userCreated")]: {
             id: FdrAPI.WebhookId("userCreated"),
@@ -120,15 +122,9 @@ describe.skip("findWebhookByLocator", () => {
             description: "description",
             availability: undefined,
             namespace: [],
-            operationId: "userCreated",
+            operationId: "userCreated"
         }
     };
-
-    it("finds webhook by id", () => {
-        expect(findWebhookByLocator("userCreated", mockWebhooks)).toBeDefined();
-    });
-
-    it("finds webhook by path and method", () => {
-        expect(findWebhookByLocator("POST /webhooks/user-created", mockWebhooks)).toBeDefined();
-    });
+    expect(findWebhookByLocator("userCreated", mockWebhooks)).toBeDefined();
+    expect(findWebhookByLocator("POST /webhooks/user-created", mockWebhooks)).toBeDefined();
 });

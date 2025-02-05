@@ -110,9 +110,7 @@ export function findWebhookByLocator(
         webhooks?.[FdrAPI.WebhookId(locator.split(".").pop() ?? "")] ??
         webhooks?.[FdrAPI.WebhookId(locator.split("/").pop() ?? "")] ??
         Object.values(webhooks ?? {}).find((webhook) => webhook.id.includes(locator)) ??
-        Object.values(webhooks ?? {}).find(
-            (webhook) => `${webhook.method} ${webhook.path.join("/")}` === oaiLocator
-        )
+        Object.values(webhooks ?? {}).find((webhook) => `${webhook.method} ${webhook.path.join("/")}` === oaiLocator)
     );
 }
 // END TODO
