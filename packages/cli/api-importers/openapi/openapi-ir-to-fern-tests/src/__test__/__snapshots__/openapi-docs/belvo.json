@@ -57041,6 +57041,78 @@ A payment intent captures all payment information (such as the amount to be char
                             "website": "https://www.wakandanational.com",
                           },
                         },
+                        "pse_display_credentials_required": {
+                          "payer_institution": {
+                            "active": true,
+                            "display_name": "Wakanda National Bank",
+                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                            "name": "wakanda_national",
+                            "primary_color": "#fdbc24",
+                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                            "website": "https://www.wakandanational.com",
+                          },
+                        },
+                        "pse_display_customer_bank_accounts": {
+                          "beneficiary_bank_account": {
+                            "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                          },
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                        },
+                        "pse_display_needs_redirect": {
+                          "payer_institution": {
+                            "label": "Document",
+                            "length": 6,
+                            "name": "username",
+                            "optional": false,
+                            "placeholder": "Username",
+                            "type": "text",
+                            "validation": "^.{1,}$",
+                            "validation_message": "Invalid client number",
+                          },
+                        },
+                        "pse_display_payment_method_information": {
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                          "institutions": [
+                            {
+                              "active": true,
+                              "display_name": "Wakanda National Bank",
+                              "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                              "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                              "name": "wakanda_national",
+                              "primary_color": "#fdbc24",
+                              "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                              "website": "https://www.wakandanational.com",
+                            },
+                          ],
+                        },
+                        "pse_display_token_required": {
+                          "payer_institution": {
+                            "active": true,
+                            "display_name": "Wakanda National Bank",
+                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                            "name": "wakanda_national",
+                            "primary_color": "#fdbc24",
+                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                            "website": "https://www.wakandanational.com",
+                          },
+                        },
                         "ready_to_confirm": true,
                         "type": "pse_display_confirmation_required",
                       },
@@ -57208,6 +57280,78 @@ A payment intent captures all payment information (such as the amount to be char
                       },
                       "next_step": {
                         "pse_display_confirmation_required": {
+                          "payer_institution": {
+                            "active": true,
+                            "display_name": "Wakanda National Bank",
+                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                            "name": "wakanda_national",
+                            "primary_color": "#fdbc24",
+                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                            "website": "https://www.wakandanational.com",
+                          },
+                        },
+                        "pse_display_credentials_required": {
+                          "payer_institution": {
+                            "active": true,
+                            "display_name": "Wakanda National Bank",
+                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                            "name": "wakanda_national",
+                            "primary_color": "#fdbc24",
+                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                            "website": "https://www.wakandanational.com",
+                          },
+                        },
+                        "pse_display_customer_bank_accounts": {
+                          "beneficiary_bank_account": {
+                            "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                          },
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                        },
+                        "pse_display_needs_redirect": {
+                          "payer_institution": {
+                            "label": "Document",
+                            "length": 6,
+                            "name": "username",
+                            "optional": false,
+                            "placeholder": "Username",
+                            "type": "text",
+                            "validation": "^.{1,}$",
+                            "validation_message": "Invalid client number",
+                          },
+                        },
+                        "pse_display_payment_method_information": {
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                          "institutions": [
+                            {
+                              "active": true,
+                              "display_name": "Wakanda National Bank",
+                              "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                              "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                              "name": "wakanda_national",
+                              "primary_color": "#fdbc24",
+                              "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                              "website": "https://www.wakandanational.com",
+                            },
+                          ],
+                        },
+                        "pse_display_token_required": {
                           "payer_institution": {
                             "active": true,
                             "display_name": "Wakanda National Bank",
@@ -57562,6 +57706,78 @@ During the payment intent flow, you need to fill in the payment intent with requ
                       },
                       "next_step": {
                         "pse_display_confirmation_required": {
+                          "payer_institution": {
+                            "active": true,
+                            "display_name": "Wakanda National Bank",
+                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                            "name": "wakanda_national",
+                            "primary_color": "#fdbc24",
+                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                            "website": "https://www.wakandanational.com",
+                          },
+                        },
+                        "pse_display_credentials_required": {
+                          "payer_institution": {
+                            "active": true,
+                            "display_name": "Wakanda National Bank",
+                            "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                            "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                            "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                            "name": "wakanda_national",
+                            "primary_color": "#fdbc24",
+                            "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                            "website": "https://www.wakandanational.com",
+                          },
+                        },
+                        "pse_display_customer_bank_accounts": {
+                          "beneficiary_bank_account": {
+                            "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                          },
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                        },
+                        "pse_display_needs_redirect": {
+                          "payer_institution": {
+                            "label": "Document",
+                            "length": 6,
+                            "name": "username",
+                            "optional": false,
+                            "placeholder": "Username",
+                            "type": "text",
+                            "validation": "^.{1,}$",
+                            "validation_message": "Invalid client number",
+                          },
+                        },
+                        "pse_display_payment_method_information": {
+                          "customer_bank_accounts": [
+                            {
+                              "customer": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "number": "******1234",
+                            },
+                          ],
+                          "institutions": [
+                            {
+                              "active": true,
+                              "display_name": "Wakanda National Bank",
+                              "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                              "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                              "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                              "name": "wakanda_national",
+                              "primary_color": "#fdbc24",
+                              "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                              "website": "https://www.wakandanational.com",
+                            },
+                          ],
+                        },
+                        "pse_display_token_required": {
                           "payer_institution": {
                             "active": true,
                             "display_name": "Wakanda National Bank",
@@ -57945,6 +58161,70 @@ service:
                 internal_reference_id: GGq73487w2
               next_step:
                 type: pse_display_confirmation_required
+                pse_display_payment_method_information:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  institutions:
+                    - id: bbaceead-7b96-46d8-9354-38dec9707004
+                      active: true
+                      name: wakanda_national
+                      display_name: Wakanda National Bank
+                      website: https://www.wakandanational.com
+                      logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                      icon_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                      text_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                      primary_color: '#fdbc24'
+                ready_to_confirm: true
+                pse_display_credentials_required:
+                  payer_institution:
+                    id: bbaceead-7b96-46d8-9354-38dec9707004
+                    active: true
+                    name: wakanda_national
+                    display_name: Wakanda National Bank
+                    website: https://www.wakandanational.com
+                    logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                    icon_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                    text_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                    primary_color: '#fdbc24'
+                pse_display_needs_redirect:
+                  payer_institution:
+                    name: username
+                    type: text
+                    label: Document
+                    validation: ^.{1,}$
+                    placeholder: Username
+                    validation_message: Invalid client number
+                    length: 6
+                    optional: false
+                pse_display_token_required:
+                  payer_institution:
+                    id: bbaceead-7b96-46d8-9354-38dec9707004
+                    active: true
+                    name: wakanda_national
+                    display_name: Wakanda National Bank
+                    website: https://www.wakandanational.com
+                    logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                    icon_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                    text_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                    primary_color: '#fdbc24'
+                pse_display_customer_bank_accounts:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  beneficiary_bank_account:
+                    id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
                 pse_display_confirmation_required:
                   payer_institution:
                     id: bbaceead-7b96-46d8-9354-38dec9707004
@@ -57959,7 +58239,6 @@ service:
                     text_logo: >-
                       https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
                     primary_color: '#fdbc24'
-                ready_to_confirm: true
               last_error:
                 error_code: invalid_credentials
                 error_message: The credentials sent are incorrect, please try again.
@@ -58054,6 +58333,70 @@ service:
                 internal_reference_id: GGq73487w2
               next_step:
                 type: pse_display_confirmation_required
+                pse_display_payment_method_information:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  institutions:
+                    - id: bbaceead-7b96-46d8-9354-38dec9707004
+                      active: true
+                      name: wakanda_national
+                      display_name: Wakanda National Bank
+                      website: https://www.wakandanational.com
+                      logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                      icon_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                      text_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                      primary_color: '#fdbc24'
+                ready_to_confirm: true
+                pse_display_credentials_required:
+                  payer_institution:
+                    id: bbaceead-7b96-46d8-9354-38dec9707004
+                    active: true
+                    name: wakanda_national
+                    display_name: Wakanda National Bank
+                    website: https://www.wakandanational.com
+                    logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                    icon_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                    text_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                    primary_color: '#fdbc24'
+                pse_display_needs_redirect:
+                  payer_institution:
+                    name: username
+                    type: text
+                    label: Document
+                    validation: ^.{1,}$
+                    placeholder: Username
+                    validation_message: Invalid client number
+                    length: 6
+                    optional: false
+                pse_display_token_required:
+                  payer_institution:
+                    id: bbaceead-7b96-46d8-9354-38dec9707004
+                    active: true
+                    name: wakanda_national
+                    display_name: Wakanda National Bank
+                    website: https://www.wakandanational.com
+                    logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                    icon_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                    text_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                    primary_color: '#fdbc24'
+                pse_display_customer_bank_accounts:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  beneficiary_bank_account:
+                    id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
                 pse_display_confirmation_required:
                   payer_institution:
                     id: bbaceead-7b96-46d8-9354-38dec9707004
@@ -58068,7 +58411,6 @@ service:
                     text_logo: >-
                       https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
                     primary_color: '#fdbc24'
-                ready_to_confirm: true
               last_error:
                 error_code: invalid_credentials
                 error_message: The credentials sent are incorrect, please try again.
@@ -58193,6 +58535,70 @@ service:
                 internal_reference_id: GGq73487w2
               next_step:
                 type: pse_display_confirmation_required
+                pse_display_payment_method_information:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  institutions:
+                    - id: bbaceead-7b96-46d8-9354-38dec9707004
+                      active: true
+                      name: wakanda_national
+                      display_name: Wakanda National Bank
+                      website: https://www.wakandanational.com
+                      logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                      icon_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                      text_logo: >-
+                        https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                      primary_color: '#fdbc24'
+                ready_to_confirm: true
+                pse_display_credentials_required:
+                  payer_institution:
+                    id: bbaceead-7b96-46d8-9354-38dec9707004
+                    active: true
+                    name: wakanda_national
+                    display_name: Wakanda National Bank
+                    website: https://www.wakandanational.com
+                    logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                    icon_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                    text_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                    primary_color: '#fdbc24'
+                pse_display_needs_redirect:
+                  payer_institution:
+                    name: username
+                    type: text
+                    label: Document
+                    validation: ^.{1,}$
+                    placeholder: Username
+                    validation_message: Invalid client number
+                    length: 6
+                    optional: false
+                pse_display_token_required:
+                  payer_institution:
+                    id: bbaceead-7b96-46d8-9354-38dec9707004
+                    active: true
+                    name: wakanda_national
+                    display_name: Wakanda National Bank
+                    website: https://www.wakandanational.com
+                    logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                    icon_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                    text_logo: >-
+                      https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                    primary_color: '#fdbc24'
+                pse_display_customer_bank_accounts:
+                  customer_bank_accounts:
+                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      customer: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      number: '******1234'
+                  beneficiary_bank_account:
+                    id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
                 pse_display_confirmation_required:
                   payer_institution:
                     id: bbaceead-7b96-46d8-9354-38dec9707004
@@ -58207,7 +58613,6 @@ service:
                     text_logo: >-
                       https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
                     primary_color: '#fdbc24'
-                ready_to_confirm: true
               last_error:
                 error_code: invalid_credentials
                 error_message: The credentials sent are incorrect, please try again.
@@ -58406,6 +58811,40 @@ types:
                           "internal_reference_id": "GGq73487w2",
                         },
                         "next_step": {
+                          "open_finance_display_confirmation_required": {
+                            "beneficiary_bank_account": {
+                              "created_at": "2022-02-09T08:45:50Z",
+                              "created_by": "62053a72-e2d5-4c95-a578-6b16616900ac",
+                              "details": {
+                                "account_type": "CHECKINGS",
+                                "agency": "0444",
+                                "country": "BRA",
+                                "number": "45722-0",
+                              },
+                              "holder": {
+                                "information": {
+                                  "identifier": "231.002.999-00",
+                                  "identifier_type": "CPF",
+                                  "name": "Caetano Veloso Entertainment Universe",
+                                },
+                                "type": "INDIVIDUAL",
+                              },
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "institution": {
+                                "active": true,
+                                "display_name": "Wakanda National Bank",
+                                "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                                "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                                "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                                "name": "wakanda_national",
+                                "primary_color": "#fdbc24",
+                                "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                                "website": "https://www.wakandanational.com",
+                              },
+                            },
+                            "payer_identifier": "LV890273900-23",
+                            "payer_name": "Caetano Veloso",
+                          },
                           "ready_to_confirm": false,
                           "type": "open_finance_display_payment_failed",
                         },
@@ -58528,6 +58967,40 @@ types:
                           "internal_reference_id": "GGq73487w2",
                         },
                         "next_step": {
+                          "open_finance_display_confirmation_required": {
+                            "beneficiary_bank_account": {
+                              "created_at": "2022-02-09T08:45:50Z",
+                              "created_by": "62053a72-e2d5-4c95-a578-6b16616900ac",
+                              "details": {
+                                "account_type": "CHECKINGS",
+                                "agency": "0444",
+                                "country": "BRA",
+                                "number": "45722-0",
+                              },
+                              "holder": {
+                                "information": {
+                                  "identifier": "231.002.999-00",
+                                  "identifier_type": "CPF",
+                                  "name": "Caetano Veloso Entertainment Universe",
+                                },
+                                "type": "INDIVIDUAL",
+                              },
+                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                              "institution": {
+                                "active": true,
+                                "display_name": "Wakanda National Bank",
+                                "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                                "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                                "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                                "name": "wakanda_national",
+                                "primary_color": "#fdbc24",
+                                "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                                "website": "https://www.wakandanational.com",
+                              },
+                            },
+                            "payer_identifier": "LV890273900-23",
+                            "payer_name": "Caetano Veloso",
+                          },
                           "ready_to_confirm": false,
                           "type": "open_finance_display_payment_failed",
                         },
@@ -58997,6 +59470,37 @@ service:
                 next_step:
                   type: open_finance_display_payment_failed
                   ready_to_confirm: false
+                  open_finance_display_confirmation_required:
+                    beneficiary_bank_account:
+                      id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      created_at: '2022-02-09T08:45:50Z'
+                      created_by: 62053a72-e2d5-4c95-a578-6b16616900ac
+                      institution:
+                        id: bbaceead-7b96-46d8-9354-38dec9707004
+                        active: true
+                        name: wakanda_national
+                        display_name: Wakanda National Bank
+                        website: https://www.wakandanational.com
+                        logo: >-
+                          https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                        icon_logo: >-
+                          https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                        text_logo: >-
+                          https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                        primary_color: '#fdbc24'
+                      details:
+                        country: BRA
+                        account_type: CHECKINGS
+                        agency: '0444'
+                        number: 45722-0
+                      holder:
+                        type: INDIVIDUAL
+                        information:
+                          name: Caetano Veloso Entertainment Universe
+                          identifier_type: CPF
+                          identifier: 231.002.999-00
+                    payer_name: Caetano Veloso
+                    payer_identifier: LV890273900-23
                 last_error:
                   error_code: payment_error
                   error_message: Unexpected error to confirm the payment
@@ -59100,6 +59604,37 @@ service:
                 next_step:
                   type: open_finance_display_payment_failed
                   ready_to_confirm: false
+                  open_finance_display_confirmation_required:
+                    beneficiary_bank_account:
+                      id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
+                      created_at: '2022-02-09T08:45:50Z'
+                      created_by: 62053a72-e2d5-4c95-a578-6b16616900ac
+                      institution:
+                        id: bbaceead-7b96-46d8-9354-38dec9707004
+                        active: true
+                        name: wakanda_national
+                        display_name: Wakanda National Bank
+                        website: https://www.wakandanational.com
+                        logo: >-
+                          https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png
+                        icon_logo: >-
+                          https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png
+                        text_logo: >-
+                          https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png
+                        primary_color: '#fdbc24'
+                      details:
+                        country: BRA
+                        account_type: CHECKINGS
+                        agency: '0444'
+                        number: 45722-0
+                      holder:
+                        type: INDIVIDUAL
+                        information:
+                          name: Caetano Veloso Entertainment Universe
+                          identifier_type: CPF
+                          identifier: 231.002.999-00
+                    payer_name: Caetano Veloso
+                    payer_identifier: LV890273900-23
                 last_error:
                   error_code: payment_error
                   error_message: Unexpected error to confirm the payment

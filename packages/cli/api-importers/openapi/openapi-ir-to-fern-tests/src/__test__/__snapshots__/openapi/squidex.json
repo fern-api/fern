@@ -15805,11 +15805,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -15982,11 +15994,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -16107,11 +16131,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -16235,21 +16271,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -16447,11 +16507,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -16581,11 +16653,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -16705,11 +16789,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -16838,11 +16934,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -16977,11 +17085,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -17110,11 +17230,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -17351,11 +17483,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -17500,11 +17644,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -17632,11 +17788,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -17820,7 +17988,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -17925,7 +18105,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18017,7 +18209,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18109,7 +18313,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -18125,7 +18341,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18231,7 +18459,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18329,7 +18569,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18465,7 +18717,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18591,7 +18855,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18688,7 +18964,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -18970,7 +19258,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -19062,7 +19362,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -19154,7 +19466,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -19246,7 +19570,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -21009,13 +21345,56 @@ service:
                         },
                       },
                       "action": {
+                        "accessSecret": "accessSecret",
+                        "accessToken": "accessToken",
+                        "action": "Broadcast",
                         "actionType": "Webhook",
-                        "headers": "action",
+                        "apiKey": "apiKey",
+                        "apiUsername": "apiUsername",
+                        "appId": "appId",
+                        "canonicalUrl": "canonicalUrl",
+                        "category": 1,
+                        "client": "client",
+                        "connectionString": "connectionString",
+                        "content": "content",
+                        "data": "data",
+                        "delete": "delete",
+                        "document": "document",
+                        "headers": "headers",
+                        "host": "host",
+                        "hubName": "hubName",
+                        "indexName": "indexName",
+                        "isHtml": true,
+                        "messageBody": "messageBody",
+                        "messageFrom": "messageFrom",
+                        "messageSubject": "messageSubject",
+                        "messageTo": "messageTo",
                         "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "methodName": "methodName",
+                        "password": "password",
+                        "payload": "payload",
+                        "payloadType": "payloadType",
+                        "publicationId": "publicationId",
+                        "publish": true,
+                        "queue": "queue",
+                        "schema": "schema",
+                        "script": "script",
+                        "serverHost": "serverHost",
+                        "serverPassword": "serverPassword",
+                        "serverPort": 1,
+                        "serverUsername": "serverUsername",
+                        "serviceId": "serviceId",
+                        "sharedSecret": "sharedSecret",
+                        "tags": "tags",
+                        "target": "target",
+                        "text": "text",
+                        "title": "title",
+                        "token": "token",
+                        "topic": 1,
+                        "url": "url",
+                        "user": "user",
+                        "username": "username",
+                        "webhookUrl": "webhookUrl",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21028,8 +21407,20 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
+                        "condition": "condition",
+                        "handleAll": true,
                         "limit": 1,
                         "numDays": 1,
+                        "referencedSchemas": [
+                          {
+                            "schemaId": "schemaId",
+                          },
+                        ],
+                        "schemas": [
+                          {
+                            "schemaId": "schemaId",
+                          },
+                        ],
                         "triggerType": "Usage",
                       },
                       "version": 1000000,
@@ -21084,13 +21475,56 @@ service:
                         },
                       },
                       "action": {
+                        "accessSecret": "accessSecret",
+                        "accessToken": "accessToken",
+                        "action": "Broadcast",
                         "actionType": "Webhook",
-                        "headers": "action",
+                        "apiKey": "apiKey",
+                        "apiUsername": "apiUsername",
+                        "appId": "appId",
+                        "canonicalUrl": "canonicalUrl",
+                        "category": 1,
+                        "client": "client",
+                        "connectionString": "connectionString",
+                        "content": "content",
+                        "data": "data",
+                        "delete": "delete",
+                        "document": "document",
+                        "headers": "headers",
+                        "host": "host",
+                        "hubName": "hubName",
+                        "indexName": "indexName",
+                        "isHtml": true,
+                        "messageBody": "messageBody",
+                        "messageFrom": "messageFrom",
+                        "messageSubject": "messageSubject",
+                        "messageTo": "messageTo",
                         "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "methodName": "methodName",
+                        "password": "password",
+                        "payload": "payload",
+                        "payloadType": "payloadType",
+                        "publicationId": "publicationId",
+                        "publish": true,
+                        "queue": "queue",
+                        "schema": "schema",
+                        "script": "script",
+                        "serverHost": "serverHost",
+                        "serverPassword": "serverPassword",
+                        "serverPort": 1,
+                        "serverUsername": "serverUsername",
+                        "serviceId": "serviceId",
+                        "sharedSecret": "sharedSecret",
+                        "tags": "tags",
+                        "target": "target",
+                        "text": "text",
+                        "title": "title",
+                        "token": "token",
+                        "topic": 1,
+                        "url": "url",
+                        "user": "user",
+                        "username": "username",
+                        "webhookUrl": "webhookUrl",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21103,8 +21537,20 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
+                        "condition": "condition",
+                        "handleAll": true,
                         "limit": 1,
                         "numDays": 1,
+                        "referencedSchemas": [
+                          {
+                            "schemaId": "schemaId",
+                          },
+                        ],
+                        "schemas": [
+                          {
+                            "schemaId": "schemaId",
+                          },
+                        ],
                         "triggerType": "Usage",
                       },
                       "version": 1000000,
@@ -21358,13 +21804,54 @@ service:
                             },
                           },
                           "action": {
+                            "accessSecret": "accessSecret",
+                            "accessToken": "accessToken",
+                            "action": "Broadcast",
                             "actionType": "Webhook",
-                            "headers": "action",
+                            "apiKey": "apiKey",
+                            "apiUsername": "apiUsername",
+                            "appId": "appId",
+                            "canonicalUrl": "canonicalUrl",
+                            "client": "client",
+                            "connectionString": "connectionString",
+                            "content": "content",
+                            "data": "data",
+                            "delete": "delete",
+                            "document": "document",
+                            "headers": "headers",
+                            "host": "host",
+                            "hubName": "hubName",
+                            "indexName": "indexName",
+                            "isHtml": true,
+                            "messageBody": "messageBody",
+                            "messageFrom": "messageFrom",
+                            "messageSubject": "messageSubject",
+                            "messageTo": "messageTo",
                             "method": "POST",
-                            "payload": "action",
-                            "payloadType": "action",
-                            "sharedSecret": "action",
-                            "url": "action",
+                            "methodName": "methodName",
+                            "password": "password",
+                            "payload": "payload",
+                            "payloadType": "payloadType",
+                            "publicationId": "publicationId",
+                            "publish": true,
+                            "queue": "queue",
+                            "schema": "schema",
+                            "script": "script",
+                            "serverHost": "serverHost",
+                            "serverPassword": "serverPassword",
+                            "serverPort": 1,
+                            "serverUsername": "serverUsername",
+                            "serviceId": "serviceId",
+                            "sharedSecret": "sharedSecret",
+                            "tags": "tags",
+                            "target": "target",
+                            "text": "text",
+                            "title": "title",
+                            "token": "token",
+                            "url": "url",
+                            "user": "user",
+                            "username": "username",
+                            "webhookUrl": "webhookUrl",
                           },
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
@@ -21377,6 +21864,7 @@ service:
                           "numFailed": 1000000,
                           "numSucceeded": 1000000,
                           "trigger": {
+                            "handleAll": true,
                             "limit": 1,
                             "triggerType": "Usage",
                           },
@@ -21422,15 +21910,57 @@ service:
                   },
                   "request": {
                     "action": {
+                      "accessSecret": "accessSecret",
+                      "accessToken": "accessToken",
+                      "action": "Broadcast",
                       "actionType": "Webhook",
-                      "headers": "action",
+                      "apiKey": "apiKey",
+                      "apiUsername": "apiUsername",
+                      "appId": "appId",
+                      "canonicalUrl": "canonicalUrl",
+                      "client": "client",
+                      "connectionString": "connectionString",
+                      "content": "content",
+                      "data": "data",
+                      "delete": "delete",
+                      "document": "document",
+                      "headers": "headers",
+                      "host": "host",
+                      "hubName": "hubName",
+                      "indexName": "indexName",
+                      "isHtml": true,
+                      "messageBody": "messageBody",
+                      "messageFrom": "messageFrom",
+                      "messageSubject": "messageSubject",
+                      "messageTo": "messageTo",
                       "method": "POST",
-                      "payload": "action",
-                      "payloadType": "action",
-                      "sharedSecret": "action",
-                      "url": "action",
+                      "methodName": "methodName",
+                      "password": "password",
+                      "payload": "payload",
+                      "payloadType": "payloadType",
+                      "publicationId": "publicationId",
+                      "publish": true,
+                      "queue": "queue",
+                      "schema": "schema",
+                      "script": "script",
+                      "serverHost": "serverHost",
+                      "serverPassword": "serverPassword",
+                      "serverPort": 1,
+                      "serverUsername": "serverUsername",
+                      "serviceId": "serviceId",
+                      "sharedSecret": "sharedSecret",
+                      "tags": "tags",
+                      "target": "target",
+                      "text": "text",
+                      "title": "title",
+                      "token": "token",
+                      "url": "url",
+                      "user": "user",
+                      "username": "username",
+                      "webhookUrl": "webhookUrl",
                     },
                     "trigger": {
+                      "handleAll": true,
                       "limit": 1,
                       "triggerType": "Usage",
                     },
@@ -21445,13 +21975,56 @@ service:
                         },
                       },
                       "action": {
+                        "accessSecret": "accessSecret",
+                        "accessToken": "accessToken",
+                        "action": "Broadcast",
                         "actionType": "Webhook",
-                        "headers": "action",
+                        "apiKey": "apiKey",
+                        "apiUsername": "apiUsername",
+                        "appId": "appId",
+                        "canonicalUrl": "canonicalUrl",
+                        "category": 1,
+                        "client": "client",
+                        "connectionString": "connectionString",
+                        "content": "content",
+                        "data": "data",
+                        "delete": "delete",
+                        "document": "document",
+                        "headers": "headers",
+                        "host": "host",
+                        "hubName": "hubName",
+                        "indexName": "indexName",
+                        "isHtml": true,
+                        "messageBody": "messageBody",
+                        "messageFrom": "messageFrom",
+                        "messageSubject": "messageSubject",
+                        "messageTo": "messageTo",
                         "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "methodName": "methodName",
+                        "password": "password",
+                        "payload": "payload",
+                        "payloadType": "payloadType",
+                        "publicationId": "publicationId",
+                        "publish": true,
+                        "queue": "queue",
+                        "schema": "schema",
+                        "script": "script",
+                        "serverHost": "serverHost",
+                        "serverPassword": "serverPassword",
+                        "serverPort": 1,
+                        "serverUsername": "serverUsername",
+                        "serviceId": "serviceId",
+                        "sharedSecret": "sharedSecret",
+                        "tags": "tags",
+                        "target": "target",
+                        "text": "text",
+                        "title": "title",
+                        "token": "token",
+                        "topic": 1,
+                        "url": "url",
+                        "user": "user",
+                        "username": "username",
+                        "webhookUrl": "webhookUrl",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21464,8 +22037,20 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
+                        "condition": "condition",
+                        "handleAll": true,
                         "limit": 1,
                         "numDays": 1,
+                        "referencedSchemas": [
+                          {
+                            "schemaId": "schemaId",
+                          },
+                        ],
+                        "schemas": [
+                          {
+                            "schemaId": "schemaId",
+                          },
+                        ],
                         "triggerType": "Usage",
                       },
                       "version": 1000000,
@@ -21555,13 +22140,56 @@ service:
                         },
                       },
                       "action": {
+                        "accessSecret": "accessSecret",
+                        "accessToken": "accessToken",
+                        "action": "Broadcast",
                         "actionType": "Webhook",
-                        "headers": "action",
+                        "apiKey": "apiKey",
+                        "apiUsername": "apiUsername",
+                        "appId": "appId",
+                        "canonicalUrl": "canonicalUrl",
+                        "category": 1,
+                        "client": "client",
+                        "connectionString": "connectionString",
+                        "content": "content",
+                        "data": "data",
+                        "delete": "delete",
+                        "document": "document",
+                        "headers": "headers",
+                        "host": "host",
+                        "hubName": "hubName",
+                        "indexName": "indexName",
+                        "isHtml": true,
+                        "messageBody": "messageBody",
+                        "messageFrom": "messageFrom",
+                        "messageSubject": "messageSubject",
+                        "messageTo": "messageTo",
                         "method": "POST",
-                        "payload": "action",
-                        "payloadType": "action",
-                        "sharedSecret": "action",
-                        "url": "action",
+                        "methodName": "methodName",
+                        "password": "password",
+                        "payload": "payload",
+                        "payloadType": "payloadType",
+                        "publicationId": "publicationId",
+                        "publish": true,
+                        "queue": "queue",
+                        "schema": "schema",
+                        "script": "script",
+                        "serverHost": "serverHost",
+                        "serverPassword": "serverPassword",
+                        "serverPort": 1,
+                        "serverUsername": "serverUsername",
+                        "serviceId": "serviceId",
+                        "sharedSecret": "sharedSecret",
+                        "tags": "tags",
+                        "target": "target",
+                        "text": "text",
+                        "title": "title",
+                        "token": "token",
+                        "topic": 1,
+                        "url": "url",
+                        "user": "user",
+                        "username": "username",
+                        "webhookUrl": "webhookUrl",
                       },
                       "created": "2024-01-15T09:30:00Z",
                       "createdBy": "createdBy",
@@ -21574,8 +22202,20 @@ service:
                       "numFailed": 1000000,
                       "numSucceeded": 1000000,
                       "trigger": {
+                        "condition": "condition",
+                        "handleAll": true,
                         "limit": 1,
                         "numDays": 1,
+                        "referencedSchemas": [
+                          {
+                            "schemaId": "schemaId",
+                          },
+                        ],
+                        "schemas": [
+                          {
+                            "schemaId": "schemaId",
+                          },
+                        ],
                         "triggerType": "Usage",
                       },
                       "version": 1000000,
@@ -21760,15 +22400,57 @@ service:
                   },
                   "request": {
                     "action": {
+                      "accessSecret": "accessSecret",
+                      "accessToken": "accessToken",
+                      "action": "Broadcast",
                       "actionType": "Webhook",
-                      "headers": "action",
+                      "apiKey": "apiKey",
+                      "apiUsername": "apiUsername",
+                      "appId": "appId",
+                      "canonicalUrl": "canonicalUrl",
+                      "client": "client",
+                      "connectionString": "connectionString",
+                      "content": "content",
+                      "data": "data",
+                      "delete": "delete",
+                      "document": "document",
+                      "headers": "headers",
+                      "host": "host",
+                      "hubName": "hubName",
+                      "indexName": "indexName",
+                      "isHtml": true,
+                      "messageBody": "messageBody",
+                      "messageFrom": "messageFrom",
+                      "messageSubject": "messageSubject",
+                      "messageTo": "messageTo",
                       "method": "POST",
-                      "payload": "action",
-                      "payloadType": "action",
-                      "sharedSecret": "action",
-                      "url": "action",
+                      "methodName": "methodName",
+                      "password": "password",
+                      "payload": "payload",
+                      "payloadType": "payloadType",
+                      "publicationId": "publicationId",
+                      "publish": true,
+                      "queue": "queue",
+                      "schema": "schema",
+                      "script": "script",
+                      "serverHost": "serverHost",
+                      "serverPassword": "serverPassword",
+                      "serverPort": 1,
+                      "serverUsername": "serverUsername",
+                      "serviceId": "serviceId",
+                      "sharedSecret": "sharedSecret",
+                      "tags": "tags",
+                      "target": "target",
+                      "text": "text",
+                      "title": "title",
+                      "token": "token",
+                      "url": "url",
+                      "user": "user",
+                      "username": "username",
+                      "webhookUrl": "webhookUrl",
                     },
                     "trigger": {
+                      "handleAll": true,
                       "limit": 1,
                       "triggerType": "Usage",
                     },
@@ -21946,15 +22628,57 @@ service:
                   name: name
                   trigger:
                     triggerType: Usage
+                    handleAll: true
                     limit: 1
                   action:
                     actionType: Webhook
-                    url: action
+                    appId: appId
+                    apiKey: apiKey
+                    indexName: indexName
+                    document: document
+                    delete: delete
+                    connectionString: connectionString
+                    queue: queue
+                    payload: payload
+                    text: text
+                    client: client
+                    data: data
+                    schema: schema
+                    publish: true
+                    url: url
+                    apiUsername: apiUsername
+                    title: title
+                    host: host
+                    username: username
+                    password: password
+                    serverHost: serverHost
+                    serverPort: 1
+                    serverUsername: serverUsername
+                    serverPassword: serverPassword
+                    messageFrom: messageFrom
+                    messageTo: messageTo
+                    messageSubject: messageSubject
+                    messageBody: messageBody
+                    serviceId: serviceId
+                    accessToken: accessToken
+                    content: content
+                    canonicalUrl: canonicalUrl
+                    tags: tags
+                    publicationId: publicationId
+                    isHtml: true
+                    user: user
+                    token: token
+                    script: script
+                    hubName: hubName
+                    action: Broadcast
+                    methodName: methodName
+                    target: target
+                    webhookUrl: webhookUrl
+                    accessSecret: accessSecret
                     method: POST
-                    payload: action
-                    payloadType: action
-                    headers: action
-                    sharedSecret: action
+                    payloadType: payloadType
+                    headers: headers
+                    sharedSecret: sharedSecret
                   numSucceeded: 1000000
                   numFailed: 1000000
                   lastExecuted: '2024-01-15T09:30:00Z'
@@ -21987,15 +22711,57 @@ service:
           request:
             trigger:
               triggerType: Usage
+              handleAll: true
               limit: 1
             action:
               actionType: Webhook
-              url: action
+              appId: appId
+              apiKey: apiKey
+              indexName: indexName
+              document: document
+              delete: delete
+              connectionString: connectionString
+              queue: queue
+              payload: payload
+              text: text
+              client: client
+              data: data
+              schema: schema
+              publish: true
+              url: url
+              apiUsername: apiUsername
+              title: title
+              host: host
+              username: username
+              password: password
+              serverHost: serverHost
+              serverPort: 1
+              serverUsername: serverUsername
+              serverPassword: serverPassword
+              messageFrom: messageFrom
+              messageTo: messageTo
+              messageSubject: messageSubject
+              messageBody: messageBody
+              serviceId: serviceId
+              accessToken: accessToken
+              content: content
+              canonicalUrl: canonicalUrl
+              tags: tags
+              publicationId: publicationId
+              isHtml: true
+              user: user
+              token: token
+              script: script
+              hubName: hubName
+              action: Broadcast
+              methodName: methodName
+              target: target
+              webhookUrl: webhookUrl
+              accessSecret: accessSecret
               method: POST
-              payload: action
-              payloadType: action
-              headers: action
-              sharedSecret: action
+              payloadType: payloadType
+              headers: headers
+              sharedSecret: sharedSecret
           response:
             body:
               _links:
@@ -22013,16 +22779,65 @@ service:
               name: name
               trigger:
                 triggerType: Usage
+                condition: condition
+                schemas:
+                  - schemaId: schemaId
+                referencedSchemas:
+                  - schemaId: schemaId
+                handleAll: true
                 limit: 1
                 numDays: 1
               action:
                 actionType: Webhook
-                url: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                connectionString: connectionString
+                queue: queue
+                payload: payload
+                text: text
+                client: client
+                data: data
+                schema: schema
+                publish: true
+                url: url
+                apiUsername: apiUsername
+                title: title
+                topic: 1
+                category: 1
+                host: host
+                username: username
+                password: password
+                serverHost: serverHost
+                serverPort: 1
+                serverUsername: serverUsername
+                serverPassword: serverPassword
+                messageFrom: messageFrom
+                messageTo: messageTo
+                messageSubject: messageSubject
+                messageBody: messageBody
+                serviceId: serviceId
+                accessToken: accessToken
+                content: content
+                canonicalUrl: canonicalUrl
+                tags: tags
+                publicationId: publicationId
+                isHtml: true
+                user: user
+                token: token
+                script: script
+                hubName: hubName
+                action: Broadcast
+                methodName: methodName
+                target: target
+                webhookUrl: webhookUrl
+                accessSecret: accessSecret
                 method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                payloadType: payloadType
+                headers: headers
+                sharedSecret: sharedSecret
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22104,16 +22919,65 @@ service:
               name: name
               trigger:
                 triggerType: Usage
+                condition: condition
+                schemas:
+                  - schemaId: schemaId
+                referencedSchemas:
+                  - schemaId: schemaId
+                handleAll: true
                 limit: 1
                 numDays: 1
               action:
                 actionType: Webhook
-                url: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                connectionString: connectionString
+                queue: queue
+                payload: payload
+                text: text
+                client: client
+                data: data
+                schema: schema
+                publish: true
+                url: url
+                apiUsername: apiUsername
+                title: title
+                topic: 1
+                category: 1
+                host: host
+                username: username
+                password: password
+                serverHost: serverHost
+                serverPort: 1
+                serverUsername: serverUsername
+                serverPassword: serverPassword
+                messageFrom: messageFrom
+                messageTo: messageTo
+                messageSubject: messageSubject
+                messageBody: messageBody
+                serviceId: serviceId
+                accessToken: accessToken
+                content: content
+                canonicalUrl: canonicalUrl
+                tags: tags
+                publicationId: publicationId
+                isHtml: true
+                user: user
+                token: token
+                script: script
+                hubName: hubName
+                action: Broadcast
+                methodName: methodName
+                target: target
+                webhookUrl: webhookUrl
+                accessSecret: accessSecret
                 method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                payloadType: payloadType
+                headers: headers
+                sharedSecret: sharedSecret
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22182,16 +23046,65 @@ service:
               name: name
               trigger:
                 triggerType: Usage
+                condition: condition
+                schemas:
+                  - schemaId: schemaId
+                referencedSchemas:
+                  - schemaId: schemaId
+                handleAll: true
                 limit: 1
                 numDays: 1
               action:
                 actionType: Webhook
-                url: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                connectionString: connectionString
+                queue: queue
+                payload: payload
+                text: text
+                client: client
+                data: data
+                schema: schema
+                publish: true
+                url: url
+                apiUsername: apiUsername
+                title: title
+                topic: 1
+                category: 1
+                host: host
+                username: username
+                password: password
+                serverHost: serverHost
+                serverPort: 1
+                serverUsername: serverUsername
+                serverPassword: serverPassword
+                messageFrom: messageFrom
+                messageTo: messageTo
+                messageSubject: messageSubject
+                messageBody: messageBody
+                serviceId: serviceId
+                accessToken: accessToken
+                content: content
+                canonicalUrl: canonicalUrl
+                tags: tags
+                publicationId: publicationId
+                isHtml: true
+                user: user
+                token: token
+                script: script
+                hubName: hubName
+                action: Broadcast
+                methodName: methodName
+                target: target
+                webhookUrl: webhookUrl
+                accessSecret: accessSecret
                 method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                payloadType: payloadType
+                headers: headers
+                sharedSecret: sharedSecret
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22238,16 +23151,65 @@ service:
               name: name
               trigger:
                 triggerType: Usage
+                condition: condition
+                schemas:
+                  - schemaId: schemaId
+                referencedSchemas:
+                  - schemaId: schemaId
+                handleAll: true
                 limit: 1
                 numDays: 1
               action:
                 actionType: Webhook
-                url: action
+                appId: appId
+                apiKey: apiKey
+                indexName: indexName
+                document: document
+                delete: delete
+                connectionString: connectionString
+                queue: queue
+                payload: payload
+                text: text
+                client: client
+                data: data
+                schema: schema
+                publish: true
+                url: url
+                apiUsername: apiUsername
+                title: title
+                topic: 1
+                category: 1
+                host: host
+                username: username
+                password: password
+                serverHost: serverHost
+                serverPort: 1
+                serverUsername: serverUsername
+                serverPassword: serverPassword
+                messageFrom: messageFrom
+                messageTo: messageTo
+                messageSubject: messageSubject
+                messageBody: messageBody
+                serviceId: serviceId
+                accessToken: accessToken
+                content: content
+                canonicalUrl: canonicalUrl
+                tags: tags
+                publicationId: publicationId
+                isHtml: true
+                user: user
+                token: token
+                script: script
+                hubName: hubName
+                action: Broadcast
+                methodName: methodName
+                target: target
+                webhookUrl: webhookUrl
+                accessSecret: accessSecret
                 method: POST
-                payload: action
-                payloadType: action
-                headers: action
-                sharedSecret: action
+                payloadType: payloadType
+                headers: headers
+                sharedSecret: sharedSecret
               numSucceeded: 1000000
               numFailed: 1000000
               lastExecuted: '2024-01-15T09:30:00Z'
@@ -22350,15 +23312,57 @@ service:
           request:
             trigger:
               triggerType: Usage
+              handleAll: true
               limit: 1
             action:
               actionType: Webhook
-              url: action
+              appId: appId
+              apiKey: apiKey
+              indexName: indexName
+              document: document
+              delete: delete
+              connectionString: connectionString
+              queue: queue
+              payload: payload
+              text: text
+              client: client
+              data: data
+              schema: schema
+              publish: true
+              url: url
+              apiUsername: apiUsername
+              title: title
+              host: host
+              username: username
+              password: password
+              serverHost: serverHost
+              serverPort: 1
+              serverUsername: serverUsername
+              serverPassword: serverPassword
+              messageFrom: messageFrom
+              messageTo: messageTo
+              messageSubject: messageSubject
+              messageBody: messageBody
+              serviceId: serviceId
+              accessToken: accessToken
+              content: content
+              canonicalUrl: canonicalUrl
+              tags: tags
+              publicationId: publicationId
+              isHtml: true
+              user: user
+              token: token
+              script: script
+              hubName: hubName
+              action: Broadcast
+              methodName: methodName
+              target: target
+              webhookUrl: webhookUrl
+              accessSecret: accessSecret
               method: POST
-              payload: action
-              payloadType: action
-              headers: action
-              sharedSecret: action
+              payloadType: payloadType
+              headers: headers
+              sharedSecret: sharedSecret
           response:
             body:
               _links:
@@ -22661,21 +23665,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -22808,21 +23836,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -22992,21 +24044,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -23139,21 +24215,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -23289,21 +24389,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -23436,21 +24560,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -23584,21 +24732,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -23718,11 +24890,23 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
@@ -23833,21 +25017,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -23980,21 +25188,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -24130,21 +25362,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -24277,21 +25533,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -24384,11 +25664,23 @@ service:
                   "request": {
                     "name": "name",
                     "properties": {
+                      "allowDuplicates": true,
+                      "contentType": "Unspecified",
+                      "createEnum": true,
                       "editor": "Separator",
                       "fieldType": "UI",
+                      "inlineEditable": true,
+                      "isEmbeddable": true,
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
+                      "isUnique": true,
+                      "mustBeImage": true,
+                      "mustBePublished": true,
+                      "previewMode": "ImageAndFileName",
+                      "resolveFirst": true,
+                      "resolveImage": true,
+                      "resolveReference": true,
                     },
                   },
                   "response": {
@@ -24437,21 +25729,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -24541,11 +25857,23 @@ service:
                   "request": {
                     "name": "name",
                     "properties": {
+                      "allowDuplicates": true,
+                      "contentType": "Unspecified",
+                      "createEnum": true,
                       "editor": "Separator",
                       "fieldType": "UI",
+                      "inlineEditable": true,
+                      "isEmbeddable": true,
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
+                      "isUnique": true,
+                      "mustBeImage": true,
+                      "mustBePublished": true,
+                      "previewMode": "ImageAndFileName",
+                      "resolveFirst": true,
+                      "resolveImage": true,
+                      "resolveReference": true,
                     },
                   },
                   "response": {
@@ -24594,21 +25922,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -24748,21 +26100,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -24918,21 +26294,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -25060,21 +26460,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -25173,11 +26597,23 @@ service:
                   },
                   "request": {
                     "properties": {
+                      "allowDuplicates": true,
+                      "contentType": "Unspecified",
+                      "createEnum": true,
                       "editor": "Separator",
                       "fieldType": "UI",
+                      "inlineEditable": true,
+                      "isEmbeddable": true,
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
+                      "isUnique": true,
+                      "mustBeImage": true,
+                      "mustBePublished": true,
+                      "previewMode": "ImageAndFileName",
+                      "resolveFirst": true,
+                      "resolveImage": true,
+                      "resolveReference": true,
                     },
                   },
                   "response": {
@@ -25226,21 +26662,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -25333,11 +26793,23 @@ service:
                   },
                   "request": {
                     "properties": {
+                      "allowDuplicates": true,
+                      "contentType": "Unspecified",
+                      "createEnum": true,
                       "editor": "Separator",
                       "fieldType": "UI",
+                      "inlineEditable": true,
+                      "isEmbeddable": true,
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
+                      "isUnique": true,
+                      "mustBeImage": true,
+                      "mustBePublished": true,
+                      "previewMode": "ImageAndFileName",
+                      "resolveFirst": true,
+                      "resolveImage": true,
+                      "resolveReference": true,
                     },
                   },
                   "response": {
@@ -25386,21 +26858,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -25545,21 +27041,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -25697,21 +27217,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -25843,21 +27387,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -26002,21 +27570,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -26199,21 +27791,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -26349,21 +27965,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -26513,21 +28153,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -26674,21 +28338,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -26820,21 +28508,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -26967,21 +28679,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -27116,21 +28852,45 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
+                                "allowDuplicates": true,
+                                "contentType": "Unspecified",
+                                "createEnum": true,
                                 "editor": "Separator",
                                 "fieldType": "UI",
+                                "inlineEditable": true,
+                                "isEmbeddable": true,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
+                                "isUnique": true,
+                                "mustBeImage": true,
+                                "mustBePublished": true,
+                                "previewMode": "ImageAndFileName",
+                                "resolveFirst": true,
+                                "resolveImage": true,
+                                "resolveReference": true,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
+                            "allowDuplicates": true,
+                            "contentType": "Unspecified",
+                            "createEnum": true,
                             "editor": "Separator",
                             "fieldType": "UI",
+                            "inlineEditable": true,
+                            "isEmbeddable": true,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
+                            "isUnique": true,
+                            "mustBeImage": true,
+                            "mustBePublished": true,
+                            "previewMode": "ImageAndFileName",
+                            "resolveFirst": true,
+                            "resolveImage": true,
+                            "resolveReference": true,
                           },
                         },
                       ],
@@ -27242,7 +29002,19 @@ service:
             name: name
             properties:
               fieldType: UI
+              previewMode: ImageAndFileName
+              resolveFirst: true
+              mustBeImage: true
+              resolveImage: true
+              allowDuplicates: true
+              inlineEditable: true
               editor: Separator
+              isUnique: true
+              resolveReference: true
+              mustBePublished: true
+              isEmbeddable: true
+              createEnum: true
+              contentType: Unspecified
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27303,7 +29075,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27319,7 +29103,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27361,7 +29157,19 @@ service:
             name: name
             properties:
               fieldType: UI
+              previewMode: ImageAndFileName
+              resolveFirst: true
+              mustBeImage: true
+              resolveImage: true
+              allowDuplicates: true
+              inlineEditable: true
               editor: Separator
+              isUnique: true
+              resolveReference: true
+              mustBePublished: true
+              isEmbeddable: true
+              createEnum: true
+              contentType: Unspecified
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27422,7 +29230,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27438,7 +29258,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27537,7 +29369,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27553,7 +29397,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27646,7 +29502,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27662,7 +29530,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27759,7 +29639,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27775,7 +29667,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27815,7 +29719,19 @@ service:
           request:
             properties:
               fieldType: UI
+              previewMode: ImageAndFileName
+              resolveFirst: true
+              mustBeImage: true
+              resolveImage: true
+              allowDuplicates: true
+              inlineEditable: true
               editor: Separator
+              isUnique: true
+              resolveReference: true
+              mustBePublished: true
+              isEmbeddable: true
+              createEnum: true
+              contentType: Unspecified
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -27876,7 +29792,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27892,7 +29820,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -27983,7 +29923,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -27999,7 +29951,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28043,7 +30007,19 @@ service:
           request:
             properties:
               fieldType: UI
+              previewMode: ImageAndFileName
+              resolveFirst: true
+              mustBeImage: true
+              resolveImage: true
+              allowDuplicates: true
+              inlineEditable: true
               editor: Separator
+              isUnique: true
+              resolveReference: true
+              mustBePublished: true
+              isEmbeddable: true
+              createEnum: true
+              contentType: Unspecified
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
@@ -28104,7 +30080,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28120,7 +30108,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28215,7 +30215,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28231,7 +30243,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28323,7 +30347,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28339,7 +30375,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28435,7 +30483,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28451,7 +30511,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28545,7 +30617,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28561,7 +30645,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28659,7 +30755,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28675,7 +30783,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28769,7 +30889,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28785,7 +30917,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28883,7 +31027,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -28899,7 +31055,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -28993,7 +31161,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29009,7 +31189,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29107,7 +31299,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29123,7 +31327,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29217,7 +31433,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29233,7 +31461,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29331,7 +31571,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29347,7 +31599,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29420,7 +31684,19 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29528,7 +31804,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29544,7 +31832,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29630,7 +31930,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29646,7 +31958,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29767,7 +32091,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29783,7 +32119,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -29909,7 +32257,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -29925,7 +32285,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30021,7 +32393,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30037,7 +32421,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30129,7 +32525,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30145,7 +32553,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30236,7 +32656,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30252,7 +32684,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30348,7 +32792,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30364,7 +32820,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30451,7 +32919,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30467,7 +32947,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
@@ -30554,7 +33046,19 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: UI
+                    previewMode: ImageAndFileName
+                    resolveFirst: true
+                    mustBeImage: true
+                    resolveImage: true
+                    allowDuplicates: true
+                    inlineEditable: true
                     editor: Separator
+                    isUnique: true
+                    resolveReference: true
+                    mustBePublished: true
+                    isEmbeddable: true
+                    createEnum: true
+                    contentType: Unspecified
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
@@ -30570,7 +33074,19 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: UI
+                        previewMode: ImageAndFileName
+                        resolveFirst: true
+                        mustBeImage: true
+                        resolveImage: true
+                        allowDuplicates: true
+                        inlineEditable: true
                         editor: Separator
+                        isUnique: true
+                        resolveReference: true
+                        mustBePublished: true
+                        isEmbeddable: true
+                        createEnum: true
+                        contentType: Unspecified
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true

@@ -18,7 +18,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -53,7 +54,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -88,7 +90,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -123,7 +126,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -158,7 +162,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -193,7 +198,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -228,7 +234,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -263,7 +270,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -298,7 +306,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -333,7 +342,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -368,7 +378,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -403,7 +414,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -438,7 +450,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -473,7 +486,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -592,7 +606,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -627,7 +642,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -652,6 +668,21 @@
           },
           "ChatIamTestPermissionsRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ChatIamTestPermissionsRequestBadRequestErrorBody",
           },
@@ -662,7 +693,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -708,7 +740,16 @@
                 "name": undefined,
                 "value": {
                   "invalidMemberError": {},
-                  "message": "string",
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
                   "reason": "INVALID_MEMBER",
                 },
               },
@@ -723,7 +764,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -773,7 +815,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -808,7 +851,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -843,7 +887,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -878,7 +923,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -913,7 +959,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -948,7 +995,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -983,7 +1031,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1030,7 +1079,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1065,7 +1115,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1100,7 +1151,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1135,7 +1187,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1160,6 +1213,21 @@
           },
           "CollectionIamTestPermissionsRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "CollectionIamTestPermissionsRequestBadRequestErrorBody",
           },
@@ -1170,7 +1238,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1216,7 +1285,16 @@
                 "name": undefined,
                 "value": {
                   "invalidMemberError": {},
-                  "message": "string",
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
                   "reason": "INVALID_MEMBER",
                 },
               },
@@ -1231,7 +1309,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1281,7 +1360,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1316,7 +1396,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1351,7 +1432,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1386,7 +1468,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1421,7 +1504,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1456,7 +1540,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1491,7 +1576,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1526,7 +1612,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1561,7 +1648,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1596,7 +1684,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1631,7 +1720,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1666,7 +1756,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1701,7 +1792,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1736,7 +1828,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1771,7 +1864,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1806,7 +1900,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1853,7 +1948,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1888,7 +1984,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1923,7 +2020,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1958,7 +2056,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -1983,6 +2082,21 @@
           },
           "DocumentIamTestPermissionsRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "DocumentIamTestPermissionsRequestBadRequestErrorBody",
           },
@@ -1993,7 +2107,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2039,7 +2154,16 @@
                 "name": undefined,
                 "value": {
                   "invalidMemberError": {},
-                  "message": "string",
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
                   "reason": "INVALID_MEMBER",
                 },
               },
@@ -2054,7 +2178,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2104,7 +2229,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2139,7 +2265,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2174,7 +2301,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2209,7 +2337,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2244,7 +2373,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2387,7 +2517,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2422,7 +2553,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2457,7 +2589,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2492,7 +2625,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2527,7 +2661,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2562,7 +2697,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2597,7 +2733,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2632,7 +2769,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2667,7 +2805,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2702,7 +2841,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2737,7 +2877,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2772,7 +2913,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2807,7 +2949,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2842,7 +2985,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2889,7 +3033,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2936,7 +3081,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -2971,7 +3117,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3006,7 +3153,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3041,7 +3189,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3076,7 +3225,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3123,7 +3273,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3158,7 +3309,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3277,7 +3429,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3312,7 +3465,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3347,7 +3501,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3382,7 +3537,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3417,7 +3573,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3452,7 +3609,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3487,7 +3645,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3522,7 +3681,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3581,7 +3741,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3616,7 +3777,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3651,7 +3813,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3686,7 +3849,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3711,6 +3875,24 @@
           },
           "OrgInvitesCreateOrgOrgIdInvitePostRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "organizationInviteAlreadyExistsError": {
+                    "email_address": "email_address",
+                    "organization_id": "organization_id",
+                  },
+                  "organizationMemberAlreadyExistsError": {
+                    "member_id": "member_id",
+                    "organization_id": "organization_id",
+                  },
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "OrgInvitesCreateOrgOrgIdInvitePostRequestBadRequestErrorBody",
           },
@@ -3721,7 +3903,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3756,7 +3939,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3791,7 +3975,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3826,7 +4011,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3873,7 +4059,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3908,7 +4095,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3943,7 +4131,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -3978,7 +4167,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4003,6 +4193,21 @@
           },
           "OrganizationIamTestPermissionsRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "OrganizationIamTestPermissionsRequestBadRequestErrorBody",
           },
@@ -4013,7 +4218,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4059,7 +4265,16 @@
                 "name": undefined,
                 "value": {
                   "invalidMemberError": {},
-                  "message": "string",
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
                   "reason": "INVALID_MEMBER",
                 },
               },
@@ -4074,7 +4289,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4124,7 +4340,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4159,7 +4376,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4184,6 +4402,21 @@
           },
           "ProjectIamTestPermissionsRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "ProjectIamTestPermissionsRequestBadRequestErrorBody",
           },
@@ -4194,7 +4427,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4240,7 +4474,16 @@
                 "name": undefined,
                 "value": {
                   "invalidMemberError": {},
-                  "message": "string",
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
                   "reason": "INVALID_MEMBER",
                 },
               },
@@ -4255,7 +4498,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4305,7 +4549,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4340,7 +4585,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4375,7 +4621,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4410,7 +4657,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4445,7 +4693,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4480,7 +4729,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4515,7 +4765,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4550,7 +4801,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4585,7 +4837,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4620,7 +4873,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4655,7 +4909,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4690,7 +4945,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4725,7 +4981,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4760,7 +5017,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4795,7 +5053,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4830,7 +5089,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4865,7 +5125,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4890,6 +5151,21 @@
           },
           "TaskIamTestPermissionsRequestBadRequestError": {
             "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidMemberError": {},
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                },
+              },
+            ],
             "status-code": 400,
             "type": "TaskIamTestPermissionsRequestBadRequestErrorBody",
           },
@@ -4900,7 +5176,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -4946,7 +5223,16 @@
                 "name": undefined,
                 "value": {
                   "invalidMemberError": {},
-                  "message": "string",
+                  "invalidRoleError": {
+                    "role": "role",
+                  },
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
                   "reason": "INVALID_MEMBER",
                 },
               },
@@ -4961,7 +5247,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -5011,7 +5298,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -5046,7 +5334,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -5081,7 +5370,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -5116,7 +5406,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -5151,7 +5442,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -5186,7 +5478,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -5221,7 +5514,8 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
+                  "message": "message",
+                  "missingAuthenticationError": {},
                   "permissionCheckFailedError": {
                     "permission": "permission",
                   },
@@ -10621,7 +10915,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrganizationIamListMembersRequestUnprocessableEntityError:
@@ -10641,7 +10936,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrganizationGetMemberRequestUnprocessableEntityError:
@@ -10657,7 +10953,13 @@ errors:
     examples:
       - value:
           reason: INVALID_MEMBER
-          message: string
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          invalidRoleError:
+            role: role
+          invalidSubjectTypeError: {}
           invalidMemberError: {}
   OrganizationIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
@@ -10666,7 +10968,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrganizationIamUpdateMemberRolesRequestNotFoundError:
@@ -10687,6 +10990,14 @@ errors:
     status-code: 400
     type: OrganizationIamTestPermissionsRequestBadRequestErrorBody
     docs: Bad Request
+    examples:
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          invalidSubjectTypeError: {}
+          invalidMemberError: {}
+          invalidRoleError:
+            role: role
   OrganizationIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: OrganizationIamTestPermissionsRequestForbiddenErrorBody
@@ -10694,7 +11005,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrganizationIamTestPermissionsRequestNotFoundError:
@@ -10734,7 +11046,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgGetOrgOrgIdGetRequestUnprocessableEntityError:
@@ -10754,7 +11067,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgUpdateOrgOrgIdPostRequestUnprocessableEntityError:
@@ -10774,7 +11088,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgJoinOrgOrgIdJoinPostRequestUnprocessableEntityError:
@@ -10794,7 +11109,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgInvitesListOrgOrgIdInviteGetRequestUnprocessableEntityError:
@@ -10807,6 +11123,16 @@ errors:
     status-code: 400
     type: OrgInvitesCreateOrgOrgIdInvitePostRequestBadRequestErrorBody
     docs: Bad Request
+    examples:
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          organizationInviteAlreadyExistsError:
+            organization_id: organization_id
+            email_address: email_address
+          organizationMemberAlreadyExistsError:
+            organization_id: organization_id
+            member_id: member_id
   OrgInvitesCreateOrgOrgIdInvitePostRequestForbiddenError:
     status-code: 403
     type: OrgInvitesCreateOrgOrgIdInvitePostRequestForbiddenErrorBody
@@ -10814,7 +11140,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgInvitesCreateOrgOrgIdInvitePostRequestUnprocessableEntityError:
@@ -10834,7 +11161,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgInvitesDeleteOrgOrgIdInviteOrgInviteIdDeleteRequestUnprocessableEntityError:
@@ -10854,7 +11182,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgDomainsListOrgOrgIdDomainsGetRequestUnprocessableEntityError:
@@ -10874,7 +11203,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgDomainsPostOrgOrgIdDomainsPostRequestUnprocessableEntityError:
@@ -10894,7 +11224,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgDomainDeleteOrgOrgIdDomainsDomainIdDeleteRequestUnprocessableEntityError:
@@ -10914,7 +11245,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   OrgUpdateAvatarOrgOrgIdAvatarPostRequestUnprocessableEntityError:
@@ -10952,7 +11284,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListProjectOrgOrgIdProjectGetRequestUnprocessableEntityError:
@@ -10972,7 +11305,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CreateProjectOrgOrgIdProjectPostRequestUnprocessableEntityError:
@@ -10992,7 +11326,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetProjectOrgOrgIdProjectProjectIdGetRequestUnprocessableEntityError:
@@ -11012,7 +11347,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   UpdateProjectOrgOrgIdProjectProjectIdPostRequestUnprocessableEntityError:
@@ -11039,7 +11375,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetProjectConfigOrgOrgIdProjectProjectIdConfigPostRequestUnprocessableEntityError:
@@ -11060,7 +11397,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ProjectUpdateAvatarOrgOrgIdProjectProjectIdAvatarPostRequestUnprocessableEntityError:
@@ -11080,7 +11418,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ProjectIamListMembersRequestUnprocessableEntityError:
@@ -11100,7 +11439,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ProjectGetMemberRequestUnprocessableEntityError:
@@ -11116,7 +11456,13 @@ errors:
     examples:
       - value:
           reason: INVALID_MEMBER
-          message: string
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          invalidRoleError:
+            role: role
+          invalidSubjectTypeError: {}
           invalidMemberError: {}
   ProjectIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
@@ -11125,7 +11471,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ProjectIamUpdateMemberRolesRequestNotFoundError:
@@ -11146,6 +11493,14 @@ errors:
     status-code: 400
     type: ProjectIamTestPermissionsRequestBadRequestErrorBody
     docs: Bad Request
+    examples:
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          invalidSubjectTypeError: {}
+          invalidMemberError: {}
+          invalidRoleError:
+            role: role
   ProjectIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: ProjectIamTestPermissionsRequestForbiddenErrorBody
@@ -11153,7 +11508,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ProjectIamTestPermissionsRequestNotFoundError:
@@ -11182,7 +11538,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequestUnprocessableEntityError:
@@ -11203,7 +11560,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CreateCollectionOrgOrgIdProjectProjectIdCollectionPostRequestUnprocessableEntityError:
@@ -11224,7 +11582,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdGetRequestUnprocessableEntityError:
@@ -11245,7 +11604,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CollectionEditOrgOrgIdProjectProjectIdCollectionCollectionIdPostRequestUnprocessableEntityError:
@@ -11266,7 +11626,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CollectionStatsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGetRequestUnprocessableEntityError:
@@ -11287,7 +11648,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequestUnprocessableEntityError:
@@ -11308,7 +11670,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   QueryCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdQueryPostRequestUnprocessableEntityError:
@@ -11329,7 +11692,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   UpdateSummaryOrgOrgIdProjectProjectIdCollectionCollectionIdUpdateSummaryPostRequestUnprocessableEntityError:
@@ -11350,7 +11714,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CollectionAddOrgOrgIdProjectProjectIdCollectionCollectionIdAddPostRequestUnprocessableEntityError:
@@ -11371,7 +11736,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CollectionRemoveOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePostRequestUnprocessableEntityError:
@@ -11391,7 +11757,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CollectionIamListMembersRequestUnprocessableEntityError:
@@ -11411,7 +11778,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CollectionGetMemberRequestUnprocessableEntityError:
@@ -11427,7 +11795,13 @@ errors:
     examples:
       - value:
           reason: INVALID_MEMBER
-          message: string
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          invalidRoleError:
+            role: role
+          invalidSubjectTypeError: {}
           invalidMemberError: {}
   CollectionIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
@@ -11436,7 +11810,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CollectionIamUpdateMemberRolesRequestNotFoundError:
@@ -11457,6 +11832,14 @@ errors:
     status-code: 400
     type: CollectionIamTestPermissionsRequestBadRequestErrorBody
     docs: Bad Request
+    examples:
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          invalidSubjectTypeError: {}
+          invalidMemberError: {}
+          invalidRoleError:
+            role: role
   CollectionIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: CollectionIamTestPermissionsRequestForbiddenErrorBody
@@ -11464,7 +11847,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CollectionIamTestPermissionsRequestNotFoundError:
@@ -11492,7 +11876,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestUnprocessableEntityError:
@@ -11513,7 +11898,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentCreateOrgOrgIdProjectProjectIdDocumentPostRequestUnprocessableEntityError:
@@ -11534,7 +11920,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentUploadOrgOrgIdProjectProjectIdDocumentUploadPostRequestUnprocessableEntityError:
@@ -11555,7 +11942,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   TaskStatusOrgOrgIdProjectProjectIdDocumentCreateStatusGroupIdGetRequestUnprocessableEntityError:
@@ -11576,7 +11964,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentQueryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGetRequestUnprocessableEntityError:
@@ -11597,7 +11986,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentFetchOrgOrgIdProjectProjectIdDocumentDocumentIdGetRequestUnprocessableEntityError:
@@ -11618,7 +12008,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentUpdateOrgOrgIdProjectProjectIdDocumentDocumentIdPostRequestUnprocessableEntityError:
@@ -11639,7 +12030,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentDeleteOrgOrgIdProjectProjectIdDocumentDocumentIdDeleteRequestUnprocessableEntityError:
@@ -11660,7 +12052,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequestUnprocessableEntityError:
@@ -11686,7 +12079,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentIamListMembersRequestUnprocessableEntityError:
@@ -11706,7 +12100,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentGetMemberRequestUnprocessableEntityError:
@@ -11722,7 +12117,13 @@ errors:
     examples:
       - value:
           reason: INVALID_MEMBER
-          message: string
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          invalidRoleError:
+            role: role
+          invalidSubjectTypeError: {}
           invalidMemberError: {}
   DocumentIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
@@ -11731,7 +12132,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentIamUpdateMemberRolesRequestNotFoundError:
@@ -11752,6 +12154,14 @@ errors:
     status-code: 400
     type: DocumentIamTestPermissionsRequestBadRequestErrorBody
     docs: Bad Request
+    examples:
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          invalidSubjectTypeError: {}
+          invalidMemberError: {}
+          invalidRoleError:
+            role: role
   DocumentIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: DocumentIamTestPermissionsRequestForbiddenErrorBody
@@ -11759,7 +12169,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DocumentIamTestPermissionsRequestNotFoundError:
@@ -11793,7 +12204,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetChatChatChatIdGetRequestUnprocessableEntityError:
@@ -11813,7 +12225,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   UpdateChatChatChatIdPostRequestUnprocessableEntityError:
@@ -11833,7 +12246,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetChatConfigChatChatIdConfigGetRequestUnprocessableEntityError:
@@ -11853,7 +12267,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetChatConfigChatChatIdConfigPostRequestUnprocessableEntityError:
@@ -11873,7 +12288,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CreateChatChatPostRequestUnprocessableEntityError:
@@ -11893,7 +12309,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   QueryChatChatChatIdQueryGetRequestUnprocessableEntityError:
@@ -11913,7 +12330,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ChatIamListMembersRequestUnprocessableEntityError:
@@ -11933,7 +12351,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ChatGetMemberRequestUnprocessableEntityError:
@@ -11949,7 +12368,13 @@ errors:
     examples:
       - value:
           reason: INVALID_MEMBER
-          message: string
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          invalidRoleError:
+            role: role
+          invalidSubjectTypeError: {}
           invalidMemberError: {}
   ChatIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
@@ -11958,7 +12383,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ChatIamUpdateMemberRolesRequestNotFoundError:
@@ -11979,6 +12405,14 @@ errors:
     status-code: 400
     type: ChatIamTestPermissionsRequestBadRequestErrorBody
     docs: Bad Request
+    examples:
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          invalidSubjectTypeError: {}
+          invalidMemberError: {}
+          invalidRoleError:
+            role: role
   ChatIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: ChatIamTestPermissionsRequestForbiddenErrorBody
@@ -11986,7 +12420,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ChatIamTestPermissionsRequestNotFoundError:
@@ -12027,7 +12462,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxAuthorizeGetRequestUnprocessableEntityError:
@@ -12048,7 +12484,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetRequestUnprocessableEntityError:
@@ -12069,7 +12506,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DeleteOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdDeleteRequestUnprocessableEntityError:
@@ -12090,7 +12528,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequestUnprocessableEntityError:
@@ -12111,7 +12550,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CheckStatusOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunGetRequestUnprocessableEntityError:
@@ -12132,7 +12572,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigGetRequestUnprocessableEntityError:
@@ -12153,7 +12594,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigPostRequestUnprocessableEntityError:
@@ -12192,7 +12634,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceAuthorizeGetRequestUnprocessableEntityError:
@@ -12213,7 +12656,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetRequestUnprocessableEntityError:
@@ -12234,7 +12678,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DeleteOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdDeleteRequestUnprocessableEntityError:
@@ -12255,7 +12700,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequestUnprocessableEntityError:
@@ -12276,7 +12722,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CheckStatusOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunGetRequestUnprocessableEntityError:
@@ -12297,7 +12744,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigGetRequestUnprocessableEntityError:
@@ -12318,7 +12766,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigPostRequestUnprocessableEntityError:
@@ -12357,7 +12806,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxAuthorizeGetRequestUnprocessableEntityError:
@@ -12378,7 +12828,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetRequestUnprocessableEntityError:
@@ -12399,7 +12850,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DeleteOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdDeleteRequestUnprocessableEntityError:
@@ -12420,7 +12872,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequestUnprocessableEntityError:
@@ -12441,7 +12894,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CheckStatusOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunGetRequestUnprocessableEntityError:
@@ -12462,7 +12916,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigGetRequestUnprocessableEntityError:
@@ -12483,7 +12938,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigPostRequestUnprocessableEntityError:
@@ -12522,7 +12978,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveAuthorizeGetRequestUnprocessableEntityError:
@@ -12543,7 +13000,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetRequestUnprocessableEntityError:
@@ -12564,7 +13022,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DeleteOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdDeleteRequestUnprocessableEntityError:
@@ -12585,7 +13044,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequestUnprocessableEntityError:
@@ -12606,7 +13066,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CheckStatusOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunGetRequestUnprocessableEntityError:
@@ -12627,7 +13088,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigGetRequestUnprocessableEntityError:
@@ -12648,7 +13110,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigPostRequestUnprocessableEntityError:
@@ -12687,7 +13150,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionAuthorizeGetRequestUnprocessableEntityError:
@@ -12708,7 +13172,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetRequestUnprocessableEntityError:
@@ -12729,7 +13194,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DeleteOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdDeleteRequestUnprocessableEntityError:
@@ -12750,7 +13216,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequestUnprocessableEntityError:
@@ -12771,7 +13238,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CheckStatusOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunGetRequestUnprocessableEntityError:
@@ -12792,7 +13260,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigGetRequestUnprocessableEntityError:
@@ -12813,7 +13282,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigPostRequestUnprocessableEntityError:
@@ -12852,7 +13322,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveAuthorizeGetRequestUnprocessableEntityError:
@@ -12873,7 +13344,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetRequestUnprocessableEntityError:
@@ -12894,7 +13366,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DeleteOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdDeleteRequestUnprocessableEntityError:
@@ -12915,7 +13388,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequestUnprocessableEntityError:
@@ -12936,7 +13410,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CheckStatusOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunGetRequestUnprocessableEntityError:
@@ -12957,7 +13432,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigGetRequestUnprocessableEntityError:
@@ -12978,7 +13454,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigPostRequestUnprocessableEntityError:
@@ -13017,7 +13494,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointAuthorizeGetRequestUnprocessableEntityError:
@@ -13038,7 +13516,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetRequestUnprocessableEntityError:
@@ -13059,7 +13538,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   DeleteOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdDeleteRequestUnprocessableEntityError:
@@ -13080,7 +13560,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequestUnprocessableEntityError:
@@ -13101,7 +13582,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CheckStatusOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunGetRequestUnprocessableEntityError:
@@ -13122,7 +13604,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigGetRequestUnprocessableEntityError:
@@ -13143,7 +13626,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigPostRequestUnprocessableEntityError:
@@ -13176,7 +13660,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   RegisterOauthClientInternalProjectProjectIdRegisterOauthClientPostRequestUnprocessableEntityError:
@@ -13232,7 +13717,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   InitialiseOrgOrgIdProjectProjectIdComposePostRequestUnprocessableEntityError:
@@ -13253,7 +13739,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GenerateOrgOrgIdProjectProjectIdComposeGeneratePostRequestUnprocessableEntityError:
@@ -13274,7 +13761,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   UpdateSectionOrgOrgIdProjectProjectIdComposeUpdateSectionPostRequestUnprocessableEntityError:
@@ -13295,7 +13783,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   SectionTalkingPointsOrgOrgIdProjectProjectIdComposeSectionTalkingPointsPostRequestUnprocessableEntityError:
@@ -13315,7 +13804,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   TopicOrgOrgIdProjectProjectIdComposeTopicPostRequestUnprocessableEntityError:
@@ -13335,7 +13825,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetAllTasksRequestUnprocessableEntityError:
@@ -13355,7 +13846,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CreateTaskRequestUnprocessableEntityError:
@@ -13375,7 +13867,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetTaskRequestUnprocessableEntityError:
@@ -13395,7 +13888,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   EditTaskRequestUnprocessableEntityError:
@@ -13415,7 +13909,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetTaskRunsRequestUnprocessableEntityError:
@@ -13435,7 +13930,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   RunTaskRequestUnprocessableEntityError:
@@ -13455,7 +13951,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   TaskIamListMembersRequestUnprocessableEntityError:
@@ -13475,7 +13972,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   TaskGetMemberRequestUnprocessableEntityError:
@@ -13491,7 +13989,13 @@ errors:
     examples:
       - value:
           reason: INVALID_MEMBER
-          message: string
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          invalidRoleError:
+            role: role
+          invalidSubjectTypeError: {}
           invalidMemberError: {}
   TaskIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
@@ -13500,7 +14004,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   TaskIamUpdateMemberRolesRequestNotFoundError:
@@ -13521,6 +14026,14 @@ errors:
     status-code: 400
     type: TaskIamTestPermissionsRequestBadRequestErrorBody
     docs: Bad Request
+    examples:
+      - value:
+          reason: MALFORMED_RESOURCE_IDENTIFIER
+          message: message
+          invalidSubjectTypeError: {}
+          invalidMemberError: {}
+          invalidRoleError:
+            role: role
   TaskIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: TaskIamTestPermissionsRequestForbiddenErrorBody
@@ -13528,7 +14041,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   TaskIamTestPermissionsRequestNotFoundError:
@@ -13556,7 +14070,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetAllTaskForwardersRequestUnprocessableEntityError:
@@ -13576,7 +14091,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   CreateTaskForwarderRequestUnprocessableEntityError:
@@ -13596,7 +14112,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetTaskForwarderRequestUnprocessableEntityError:
@@ -13616,7 +14133,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   UpdateTaskForwarderRequestUnprocessableEntityError:
@@ -13636,7 +14154,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetTaskRunRequestUnprocessableEntityError:
@@ -13656,7 +14175,8 @@ errors:
     examples:
       - value:
           reason: PERMISSION_CHECK_FAILED
-          message: string
+          message: message
+          missingAuthenticationError: {}
           permissionCheckFailedError:
             permission: permission
   GetAllModelsRequestUnprocessableEntityError:

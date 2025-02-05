@@ -12568,13 +12568,29 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -12587,6 +12603,8 @@ docs: ''
                         "rules": [
                           {
                             "delay": 1,
+                            "strategy": "each_attempt",
+                            "transformation_id": "transformation_id",
                             "type": "delay",
                           },
                         ],
@@ -12667,13 +12685,29 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -12686,6 +12720,8 @@ docs: ''
                         "rules": [
                           {
                             "delay": 1,
+                            "strategy": "each_attempt",
+                            "transformation_id": "transformation_id",
                             "type": "delay",
                           },
                         ],
@@ -12829,13 +12865,29 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -12848,6 +12900,8 @@ docs: ''
                         "rules": [
                           {
                             "delay": 1,
+                            "strategy": "each_attempt",
+                            "transformation_id": "transformation_id",
                             "type": "delay",
                           },
                         ],
@@ -12923,12 +12977,16 @@ docs: ''
                           "resolved_rules": [
                             {
                               "delay": 1,
+                              "strategy": "each_attempt",
+                              "transformation_id": "transformation_id",
                               "type": "delay",
                             },
                           ],
                           "rules": [
                             {
                               "delay": 1,
+                              "strategy": "each_attempt",
+                              "transformation_id": "transformation_id",
                               "type": "delay",
                             },
                           ],
@@ -12940,6 +12998,8 @@ docs: ''
                             "rules": [
                               {
                                 "delay": 1,
+                                "strategy": "each_attempt",
+                                "transformation_id": "transformation_id",
                                 "type": "delay",
                               },
                             ],
@@ -13060,13 +13120,29 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -13079,6 +13155,8 @@ docs: ''
                         "rules": [
                           {
                             "delay": 1,
+                            "strategy": "each_attempt",
+                            "transformation_id": "transformation_id",
                             "type": "delay",
                           },
                         ],
@@ -13158,13 +13236,29 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -13177,6 +13271,8 @@ docs: ''
                         "rules": [
                           {
                             "delay": 1,
+                            "strategy": "each_attempt",
+                            "transformation_id": "transformation_id",
                             "type": "delay",
                           },
                         ],
@@ -13256,13 +13352,29 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -13275,6 +13387,8 @@ docs: ''
                         "rules": [
                           {
                             "delay": 1,
+                            "strategy": "each_attempt",
+                            "transformation_id": "transformation_id",
                             "type": "delay",
                           },
                         ],
@@ -13357,13 +13471,29 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -13376,6 +13506,8 @@ docs: ''
                         "rules": [
                           {
                             "delay": 1,
+                            "strategy": "each_attempt",
+                            "transformation_id": "transformation_id",
                             "type": "delay",
                           },
                         ],
@@ -13495,13 +13627,29 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -13514,6 +13662,8 @@ docs: ''
                         "rules": [
                           {
                             "delay": 1,
+                            "strategy": "each_attempt",
+                            "transformation_id": "transformation_id",
                             "type": "delay",
                           },
                         ],
@@ -14078,15 +14228,21 @@ service:
                     team_id: team_id
                     rules:
                       - type: delay
+                        strategy: each_attempt
+                        transformation_id: transformation_id
                         delay: 1
                     is_team_default: true
                     updated_at: '2024-01-15T09:30:00Z'
                     created_at: '2024-01-15T09:30:00Z'
                   resolved_rules:
                     - type: delay
+                      strategy: each_attempt
+                      transformation_id: transformation_id
                       delay: 1
                   rules:
                     - type: delay
+                      strategy: each_attempt
+                      transformation_id: transformation_id
                       delay: 1
                   archived_at: '2024-01-15T09:30:00Z'
                   paused_at: '2024-01-15T09:30:00Z'
@@ -14188,6 +14344,8 @@ service:
                 team_id: team_id
                 rules:
                   - type: delay
+                    strategy: each_attempt
+                    transformation_id: transformation_id
                     delay: 1
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
@@ -14195,9 +14353,25 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
@@ -14299,6 +14473,8 @@ service:
                 team_id: team_id
                 rules:
                   - type: delay
+                    strategy: each_attempt
+                    transformation_id: transformation_id
                     delay: 1
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
@@ -14306,9 +14482,25 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
@@ -14371,6 +14563,8 @@ service:
                 team_id: team_id
                 rules:
                   - type: delay
+                    strategy: each_attempt
+                    transformation_id: transformation_id
                     delay: 1
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
@@ -14378,9 +14572,25 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
@@ -14470,6 +14680,8 @@ service:
                 team_id: team_id
                 rules:
                   - type: delay
+                    strategy: each_attempt
+                    transformation_id: transformation_id
                     delay: 1
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
@@ -14477,9 +14689,25 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
@@ -14542,6 +14770,8 @@ service:
                 team_id: team_id
                 rules:
                   - type: delay
+                    strategy: each_attempt
+                    transformation_id: transformation_id
                     delay: 1
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
@@ -14549,9 +14779,25 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
@@ -14614,6 +14860,8 @@ service:
                 team_id: team_id
                 rules:
                   - type: delay
+                    strategy: each_attempt
+                    transformation_id: transformation_id
                     delay: 1
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
@@ -14621,9 +14869,25 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
@@ -14686,6 +14950,8 @@ service:
                 team_id: team_id
                 rules:
                   - type: delay
+                    strategy: each_attempt
+                    transformation_id: transformation_id
                     delay: 1
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
@@ -14693,9 +14959,25 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
@@ -14758,6 +15040,8 @@ service:
                 team_id: team_id
                 rules:
                   - type: delay
+                    strategy: each_attempt
+                    transformation_id: transformation_id
                     delay: 1
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
@@ -14765,9 +15049,25 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
@@ -18148,22 +18448,22 @@ docs: >-
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "dismissed_at": "2024-01-15T09:30:00Z",
                       "first_seen_at": "2024-01-15T09:30:00Z",
                       "id": "iss_YXKv5OdJXCiVwkPhGy",
                       "last_seen_at": "2024-01-15T09:30:00Z",
-                      "last_updated_by": "string",
-                      "merged_with": "string",
+                      "last_updated_by": "last_updated_by",
+                      "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
                         "transformation_execution_id": "transformation_execution_id",
                         "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
                       },
                       "status": "OPENED",
-                      "team_id": "string",
+                      "team_id": "team_id",
                       "type": "transformation",
-                      "updated_at": "string",
+                      "updated_at": "updated_at",
                     },
                   },
                 },
@@ -18204,7 +18504,7 @@ docs: >-
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "data": {
                         "transformation_execution": {
                           "created_at": "2024-01-15T09:30:00Z",
@@ -18257,17 +18557,17 @@ docs: >-
                       "first_seen_at": "2024-01-15T09:30:00Z",
                       "id": "iss_YXKv5OdJXCiVwkPhGy",
                       "last_seen_at": "2024-01-15T09:30:00Z",
-                      "last_updated_by": "string",
-                      "merged_with": "string",
+                      "last_updated_by": "last_updated_by",
+                      "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
                         "transformation_execution_id": "transformation_execution_id",
                         "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
                       },
                       "status": "OPENED",
-                      "team_id": "string",
+                      "team_id": "team_id",
                       "type": "transformation",
-                      "updated_at": "string",
+                      "updated_at": "updated_at",
                     },
                   },
                 },
@@ -18387,7 +18687,7 @@ docs: >-
                             ],
                           },
                           "auto_resolved_at": "2024-01-15T09:30:00Z",
-                          "created_at": "models",
+                          "created_at": "created_at",
                           "data": {
                             "transformation_execution": {
                               "created_at": "2024-01-15T09:30:00Z",
@@ -18411,16 +18711,16 @@ docs: >-
                           "first_seen_at": "2024-01-15T09:30:00Z",
                           "id": "iss_YXKv5OdJXCiVwkPhGy",
                           "last_seen_at": "2024-01-15T09:30:00Z",
-                          "last_updated_by": "models",
-                          "merged_with": "models",
+                          "last_updated_by": "last_updated_by",
+                          "merged_with": "merged_with",
                           "opened_at": "2024-01-15T09:30:00Z",
                           "reference": {
                             "transformation_execution_id": "transformation_execution_id",
                           },
                           "status": "OPENED",
-                          "team_id": "models",
+                          "team_id": "team_id",
                           "type": "transformation",
-                          "updated_at": "models",
+                          "updated_at": "updated_at",
                         },
                       ],
                       "pagination": {
@@ -18511,22 +18811,22 @@ docs: >-
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "dismissed_at": "2024-01-15T09:30:00Z",
                       "first_seen_at": "2024-01-15T09:30:00Z",
                       "id": "iss_YXKv5OdJXCiVwkPhGy",
                       "last_seen_at": "2024-01-15T09:30:00Z",
-                      "last_updated_by": "string",
-                      "merged_with": "string",
+                      "last_updated_by": "last_updated_by",
+                      "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
                         "transformation_execution_id": "transformation_execution_id",
                         "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
                       },
                       "status": "OPENED",
-                      "team_id": "string",
+                      "team_id": "team_id",
                       "type": "transformation",
-                      "updated_at": "string",
+                      "updated_at": "updated_at",
                     },
                   },
                 },
@@ -18762,17 +19062,17 @@ service:
               models:
                 - type: transformation
                   id: iss_YXKv5OdJXCiVwkPhGy
-                  team_id: models
+                  team_id: team_id
                   status: OPENED
                   opened_at: '2024-01-15T09:30:00Z'
                   first_seen_at: '2024-01-15T09:30:00Z'
                   last_seen_at: '2024-01-15T09:30:00Z'
-                  last_updated_by: models
+                  last_updated_by: last_updated_by
                   dismissed_at: '2024-01-15T09:30:00Z'
                   auto_resolved_at: '2024-01-15T09:30:00Z'
-                  merged_with: models
-                  updated_at: models
-                  created_at: models
+                  merged_with: merged_with
+                  updated_at: updated_at
+                  created_at: created_at
                   aggregation_keys:
                     transformation_id:
                       - transformation_id
@@ -18865,17 +19165,17 @@ service:
             body:
               type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
-              team_id: string
+              team_id: team_id
               status: OPENED
               opened_at: '2024-01-15T09:30:00Z'
               first_seen_at: '2024-01-15T09:30:00Z'
               last_seen_at: '2024-01-15T09:30:00Z'
-              last_updated_by: string
+              last_updated_by: last_updated_by
               dismissed_at: '2024-01-15T09:30:00Z'
               auto_resolved_at: '2024-01-15T09:30:00Z'
-              merged_with: string
-              updated_at: string
-              created_at: string
+              merged_with: merged_with
+              updated_at: updated_at
+              created_at: created_at
               aggregation_keys:
                 transformation_id:
                   - transformation_id
@@ -18957,17 +19257,17 @@ service:
             body:
               type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
-              team_id: string
+              team_id: team_id
               status: OPENED
               opened_at: '2024-01-15T09:30:00Z'
               first_seen_at: '2024-01-15T09:30:00Z'
               last_seen_at: '2024-01-15T09:30:00Z'
-              last_updated_by: string
+              last_updated_by: last_updated_by
               dismissed_at: '2024-01-15T09:30:00Z'
               auto_resolved_at: '2024-01-15T09:30:00Z'
-              merged_with: string
-              updated_at: string
-              created_at: string
+              merged_with: merged_with
+              updated_at: updated_at
+              created_at: created_at
               aggregation_keys:
                 transformation_id:
                   - transformation_id
@@ -18998,17 +19298,17 @@ service:
             body:
               type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
-              team_id: string
+              team_id: team_id
               status: OPENED
               opened_at: '2024-01-15T09:30:00Z'
               first_seen_at: '2024-01-15T09:30:00Z'
               last_seen_at: '2024-01-15T09:30:00Z'
-              last_updated_by: string
+              last_updated_by: last_updated_by
               dismissed_at: '2024-01-15T09:30:00Z'
               auto_resolved_at: '2024-01-15T09:30:00Z'
-              merged_with: string
-              updated_at: string
-              created_at: string
+              merged_with: merged_with
+              updated_at: updated_at
+              created_at: created_at
               aggregation_keys:
                 transformation_id:
                   - transformation_id
@@ -20232,7 +20532,15 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -20279,7 +20587,15 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -20348,7 +20664,15 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -20396,6 +20720,8 @@ docs: A request represent a webhook received by Hookdeck.
                           "rules": [
                             {
                               "delay": 1,
+                              "strategy": "each_attempt",
+                              "transformation_id": "transformation_id",
                               "type": "delay",
                             },
                           ],
@@ -20470,7 +20796,15 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -20519,7 +20853,15 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -20596,7 +20938,15 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
+                          "body": "body",
+                          "count": 1,
                           "delay": 1,
+                          "headers": "headers",
+                          "interval": 1,
+                          "path": "path",
+                          "query": "query",
+                          "strategy": "each_attempt",
+                          "transformation_id": "transformation_id",
                           "type": "delay",
                         },
                       ],
@@ -20724,6 +21074,8 @@ service:
                   team_id: team_id
                   rules:
                     - type: delay
+                      strategy: each_attempt
+                      transformation_id: transformation_id
                       delay: 1
                   is_team_default: true
                   archived_at: '2024-01-15T09:30:00Z'
@@ -20769,6 +21121,14 @@ service:
               team_id: team_id
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
@@ -20814,6 +21174,14 @@ service:
               team_id: team_id
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
@@ -20845,6 +21213,14 @@ service:
               team_id: team_id
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
@@ -20897,6 +21273,14 @@ service:
               team_id: team_id
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
@@ -20928,6 +21312,14 @@ service:
               team_id: team_id
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
@@ -20959,6 +21351,14 @@ service:
               team_id: team_id
               rules:
                 - type: delay
+                  strategy: each_attempt
+                  interval: 1
+                  count: 1
+                  headers: headers
+                  body: body
+                  query: query
+                  path: path
+                  transformation_id: transformation_id
                   delay: 1
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'

@@ -91,7 +91,7 @@ Executes a deployed Workflow and streams back its results.",
                   "request": {
                     "inputs": [
                       {
-                        "name": "inputs",
+                        "name": "name",
                         "type": "CHAT_HISTORY",
                         "value": [
                           {
@@ -109,7 +109,7 @@ Executes a deployed Workflow and streams back its results.",
                           "data": {
                             "data": {
                               "output": {
-                                "name": "output",
+                                "name": "name",
                                 "type": "CHAT_HISTORY",
                                 "value": [
                                   {
@@ -131,8 +131,8 @@ Executes a deployed Workflow and streams back its results.",
                           "state": "INITIATED",
                           "ts": "2024-01-15T09:30:00Z",
                         },
-                        "external_id": "string",
-                        "run_id": "string",
+                        "external_id": "external_id",
+                        "run_id": "run_id",
                         "type": "NODE",
                       },
                     ],
@@ -2650,15 +2650,15 @@ Used to submit feedback regarding the quality of previously generated completion
         - request:
             inputs:
               - type: CHAT_HISTORY
-                name: inputs
+                name: name
                 value:
                   - text: text
                     role: SYSTEM
           response:
             stream:
               - type: NODE
-                run_id: string
-                external_id: string
+                run_id: run_id
+                external_id: external_id
                 data:
                   id: id
                   node_id: node_id
@@ -2670,7 +2670,7 @@ Used to submit feedback regarding the quality of previously generated completion
                     data:
                       output:
                         type: CHAT_HISTORY
-                        name: output
+                        name: name
                         value:
                           - text: text
                             role: SYSTEM

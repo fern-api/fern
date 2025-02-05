@@ -1275,7 +1275,7 @@
                         },
                         "name": {
                           "value": {
-                            "value": "inputs",
+                            "value": "name",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -1327,14 +1327,14 @@
                     },
                     "run_id": {
                       "value": {
-                        "value": "string",
+                        "value": "run_id",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
                     "external_id": {
                       "value": {
-                        "value": "string",
+                        "value": "external_id",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -1397,7 +1397,7 @@
                                         },
                                         "name": {
                                           "value": {
-                                            "value": "output",
+                                            "value": "name",
                                             "type": "string"
                                           },
                                           "type": "primitive"
