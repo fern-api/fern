@@ -557,7 +557,7 @@ export class ExampleTypeFactory {
             },
             primitive: noop,
             unknown: noop,
-            _other: noop,
+            _other: noop
         });
     }
 
