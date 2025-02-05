@@ -2,6 +2,7 @@
 
 namespace Seed\Playlist;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Playlist\Requests\CreatePlaylistRequest;
 use Seed\Playlist\Types\Playlist;
@@ -20,17 +21,35 @@ use Seed\Playlist\Types\UpdatePlaylistRequest;
 class PlaylistClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
@@ -40,6 +59,7 @@ class PlaylistClient
      * @param CreatePlaylistRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Playlist
      * @throws SeedException
@@ -47,6 +67,7 @@ class PlaylistClient
      */
     public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): Playlist
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['datetime'] = $request->datetime->format(Constant::DateTimeFormat);
         if ($request->optionalDatetime != null) {
@@ -61,6 +82,7 @@ class PlaylistClient
                     query: $query,
                     body: $request->body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -86,6 +108,7 @@ class PlaylistClient
      * @param GetPlaylistsRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<Playlist>
      * @throws SeedException
@@ -93,6 +116,7 @@ class PlaylistClient
      */
     public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['otherField'] = $request->otherField;
         $query['multiLineDocs'] = $request->multiLineDocs;
@@ -111,6 +135,7 @@ class PlaylistClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -136,6 +161,7 @@ class PlaylistClient
      * @param string $playlistId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Playlist
      * @throws SeedException
@@ -143,6 +169,7 @@ class PlaylistClient
      */
     public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): Playlist
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -150,6 +177,7 @@ class PlaylistClient
                     path: "/v2/playlist/$serviceParam/$playlistId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -176,6 +204,7 @@ class PlaylistClient
      * @param ?UpdatePlaylistRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ?Playlist
      * @throws SeedException
@@ -183,6 +212,7 @@ class PlaylistClient
      */
     public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): ?Playlist
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -191,6 +221,7 @@ class PlaylistClient
                     method: HttpMethod::PUT,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -219,12 +250,14 @@ class PlaylistClient
      * @param string $playlistId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -232,6 +265,7 @@ class PlaylistClient
                     path: "/v2/playlist/$serviceParam/$playlistId",
                     method: HttpMethod::DELETE,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

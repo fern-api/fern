@@ -3,6 +3,7 @@
 namespace Seed\User;
 
 use Seed\User\Events\EventsClient;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\User\Requests\ListUsersRequest;
 use Seed\User\Types\User;
@@ -22,18 +23,36 @@ class UserClient
     public EventsClient $events;
 
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
-        $this->events = new EventsClient($this->client);
+        $this->options = $options ?? [];
+        $this->events = new EventsClient($this->client, $this->options);
     }
 
     /**
@@ -42,6 +61,7 @@ class UserClient
      * @param ListUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<User>
      * @throws SeedException
@@ -49,6 +69,7 @@ class UserClient
      */
     public function list(ListUsersRequest $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         if ($request->limit != null) {
             $query['limit'] = $request->limit;
@@ -61,6 +82,7 @@ class UserClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

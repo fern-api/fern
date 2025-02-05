@@ -56,13 +56,14 @@ class SeedClient
     public SyspropClient $sysprop;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -76,6 +77,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
@@ -106,13 +108,13 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->v2 = new V2Client($this->client);
-        $this->admin = new AdminClient($this->client);
-        $this->homepage = new HomepageClient($this->client);
-        $this->migration = new MigrationClient($this->client);
-        $this->playlist = new PlaylistClient($this->client);
-        $this->problem = new ProblemClient($this->client);
-        $this->submission = new SubmissionClient($this->client);
-        $this->sysprop = new SyspropClient($this->client);
+        $this->v2 = new V2Client($this->client, $this->options);
+        $this->admin = new AdminClient($this->client, $this->options);
+        $this->homepage = new HomepageClient($this->client, $this->options);
+        $this->migration = new MigrationClient($this->client, $this->options);
+        $this->playlist = new PlaylistClient($this->client, $this->options);
+        $this->problem = new ProblemClient($this->client, $this->options);
+        $this->submission = new SubmissionClient($this->client, $this->options);
+        $this->sysprop = new SyspropClient($this->client, $this->options);
     }
 }
