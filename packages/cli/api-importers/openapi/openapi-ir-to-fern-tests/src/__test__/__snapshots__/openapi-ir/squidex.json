@@ -7483,17 +7483,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -7895,17 +7888,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -8007,17 +7993,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -8364,17 +8343,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -8776,17 +8748,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -8888,17 +8853,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -9540,17 +9498,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -9652,17 +9603,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -10317,17 +10261,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -10429,17 +10366,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -11120,17 +11050,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -11232,17 +11155,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -11542,17 +11458,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -11954,17 +11863,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -12066,17 +11968,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -12721,17 +12616,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -12833,17 +12721,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -13169,17 +13050,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -13581,17 +13455,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -13693,17 +13560,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -14374,17 +14234,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -14486,17 +14339,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -15142,17 +14988,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -15254,17 +15093,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -15936,17 +15768,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -16048,17 +15873,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -16704,17 +16522,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -16816,17 +16627,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -17498,17 +17302,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -17610,17 +17407,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -18266,17 +18056,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -18378,17 +18161,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -19060,17 +18836,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -19172,17 +18941,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -19828,17 +19590,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -19940,17 +19695,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -20622,17 +20370,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -20734,17 +20475,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -21390,17 +21124,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -21502,17 +21229,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -22184,17 +21904,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -22296,17 +22009,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -22796,17 +22502,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -23476,17 +23175,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -23588,17 +23280,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -24177,17 +23862,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -24289,17 +23967,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -24949,17 +24620,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -25061,17 +24725,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -25919,17 +25576,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -26031,17 +25681,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -26683,17 +26326,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -26795,17 +26431,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -27461,17 +27090,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -27573,17 +27195,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -28225,17 +27840,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -28337,17 +27945,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -28989,17 +28590,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -29101,17 +28695,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -29730,17 +29317,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -29842,17 +29422,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -30471,17 +30044,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -30583,17 +30149,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -31122,15 +30681,8 @@
                             "value": {
                               "triggerType": {
                                 "value": {
-                                  "value": "Usage",
+                                  "value": "AssetChanged",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "limit": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -31142,48 +30694,44 @@
                         "action": {
                           "value": {
                             "value": {
+                              "appId": {
+                                "value": {
+                                  "value": "appId",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "apiKey": {
+                                "value": {
+                                  "value": "apiKey",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "indexName": {
+                                "value": {
+                                  "value": "indexName",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "document": {
+                                "value": {
+                                  "value": "document",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "delete": {
+                                "value": {
+                                  "value": "delete",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
                               "actionType": {
                                 "value": {
-                                  "value": "Webhook",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "url": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "method": {
-                                "value": "POST",
-                                "type": "enum"
-                              },
-                              "payload": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "payloadType": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "headers": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "sharedSecret": {
-                                "value": {
-                                  "value": "action",
+                                  "value": "Algolia",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -31435,15 +30983,8 @@
                   "value": {
                     "triggerType": {
                       "value": {
-                        "value": "Usage",
+                        "value": "AssetChanged",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "limit": {
-                      "value": {
-                        "value": 1,
-                        "type": "int"
                       },
                       "type": "primitive"
                     }
@@ -31455,48 +30996,44 @@
               "action": {
                 "value": {
                   "value": {
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "apiKey": {
+                      "value": {
+                        "value": "apiKey",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "indexName": {
+                      "value": {
+                        "value": "indexName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "document": {
+                      "value": {
+                        "value": "document",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "delete": {
+                      "value": {
+                        "value": "delete",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
                     "actionType": {
                       "value": {
-                        "value": "Webhook",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "method": {
-                      "value": "POST",
-                      "type": "enum"
-                    },
-                    "payload": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "payloadType": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "headers": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "sharedSecret": {
-                      "value": {
-                        "value": "action",
+                        "value": "Algolia",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -31608,24 +31145,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -31637,48 +31167,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -32185,24 +31711,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -32214,48 +31733,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -32777,24 +32292,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -32806,48 +32314,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -33185,24 +32689,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -33214,48 +32711,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -34045,15 +33538,8 @@
                   "value": {
                     "triggerType": {
                       "value": {
-                        "value": "Usage",
+                        "value": "AssetChanged",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "limit": {
-                      "value": {
-                        "value": 1,
-                        "type": "int"
                       },
                       "type": "primitive"
                     }
@@ -34065,48 +33551,44 @@
               "action": {
                 "value": {
                   "value": {
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "apiKey": {
+                      "value": {
+                        "value": "apiKey",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "indexName": {
+                      "value": {
+                        "value": "indexName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "document": {
+                      "value": {
+                        "value": "document",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "delete": {
+                      "value": {
+                        "value": "delete",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
                     "actionType": {
                       "value": {
-                        "value": "Webhook",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "method": {
-                      "value": "POST",
-                      "type": "enum"
-                    },
-                    "payload": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "payloadType": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "headers": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "sharedSecret": {
-                      "value": {
-                        "value": "action",
+                        "value": "Algolia",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -39552,17 +39034,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -40307,17 +39782,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -40970,17 +40438,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -41578,17 +41039,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -41690,17 +41144,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -42447,17 +41894,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -43164,17 +42604,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -44135,17 +43568,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -44994,17 +44420,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -45642,17 +45061,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -47182,17 +46594,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -47848,17 +47253,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -48514,17 +47912,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -49180,17 +48571,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {

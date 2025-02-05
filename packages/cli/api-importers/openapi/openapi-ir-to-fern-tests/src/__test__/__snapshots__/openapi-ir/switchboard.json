@@ -3348,22 +3348,8 @@
               {
                 "value": {
                   "value": {
-                    "event": {
-                      "value": {
-                        "value": "error",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "data": {
                       "properties": {
-                        "code": {
-                          "value": {
-                            "value": "code",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "event": {
                           "value": {
                             "value": "event",
@@ -3371,12 +3357,23 @@
                           },
                           "type": "primitive"
                         },
-                        "message": {
+                        "eventTimeMillis": {
                           "value": {
-                            "value": "message",
+                            "value": 1000000,
+                            "type": "int64"
+                          },
+                          "type": "primitive"
+                        },
+                        "id": {
+                          "value": {
+                            "value": "id",
                             "type": "string"
                           },
                           "type": "primitive"
+                        },
+                        "status": {
+                          "value": "awaiting_capacity",
+                          "type": "enum"
                         }
                       },
                       "type": "object"
@@ -3392,6 +3389,13 @@
                       "value": {
                         "value": 1,
                         "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "event": {
+                      "value": {
+                        "value": "status",
+                        "type": "string"
                       },
                       "type": "primitive"
                     }
