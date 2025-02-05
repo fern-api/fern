@@ -165,6 +165,9 @@ class RawClientTest extends TestCase
         $this->assertEquals(0, $this->mockHandler->count());
     }
 
+    /**
+     * @throws ClientExceptionInterface
+     */
     public function testShouldRetryOnStatusCodes(): void
     {
         $this->mockHandler->append(
@@ -179,7 +182,7 @@ class RawClientTest extends TestCase
             new Response(599),
             new Response(200),
         );
-        $countOfErrorRequests = $this->mockHandler->count() - 2;
+        $countOfErrorRequests = $this->mockHandler->count() - 1;
 
         $request = new JsonApiRequest(
             $this->baseUrl,
@@ -187,13 +190,9 @@ class RawClientTest extends TestCase
             HttpMethod::GET
         );
 
-        try {
-            $this->rawClient->sendRequest($request, ['maxRetries' => $countOfErrorRequests]);
-            $this->fail("Request should've failed but succeeded.");
-        } catch (ClientExceptionInterface) {
-        }
+        $this->rawClient->sendRequest($request, ['maxRetries' => $countOfErrorRequests]);
 
-        $this->assertEquals(1, $this->mockHandler->count());
+        $this->assertEquals(0, $this->mockHandler->count());
     }
 
     public function testShouldFailOn400Response(): void
