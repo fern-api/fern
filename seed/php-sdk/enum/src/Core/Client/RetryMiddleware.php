@@ -11,6 +11,10 @@ use Throwable;
 
 class RetryMiddleware
 {
+    private const DEFAULT_RETRY_OPTIONS = [
+        'maxRetries' => 2,
+        'baseDelay' => 1000
+    ];
     private const RETRY_STATUS_CODES = [408, 429];
 
     /**
@@ -29,26 +33,23 @@ class RetryMiddleware
 
     /**
      * @param callable $nextHandler
-     * @param array{
+     * @param ?array{
      *     maxRetries?: int,
-     *  }|null $options
+     *  } $options
      */
     public function __construct(
         callable $nextHandler,
         ?array   $options = null,
     ) {
         $this->nextHandler = $nextHandler;
-        $this->options = array_merge([
-            'maxRetries' => 2,
-            'baseDelay' => 1000,
-        ], $options ?? []);
+        $this->options = array_merge(self::DEFAULT_RETRY_OPTIONS, $options ?? []);
     }
 
     /**
-     * @param array{
+     * @param ?array{
      *     maxRetries?: int,
      *     baseDelay?: int,
-     * }|null $options
+     * } $options
      * @return callable
      */
     public static function create(?array $options = null): callable
@@ -61,7 +62,7 @@ class RetryMiddleware
     /**
      * @param RequestInterface $request
      * @param array{
-     *      retries?: int,
+     *      retryAttempt?: int,
      *      delay: int,
      *      maxRetries?: int,
      *  } $options
@@ -70,8 +71,8 @@ class RetryMiddleware
     public function __invoke(RequestInterface $request, array $options): PromiseInterface
     {
         $options = array_merge($this->options, $options);
-        if (!isset($options['retries'])) {
-            $options['retries'] = 0;
+        if (!isset($options['retryAttempt'])) {
+            $options['retryAttempt'] = 0;
         }
 
         $fn = $this->nextHandler;
@@ -84,29 +85,27 @@ class RetryMiddleware
     }
 
     /**
-     * @param int $retries
+     * @param int $retryAttempt
      * @param int $maxRetries
-     * @param ResponseInterface|null $response
+     * @param ?ResponseInterface $response
      * @param ?Throwable $exception
      * @return bool
      */
     private function shouldRetry(
-        int                $retries,
+        int                $retryAttempt,
         int                $maxRetries,
         ?ResponseInterface $response = null,
         ?Throwable         $exception = null
     ): bool {
-        if ($retries >= $maxRetries) {
+        if ($retryAttempt >= $maxRetries) {
             return false;
         }
 
-        // Check for timeout
         if ($exception instanceof ConnectException) {
             return true;
         }
 
         if ($response) {
-            // Check status codes
             return $response->getStatusCode() >= 500 ||
                 in_array($response->getStatusCode(), self::RETRY_STATUS_CODES);
         }
@@ -116,18 +115,18 @@ class RetryMiddleware
     /**
      * Execute fulfilled closure
      * @param array{
-     *     retries: int,
+     *     retryAttempt: int,
      *     delay: int,
      *     maxRetries: int,
      * } $options
      */
     private function onFulfilled(RequestInterface $request, array $options): callable
     {
-        $retries = $options['retries'];
+        $retryAttempt = $options['retryAttempt'];
         $maxRetries = $options['maxRetries'];
-        return function ($value) use ($request, $options, $retries, $maxRetries) {
+        return function ($value) use ($request, $options, $retryAttempt, $maxRetries) {
             if (!$this->shouldRetry(
-                $retries,
+                $retryAttempt,
                 $maxRetries,
                 $value
             )) {
@@ -142,7 +141,7 @@ class RetryMiddleware
      * Execute rejected closure
      * @param RequestInterface $req
      * @param array{
-     *     retries: int,
+     *     retryAttempt: int,
      *     delay: int,
      *     maxRetries: int,
      * } $options
@@ -150,11 +149,11 @@ class RetryMiddleware
      */
     private function onRejected(RequestInterface $req, array $options): callable
     {
-        $retries = $options['retries'];
+        $retryAttempt = $options['retryAttempt'];
         $maxRetries = $options['maxRetries'];
-        return function ($reason) use ($req, $options, $retries, $maxRetries) {
+        return function ($reason) use ($req, $options, $retryAttempt, $maxRetries) {
             if (!$this->shouldRetry(
-                $retries,
+                $retryAttempt,
                 $maxRetries,
                 null,
                 $reason
@@ -170,13 +169,13 @@ class RetryMiddleware
      * @param RequestInterface $request
      * @param array{
      *     delay: int,
-     *     retries: int,
+     *     retryAttempt: int,
      * } $options
      * @return PromiseInterface
      */
     private function doRetry(RequestInterface $request, array $options): PromiseInterface
     {
-        $options['delay'] = $this->exponentialDelay(++$options['retries']);
+        $options['delay'] = $this->exponentialDelay(++$options['retryAttempt']);
         return $this($request, $options);
     }
 
@@ -185,8 +184,8 @@ class RetryMiddleware
      *
      * @return int milliseconds.
      */
-    private function exponentialDelay(int $retries): int
+    private function exponentialDelay(int $retryAttempt): int
     {
-        return 2 ** ($retries - 1) * $this->options['baseDelay'];
+        return 2 ** ($retryAttempt - 1) * $this->options['baseDelay'];
     }
 }
