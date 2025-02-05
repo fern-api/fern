@@ -1,3 +1,4 @@
+import { AccessAttribute } from "./AccessAttribute";
 import { Class } from "./Class";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { CodeBlock } from "./CodeBlock";
@@ -15,6 +16,7 @@ import { PythonFile } from "./PythonFile";
 import { Reference } from "./Reference";
 import { StarImport } from "./StarImport";
 
+export { AccessAttribute } from "./AccessAttribute";
 export { AstNode } from "./core/AstNode";
 export { Class } from "./Class";
 export { ClassInstantiation } from "./ClassInstantiation";
@@ -34,6 +36,10 @@ export { Reference } from "./Reference";
 export { StarImport } from "./StarImport";
 export { Type } from "./Type";
 export { TypeInstantiation } from "./TypeInstantiation";
+
+export function accessAttribute(args: AccessAttribute.Args): AccessAttribute {
+    return new AccessAttribute(args);
+}
 
 export function file(args: PythonFile.Args): PythonFile {
     return new PythonFile(args);
