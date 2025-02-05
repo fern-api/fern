@@ -172,6 +172,12 @@ export class PythonFile extends AstNode {
         for (const reference of this.references) {
             const referenceName = reference.name;
             const fullyQualifiedPath = reference.getFullyQualifiedPath();
+
+            // Skip references that don't have a path. It's inferred that they don't need to be imported.
+            if (fullyQualifiedPath === "") {
+                continue;
+            }
+
             const existingRefs = uniqueReferences.get(fullyQualifiedPath);
 
             if (existingRefs) {
