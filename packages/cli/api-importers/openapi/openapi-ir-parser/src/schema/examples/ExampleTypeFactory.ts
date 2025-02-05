@@ -1,4 +1,4 @@
-import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
+import { Examples, assertNever, isPlainObject, noop } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FernOpenapiIr,
@@ -218,7 +218,7 @@ export class ExampleTypeFactory {
                                     schema: unionVariant[1],
                                     example: undefined,
                                     visitedSchemaIds,
-                                    depth: depth,
+                                    depth,
                                     options,
                                     skipReadonly
                                 });
@@ -529,9 +529,9 @@ export class ExampleTypeFactory {
 
     private mergeExampleWith(example: FullExample, result: Record<string, FullExample>): void {
         example._visit({
-            array: () => {},
-            enum: () => {},
-            literal: () => {},
+            array: noop,
+            enum: noop,
+            literal: noop,
             map: (example) => {
                 for (const kvPair of example) {
                     const key = kvPair.key;
@@ -555,9 +555,9 @@ export class ExampleTypeFactory {
                     this.mergeExampleWith(example.value, result);
                 }
             },
-            primitive: () => {},
-            unknown: () => {},
-            _other: () => {},
+            primitive: noop,
+            unknown: noop,
+            _other: noop,
         });
     }
 
