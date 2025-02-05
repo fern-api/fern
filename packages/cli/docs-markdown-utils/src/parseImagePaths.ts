@@ -2,6 +2,7 @@ import grayMatter from "gray-matter";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
+import { isAbsolute } from "path";
 import { visit } from "unist-util-visit";
 import { z } from "zod";
 
@@ -231,8 +232,8 @@ export function replaceImagePathsAndUrls(
             return undefined;
         }
 
-        // Check if it's an absolute path
-        if (image.startsWith("/")) {
+        // Handle absolute path
+        if (isAbsolute(image)) {
             const absolutePath = AbsoluteFilePath.of(image);
             const fileId = fileIdsMap.get(absolutePath);
             return fileId ? `file:${fileId}` : undefined;
@@ -242,12 +243,6 @@ export function replaceImagePathsAndUrls(
         const resolvedPath = resolvePath(image, metadata);
         if (resolvedPath) {
             const fileId = fileIdsMap.get(resolvedPath);
-            context.logger.info(
-                "image - resolvedPath - fileId",
-                image || "undefined",
-                resolvedPath.toString() || "undefined",
-                fileId || "undefined"
-            );
             return fileId ? `file:${fileId}` : undefined;
         }
 
