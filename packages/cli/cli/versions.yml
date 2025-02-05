@@ -1,5 +1,14 @@
 - changelogEntry:
     - summary: |
+        The IR generator now optimizes SDK generation by skipping automatic example generation when manual examples are provided.
+        Previously, it would generate additional examples even when manual examples were specified for an operation.
+        This change improves generation performance by avoiding unnecessary example generation work.
+      type: fix
+  irVersion: 55
+  version: 0.51.28
+
+- changelogEntry:
+    - summary: |
         The OpenAPI parser now optimizes discriminated union example generation by using the first successful variant.
         Previously, it would continue trying other variants even after finding a valid one. Now it stops after finding
         the first valid variant, making example generation more efficient.
