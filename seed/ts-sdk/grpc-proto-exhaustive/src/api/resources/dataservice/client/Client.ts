@@ -9,11 +9,13 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Dataservice {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -42,10 +44,14 @@ export class Dataservice {
      */
     public async upload(
         request: SeedApi.UploadRequest,
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.UploadResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "data"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "data",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -103,10 +109,14 @@ export class Dataservice {
      */
     public async delete(
         request: SeedApi.DeleteRequest = {},
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.DeleteResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "data/delete"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "data/delete",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -164,10 +174,14 @@ export class Dataservice {
      */
     public async describe(
         request: SeedApi.DescribeRequest = {},
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.DescribeResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "data/describe"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "data/describe",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -225,7 +239,7 @@ export class Dataservice {
      */
     public async fetch(
         request: SeedApi.FetchRequest = {},
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.FetchResponse> {
         const { ids, namespace } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -242,7 +256,11 @@ export class Dataservice {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "data/fetch"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "data/fetch",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -300,7 +318,7 @@ export class Dataservice {
      */
     public async list(
         request: SeedApi.ListRequest = {},
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.ListResponse> {
         const { prefix, limit, paginationToken, namespace } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -321,7 +339,11 @@ export class Dataservice {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "data/list"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "data/list",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -381,10 +403,14 @@ export class Dataservice {
      */
     public async query(
         request: SeedApi.QueryRequest,
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.QueryResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "data/query"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "data/query",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -444,10 +470,14 @@ export class Dataservice {
      */
     public async update(
         request: SeedApi.UpdateRequest,
-        requestOptions?: Dataservice.RequestOptions
+        requestOptions?: Dataservice.RequestOptions,
     ): Promise<SeedApi.UpdateResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "data/update"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "data/update",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

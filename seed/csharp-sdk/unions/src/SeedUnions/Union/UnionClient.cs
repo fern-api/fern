@@ -1,9 +1,8 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedUnions.Core;
-
-#nullable enable
 
 namespace SeedUnions;
 
@@ -27,16 +26,18 @@ public partial class UnionClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/{id}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"/{id}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -68,17 +69,19 @@ public partial class UnionClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethodExtensions.Patch,
-                Path = "",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethodExtensions.Patch,
+                    Path = "",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

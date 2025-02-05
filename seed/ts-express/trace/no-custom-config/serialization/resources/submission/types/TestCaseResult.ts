@@ -14,7 +14,7 @@ export const TestCaseResult: core.serialization.ObjectSchema<serializers.TestCas
     });
 
 export declare namespace TestCaseResult {
-    interface Raw {
+    export interface Raw {
         expectedResult: serializers.VariableValue.Raw;
         actualResult: serializers.ActualResult.Raw;
         passed: boolean;

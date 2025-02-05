@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedPlainText.Core;
 
-#nullable enable
-
 namespace SeedPlainText;
 
 public partial class ClientOptions

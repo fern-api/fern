@@ -12,6 +12,7 @@ import {
     Property,
     StringClassReference
 } from "@fern-api/ruby-codegen";
+
 import {
     ApiAuth,
     AuthSchemesRequirement,
@@ -21,8 +22,9 @@ import {
     HttpHeader,
     OAuthScheme
 } from "@fern-fern/ir-sdk/api";
-import { OauthTokenProvider } from "./oauth/OauthTokenProvider";
+
 import { isTypeOptional } from "./TypeUtilities";
+import { OauthTokenProvider } from "./oauth/OauthTokenProvider";
 
 export interface BasicAuth {
     username: string;

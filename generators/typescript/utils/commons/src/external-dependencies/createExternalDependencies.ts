@@ -1,8 +1,8 @@
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ImportsManager } from "../imports-manager";
+import { ExternalDependencies } from "./ExternalDependencies";
 import { BlobImpl } from "./blob/BlobImpl";
 import { ExpressImpl } from "./express/ExpressImpl";
-import { ExternalDependencies } from "./ExternalDependencies";
 import { FsImpl } from "./fs/FsImpl";
 import { StreamImpl } from "./stream/StreamImpl";
 import { UrlJoinImpl } from "./url-join/UrlJoinImpl";

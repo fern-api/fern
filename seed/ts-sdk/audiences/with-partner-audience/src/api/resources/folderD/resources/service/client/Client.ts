@@ -9,11 +9,13 @@ import * as serializers from "../../../../../../serialization/index";
 import * as errors from "../../../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -36,7 +38,11 @@ export class Service {
      */
     public async getDirectThread(requestOptions?: Service.RequestOptions): Promise<SeedAudiences.folderD.Response> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/partner-path"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/partner-path",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

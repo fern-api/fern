@@ -14,7 +14,7 @@ export const StackFrame: core.serialization.ObjectSchema<serializers.StackFrame.
     });
 
 export declare namespace StackFrame {
-    interface Raw {
+    export interface Raw {
         methodName: string;
         lineNumber: number;
         scopes: serializers.Scope.Raw[];

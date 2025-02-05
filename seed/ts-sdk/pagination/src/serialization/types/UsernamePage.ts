@@ -13,7 +13,7 @@ export const UsernamePage: core.serialization.ObjectSchema<serializers.UsernameP
     });
 
 export declare namespace UsernamePage {
-    interface Raw {
+    export interface Raw {
         after?: string | null;
         data: string[];
     }

@@ -44,10 +44,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_imdb:CreateMovieRequest": {
@@ -74,10 +71,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -149,7 +143,7 @@
                   "rating": 1.1
                 }
               },
-              "responseStatusCode": 200,
+              "responseStatusCode": 201,
               "responseBody": "string",
               "responseBodyV3": {
                 "type": "json",

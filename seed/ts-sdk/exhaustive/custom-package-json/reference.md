@@ -171,7 +171,7 @@ await client.endpoints.container.getAndReturnSetOfObjects(
         {
             string: "string",
         },
-    ])
+    ]),
 );
 ```
 
@@ -1054,7 +1054,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> core.APIResponse<Fiddle.NestedObjectWithRequiredField, Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error></code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string_, { ...params }) -> core.APIResponse<Fiddle.NestedObjectWithRequiredField, Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error></code></summary>
 <dl>
 <dd>
 
@@ -1102,7 +1102,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**string:** `string`
+**string\_:** `string`
 
 </dd>
 </dl>
@@ -1450,7 +1450,7 @@ GET with multiple of same query param
 ```typescript
 await client.endpoints.params.getWithAllowMultipleQuery({
     query: "query",
-    numer: 1,
+    number: 1,
 });
 ```
 
@@ -2229,7 +2229,7 @@ await client.endpoints.union.getAndReturnUnion(
     Fiddle.Animal.dog({
         name: "name",
         likesToWoof: true,
-    })
+    }),
 );
 ```
 

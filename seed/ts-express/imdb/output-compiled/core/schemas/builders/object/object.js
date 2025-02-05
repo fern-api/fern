@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getObjectUtils = exports.object = void 0;
+exports.object = object;
+exports.getObjectUtils = getObjectUtils;
 const Schema_1 = require("../../Schema");
 const entries_1 = require("../../utils/entries");
 const filterObject_1 = require("../../utils/filterObject");
@@ -104,7 +105,6 @@ function object(schemas) {
     };
     return Object.assign(Object.assign(Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
 }
-exports.object = object;
 function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = "fail", skipValidation = false, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
@@ -224,7 +224,6 @@ function getObjectUtils(schema) {
         },
     };
 }
-exports.getObjectUtils = getObjectUtils;
 function validateAndTransformExtendedObject({ extensionKeys, value, transformBase, transformExtension, }) {
     const extensionPropertiesSet = new Set(extensionKeys);
     const [extensionProperties, baseProperties] = (0, partition_1.partition)((0, keys_1.keys)(value), (key) => extensionPropertiesSet.has(key));
@@ -254,6 +253,7 @@ function isSchemaOptional(schema) {
         case Schema_1.SchemaType.ANY:
         case Schema_1.SchemaType.UNKNOWN:
         case Schema_1.SchemaType.OPTIONAL:
+        case Schema_1.SchemaType.OPTIONAL_NULLABLE:
             return true;
         default:
             return false;

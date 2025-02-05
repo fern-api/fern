@@ -25,7 +25,7 @@ export function register(
             _root: folder_RootService;
             service: folder_ServiceService;
         };
-    }
+    },
 ): void {
     (expressApp as any).use("/", services._root.toRouter());
     (expressApp as any).use("/", services.a.b._root.toRouter());

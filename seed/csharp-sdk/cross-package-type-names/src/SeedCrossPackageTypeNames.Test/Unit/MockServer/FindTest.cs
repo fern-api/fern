@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedCrossPackageTypeNames;
 using SeedCrossPackageTypeNames.Core;
 
-#nullable enable
-
 namespace SeedCrossPackageTypeNames.Test.Unit.MockServer;
 
 [TestFixture]

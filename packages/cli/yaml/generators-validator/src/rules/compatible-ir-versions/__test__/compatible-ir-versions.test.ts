@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { CompatibleIrVersionsRule } from "../compatible-ir-versions";
 
 describe("compatible-ir-versions", () => {
@@ -18,7 +19,7 @@ describe("compatible-ir-versions", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                severity: "error",
+                severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("generators.yml"),
                 nodePath: ["groups", "python-sdk", "generators", "0", "fernapi/fern-python-sdk"],
                 message:

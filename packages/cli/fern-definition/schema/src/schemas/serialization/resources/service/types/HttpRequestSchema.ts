@@ -27,7 +27,7 @@ export const HttpRequestSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace HttpRequestSchema {
-    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
+    export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
         "content-type"?: string | null;
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
         "query-parameters"?: Record<string, HttpQueryParameterSchema.Raw> | null;

@@ -20,6 +20,7 @@ import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedJavaInterface.PropertyMethodSpec;
+import com.fern.java.utils.TypeReferenceInlineChecker;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -44,6 +45,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedJavaInterface generateFile() {
         List<PropertyMethodSpec> methodSpecsByProperties = getPropertyGetters();
+        List<PropertyMethodSpec> renderedSpecsByProperties = getRenderedPropertyGetters();
         List<ClassName> superInterfaces = objectTypeDeclaration.getExtends().stream()
                 .map(declaredTypeName ->
                         generatorContext.getPoetClassNameFactory().getInterfaceClassName(declaredTypeName))
@@ -51,7 +53,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
                 .addSuperinterfaces(superInterfaces)
-                .addMethods(methodSpecsByProperties.stream()
+                .addMethods(renderedSpecsByProperties.stream()
                         .map(PropertyMethodSpec::methodSpec)
                         .collect(Collectors.toList()))
                 .build();
@@ -67,6 +69,36 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
 
     private List<PropertyMethodSpec> getPropertyGetters() {
         return objectTypeDeclaration.getProperties().stream()
+                .map(objectProperty -> {
+                    TypeName poetTypeName = generatorContext
+                            .getPoetTypeNameMapper()
+                            .convertToTypeName(true, objectProperty.getValueType());
+                    MethodSpec getter = MethodSpec.methodBuilder("get"
+                                    + objectProperty
+                                            .getName()
+                                            .getName()
+                                            .getPascalCase()
+                                            .getSafeName())
+                            .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                            .returns(poetTypeName)
+                            .build();
+                    return PropertyMethodSpec.builder()
+                            .objectProperty(objectProperty)
+                            .methodSpec(getter)
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
+
+    private List<PropertyMethodSpec> getRenderedPropertyGetters() {
+        return objectTypeDeclaration.getProperties().stream()
+                // Omit any types we're going to inline
+                .filter(objectProperty -> {
+                    if (!generatorContext.getCustomConfig().enableInlineTypes()) {
+                        return true;
+                    }
+                    return !objectProperty.getValueType().visit(new TypeReferenceInlineChecker(generatorContext));
+                })
                 .map(objectProperty -> {
                     TypeName poetTypeName = generatorContext
                             .getPoetTypeNameMapper()

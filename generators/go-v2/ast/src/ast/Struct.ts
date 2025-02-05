@@ -1,8 +1,8 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
-import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Struct {
     interface Args {
@@ -41,7 +41,7 @@ export class Struct extends AstNode {
     public write(writer: Writer): void {
         writer.writeNode(new Comment({ docs: this.docs }));
         writer.write(`type ${this.name} struct {`);
-        if (this.fields.length > 0) {
+        if (this.fields.length === 0) {
             writer.writeLine("}");
         } else {
             writer.newLine();
@@ -53,13 +53,13 @@ export class Struct extends AstNode {
             writer.dedent();
             writer.writeLine("}");
         }
-        if (this.constructor != null || this.methods.length > 0) {
+
+        if (this.methods.length > 0) {
             writer.newLine();
+            for (const method of this.methods) {
+                writer.writeNode(method);
+                writer.newLine();
+            }
         }
-        for (const method of this.methods) {
-            writer.writeNode(method);
-            writer.newLine();
-        }
-        return;
     }
 }

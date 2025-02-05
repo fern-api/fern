@@ -7222,6 +7222,7 @@ deployed to the default Environment will be used.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -7351,6 +7352,7 @@ If `"add"` or `"remove"`, one of the `version_id` or `environment` query paramet
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -7470,6 +7472,7 @@ Set the deployed Version for the specified Environment.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -7557,6 +7560,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     "type": "optional<string>",
                   },
                   "include_datapoints": {
+                    "default": false,
                     "docs": "If set to `true`, include all Datapoints in the response. Defaults to `false`. Consider using the paginated List Datapoints endpoint instead.",
                     "type": "optional<boolean>",
                   },
@@ -7568,6 +7572,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -7637,6 +7642,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     "type": "optional<root.SortOrder>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7648,6 +7654,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Datasets to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7670,6 +7677,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataDatasetResponse",
               },
               "source": {
@@ -7730,6 +7738,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7741,6 +7750,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                     },
                   },
                   "size": {
+                    "default": 50,
                     "docs": "Page size for pagination. Number of Datapoints to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7759,6 +7769,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataDatapointResponse",
               },
               "source": {
@@ -7838,6 +7849,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListDatasets",
               },
               "source": {
@@ -7927,6 +7939,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.DatasetResponse",
               },
               "source": {
@@ -7958,11 +7971,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page offset for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Datasets to fetch.
             validation:
               min: 0
@@ -7983,6 +7998,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedDataDatasetResponse
+        status-code: 200
       errors:
         - root.DatasetsListRequestUnprocessableEntityError
       examples:
@@ -8104,6 +8120,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.DatasetsCreateRequestUnprocessableEntityError
       examples:
@@ -8179,6 +8196,7 @@ service:
             docs: An environment tag to retrieve a deployed Version from.
           include_datapoints:
             type: optional<boolean>
+            default: false
             docs: >-
               If set to `true`, include all Datapoints in the response. Defaults
               to `false`. Consider using the paginated List Datapoints endpoint
@@ -8186,6 +8204,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.DatasetsGetRequestUnprocessableEntityError
       examples:
@@ -8259,6 +8278,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.DatasetsUpdateRequestUnprocessableEntityError
       examples:
@@ -8316,17 +8336,20 @@ service:
             docs: An environment tag to retrieve a deployed Version from.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 50
             docs: Page size for pagination. Number of Datapoints to fetch.
             validation:
               min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataDatapointResponse
+        status-code: 200
       errors:
         - root.DatasetsListDatapointsRequestUnprocessableEntityError
       examples:
@@ -8374,6 +8397,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListDatasets
+        status-code: 200
       errors:
         - root.DatasetsListVersionsRequestUnprocessableEntityError
       examples:
@@ -8423,6 +8447,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - root.DatasetsCommitRequestUnprocessableEntityError
       examples:
@@ -8486,6 +8511,7 @@ service:
       response:
         docs: Successful Response
         type: root.DatasetResponse
+        status-code: 200
       errors:
         - >-
           root.DeployDatasetsIdVersionsVersionIdDeployPostRequestUnprocessableEntityError
@@ -8696,7 +8722,7 @@ and check its status.",
                             "name": "name",
                             "spec": {
                               "arguments_type": "target_free",
-                              "evaluator_type": "human",
+                              "evaluator_type": "llm",
                               "return_type": "boolean",
                             },
                             "status": "uncommitted",
@@ -8725,6 +8751,7 @@ and check its status.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 201,
                 "type": "root.EvaluationResponse",
               },
               "source": {
@@ -8850,7 +8877,7 @@ Retrieve the Evaluation with the given ID.",
                             "name": "name",
                             "spec": {
                               "arguments_type": "target_free",
-                              "evaluator_type": "human",
+                              "evaluator_type": "llm",
                               "return_type": "boolean",
                             },
                             "status": "uncommitted",
@@ -8879,6 +8906,7 @@ Retrieve the Evaluation with the given ID.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluationResponse",
               },
               "source": {
@@ -8947,6 +8975,7 @@ This includes the number of generated Logs for every evaluatee and Evaluator met
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluationStats",
               },
               "source": {
@@ -9024,7 +9053,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                                 "name": "name",
                                 "spec": {
                                   "arguments_type": "target_free",
-                                  "evaluator_type": "human",
+                                  "evaluator_type": "llm",
                                   "return_type": "boolean",
                                 },
                                 "status": "uncommitted",
@@ -9057,6 +9086,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                     "type": "string",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -9068,6 +9098,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Evaluations to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -9082,6 +9113,7 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataEvaluationResponse",
               },
               "source": {
@@ -9192,7 +9224,7 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
                             "name": "name",
                             "spec": {
                               "arguments_type": "target_free",
-                              "evaluator_type": "human",
+                              "evaluator_type": "llm",
                               "return_type": "boolean",
                             },
                             "status": "uncommitted",
@@ -9227,6 +9259,7 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluationResponse",
               },
               "source": {
@@ -9326,7 +9359,7 @@ as completed.",
                             "name": "name",
                             "spec": {
                               "arguments_type": "target_free",
-                              "evaluator_type": "human",
+                              "evaluator_type": "llm",
                               "return_type": "boolean",
                             },
                             "status": "uncommitted",
@@ -9369,6 +9402,7 @@ as completed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluationResponse",
               },
               "source": {
@@ -9410,17 +9444,20 @@ service:
               File will be returned.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Evaluations to fetch.
             validation:
               min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataEvaluationResponse
+        status-code: 200
       errors:
         - root.EvaluationsListRequestUnprocessableEntityError
       examples:
@@ -9464,9 +9501,9 @@ service:
                         status: uncommitted
                         last_used_at: '2024-01-15T09:30:00Z'
                         spec:
-                          evaluator_type: human
                           arguments_type: target_free
                           return_type: boolean
+                          evaluator_type: llm
                         version_logs_count: 1
                         total_logs_count: 1
                         inputs:
@@ -9510,6 +9547,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationResponse
+        status-code: 201
       errors:
         - root.EvaluationsCreateRequestUnprocessableEntityError
       examples:
@@ -9570,9 +9608,9 @@ service:
                     status: uncommitted
                     last_used_at: '2024-01-15T09:30:00Z'
                     spec:
-                      evaluator_type: human
                       arguments_type: target_free
                       return_type: boolean
+                      evaluator_type: llm
                     version_logs_count: 1
                     total_logs_count: 1
                     inputs:
@@ -9603,6 +9641,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationResponse
+        status-code: 200
       errors:
         - root.EvaluationsGetRequestUnprocessableEntityError
       examples:
@@ -9658,9 +9697,9 @@ service:
                     status: uncommitted
                     last_used_at: '2024-01-15T09:30:00Z'
                     spec:
-                      evaluator_type: human
                       arguments_type: target_free
                       return_type: boolean
+                      evaluator_type: llm
                     version_logs_count: 1
                     total_logs_count: 1
                     inputs:
@@ -9721,6 +9760,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationResponse
+        status-code: 200
       errors:
         - root.EvaluationsUpdateRequestUnprocessableEntityError
       examples:
@@ -9783,9 +9823,9 @@ service:
                     status: uncommitted
                     last_used_at: '2024-01-15T09:30:00Z'
                     spec:
-                      evaluator_type: human
                       arguments_type: target_free
                       return_type: boolean
+                      evaluator_type: llm
                     version_logs_count: 1
                     total_logs_count: 1
                     inputs:
@@ -9827,6 +9867,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationResponse
+        status-code: 200
       errors:
         - root.EvaluationsUpdateStatusRequestUnprocessableEntityError
       examples:
@@ -9884,9 +9925,9 @@ service:
                     status: uncommitted
                     last_used_at: '2024-01-15T09:30:00Z'
                     spec:
-                      evaluator_type: human
                       arguments_type: target_free
                       return_type: boolean
+                      evaluator_type: llm
                     version_logs_count: 1
                     total_logs_count: 1
                     inputs:
@@ -9924,6 +9965,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluationStats
+        status-code: 200
       errors:
         - root.EvaluationsGetStatsRequestUnprocessableEntityError
       examples:
@@ -10035,7 +10077,35 @@ docs: >+
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -10068,6 +10138,7 @@ docs: >+
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -10094,7 +10165,7 @@ an exception will be raised.",
                   "request": {
                     "spec": {
                       "arguments_type": "target_free",
-                      "evaluator_type": "human",
+                      "evaluator_type": "llm",
                       "return_type": "boolean",
                     },
                   },
@@ -10126,7 +10197,35 @@ an exception will be raised.",
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -10170,6 +10269,7 @@ an exception will be raised.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -10188,7 +10288,7 @@ an exception will be raised.",
                   "request": {
                     "evaluator": {
                       "arguments_type": "target_free",
-                      "evaluator_type": "human",
+                      "evaluator_type": "llm",
                       "return_type": "boolean",
                     },
                     "file_id": "file_id",
@@ -10203,10 +10303,9 @@ an exception will be raised.",
                             "batch_ids",
                           ],
                           "config": {
-                            "id": "config",
-                            "name": "config",
-                            "status": "config",
-                            "type": "generic",
+                            "id": "id",
+                            "model": "model",
+                            "type": "model",
                           },
                           "config_id": "config_id",
                           "created_at": "2024-01-15T09:30:00Z",
@@ -10297,10 +10396,9 @@ an exception will be raised.",
                             "batch_ids",
                           ],
                           "config": {
-                            "id": "config",
-                            "name": "config",
-                            "status": "config",
-                            "type": "generic",
+                            "id": "id",
+                            "model": "model",
+                            "type": "model",
                           },
                           "config_id": "config_id",
                           "created_at": "2024-01-15T09:30:00Z",
@@ -10433,6 +10531,7 @@ an exception will be raised.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.EvaluationDebugResultResponse>",
               },
               "source": {
@@ -10513,7 +10612,35 @@ will be used for calls made to the Evaluator in this Environment.",
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -10549,6 +10676,7 @@ will be used for calls made to the Evaluator in this Environment.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -10598,7 +10726,35 @@ By default the deployed version of the Evaluator is returned. Use the query para
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -10634,6 +10790,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -10678,7 +10835,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                           "name": "name",
                           "spec": {
                             "arguments_type": "target_free",
-                            "evaluator_type": "human",
+                            "evaluator_type": "llm",
                             "return_type": "boolean",
                           },
                           "status": "uncommitted",
@@ -10707,6 +10864,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                     "type": "optional<root.SortOrder>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -10718,6 +10876,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Evaluators to fetch.",
                     "type": "optional<integer>",
                   },
@@ -10733,6 +10892,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListEvaluators",
               },
               "source": {
@@ -10777,7 +10937,10 @@ By default the deployed version of the Evaluator is returned. Use the query para
                         "name": "name",
                         "spec": {
                           "arguments_type": "target_free",
-                          "evaluator_type": "human",
+                          "evaluator_type": "llm",
+                          "prompt": {
+                            "model": "model",
+                          },
                           "return_type": "boolean",
                         },
                         "status": "uncommitted",
@@ -10795,6 +10958,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "path": "/evaluators/default",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.EvaluatorResponse>",
               },
               "source": {
@@ -10842,7 +11006,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                           "name": "name",
                           "spec": {
                             "arguments_type": "target_free",
-                            "evaluator_type": "human",
+                            "evaluator_type": "llm",
                             "return_type": "boolean",
                           },
                           "status": "uncommitted",
@@ -10881,6 +11045,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListEvaluators",
               },
               "source": {
@@ -10928,7 +11093,35 @@ By default the deployed version of the Evaluator is returned. Use the query para
                       "name": "name",
                       "spec": {
                         "arguments_type": "target_free",
-                        "evaluator_type": "human",
+                        "evaluator_type": "llm",
+                        "prompt": {
+                          "endpoint": "complete",
+                          "frequency_penalty": 1.1,
+                          "linked_tools": [
+                            "linked_tools",
+                          ],
+                          "max_tokens": 1,
+                          "model": "model",
+                          "other": {
+                            "key": "value",
+                          },
+                          "presence_penalty": 1.1,
+                          "provider": "openai",
+                          "response_format": {
+                            "type": "json_object",
+                          },
+                          "seed": 1,
+                          "stop": "stop",
+                          "temperature": 1.1,
+                          "template": "template",
+                          "tools": [
+                            {
+                              "description": "description",
+                              "name": "name",
+                            },
+                          ],
+                          "top_p": 1.1,
+                        },
                         "return_type": "boolean",
                       },
                       "status": "uncommitted",
@@ -10970,6 +11163,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EvaluatorResponse",
               },
               "source": {
@@ -11045,11 +11239,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page offset for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Evaluators to fetch.
           name:
             type: optional<string>
@@ -11068,6 +11264,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListEvaluators
+        status-code: 200
       errors:
         - root.EvaluatorsListRequestUnprocessableEntityError
       examples:
@@ -11092,9 +11289,9 @@ service:
                   last_used_at: '2024-01-15T09:30:00Z'
                   commit_message: commit_message
                   spec:
-                    evaluator_type: human
                     arguments_type: target_free
                     return_type: boolean
+                    evaluator_type: llm
                   version_logs_count: 1
                   total_logs_count: 1
                   inputs:
@@ -11143,14 +11340,15 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.EvaluatorsCreateRequestUnprocessableEntityError
       examples:
         - request:
             spec:
-              evaluator_type: human
               arguments_type: target_free
               return_type: boolean
+              evaluator_type: llm
           response:
             body:
               id: id
@@ -11172,9 +11370,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -11211,6 +11430,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.EvaluatorsGetRequestUnprocessableEntityError
       examples:
@@ -11237,9 +11457,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -11287,6 +11528,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.EvaluatorsUpdateRequestUnprocessableEntityError
       examples:
@@ -11314,9 +11556,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -11350,6 +11613,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListEvaluators
+        status-code: 200
       errors:
         - root.EvaluatorsListVersionsRequestUnprocessableEntityError
       examples:
@@ -11376,9 +11640,9 @@ service:
                   last_used_at: '2024-01-15T09:30:00Z'
                   commit_message: commit_message
                   spec:
-                    evaluator_type: human
                     arguments_type: target_free
                     return_type: boolean
+                    evaluator_type: llm
                   version_logs_count: 1
                   total_logs_count: 1
                   inputs:
@@ -11414,6 +11678,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - >-
           root.DeployEvaluatorsIdVersionsVersionIdDeployPostRequestUnprocessableEntityError
@@ -11444,9 +11709,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -11473,6 +11759,7 @@ service:
       response:
         docs: Successful Response
         type: root.EvaluatorResponse
+        status-code: 200
       errors:
         - root.EvaluatorsCommitRequestUnprocessableEntityError
       examples:
@@ -11502,9 +11789,30 @@ service:
               last_used_at: '2024-01-15T09:30:00Z'
               commit_message: commit_message
               spec:
-                evaluator_type: human
                 arguments_type: target_free
                 return_type: boolean
+                prompt:
+                  model: model
+                  endpoint: complete
+                  template: template
+                  provider: openai
+                  max_tokens: 1
+                  temperature: 1.1
+                  top_p: 1.1
+                  stop: stop
+                  presence_penalty: 1.1
+                  frequency_penalty: 1.1
+                  other:
+                    key: value
+                  seed: 1
+                  response_format:
+                    type: json_object
+                  tools:
+                    - name: name
+                      description: description
+                  linked_tools:
+                    - linked_tools
+                evaluator_type: llm
               version_logs_count: 1
               total_logs_count: 1
               inputs:
@@ -11520,6 +11828,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.EvaluatorResponse>
+        status-code: 200
       errors:
         - root.EvaluatorsListDefaultRequestUnprocessableEntityError
       examples:
@@ -11544,9 +11853,11 @@ service:
                 last_used_at: '2024-01-15T09:30:00Z'
                 commit_message: commit_message
                 spec:
-                  evaluator_type: human
                   arguments_type: target_free
                   return_type: boolean
+                  prompt:
+                    model: model
+                  evaluator_type: llm
                 version_logs_count: 1
                 total_logs_count: 1
                 inputs:
@@ -11594,15 +11905,16 @@ service:
       response:
         docs: Successful Response
         type: list<root.EvaluationDebugResultResponse>
+        status-code: 200
       errors:
         - root.DebugEvaluatorsDebugPostRequestUnprocessableEntityError
       examples:
         - request:
             file_id: file_id
             evaluator:
-              evaluator_type: human
               arguments_type: target_free
               return_type: boolean
+              evaluator_type: llm
           response:
             body:
               - log_id: log_id
@@ -11629,10 +11941,9 @@ service:
                   judgment: true
                   config_id: config_id
                   config:
-                    type: generic
-                    id: config
-                    status: config
-                    name: config
+                    id: id
+                    model: model
+                    type: model
                   environment: environment
                   feedback:
                     - type: rating
@@ -11701,10 +12012,9 @@ service:
                   judgment: true
                   config_id: config_id
                   config:
-                    type: generic
-                    id: config
-                    status: config
-                    name: config
+                    id: id
+                    model: model
+                    type: model
                   environment: environment
                   feedback:
                     - type: rating
@@ -11983,6 +12293,7 @@ You can manually create Logs through the API.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptLogResponse",
               },
               "source": {
@@ -12092,6 +12403,7 @@ You can manually create Logs through the API.
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -12107,6 +12419,7 @@ You can manually create Logs through the API.
                     "type": "optional<string>",
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Logs to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -12133,6 +12446,7 @@ You can manually create Logs through the API.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataPromptLogResponse",
               },
               "source": {
@@ -12167,11 +12481,13 @@ service:
             docs: Unique identifier for the File to list Logs for.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Logs to fetch.
             validation:
               min: 0
@@ -12208,6 +12524,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedDataPromptLogResponse
+        status-code: 200
       errors:
         - root.ListLogsForFileLogsGetRequestUnprocessableEntityError
       examples:
@@ -12297,6 +12614,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptLogResponse
+        status-code: 200
       errors:
         - root.LogsGetRequestUnprocessableEntityError
       examples:
@@ -12713,6 +13031,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "PromptsCallResponse",
               },
               "source": {
@@ -12828,6 +13147,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -13018,6 +13338,7 @@ an exception will be raised.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -13166,6 +13487,7 @@ will be used for calls made to the Prompt in this Environment.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -13283,6 +13605,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -13382,6 +13705,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     "type": "optional<root.SortOrder>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -13393,6 +13717,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Prompts to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -13415,6 +13740,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListPrompts",
               },
               "source": {
@@ -13527,6 +13853,7 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListPrompts",
               },
               "source": {
@@ -13705,6 +14032,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.CreatePromptLogResponse",
               },
               "source": {
@@ -13826,6 +14154,7 @@ in the case where you are storing or deriving your Prompt details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -13934,6 +14263,7 @@ within the Prompt for monitoring purposes.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PromptResponse",
               },
               "source": {
@@ -14052,11 +14382,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Prompts to fetch.
             validation:
               min: 0
@@ -14077,6 +14409,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListPrompts
+        status-code: 200
       errors:
         - root.PromptsListRequestUnprocessableEntityError
       examples:
@@ -14247,6 +14580,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.PromptsCreateRequestUnprocessableEntityError
       examples:
@@ -14335,6 +14669,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.PromptsGetRequestUnprocessableEntityError
       examples:
@@ -14434,6 +14769,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.PromptsUpdateRequestUnprocessableEntityError
       examples:
@@ -14520,6 +14856,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListPrompts
+        status-code: 200
       errors:
         - root.PromptsListVersionsRequestUnprocessableEntityError
       examples:
@@ -14603,6 +14940,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - >-
           root.DeployPromptsIdVersionsVersionIdDeployPostRequestUnprocessableEntityError
@@ -14685,6 +15023,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - root.PromptsCommitRequestUnprocessableEntityError
       examples:
@@ -14908,6 +15247,7 @@ service:
       response:
         docs: Successful Response
         type: root.CreatePromptLogResponse
+        status-code: 200
       errors:
         - root.PromptsLogRequestUnprocessableEntityError
       examples:
@@ -15081,6 +15421,7 @@ service:
       response:
         docs: Successful Response
         type: PromptsCallResponse
+        status-code: 200
       errors:
         - root.PromptsCallRequestUnprocessableEntityError
       examples:
@@ -15195,6 +15536,7 @@ service:
       response:
         docs: Successful Response
         type: root.PromptResponse
+        status-code: 200
       errors:
         - >-
           root.UpdateEvaluatorsPromptsIdEvaluatorsPostRequestUnprocessableEntityError
@@ -15522,6 +15864,7 @@ Log is in, nested within the evaluated Log.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.SessionResponse",
               },
               "source": {
@@ -15586,6 +15929,7 @@ Log is in, nested within the evaluated Log.
                     "type": "optional<string>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -15597,6 +15941,7 @@ Log is in, nested within the evaluated Log.
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Sessions to fetch.",
                     "type": "optional<integer>",
                     "validation": {
@@ -15615,6 +15960,7 @@ Log is in, nested within the evaluated Log.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedDataSessionResponse",
               },
               "source": {
@@ -15648,6 +15994,7 @@ service:
       response:
         docs: Successful Response
         type: root.SessionResponse
+        status-code: 200
       errors:
         - root.SessionsGetRequestUnprocessableEntityError
       examples:
@@ -15745,17 +16092,20 @@ service:
               that contain any Logs associated to this Version will be returned.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Sessions to fetch.
             validation:
               min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataSessionResponse
+        status-code: 200
       errors:
         - root.SessionsListRequestUnprocessableEntityError
       examples:
@@ -15904,6 +16254,7 @@ docs: >+
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -16020,6 +16371,7 @@ an exception will be raised.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -16144,6 +16496,7 @@ will be used for calls made to the Tool in this Environment.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -16237,6 +16590,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -16315,6 +16669,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     "type": "optional<root.SortOrder>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
                     "validation": {
@@ -16326,6 +16681,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
                     },
                   },
                   "size": {
+                    "default": 10,
                     "docs": "Page size for pagination. Number of Tools to fetch.",
                     "type": "optional<integer>",
                   },
@@ -16341,6 +16697,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListTools",
               },
               "source": {
@@ -16387,6 +16744,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ToolTemplateResponse>",
               },
               "source": {
@@ -16478,6 +16836,7 @@ By default the deployed version of the Tool is returned. Use the query parameter
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ListTools",
               },
               "source": {
@@ -16620,6 +16979,7 @@ in the case where you are storing or deriving your Tool details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.CreateToolLogResponse",
               },
               "source": {
@@ -16717,6 +17077,7 @@ in the case where you are storing or deriving your Tool details in code.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -16801,6 +17162,7 @@ within the Tool for monitoring purposes.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ToolResponse",
               },
               "source": {
@@ -16832,11 +17194,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page offset for pagination.
             validation:
               min: 1
           size:
             type: optional<integer>
+            default: 10
             docs: Page size for pagination. Number of Tools to fetch.
           name:
             type: optional<string>
@@ -16855,6 +17219,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListTools
+        status-code: 200
       errors:
         - root.ToolsListRequestUnprocessableEntityError
       examples:
@@ -16947,6 +17312,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.ToolsCreateRequestUnprocessableEntityError
       examples:
@@ -17016,6 +17382,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.ToolsGetRequestUnprocessableEntityError
       examples:
@@ -17098,6 +17465,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.ToolsUpdateRequestUnprocessableEntityError
       examples:
@@ -17167,6 +17535,7 @@ service:
       response:
         docs: Successful Response
         type: root.ListTools
+        status-code: 200
       errors:
         - root.ToolsListVersionsRequestUnprocessableEntityError
       examples:
@@ -17235,6 +17604,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - >-
           root.DeployToolsIdVersionsVersionIdDeployPostRequestUnprocessableEntityError
@@ -17300,6 +17670,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - root.ToolsCommitRequestUnprocessableEntityError
       examples:
@@ -17465,6 +17836,7 @@ service:
       response:
         docs: Successful Response
         type: root.CreateToolLogResponse
+        status-code: 200
       errors:
         - root.ToolsLogRequestUnprocessableEntityError
       examples:
@@ -17498,6 +17870,7 @@ service:
       response:
         docs: Successful Response
         type: root.ToolResponse
+        status-code: 200
       errors:
         - >-
           root.UpdateEvaluatorsToolsIdEvaluatorsPostRequestUnprocessableEntityError
@@ -17555,6 +17928,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ToolTemplateResponse>
+        status-code: 200
       errors:
         - root.ListTemplatesToolsTemplatesGetRequestUnprocessableEntityError
       examples:

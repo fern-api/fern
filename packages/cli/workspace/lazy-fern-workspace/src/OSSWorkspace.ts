@@ -1,9 +1,5 @@
-import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { parse } from "@fern-api/openapi-ir-parser";
-import { TaskContext } from "@fern-api/task-context";
 import { v4 as uuidv4 } from "uuid";
-import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
+
 import {
     AbstractAPIWorkspace,
     BaseOpenAPIWorkspace,
@@ -11,8 +7,14 @@ import {
     IdentifiableSource,
     Spec
 } from "@fern-api/api-workspace-commons";
+import { isNonNullish } from "@fern-api/core-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
+import { parse } from "@fern-api/openapi-ir-parser";
+import { TaskContext } from "@fern-api/task-context";
+
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
+import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -32,9 +34,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         super({
             ...superArgs,
             respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
+            respectNullableSchemas: specs.every((spec) => spec.settings?.respectNullableSchemas),
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
-            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters)
+            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
+            exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
@@ -61,10 +65,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             options: {
                 ...settings,
                 respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.respectReadonlySchemas,
+                respectNullableSchemas: settings?.respectNullableSchemas ?? this.respectNullableSchemas,
                 onlyIncludeReferencedSchemas:
                     settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
-                objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters
+                objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters,
+                exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration
             }
         });
     }

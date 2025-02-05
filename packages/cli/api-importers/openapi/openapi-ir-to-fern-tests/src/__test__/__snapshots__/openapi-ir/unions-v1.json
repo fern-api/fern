@@ -10,36 +10,130 @@
   "channel": [],
   "groupedSchemas": {
     "rootSchemas": {
-      "SchemaWithALongNameIsRightHereAndNotSomewhereElse": {
+      "Shape": {
+        "value": {
+          "generatedName": "Shape",
+          "schemas": [
+            {
+              "generatedName": "ShapeZero",
+              "schema": "Triangle",
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "ShapeOne",
+              "schema": "Square",
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "Triangle": {
         "allOf": [],
         "properties": [
           {
             "conflict": {},
-            "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
-            "key": "id",
+            "generatedName": "triangleType",
+            "key": "type",
             "schema": {
-              "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
-              "nameOverride": "EnticingTitle",
-              "title": "EnticingTitle",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
-                "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElseId",
-                "groupName": [],
-                "type": "primitive"
+                "value": "triangle",
+                "type": "string"
               },
+              "generatedName": "TriangleType",
               "groupName": [],
-              "type": "optional"
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "triangleBase",
+            "key": "base",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TriangleBase",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "triangleHeight",
+            "key": "height",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TriangleHeight",
+              "groupName": [],
+              "type": "primitive"
             },
             "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
-        "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElse",
-        "nameOverride": "EnticingTitle",
-        "title": "EnticingTitle",
+        "generatedName": "Triangle",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Square": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "squareType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "square",
+                "type": "string"
+              },
+              "generatedName": "SquareType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "squareSideLength",
+            "key": "sideLength",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "SquareSideLength",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Square",
         "groupName": [],
         "additionalProperties": false,
         "source": {

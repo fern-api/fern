@@ -10,12 +10,14 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -39,12 +41,13 @@ export class Service {
      */
     public async getMovie(
         movieId: SeedExamples.MovieId,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.Movie> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`,
             ),
             method: "GET",
             headers: {
@@ -124,10 +127,14 @@ export class Service {
      */
     public async createMovie(
         request: SeedExamples.Movie,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.MovieId> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/movie",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -190,10 +197,10 @@ export class Service {
      */
     public async getMetadata(
         request: SeedExamples.GetMetadataRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.Metadata> {
         const { shallow, tag, xApiVersion } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (shallow != null) {
             _queryParams["shallow"] = shallow.toString();
         }
@@ -207,7 +214,11 @@ export class Service {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/metadata"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/metadata",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -425,10 +436,14 @@ export class Service {
      */
     public async createBigEntity(
         request: SeedExamples.BigEntity,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.Response> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/big-entity"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/big-entity",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

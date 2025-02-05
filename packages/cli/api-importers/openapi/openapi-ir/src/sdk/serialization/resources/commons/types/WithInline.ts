@@ -12,7 +12,7 @@ export const WithInline: core.serialization.ObjectSchema<serializers.WithInline.
     });
 
 export declare namespace WithInline {
-    interface Raw {
+    export interface Raw {
         inline?: boolean | null;
     }
 }

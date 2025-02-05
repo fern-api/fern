@@ -1,16 +1,18 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, getExampleEndpointCalls, GetReferenceOpts, getTextOfTsNode } from "@fern-typescript/commons";
+import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
 import { buildUrl } from "../utils/buildUrl";
 import {
+    REQUEST_OPTIONS_PARAMETER_NAME,
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression,
-    REQUEST_OPTIONS_PARAMETER_NAME
+    getTimeoutExpression
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 
@@ -100,14 +102,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 continue;
             }
             const docsStrPrefix = `@param {${parameter.type}} ${parameter.name} - `;
-            const docsStrs = parameter.docs.split("\n").map((line, index) => {
+            const docsStrings = parameter.docs.split("\n").map((line, index) => {
                 if (index === 0) {
                     return `${docsStrPrefix}${line}`;
                 } else {
                     return `${" ".repeat(docsStrPrefix.length)}${line}`;
                 }
             });
-            params.push(...docsStrs);
+            params.push(...docsStrings);
         }
 
         // Every method supports request options, so we always include this parameter last.
@@ -192,7 +194,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
         const responseVariableName = "response";
         const pageVariableName = "page";
-        const itemVaribaleName = "item";
+        const itemVariableName = "item";
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -213,7 +215,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier(itemVaribaleName),
+                            ts.factory.createIdentifier(itemVariableName),
                             undefined,
                             undefined,
                             undefined
@@ -231,7 +233,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                     ts.factory.createIdentifier("log")
                                 ),
                                 undefined,
-                                [ts.factory.createIdentifier(itemVaribaleName)]
+                                [ts.factory.createIdentifier(itemVariableName)]
                             )
                         )
                     ],
@@ -383,27 +385,30 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return [...this.invokeFetcher(context), ...this.response.getReturnResponseStatements(context)];
     }
 
-    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
-        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+            }
         });
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
         } else {
-            return referenceToEnvironment;
+            return baseUrl;
         }
     }
 
     private invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
-            url: this.getReferenceToEnvironment(context),
+            url: this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,

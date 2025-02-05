@@ -1,3 +1,6 @@
+import { getSchemaOptions } from "@fern-typescript/commons";
+import { ts } from "ts-morph";
+
 import {
     ContainerType,
     DeclaredTypeName,
@@ -6,7 +9,7 @@ import {
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { ts } from "ts-morph";
+
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToStringExpressionConverter {
@@ -19,24 +22,25 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     public convertWithNullCheckIfOptional(
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        const type = params.typeReference;
-        const isNullable = TypeReference._visit(type, {
-            named: (typeName) => {
-                const resolvedType = this.typeResolver.resolveTypeName(typeName);
-                return resolvedType.type === "container" && resolvedType.container.type === "optional";
-            },
-            container: (container) => container.type === "optional",
-            primitive: () => false,
-            unknown: () => true,
-            _other: () => {
-                throw new Error("Unknown TypeReference: " + type.type);
-            }
-        });
-
-        if (!isNullable) {
+        const isNullable = this.isTypeReferenceNullable(params.typeReference);
+        const isOptional = this.isTypeReferenceOptional(params.typeReference);
+        if (!isNullable && !isOptional) {
             return this.convert(params);
         }
-
+        if (isNullable) {
+            return (reference) =>
+                ts.factory.createConditionalExpression(
+                    ts.factory.createBinaryExpression(
+                        reference,
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                        ts.factory.createIdentifier("undefined")
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    this.convert(params)(reference),
+                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                    ts.factory.createIdentifier("undefined")
+                );
+        }
         return (reference) =>
             ts.factory.createConditionalExpression(
                 ts.factory.createBinaryExpression(
@@ -55,20 +59,73 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         typeName: DeclaredTypeName,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        const resolvedType = this.typeResolver.resolveTypeName(typeName);
+        const resolvedType = this.context.type.resolveTypeName(typeName);
+        if (this.includeSerdeLayer) {
+            return (reference) => {
+                const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
+                const mapExpression = this.context.typeSchema
+                    .getSchemaOfNamedType(typeName, { isGeneratingSchema: false })
+                    .jsonOrThrow(reference, {
+                        ...getSchemaOptions({
+                            allowExtraFields:
+                                this.allowExtraFields ??
+                                (typeDeclaration.shape.type === "object" && typeDeclaration.shape.extraProperties),
+                            omitUndefined: this.omitUndefined
+                        })
+                    });
+
+                const getStringify = (resolvedType: ResolvedTypeReference): ts.Expression =>
+                    ResolvedTypeReference._visit<ts.Expression>(resolvedType, {
+                        container: (containerType) =>
+                            ContainerType._visit(containerType, {
+                                list: () => this.jsonStringify(mapExpression),
+                                optional: (optional) => getStringify(this.context.type.resolveTypeReference(optional)),
+                                nullable: (nullable) => getStringify(this.context.type.resolveTypeReference(nullable)),
+                                set: () => this.jsonStringify(mapExpression),
+                                map: () => this.jsonStringify(mapExpression),
+                                literal: (literal) => {
+                                    if (literal.type === "string") {
+                                        return mapExpression;
+                                    }
+                                    return this.jsonStringify(mapExpression);
+                                },
+                                _other: () => {
+                                    throw new Error("Unknown ContainerType: " + containerType.type);
+                                }
+                            }),
+                        primitive: () => mapExpression,
+                        named: ({ shape }) => {
+                            if (shape === ShapeType.Enum) {
+                                return mapExpression;
+                            }
+                            if (shape === ShapeType.UndiscriminatedUnion) {
+                                return this.jsonStringifyIfNotStringNoRecompute(mapExpression);
+                            }
+                            return this.jsonStringify(mapExpression);
+                        },
+                        unknown: () => this.jsonStringifyIfNotStringNoRecompute(mapExpression),
+                        _other: () => {
+                            throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
+                        }
+                    });
+                return getStringify(resolvedType);
+            };
+        }
+
         return ResolvedTypeReference._visit<(reference: ts.Expression) => ts.Expression>(resolvedType, {
             container: (containerType) =>
                 ContainerType._visit(containerType, {
                     list: this.list.bind(this),
+                    nullable: (nullableType) => this.nullable(nullableType, params),
                     optional: (optionalType) => this.optional(optionalType, params),
                     set: this.set.bind(this),
                     map: (mapType) => this.map(mapType, params),
-                    literal: this.literal.bind(this),
+                    literal: (literal) => this.literal(literal, params),
                     _other: () => {
                         throw new Error("Unknown ContainerType: " + containerType.type);
                     }
                 }),
-            primitive: this.primitive.bind(this),
+            primitive: (type) => this.primitive(type, params),
             named: ({ shape }) => {
                 if (shape === ShapeType.Enum) {
                     return (reference) => reference;
@@ -89,58 +146,37 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         return (reference) => reference;
     }
 
-    protected override number(): (reference: ts.Expression) => ts.Expression {
-        return (reference) =>
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(reference, "toString"),
-                undefined,
-                undefined
-            );
+    protected override number(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
+        return this.nullSafeCall("toString", params);
     }
 
-    protected long(): (reference: ts.Expression) => ts.Expression {
-        if (this.useBigInt) {
-            return (reference) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(reference, "toString"),
-                    undefined,
-                    undefined
-                );
-        }
-        return this.number();
+    protected long(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
+        return this.nullSafeCall("toString", params);
     }
 
-    protected bigInteger(): (reference: ts.Expression) => ts.Expression {
+    protected bigInteger(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
         if (this.useBigInt) {
-            return (reference) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(reference, "toString"),
-                    undefined,
-                    undefined
-                );
+            return this.nullSafeCall("toString", params);
         }
         return this.string();
     }
 
-    protected override boolean(): (reference: ts.Expression) => ts.Expression {
-        return (reference) =>
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(reference, "toString"),
-                undefined,
-                undefined
-            );
+    protected override boolean(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
+        return this.nullSafeCall("toString", params);
     }
 
-    protected override dateTime(): (reference: ts.Expression) => ts.Expression {
+    protected override dateTime(params: ConvertTypeReferenceParams): (reference: ts.Expression) => ts.Expression {
         if (this.includeSerdeLayer) {
-            return (reference) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(reference, "toISOString"),
-                    undefined,
-                    undefined
-                );
+            return this.nullSafeCall("toISOString", params);
         }
         return (reference) => reference;
+    }
+
+    protected override nullable(
+        itemType: TypeReference,
+        params: ConvertTypeReferenceParams
+    ): (reference: ts.Expression) => ts.Expression {
+        return (reference) => this.convert({ ...params, typeReference: itemType, nullable: true })(reference);
     }
 
     protected override optional(
@@ -162,15 +198,13 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         return this.jsonStringify.bind(this);
     }
 
-    protected override literal(literal: Literal): (reference: ts.Expression) => ts.Expression {
+    protected override literal(
+        literal: Literal,
+        params: ConvertTypeReferenceParams
+    ): (reference: ts.Expression) => ts.Expression {
         return Literal._visit(literal, {
             string: () => (reference: ts.Expression) => reference,
-            boolean: () => (reference: ts.Expression) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(reference, "toString"),
-                    undefined,
-                    undefined
-                ),
+            boolean: () => (reference: ts.Expression) => this.nullSafeCall("toString", params)(reference),
             _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
             }
@@ -189,17 +223,26 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         return this.jsonStringify.bind(this);
     }
 
+    /**
+     * Example:
+     * ```ts
+     * toJson(REFERENCE)
+     * ```
+     */
     private jsonStringify(reference: ts.Expression): ts.Expression {
         return ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier("JSON"),
-                ts.factory.createIdentifier("stringify")
-            ),
+            this.context.jsonContext.getReferenceToToJson().getExpression(),
             undefined,
             [reference]
         );
     }
 
+    /**
+     * Example:
+     * ```ts
+     * typeof REFERENCE === "string" ? REFERENCE : toJson(REFERENCE)
+     * ```
+     */
     private jsonStringifyIfNotString(reference: ts.Expression): ts.Expression {
         return ts.factory.createConditionalExpression(
             ts.factory.createBinaryExpression(
@@ -212,5 +255,75 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             ts.factory.createToken(ts.SyntaxKind.ColonToken),
             this.jsonStringify(reference)
         );
+    }
+
+    /**
+     * Example:
+     * ```ts
+     * (() => {
+     *   const mapped = REFERENCE;
+     *   return typeof mapped === "string" ? mapped : toJson(mapped);
+     * })()
+     * ```
+     */
+    private jsonStringifyIfNotStringNoRecompute(reference: ts.Expression): ts.Expression {
+        const mappedConst = ts.factory.createIdentifier("mapped");
+        return ts.factory.createCallExpression(
+            ts.factory.createParenthesizedExpression(
+                ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createVariableStatement(
+                                undefined,
+                                ts.factory.createVariableDeclarationList(
+                                    [
+                                        ts.factory.createVariableDeclaration(
+                                            mappedConst,
+                                            undefined,
+                                            undefined,
+                                            reference
+                                        )
+                                    ],
+                                    ts.NodeFlags.Const
+                                )
+                            ),
+                            ts.factory.createReturnStatement(this.jsonStringifyIfNotString(mappedConst))
+                        ],
+                        true
+                    )
+                )
+            ),
+            undefined,
+            []
+        );
+    }
+
+    private nullSafeCall(
+        methodName: string,
+        params: ConvertTypeReferenceParams
+    ): (reference: ts.Expression) => ts.Expression {
+        if (params.nullable) {
+            return (reference) =>
+                ts.factory.createBinaryExpression(
+                    ts.factory.createPropertyAccessChain(
+                        reference,
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(`${methodName}()`)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createNull()
+                );
+        }
+        return (reference) =>
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(reference, methodName),
+                undefined,
+                undefined
+            );
     }
 }

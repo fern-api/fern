@@ -1,4 +1,23 @@
+import {
+    PackageId,
+    TypeReferenceNode,
+    generateInlinePropertiesModule,
+    getExampleEndpointCalls,
+    getParameterNameForPropertyPathParameterName,
+    getTextOfTsNode,
+    maybeAddDocsNode,
+    visitJavaScriptRuntime
+} from "@fern-typescript/commons";
+import {
+    GeneratedRequestWrapper,
+    GeneratedRequestWrapperExample,
+    RequestWrapperNonBodyProperty,
+    SdkContext
+} from "@fern-typescript/contexts";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
 import { noop } from "@fern-api/core-utils";
+
 import {
     ExampleEndpointCall,
     FileProperty,
@@ -16,24 +35,7 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import {
-    generateInlinePropertiesModule,
-    getExampleEndpointCalls,
-    getParameterNameForPropertyPathParameter,
-    getParameterNameForPropertyPathParameterName,
-    getTextOfTsNode,
-    maybeAddDocsNode,
-    PackageId,
-    TypeReferenceNode,
-    visitJavaScriptRuntime
-} from "@fern-typescript/commons";
-import {
-    GeneratedRequestWrapper,
-    GeneratedRequestWrapperExample,
-    RequestWrapperNonBodyProperty,
-    SdkContext
-} from "@fern-typescript/contexts";
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
 export declare namespace GeneratedRequestWrapperImpl {
@@ -319,22 +321,33 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             statements = queryParamSetter(referenceToQueryParameterProperty);
         }
 
-        const resolvedType = context.type.resolveTypeReference(queryParameter.valueType);
-        const isQueryParamOptional = resolvedType.type === "container" && resolvedType.container.type === "optional";
-        if (isQueryParamOptional) {
-            statements = [
+        const isQueryParamOptional = context.type.isOptional(queryParameter.valueType);
+        const isQueryParamNullable = context.type.isNullable(queryParameter.valueType);
+        if (!isQueryParamNullable && !isQueryParamOptional) {
+            return statements;
+        }
+        if (isQueryParamNullable) {
+            return [
                 ts.factory.createIfStatement(
                     ts.factory.createBinaryExpression(
                         referenceToQueryParameterProperty,
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                        ts.factory.createIdentifier("undefined")
                     ),
                     ts.factory.createBlock(statements)
                 )
             ];
         }
-
-        return statements;
+        return [
+            ts.factory.createIfStatement(
+                ts.factory.createBinaryExpression(
+                    referenceToQueryParameterProperty,
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    ts.factory.createNull()
+                ),
+                ts.factory.createBlock(statements)
+            )
+        ];
     }
 
     #areBodyPropertiesOptional: boolean | undefined;
@@ -347,6 +360,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getNonBodyKeys(context: SdkContext): RequestWrapperNonBodyProperty[] {
         const properties = [
+            ...this.getPathParamsForRequestWrapper().map((pathParameter) =>
+                this.getPropertyNameOfPathParameter(pathParameter)
+            ),
             ...this.getAllQueryParameters().map((queryParameter) =>
                 this.getPropertyNameOfQueryParameter(queryParameter)
             ),

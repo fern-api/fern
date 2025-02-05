@@ -7,8 +7,19 @@ client.users.list_with_cursor_pagination(
 	per_page=1,
 	starting_after="starting_after"
 )
- 
-```                        
+
+```
+
+
+```python
+from seed import SeedPagination
+
+client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.users.list_with_mixed_type_cursor_pagination(
+	cursor="cursor"
+)
+
+```
 
 
 ```python
@@ -21,8 +32,8 @@ client.users.list_with_body_cursor_pagination(
 		cursor="cursor"
 	)
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -34,8 +45,21 @@ client.users.list_with_offset_pagination(
 	per_page=1,
 	starting_after="starting_after"
 )
- 
-```                        
+
+```
+
+
+```python
+from seed import SeedPagination
+
+client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.users.list_with_double_offset_pagination(
+	page=1.1,
+	per_page=1.1,
+	starting_after="starting_after"
+)
+
+```
 
 
 ```python
@@ -48,8 +72,8 @@ client.users.list_with_body_offset_pagination(
 		page=1
 	)
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -60,8 +84,8 @@ client.users.list_with_offset_step_pagination(
 	page=1,
 	limit=1
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -72,8 +96,8 @@ client.users.list_with_offset_pagination_has_next_page(
 	page=1,
 	limit=1
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -83,8 +107,8 @@ client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR
 client.users.list_with_extended_results(
 	cursor="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -94,8 +118,8 @@ client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR
 client.users.list_with_extended_results_and_optional_data(
 	cursor="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -105,8 +129,8 @@ client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR
 client.users.list_usernames(
 	starting_after="starting_after"
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -116,7 +140,7 @@ client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR
 client.users.list_with_global_config(
 	offset=1
 )
- 
-```                        
+
+```
 
 

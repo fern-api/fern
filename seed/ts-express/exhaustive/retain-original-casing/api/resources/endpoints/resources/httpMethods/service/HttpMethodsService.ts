@@ -22,7 +22,7 @@ export interface HttpMethodsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     testPost(
         req: express.Request<
@@ -36,7 +36,7 @@ export interface HttpMethodsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     testPut(
         req: express.Request<
@@ -52,7 +52,7 @@ export interface HttpMethodsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     testPatch(
         req: express.Request<
@@ -68,7 +68,7 @@ export interface HttpMethodsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     testDelete(
         req: express.Request<
@@ -84,19 +84,22 @@ export interface HttpMethodsServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class HttpMethodsService {
     private router;
 
-    constructor(private readonly methods: HttpMethodsServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: HttpMethodsServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -115,13 +118,13 @@ export class HttpMethodsService {
                             res.json(
                                 serializers.endpoints.httpMethods.testGet.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -129,7 +132,7 @@ export class HttpMethodsService {
                     console.warn(
                         `Endpoint 'testGet' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -150,13 +153,13 @@ export class HttpMethodsService {
                                 res.json(
                                     serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -164,7 +167,7 @@ export class HttpMethodsService {
                         console.warn(
                             `Endpoint 'testPost' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -175,7 +178,7 @@ export class HttpMethodsService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -193,13 +196,13 @@ export class HttpMethodsService {
                                 res.json(
                                     serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -207,7 +210,7 @@ export class HttpMethodsService {
                         console.warn(
                             `Endpoint 'testPut' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -218,7 +221,7 @@ export class HttpMethodsService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -236,13 +239,13 @@ export class HttpMethodsService {
                                 res.json(
                                     serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -250,7 +253,7 @@ export class HttpMethodsService {
                         console.warn(
                             `Endpoint 'testPatch' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -261,7 +264,7 @@ export class HttpMethodsService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -276,13 +279,13 @@ export class HttpMethodsService {
                             res.json(
                                 serializers.endpoints.httpMethods.testDelete.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -290,7 +293,7 @@ export class HttpMethodsService {
                     console.warn(
                         `Endpoint 'testDelete' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {

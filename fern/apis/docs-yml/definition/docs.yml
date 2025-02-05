@@ -27,8 +27,8 @@ types:
       fullstory: optional<FullStoryAnalyticsConfig>
       intercom: optional<IntercomConfig>
       posthog: optional<PostHogConfig>
-      # gtm: optional<GTMConfig>
-      # ga4: optional<GoogleAnalytics4Config>
+      gtm: optional<GTMConfig>
+      ga4: optional<GoogleAnalytics4Config>
       # amplitude: optional<AmplitudeConfig>
       # mixpanel: optional<MixpanelConfig>
       # hotjar: optional<HotJarConfig>
@@ -58,13 +58,13 @@ types:
       api-key: string
       endpoint: optional<string>
 
-  # GTMConfig:
-  #   properties:
-  #     container-id: string
+  GTMConfig:
+    properties:
+      container-id: string
 
-  # GoogleAnalytics4Config:
-  #   properties:
-  #     measurement-id: string
+  GoogleAnalytics4Config:
+    properties:
+      measurement-id: string
 
   # AmplitudeConfig:
   #   properties:
@@ -161,7 +161,7 @@ types:
   TabId: string
 
   TabConfig:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       display-name: string
       icon: optional<string>
@@ -186,7 +186,7 @@ types:
       changelog: "changelog"
       ```
 
-      This will look for markdown files in the `/fern/changelog` directory, which should contain files named like 
+      This will look for markdown files in the `/fern/changelog` directory, which should contain files named like
       - `/fern/changelog/2024-04-29.mdx`.
       - `/fern/changelog/2023-01-02.mdx`.
 
@@ -197,7 +197,7 @@ types:
       private:
         type: optional<boolean>
         docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
-        availability: deprecated 
+        availability: deprecated
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -230,7 +230,7 @@ types:
 
 
   VersionConfig:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       display-name: string
       path:
@@ -260,10 +260,10 @@ types:
   NavigationConfig:
     discriminated: false
     union:
-      - UntabbedNavigationConifg
+      - UntabbedNavigationConfig
       - TabbedNavigationConfig
 
-  UntabbedNavigationConifg: list<NavigationItem>
+  UntabbedNavigationConfig: list<NavigationItem>
 
   TabbedNavigationConfig:
     type: list<TabbedNavigationItem>
@@ -451,6 +451,32 @@ types:
         type: optional<boolean>
         docs: When `orphaned` is set to `true`, the roles will not inherit from parents.
 
+  FeatureFlag:
+    properties:
+      flag:
+        type: string
+        docs: The name of the feature flag to check.
+      fallback-value:
+        type: optional<unknown>
+        docs: The default value to use if the feature flag is not set. If not specified, defaults to false.
+      match:
+        type: optional<unknown>
+        docs: The value that the feature flag should match for the content to be shown. If not specified, content is shown when the flag is true.
+
+  FeatureFlagConfiguration:
+    discriminated: false
+    union:
+      - type: string
+        docs: The name of the feature flag, We assume that it is a boolean feature flag that needs to be evaluated to true.
+      - type: FeatureFlag
+        docs: A single feature flag with a configurable name, fallback value, and match value. Especially useful for non boolean feature flags.
+      - type: list<FeatureFlag>
+        docs: A list of feature flags. If any of the feature flags are satisfied, we will show all content.
+
+  WithFeatureFlags:
+    properties:
+      feature-flag: optional<FeatureFlagConfiguration>
+
   FontConfig:
     properties:
       name:
@@ -459,7 +485,7 @@ types:
           If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
       path:
         type: optional<string>
-        docs: The relative path of the font file. To define multiple weight and style varations of the same font, use `paths` instead.
+        docs: The relative path of the font file. To define multiple weight and style variations of the same font, use `paths` instead.
       weight:
         type: optional<FontWeight>
         docs: |
@@ -527,7 +553,7 @@ types:
           @default: `normal`.
 
   PageConfiguration:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       page: string
       path: string
@@ -536,7 +562,7 @@ types:
       hidden: optional<boolean>
 
   ChangelogConfiguration:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       changelog: ChangelogFolderRelativePath
       title: optional<string> # defaults to "Changelog"
@@ -546,7 +572,7 @@ types:
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
 
   SectionConfiguration:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       section: string
       path:
@@ -561,12 +587,16 @@ types:
       skip-slug: optional<boolean>
 
   ApiReferenceConfiguration:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       api: string
       "api-name":
         type: optional<string>
         docs: Name of API that we are referencing
+      openrpc:
+        type: optional<string>
+        docs: Path to an openrpc spec.
+        availability: pre-release
       audiences: optional<list<AudienceId>>
       display-errors:
         type: optional<boolean>
@@ -617,7 +647,7 @@ types:
       - LinkConfiguration
 
   ApiReferenceSectionConfiguration:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       section:
         type: string
@@ -645,7 +675,7 @@ types:
       - ApiReferencePackageConfigurationWithOptions
 
   ApiReferencePackageConfigurationWithOptions:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       title: optional<string>
       summary:
@@ -662,7 +692,7 @@ types:
         docs: Settings for the api playground that is applied only to descendants of this api package.
 
   ApiReferenceEndpointConfiguration:
-    extends: WithPermissions
+    extends: [WithPermissions, WithFeatureFlags]
     properties:
       endpoint: string
       title: optional<string>
@@ -706,7 +736,7 @@ types:
       accent-primary:
         type: optional<ColorConfig>
         docs: |
-          The primary accent color is used for buttons, links, and other interactive elements. 
+          The primary accent color is used for buttons, links, and other interactive elements.
 
           @default: #818CF8
 
@@ -974,6 +1004,10 @@ types:
           If `disable-stream-toggle` is set to true, the stream toggle will be disabled.
 
           This behavior is unstable and may change in the future.
+      openapi-parser-v2:
+        type: optional<boolean>
+        docs: |
+          If `openapi-parser-v2` is set to true, the OpenAPI parser will be used directly, without Fern.
 
   PlaygroundSettings:
     properties:

@@ -1,3 +1,6 @@
+import { mapValues } from "lodash-es";
+
+import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import {
     Environments,
     EnvironmentsConfig,
@@ -6,8 +9,7 @@ import {
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
 } from "@fern-api/ir-sdk";
-import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
-import { mapValues } from "lodash-es";
+
 import { CasingsGenerator } from "../casings/CasingsGenerator";
 
 export function convertEnvironments({

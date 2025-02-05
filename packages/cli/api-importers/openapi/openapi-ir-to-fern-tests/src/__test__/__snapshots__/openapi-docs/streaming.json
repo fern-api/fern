@@ -45,6 +45,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "User",
               },
               "source": {
@@ -134,6 +135,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "User2",
               },
               "source": {
@@ -224,6 +226,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "UserV3Response",
               },
               "source": {
@@ -447,6 +450,7 @@
       response:
         docs: ''
         type: User
+        status-code: 200
       examples:
         - request:
             stream: false
@@ -498,6 +502,7 @@
       response:
         docs: ''
         type: User2
+        status-code: 200
       examples:
         - request:
             stream: false
@@ -551,6 +556,7 @@
       response:
         docs: ''
         type: UserV3Response
+        status-code: 200
       examples:
         - request:
             stream: false

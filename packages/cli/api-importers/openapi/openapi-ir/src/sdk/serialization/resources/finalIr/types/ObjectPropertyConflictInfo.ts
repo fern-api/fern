@@ -14,7 +14,7 @@ export const ObjectPropertyConflictInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace ObjectPropertyConflictInfo {
-    interface Raw {
+    export interface Raw {
         differentSchema: boolean;
     }
 }

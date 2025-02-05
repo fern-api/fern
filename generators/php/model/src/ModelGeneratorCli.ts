@@ -1,6 +1,8 @@
 import { GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractPhpGeneratorCli } from "@fern-api/php-codegen";
+
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { generateModels } from "./generateModels";

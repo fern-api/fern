@@ -24,7 +24,7 @@ export const DiscriminatedUnionSchema: core.serialization.ObjectSchema<
     .extend(BaseTypeDeclarationSchema);
 
 export declare namespace DiscriminatedUnionSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw {
+    export interface Raw extends BaseTypeDeclarationSchema.Raw {
         discriminant?: UnionDiscriminant.Raw | null;
         extends?: ObjectExtendsSchema.Raw | null;
         "base-properties"?: Record<string, TypeReferenceSchema.Raw> | null;

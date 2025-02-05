@@ -18,7 +18,7 @@ export const HttpRequestBodyReference: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace HttpRequestBodyReference {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         requestBodyType: serializers.TypeReference.Raw;
         contentType?: string | null;
     }

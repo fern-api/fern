@@ -6,11 +6,13 @@ import * as core from "./core";
 import { Userservice } from "./api/resources/userservice/client/Client";
 
 export declare namespace SeedApiClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -23,9 +25,9 @@ export declare namespace SeedApiClient {
 }
 
 export class SeedApiClient {
-    constructor(protected readonly _options: SeedApiClient.Options) {}
-
     protected _userservice: Userservice | undefined;
+
+    constructor(protected readonly _options: SeedApiClient.Options) {}
 
     public get userservice(): Userservice {
         return (this._userservice ??= new Userservice(this._options));

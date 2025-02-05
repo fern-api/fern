@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedIdempotencyHeaders.Core;
 
-#nullable enable
-
 namespace SeedIdempotencyHeaders;
 
 public record CreatePaymentRequest

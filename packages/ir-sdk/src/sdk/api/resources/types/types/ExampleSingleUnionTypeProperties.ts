@@ -9,24 +9,24 @@ export type ExampleSingleUnionTypeProperties =
     | FernIr.ExampleSingleUnionTypeProperties.SingleProperty
     | FernIr.ExampleSingleUnionTypeProperties.NoProperties;
 
-export declare namespace ExampleSingleUnionTypeProperties {
-    interface SamePropertiesAsObject extends FernIr.ExampleObjectTypeWithTypeId, _Utils {
+export namespace ExampleSingleUnionTypeProperties {
+    export interface SamePropertiesAsObject extends FernIr.ExampleObjectTypeWithTypeId, _Utils {
         type: "samePropertiesAsObject";
     }
 
-    interface SingleProperty extends FernIr.ExampleTypeReference, _Utils {
+    export interface SingleProperty extends FernIr.ExampleTypeReference, _Utils {
         type: "singleProperty";
     }
 
-    interface NoProperties extends _Utils {
+    export interface NoProperties extends _Utils {
         type: "noProperties";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         samePropertiesAsObject: (value: FernIr.ExampleObjectTypeWithTypeId) => _Result;
         singleProperty: (value: FernIr.ExampleTypeReference) => _Result;
         noProperties: () => _Result;
@@ -36,14 +36,14 @@ export declare namespace ExampleSingleUnionTypeProperties {
 
 export const ExampleSingleUnionTypeProperties = {
     samePropertiesAsObject: (
-        value: FernIr.ExampleObjectTypeWithTypeId
+        value: FernIr.ExampleObjectTypeWithTypeId,
     ): FernIr.ExampleSingleUnionTypeProperties.SamePropertiesAsObject => {
         return {
             ...value,
             type: "samePropertiesAsObject",
             _visit: function <_Result>(
                 this: FernIr.ExampleSingleUnionTypeProperties.SamePropertiesAsObject,
-                visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>
+                visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>,
             ) {
                 return FernIr.ExampleSingleUnionTypeProperties._visit(this, visitor);
             },
@@ -56,7 +56,7 @@ export const ExampleSingleUnionTypeProperties = {
             type: "singleProperty",
             _visit: function <_Result>(
                 this: FernIr.ExampleSingleUnionTypeProperties.SingleProperty,
-                visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>
+                visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>,
             ) {
                 return FernIr.ExampleSingleUnionTypeProperties._visit(this, visitor);
             },
@@ -68,7 +68,7 @@ export const ExampleSingleUnionTypeProperties = {
             type: "noProperties",
             _visit: function <_Result>(
                 this: FernIr.ExampleSingleUnionTypeProperties.NoProperties,
-                visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>
+                visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>,
             ) {
                 return FernIr.ExampleSingleUnionTypeProperties._visit(this, visitor);
             },
@@ -77,7 +77,7 @@ export const ExampleSingleUnionTypeProperties = {
 
     _visit: <_Result>(
         value: FernIr.ExampleSingleUnionTypeProperties,
-        visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>
+        visitor: FernIr.ExampleSingleUnionTypeProperties._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "samePropertiesAsObject":

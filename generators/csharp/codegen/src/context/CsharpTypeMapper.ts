@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ContainerType,
     DeclaredTypeName,
@@ -9,6 +10,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { csharp } from "../";
 import { ClassReference, Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -49,7 +51,7 @@ export class CsharpTypeMapper {
 
     public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
         const objectNamespace = this.context.getNamespaceForTypeId(declaredTypeName.typeId);
-        return new csharp.ClassReference({
+        return csharp.classReference({
             name: this.context.getPascalCaseSafeName(declaredTypeName.name),
             namespace: objectNamespace
         });

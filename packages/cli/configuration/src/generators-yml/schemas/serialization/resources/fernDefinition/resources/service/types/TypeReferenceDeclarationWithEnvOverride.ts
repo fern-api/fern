@@ -16,5 +16,5 @@ export const TypeReferenceDeclarationWithEnvOverride: core.serialization.Schema<
 ]);
 
 export declare namespace TypeReferenceDeclarationWithEnvOverride {
-    type Raw = string | TypeReferenceDeclarationWithEnvOverrideSchema.Raw;
+    export type Raw = string | TypeReferenceDeclarationWithEnvOverrideSchema.Raw;
 }

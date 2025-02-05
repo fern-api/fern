@@ -1,4 +1,5 @@
 import { ts } from "ts-morph";
+
 import { BaseGeneratedType } from "./BaseGeneratedType";
 
 export type GeneratedAliasType<Context> = BrandedGeneratedAliasType<Context> | NotBrandedGeneratedAliasType<Context>;

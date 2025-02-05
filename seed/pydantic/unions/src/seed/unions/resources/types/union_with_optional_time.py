@@ -11,9 +11,9 @@ class UnionWithOptionalTime_Date(UniversalBaseModel):
     type: typing.Literal["date"] = "date"
 
 
-class UnionWithOptionalTime_Dateimte(UniversalBaseModel):
+class UnionWithOptionalTime_Datetime(UniversalBaseModel):
     value: typing.Optional[dt.datetime] = None
-    type: typing.Literal["dateimte"] = "dateimte"
+    type: typing.Literal["datetime"] = "datetime"
 
 
-UnionWithOptionalTime = typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Dateimte]
+UnionWithOptionalTime = typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime]

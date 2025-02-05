@@ -9,8 +9,10 @@ import * as errors from "../../../../errors/index";
 import * as SeedAuthEnvironmentVariables from "../../../index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
         /** Override the X-Another-Header header */
         xAnotherHeader: core.Supplier<string>;
@@ -18,7 +20,7 @@ export declare namespace Service {
         xApiVersion?: "01-01-2000";
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -47,7 +49,11 @@ export class Service {
      */
     public async getWithApiKey(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "apiKey"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "apiKey",
+            ),
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
@@ -111,11 +117,15 @@ export class Service {
      */
     public async getWithHeader(
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<string> {
         const { xEndpointHeader } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "apiKeyInHeader"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "apiKeyInHeader",
+            ),
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
@@ -160,7 +170,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
-                    "Timeout exceeded when calling GET /apiKeyInHeader."
+                    "Timeout exceeded when calling GET /apiKeyInHeader.",
                 );
             case "unknown":
                 throw new errors.SeedAuthEnvironmentVariablesError({

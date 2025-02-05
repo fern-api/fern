@@ -1,7 +1,9 @@
-import { ExampleEndpointCall, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { ExampleEndpointCall, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-sdk/api";
+
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
 export declare namespace RequestBodyParameter {
@@ -40,6 +42,10 @@ export class RequestBodyParameter extends AbstractRequestParameter {
 
     public withQueryParameter(): never {
         throw new Error("Cannot reference query parameter because request is not wrapped");
+    }
+
+    public getReferenceToPathParameter(): ts.Expression {
+        throw new Error("Cannot reference path parameter because request is not wrapped");
     }
 
     public getReferenceToQueryParameter(): ts.Expression {

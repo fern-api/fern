@@ -1,7 +1,8 @@
+import { assertNever } from "@fern-api/core-utils";
+
+import { OperatorType } from "./OperatorType";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { assertNever } from "@fern-api/core-utils";
-import { OperatorType } from "./OperatorType";
 
 export declare namespace Operator {
     interface Args {
@@ -31,6 +32,16 @@ export class Operator extends AstNode {
                 return "or";
             case OperatorType.And:
                 return "and";
+            case OperatorType.Add:
+                return "+";
+            case OperatorType.Subtract:
+                return "-";
+            case OperatorType.Multiply:
+                return "*";
+            case OperatorType.Divide:
+                return "/";
+            case OperatorType.Modulo:
+                return "%";
             case OperatorType.LeftShift:
                 return "<<";
             case OperatorType.RightShift:

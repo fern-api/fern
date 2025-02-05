@@ -1,6 +1,11 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/path-utils";
 import { isRawAliasDefinition } from "@fern-api/fern-definition-schema";
+import { FernDefinition } from "@fern-api/importer-commons";
+import { Schema } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import { buildAuthSchemes } from "./buildAuthSchemes";
 import { buildChannel } from "./buildChannel";
 import { buildEnvironments } from "./buildEnvironments";
@@ -10,17 +15,13 @@ import { buildServices } from "./buildServices";
 import { buildTypeDeclaration } from "./buildTypeDeclaration";
 import { buildVariables } from "./buildVariables";
 import { buildWebhooks } from "./buildWebhooks";
-import { FernDefinition } from "@fern-api/importer-commons";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
-import { Schema } from "@fern-api/openapi-ir";
-import { State } from "./State";
 
 export const ROOT_PREFIX = "root";
 export const EXTERNAL_AUDIENCE = "external";
-/** All errrors are currently declared in __package__.yml */
+/** All errors are currently declared in __package__.yml */
 export const ERROR_DECLARATIONS_FILENAME = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
 function addSchemas({

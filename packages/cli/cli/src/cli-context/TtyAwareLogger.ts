@@ -1,9 +1,11 @@
-import { addPrefixToString, assertNever, noop } from "@fern-api/core-utils";
-import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import ansiEscapes from "ansi-escapes";
 import chalk from "chalk";
 import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
+
+import { addPrefixToString, assertNever, noop } from "@fern-api/core-utils";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
+
 import { Log } from "./Log";
 import { TaskContextImpl } from "./TaskContextImpl";
 
@@ -165,6 +167,7 @@ function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }
             return chalk.red(content);
         case LogLevel.Warn:
             return chalk.hex("FFA500")(content);
+        case LogLevel.Trace:
         case LogLevel.Debug:
         case LogLevel.Info:
             return content;
@@ -178,6 +181,8 @@ function getDebugPrefix(log: Log) {
 
 function getLogLevelAsString(logLevel: LogLevel) {
     switch (logLevel) {
+        case LogLevel.Trace:
+            return "TRACE";
         case LogLevel.Debug:
             return "DEBUG";
         case LogLevel.Info:

@@ -1,9 +1,8 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedQueryParameters.Core;
-
-#nullable enable
 
 namespace SeedQueryParameters;
 
@@ -28,11 +27,13 @@ public partial class UserClient
         _query["date"] = request.Date.ToString(Constants.DateFormat);
         _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
         _query["bytes"] = request.Bytes.ToString();
-        _query["user"] = request.User.ToString();
-        _query["userList"] = request.UserList.ToString();
-        _query["keyValue"] = request.KeyValue.ToString();
-        _query["nestedUser"] = request.NestedUser.ToString();
-        _query["excludeUser"] = request.ExcludeUser.Select(_value => _value.ToString()).ToList();
+        _query["user"] = JsonUtils.Serialize(request.User);
+        _query["userList"] = JsonUtils.Serialize(request.UserList);
+        _query["keyValue"] = JsonUtils.Serialize(request.KeyValue);
+        _query["nestedUser"] = JsonUtils.Serialize(request.NestedUser);
+        _query["excludeUser"] = request
+            .ExcludeUser.Select(_value => JsonUtils.Serialize(_value))
+            .ToList();
         _query["filter"] = request.Filter;
         if (request.OptionalDeadline != null)
         {
@@ -46,19 +47,21 @@ public partial class UserClient
         }
         if (request.OptionalUser != null)
         {
-            _query["optionalUser"] = request.OptionalUser.ToString();
+            _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/user",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/user",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -15,7 +15,7 @@ export const ExampleLiteralContainer: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleLiteralContainer {
-    interface Raw {
+    export interface Raw {
         literal: ExamplePrimitive.Raw;
     }
 }

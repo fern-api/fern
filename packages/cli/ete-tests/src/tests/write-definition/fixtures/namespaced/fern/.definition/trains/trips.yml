@@ -74,6 +74,7 @@ service:
         name: GetTripsRequest
         query-parameters:
           bicycles:
+            default: false
             docs: Only return trips where bicycles are known to be allowed
             type: optional<boolean>
           date:
@@ -87,6 +88,7 @@ service:
             validation:
               format: uuid
           dogs:
+            default: false
             docs: Only return trips where dogs are known to be allowed
             type: optional<boolean>
           origin:
@@ -96,6 +98,7 @@ service:
               format: uuid
       response:
         docs: A list of available train trips
+        status-code: 200
         type: GetTripsResponse
       source:
         openapi: openapi/trains/openapi.yml

@@ -1,0 +1,14 @@
+## Advanced Redirects
+Implemented a powerful redirects system supporting pattern matching and parameter preservation. Teams can now manage documentation URL structure while maintaining backwards compatibility.
+
+```yaml
+redirects:
+  - source: /v1/api/*
+    destination: /v2/api/:splat
+    permanent: true
+  - source: /guides/:name
+    destination: /tutorials/:name
+```
+
+## API Authorization Handling
+Enhanced API authorization handling in the documentation platform. Developers can now test authenticated endpoints more easily with improved token management.

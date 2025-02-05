@@ -89,11 +89,11 @@ export namespace CodeExecutionUpdate {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         buildingExecutor: (value: SeedTrace.BuildingExecutorResponse) => _Result;
         running: (value: SeedTrace.RunningResponse) => _Result;
         errored: (value: SeedTrace.ErroredResponse) => _Result;
@@ -116,7 +116,7 @@ export const CodeExecutionUpdate = {
             type: "buildingExecutor",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.BuildingExecutor,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -129,7 +129,7 @@ export const CodeExecutionUpdate = {
             type: "running",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.Running,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -142,7 +142,7 @@ export const CodeExecutionUpdate = {
             type: "errored",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.Errored,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -155,7 +155,7 @@ export const CodeExecutionUpdate = {
             type: "stopped",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.Stopped,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -168,7 +168,7 @@ export const CodeExecutionUpdate = {
             type: "graded",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.Graded,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -181,7 +181,7 @@ export const CodeExecutionUpdate = {
             type: "gradedV2",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.GradedV2,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -194,7 +194,7 @@ export const CodeExecutionUpdate = {
             type: "workspaceRan",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.WorkspaceRan,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -207,7 +207,7 @@ export const CodeExecutionUpdate = {
             type: "recording",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.Recording,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -220,7 +220,7 @@ export const CodeExecutionUpdate = {
             type: "recorded",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.Recorded,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -233,7 +233,7 @@ export const CodeExecutionUpdate = {
             type: "invalidRequest",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.InvalidRequest,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -246,7 +246,7 @@ export const CodeExecutionUpdate = {
             type: "finished",
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate.Finished,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -258,7 +258,7 @@ export const CodeExecutionUpdate = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.CodeExecutionUpdate._Unknown,
-                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+                visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
             ) {
                 return SeedTrace.CodeExecutionUpdate._visit(this, visitor);
             },
@@ -267,7 +267,7 @@ export const CodeExecutionUpdate = {
 
     _visit: <_Result>(
         value: SeedTrace.CodeExecutionUpdate,
-        visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>
+        visitor: SeedTrace.CodeExecutionUpdate._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "buildingExecutor":

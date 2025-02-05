@@ -1,19 +1,20 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { Logger } from "@fern-api/logger";
 import {
-    OpenApiIntermediateRepresentation,
-    Schema,
-    SchemaId,
     HttpMethod,
     ObjectSchema,
-    OneOfSchema
+    OneOfSchema,
+    OpenApiIntermediateRepresentation,
+    Schema,
+    SchemaId
 } from "@fern-api/openapi-ir";
-import { TaskContext } from "@fern-api/task-context";
-import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { isSchemaEqual } from "@fern-api/openapi-ir";
-import { State } from "./State";
+import { TaskContext } from "@fern-api/task-context";
+
 import { ConvertOpenAPIOptions } from "./ConvertOpenAPIOptions";
+import { State } from "./State";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
@@ -36,6 +37,7 @@ export class OpenApiIrConverterContext {
     public detectGlobalHeaders: boolean;
     public objectQueryParameters: boolean;
     public respectReadonlySchemas: boolean;
+    public respectNullableSchemas: boolean;
     public onlyIncludeReferencedSchemas: boolean;
     public inlinePathParameters: boolean;
 
@@ -81,6 +83,7 @@ export class OpenApiIrConverterContext {
         this.detectGlobalHeaders = options?.detectGlobalHeaders ?? true;
         this.objectQueryParameters = options?.objectQueryParameters ?? false;
         this.respectReadonlySchemas = options?.respectReadonlySchemas ?? false;
+        this.respectNullableSchemas = options?.respectNullableSchemas ?? false;
         this.onlyIncludeReferencedSchemas = options?.onlyIncludeReferencedSchemas ?? false;
         this.inlinePathParameters = options?.inlinePathParameters ?? false;
         this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;
@@ -248,7 +251,7 @@ export class OpenApiIrConverterContext {
                     this.markSchemaAsReferenced(oneOf, namespace);
                 }
                 return;
-            case "undisciminated":
+            case "undiscriminated":
                 for (const oneOf of schema.schemas) {
                     this.markSchemaAsReferenced(oneOf, namespace);
                 }

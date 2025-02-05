@@ -9,8 +9,10 @@ use Seed\Core\Types\ArrayType;
 class TraceResponsesPage extends JsonSerializableType
 {
     /**
-     * @var ?int $offset If present, use this to load subseqent pages.
-    The offset is the id of the next trace response to load.
+     * If present, use this to load subsequent pages.
+     * The offset is the id of the next trace response to load.
+     *
+     * @var ?int $offset
      */
     #[JsonProperty('offset')]
     public ?int $offset;

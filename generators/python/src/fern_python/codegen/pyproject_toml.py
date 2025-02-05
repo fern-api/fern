@@ -44,6 +44,7 @@ class PyProjectToml:
         extras: typing.Dict[str, List[str]] = {},
         user_defined_toml: Optional[str] = None,
     ):
+        self._name = name
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
             version=version,
@@ -69,7 +70,11 @@ class PyProjectToml:
             PyProjectToml.PluginConfigurationBlock(),
             PyProjectToml.BuildSystemBlock(),
         ]
-        content = ""
+        content = f"""[project]
+name = "{self._name}"
+
+"""
+
         for block in blocks:
             content += block.to_string()
 
@@ -194,12 +199,12 @@ packages = [
         def deps_to_string(self, dependencies: Set[Dependency]) -> str:
             deps = ""
             for dep in sorted(dependencies, key=lambda dep: dep.name):
-                compatiblity = dep.compatibility
+                compatibility = dep.compatibility
                 is_optional = dep.optional
                 version = dep.version
                 extras = dep.extras
                 name = dep.name.replace(".", "-")
-                if compatiblity == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
+                if compatibility == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
                     version = f">={dep.version}"
 
                 if is_optional or dep.extras is not None:

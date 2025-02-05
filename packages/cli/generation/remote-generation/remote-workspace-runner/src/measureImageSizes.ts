@@ -1,9 +1,10 @@
-import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import imageSize from "image-size";
 import { chunk } from "lodash-es";
 import { promisify } from "util";
+
+import { isNonNullish } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 
 interface AbsoluteImageFilePath {
     filePath: AbsoluteFilePath;

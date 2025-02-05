@@ -16,7 +16,7 @@ export const NugetOutputLocationSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace NugetOutputLocationSchema {
-    interface Raw {
+    export interface Raw {
         url?: string | null;
         "package-name": string;
         "api-key"?: string | null;

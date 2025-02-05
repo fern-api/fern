@@ -10,7 +10,7 @@ import pydantic
 T = typing.TypeVar("T")
 
 
-# SDKs implement a Page ABC per-pagination request, the endpoint then retuns a pager that wraps this type
+# SDKs implement a Page ABC per-pagination request, the endpoint then returns a pager that wraps this type
 # for example, an endpoint will return SyncPager[UserPage] where UserPage implements the Page ABC. ex:
 #
 # SyncPager<InnerListType>(

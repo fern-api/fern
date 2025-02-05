@@ -15,7 +15,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getMovieDocs(
         req: express.Request<never, SeedResponseProperty.Response, string, never>,
@@ -24,7 +24,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getMovieName(
         req: express.Request<never, SeedResponseProperty.StringResponse, string, never>,
@@ -33,7 +33,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getMovieMetadata(
         req: express.Request<never, SeedResponseProperty.Response, string, never>,
@@ -42,7 +42,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getOptionalMovie(
         req: express.Request<never, SeedResponseProperty.Response | undefined, string, never>,
@@ -51,7 +51,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getOptionalMovieDocs(
         req: express.Request<never, SeedResponseProperty.OptionalWithDocs | undefined, string, never>,
@@ -60,7 +60,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getOptionalMovieName(
         req: express.Request<never, SeedResponseProperty.OptionalStringResponse | undefined, string, never>,
@@ -69,19 +69,22 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class ServiceService {
     private router;
 
-    constructor(private readonly methods: ServiceServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: ServiceServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -101,13 +104,13 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -115,7 +118,7 @@ export class ServiceService {
                         console.warn(
                             `Endpoint 'getMovie' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -126,7 +129,7 @@ export class ServiceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -142,13 +145,13 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -156,7 +159,7 @@ export class ServiceService {
                         console.warn(
                             `Endpoint 'getMovieDocs' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -167,7 +170,7 @@ export class ServiceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -185,13 +188,13 @@ export class ServiceService {
                                 res.json(
                                     serializers.StringResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -199,7 +202,7 @@ export class ServiceService {
                         console.warn(
                             `Endpoint 'getMovieName' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -210,7 +213,7 @@ export class ServiceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -226,13 +229,13 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -240,7 +243,7 @@ export class ServiceService {
                         console.warn(
                             `Endpoint 'getMovieMetadata' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -251,7 +254,7 @@ export class ServiceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -269,13 +272,13 @@ export class ServiceService {
                                 res.json(
                                     serializers.service.getOptionalMovie.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -283,7 +286,7 @@ export class ServiceService {
                         console.warn(
                             `Endpoint 'getOptionalMovie' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -294,7 +297,7 @@ export class ServiceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -312,13 +315,13 @@ export class ServiceService {
                                 res.json(
                                     serializers.OptionalWithDocs.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -326,7 +329,7 @@ export class ServiceService {
                         console.warn(
                             `Endpoint 'getOptionalMovieDocs' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -337,7 +340,7 @@ export class ServiceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -355,13 +358,13 @@ export class ServiceService {
                                 res.json(
                                     serializers.OptionalStringResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -369,7 +372,7 @@ export class ServiceService {
                         console.warn(
                             `Endpoint 'getOptionalMovieName' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -380,7 +383,7 @@ export class ServiceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);

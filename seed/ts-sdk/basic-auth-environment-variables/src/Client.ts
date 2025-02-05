@@ -6,13 +6,15 @@ import * as core from "./core";
 import { BasicAuth } from "./api/resources/basicAuth/client/Client";
 
 export declare namespace SeedBasicAuthEnvironmentVariablesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
-        password?: core.Supplier<string | undefined>;
+        accessToken?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

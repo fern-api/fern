@@ -19,7 +19,7 @@ export const SendEnumInlinedRequest: core.serialization.Schema<
 });
 
 export declare namespace SendEnumInlinedRequest {
-    interface Raw {
+    export interface Raw {
         operand: Operand.Raw;
         maybeOperand?: Operand.Raw | null;
         operandOrColor: ColorOrOperand.Raw;

@@ -1,7 +1,9 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { join, RelativeFilePath } from "@fern-api/path-utils";
-import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
 import { camelCase, compact, isEqual } from "lodash-es";
+
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
+import { RelativeFilePath, join } from "@fern-api/path-utils";
+
 import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName";
 
 export interface EndpointLocation {
@@ -161,7 +163,7 @@ export function tokenizeString(input: string): string[] {
     return tokens;
 }
 
-// When the url is /users/{userId}/sigin-in we want the split to be ["users", "{userId}", "sign", "in"]
+// When the url is /users/{userId}/sign-in we want the split to be ["users", "{userId}", "sign", "in"]
 const NON_ALPHANUMERIC_EXCEPT_BRACES_REGEX = new RegExp("[^a-zA-Z0-9{}]+");
 const BRACE_REGEX = new RegExp("[{}]", "g");
 

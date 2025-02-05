@@ -1,20 +1,21 @@
-import {
-    DEFINITION_DIRECTORY,
-    generatorsYml,
-    loadGeneratorsConfiguration,
-    OPENAPI_DIRECTORY
-} from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { loadAPIChangelog } from "./loadAPIChangelog";
 import { Spec } from "@fern-api/api-workspace-commons";
 import {
-    OSSWorkspace,
+    DEFINITION_DIRECTORY,
+    OPENAPI_DIRECTORY,
+    generatorsYml,
+    loadGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import {
+    ConjureWorkspace,
     LazyFernWorkspace,
+    OSSWorkspace,
     WorkspaceLoader,
-    WorkspaceLoaderFailureType,
-    ConjureWorkspace
+    WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
+import { TaskContext } from "@fern-api/task-context";
+
+import { loadAPIChangelog } from "./loadAPIChangelog";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -75,16 +76,18 @@ export async function loadSingleNamespaceAPIWorkspace({
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                    cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
+                    coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                     objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                     respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
+                    respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
                     onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
                     inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
                     disableExamples: false,
-                    discriminatedUnionV2: false,
+                    discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     preserveSchemaIds: false,
                     asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
-                    filter: definition.settings?.filter
+                    filter: definition.settings?.filter,
+                    exampleGeneration: undefined
                 }
             });
             continue;
@@ -124,16 +127,18 @@ export async function loadSingleNamespaceAPIWorkspace({
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                 optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
+                coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                 objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                 respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
+                respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
                 onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
                 inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
                 disableExamples: false,
-                discriminatedUnionV2: false,
+                discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                 preserveSchemaIds: false,
                 asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
-                filter: definition.settings?.filter
+                filter: definition.settings?.filter,
+                exampleGeneration: definition.settings?.exampleGeneration
             },
             source: {
                 type: "openapi",

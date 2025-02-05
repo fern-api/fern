@@ -1,5 +1,7 @@
-import { php, PhpFile, FileGenerator, FileLocation } from "@fern-api/php-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { assertNever } from "@fern-api/core-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { FileGenerator, FileLocation, PhpFile, php } from "@fern-api/php-codegen";
+
 import {
     FileProperty,
     FilePropertyArray,
@@ -10,9 +12,9 @@ import {
     SdkRequestWrapper,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { assertNever } from "@fern-api/core-utils";
 
 export declare namespace WrappedEndpointRequestGenerator {
     export interface Args {

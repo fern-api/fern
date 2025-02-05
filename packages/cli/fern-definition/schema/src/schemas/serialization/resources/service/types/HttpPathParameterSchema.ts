@@ -14,5 +14,5 @@ export const HttpPathParameterSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([TypeReferenceSchema, VariableReferenceSchema]);
 
 export declare namespace HttpPathParameterSchema {
-    type Raw = TypeReferenceSchema.Raw | VariableReferenceSchema.Raw;
+    export type Raw = TypeReferenceSchema.Raw | VariableReferenceSchema.Raw;
 }

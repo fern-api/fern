@@ -38,6 +38,18 @@ class DeeplyNestedTestClass(DeepClass):
 "
 `;
 
+exports[`PythonFile > Add a class with a reference to itself 1`] = `
+"from parent_module import ParentTestClass
+
+
+class TestClass(ParentTestClass):
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]):
+        instance = TestClass(data)
+        return instance
+"
+`;
+
 exports[`PythonFile > Add a class with a relative import and alias 1`] = `
 "from .test.sibling_dir import SiblingClass as AliasedSibling
 

@@ -15,7 +15,7 @@ export const HeaderAuth: core.serialization.ObjectSchema<
 });
 
 export declare namespace HeaderAuth {
-    interface Raw {
+    export interface Raw {
         header: NamedParameter.Raw;
     }
 }

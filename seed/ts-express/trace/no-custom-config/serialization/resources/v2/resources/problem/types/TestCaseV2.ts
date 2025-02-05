@@ -12,13 +12,13 @@ export const TestCaseV2: core.serialization.ObjectSchema<serializers.v2.TestCase
         implementation: core.serialization.lazy(() => serializers.v2.TestCaseImplementationReference),
         arguments: core.serialization.record(
             core.serialization.lazy(() => serializers.v2.ParameterId),
-            core.serialization.lazy(() => serializers.VariableValue)
+            core.serialization.lazy(() => serializers.VariableValue),
         ),
         expects: core.serialization.lazyObject(() => serializers.v2.TestCaseExpects).optional(),
     });
 
 export declare namespace TestCaseV2 {
-    interface Raw {
+    export interface Raw {
         metadata: serializers.v2.TestCaseMetadata.Raw;
         implementation: serializers.v2.TestCaseImplementationReference.Raw;
         arguments: Record<serializers.v2.ParameterId.Raw, serializers.VariableValue.Raw>;

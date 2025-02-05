@@ -1,8 +1,11 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+
 import TestInput = TestClass.TestInput;
 
 export declare namespace TestClass {
@@ -62,7 +65,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
 
                 writer.write("var deserializedObject = ");
                 writer.writeNodeStatement(
-                    new csharp.MethodInvocation({
+                    csharp.invokeMethod({
                         on: csharp.codeblock((writer) => writer.writeNode(this.jsonSerializerClassReference)),
                         method: "Deserialize",
                         generics: [csharp.Type.reference(this.classReference)],
@@ -74,7 +77,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                 writer.newLine();
                 writer.write("var serializedJson = ");
                 writer.writeNodeStatement(
-                    new csharp.MethodInvocation({
+                    csharp.invokeMethod({
                         on: csharp.codeblock((writer) => writer.writeNode(this.jsonSerializerClassReference)),
                         method: "Serialize",
                         arguments_: [csharp.codeblock("deserializedObject"), csharp.codeblock("serializerOptions")]

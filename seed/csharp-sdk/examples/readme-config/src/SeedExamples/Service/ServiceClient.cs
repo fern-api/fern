@@ -1,9 +1,8 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedExamples.Core;
-
-#nullable enable
 
 namespace SeedExamples;
 
@@ -27,16 +26,18 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/movie/{movieId}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"/movie/{movieId}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -92,17 +93,19 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/movie",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/movie",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -145,23 +148,25 @@ public partial class ServiceClient
         _query["tag"] = request.Tag;
         if (request.Shallow != null)
         {
-            _query["shallow"] = request.Shallow.ToString();
+            _query["shallow"] = JsonUtils.Serialize(request.Shallow.Value);
         }
         var _headers = new Headers(
             new Dictionary<string, string>() { { "X-API-Version", request.XApiVersion } }
         );
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/metadata",
-                Query = _query,
-                Headers = _headers,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/metadata",
+                    Query = _query,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -385,17 +390,19 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/big-entity",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/big-entity",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

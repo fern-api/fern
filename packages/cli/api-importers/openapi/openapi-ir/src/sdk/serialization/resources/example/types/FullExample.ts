@@ -61,7 +61,7 @@ export const FullExample: core.serialization.Schema<serializers.FullExample.Raw,
         });
 
 export declare namespace FullExample {
-    type Raw =
+    export type Raw =
         | FullExample.Primitive
         | FullExample.Object
         | FullExample.Array
@@ -71,41 +71,41 @@ export declare namespace FullExample {
         | FullExample.OneOf
         | FullExample.Unknown;
 
-    interface Primitive {
+    export interface Primitive {
         type: "primitive";
         value: PrimitiveExample.Raw;
     }
 
-    interface Object extends serializers.FullObjectExample.Raw {
+    export interface Object extends serializers.FullObjectExample.Raw {
         type: "object";
     }
 
-    interface Array {
+    export interface Array {
         type: "array";
         value: serializers.FullExample.Raw[];
     }
 
-    interface Map {
+    export interface Map {
         type: "map";
         value: serializers.KeyValuePair.Raw[];
     }
 
-    interface Enum {
+    export interface Enum {
         type: "enum";
         value: string;
     }
 
-    interface Literal {
+    export interface Literal {
         type: "literal";
         value: LiteralExample.Raw;
     }
 
-    interface OneOf {
+    export interface OneOf {
         type: "oneOf";
         value: serializers.FullOneOfExample.Raw;
     }
 
-    interface Unknown {
+    export interface Unknown {
         type: "unknown";
         value: serializers.FullExample.Raw;
     }

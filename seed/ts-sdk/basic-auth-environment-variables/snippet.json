@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicAuth.getWithBasicAuth();\n"
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", accessToken: \"YOUR_ACCESS_TOKEN\" });\nawait client.basicAuth.getWithBasicAuth();\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", accessToken: \"YOUR_ACCESS_TOKEN\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
             }
         }
     ],

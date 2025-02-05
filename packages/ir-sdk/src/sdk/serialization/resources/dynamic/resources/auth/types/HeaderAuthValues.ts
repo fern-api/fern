@@ -14,7 +14,7 @@ export const HeaderAuthValues: core.serialization.ObjectSchema<
 });
 
 export declare namespace HeaderAuthValues {
-    interface Raw {
+    export interface Raw {
         value?: unknown;
     }
 }

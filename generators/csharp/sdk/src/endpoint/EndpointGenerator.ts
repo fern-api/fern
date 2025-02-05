@@ -1,7 +1,9 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
 import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
@@ -56,7 +58,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint
     ): grpcClientInfo is GrpcClientInfo {
         // If the service is a grpc service, grpcClientInfo will not be null or undefined,
-        // so any endpoint will be generated as a grpc endpoint, unless the transport is overriden by setting type to http
+        // so any endpoint will be generated as a grpc endpoint, unless the transport is overridden by setting type to http
         return grpcClientInfo != null && endpoint.transport?.type !== "http";
     }
 }

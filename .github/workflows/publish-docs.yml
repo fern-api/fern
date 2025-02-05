@@ -1,4 +1,4 @@
-name: publish-docs
+name: Publish Docs
 
 on:
   push:
@@ -10,13 +10,10 @@ on:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && contains(github.ref, 'refs/heads/main')
+    if: github.repository == 'fern-api/fern'
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Install

@@ -1,43 +1,59 @@
-import { APIWorkspaceLoader, validateDocsWorkspace } from "@fern-api/docs-validator";
+import { validateDocsWorkspace } from "@fern-api/docs-validator";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
+import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+
 import { logViolations } from "./logViolations";
 
 export async function validateDocsWorkspaceWithoutExiting({
     workspace,
-    loadAPIWorkspace,
+    fernWorkspaces,
+    ossWorkspaces,
     context,
     logWarnings,
+    errorOnBrokenLinks,
     logSummary = true
 }: {
     workspace: DocsWorkspace;
-    loadAPIWorkspace: APIWorkspaceLoader;
+    fernWorkspaces: FernWorkspace[];
+    ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     logWarnings: boolean;
+    errorOnBrokenLinks?: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
-    const violations = await validateDocsWorkspace(workspace, context, loadAPIWorkspace);
-    const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
+    const violations = await validateDocsWorkspace(workspace, context, fernWorkspaces, ossWorkspaces);
+    let { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
+
+    if (errorOnBrokenLinks) {
+        hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");
+    }
 
     return { hasErrors };
 }
 
 export async function validateDocsWorkspaceAndLogIssues({
     workspace,
-    loadAPIWorkspace,
+    fernWorkspaces,
+    ossWorkspaces,
     context,
-    logWarnings
+    logWarnings,
+    errorOnBrokenLinks
 }: {
     workspace: DocsWorkspace;
-    loadAPIWorkspace: APIWorkspaceLoader;
+    fernWorkspaces: FernWorkspace[];
+    ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     logWarnings: boolean;
+    errorOnBrokenLinks?: boolean;
 }): Promise<void> {
     const { hasErrors } = await validateDocsWorkspaceWithoutExiting({
         workspace,
         context,
         logWarnings,
-        loadAPIWorkspace
+        fernWorkspaces,
+        ossWorkspaces,
+        errorOnBrokenLinks
     });
 
     if (hasErrors) {

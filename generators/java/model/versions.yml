@@ -1,5 +1,61 @@
 - changelogEntry:
     - summary: |
+        Send only request body reference for body-only wrapped request
+      type: fix
+  createdAt: '2025-2-3'
+  irVersion: 53
+  version: 1.5.1
+- changelogEntry:
+    - summary: |
+        Add deep cursor path pagination support.
+      type: feat
+  createdAt: '2025-01-29'
+  irVersion: 53
+  version: 1.5.0
+- changelogEntry:
+    - summary: |
+        Prevent accept header from being removed in wrapped requests
+      type: fix
+  createdAt: '2025-01-21'
+  irVersion: 53
+  version: 1.4.5
+- changelogEntry:
+    - summary: |
+        Add Accept header for json responses
+      type: fix
+  createdAt: '2025-01-21'
+  irVersion: 53
+  version: 1.4.4
+- changelogEntry:
+    - summary: |
+        Fix inlining unwrapped alias types.
+      type: fix
+  createdAt: '2025-01-17'
+  irVersion: 53
+  version: 1.4.3
+- changelogEntry:
+    - summary: |
+        Omit methods with inlined types from interface definitions.
+      type: fix
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.2
+- changelogEntry:
+    - summary: |
+        Fix union inline type name conflict resolution.
+      type: fix
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.1
+- changelogEntry:
+    - summary: |
+        Support inline types in the Java generator.
+      type: feat
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.0
+- changelogEntry:
+    - summary: |
         Bump IR version to latest (v53)
       type: chore
   createdAt: '2024-12-10'

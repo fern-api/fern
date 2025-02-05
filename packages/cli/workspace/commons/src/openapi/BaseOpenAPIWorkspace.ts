@@ -1,9 +1,11 @@
-import { AbstractAPIWorkspace, AbstractAPIWorkspaceSync, FernDefinition, FernWorkspace } from "..";
+import { generatorsYml } from "@fern-api/configuration";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { OpenAPISettings } from "./OpenAPISettings";
+
+import { AbstractAPIWorkspace, AbstractAPIWorkspaceSync, FernDefinition, FernWorkspace } from "..";
 import { FernDefinitionConverter } from "./FernDefinitionConverter";
+import { OpenAPISettings } from "./OpenAPISettings";
 
 export declare namespace BaseOpenAPIWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -11,6 +13,8 @@ export declare namespace BaseOpenAPIWorkspace {
         objectQueryParameters: boolean | undefined;
         onlyIncludeReferencedSchemas: boolean | undefined;
         respectReadonlySchemas: boolean | undefined;
+        respectNullableSchemas: boolean | undefined;
+        exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -21,6 +25,8 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public objectQueryParameters: boolean | undefined;
     public onlyIncludeReferencedSchemas: boolean | undefined;
     public respectReadonlySchemas: boolean | undefined;
+    public respectNullableSchemas: boolean | undefined;
+    public exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
 
     private converter: FernDefinitionConverter;
 
@@ -30,6 +36,8 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.objectQueryParameters = args.objectQueryParameters;
         this.onlyIncludeReferencedSchemas = args.onlyIncludeReferencedSchemas;
         this.respectReadonlySchemas = args.respectReadonlySchemas;
+        this.respectNullableSchemas = args.respectNullableSchemas;
+        this.exampleGeneration = args.exampleGeneration;
         this.converter = new FernDefinitionConverter(args);
     }
 

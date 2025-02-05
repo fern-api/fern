@@ -1,5 +1,7 @@
-import { Pagination } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { Pagination } from "@fern-api/openapi-ir";
+
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
@@ -50,7 +52,7 @@ export function getFernPaginationExtension(
         return undefined;
     }
     if (typeof pagination === "boolean") {
-        // The endpoint is tryning to leverage the gloabl config, grab extension from global
+        // The endpoint is trying to leverage the global config, grab extension from global
         const topLevelPagination = getExtension<Raw.PaginationExtensionSchema>(
             document,
             FernOpenAPIExtension.PAGINATION

@@ -12,6 +12,7 @@ export {
 export {
     type APIDefinition,
     type APIDefinitionLocation,
+    type APIDefinitionSettings,
     type GeneratorGroup,
     type GeneratorInvocation,
     type GeneratorsConfiguration,

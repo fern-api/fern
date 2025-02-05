@@ -1,6 +1,8 @@
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 import { getPathFromSelector } from "../../utils/property-validator/getPathFromSelector";
 import { validatePropertyInType } from "../../utils/property-validator/validatePropertyInType";
@@ -45,7 +47,7 @@ export function validateOffsetPagination({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         });
         return violations;
@@ -163,7 +165,7 @@ function validateHasNextPageProperty({
                 return [
                     {
                         message: `"has-next-page" selector, ${offsetPagination["has-next-page"]}, does not point to a boolean property`,
-                        severity: "error"
+                        severity: "fatal"
                     }
                 ];
             }

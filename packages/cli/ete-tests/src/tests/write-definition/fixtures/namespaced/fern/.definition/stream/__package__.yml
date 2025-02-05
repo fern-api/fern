@@ -104,10 +104,10 @@ types:
       timestamp:
         docs: >-
           The timestamp in seconds for this group of events (included for
-          compatibility reasons). We recommend using the timestampms field
+          compatibility reasons). We recommend using the timestamps field
           instead.
         type: double
-      timestampms:
+      timestamps:
         docs: The timestamp in milliseconds for this group of events.
         type: double
       type: literal<"update">
@@ -128,24 +128,30 @@ channel:
       type: string
   query-parameters:
     auctions:
+      default: true
       docs: Include auction events
       type: optional<boolean>
     bids:
+      default: true
       docs: Include bids in change events
       type: optional<boolean>
     heartbeat:
+      default: false
       docs: >-
         Optionally add this parameter and set to true to receive a heartbeat
         every 5 seconds
       type: optional<boolean>
     offers:
+      default: true
       docs: Include asks in change events
       type: optional<boolean>
     top_of_book:
+      default: false
       docs: >-
         If absent or false, receive full order book depth; if present and true,
         receive top of book only. Only applies to bids and offers.
       type: optional<boolean>
     trades:
+      default: true
       docs: Include trade events
       type: optional<boolean>

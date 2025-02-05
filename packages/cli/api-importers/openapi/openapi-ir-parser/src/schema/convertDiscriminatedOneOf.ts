@@ -1,3 +1,5 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     Availability,
     CommonPropertyWithExample,
@@ -7,9 +9,9 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
-import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas";
+
 import { SchemaParserContext } from "./SchemaParserContext";
+import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export function convertDiscriminatedOneOf({
@@ -88,7 +90,7 @@ export function convertDiscriminatedOneOf({
                 schema
             };
         });
-    return wrapDiscriminantedOneOf({
+    return wrapDiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
@@ -186,7 +188,7 @@ export function convertDiscriminatedOneOfWithVariants({
                 schema
             };
         });
-    return wrapDiscriminantedOneOf({
+    return wrapDiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
@@ -201,7 +203,7 @@ export function convertDiscriminatedOneOfWithVariants({
     });
 }
 
-export function wrapDiscriminantedOneOf({
+export function wrapDiscriminatedOneOf({
     nameOverride,
     generatedName,
     title,

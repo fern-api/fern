@@ -1,5 +1,4 @@
 /* eslint-disable jest/no-mocks-import */
-
 import urlJoin from "url-join";
 
 require("jest-specific-snapshot");

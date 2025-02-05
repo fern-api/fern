@@ -1,0 +1,41 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/root/root",
+                "method": "POST",
+                "identifier_override": "endpoint_.getRoot"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedObject;\n\nvar client = new SeedObjectClient();\nawait client.GetRootAsync(\n    new PostRootRequest\n    {\n        Bar = new RequestTypeInlineType1 { Foo = \"foo\" },\n        Foo = \"foo\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/root/discriminated-union",
+                "method": "POST",
+                "identifier_override": "endpoint_.getDiscriminatedUnion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedObject;\n\nvar client = new SeedObjectClient();\nawait client.GetDiscriminatedUnionAsync(\n    new GetDiscriminatedUnionRequest\n    {\n        Bar = new DiscriminatedUnion1InlineType1\n        {\n            Foo = \"foo\",\n            Bar = new DiscriminatedUnion1InlineType1InlineType1\n            {\n                Foo = \"foo\",\n                Ref = new ReferenceType { Foo = \"foo\" },\n            },\n            Ref = new ReferenceType { Foo = \"foo\" },\n        },\n        Foo = \"foo\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/root/undiscriminated-union",
+                "method": "POST",
+                "identifier_override": "endpoint_.getUndiscriminatedUnion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedObject;\n\nvar client = new SeedObjectClient();\nawait client.GetUndiscriminatedUnionAsync(\n    new GetUndiscriminatedUnionRequest\n    {\n        Bar = new UndiscriminatedUnion1InlineType1\n        {\n            Foo = \"foo\",\n            Bar = new UndiscriminatedUnion1InlineType1InlineType1\n            {\n                Foo = \"foo\",\n                Ref = new ReferenceType { Foo = \"foo\" },\n            },\n            Ref = new ReferenceType { Foo = \"foo\" },\n        },\n        Foo = \"foo\",\n    }\n);\n"
+            }
+        }
+    ]
+}

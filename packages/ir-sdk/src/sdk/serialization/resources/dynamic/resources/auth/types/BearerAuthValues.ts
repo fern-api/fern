@@ -14,7 +14,7 @@ export const BearerAuthValues: core.serialization.ObjectSchema<
 });
 
 export declare namespace BearerAuthValues {
-    interface Raw {
+    export interface Raw {
         token: string;
     }
 }

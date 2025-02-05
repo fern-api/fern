@@ -10,9 +10,12 @@ use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Endpoints\Params\Requests\GetWithInlinePath;
 use Seed\Endpoints\Params\Requests\GetWithQuery;
 use Seed\Endpoints\Params\Requests\GetWithMultipleQuery;
 use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
+use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
+use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
 
 class ParamsClient
 {
@@ -42,6 +45,45 @@ class ParamsClient
      * @throws SeedApiException
      */
     public function getWithPath(string $param, ?array $options = null): string
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/params/path/$param",
+                    method: HttpMethod::GET,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * GET with path param
+     *
+     * @param string $param
+     * @param GetWithInlinePath $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getWithInlinePath(string $param, GetWithInlinePath $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -120,7 +162,7 @@ class ParamsClient
     {
         $query = [];
         $query['query'] = $request->query;
-        $query['numer'] = $request->numer;
+        $query['number'] = $request->number;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -183,6 +225,44 @@ class ParamsClient
     }
 
     /**
+     * GET with path and query params
+     *
+     * @param string $param
+     * @param GetWithInlinePathAndQuery $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getWithInlinePathAndQuery(string $param, GetWithInlinePathAndQuery $request, ?array $options = null): void
+    {
+        $query = [];
+        $query['query'] = $request->query;
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/params/path-query/$param",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
      * PUT to update with path param
      *
      * @param string $param
@@ -203,6 +283,46 @@ class ParamsClient
                     path: "/params/path/$param",
                     method: HttpMethod::PUT,
                     body: $request,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * PUT to update with path param
+     *
+     * @param string $param
+     * @param ModifyResourceAtInlinedPath $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options = null): string
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/params/path/$param",
+                    method: HttpMethod::PUT,
+                    body: $request->body,
                 ),
             );
             $statusCode = $response->getStatusCode();

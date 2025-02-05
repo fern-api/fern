@@ -1,10 +1,10 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { ClassReference } from "./ClassReference";
+import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
-import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { orderByAccess } from "./utils/orderByAccess";
-import { ClassReference } from "./ClassReference";
 
 export declare namespace Trait {
     interface Args {

@@ -1,12 +1,14 @@
-import { BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace";
+import yaml from "js-yaml";
+import { mapValues } from "lodash-es";
+
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { convert, getConvertOptions } from "@fern-api/openapi-ir-to-fern";
-import { FernDefinition } from "..";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { mapValues } from "lodash-es";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import yaml from "js-yaml";
+
+import { FernDefinition } from "..";
+import { BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace";
 
 export class FernDefinitionConverter {
     constructor(private readonly args: BaseOpenAPIWorkspace.Args) {}
@@ -29,6 +31,7 @@ export class FernDefinitionConverter {
                 overrides: {
                     ...settings,
                     respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.args.respectReadonlySchemas,
+                    respectNullableSchemas: settings?.respectNullableSchemas ?? this.args.respectNullableSchemas,
                     onlyIncludeReferencedSchemas:
                         settings?.onlyIncludeReferencedSchemas ?? this.args.onlyIncludeReferencedSchemas,
                     inlinePathParameters: settings?.inlinePathParameters ?? this.args.inlinePathParameters,

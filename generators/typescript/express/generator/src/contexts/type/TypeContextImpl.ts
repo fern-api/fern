@@ -1,13 +1,11 @@
-import {
-    DeclaredTypeName,
-    ExampleTypeReference,
-    ObjectProperty,
-    ResolvedTypeReference,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
+import {
+    BaseContext,
+    GeneratedType,
+    GeneratedTypeReferenceExample,
+    TypeContext,
+    TypeSchemaContext
+} from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -16,6 +14,15 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
+
+import {
+    DeclaredTypeName,
+    ExampleTypeReference,
+    ResolvedTypeReference,
+    TypeDeclaration,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
+
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
 export declare namespace TypeContextImpl {
@@ -32,6 +39,8 @@ export declare namespace TypeContextImpl {
         useBigInt: boolean;
         context: BaseContext;
         enableInlineTypes: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -60,6 +69,8 @@ export class TypeContextImpl implements TypeContext {
         retainOriginalCasing,
         useBigInt,
         enableInlineTypes,
+        allowExtraFields,
+        omitUndefined,
         context
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
@@ -75,18 +86,22 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
     }
 
@@ -191,5 +206,56 @@ export class TypeContextImpl implements TypeContext {
 
     public getGeneratedExample(example: ExampleTypeReference): GeneratedTypeReferenceExample {
         return this.typeReferenceExampleGenerator.generateExample(example);
+    }
+
+    public isOptional(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "named": {
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
+                switch (typeDeclaration.shape.type) {
+                    case "alias":
+                        return this.isOptional(typeDeclaration.shape.aliasOf);
+                    default:
+                        return false;
+                }
+            }
+            case "container":
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return this.isOptional(typeReference.container.nullable);
+                    case "optional":
+                        return true;
+                    default:
+                        return false;
+                }
+            default:
+                return false;
+        }
+    }
+
+    public isNullable(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "named": {
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
+                switch (typeDeclaration.shape.type) {
+                    case "alias":
+                        return this.isNullable(typeDeclaration.shape.aliasOf);
+                    default:
+                        return false;
+                }
+            }
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return true;
+                    case "optional":
+                        return this.isNullable(typeReference.container.optional);
+                    default:
+                        return false;
+                }
+            }
+            default:
+                return false;
+        }
     }
 }

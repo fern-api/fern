@@ -1,11 +1,10 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.User.Events;
-
-#nullable enable
 
 namespace SeedMixedFileDirectory.User;
 
@@ -38,19 +37,21 @@ public partial class EventsClient
         var _query = new Dictionary<string, object>();
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.ToString();
+            _query["limit"] = request.Limit.Value.ToString();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/users/events/",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/users/events/",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

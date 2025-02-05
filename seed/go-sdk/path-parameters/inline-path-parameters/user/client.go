@@ -71,6 +71,88 @@ func (c *Client) GetUser(
 	return response, nil
 }
 
+func (c *Client) CreateUser(
+	ctx context.Context,
+	tenantId string,
+	request *pathparametersgo.User,
+	opts ...option.RequestOption,
+) (*pathparametersgo.User, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/%v/user/",
+		tenantId,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response *pathparametersgo.User
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (c *Client) UpdateUser(
+	ctx context.Context,
+	request *pathparametersgo.UpdateUserRequest,
+	opts ...option.RequestOption,
+) (*pathparametersgo.User, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/%v/user/%v",
+		request.TenantId,
+		request.UserId,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response *pathparametersgo.User
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPatch,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
 func (c *Client) SearchUsers(
 	ctx context.Context,
 	request *pathparametersgo.SearchUsersRequest,

@@ -8,7 +8,7 @@ import (
 	internal "github.com/file-upload/fern/internal"
 )
 
-type JustFileWithQueryParamsRequet struct {
+type JustFileWithQueryParamsRequest struct {
 	MaybeString           *string   `json:"-" url:"maybeString,omitempty"`
 	Integer               int       `json:"-" url:"integer"`
 	MaybeInteger          *int      `json:"-" url:"maybeInteger,omitempty"`
@@ -17,14 +17,14 @@ type JustFileWithQueryParamsRequet struct {
 }
 
 type MyRequest struct {
-	MaybeString           *string     `json:"maybeString,omitempty" url:"-"`
+	MaybeString           *string     `json:"maybe_string,omitempty" url:"-"`
 	Integer               int         `json:"integer" url:"-"`
-	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"-"`
-	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"-"`
-	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"-"`
-	OptionalMetadata      interface{} `json:"optionalMetadata,omitempty" url:"-"`
-	OptionalObjectType    *ObjectType `json:"optionalObjectType,omitempty" url:"-"`
-	OptionalId            *Id         `json:"optionalId,omitempty" url:"-"`
+	MaybeInteger          *int        `json:"maybe_integer,omitempty" url:"-"`
+	OptionalListOfStrings []string    `json:"optional_list_of_strings,omitempty" url:"-"`
+	ListOfObjects         []*MyObject `json:"list_of_objects,omitempty" url:"-"`
+	OptionalMetadata      interface{} `json:"optional_metadata,omitempty" url:"-"`
+	OptionalObjectType    *ObjectType `json:"optional_object_type,omitempty" url:"-"`
+	OptionalId            *Id         `json:"optional_id,omitempty" url:"-"`
 }
 
 type Id = string
@@ -100,5 +100,5 @@ func (o ObjectType) Ptr() *ObjectType {
 type WithContentTypeRequest struct {
 	Foo    string    `json:"foo" url:"-"`
 	Bar    *MyObject `json:"bar,omitempty" url:"-"`
-	Foobar *MyObject `json:"foobar,omitempty" url:"-"`
+	FooBar *MyObject `json:"foo_bar,omitempty" url:"-"`
 }

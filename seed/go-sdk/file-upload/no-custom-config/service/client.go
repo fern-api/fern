@@ -58,22 +58,22 @@ func (c *Client) Post(
 		return err
 	}
 	for _, f := range fileList {
-		if err := writer.WriteFile("fileList", f); err != nil {
+		if err := writer.WriteFile("file_list", f); err != nil {
 			return err
 		}
 	}
 	if maybeFile != nil {
-		if err := writer.WriteFile("maybeFile", maybeFile); err != nil {
+		if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
 			return err
 		}
 	}
 	for _, f := range maybeFileList {
-		if err := writer.WriteFile("maybeFileList", f); err != nil {
+		if err := writer.WriteFile("maybe_file_list", f); err != nil {
 			return err
 		}
 	}
 	if request.MaybeString != nil {
-		if err := writer.WriteField("maybeString", fmt.Sprintf("%v", *request.MaybeString)); err != nil {
+		if err := writer.WriteField("maybe_string", fmt.Sprintf("%v", *request.MaybeString)); err != nil {
 			return err
 		}
 	}
@@ -81,32 +81,32 @@ func (c *Client) Post(
 		return err
 	}
 	if request.MaybeInteger != nil {
-		if err := writer.WriteField("maybeInteger", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
+		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
 			return err
 		}
 	}
 	for _, part := range request.OptionalListOfStrings {
-		if err := writer.WriteField("optionalListOfStrings", fmt.Sprintf("%v", part)); err != nil {
+		if err := writer.WriteField("optional_list_of_strings", fmt.Sprintf("%v", part)); err != nil {
 			return err
 		}
 	}
 	for _, part := range request.ListOfObjects {
-		if err := writer.WriteJSON("listOfObjects", part); err != nil {
+		if err := writer.WriteJSON("list_of_objects", part); err != nil {
 			return err
 		}
 	}
 	if request.OptionalMetadata != nil {
-		if err := writer.WriteJSON("optionalMetadata", request.OptionalMetadata); err != nil {
+		if err := writer.WriteJSON("optional_metadata", request.OptionalMetadata); err != nil {
 			return err
 		}
 	}
 	if request.OptionalObjectType != nil {
-		if err := writer.WriteJSON("optionalObjectType", *request.OptionalObjectType); err != nil {
+		if err := writer.WriteJSON("optional_object_type", *request.OptionalObjectType); err != nil {
 			return err
 		}
 	}
 	if request.OptionalId != nil {
-		if err := writer.WriteJSON("optionalId", *request.OptionalId); err != nil {
+		if err := writer.WriteJSON("optional_id", *request.OptionalId); err != nil {
 			return err
 		}
 	}
@@ -179,7 +179,7 @@ func (c *Client) JustFile(
 func (c *Client) JustFileWithQueryParams(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.JustFileWithQueryParamsRequet,
+	request *fern.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
 	options := core.NewRequestOptions(opts...)
@@ -254,8 +254,8 @@ func (c *Client) WithContentType(
 	if err := writer.WriteJSON("bar", request.Bar, internal.WithDefaultContentType("application/json")); err != nil {
 		return err
 	}
-	if request.Foobar != nil {
-		if err := writer.WriteJSON("foobar", request.Foobar, internal.WithDefaultContentType("application/json")); err != nil {
+	if request.FooBar != nil {
+		if err := writer.WriteJSON("foo_bar", request.FooBar, internal.WithDefaultContentType("application/json")); err != nil {
 			return err
 		}
 	}

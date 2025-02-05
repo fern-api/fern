@@ -19,9 +19,6 @@ export type UndiscriminatedUnion1 =
     | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1
     /**
      * lorem ipsum */
-    | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1
-    /**
-     * lorem ipsum */
     | SeedObject.UndiscriminatedUnion1InlineEnum1
     /**
      * lorem ipsum */

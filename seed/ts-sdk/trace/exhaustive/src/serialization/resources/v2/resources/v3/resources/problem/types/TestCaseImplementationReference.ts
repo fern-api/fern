@@ -33,14 +33,14 @@ export const TestCaseImplementationReference: core.serialization.Schema<
     });
 
 export declare namespace TestCaseImplementationReference {
-    type Raw = TestCaseImplementationReference.TemplateId | TestCaseImplementationReference.Implementation;
+    export type Raw = TestCaseImplementationReference.TemplateId | TestCaseImplementationReference.Implementation;
 
-    interface TemplateId {
+    export interface TemplateId {
         type: "templateId";
         value: TestCaseTemplateId.Raw;
     }
 
-    interface Implementation extends TestCaseImplementation.Raw {
+    export interface Implementation extends TestCaseImplementation.Raw {
         type: "implementation";
     }
 }

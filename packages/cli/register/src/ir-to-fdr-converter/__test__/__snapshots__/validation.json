@@ -125,6 +125,7 @@
               "type": "primitive",
               "value": {
                 "type": "string",
+                "format": "custom",
                 "regex": "^[a-z]+$",
                 "minLength": 3,
                 "maxLength": 10,
@@ -139,10 +140,7 @@
               "value": "type_:Shape"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -208,6 +206,7 @@
                     "type": "primitive",
                     "value": {
                       "type": "string",
+                      "format": "custom",
                       "regex": "^[a-z]+$",
                       "minLength": 3,
                       "maxLength": 10,
@@ -327,6 +326,7 @@
               "type": "primitive",
               "value": {
                 "type": "string",
+                "format": "custom",
                 "regex": "^[a-z]+$",
                 "minLength": 3,
                 "maxLength": 10,

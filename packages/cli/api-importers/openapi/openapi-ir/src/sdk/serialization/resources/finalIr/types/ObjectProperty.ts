@@ -25,7 +25,7 @@ export const ObjectProperty: core.serialization.ObjectSchema<
     .extend(WithAvailability);
 
 export declare namespace ObjectProperty {
-    interface Raw extends WithAvailability.Raw {
+    export interface Raw extends WithAvailability.Raw {
         key: string;
         schema: serializers.Schema.Raw;
         readonly?: boolean | null;

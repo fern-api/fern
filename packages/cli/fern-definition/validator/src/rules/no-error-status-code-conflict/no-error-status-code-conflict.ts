@@ -1,8 +1,10 @@
+import { noop } from "lodash-es";
+
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { visitDefinitionFileYamlAst } from "../../ast";
-import { noop } from "lodash-es";
+
 import { Rule, RuleViolation } from "../../Rule";
+import { visitDefinitionFileYamlAst } from "../../ast";
 
 export const NoErrorStatusCodeConflictRule: Rule = {
     name: "no-error-status-code-conflict",
@@ -35,7 +37,7 @@ export const NoErrorStatusCodeConflictRule: Rule = {
                     for (const [statusCode, errorNames] of Object.entries(statusCodeToError)) {
                         if (errorNames.length > 1) {
                             result.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Multiple errors have status-code ${statusCode}: ${errorNames.join(", ")}`
                             });
                         }

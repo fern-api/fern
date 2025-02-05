@@ -9,11 +9,13 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Foo {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,16 +43,18 @@ export class Foo {
      */
     public async find(
         request: SeedAudiences.FindRequest = {},
-        requestOptions?: Foo.RequestOptions
+        requestOptions?: Foo.RequestOptions,
     ): Promise<SeedAudiences.ImportingType> {
         const { optionalString, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
         }
 
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

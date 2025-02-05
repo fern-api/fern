@@ -1,7 +1,9 @@
-import { Values } from "@fern-api/core-utils";
-import { TypedExtensionId } from "./id";
-import { NodeType } from "@redocly/openapi-core/lib/types";
 import { Plugin } from "@redocly/openapi-core/lib/config";
+import { NodeType } from "@redocly/openapi-core/lib/types";
+
+import { Values } from "@fern-api/core-utils";
+
+import { TypedExtensionId } from "./id";
 
 export const XFernStreaming: NodeType = {
     properties: {
@@ -115,7 +117,7 @@ export const FernOpenAPIExtension = {
      * it generates both a traditional unary endpoint,
      * as well as its streaming equivalent. The stream
      * condition property is included to specify a boolean
-     * propetry that tells the server whether or not the
+     * property that tells the server whether or not the
      * response should be streamed or not.
      *
      * Example usage:
@@ -185,7 +187,7 @@ export const FernOpenAPIExtension = {
     ASYNC_CONFIG: "x-fern-async-config",
 
     /**
-     * Used to create veriables in the fern definition
+     * Used to create variables in the fern definition
      * Example usage:
      * x-fern-sdk-variables:
      *   appName:
@@ -418,7 +420,7 @@ export const FernOpenAPIExtension = {
     FERN_PROPERTY_NAME: "x-fern-property-name",
 
     /**
-     * Allows a user to configure that a union wiht a discriminant should
+     * Allows a user to configure that a union with a discriminant should
      * be undiscriminated.
      *
      * Shape:

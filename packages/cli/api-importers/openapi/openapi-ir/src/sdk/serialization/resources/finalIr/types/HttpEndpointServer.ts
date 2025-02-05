@@ -16,7 +16,7 @@ export const HttpEndpointServer: core.serialization.ObjectSchema<
 });
 
 export declare namespace HttpEndpointServer {
-    interface Raw {
+    export interface Raw {
         name?: string | null;
         url?: string | null;
         audiences?: string[] | null;

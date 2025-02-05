@@ -14,5 +14,5 @@ export const AuthVariable: core.serialization.ObjectSchema<
 > = core.serialization.object({}).extend(WithEnvironmentVariable).extend(WithName);
 
 export declare namespace AuthVariable {
-    interface Raw extends WithEnvironmentVariable.Raw, WithName.Raw {}
+    export interface Raw extends WithEnvironmentVariable.Raw, WithName.Raw {}
 }

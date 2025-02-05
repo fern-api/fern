@@ -14,7 +14,7 @@ export const ProblemFiles: core.serialization.ObjectSchema<serializers.ProblemFi
     });
 
 export declare namespace ProblemFiles {
-    interface Raw {
+    export interface Raw {
         solutionFile: FileInfo.Raw;
         readOnlyFiles: FileInfo.Raw[];
     }

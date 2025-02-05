@@ -1,8 +1,10 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedEndpointTypeSchema } from "./AbstractGeneratedEndpointTypeSchema";
 
 export declare namespace GeneratedEndpointTypeSchemaImpl {
@@ -22,7 +24,8 @@ export class GeneratedEndpointTypeSchemaImpl extends AbstractGeneratedEndpointTy
     protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode)
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
+            isExported: true
         });
     }
 

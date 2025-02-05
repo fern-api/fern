@@ -1,6 +1,8 @@
-import { ExampleTypeShape } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
+
+import { ExampleTypeShape } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedFile } from "../../commons";
 import { GeneratedModule } from "../../commons/GeneratedModule";
 import { GeneratedStatements } from "../../commons/GeneratedStatements";

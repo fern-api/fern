@@ -14,10 +14,12 @@ export interface ParseOpenAPIOptions {
     audiences: string[] | undefined;
     /* Whether or not to make additional property values optional */
     optionalAdditionalProperties: boolean;
-    /* Whether or not to cooerce enums as literals */
-    cooerceEnumsToLiterals: boolean;
+    /* Whether or not to coerce enums as literals */
+    coerceEnumsToLiterals: boolean;
     /* Whether or not to respect readonly properties in schemas */
     respectReadonlySchemas: boolean;
+    /* Whether or not to respect nullable properties in schemas */
+    respectNullableSchemas: boolean;
     /* Whether or not to only include endpoint referenced schemas */
     onlyIncludeReferencedSchemas: boolean;
     /* Whether or not to include path parameters in the in-lined request */
@@ -35,6 +37,8 @@ export interface ParseOpenAPIOptions {
     // For now, we include an AsyncAPI-specific option here, but this is better
     // handled with a discriminated union.
     asyncApiNaming: "v1" | "v2";
+
+    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -43,15 +47,17 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     useTitlesAsName: true,
     audiences: undefined,
     optionalAdditionalProperties: true,
-    cooerceEnumsToLiterals: true,
+    coerceEnumsToLiterals: true,
     respectReadonlySchemas: false,
+    respectNullableSchemas: false,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: false,
     preserveSchemaIds: false,
     objectQueryParameters: false,
     shouldUseUndiscriminatedUnionsWithLiterals: false,
     filter: undefined,
-    asyncApiNaming: "v1"
+    asyncApiNaming: "v1",
+    exampleGeneration: undefined
 };
 
 export function getParseOptions({
@@ -74,14 +80,18 @@ export function getParseOptions({
             overrides?.optionalAdditionalProperties ??
             options?.optionalAdditionalProperties ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties,
-        cooerceEnumsToLiterals:
-            overrides?.cooerceEnumsToLiterals ??
-            options?.cooerceEnumsToLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals,
+        coerceEnumsToLiterals:
+            overrides?.coerceEnumsToLiterals ??
+            options?.coerceEnumsToLiterals ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceEnumsToLiterals,
         respectReadonlySchemas:
             overrides?.respectReadonlySchemas ??
             options?.respectReadonlySchemas ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas,
+        respectNullableSchemas:
+            overrides?.respectNullableSchemas ??
+            options?.respectNullableSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectNullableSchemas,
         onlyIncludeReferencedSchemas:
             overrides?.onlyIncludeReferencedSchemas ??
             options?.onlyIncludeReferencedSchemas ??
@@ -101,6 +111,7 @@ export function getParseOptions({
             DEFAULT_PARSE_OPENAPI_SETTINGS.objectQueryParameters,
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
-            overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming
+            overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
+        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined
     };
 }

@@ -234,6 +234,128 @@ await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
 </dl>
 </details>
 
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">CreateUserAsync</a>(tenantId, User { ... }) -> User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.CreateUserAsync(
+    "tenant_id",
+    new User
+    {
+        Name = "name",
+        Tags = new List<string>() { "tags", "tags" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `User` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(tenantId, userId, UpdateUserRequest { ... }) -> User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.UpdateUserAsync(
+    "tenant_id",
+    "user_id",
+    new UpdateUserRequest
+    {
+        Body = new User
+        {
+            Name = "name",
+            Tags = new List<string>() { "tags", "tags" },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateUserRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(tenantId, userId, SearchUsersRequest { ... }) -> IEnumerable<User></code></summary>
 <dl>
 <dd>

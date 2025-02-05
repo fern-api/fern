@@ -1,8 +1,10 @@
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedUndiscriminatedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
 export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelContext>
@@ -24,7 +26,8 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
                 ts.factory.createUnionTypeNode(
                     this.shape.members.map((value) => context.typeSchema.getReferenceToRawType(value.type).typeNode)
                 )
-            )
+            ),
+            isExported: true
         });
     }
 }

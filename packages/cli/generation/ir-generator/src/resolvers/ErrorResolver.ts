@@ -1,6 +1,7 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { constructFernFileContext, FernFileContext } from "../FernFileContext";
+
+import { FernFileContext, constructFernFileContext } from "../FernFileContext";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
 
 export interface ErrorResolver {

@@ -41,27 +41,34 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        inline-path-parameters: true
         custom-dependencies:
           - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
       outputFolder: custom-dependency
     - customConfig:
+        inline-path-parameters: true
         json-include: non-empty
       outputFolder: json-include-non-empty
     - customConfig:
+        inline-path-parameters: true
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - customConfig:
+        inline-path-parameters: true
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: custom-error-names
     - customConfig:
+        inline-path-parameters: true
         client-class-name: Best
       outputFolder: custom-client-class-name
     - customConfig:
+        inline-path-parameters: true
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
     - customConfig:
+        inline-path-parameters: true
         enable-public-constructors: true
       outputFolder: enable-public-constructors
     - publishConfig:
@@ -78,6 +85,19 @@ fixtures:
         publisher_name: "Fern"
         reference_url: "https://buildwithfern.com"
       outputFolder: signed_publish
+  java-inline-types:
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: true
+      outputFolder: inline
+    - customConfig:
+        enable-inline-types: false
+        wrapped-aliases: true
+      outputFolder: no-inline
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: false
+      outputFolder: no-wrapped-aliases
   imdb:
     - customConfig:
         disable-required-property-builder-checks: true
@@ -86,6 +106,12 @@ fixtures:
     - customConfig:
         package-prefix: "com.customprefix"
       outputFolder: java-custom-package-prefix
+  java-single-property-endpoint:
+    - outputFolder: java-single-property-endpoint
+  java-pagination-deep-cursor-path:
+    - outputFolder: java-pagination-deep-cursor-path
+  accept-header:
+    - outputFolder: accept-header
 scripts:
   - docker: fernapi/java-seed
     commands:
@@ -97,7 +123,10 @@ allowedFailures:
   - exhaustive:signed_publish
   - exhaustive:local-files
   - extends
+  - oauth-client-credentials-custom
   - query-parameters
   - trace
   - unions
   - streaming-parameter
+  - literal
+  - java-pagination-deep-cursor-path

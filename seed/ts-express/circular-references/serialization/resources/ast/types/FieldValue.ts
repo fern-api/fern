@@ -22,18 +22,18 @@ export const FieldValue: core.serialization.Schema<serializers.FieldValue.Raw, S
     });
 
 export declare namespace FieldValue {
-    type Raw = FieldValue.PrimitiveValue | FieldValue.ObjectValue | FieldValue.ContainerValue;
+    export type Raw = FieldValue.PrimitiveValue | FieldValue.ObjectValue | FieldValue.ContainerValue;
 
-    interface PrimitiveValue {
+    export interface PrimitiveValue {
         type: "primitive_value";
         value: serializers.PrimitiveValue.Raw;
     }
 
-    interface ObjectValue extends serializers.ObjectValue.Raw {
+    export interface ObjectValue extends serializers.ObjectValue.Raw {
         type: "object_value";
     }
 
-    interface ContainerValue {
+    export interface ContainerValue {
         type: "container_value";
         value: serializers.ContainerValue.Raw;
     }

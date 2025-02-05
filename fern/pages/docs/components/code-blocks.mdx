@@ -1,11 +1,10 @@
 ---
-title: Code Blocks
-subtitle: Configure syntax highlighting and more in your code snippets
-description: Write beautiful code snippets in your documentation
+title: 'Code Blocks'
+description: 'Learn how to enhance your documentation with customizable code blocks featuring syntax highlighting, line highlighting, focusing, and more.'
 ---
 
-Fern uses [Shiki](https://shiki.matsu.io/) to do syntax highlighting. 
-It's very reliable and performant. Below are examples of how you can configure syntax highlighting in code snippets.
+Fern uses [Shiki](https://shiki.matsu.io/) for syntax highlighting in code blocks. 
+It's reliable and performant. Below are examples of how you can configure syntax highlighting in code snippets.
 
 ## Basic
 
@@ -55,8 +54,8 @@ You can add a title to your code snippet by adding a title after the language id
 
 ## Line highlighting
 
-You can highlight specific lines in your code snippet by adding a comment `[!code highlight]` or by 
-placing a numeric range inside `{}` after the language identifier.
+You can highlight specific lines in your code snippet by placing a numeric range inside `{}` 
+after the language identifier.
 
 <Tabs>
     <Tab title="Example">
@@ -68,18 +67,7 @@ placing a numeric range inside `{}` after the language identifier.
         console.log("Line 5");
         ```
     </Tab>
-    <Tab title = "Markdown (Using Comments)">
-        ````markdown
-        ```javascript
-        console.log("Line 1");
-        console.log("Line 2"); // [!code highlight]
-        console.log("Line 3"); // [!code highlight]
-        console.log("Line 4"); // [!code highlight]
-        console.log("Line 5");
-        ```
-        ````
-    </Tab>
-    <Tab title = "Markdown (Using Attribute)">
+    <Tab title = "Markdown">
         ````markdown
         ```javascript {2-4}
         console.log("Line 1");
@@ -198,15 +186,37 @@ number of lines to display. By default, the code block will display up to 20 lin
 
 By default, long lines that exceed the width of the code block become scrollable:
 
+<Tabs>
+<Tab title="Example">
 ```txt title="Without Word Wrap"
 A very very very long line of text that may cause the codeblock to overflow and scroll as a result. 
 ```
+</Tab>
+<Tab title="Markdown">
+````markdown
+```txt title="Without Word Wrap"
+A very very very long line of text that may cause the codeblock to overflow and scroll as a result. 
+```
+````
+</Tab>
+</Tabs>
 
 To disable scrolling and wrap overflow onto the next line, use the `wordWrap` prop:
 
+<Tabs>
+<Tab title="Example">
 ```txt title="With Word Wrap" wordWrap
 A very very very long line of text that may cause the codeblock to overflow and scroll as a result. 
 ```
+</Tab>
+<Tab title="Markdown">
+````markdown
+```txt title="With Word Wrap" wordWrap
+A very very very long line of text that may cause the codeblock to overflow and scroll as a result. 
+```
+````
+</Tab>
+</Tabs>
 
 
 ## Combining props

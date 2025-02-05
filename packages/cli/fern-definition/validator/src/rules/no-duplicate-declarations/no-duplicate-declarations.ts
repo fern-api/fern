@@ -1,8 +1,10 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
-import { visitDefinitionFileYamlAst } from "../../ast";
 import path from "path";
+
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { Rule, RuleViolation } from "../../Rule";
+import { visitDefinitionFileYamlAst } from "../../ast";
 
 type RelativeDirectoryPath = string;
 type DeclaredName = string;
@@ -43,7 +45,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
             const indexOfThisDeclarations = declarationsForName.indexOf(relativeFilepath);
             const duplicates = declarationsForName.filter((_declaration, index) => index !== indexOfThisDeclarations);
             return duplicates.map((duplicate) => ({
-                severity: "error",
+                severity: "fatal",
                 message: `${declaredName} is already declared in ${
                     duplicate === relativeFilepath ? "this file" : duplicate
                 }`

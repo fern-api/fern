@@ -1,8 +1,10 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { SdkGeneratorContext, MOCK_SERVER_TEST_FOLDER } from "../../SdkGeneratorContext";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 
@@ -47,7 +49,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 jsonExampleResponse = example.response.value.value?.jsonExample;
             }
             const responseBodyType = this.endpoint.response?.body?.type;
-            // where or not we support this repsonse type in this generator; the example json may
+            // where or not we support this response type in this generator; the example json may
             // have a response that we can return, but our generated method actually returns void
             responseSupported =
                 jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");

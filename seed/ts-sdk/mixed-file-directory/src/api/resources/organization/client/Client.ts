@@ -9,11 +9,13 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Organization {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,10 +43,14 @@ export class Organization {
      */
     public async create(
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
-        requestOptions?: Organization.RequestOptions
+        requestOptions?: Organization.RequestOptions,
     ): Promise<SeedMixedFileDirectory.Organization> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/organizations/"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/organizations/",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -86,7 +92,7 @@ export class Organization {
                 });
             case "timeout":
                 throw new errors.SeedMixedFileDirectoryTimeoutError(
-                    "Timeout exceeded when calling POST /organizations/."
+                    "Timeout exceeded when calling POST /organizations/.",
                 );
             case "unknown":
                 throw new errors.SeedMixedFileDirectoryError({

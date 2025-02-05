@@ -2,8 +2,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPagination;
 
-#nullable enable
-
 namespace SeedPagination.Test.Unit.MockServer;
 
 [TestFixture]

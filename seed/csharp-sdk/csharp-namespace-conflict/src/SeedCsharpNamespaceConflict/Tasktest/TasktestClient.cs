@@ -2,8 +2,6 @@ using System.Net.Http;
 using System.Threading;
 using SeedCsharpNamespaceConflict.Core;
 
-#nullable enable
-
 namespace SeedCsharpNamespaceConflict;
 
 public partial class TasktestClient
@@ -25,16 +23,18 @@ public partial class TasktestClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "hello",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "hello",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

@@ -16,7 +16,7 @@ export const VoidFunctionSignatureThatTakesActualResult: core.serialization.Obje
 });
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {
-    interface Raw {
+    export interface Raw {
         parameters: Parameter.Raw[];
         actualResultType: serializers.VariableType.Raw;
     }

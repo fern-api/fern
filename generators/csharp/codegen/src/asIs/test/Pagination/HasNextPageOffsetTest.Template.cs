@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SystemTask = System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core.Pagination;
@@ -7,7 +8,7 @@ namespace <%= namespace%>.Test.Core.Pagination;
 public class HasNextPageOffsetTest
 {
     [Test]
-    public async Task OffsetPagerShouldWorkWithHasNextPage()
+    public async SystemTask OffsetPagerShouldWorkWithHasNextPage()
     {
         var pager = CreatePager();
         await AssertPager(pager);
@@ -61,7 +62,7 @@ public class HasNextPageOffsetTest
             (_, _, _) =>
             {
                 responses.MoveNext();
-                return Task.FromResult(responses.Current);
+                return SystemTask.FromResult(responses.Current);
             },
             request => request?.Pagination?.Page ?? 0,
             (request, offset) =>
@@ -76,7 +77,7 @@ public class HasNextPageOffsetTest
         return pager;
     }
 
-    private static async Task AssertPager(Pager<object> pager)
+    private static async SystemTask AssertPager(Pager<object> pager)
     {
         var pageCounter = 0;
         var itemCounter = 0;

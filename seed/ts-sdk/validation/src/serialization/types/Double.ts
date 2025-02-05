@@ -10,5 +10,5 @@ export const Double: core.serialization.Schema<serializers.Double.Raw, SeedValid
     core.serialization.number();
 
 export declare namespace Double {
-    type Raw = number;
+    export type Raw = number;
 }

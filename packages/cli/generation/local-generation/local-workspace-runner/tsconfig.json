@@ -1,5 +1,5 @@
 {
-  "extends": "../../../../../shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
@@ -11,6 +11,9 @@
   "references": [
     {
       "path": "../../../../../generators/go-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/typescript-v2/dynamic-snippets"
     },
     {
       "path": "../../../../commons/core-utils"

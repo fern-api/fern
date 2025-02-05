@@ -1,5 +1,7 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { getExtension, getExtensionAndValidate } from "../../../getExtension";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "./fernExtensions";

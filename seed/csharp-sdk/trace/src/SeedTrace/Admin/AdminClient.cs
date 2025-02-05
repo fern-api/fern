@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace;
 
 public partial class AdminClient
@@ -31,17 +29,19 @@ public partial class AdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/admin/store-test-submission-status/{submissionId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = $"/admin/store-test-submission-status/{submissionId}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -73,17 +73,19 @@ public partial class AdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/admin/store-test-submission-status-v2/{submissionId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = $"/admin/store-test-submission-status-v2/{submissionId}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -111,17 +113,19 @@ public partial class AdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/admin/store-workspace-submission-status/{submissionId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = $"/admin/store-workspace-submission-status/{submissionId}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -153,17 +157,19 @@ public partial class AdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -264,17 +270,20 @@ public partial class AdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path =
+                        $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -364,18 +373,20 @@ public partial class AdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path =
-                    $"/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path =
+                        $"/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -480,17 +491,19 @@ public partial class AdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/admin/store-workspace-trace/submission/{submissionId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = $"/admin/store-workspace-trace/submission/{submissionId}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -578,17 +591,19 @@ public partial class AdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

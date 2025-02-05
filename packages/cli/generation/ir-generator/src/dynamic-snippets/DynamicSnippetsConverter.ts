@@ -1,3 +1,5 @@
+import urlJoin from "url-join";
+
 import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
@@ -33,7 +35,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
-import urlJoin from "url-join";
+
 import { Version } from "./version";
 
 interface EndpointWithFilepath extends HttpEndpoint {
@@ -329,6 +331,8 @@ export class DynamicSnippetsConverter {
                 });
             case "optional":
                 return DynamicSnippets.TypeReference.optional(this.convertTypeReference(container.optional));
+            case "nullable":
+                return DynamicSnippets.TypeReference.nullable(this.convertTypeReference(container.nullable));
             case "set":
                 return DynamicSnippets.TypeReference.set(this.convertTypeReference(container.set));
             case "literal":

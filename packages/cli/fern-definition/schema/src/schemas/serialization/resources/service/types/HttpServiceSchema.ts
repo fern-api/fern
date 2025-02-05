@@ -20,9 +20,7 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
         auth: core.serialization.boolean(),
         url: core.serialization.string().optional(),
         "base-path": core.serialization.string(),
-        "path-parameters": core.serialization
-            .record(core.serialization.string(), core.serialization.string())
-            .optional(),
+        "path-parameters": core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
         idempotent: core.serialization.boolean().optional(),
         headers: core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
         transport: ServiceTransport.optional(),
@@ -33,11 +31,11 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
     .extend(WithDisplayName);
 
 export declare namespace HttpServiceSchema {
-    interface Raw extends DeclarationWithoutDocsSchema.Raw, WithDisplayName.Raw {
+    export interface Raw extends DeclarationWithoutDocsSchema.Raw, WithDisplayName.Raw {
         auth: boolean;
         url?: string | null;
         "base-path": string;
-        "path-parameters"?: Record<string, string> | null;
+        "path-parameters"?: Record<string, TypeReferenceSchema.Raw> | null;
         idempotent?: boolean | null;
         headers?: Record<string, TypeReferenceSchema.Raw> | null;
         transport?: ServiceTransport.Raw | null;

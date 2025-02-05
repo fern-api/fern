@@ -1,3 +1,5 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     AllOfPropertyConflict,
     Availability,
@@ -11,13 +13,13 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
 import { convertAvailability } from "./convertAvailability";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";

@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedBytes.Core;
 
-#nullable enable
-
 namespace SeedBytes;
 
 public partial class ClientOptions

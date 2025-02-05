@@ -6,11 +6,12 @@ import {
     TypeId,
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
+
 import { csharp } from "..";
+import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { CsharpTypeMapper } from "../context/CsharpTypeMapper";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
-import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
 
 export class ProtobufResolver {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
@@ -47,7 +48,7 @@ export class ProtobufResolver {
                 );
             }
             case "userDefined": {
-                return new csharp.ClassReference({
+                return csharp.classReference({
                     name: this.context.getPascalCaseSafeName(protobufType.name),
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file),
                     namespaceAlias: "Proto"

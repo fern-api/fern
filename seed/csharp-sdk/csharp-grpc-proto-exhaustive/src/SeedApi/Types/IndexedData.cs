@@ -1,8 +1,7 @@
+using System.Linq;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
-
-#nullable enable
 
 namespace SeedApi;
 
@@ -43,8 +42,8 @@ public record IndexedData
     {
         return new IndexedData
         {
-            Indices = value.Indices?.ToList() ?? new List<uint>(),
-            Values = value.Values?.ToList() ?? new List<float>(),
+            Indices = value.Indices?.ToList() ?? Enumerable.Empty<uint>(),
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
         };
     }
 }

@@ -6,15 +6,19 @@ import * as core from "../../../../core";
 import * as fs from "fs";
 import { Blob } from "buffer";
 import * as SeedFileUpload from "../../../index";
+import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -43,64 +47,72 @@ export class Service {
         maybeFile: File | fs.ReadStream | Blob | undefined,
         maybeFileList: File[] | fs.ReadStream[] | Blob[] | undefined,
         request: SeedFileUpload.MyRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
         if (request.maybeString != null) {
-            await _request.append("maybeString", request.maybeString);
+            _request.append("maybe_string", request.maybeString);
         }
 
-        await _request.append("integer", request.integer.toString());
+        _request.append("integer", request.integer.toString());
         await _request.appendFile("file", file);
         for (const _file of fileList) {
-            await _request.appendFile("fileList", _file);
+            await _request.appendFile("file_list", _file);
         }
 
         if (maybeFile != null) {
-            await _request.appendFile("maybeFile", maybeFile);
+            await _request.appendFile("maybe_file", maybeFile);
         }
 
         if (maybeFileList != null) {
             for (const _file of maybeFileList) {
-                await _request.appendFile("maybeFileList", _file);
+                await _request.appendFile("maybe_file_list", _file);
             }
         }
 
         if (request.maybeInteger != null) {
-            await _request.append("maybeInteger", request.maybeInteger.toString());
+            _request.append("maybe_integer", request.maybeInteger.toString());
         }
 
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
-                await _request.append("optionalListOfStrings", _item);
+                _request.append("optional_list_of_strings", _item);
             }
         }
 
         for (const _item of request.listOfObjects) {
-            await _request.append("listOfObjects", JSON.stringify(_item));
+            _request.append(
+                "list_of_objects",
+                toJson(serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip" })),
+            );
         }
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
                 for (const _item of request.optionalMetadata) {
-                    await _request.append(
-                        "optionalMetadata",
-                        typeof _item === "string" ? _item : JSON.stringify(_item)
-                    );
+                    _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
                 }
         }
 
         if (request.optionalObjectType != null) {
-            await _request.append("optionalObjectType", request.optionalObjectType);
+            _request.append(
+                "optional_object_type",
+                serializers.ObjectType.jsonOrThrow(request.optionalObjectType, { unrecognizedObjectKeys: "strip" }),
+            );
         }
 
         if (request.optionalId != null) {
-            await _request.append("optionalId", request.optionalId);
+            _request.append(
+                "optional_id",
+                serializers.Id.jsonOrThrow(request.optionalId, { unrecognizedObjectKeys: "strip" }),
+            );
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -154,7 +166,11 @@ export class Service {
         await _request.appendFile("file", file);
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/just-file",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -201,15 +217,15 @@ export class Service {
 
     /**
      * @param {File | fs.ReadStream | Blob} file
-     * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
+     * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public async justFileWithQueryParams(
         file: File | fs.ReadStream | Blob,
-        request: SeedFileUpload.JustFileWithQueryParamsRequet,
-        requestOptions?: Service.RequestOptions
+        request: SeedFileUpload.JustFileWithQueryParamsRequest,
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (request.maybeString != null) {
             _queryParams["maybeString"] = request.maybeString;
         }
@@ -237,7 +253,11 @@ export class Service {
         await _request.appendFile("file", file);
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/just-file-with-query-params",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -276,7 +296,7 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedFileUploadTimeoutError(
-                    "Timeout exceeded when calling POST /just-file-with-query-params."
+                    "Timeout exceeded when calling POST /just-file-with-query-params.",
                 );
             case "unknown":
                 throw new errors.SeedFileUploadError({
@@ -293,19 +313,29 @@ export class Service {
     public async withContentType(
         file: File | fs.ReadStream | Blob,
         request: SeedFileUpload.WithContentTypeRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", file);
-        await _request.append("foo", request.foo);
-        await _request.append("bar", JSON.stringify(request.bar));
-        if (request.foobar != null) {
-            await _request.append("foobar", JSON.stringify(request.foobar));
+        _request.append("foo", request.foo);
+        _request.append(
+            "bar",
+            toJson(serializers.MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip" })),
+        );
+        if (request.fooBar != null) {
+            _request.append(
+                "foo_bar",
+                toJson(serializers.MyObject.jsonOrThrow(request.fooBar, { unrecognizedObjectKeys: "strip" })),
+            );
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/with-content-type"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/with-content-type",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

@@ -1,6 +1,8 @@
-import { DocsLinks } from "@fern-api/configuration-loader";
-import { constructRootApiFileContext, EndpointResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
 import terminalLink from "terminal-link";
+
+import { DocsLinks } from "@fern-api/configuration-loader";
+import { EndpointResolverImpl, TypeResolverImpl, constructRootApiFileContext } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateRefreshTokenEndpoint } from "./validateRefreshTokenEndpoint";
@@ -29,7 +31,7 @@ export const ValidOauthRule: Rule = {
                     });
                     if (resolvedTokenEndpoint == null) {
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             message: `Failed to resolve endpoint ${tokenEndpointReference}`
                         });
                     } else {
@@ -52,7 +54,7 @@ export const ValidOauthRule: Rule = {
                         });
                         if (resolvedRefreshEndpoint == null) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Failed to resolve endpoint ${tokenEndpointReference}`
                             });
                         } else {

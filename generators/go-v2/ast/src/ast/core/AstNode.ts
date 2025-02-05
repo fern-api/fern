@@ -1,4 +1,5 @@
 import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
+
 import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
 import { GoFile } from "./GoFile";
 
@@ -6,7 +7,7 @@ export abstract class AstNode extends AbstractAstNode {
     /**
      * Writes the node to a string.
      */
-    public async toString({
+    public async toStringAsync({
         packageName,
         rootImportPath,
         importPath,
@@ -27,13 +28,13 @@ export abstract class AstNode extends AbstractAstNode {
             formatter
         });
         this.write(file);
-        return file.toString();
+        return file.toStringAsync();
     }
 
     /**
      * Writes the node to a string.
      */
-    public toStringSync({
+    public toString({
         packageName,
         rootImportPath,
         importPath,
@@ -54,6 +55,6 @@ export abstract class AstNode extends AbstractAstNode {
             formatter
         });
         this.write(file);
-        return file.toStringSync();
+        return file.toString();
     }
 }

@@ -1,4 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import {
     ExampleContainer,
     ExampleNamedType,
@@ -8,6 +9,7 @@ import {
     ExampleUndiscriminatedUnionType,
     ExampleUnionType
 } from "@fern-fern/ir-sdk/api";
+
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "../object/ObjectGenerator";
 
@@ -68,6 +70,7 @@ export class ExampleGenerator {
         }
         return csharp.InstantiatedPrimitive.null();
     }
+
     private getSnippetForNamed(exampleNamedType: ExampleNamedType, parseDatetimes: boolean): csharp.AstNode {
         return exampleNamedType.shape._visit<csharp.AstNode>({
             alias: (exampleAliasType) =>

@@ -4,8 +4,6 @@ using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;
 
-#nullable enable
-
 namespace SeedBasicAuthEnvironmentVariables.Test.Unit.MockServer;
 
 [SetUpFixture]
@@ -26,7 +24,7 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedBasicAuthEnvironmentVariablesClient("USERNAME", "PASSWORD");
+        Client = new SeedBasicAuthEnvironmentVariablesClient("USERNAME", "ACCESS_TOKEN");
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }

@@ -1,4 +1,4 @@
-import { Namespace, SdkGroupName, EndpointSdkName } from "@fern-api/openapi-ir";
+import { EndpointSdkName, Namespace, SdkGroupName } from "@fern-api/openapi-ir";
 
 export function getNamespaceFromGroup(groupName: SdkGroupName): string | undefined {
     return groupName.find((group): group is Namespace => typeof group !== "string" && group.type === "namespace")?.name;
@@ -11,6 +11,6 @@ export function getEndpointNamespace(
     return namespaceOverride != null
         ? namespaceOverride
         : sdkName?.groupName != null
-        ? getNamespaceFromGroup(sdkName.groupName)
-        : undefined;
+          ? getNamespaceFromGroup(sdkName.groupName)
+          : undefined;
 }

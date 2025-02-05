@@ -1,18 +1,14 @@
-import { php } from "@fern-api/php-codegen";
-import {
-    BytesRequest,
-    FileUploadRequest,
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpRequestBodyReference,
-    InlinedRequestBody,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
 import { upperFirst } from "lodash-es";
+
+import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
+import { php } from "@fern-api/php-codegen";
+
+import { HttpEndpoint, HttpRequestBody, ServiceId } from "@fern-fern/ir-sdk/api";
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -164,6 +160,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const body = endpoint.response.body;
         return php.codeblock((writer) => {
             body._visit({
+                bytes: () => this.context.logger.error("Bytes not supported"),
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
                 fileDownload: () => this.context.logger.error("File download not supported"),
                 json: (_reference) => {
@@ -251,8 +248,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 });
             case "object":
             case "optional":
+            case "null":
             case "typeDict":
                 throw new Error(`Internal error; '${internalType.type}' type is not a supported return type`);
+            default:
+                assertNever(internalType);
         }
     }
 

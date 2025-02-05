@@ -11,7 +11,7 @@ export function register(
     services: {
         organization: OrganizationService;
         user: UserService;
-    }
+    },
 ): void {
     (expressApp as any).use("/organizations", services.organization.toRouter());
     (expressApp as any).use("/users", services.user.toRouter());

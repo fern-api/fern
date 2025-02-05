@@ -8,12 +8,14 @@ import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace ContentType {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -53,10 +55,14 @@ export class ContentType {
      */
     public async postJsonPatchContentType(
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions
+        requestOptions?: ContentType.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/foo/bar"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/foo/bar",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -113,10 +119,14 @@ export class ContentType {
      */
     public async postJsonPatchContentWithCharsetType(
         request: Fiddle.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions
+        requestOptions?: ContentType.RequestOptions,
     ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/foo/baz"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/foo/baz",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

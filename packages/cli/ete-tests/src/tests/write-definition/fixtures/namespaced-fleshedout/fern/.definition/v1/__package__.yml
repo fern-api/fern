@@ -163,7 +163,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
@@ -445,6 +445,7 @@ service:
         name: ChatRequest
       response:
         docs: OK
+        status-code: 200
         type: list<string>
       source:
         openapi: openapi/cohere.yaml

@@ -1,6 +1,7 @@
-import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
+import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 
 export function validateRequest({
@@ -25,7 +26,7 @@ export function validateRequest({
     if (body == null) {
         if (example != null) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: "Unexpected request in example."
             });
         }
@@ -35,6 +36,7 @@ export function validateRequest({
                 typeName: undefined,
                 typeNameForBreadcrumb: "<Inlined Request>",
                 rawObject: {
+                    "extra-properties": body["extra-properties"],
                     extends: body.extends,
                     properties: body.properties ?? {}
                 },
@@ -46,7 +48,7 @@ export function validateRequest({
                 breadcrumbs: ["request"],
                 depth: 0
             }).map((val): RuleViolation => {
-                return { severity: "error", message: val.message };
+                return { severity: "fatal", message: val.message };
             })
         );
     } else {
@@ -61,7 +63,7 @@ export function validateRequest({
                 breadcrumbs: ["response", "body"],
                 depth: 0
             }).map((val): RuleViolation => {
-                return { severity: "error", message: val.message };
+                return { severity: "fatal", message: val.message };
             })
         );
     }

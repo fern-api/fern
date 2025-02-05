@@ -1,7 +1,9 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
 
@@ -49,7 +51,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
                 return;
             }
             if (remainingServices.length > 0) {
-                return context.failAndThrow("Tthere are multiple services defined");
+                return context.failAndThrow("There are multiple services defined");
             }
 
             pair.key.value = "service";

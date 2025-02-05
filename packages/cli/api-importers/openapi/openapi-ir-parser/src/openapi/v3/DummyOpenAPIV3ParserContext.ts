@@ -1,6 +1,8 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { SchemaId, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+
 import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import {
@@ -51,7 +53,7 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
 
     public markReferencedByDiscriminatedUnion(
         _schema: OpenAPIV3.ReferenceObject,
-        _discrminant: string,
+        _discriminant: string,
         _times: number
     ): void {
         return;
@@ -73,7 +75,7 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
 
     public markSchemaWithDiscriminantValue(
         _schema: OpenAPIV3.ReferenceObject,
-        _discrminant: string,
+        _discriminant: string,
         _discriminantValue: string
     ): void {
         return;

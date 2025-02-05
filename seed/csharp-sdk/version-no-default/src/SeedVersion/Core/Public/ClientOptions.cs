@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedVersion.Core;
 
-#nullable enable
-
 namespace SeedVersion;
 
 public partial class ClientOptions

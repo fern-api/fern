@@ -29,7 +29,7 @@ export const SupportedSdkLanguageSchema: core.serialization.Schema<
 ]);
 
 export declare namespace SupportedSdkLanguageSchema {
-    type Raw =
+    export type Raw =
         | "curl"
         | "python"
         | "javascript"

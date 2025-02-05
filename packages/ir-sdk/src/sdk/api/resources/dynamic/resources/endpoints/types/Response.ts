@@ -5,7 +5,7 @@
 import * as FernIr from "../../../../../index";
 
 /**
- * Reperesents the response returned by a specific endpoint.
+ * Represents the response returned by a specific endpoint.
  *
  * For now, we only support json responses, but this is set up to support a
  * variety of other endpoint response types (e.g. file download, pagination,
@@ -13,16 +13,16 @@ import * as FernIr from "../../../../../index";
  */
 export type Response = FernIr.dynamic.Response.Json;
 
-export declare namespace Response {
-    interface Json extends _Utils {
+export namespace Response {
+    export interface Json extends _Utils {
         type: "json";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.Response._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         json: () => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -34,7 +34,7 @@ export const Response = {
             type: "json",
             _visit: function <_Result>(
                 this: FernIr.dynamic.Response.Json,
-                visitor: FernIr.dynamic.Response._Visitor<_Result>
+                visitor: FernIr.dynamic.Response._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.Response._visit(this, visitor);
             },

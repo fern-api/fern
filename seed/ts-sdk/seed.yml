@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v55
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
 publish:
@@ -40,8 +40,11 @@ fixtures:
     - customConfig:
         noScripts: true
         extraDependencies:
-          dummmy: "dummy"
+          dummy: "dummy"
       outputFolder: noScripts
+    - customConfig:
+        useBrandedStringAliases: true
+      outputFolder: branded-string-aliases
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -60,12 +63,15 @@ fixtures:
       outputFolder: with-partner-audience
   exhaustive:
     - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: null
       audiences:
         - audience1
         - audience2
       outputFolder: with-audiences
-    - customConfig: null
-      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde-layer
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
@@ -126,6 +132,10 @@ fixtures:
     - outputFolder: bigint
       customConfig:
         useBigInt: true
+    - outputFolder: bigint-no-serde-layer
+      customConfig:
+        useBigInt: true
+        noSerdeLayer: true
   error-property:
     - customConfig:
         private: true
@@ -143,13 +153,17 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
-      outputFolder: file-download-reponse-headers
+      outputFolder: file-download-response-headers
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         inlineFileProperties: true
-      outputFolder: wrap-file-properties
+        inlinePathParameters: true
+      outputFolder: inline
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -246,8 +260,6 @@ allowedFailures:
   - alias
   - api-wide-base-path
   - cross-package-type-names
-  - auth-environment-variables
-  - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences:no-custom-config
@@ -255,6 +267,7 @@ allowedFailures:
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  - oauth-client-credentials-custom
   # the below are likely related to changes made to example generation
   - multi-url-environment-no-default
   - objects-with-imports
@@ -267,3 +280,5 @@ allowedFailures:
   - oauth-client-credentials-nested-root:never-throw-errors
   - trace:no-zurg-no-throwing
   - trace:exhaustive
+  # Dynamic snippets
+  - unions # Required base properties need to be included in the example generator.

@@ -3,18 +3,18 @@ import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
-import { AstNode } from "./core/AstNode";
-import { DocXmlWriter } from "./core/DocXmlWriter";
-import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
 import { Method } from "./Method";
 import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
+import { AstNode } from "./core/AstNode";
+import { DocXmlWriter } from "./core/DocXmlWriter";
+import { Writer } from "./core/Writer";
 
 export declare namespace Class {
-    type ClassType = typeof Class.ClassType[keyof typeof Class.ClassType];
+    type ClassType = (typeof Class.ClassType)[keyof typeof Class.ClassType];
     interface Args {
         /* The name of the C# class */
         name: string;
@@ -268,6 +268,11 @@ export class Class extends AstNode {
                 }
             });
         }
+        if (!this.hasBody()) {
+            writer.write(";");
+            return;
+        }
+
         writer.writeNewLineIfLastLineNot();
         writer.writeLine("{");
 
@@ -341,6 +346,17 @@ export class Class extends AstNode {
         writer.dedent();
 
         writer.writeLine("}");
+    }
+
+    private hasBody(): boolean {
+        return (
+            this.fields.length > 0 ||
+            this.constructors.length > 0 ||
+            this.nestedClasses.length > 0 ||
+            this.nestedInterfaces.length > 0 ||
+            this.methods.length > 0 ||
+            this.operators.length > 0
+        );
     }
 
     private writeConstructors({ writer, constructors }: { writer: Writer; constructors: Class.Constructor[] }): void {

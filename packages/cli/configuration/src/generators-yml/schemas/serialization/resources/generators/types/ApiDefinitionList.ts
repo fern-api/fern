@@ -13,5 +13,5 @@ export const ApiDefinitionList: core.serialization.Schema<
 > = core.serialization.list(ApiDefinitionSchema);
 
 export declare namespace ApiDefinitionList {
-    type Raw = ApiDefinitionSchema.Raw[];
+    export type Raw = ApiDefinitionSchema.Raw[];
 }

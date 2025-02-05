@@ -1,5 +1,6 @@
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";

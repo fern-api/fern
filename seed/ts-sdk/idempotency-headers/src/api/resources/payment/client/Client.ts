@@ -9,12 +9,14 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Payment {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,10 +43,14 @@ export class Payment {
      */
     public async create(
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
-        requestOptions?: Payment.IdempotentRequestOptions
+        requestOptions?: Payment.IdempotentRequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/payment"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/payment",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -106,8 +112,9 @@ export class Payment {
     public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/payment/${encodeURIComponent(paymentId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/payment/${encodeURIComponent(paymentId)}`,
             ),
             method: "DELETE",
             headers: {
@@ -145,7 +152,7 @@ export class Payment {
                 });
             case "timeout":
                 throw new errors.SeedIdempotencyHeadersTimeoutError(
-                    "Timeout exceeded when calling DELETE /payment/{paymentId}."
+                    "Timeout exceeded when calling DELETE /payment/{paymentId}.",
                 );
             case "unknown":
                 throw new errors.SeedIdempotencyHeadersError({

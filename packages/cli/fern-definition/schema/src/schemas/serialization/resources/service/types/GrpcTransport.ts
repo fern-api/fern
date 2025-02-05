@@ -14,7 +14,7 @@ export const GrpcTransport: core.serialization.ObjectSchema<
 });
 
 export declare namespace GrpcTransport {
-    interface Raw {
+    export interface Raw {
         "service-name": string;
     }
 }

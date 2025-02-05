@@ -1,3 +1,7 @@
+import { GetReferenceOpts, PackageId, getTextOfTsNode } from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+
 import {
     ExampleEndpointCall,
     HttpEndpoint,
@@ -6,9 +10,7 @@ import {
     QueryParameter,
     SdkRequest
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+
 import { RequestParameter } from "./RequestParameter";
 
 export declare namespace AbstractRequestParameter {
@@ -52,6 +54,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     public abstract getInitialStatements(context: SdkContext, args: { variablesInScope: string[] }): ts.Statement[];
     public abstract getAllQueryParameters(context: SdkContext): QueryParameter[];
     public abstract getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined;
+    public abstract getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression;
     public abstract getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression;
     public abstract getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression;
     public abstract withQueryParameter(
@@ -69,7 +72,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined;
-    protected abstract getParameterType(contxt: SdkContext): {
+    protected abstract getParameterType(context: SdkContext): {
         type: ts.TypeNode;
         hasQuestionToken: boolean;
         initializer?: ts.Expression;

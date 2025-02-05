@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral;
 
 public record SendRequest
@@ -15,6 +13,9 @@ public record SendRequest
 
     [JsonPropertyName("stream")]
     public required bool Stream { get; set; }
+
+    [JsonPropertyName("ending")]
+    public required string Ending { get; set; }
 
     [JsonPropertyName("context")]
     public required string Context { get; set; }

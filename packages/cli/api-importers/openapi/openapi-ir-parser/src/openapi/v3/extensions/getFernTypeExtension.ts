@@ -1,12 +1,14 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { assertNever } from "@fern-api/core-utils";
+import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import {
     Availability,
     LiteralSchemaValue,
     PrimitiveSchemaValueWithExample,
     SchemaWithExample
 } from "@fern-api/openapi-ir";
-import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
@@ -268,6 +270,19 @@ export function getSchemaFromFernType({
             optional: (itemType) =>
                 itemType != null
                     ? SchemaWithExample.optional({
+                          nameOverride,
+                          generatedName,
+                          title,
+                          value: itemType,
+                          description,
+                          availability,
+                          groupName,
+                          inline: undefined
+                      })
+                    : undefined,
+            nullable: (itemType) =>
+                itemType != null
+                    ? SchemaWithExample.nullable({
                           nameOverride,
                           generatedName,
                           title,

@@ -1,5 +1,7 @@
-import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { Zurg } from "@fern-typescript/commons";
+
+import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToSchemaConverter {
@@ -53,7 +55,17 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.date();
     }
 
+    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+        if (itemType.type === "container" && itemType.container.type === "optional") {
+            return this.convert({ ...params, typeReference: itemType.container.optional }).optionalNullable();
+        }
+        return this.convert({ ...params, typeReference: itemType }).nullable();
+    }
+
     protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+        if (itemType.type === "container" && itemType.container.type === "nullable") {
+            return this.convert({ ...params, typeReference: itemType.container.nullable }).optionalNullable();
+        }
         return this.convert({ ...params, typeReference: itemType }).optional();
     }
 

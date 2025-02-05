@@ -1,8 +1,10 @@
-import { go } from "@fern-api/go-ast";
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
 import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { go } from "@fern-api/go-ast";
+
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
+import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -26,7 +28,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return await code.toString({
+        return await code.toStringAsync({
             packageName: SNIPPET_PACKAGE_NAME,
             importPath: SNIPPET_IMPORT_PATH,
             rootImportPath: this.context.rootImportPath,
@@ -43,7 +45,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return code.toStringSync({
+        return code.toString({
             packageName: SNIPPET_PACKAGE_NAME,
             importPath: SNIPPET_IMPORT_PATH,
             rootImportPath: this.context.rootImportPath,
@@ -143,7 +145,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "basic") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
@@ -152,7 +154,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "bearer") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
@@ -161,11 +163,13 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.newAuthMismatchError({ auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return go.TypeInstantiation.nop();
                 }
                 return this.getConstructorHeaderAuthArg({ auth, values });
+            default:
+                assertNever(auth);
         }
     }
 
@@ -359,6 +363,8 @@ export class EndpointSnippetGenerator {
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
             case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+            default:
+                assertNever(endpoint.request);
         }
     }
 
@@ -400,6 +406,8 @@ export class EndpointSnippetGenerator {
             }
             case "typeReference":
                 return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
         }
     }
 
@@ -423,6 +431,11 @@ export class EndpointSnippetGenerator {
     }): go.TypeInstantiation[] {
         const args: go.TypeInstantiation[] = [];
 
+        const { inlinePathParameters, inlineFileProperties } = {
+            inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? false,
+            inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? false
+        };
+
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: go.StructField[] = [];
         if (request.pathParameters != null) {
@@ -434,20 +447,23 @@ export class EndpointSnippetGenerator {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (!this.context.includePathParametersInWrappedRequest({ request })) {
+        if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
 
-        if (!this.context.customConfig?.inlineFileProperties) {
+        if (!inlineFileProperties) {
             args.push(...filePropertyInfo.fileFields.map((field) => field.value));
         }
 
-        if (this.context.needsRequestParameter({ request })) {
+        if (this.context.needsRequestParameter({ request, inlinePathParameters, inlineFileProperties })) {
             args.push(
                 this.getInlinedRequestArg({
                     request,
                     snippet,
-                    pathParameterFields: this.context.includePathParametersInWrappedRequest({ request })
+                    pathParameterFields: this.context.includePathParametersInWrappedRequest({
+                        request,
+                        inlinePathParameters
+                    })
                         ? pathParameterFields
                         : [],
                     filePropertyInfo
@@ -545,6 +561,8 @@ export class EndpointSnippetGenerator {
                 return [this.getReferencedRequestBodyPropertyStructField({ body, value })];
             case "fileUpload":
                 return this.getFileUploadRequestBodyStructFields({ filePropertyInfo });
+            default:
+                assertNever(body);
         }
     }
 
@@ -584,6 +602,8 @@ export class EndpointSnippetGenerator {
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
                 return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+            default:
+                assertNever(body);
         }
     }
 
@@ -650,15 +670,5 @@ export class EndpointSnippetGenerator {
             }),
             arguments_
         });
-    }
-
-    private newAuthMismatchError({
-        auth,
-        values
-    }: {
-        auth: FernIr.dynamic.Auth;
-        values: FernIr.dynamic.AuthValues;
-    }): Error {
-        return new Error(`Expected auth type ${auth.type}, got ${values.type}`);
     }
 }

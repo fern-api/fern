@@ -19,7 +19,7 @@ export const ObjectTypeDeclaration: core.serialization.ObjectSchema<
 });
 
 export declare namespace ObjectTypeDeclaration {
-    interface Raw {
+    export interface Raw {
         extends: DeclaredTypeName.Raw[];
         properties: ObjectProperty.Raw[];
         extendedProperties?: ObjectProperty.Raw[] | null;

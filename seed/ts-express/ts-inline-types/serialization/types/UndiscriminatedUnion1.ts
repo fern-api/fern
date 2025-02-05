@@ -13,23 +13,21 @@ export const UndiscriminatedUnion1: core.serialization.Schema<
     core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineType1),
     core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineType2),
     core.serialization.lazy(() => serializers.UndiscriminatedUnion1DiscriminatedUnion1),
-    core.serialization.lazy(() => serializers.UndiscriminatedUnion1DiscriminatedUnion1),
     core.serialization.lazy(() => serializers.UndiscriminatedUnion1InlineEnum1),
     core.serialization.lazy(() => serializers.UserId),
     core.serialization.list(core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineListItem1)),
     core.serialization.list(core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineSetItem1)),
     core.serialization.record(
         core.serialization.string(),
-        core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineMapItem1)
+        core.serialization.lazyObject(() => serializers.UndiscriminatedUnion1InlineMapItem1),
     ),
     core.serialization.lazyObject(() => serializers.ReferenceType),
 ]);
 
 export declare namespace UndiscriminatedUnion1 {
-    type Raw =
+    export type Raw =
         | serializers.UndiscriminatedUnion1InlineType1.Raw
         | serializers.UndiscriminatedUnion1InlineType2.Raw
-        | serializers.UndiscriminatedUnion1DiscriminatedUnion1.Raw
         | serializers.UndiscriminatedUnion1DiscriminatedUnion1.Raw
         | serializers.UndiscriminatedUnion1InlineEnum1.Raw
         | serializers.UserId.Raw

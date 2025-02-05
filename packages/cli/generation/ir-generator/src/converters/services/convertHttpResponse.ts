@@ -1,18 +1,19 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
+    RawSchemas,
+    isRawTextType,
+    parseRawBytesType,
+    parseRawFileType,
+    parseRawTextType
+} from "@fern-api/fern-definition-schema";
+import {
     HttpResponse,
     HttpResponseBody,
     JsonResponse,
     NonStreamHttpResponseBody,
     StreamingResponse
 } from "@fern-api/ir-sdk";
-import {
-    isRawTextType,
-    parseRawFileType,
-    parseRawTextType,
-    parseRawBytesType,
-    RawSchemas
-} from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType";
@@ -110,20 +111,22 @@ export function convertNonStreamHttpResponseBody({
         const docs = typeof response !== "string" ? response.docs : undefined;
         const responseType = typeof response === "string" ? response : response.type;
 
-        if (parseRawFileType(responseType) != null) {
-            return HttpResponseBody.fileDownload({
-                docs
-            });
-        } else if (parseRawTextType(responseType) != null) {
-            return HttpResponseBody.text({
-                docs
-            });
-        } else if (parseRawBytesType(responseType) != null) {
-            return HttpResponseBody.bytes({
-                docs
-            });
-        } else {
-            return convertJsonResponse(response, docs, file, typeResolver);
+        if (responseType != null) {
+            if (parseRawFileType(responseType) != null) {
+                return HttpResponseBody.fileDownload({
+                    docs
+                });
+            } else if (parseRawTextType(responseType) != null) {
+                return HttpResponseBody.text({
+                    docs
+                });
+            } else if (parseRawBytesType(responseType) != null) {
+                return HttpResponseBody.bytes({
+                    docs
+                });
+            } else {
+                return convertJsonResponse(response, docs, file, typeResolver);
+            }
         }
     }
 
@@ -144,7 +147,7 @@ export function convertStreamHttpResponseBody({
     if (responseStream != null) {
         const docs = typeof responseStream !== "string" ? responseStream.docs : undefined;
         const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
-        const streamFormat = typeof responseStream === "string" ? "json" : responseStream.format ?? "json";
+        const streamFormat = typeof responseStream === "string" ? "json" : (responseStream.format ?? "json");
         if (isRawTextType(typeReference)) {
             return StreamingResponse.text({
                 docs
@@ -172,10 +175,16 @@ function convertJsonResponse(
     docs: string | undefined,
     file: FernFileContext,
     typeResolver: TypeResolver
-): HttpResponseBody.Json {
-    const responseBodyType = file.parseTypeReference(response);
+): HttpResponseBody.Json | undefined {
+    const responseTypeReference = typeof response !== "string" ? response.type : response;
+    if (responseTypeReference == null) {
+        return undefined;
+    }
+    const responseBodyType = file.parseTypeReference(
+        typeof response === "string" ? response : { ...response, type: responseTypeReference }
+    );
     const resolvedType = typeResolver.resolveTypeOrThrow({
-        type: typeof response !== "string" ? response.type : response,
+        type: responseTypeReference,
         file
     });
     const responseProperty = typeof response !== "string" ? response.property : undefined;

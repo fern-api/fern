@@ -1,6 +1,8 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
+
+import { TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
@@ -27,17 +29,34 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
         };
     }
 
+    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+        return this.generateNonOptionalTypeReferenceNode(
+            ts.factory.createUnionTypeNode([
+                this.convert({ ...params, typeReference: itemType }).typeNode,
+                ts.factory.createLiteralTypeNode(ts.factory.createNull())
+            ])
+        );
+    }
+
     protected override dateTime(): TypeReferenceNode {
         return this.string();
     }
 
     protected override bigInteger(): TypeReferenceNode {
-        return this.string();
+        if (this.useBigInt) {
+            return this.generateNonOptionalTypeReferenceNode(
+                ts.factory.createUnionTypeNode([
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
+                ])
+            );
+        }
+        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
     }
 
     protected override long(): TypeReferenceNode {
         if (this.useBigInt) {
-            return this.string();
+            return this.bigInteger();
         }
         return this.number();
     }

@@ -12,7 +12,7 @@ export const UploadResponse: core.serialization.ObjectSchema<serializers.UploadR
     });
 
 export declare namespace UploadResponse {
-    interface Raw {
+    export interface Raw {
         count?: number | null;
     }
 }

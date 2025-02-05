@@ -1,0 +1,6 @@
+## 0.46.16
+**`(fix):`** Improve parsing of OpenAPI schemas with an array in the `type` property.
+* If the array contains `"null"`, it is interpreted as nullable, and removed from the array.
+* If there is only a single item in the array (after removing "null"), it previously defaulted to `unknown`, but now the specified type is used.
+
+

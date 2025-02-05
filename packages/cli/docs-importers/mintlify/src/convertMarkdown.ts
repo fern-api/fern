@@ -1,9 +1,12 @@
-import grayMatter from "gray-matter";
-import { MintlifyFrontmatter } from "./mintlify";
 import { readFile } from "fs/promises";
-import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import grayMatter from "gray-matter";
+
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+
+import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
+
+import { MintlifyFrontmatter } from "./mintlify";
 
 export declare namespace convertMarkdown {
     interface Args {
@@ -42,7 +45,7 @@ export async function convertMarkdown({
     return {
         mintlifyFrontmatter: data,
         relativeFilepathFromRoot,
-        sidebarTitle: data.sidebarTitle ?? data.title,
+        sidebarTitle: data.sidebarTitle ?? data.title ?? "Introduction",
         frontmatter: {
             title: data.title,
             subtitle: data.description,
@@ -81,7 +84,9 @@ export async function convertMarkdown({
             "twitter:card": undefined,
             noindex: undefined,
             nofollow: undefined,
-            "jsonld:breadcrumb": undefined
+            "jsonld:breadcrumb": undefined,
+            logo: undefined,
+            keywords: undefined
         },
         content: transformedContent
     };

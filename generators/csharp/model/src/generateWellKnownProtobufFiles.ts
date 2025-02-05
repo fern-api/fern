@@ -1,5 +1,7 @@
 import { CSharpFile } from "@fern-api/csharp-codegen";
+
 import { WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { WellKnownProtoStructGenerator } from "./proto/WellKnownProtoStructGenerator";
 import { WellKnownProtoValueGenerator } from "./proto/WellKnownProtoValueGenerator";

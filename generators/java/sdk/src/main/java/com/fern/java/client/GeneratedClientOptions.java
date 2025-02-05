@@ -22,6 +22,7 @@ import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import java.util.Map;
+import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -33,6 +34,8 @@ public abstract class GeneratedClientOptions extends AbstractGeneratedJavaFile {
     public abstract MethodSpec httpClient();
 
     public abstract MethodSpec httpClientWithTimeout();
+
+    public abstract Optional<MethodSpec> version();
 
     public abstract Map<VariableId, MethodSpec> variableGetters();
 

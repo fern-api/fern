@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
 
-#nullable enable
-
 namespace SeedExamples;
 
 public record Tree

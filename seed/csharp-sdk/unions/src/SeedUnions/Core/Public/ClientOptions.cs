@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedUnions.Core;
 
-#nullable enable
-
 namespace SeedUnions;
 
 public partial class ClientOptions

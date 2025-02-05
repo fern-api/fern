@@ -9,11 +9,13 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace PropertyBasedError {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -40,7 +42,11 @@ export class PropertyBasedError {
      */
     public async throwError(requestOptions?: PropertyBasedError.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "property-based-error"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "property-based-error",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -75,7 +81,7 @@ export class PropertyBasedError {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedErrorPropertyError({
@@ -93,7 +99,7 @@ export class PropertyBasedError {
                 });
             case "timeout":
                 throw new errors.SeedErrorPropertyTimeoutError(
-                    "Timeout exceeded when calling GET /property-based-error."
+                    "Timeout exceeded when calling GET /property-based-error.",
                 );
             case "unknown":
                 throw new errors.SeedErrorPropertyError({

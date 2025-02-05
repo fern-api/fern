@@ -4,17 +4,19 @@
 
 import * as core from "../../../../core";
 import * as SeedPagination from "../../../index";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Users {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -43,13 +45,13 @@ export class Users {
      */
     public async listWithCursorPagination(
         request: SeedPagination.ListUsersCursorPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersCursorPaginationRequest
+            request: SeedPagination.ListUsersCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, perPage, order, startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (page != null) {
                 _queryParams["page"] = page.toString();
             }
@@ -57,13 +59,17 @@ export class Users {
                 _queryParams["per_page"] = perPage.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             if (startingAfter != null) {
                 _queryParams["starting_after"] = startingAfter;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -121,6 +127,89 @@ export class Users {
     }
 
     /**
+     * @param {SeedPagination.ListUsersMixedTypeCursorPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithMixedTypeCursorPagination({
+     *         cursor: "cursor"
+     *     })
+     */
+    public async listWithMixedTypeCursorPagination(
+        request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.Page<SeedPagination.User>> {
+        const list = async (
+            request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest,
+        ): Promise<SeedPagination.ListUsersMixedTypePaginationResponse> => {
+            const { cursor } = request;
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+            if (cursor != null) {
+                _queryParams["cursor"] = cursor;
+            }
+            const _response = await core.fetcher({
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
+                method: "POST",
+                headers: {
+                    Authorization: await this._getAuthorizationHeader(),
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/pagination",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
+                },
+                contentType: "application/json",
+                queryParameters: _queryParams,
+                requestType: "json",
+                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                maxRetries: requestOptions?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+            });
+            if (_response.ok) {
+                return serializers.ListUsersMixedTypePaginationResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                });
+            }
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedPaginationError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                });
+            }
+            switch (_response.error.reason) {
+                case "non-json":
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.rawBody,
+                    });
+                case "timeout":
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
+                case "unknown":
+                    throw new errors.SeedPaginationError({
+                        message: _response.error.errorMessage,
+                    });
+            }
+        };
+        return new core.Pageable<SeedPagination.ListUsersMixedTypePaginationResponse, SeedPagination.User>({
+            response: await list(request),
+            hasNextPage: (response) => response?.next != null,
+            getItems: (response) => response?.data ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.next));
+            },
+        });
+    }
+
+    /**
      * @param {SeedPagination.ListUsersBodyCursorPaginationRequest} request
      * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -133,13 +222,17 @@ export class Users {
      */
     public async listWithBodyCursorPagination(
         request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersBodyCursorPaginationRequest
+            request: SeedPagination.ListUsersBodyCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "POST",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -212,13 +305,13 @@ export class Users {
      */
     public async listWithOffsetPagination(
         request: SeedPagination.ListUsersOffsetPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersOffsetPaginationRequest
+            request: SeedPagination.ListUsersOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, perPage, order, startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (page != null) {
                 _queryParams["page"] = page.toString();
             }
@@ -226,13 +319,114 @@ export class Users {
                 _queryParams["per_page"] = perPage.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             if (startingAfter != null) {
                 _queryParams["starting_after"] = startingAfter;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
+                method: "GET",
+                headers: {
+                    Authorization: await this._getAuthorizationHeader(),
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/pagination",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
+                },
+                contentType: "application/json",
+                queryParameters: _queryParams,
+                requestType: "json",
+                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                maxRetries: requestOptions?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+            });
+            if (_response.ok) {
+                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                });
+            }
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedPaginationError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                });
+            }
+            switch (_response.error.reason) {
+                case "non-json":
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.rawBody,
+                    });
+                case "timeout":
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                case "unknown":
+                    throw new errors.SeedPaginationError({
+                        message: _response.error.errorMessage,
+                    });
+            }
+        };
+        let _offset = request?.page != null ? request?.page : 0;
+        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+            response: await list(request),
+            hasNextPage: (response) => (response?.data ?? []).length > 0,
+            getItems: (response) => response?.data ?? [],
+            loadPage: (_response) => {
+                _offset += 1;
+                return list(core.setObjectProperty(request, "page", _offset));
+            },
+        });
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersDoubleOffsetPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithDoubleOffsetPagination({
+     *         page: 1.1,
+     *         perPage: 1.1,
+     *         order: "asc",
+     *         startingAfter: "starting_after"
+     *     })
+     */
+    public async listWithDoubleOffsetPagination(
+        request: SeedPagination.ListUsersDoubleOffsetPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.Page<SeedPagination.User>> {
+        const list = async (
+            request: SeedPagination.ListUsersDoubleOffsetPaginationRequest,
+        ): Promise<SeedPagination.ListUsersPaginationResponse> => {
+            const { page, perPage, order, startingAfter } = request;
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+            if (page != null) {
+                _queryParams["page"] = page.toString();
+            }
+            if (perPage != null) {
+                _queryParams["per_page"] = perPage.toString();
+            }
+            if (order != null) {
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
+            }
+            if (startingAfter != null) {
+                _queryParams["starting_after"] = startingAfter;
+            }
+            const _response = await core.fetcher({
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -304,13 +498,17 @@ export class Users {
      */
     public async listWithBodyOffsetPagination(
         request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersBodyOffsetPaginationRequest
+            request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "POST",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -384,13 +582,13 @@ export class Users {
      */
     public async listWithOffsetStepPagination(
         request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersOffsetStepPaginationRequest
+            request: SeedPagination.ListUsersOffsetStepPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, limit, order } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (page != null) {
                 _queryParams["page"] = page.toString();
             }
@@ -398,10 +596,14 @@ export class Users {
                 _queryParams["limit"] = limit.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -473,13 +675,13 @@ export class Users {
      */
     public async listWithOffsetPaginationHasNextPage(
         request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest
+            request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
             const { page, limit, order } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (page != null) {
                 _queryParams["page"] = page.toString();
             }
@@ -487,10 +689,14 @@ export class Users {
                 _queryParams["limit"] = limit.toString();
             }
             if (order != null) {
-                _queryParams["order"] = order;
+                _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -560,18 +766,22 @@ export class Users {
      */
     public async listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersExtendedRequest
+            request: SeedPagination.ListUsersExtendedRequest,
         ): Promise<SeedPagination.ListUsersExtendedResponse> => {
             const { cursor } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (cursor != null) {
                 _queryParams["cursor"] = cursor;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -639,18 +849,22 @@ export class Users {
      */
     public async listWithExtendedResultsAndOptionalData(
         request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
         const list = async (
-            request: SeedPagination.ListUsersExtendedRequestForOptionalData
+            request: SeedPagination.ListUsersExtendedRequestForOptionalData,
         ): Promise<SeedPagination.ListUsersExtendedOptionalListResponse> => {
             const { cursor } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (cursor != null) {
                 _queryParams["cursor"] = cursor;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -718,16 +932,20 @@ export class Users {
      */
     public async listUsernames(
         request: SeedPagination.ListUsernamesRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<string>> {
         const list = async (request: SeedPagination.ListUsernamesRequest): Promise<SeedPagination.UsernameCursor> => {
             const { startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (startingAfter != null) {
                 _queryParams["starting_after"] = startingAfter;
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),
@@ -795,18 +1013,22 @@ export class Users {
      */
     public async listWithGlobalConfig(
         request: SeedPagination.ListWithGlobalConfigRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<string>> {
         const list = async (
-            request: SeedPagination.ListWithGlobalConfigRequest
+            request: SeedPagination.ListWithGlobalConfigRequest,
         ): Promise<SeedPagination.UsernameContainer> => {
             const { offset } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
             if (offset != null) {
                 _queryParams["offset"] = offset.toString();
             }
             const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                url: urlJoin(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/users",
+                ),
                 method: "GET",
                 headers: {
                     Authorization: await this._getAuthorizationHeader(),

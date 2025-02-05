@@ -1,9 +1,10 @@
 import {
-    constructFernFileContext,
-    constructRootApiFileContext,
     FernFileContext,
-    VariableResolverImpl
+    VariableResolverImpl,
+    constructFernFileContext,
+    constructRootApiFileContext
 } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -16,7 +17,7 @@ export const NoUndefinedVariableReferenceRule: Rule = {
             if (!variableReference.startsWith(VariableResolverImpl.VARIABLE_PREFIX)) {
                 return [
                     {
-                        severity: "error",
+                        severity: "fatal",
                         message: `Variable reference must start with ${VariableResolverImpl.VARIABLE_PREFIX}`
                     }
                 ];
@@ -28,7 +29,7 @@ export const NoUndefinedVariableReferenceRule: Rule = {
 
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `Variable ${variableReference} is not defined.`
                 }
             ];

@@ -69,10 +69,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:RequestTypeInlineType1": {
@@ -92,10 +89,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:RootType1": {
@@ -170,10 +164,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:RootType1FooMapValue": {
@@ -201,10 +192,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:RootType1FooListItem": {
@@ -232,10 +220,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:RootType1FooSetItem": {
@@ -263,10 +248,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:RootType1InlineType1": {
@@ -302,10 +284,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:RootType1InlineType1NestedInlineType1": {
@@ -351,10 +330,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:DiscriminatedUnion1": {
@@ -430,10 +406,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:DiscriminatedUnion1InlineType1InlineType1": {
@@ -461,10 +434,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:DiscriminatedUnion1InlineType2": {
@@ -492,10 +462,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UndiscriminatedUnion1": {
@@ -518,14 +485,6 @@
             "type": {
               "type": "id",
               "value": "type_:UndiscriminatedUnion1InlineType2"
-            }
-          },
-          {
-            "typeName": "UndiscriminatedUnion1DiscriminatedUnion1",
-            "description": "lorem ipsum",
-            "type": {
-              "type": "id",
-              "value": "type_:UndiscriminatedUnion1DiscriminatedUnion1"
             }
           },
           {
@@ -632,10 +591,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UndiscriminatedUnion1InlineType1InlineType1": {
@@ -663,10 +619,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UndiscriminatedUnion1InlineType2": {
@@ -694,10 +647,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:InlineEnum1": {
@@ -794,10 +744,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
@@ -825,10 +772,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2": {
@@ -856,10 +800,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UndiscriminatedUnion1InlineEnum1": {
@@ -921,10 +862,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UndiscriminatedUnion1InlineSetItem1": {
@@ -952,10 +890,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UndiscriminatedUnion1InlineMapItem1": {
@@ -983,10 +918,7 @@
               "value": "type_:ReferenceType"
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:ReferenceType": {
@@ -1006,10 +938,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

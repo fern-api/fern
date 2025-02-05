@@ -19,7 +19,7 @@ export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
     .extend(WithDocsAndAvailability);
 
 export declare namespace InlinedRequestBodyProperty {
-    interface Raw extends WithDocsAndAvailability.Raw {
+    export interface Raw extends WithDocsAndAvailability.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
     }

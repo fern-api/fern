@@ -380,7 +380,7 @@
             }
           },
           {
-            "discriminantValue": "dateimte",
+            "discriminantValue": "datetime",
             "additionalProperties": {
               "extends": [],
               "properties": [
@@ -435,10 +435,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_types:Bar": {
@@ -456,10 +453,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_union:GetShapeRequest": {
@@ -477,10 +471,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_union:Shape": {
@@ -545,10 +536,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_union:Square": {
@@ -566,10 +554,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },

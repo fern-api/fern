@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * The {@code Stream} class implmenets {@link Iterable} to provide a simple mechanism for reading and parsing
+ * The {@code Stream} class implements {@link Iterable} to provide a simple mechanism for reading and parsing
  * objects of a given type from data streamed via a {@link Reader} using a specified delimiter.
  * <p>
  * {@code Stream} assumes that data is being pushed to the provided {@link Reader} asynchronously and utilizes a
@@ -23,7 +23,7 @@ public final class Stream<T> implements Iterable<T> {
      */
     private final Class<T> valueType;
     /**
-     * The {@link Scanner} used for reading from the input stream and blocking when neede during iteration.
+     * The {@link Scanner} used for reading from the input stream and blocking when needed during iteration.
      */
     private final Scanner scanner;
 

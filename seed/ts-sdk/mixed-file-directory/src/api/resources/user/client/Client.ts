@@ -10,11 +10,13 @@ import * as errors from "../../../../errors/index";
 import { Events } from "../resources/events/client/Client";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -48,16 +50,20 @@ export class User {
      */
     public async list(
         request: SeedMixedFileDirectory.ListUsersRequest = {},
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedMixedFileDirectory.User[]> {
         const { limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/users/"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users/",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

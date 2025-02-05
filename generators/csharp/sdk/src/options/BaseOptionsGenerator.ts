@@ -1,4 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export const BASE_URL_FIELD_NAME = "BaseUrl";
@@ -54,7 +55,7 @@ export class BaseOptionsGenerator {
     }: HttpHeadersFieldOptionArgs): csharp.Field {
         const headersReference = csharp.Type.reference(this.context.getHeadersClassReference());
         return csharp.field({
-            // Classes implenting internal interface field cannot have an access modifier
+            // Classes implementing internal interface field cannot have an access modifier
             access: !interfaceReference ? csharp.Access.Internal : undefined,
             name: "Headers",
             get: true,
@@ -129,7 +130,7 @@ export class BaseOptionsGenerator {
         ];
     }
 
-    public getIdepotentRequestOptionFields(): csharp.Field[] {
+    public getIdempotentRequestOptionFields(): csharp.Field[] {
         return this.context.getIdempotencyHeaders().map((header) =>
             csharp.field({
                 access: csharp.Access.Public,

@@ -1,10 +1,11 @@
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { NopSourceResolver } from "@fern-api/source-resolver";
-import { createTaskContext } from "./utils/createTaskContext";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic } from "@fern-api/ir-sdk";
+import { NopSourceResolver } from "@fern-api/source-resolver";
+
 import { Spec } from "./Spec";
 import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace";
+import { createTaskContext } from "./utils/createTaskContext";
 
 export function generateDynamicIR({
     spec,
@@ -31,7 +32,7 @@ export function generateDynamicIR({
         keywords,
         sourceResolver: new NopSourceResolver(),
         smartCasing: smartCasing ?? false,
-        disableExamples: true,
+        exampleGeneration: { disabled: true },
         version: undefined,
         packageName: undefined,
         readme: undefined

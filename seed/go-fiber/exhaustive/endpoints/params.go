@@ -2,9 +2,17 @@
 
 package endpoints
 
+import (
+	json "encoding/json"
+)
+
 type GetWithMultipleQuery struct {
-	Query []string `query:"query"`
-	Numer []int    `query:"numer"`
+	Query  []string `query:"query"`
+	Number []int    `query:"number"`
+}
+
+type GetWithInlinePathAndQuery struct {
+	Query string `query:"query"`
 }
 
 type GetWithPathAndQuery struct {
@@ -14,4 +22,21 @@ type GetWithPathAndQuery struct {
 type GetWithQuery struct {
 	Query  string `query:"query"`
 	Number int    `query:"number"`
+}
+
+type ModifyResourceAtInlinedPath struct {
+	Body string `json:"-" url:"-"`
+}
+
+func (m *ModifyResourceAtInlinedPath) UnmarshalJSON(data []byte) error {
+	var body string
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	m.Body = body
+	return nil
+}
+
+func (m *ModifyResourceAtInlinedPath) MarshalJSON() ([]byte, error) {
+	return json.Marshal(m.Body)
 }

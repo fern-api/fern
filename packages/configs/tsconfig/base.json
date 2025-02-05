@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "composite": true
+  },
+  "exclude": ["node_modules", "dist", ".turbo", ".github", ".husky", "__snapshots__"]
+}

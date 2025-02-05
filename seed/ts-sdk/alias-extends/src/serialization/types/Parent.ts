@@ -12,7 +12,7 @@ export const Parent: core.serialization.ObjectSchema<serializers.Parent.Raw, See
     });
 
 export declare namespace Parent {
-    interface Raw {
+    export interface Raw {
         parent: string;
     }
 }

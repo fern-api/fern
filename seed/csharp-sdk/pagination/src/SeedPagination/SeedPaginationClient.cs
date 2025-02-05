@@ -1,12 +1,10 @@
 using SeedPagination.Core;
 
-#nullable enable
-
 namespace SeedPagination;
 
 public partial class SeedPaginationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedPaginationClient(string token, ClientOptions? clientOptions = null)
     {
@@ -28,8 +26,11 @@ public partial class SeedPaginationClient
             }
         }
         _client = new RawClient(clientOptions);
+        Complex = new ComplexClient(_client);
         Users = new UsersClient(_client);
     }
+
+    public ComplexClient Complex { get; init; }
 
     public UsersClient Users { get; init; }
 }

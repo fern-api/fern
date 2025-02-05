@@ -1,10 +1,12 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { Logger } from "@fern-api/logger";
 import { Namespace, SdkGroup, SdkGroupName } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+
 import { ParseOpenAPIOptions } from "../options";
-import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
 import { SchemaParserContext } from "../schema/SchemaParserContext";
+import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2 } from "./v2";
 
@@ -87,7 +89,7 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         if (splitSchemaKey[1] === "properties" && splitSchemaKey[2] != null) {
             const resolvedProperty = resolvedSchema.properties?.[splitSchemaKey[2]];
             if (resolvedProperty == null) {
-                throw new Error(`${schema.$ref} is undefiened. Property does not exist on object.`);
+                throw new Error(`${schema.$ref} is undefined. Property does not exist on object.`);
             } else if (isReferenceObject(resolvedProperty)) {
                 resolvedSchema = this.resolveSchemaReference(resolvedProperty);
             } else {
@@ -138,13 +140,13 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
 
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         times: number
     ): void;
 
     public abstract markSchemaWithDiscriminantValue(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         discriminantValue: string
     ): void;
 }
@@ -177,13 +179,13 @@ export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
         return;
     }
 
-    markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string, times: number): void {
+    markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discriminant: string, times: number): void {
         return;
     }
 
     markSchemaWithDiscriminantValue(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         discriminantValue: string
     ): void {
         return;

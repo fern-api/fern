@@ -9,11 +9,13 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -39,10 +41,14 @@ export class User {
      */
     public async createUser(
         request: SeedExtraProperties.CreateUserRequest,
-        requestOptions?: User.RequestOptions
+        requestOptions?: User.RequestOptions,
     ): Promise<SeedExtraProperties.User> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/user"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/user",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

@@ -28,6 +28,7 @@ import {
     VariableType,
     VoidClassReference
 } from "@fern-api/ruby-codegen";
+
 import {
     BytesRequest,
     ExampleEndpointCall,
@@ -42,6 +43,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { FileUploadUtility } from "./FileUploadUtility";
 import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass";
 import { RequestOptions } from "./RequestOptionsClass";
@@ -242,13 +244,13 @@ export class EndpointGenerator {
                                     example: "my_file.txt"
                                 }),
                             // TODO: add examples for fileUpload parameters
-                            bodyProperty: (irbp: InlinedRequestBodyProperty) =>
+                            bodyProperty: (prop: InlinedRequestBodyProperty) =>
                                 new Property({
-                                    name: irbp.name.name.snakeCase.safeName,
-                                    isOptional: isTypeOptional(irbp.valueType),
-                                    wireValue: irbp.name.wireValue,
-                                    type: crf.fromTypeReference(irbp.valueType),
-                                    documentation: irbp.docs
+                                    name: prop.name.name.snakeCase.safeName,
+                                    isOptional: isTypeOptional(prop.valueType),
+                                    wireValue: prop.name.wireValue,
+                                    type: crf.fromTypeReference(prop.valueType),
+                                    documentation: prop.docs
                                 }),
                             _other: () => {
                                 throw new Error("Unknown file upload property type.");

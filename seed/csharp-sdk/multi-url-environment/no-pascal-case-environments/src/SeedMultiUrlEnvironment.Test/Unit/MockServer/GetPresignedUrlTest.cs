@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedMultiUrlEnvironment;
 using SeedMultiUrlEnvironment.Core;
 
-#nullable enable
-
 namespace SeedMultiUrlEnvironment.Test.Unit.MockServer;
 
 [TestFixture]

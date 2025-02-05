@@ -1,4 +1,29 @@
-import { assertNever, SetRequired } from "@fern-api/core-utils";
+import {
+    ImportsManager,
+    JavaScriptRuntime,
+    NpmPackage,
+    PackageId,
+    getParameterNameForRootPathParameter,
+    getTextOfTsNode,
+    maybeAddDocsStructure
+} from "@fern-typescript/commons";
+import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
+import {
+    ClassDeclarationStructure,
+    InterfaceDeclarationStructure,
+    MethodDeclarationStructure,
+    ModuleDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
+    Scope,
+    StructureKind,
+    ts
+} from "ts-morph";
+import { code } from "ts-poet";
+
+import { SetRequired, assertNever } from "@fern-api/core-utils";
+
 import {
     AuthScheme,
     BasicAuthScheme,
@@ -15,42 +40,20 @@ import {
     VariableDeclaration,
     VariableId
 } from "@fern-fern/ir-sdk/api";
-import {
-    getParameterNameForRootPathParameter,
-    getTextOfTsNode,
-    ImportsManager,
-    JavaScriptRuntime,
-    maybeAddDocsStructure,
-    NpmPackage,
-    PackageId
-} from "@fern-typescript/commons";
-import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
-import {
-    ClassDeclarationStructure,
-    InterfaceDeclarationStructure,
-    MethodDeclarationStructure,
-    ModuleDeclarationStructure,
-    OptionalKind,
-    PropertySignatureStructure,
-    Scope,
-    StructureKind,
-    ts
-} from "ts-morph";
-import { code } from "ts-poet";
+
+import { GeneratedHeader } from "./GeneratedHeader";
+import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
-import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
-import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
-import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
+import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
+import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
+import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./endpoints/utils/requestOptionsParameter";
-import { GeneratedHeader } from "./GeneratedHeader";
-import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace GeneratedSdkClientClassImpl {
@@ -74,6 +77,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -86,6 +90,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "_options";
+    private static BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
@@ -109,7 +114,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private includeSerdeLayer: boolean;
     private omitUndefined: boolean;
+    private allowExtraFields: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -132,6 +139,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         retainOriginalCasing,
         inlineFileProperties,
         omitUndefined,
+        allowExtraFields,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -146,7 +154,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
+        this.allowExtraFields = allowExtraFields;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -185,7 +195,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            inlineFileProperties: this.inlineFileProperties
+                            inlineFileProperties: this.inlineFileProperties,
+                            includeSerdeLayer: this.includeSerdeLayer,
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: this.omitUndefined
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -310,6 +323,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         return getDefaultEndpointImplementation({
                             response: HttpResponseBody.text(textResponse)
                         });
+                    },
+                    bytes: (bytesResponse) => {
+                        throw new Error("Bytes response type is not supported yet");
                     },
                     _other: () => {
                         throw new Error("Unknown Response type: " + endpoint.response?.body?.type);
@@ -515,6 +531,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                             GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME
                                         )
                                     )
+                                ),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier(
+                                        GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME
+                                    ),
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createThis(),
+                                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                                        ),
+                                        ts.factory.createIdentifier(
+                                            GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME
+                                        )
+                                    )
                                 )
                             ],
                             true
@@ -716,6 +746,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             return false;
         }
         return this.getCustomAuthorizationHeaders().length > 0;
+    }
+
+    public getBaseUrl(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
+        const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
+
+        const environment = this.getEnvironment(endpoint, context);
+
+        return ts.factory.createBinaryExpression(
+            referenceToBaseUrl,
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            environment
+        );
     }
 
     public getEnvironment(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
@@ -997,7 +1039,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     hasQuestionToken: true,
                     docs: ["Additional headers to include in the request."]
                 }
-            ]
+            ],
+            isExported: true
         };
 
         const generatedVersion = context.versionContext.getGeneratedVersion();
@@ -1033,7 +1076,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
             extends: [GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME],
-            properties
+            properties,
+            isExported: true
         };
     }
 
@@ -1150,6 +1194,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
             });
         }
+
+        properties.push({
+            name: GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
+            type: getTextOfTsNode(
+                context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                )
+            ),
+            hasQuestionToken: true,
+            docs: ["Specify a custom URL to connect the client to."]
+        });
 
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push({
@@ -1336,7 +1391,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
-            properties
+            properties,
+            isExported: true
         };
     }
 
@@ -1355,6 +1411,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
+        );
+    }
+
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        return context.coreUtilities.fetcher.Supplier.get(
+            this.getReferenceToOption(GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME)
         );
     }
 
@@ -1557,7 +1619,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     ts.factory.createThrowStatement(
                                         context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
                                             message: ts.factory.createStringLiteral(
-                                                `Please specify ${this.bearerAuthScheme.tokenEnvVar} when instantiating the client.`
+                                                `Please specify a ${BEARER_TOKEN_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.bearerAuthScheme.tokenEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
                                             responseBody: undefined
@@ -1706,16 +1768,102 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     : context.coreUtilities.fetcher.Supplier.get(
                           this.getReferenceToOption(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme))
                       );
-
             if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
-                statements.push(
-                    ts.factory.createReturnStatement(
-                        context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                            usernameExpression,
-                            passwordExpression
+                if (this.basicAuthScheme.usernameEnvVar != null) {
+                    const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
+                    statements.push(
+                        ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        USERNAME_VARIABLE_NAME,
+                                        undefined,
+                                        undefined,
+                                        usernameExpression
+                                    )
+                                ],
+                                ts.NodeFlags.Const
+                            )
+                        ),
+                        ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createThrowStatement(
+                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                            message: ts.factory.createStringLiteral(
+                                                `Please specify a ${USERNAME_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.usernameEnvVar} environment variable`
+                                            ),
+                                            statusCode: undefined,
+                                            responseBody: undefined
+                                        })
+                                    )
+                                ],
+                                true
+                            )
                         )
-                    )
-                );
+                    );
+                    const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;
+                    statements.push(
+                        ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        PASSWORD_VARIABLE_NAME,
+                                        undefined,
+                                        undefined,
+                                        passwordExpression
+                                    )
+                                ],
+                                ts.NodeFlags.Const
+                            )
+                        ),
+                        ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createThrowStatement(
+                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                            message: ts.factory.createStringLiteral(
+                                                `Please specify a ${PASSWORD_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.passwordEnvVar} environment variable`
+                                            ),
+                                            statusCode: undefined,
+                                            responseBody: undefined
+                                        })
+                                    )
+                                ],
+                                true
+                            )
+                        )
+                    );
+                    statements.push(
+                        ts.factory.createReturnStatement(
+                            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
+                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME)
+                            )
+                        )
+                    );
+                } else {
+                    statements.push(
+                        ts.factory.createReturnStatement(
+                            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                                usernameExpression,
+                                passwordExpression
+                            )
+                        )
+                    );
+                }
             } else {
                 const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
                 const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;

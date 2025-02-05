@@ -11,8 +11,11 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest;
+use Seed\Users\Types\ListUsersMixedTypePaginationResponse;
 use Seed\Users\Requests\ListUsersBodyCursorPaginationRequest;
 use Seed\Users\Requests\ListUsersOffsetPaginationRequest;
+use Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest;
 use Seed\Users\Requests\ListUsersBodyOffsetPaginationRequest;
 use Seed\Users\Requests\ListUsersOffsetStepPaginationRequest;
 use Seed\Users\Requests\ListWithOffsetPaginationHasNextPageRequest;
@@ -92,6 +95,47 @@ class UsersClient
     }
 
     /**
+     * @param ListUsersMixedTypeCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return ListUsersMixedTypePaginationResponse
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request, ?array $options = null): ListUsersMixedTypePaginationResponse
+    {
+        $query = [];
+        if ($request->cursor != null) {
+            $query['cursor'] = $request->cursor;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::POST,
+                    query: $query,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return ListUsersMixedTypePaginationResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
      * @param ListUsersBodyCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -138,6 +182,56 @@ class UsersClient
      * @throws SeedApiException
      */
     public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
+    {
+        $query = [];
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        if ($request->perPage != null) {
+            $query['per_page'] = $request->perPage;
+        }
+        if ($request->order != null) {
+            $query['order'] = $request->order;
+        }
+        if ($request->startingAfter != null) {
+            $query['starting_after'] = $request->startingAfter;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return ListUsersPaginationResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param ListUsersDoubleOffsetPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return ListUsersPaginationResponse
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
     {
         $query = [];
         if ($request->page != null) {

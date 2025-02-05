@@ -1,5 +1,6 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { upperFirst } from "lodash-es";
+
+import { generatorsYml } from "@fern-api/configuration";
 
 export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<string>> = {
     [generatorsYml.GenerationLanguage.PHP]: new Set(
@@ -155,6 +156,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "else",
         "enum",
         "extends",
+        "false",
         "final",
         "finally",
         "float",
@@ -185,6 +187,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "throw",
         "throws",
         "transient",
+        "true",
         "try",
         "void",
         "volatile",

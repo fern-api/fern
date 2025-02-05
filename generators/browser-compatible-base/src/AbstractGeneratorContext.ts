@@ -1,8 +1,10 @@
-import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
+
 import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService";
 import { getSdkVersion } from "./utils";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
+    [LogLevel.Trace]: FernGeneratorExec.logging.LogLevel.Debug,
     [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
     [LogLevel.Info]: FernGeneratorExec.logging.LogLevel.Info,
     [LogLevel.Warn]: FernGeneratorExec.logging.LogLevel.Warn,

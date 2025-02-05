@@ -1,8 +1,12 @@
 import { z } from "zod";
 
-export const SdkCustomConfigSchema = z.strictObject({
-    namespace: z.string().optional(),
-    "client-class-name": z.string().optional()
-});
+import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
+
+export const SdkCustomConfigSchema = z
+    .strictObject({
+        // Deprecated; use clientName instead.
+        "client-class-name": z.string().optional()
+    })
+    .extend(BasePhpCustomConfigSchema.shape);
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

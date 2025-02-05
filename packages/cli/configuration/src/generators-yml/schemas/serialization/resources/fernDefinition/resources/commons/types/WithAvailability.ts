@@ -15,7 +15,7 @@ export const WithAvailability: core.serialization.ObjectSchema<
 });
 
 export declare namespace WithAvailability {
-    interface Raw {
+    export interface Raw {
         availability?: AvailabilityUnionSchema.Raw | null;
     }
 }

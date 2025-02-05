@@ -1,21 +1,23 @@
-import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
-    generateInlinePropertiesModule,
     GetReferenceOpts,
+    TypeReferenceNode,
+    generateInlinePropertiesModule,
     getTextOfTsNode,
-    maybeAddDocsStructure,
-    TypeReferenceNode
+    maybeAddDocsStructure
 } from "@fern-typescript/commons";
-import { GeneratedObjectType, BaseContext } from "@fern-typescript/contexts";
+import { BaseContext, GeneratedObjectType } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
     ModuleDeclarationStructure,
     PropertySignatureStructure,
     StatementStructures,
     StructureKind,
-    ts,
-    WriterFunction
+    WriterFunction,
+    ts
 } from "ts-morph";
+
+import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 interface Property {

@@ -162,7 +162,7 @@ types:
 
   NamedType:
     docs: |
-      A reference to a named type. For backwards compatbility, this type must be fully compatible
+      A reference to a named type. For backwards compatibility, this type must be fully compatible
       with the DeclaredTypeName.
     properties:
       typeId: commons.TypeId
@@ -192,6 +192,9 @@ types:
         type: TypeReference
         key: list
       map: MapType
+      nullable:
+        type: TypeReference
+        key: nullable
       optional:
         type: TypeReference
         key: optional
@@ -404,6 +407,7 @@ types:
       list: ExampleListContainer
       set: ExampleSetContainer
       optional: ExampleOptionalContainer
+      nullable: ExampleNullableContainer
       map: ExampleMapContainer
       literal: ExampleLiteralContainer
 
@@ -420,6 +424,11 @@ types:
   ExampleOptionalContainer:
     properties:
       optional: optional<ExampleTypeReference>
+      valueType: TypeReference
+
+  ExampleNullableContainer:
+    properties:
+      nullable: optional<ExampleTypeReference>
       valueType: TypeReference
 
   ExampleMapContainer:

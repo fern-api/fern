@@ -1,12 +1,10 @@
 using SeedUnions.Core;
 
-#nullable enable
-
 namespace SeedUnions;
 
 public partial class SeedUnionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedUnionsClient(ClientOptions? clientOptions = null)
     {

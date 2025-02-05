@@ -15,10 +15,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -209,7 +206,7 @@
   },
   "auth": {
     "type": "basicAuth",
-    "passwordName": "password",
+    "passwordName": "accessToken",
     "usernameName": "username"
   },
   "snippetsConfiguration": {},

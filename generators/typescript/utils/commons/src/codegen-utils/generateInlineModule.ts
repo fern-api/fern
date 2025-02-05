@@ -1,5 +1,3 @@
-import { assertNever } from "@fern-api/core-utils";
-import { TypeReference, TypeDeclaration, MapType, NamedType, DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import {
     ModuleDeclarationKind,
     ModuleDeclarationStructure,
@@ -8,6 +6,11 @@ import {
     TypeAliasDeclarationStructure,
     WriterFunction
 } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { InlineConsts } from "./inlineConsts";
 
 export function generateInlinePropertiesModule({
@@ -215,6 +218,7 @@ function generateTypeVisitor<TOut>(
                 map: visitor.map,
                 set: visitor.set,
                 optional: (typeReference) => generateTypeVisitor(typeReference, visitor),
+                nullable: (typeReference) => generateTypeVisitor(typeReference, visitor),
                 _other: visitor.other
             }),
         _other: visitor.other
@@ -227,6 +231,8 @@ function getNamedType(typeReference: TypeReference): NamedType | undefined {
             return typeReference;
         case "container":
             switch (typeReference.container.type) {
+                case "nullable":
+                    return getNamedType(typeReference.container.nullable);
                 case "optional":
                     return getNamedType(typeReference.container.optional);
                 case "list":

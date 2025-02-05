@@ -47,10 +47,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:DeleteResponse": {
@@ -58,10 +55,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        "properties": []
       }
     },
     "type_:DescribeResponse": {
@@ -125,10 +119,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:FetchResponse": {
@@ -178,10 +169,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:IndexedData": {
@@ -214,10 +202,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:ListElement": {
@@ -238,10 +223,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:ListResponse": {
@@ -295,10 +277,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:NamespaceSummary": {
@@ -319,10 +298,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Pagination": {
@@ -343,10 +319,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:QueryColumn": {
@@ -411,10 +384,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:QueryResponse": {
@@ -471,10 +441,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:QueryResult": {
@@ -508,10 +475,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:ScoredColumn": {
@@ -576,10 +540,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UpdateResponse": {
@@ -587,10 +548,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        "properties": []
       }
     },
     "type_:UploadResponse": {
@@ -611,10 +569,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Usage": {
@@ -635,10 +590,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Metadata": {
@@ -760,7 +712,8 @@
                   "type": "unknown"
                 }
               }
-            }
+            },
+            "statusCode": 200
           },
           "errorsV2": [],
           "examples": [
@@ -852,6 +805,7 @@
                 "value": "type_:UploadResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -994,6 +948,7 @@
                 "value": "type_:DeleteResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1075,6 +1030,7 @@
                 "value": "type_:DescribeResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1177,6 +1133,7 @@
                 "value": "type_:FetchResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1328,6 +1285,7 @@
                 "value": "type_:ListResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1525,6 +1483,7 @@
                 "value": "type_:QueryResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],
@@ -1726,6 +1685,7 @@
                 "value": "type_:UpdateResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],

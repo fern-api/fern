@@ -5,4 +5,4 @@ export const Scope = {
     RequestBody: "requestBody"
 } as const;
 
-export type Scope = typeof Scope[keyof typeof Scope];
+export type Scope = (typeof Scope)[keyof typeof Scope];

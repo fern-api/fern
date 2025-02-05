@@ -14,7 +14,7 @@ export const GeneratorSnippetsSchema: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorSnippetsSchema {
-    interface Raw {
+    export interface Raw {
         path: string;
     }
 }

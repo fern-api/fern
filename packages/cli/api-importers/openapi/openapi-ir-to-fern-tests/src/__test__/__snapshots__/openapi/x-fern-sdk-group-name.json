@@ -69,6 +69,7 @@
               "path": "/auth/user",
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "user.User",
               },
               "source": {
@@ -97,6 +98,7 @@ service:
       response:
         docs: Success
         type: user.User
+        status-code: 200
       examples:
         - response:
             body:

@@ -1,12 +1,10 @@
 using SeedEnum.Core;
 
-#nullable enable
-
 namespace SeedEnum;
 
 public partial class SeedEnumClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedEnumClient(ClientOptions? clientOptions = null)
     {

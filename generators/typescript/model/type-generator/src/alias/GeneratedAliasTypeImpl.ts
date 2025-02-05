@@ -1,7 +1,6 @@
-import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
-    generateInlineAliasModule,
     GetReferenceOpts,
+    generateInlineAliasModule,
     getTextOfTsNode,
     maybeAddDocsStructure
 } from "@fern-typescript/commons";
@@ -10,10 +9,13 @@ import {
     ModuleDeclarationStructure,
     StatementStructures,
     StructureKind,
-    ts,
     TypeAliasDeclarationStructure,
-    WriterFunction
+    WriterFunction,
+    ts
 } from "ts-morph";
+
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export class GeneratedAliasTypeImpl<Context extends BaseContext>

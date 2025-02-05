@@ -6,7 +6,7 @@ import * as SeedTrace from "../../../index";
 
 export interface TraceResponsesPage {
     /**
-     * If present, use this to load subseqent pages.
+     * If present, use this to load subsequent pages.
      * The offset is the id of the next trace response to load.
      */
     offset?: number;

@@ -51,7 +51,8 @@ public class HeadersClient {
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("X-Endpoint-Version", request.getEndpointVersion());
         _requestBuilder.addHeader("X-Async", request.getAsync().toString());
         Request okhttpRequest = _requestBuilder.build();

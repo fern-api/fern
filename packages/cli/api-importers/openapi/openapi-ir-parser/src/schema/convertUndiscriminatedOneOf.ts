@@ -1,19 +1,21 @@
+import { difference } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     Availability,
-    convertNumberToSnakeCase,
     Encoding,
-    isSchemaEqual,
     LiteralSchemaValue,
     OneOfSchemaWithExample,
     SchemaWithExample,
     SdkGroupName,
-    Source
+    Source,
+    convertNumberToSnakeCase,
+    isSchemaEqual
 } from "@fern-api/openapi-ir";
-import { difference } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
+
+import { SchemaParserContext } from "./SchemaParserContext";
 import { convertEnum } from "./convertEnum";
 import { convertReferenceObject, convertSchema } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
@@ -62,13 +64,18 @@ export function convertUndiscriminatedOneOf({
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
-        if (!isReferenceObject(schema) && schema.enum != null && context.options.cooerceEnumsToLiterals) {
+        if (
+            !isReferenceObject(schema) &&
+            schema.enum != null &&
+            context.options.coerceEnumsToLiterals &&
+            schema.type === "string"
+        ) {
             return schema.enum.map((enumValue) => {
                 return SchemaWithExample.literal({
                     nameOverride: undefined,
                     generatedName: getGeneratedTypeName([generatedName, enumValue], context.options.preserveSchemaIds),
                     title: undefined,
-                    value: LiteralSchemaValue.string(enumValue),
+                    value: LiteralSchemaValue.string(String(enumValue)),
                     groupName: undefined,
                     description: undefined,
                     availability: enumValue.availability
@@ -141,7 +148,7 @@ export function convertUndiscriminatedOneOf({
         return uniqueSubtypes[0];
     }
 
-    return wrapUndiscriminantedOneOf({
+    return wrapUndiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
@@ -275,7 +282,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         return uniqueSubtypes[0];
     }
 
-    return wrapUndiscriminantedOneOf({
+    return wrapUndiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
@@ -348,7 +355,7 @@ function getUniqueSubTypeNames({
     return prefixes;
 }
 
-export function wrapUndiscriminantedOneOf({
+export function wrapUndiscriminatedOneOf({
     nameOverride,
     generatedName,
     title,
@@ -377,7 +384,7 @@ export function wrapUndiscriminantedOneOf({
             generatedName,
             title,
             value: SchemaWithExample.oneOf(
-                OneOfSchemaWithExample.undisciminated({
+                OneOfSchemaWithExample.undiscriminated({
                     description,
                     availability,
                     nameOverride,
@@ -397,7 +404,7 @@ export function wrapUndiscriminantedOneOf({
         });
     }
     return SchemaWithExample.oneOf(
-        OneOfSchemaWithExample.undisciminated({
+        OneOfSchemaWithExample.undiscriminated({
             description,
             availability,
             nameOverride,

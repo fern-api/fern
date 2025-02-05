@@ -171,7 +171,7 @@ await client.endpoints.container.getAndReturnSetOfObjects(
         {
             string: "string",
         },
-    ])
+    ]),
 );
 ```
 
@@ -377,7 +377,7 @@ await client.endpoints.container.getAndReturnOptional({
 await client.endpoints.contentType.postJsonPatchContentType({
     string: "string",
     integer: 1,
-    long: 1000000,
+    long: BigInt("1000000"),
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -389,7 +389,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
     map: {
         1: "map",
     },
-    bigint: "1000000",
+    bigint: BigInt("1000000"),
 });
 ```
 
@@ -441,7 +441,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
 await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
     string: "string",
     integer: 1,
-    long: 1000000,
+    long: BigInt("1000000"),
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -453,7 +453,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
     map: {
         1: "map",
     },
-    bigint: "1000000",
+    bigint: BigInt("1000000"),
 });
 ```
 
@@ -713,7 +713,7 @@ await client.endpoints.httpMethods.testPut("id", {
 await client.endpoints.httpMethods.testPatch("id", {
     string: "string",
     integer: 1,
-    long: 1000000,
+    long: BigInt("1000000"),
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -725,7 +725,7 @@ await client.endpoints.httpMethods.testPatch("id", {
     map: {
         1: "map",
     },
-    bigint: "1000000",
+    bigint: BigInt("1000000"),
 });
 ```
 
@@ -835,7 +835,7 @@ await client.endpoints.httpMethods.testDelete("id");
 await client.endpoints.object.getAndReturnWithOptionalField({
     string: "string",
     integer: 1,
-    long: 1000000,
+    long: BigInt("1000000"),
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -847,7 +847,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
     map: {
         1: "map",
     },
-    bigint: "1000000",
+    bigint: BigInt("1000000"),
 });
 ```
 
@@ -1005,7 +1005,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
     nestedObject: {
         string: "string",
         integer: 1,
-        long: 1000000,
+        long: BigInt("1000000"),
         double: 1.1,
         bool: true,
         datetime: "2024-01-15T09:30:00Z",
@@ -1017,7 +1017,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
         map: {
             1: "map",
         },
-        bigint: "1000000",
+        bigint: BigInt("1000000"),
     },
 });
 ```
@@ -1054,7 +1054,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string_, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1072,7 +1072,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
     nestedObject: {
         string: "string",
         integer: 1,
-        long: 1000000,
+        long: BigInt("1000000"),
         double: 1.1,
         bool: true,
         datetime: "2024-01-15T09:30:00Z",
@@ -1084,7 +1084,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
         map: {
             1: "map",
         },
-        bigint: "1000000",
+        bigint: BigInt("1000000"),
     },
 });
 ```
@@ -1102,7 +1102,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**string:** `string`
+**string\_:** `string`
 
 </dd>
 </dl>
@@ -1148,7 +1148,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
         nestedObject: {
             string: "string",
             integer: 1,
-            long: 1000000,
+            long: BigInt("1000000"),
             double: 1.1,
             bool: true,
             datetime: "2024-01-15T09:30:00Z",
@@ -1160,7 +1160,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
             map: {
                 1: "map",
             },
-            bigint: "1000000",
+            bigint: BigInt("1000000"),
         },
     },
     {
@@ -1168,7 +1168,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
         nestedObject: {
             string: "string",
             integer: 1,
-            long: 1000000,
+            long: BigInt("1000000"),
             double: 1.1,
             bool: true,
             datetime: "2024-01-15T09:30:00Z",
@@ -1180,7 +1180,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
             map: {
                 1: "map",
             },
-            bigint: "1000000",
+            bigint: BigInt("1000000"),
         },
     },
 ]);
@@ -1450,7 +1450,7 @@ GET with multiple of same query param
 ```typescript
 await client.endpoints.params.getWithAllowMultipleQuery({
     query: "query",
-    numer: 1,
+    number: 1,
 });
 ```
 
@@ -1887,7 +1887,7 @@ await client.endpoints.primitive.getAndReturnInt(1);
 <dd>
 
 ```typescript
-await client.endpoints.primitive.getAndReturnLong(1000000);
+await client.endpoints.primitive.getAndReturnLong(BigInt("1000000"));
 ```
 
 </dd>
@@ -2300,7 +2300,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
     nestedObject: {
         string: "string",
         integer: 1,
-        long: 1000000,
+        long: BigInt("1000000"),
         double: 1.1,
         bool: true,
         datetime: "2024-01-15T09:30:00Z",
@@ -2312,7 +2312,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
         map: {
             1: "map",
         },
-        bigint: "1000000",
+        bigint: BigInt("1000000"),
     },
 });
 ```

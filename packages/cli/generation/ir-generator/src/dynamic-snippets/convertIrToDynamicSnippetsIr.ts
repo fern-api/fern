@@ -1,4 +1,5 @@
 import { dynamic as DynamicSnippets, IntermediateRepresentation } from "@fern-api/ir-sdk";
+
 import { DynamicSnippetsConverter } from "./DynamicSnippetsConverter";
 
 export function convertIrToDynamicSnippetsIr(

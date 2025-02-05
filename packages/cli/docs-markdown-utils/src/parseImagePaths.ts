@@ -1,16 +1,21 @@
-import { AbsoluteFilePath, dirname, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import grayMatter from "gray-matter";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
+import { isAbsolute } from "path";
 import { visit } from "unist-util-visit";
-import { parseMarkdownToTree } from "./parseMarkdownToTree";
 import { z } from "zod";
 
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+
+import { getMarkdownFormat } from "./getMarkdownFormat";
+import { parseMarkdownToTree } from "./parseMarkdownToTree";
+
 interface AbsolutePathMetadata {
-    absolutePathToMdx: AbsoluteFilePath;
+    absolutePathToMarkdownFile: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
 }
 
@@ -51,7 +56,7 @@ export function parseImagePaths(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
-    const tree = parseMarkdownToTree(content);
+    const tree = parseMarkdownToTree(content, getMarkdownFormat(metadata.absolutePathToMarkdownFile));
 
     let offset = 0;
 
@@ -145,14 +150,14 @@ export function parseImagePaths(
 
 function resolvePath(
     pathToImage: string | undefined,
-    { absolutePathToFernFolder, absolutePathToMdx }: AbsolutePathMetadata
+    { absolutePathToFernFolder, absolutePathToMarkdownFile }: AbsolutePathMetadata
 ): AbsoluteFilePath | undefined {
     if (pathToImage == null || isExternalUrl(pathToImage) || isDataUrl(pathToImage)) {
         return undefined;
     }
 
     const filepath = resolve(
-        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMdx),
+        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     );
 
@@ -171,6 +176,36 @@ function isDataUrl(url: string): boolean {
     return url.startsWith("data:");
 }
 
+export type ReplacedHref =
+    | { type: "replace"; slug: string; href: string }
+    | { type: "missing-reference"; path: string; href: string };
+
+export function getReplacedHref({
+    href,
+    metadata,
+    markdownFilesToPathName
+}: {
+    href: string | undefined;
+    metadata: AbsolutePathMetadata;
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>;
+}): ReplacedHref | undefined {
+    if (href == null) {
+        return;
+    }
+    if (href.endsWith(".md") || href.endsWith(".mdx")) {
+        const absoluteFilePath = resolvePath(href, metadata);
+        if (absoluteFilePath != null) {
+            const slug = markdownFilesToPathName[absoluteFilePath];
+            if (slug != null) {
+                return { type: "replace", slug, href };
+            } else {
+                return { type: "missing-reference", path: absoluteFilePath, href };
+            }
+        }
+    }
+    return undefined;
+}
+
 /**
  * This step should run after the images have been uploaded. It replaces the image paths in the markdown with the fileIDs.
  * In the frontend, the fileIDs are then used to securely fetch the images.
@@ -178,7 +213,7 @@ function isDataUrl(url: string): boolean {
 export function replaceImagePathsAndUrls(
     markdown: string,
     fileIdsMap: ReadonlyMap<AbsoluteFilePath, string>,
-    markdownFilesToPathName: ReadonlyMap<AbsoluteFilePath, string>,
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>,
     metadata: AbsolutePathMetadata,
     context: TaskContext
 ): string {
@@ -193,18 +228,25 @@ export function replaceImagePathsAndUrls(
     let offset = 0;
 
     function mapImage(image: string | undefined) {
-        if (image != null && !isExternalUrl(image) && !isDataUrl(image)) {
-            try {
-                const fileId = fileIdsMap.get(AbsoluteFilePath.of(image));
-                if (fileId != null) {
-                    return `file:${fileId}`;
-                }
-            } catch (e) {
-                // do nothing
-                return;
-            }
+        if (image == null || isExternalUrl(image) || isDataUrl(image)) {
+            return undefined;
         }
-        return;
+
+        // Handle absolute path
+        if (isAbsolute(image)) {
+            const absolutePath = AbsoluteFilePath.of(image);
+            const fileId = fileIdsMap.get(absolutePath);
+            return fileId ? `file:${fileId}` : undefined;
+        }
+
+        // Handle relative path
+        const resolvedPath = resolvePath(image, metadata);
+        if (resolvedPath) {
+            const fileId = fileIdsMap.get(resolvedPath);
+            return fileId ? `file:${fileId}` : undefined;
+        }
+
+        return undefined;
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
@@ -226,27 +268,9 @@ export function replaceImagePathsAndUrls(
         }
 
         function replaceHref(href: string | undefined) {
-            if (href == null) {
-                return;
-            }
-            if (href.endsWith(".md") || href.endsWith(".mdx")) {
-                const absoluteFilePath = resolvePath(href, metadata);
-                if (absoluteFilePath != null) {
-                    const pathName = markdownFilesToPathName.get(absoluteFilePath);
-                    if (pathName != null) {
-                        replaced = replaced.replace(href, pathName);
-                    } else {
-                        context.logger.error(
-                            `${relative(
-                                metadata.absolutePathToFernFolder,
-                                absoluteFilePath
-                            )} has no slug defined but is referenced by ${relative(
-                                metadata.absolutePathToFernFolder,
-                                metadata.absolutePathToMdx
-                            )}`
-                        );
-                    }
-                }
+            const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
+            if (href != null && replacedHref != null && replacedHref.type === "replace") {
+                replaced = replaced.replace(href, replacedHref.slug);
             }
         }
 
@@ -366,7 +390,7 @@ function getPosition(
     return { start, length };
 }
 
-function trimAnchor(text: unknown): string | undefined {
+export function trimAnchor(text: unknown): string | undefined {
     if (typeof text !== "string") {
         return undefined;
     }

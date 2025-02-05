@@ -1,5 +1,5 @@
-import { RelativeFilePath, sep } from "@fern-api/path-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath, sep } from "@fern-api/path-utils";
 
 export class FernDefinitionDirectory {
     private files: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};

@@ -1,8 +1,10 @@
+import chalk from "chalk";
+
+import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { createVenusService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
-import chalk from "chalk";
 
 export async function generateToken({
     orgId,
@@ -12,6 +14,9 @@ export async function generateToken({
     taskContext: TaskContext;
 }): Promise<void> {
     const token = await askToLogin(taskContext);
+    if (token.type === "user") {
+        await createOrganizationIfDoesNotExist({ organization: orgId, token, context: taskContext });
+    }
     const venus = createVenusService({ token: token.value });
     const response = await venus.registry.generateRegistryTokens({
         organizationId: FernVenusApi.OrganizationId(orgId)

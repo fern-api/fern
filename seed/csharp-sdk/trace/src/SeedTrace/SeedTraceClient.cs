@@ -1,13 +1,11 @@
 using SeedTrace.Core;
 using SeedTrace.V2;
 
-#nullable enable
-
 namespace SeedTrace;
 
 public partial class SeedTraceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedTraceClient(
         string token,

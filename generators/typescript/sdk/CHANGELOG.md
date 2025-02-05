@@ -5,6 +5,223 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.48.5] - 2025-01-28
+
+- Fix: Don't double wrap a blob if a user uploads a blob to a multi-part form.
+  Otherwise file's content-type is lost in Deno.
+
+## [0.48.4] - 2025-01-21
+
+- Fix: When custom config `useBigInt` is `true`, generate examples and snippets with `BigInt("123")`.
+
+## [0.48.3] - 2025-01-16
+
+- Fix: The SDK now supports reading the basic auth username and password values from
+  environment variables.
+
+## [0.48.2] - 2025-01-16
+
+- Fix: This updates the retrier logic to stop retrying on HTTP conflict (409). This was an
+  oversight that we've meant to remove for a while (similar to other Fern SDKs).
+
+## [0.48.1] - 2025-01-16
+
+- Fix: Record types with `null` values are now correctly serialized.
+
+## [0.48.0] - 2025-01-16
+
+- Feat: When `useBigInt` SDK configuration is set to `true`, a customized JSON serializer & deserializer is used that will preserve the precision of `bigint`'s, as opposed to the native `JSON.stringify` and `JSON.parse` function which converts `bigint`'s to `number`'s losing precision.
+
+  When combining `useBigInt` with our serialization layer (`no-serde: false` (default)), both the request and response properties that are marked as `long` and `bigint` in OpenAPI/Fern spec, will consistently be `bigint`'s.
+  However, when disabling the serialization layer (`no-serde: true`), they will be typed as `number | bigint`.
+
+  Here's an overview of what to expect from the generated types when combining `useBigInt` and `noSerde` with the following Fern definition:
+
+  **Fern definition**
+  ```yml
+  types:
+    ObjectWithOptionalField:
+      properties:
+        longProp: long
+        bigIntProp: bigint
+  ```
+
+  **TypeScript output**
+  ```typescript
+  // useBigInt: true
+  // noSerde: false
+  interface ObjectWithLongAndBigInt {
+    longProp: bigint;
+    bigIntProp: bigint;
+  }
+
+  // useBigInt: true
+  // noSerde: true
+  interface ObjectWithLongAndBigInt {
+    longProp: bigint | number;
+    bigIntProp: bigint | number;
+  }
+
+  // useBigInt: false
+  // noSerde: false
+  interface ObjectWithLongAndBigInt {
+    longProp: number;
+    bigIntProp: string;
+  }
+
+  // useBigInt: false
+  // noSerde: true
+  interface ObjectWithLongAndBigInt {
+    longProp: number;
+    bigIntProp: string;
+  }
+  ```
+
+## [0.47.1] - 2025-01-15
+
+- Fix: Resolves an issue where nullable query parameters were not null-safe in their method invocations. The
+  generated code now appropriately guard against `null` values like so:
+
+  ```typescript
+  const _queryParams: Record< ... >;
+  if (value !== undefined) {
+      _queryParams["value"] = value?.toString() ?? null;
+  }
+  ```
+
+## [0.47.0] - 2025-01-14
+
+- Feature: Add support for `nullable` properties. Users can now specify explicit `null` values
+  for types that specify `nullable` properties like so:
+
+  ```typescript
+  await client.users.update({ username: "john.doe", metadata: null });
+  ```
+
+## [0.46.11] - 2025-01-14
+
+- Fix: Don't double check whether an optional string literal alias (see example below) is a string when using serializer to build query string parameters.
+
+  ```yml
+  types:
+    LiteralAliasExample: literal<"MyLiteralValue">
+
+  service:
+    endpoints:
+      foo:
+        path: /bar
+        method: POST
+        request:
+          name: FooBarRequest
+          query-parameters:
+            optional_alias_literal: optional<LiteralAliasExample>
+  ```
+
+  ```ts
+  // before
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = typeof serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) === "string" ? serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) : JSON.stringify(serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }));
+  }
+
+  // after
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      });
+  }
+  ```
+
+## [0.46.10] - 2025-01-14
+
+- Fix: Use serialization layer to convert types to JSON strings when enabled.
+
+## [0.46.9] - 2025-01-13
+
+- Fix: Expose `baseUrl` as a default Client constructor option and construct URL correctly.
+
+## [0.46.8] - 2025-01-13
+
+- Fix: Generate the `version.ts` file correctly
+
+## [0.46.7] - 2025-01-09
+
+- Fix: Simplify runtime detection to reduce the chance of using an unsupported API like `process.`
+  Detect Edge Runtime by Vercel.
+
+## [0.46.6] - 2025-01-09
+
+- Fix: Update `@types/node` to `18+`, required for the generated `Node18UniversalStreamWrapper` test.
+
+## [0.46.5] - 2025-01-09
+
+- Fix: Fix the webpack test to work with .js/.jsx extensions in TypeScript
+- Fix: Only map .js modules in Jest, not .json files.
+
+## [0.46.4] - 2025-01-09
+
+- Fix: Fix packageJson custom configuration & package.json types field.
+
+## [0.46.3] - 2025-01-09
+
+- Fix: Revert to using legacy exports by default.
+
+## [0.46.2] - 2025-01-09
+
+- Fix: Fix Jest to work with files imported using `.js` extension.
+- Fix: Make sure Jest loads Jest configuration regardless of package.json type.
+
+## [0.46.1] - 2025-01-08
+
+- Fix: ESModule output is fixed to be compatible with Node.js ESM loading.
+
+## [0.46.0] - 2025-01-06
+
+- Feat: SDKs are now built and exported in both CommonJS (legacy) and ESModule format.
+
+- Feat: Export `serialization` code from root package export.
+  ```ts
+  import { serialization } from `@packageName`;
+  ```
+
+  The serialization code is also exported as `@packageName/serialization`.
+  ```ts
+  import * as serialization from `@packageName/serialization`;
+  ```
+
+- Feat: `package.json` itself is exported in `package.json` to allow consumers to easily read metadata about the package they are consuming.
+
+## [0.45.2] - 2024-12-31
+
+- Fix: TS generated snippets now respect proper parameter casing when noSerdeLayer is enabled.
+
+## [0.45.1] - 2024-12-27
+
+- Fix: Export everything inside of TypeScript namespaces that used to be ambient.
+
+  For the `enableInlineTypes` feature, some namespaces were no longer declared (ambient), and types and interfaces inside the namespace would no longer be automatically exported without the `export` keyword. This fix exports everything that's inside these namespaces and also declared namespaces for good measure (in case they are not declared in the future).
+
+## [0.45.0] - 2024-12-26
+
+- Feat: Update dependencies of the generated TS SDK and Express generator. TypeScript has been updated to 5.7.2 which is a major version upgrade from 4.6.4.
+
+## [0.44.5] - 2024-12-23
+
+- Fix: Fix a bug where we attempt to parse an empty terminator when receiving streaming JSON responses.
+
+## [0.44.4] - 2024-12-20
+
+- Feat: Use specified defaults for pagination offset parameters during SDK generation.
+
+## [0.44.3] - 2024-12-18
+
+- Fix: Fix a bug where client would send request wrapper instead of the body of the request wrapper, when the request has inline path parameters and a body property.
+
 ## [0.44.2] - 2024-12-17
 
 - Fix: Inline path parameters will use their original name when `retainOriginalName` or `noSerdeLayer` is enabled.
@@ -113,7 +330,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.42.5] - 2024-11-23
 
-- Fix: Remove extraenous import in pagination snippets.
+- Fix: Remove extraneous import in pagination snippets.
 
 ## [0.42.4] - 2024-11-21
 
@@ -575,7 +792,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.27.2] - 2024-07-08
 
-- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatiblity` and
+- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatibility` and
   `Custom Fetcher` under the Advanced section in the generated README.
 
 ## [0.27.1] - 2024-07-08
@@ -607,7 +824,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.26.0-rc3] - 2024-06-30
 
-- Fix: The typesript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
+- Fix: The typescript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
 
 ## [0.26.0-rc2] - 2024-06-27
 
@@ -651,12 +868,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.25.2] - 2024-06-20
 
-- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+- Fix: The generator now removes `fs`, `path`, and `os` dependencies from the browser
   runtime.
 
 ## [0.25.1] - 2024-06-20
 
-- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+- Fix: The generator now removes `fs`, `path`, and `os` dependencies from the browser
   runtime.
 
 ## [0.25.0] - 2024-06-19
@@ -706,7 +923,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.24.0-rc0] - 2024-06-18
 
 - Feature: Dynamic client instantiation snippets are now generated. Note this only affects
-  enteprise users that are using Fern's Snippets API.
+  enterprise users that are using Fern's Snippets API.
 
 ## [0.23.3] - 2024-06-17
 
@@ -1314,7 +1531,7 @@ seedExamples.file.notification.service.getException(...)
 
 ## [0.11.2] - 2024-02-13
 
-- Fix: ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were eroniously ignored.
+- Fix: ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were erroneously ignored.
 
 ## [0.11.1] - 2024-02-13
 
@@ -1336,4 +1553,4 @@ seedExamples.file.notification.service.getException(...)
 
 ## [0.9.7] - 2024-02-11
 
-- Chore: Intialize this changelog
+- Chore: Initialize this changelog

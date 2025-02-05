@@ -1,0 +1,3 @@
+*
+!packages/generators/docker/cache_heavy_deps.sh
+!generators/ruby/sdk/dist

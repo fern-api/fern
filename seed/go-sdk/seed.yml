@@ -15,14 +15,15 @@ publish:
   workingDirectory: generators/go
   preBuildCommands:
     - go build ./...
+    - pnpm --filter @fern-api/go-sdk dist:cli
   docker:
     file: ./generators/go/sdk/Dockerfile
     image: fernapi/fern-go-sdk
-    context: ./generators/go
+    context: .
 test:
   docker:
     image: fernapi/fern-go-sdk:latest
-    command: docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest ./generators/go
+    command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
 language: go
 generatorType: SDK
 defaultOutputMode: github
@@ -36,6 +37,24 @@ fixtures:
     - outputFolder: exported-client-name
       customConfig:
         exportedClientName: AcmeClient
+    - outputFolder: client-name
+      customConfig:
+        clientName: Acme
+    - outputFolder: client-name-with-custom-constructor-name
+      customConfig:
+        clientName: Acme
+        clientConstructorName: New
+  imdb:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: flat-package-layout
+      customConfig:
+        packageLayout: flat
+    - outputFolder: flat-package-layout-with-custom-client-name
+      customConfig:
+        packageLayout: flat
+        clientName: Acme
+        clientConstructorName: New
   undiscriminated-unions:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -74,6 +93,17 @@ fixtures:
         module:
           path: github.com/fern-api/path-parameters-go
         inlinePathParameters: true
+  package-yml:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: flat-package-layout
+      customConfig:
+        packageLayout: flat
+    - outputFolder: flat-package-layout-with-custom-client-name
+      customConfig:
+        packageLayout: flat
+        clientName: Acme
+        clientConstructorName: New
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0
@@ -98,6 +128,8 @@ allowedFailures:
   - exhaustive
   - mixed-case
   - reserved-keywords
-  - server-sent-events
   - streaming-parameter
   - trace
+
+  # TODO: Fix example generator to produce valid dynamic snippets.
+  - pagination

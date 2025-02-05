@@ -1,7 +1,5 @@
 using SeedMixedFileDirectory.Core;
 
-#nullable enable
-
 namespace SeedMixedFileDirectory.User;
 
 public record ListUserEventsRequest

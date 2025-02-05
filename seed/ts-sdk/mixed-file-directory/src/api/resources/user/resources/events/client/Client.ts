@@ -10,11 +10,13 @@ import * as errors from "../../../../../../errors/index";
 import { Metadata } from "../resources/metadata/client/Client";
 
 export declare namespace Events {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -48,16 +50,20 @@ export class Events {
      */
     public async listEvents(
         request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
-        requestOptions?: Events.RequestOptions
+        requestOptions?: Events.RequestOptions,
     ): Promise<SeedMixedFileDirectory.user.Event[]> {
         const { limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/users/events/"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users/events/",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -99,7 +105,7 @@ export class Events {
                 });
             case "timeout":
                 throw new errors.SeedMixedFileDirectoryTimeoutError(
-                    "Timeout exceeded when calling GET /users/events/."
+                    "Timeout exceeded when calling GET /users/events/.",
                 );
             case "unknown":
                 throw new errors.SeedMixedFileDirectoryError({

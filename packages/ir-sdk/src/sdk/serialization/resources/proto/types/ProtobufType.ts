@@ -31,14 +31,14 @@ export const ProtobufType: core.serialization.Schema<serializers.ProtobufType.Ra
         });
 
 export declare namespace ProtobufType {
-    type Raw = ProtobufType.WellKnown | ProtobufType.UserDefined;
+    export type Raw = ProtobufType.WellKnown | ProtobufType.UserDefined;
 
-    interface WellKnown {
+    export interface WellKnown {
         type: "wellKnown";
         value: WellKnownProtobufType.Raw;
     }
 
-    interface UserDefined extends UserDefinedProtobufType.Raw {
+    export interface UserDefined extends UserDefinedProtobufType.Raw {
         type: "userDefined";
     }
 }

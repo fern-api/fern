@@ -71,6 +71,7 @@ service:
               max: 100
       response:
         docs: A paged array of pets
+        status-code: 200
         type: root.Pets
       source:
         openapi: openapi/openapi.yml
@@ -93,6 +94,7 @@ service:
           type: string
       response:
         docs: Expected response to a valid request
+        status-code: 200
         type: root.Pet
       source:
         openapi: openapi/openapi.yml
@@ -178,6 +180,7 @@ service:
               max: 100
       response:
         docs: A paged array of pets
+        status-code: 200
         type: root.Pets
       source:
         openapi: openapi/openapi.yml
@@ -200,6 +203,7 @@ service:
           type: string
       response:
         docs: Expected response to a valid request
+        status-code: 200
         type: root.Pet
       source:
         openapi: openapi/openapi.yml
@@ -316,6 +320,7 @@ service:
               max: 100
       response:
         docs: A paged array of pets
+        status-code: 200
         type: neopetsRoot.Pets
       source:
         openapi: openapi/petstore/openapi.yml
@@ -340,6 +345,7 @@ service:
           type: string
       response:
         docs: Expected response to a valid request
+        status-code: 200
         type: neopetsRoot.Pet
       source:
         openapi: openapi/petstore/openapi.yml
@@ -462,10 +468,10 @@ service:
       timestamp:
         docs: >-
           The timestamp in seconds for this group of events (included for
-          compatibility reasons). We recommend using the timestampms field
+          compatibility reasons). We recommend using the timestamps field
           instead.
         type: double
-      timestampms:
+      timestamps:
         docs: The timestamp in milliseconds for this group of events.
         type: double
       type: literal<"update">
@@ -486,25 +492,31 @@ channel:
       type: string
   query-parameters:
     auctions:
+      default: true
       docs: Include auction events
       type: optional<boolean>
     bids:
+      default: true
       docs: Include bids in change events
       type: optional<boolean>
     heartbeat:
+      default: false
       docs: >-
         Optionally add this parameter and set to true to receive a heartbeat
         every 5 seconds
       type: optional<boolean>
     offers:
+      default: true
       docs: Include asks in change events
       type: optional<boolean>
     top_of_book:
+      default: false
       docs: >-
         If absent or false, receive full order book depth; if present and true,
         receive top of book only. Only applies to bids and offers.
       type: optional<boolean>
     trades:
+      default: true
       docs: Include trade events
       type: optional<boolean>
 ",
@@ -973,6 +985,7 @@ service:
         content-type: application/json
       response:
         docs: Booking successful
+        status-code: 201
         type: CreateBookingResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1030,6 +1043,7 @@ service:
           type: string
       response:
         docs: The booking details
+        status-code: 200
         type: GetBookingResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1065,6 +1079,7 @@ service:
       path: /bookings
       response:
         docs: A list of bookings
+        status-code: 200
         type: GetBookingsResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1269,6 +1284,7 @@ service:
         content-type: application/json
       response:
         docs: Payment successful
+        status-code: 200
         type: CreateBookingPaymentResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1342,6 +1358,7 @@ service:
       path: /stations
       response:
         docs: A list of train stations
+        status-code: 200
         type: GetStationsResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1470,6 +1487,7 @@ service:
         name: GetTripsRequest
         query-parameters:
           bicycles:
+            default: false
             docs: Only return trips where bicycles are known to be allowed
             type: optional<boolean>
           date:
@@ -1483,6 +1501,7 @@ service:
             validation:
               format: uuid
           dogs:
+            default: false
             docs: Only return trips where dogs are known to be allowed
             type: optional<boolean>
           origin:
@@ -1492,6 +1511,7 @@ service:
               format: uuid
       response:
         docs: A list of available train trips
+        status-code: 200
         type: GetTripsResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -1702,7 +1722,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
@@ -1984,6 +2004,7 @@ service:
         name: ChatRequest
       response:
         docs: OK
+        status-code: 200
         type: list<string>
       source:
         openapi: openapi/cohere.yaml
@@ -2101,7 +2122,7 @@ errors:
     type: unknown
   InternalServerError:
     docs: |
-      This error is returned when an uncategorised internal server error occurs.
+      This error is returned when an uncategorized internal server error occurs.
     examples:
       - value: {}
     status-code: 500
@@ -2307,6 +2328,7 @@ service:
         name: V2ChatRequest
       response:
         docs: OK
+        status-code: 200
         type: list<string>
       source:
         openapi: openapi/cohere-v2.yaml

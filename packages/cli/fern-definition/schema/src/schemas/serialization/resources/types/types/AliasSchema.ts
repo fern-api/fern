@@ -17,7 +17,7 @@ export const AliasSchema: core.serialization.ObjectSchema<serializers.AliasSchem
         .extend(BaseTypeDeclarationSchema);
 
 export declare namespace AliasSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw {
+    export interface Raw extends BaseTypeDeclarationSchema.Raw {
         type: string;
         validation?: ValidationSchema.Raw | null;
     }

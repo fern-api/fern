@@ -1,7 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { go } from "@fern-api/go-ast";
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { go } from "@fern-api/go-ast";
+
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 export declare namespace DynamicTypeMapper {
     interface Args {
@@ -35,6 +36,8 @@ export class DynamicTypeMapper {
                 return this.convertNamed({ named });
             }
             case "optional":
+                return go.Type.optional(this.convert({ typeReference: args.typeReference.value }));
+            case "nullable":
                 return go.Type.optional(this.convert({ typeReference: args.typeReference.value }));
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });

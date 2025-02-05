@@ -4499,6 +4499,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantCreateBulkOperationResult",
               },
               "source": {
@@ -4570,6 +4571,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserCreateBulkOperationResult",
               },
               "source": {
@@ -4628,6 +4630,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantDeleteBulkOperationResult",
               },
               "source": {
@@ -4686,6 +4689,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserDeleteBulkOperationResult",
               },
               "source": {
@@ -4757,6 +4761,7 @@ types:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserReplaceBulkOperationResult",
               },
               "source": {
@@ -4803,6 +4808,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserCreateBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4851,6 +4857,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserReplaceBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4899,6 +4906,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserDeleteBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4938,6 +4946,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantCreateBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -4982,6 +4991,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantDeleteBulkOperationResult
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5108,6 +5118,7 @@ If the permission is already granted, it is skipped.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ConditionSetRuleRead>",
               },
               "source": {
@@ -5165,6 +5176,7 @@ If the permission is already granted, it is skipped.",
                 "name": "ListSetPermissionsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -5176,6 +5188,7 @@ If the permission is already granted, it is skipped.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -5202,6 +5215,7 @@ If the permission is already granted, it is skipped.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ConditionSetRuleRead>",
               },
               "source": {
@@ -5341,11 +5355,13 @@ service:
               permission is granted on this resource set
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -5353,6 +5369,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ConditionSetRuleRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5430,6 +5447,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ConditionSetRuleRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -5752,6 +5770,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ConditionSetRead",
               },
               "source": {
@@ -5905,6 +5924,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ConditionSetRead",
               },
               "source": {
@@ -6024,6 +6044,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 "name": "GetConditionSetAncestorsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6035,6 +6056,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -6049,6 +6071,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ConditionSetRead>",
               },
               "source": {
@@ -6168,6 +6191,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 "name": "GetConditionSetDescendantsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6179,6 +6203,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -6193,6 +6218,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ConditionSetRead>",
               },
               "source": {
@@ -6306,10 +6332,12 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 "name": "ListConditionSetsRequest",
                 "query-parameters": {
                   "include_total_count": {
+                    "default": false,
                     "docs": "Include total count in response",
                     "type": "optional<boolean>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -6321,6 +6349,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -6343,6 +6372,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "ListConditionSetsResponse",
               },
               "source": {
@@ -6510,6 +6540,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ConditionSetRead",
               },
               "source": {
@@ -6585,14 +6616,17 @@ service:
               type. e.g: only user sets.
           include_total_count:
             type: optional<boolean>
+            default: false
             docs: Include total count in response
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -6600,6 +6634,7 @@ service:
       response:
         docs: Successful Response
         type: ListConditionSetsResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6726,6 +6761,7 @@ service:
       response:
         docs: Successful Response
         type: root.ConditionSetRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6824,6 +6860,7 @@ service:
       response:
         docs: Successful Response
         type: root.ConditionSetRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -6970,6 +7007,7 @@ service:
       response:
         docs: Successful Response
         type: root.ConditionSetRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7069,11 +7107,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -7081,6 +7121,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ConditionSetRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7173,11 +7214,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -7185,6 +7228,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ConditionSetRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -7405,6 +7449,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 201,
                 "type": "root.EnvironmentRead",
               },
               "source": {
@@ -7469,6 +7514,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EnvironmentRead",
               },
               "source": {
@@ -7560,6 +7606,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EnvironmentRead",
               },
               "source": {
@@ -7618,6 +7665,7 @@ allowed.",
                 "name": "ListEnvironmentsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -7629,6 +7677,7 @@ allowed.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -7643,6 +7692,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.EnvironmentRead>",
               },
               "source": {
@@ -7771,6 +7821,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EnvironmentStats",
               },
               "source": {
@@ -7862,6 +7913,7 @@ allowed.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.EnvironmentRead",
               },
               "source": {
@@ -7915,6 +7967,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentStats
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8009,11 +8062,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -8021,6 +8076,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.EnvironmentRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8063,6 +8119,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8111,6 +8168,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8202,6 +8260,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8292,6 +8351,7 @@ service:
       response:
         docs: Successful Response
         type: root.EnvironmentRead
+        status-code: 201
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8442,6 +8502,7 @@ authenticated actor (i.e: human team member or api key).",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationReadWithAPIKey",
               },
               "source": {
@@ -8505,6 +8566,7 @@ if such org exists and can be accessed by the authenticated actor.",
               "path": "/v2/orgs/active/org",
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationRead",
               },
               "source": {
@@ -8550,6 +8612,7 @@ if such org exists and can be accessed by the authenticated actor.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationRead",
               },
               "source": {
@@ -8590,6 +8653,7 @@ authenticated actor (i.e: human team member or api key).",
                 "name": "ListOrganizationsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -8601,6 +8665,7 @@ authenticated actor (i.e: human team member or api key).",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -8615,6 +8680,7 @@ authenticated actor (i.e: human team member or api key).",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.OrganizationRead>",
               },
               "source": {
@@ -8685,6 +8751,7 @@ authenticated actor (i.e: human team member or api key).",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.OrganizationRead",
               },
               "source": {
@@ -8718,11 +8785,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -8730,6 +8799,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.OrganizationRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8777,6 +8847,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationReadWithAPIKey
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8816,6 +8887,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8880,6 +8952,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -8911,6 +8984,7 @@ service:
       response:
         docs: Successful Response
         type: root.OrganizationRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9049,6 +9123,7 @@ Every project is a separate silo, and has its own unique set of environments and
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectRead",
               },
               "source": {
@@ -9123,6 +9198,7 @@ Every project is a separate silo, and has its own unique set of environments and
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectRead",
               },
               "source": {
@@ -9165,6 +9241,7 @@ Every project is a separate silo, and has its own unique set of environments and
                 "name": "ListProjectsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -9176,6 +9253,7 @@ Every project is a separate silo, and has its own unique set of environments and
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -9190,6 +9268,7 @@ Every project is a separate silo, and has its own unique set of environments and
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ProjectRead>",
               },
               "source": {
@@ -9271,6 +9350,7 @@ Every project is a separate silo, and has its own unique set of environments and
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ProjectRead",
               },
               "source": {
@@ -9302,11 +9382,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -9314,6 +9396,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ProjectRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9375,6 +9458,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9413,6 +9497,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9486,6 +9571,7 @@ service:
       response:
         docs: Successful Response
         type: root.ProjectRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -9637,6 +9723,7 @@ to a role as one action.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionGroupRead",
               },
               "source": {
@@ -9747,6 +9834,7 @@ This includes any permissions granted to perform the action.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionGroupRead",
               },
               "source": {
@@ -9813,6 +9901,7 @@ This includes any permissions granted to perform the action.",
                 "name": "ListResourceActionGroupsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -9824,6 +9913,7 @@ This includes any permissions granted to perform the action.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -9838,6 +9928,7 @@ This includes any permissions granted to perform the action.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceActionGroupRead>",
               },
               "source": {
@@ -9933,6 +10024,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionGroupRead",
               },
               "source": {
@@ -9980,11 +10072,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -9992,6 +10086,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceActionGroupRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10073,6 +10168,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionGroupRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10139,6 +10235,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionGroupRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10261,6 +10358,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionGroupRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10402,6 +10500,7 @@ Each (resource, action) pair defines a unique permission level.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionRead",
               },
               "source": {
@@ -10509,6 +10608,7 @@ This includes any permissions granted to perform the action.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionRead",
               },
               "source": {
@@ -10572,6 +10672,7 @@ This includes any permissions granted to perform the action.",
                 "name": "ListResourceActionsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -10583,6 +10684,7 @@ This includes any permissions granted to perform the action.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -10597,6 +10699,7 @@ This includes any permissions granted to perform the action.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceActionRead>",
               },
               "source": {
@@ -10688,6 +10791,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceActionRead",
               },
               "source": {
@@ -10735,11 +10839,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -10747,6 +10853,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceActionRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10823,6 +10930,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10882,6 +10990,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -10999,6 +11108,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceActionRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11118,6 +11228,7 @@ define a boolean `private` attributes that we can now use in our policies.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -11169,6 +11280,7 @@ attribute to evaluate as `undefined`.",
                 "name": "DeleteResourceAttributeRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -11180,6 +11292,7 @@ attribute to evaluate as `undefined`.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -11252,6 +11365,7 @@ attribute to evaluate as `undefined`.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -11313,6 +11427,7 @@ attribute to evaluate as `undefined`.",
                 "name": "ListResourceAttributesRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -11324,6 +11439,7 @@ attribute to evaluate as `undefined`.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -11338,6 +11454,7 @@ attribute to evaluate as `undefined`.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceAttributeRead>",
               },
               "source": {
@@ -11410,6 +11527,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -11457,11 +11575,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -11469,6 +11589,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceAttributeRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11521,6 +11642,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11581,6 +11703,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11642,11 +11765,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -11698,6 +11823,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11856,6 +11982,7 @@ and will return the existing instance object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceInstanceRead",
               },
               "source": {
@@ -11953,6 +12080,7 @@ and will return the existing instance object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceInstanceRead",
               },
               "source": {
@@ -12012,6 +12140,7 @@ and will return the existing instance object in the response body.",
                 "name": "ListResourceInstancesRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -12023,6 +12152,7 @@ and will return the existing instance object in the response body.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -12037,6 +12167,7 @@ and will return the existing instance object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceInstanceRead>",
               },
               "source": {
@@ -12119,6 +12250,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceInstanceRead",
               },
               "source": {
@@ -12161,11 +12293,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -12173,6 +12307,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceInstanceRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12253,6 +12388,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceInstanceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12309,6 +12445,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceInstanceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12402,6 +12539,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceInstanceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -12541,6 +12679,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -12657,6 +12796,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -12769,6 +12909,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -12842,6 +12983,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleList",
               },
               "source": {
@@ -12915,6 +13057,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleList",
               },
               "source": {
@@ -12983,6 +13126,7 @@ This includes any permissions granted to said role.",
                 "name": "ListResourceRolesRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -12994,6 +13138,7 @@ This includes any permissions granted to said role.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -13008,6 +13153,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceRoleRead>",
               },
               "source": {
@@ -13090,6 +13236,7 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -13197,6 +13344,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRoleRead",
               },
               "source": {
@@ -13244,11 +13392,13 @@ service:
         query-parameters:
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -13256,6 +13406,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceRoleRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13346,6 +13497,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13411,6 +13563,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13541,6 +13694,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13613,6 +13767,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13684,6 +13839,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13745,6 +13901,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -13804,6 +13961,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRoleList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14033,6 +14191,7 @@ A resource may also contain:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRead",
               },
               "source": {
@@ -14173,6 +14332,7 @@ A resource may also contain:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRead",
               },
               "source": {
@@ -14259,14 +14419,17 @@ A resource may also contain:
                 "name": "ListResourcesRequest",
                 "query-parameters": {
                   "include_built_in": {
+                    "default": false,
                     "docs": "Whether to include or exclude built-in resources, default is False",
                     "type": "optional<boolean>",
                   },
                   "include_total_count": {
+                    "default": false,
                     "docs": "Include total count in response",
                     "type": "optional<boolean>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -14278,6 +14441,7 @@ A resource may also contain:
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -14296,6 +14460,7 @@ A resource may also contain:
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "ListResourcesResponse",
               },
               "source": {
@@ -14445,6 +14610,7 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRead",
               },
               "source": {
@@ -14584,6 +14750,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceRead",
               },
               "source": {
@@ -14654,17 +14821,21 @@ service:
             docs: Text search for the resources name or key
           include_built_in:
             type: optional<boolean>
+            default: false
             docs: Whether to include or exclude built-in resources, default is False
           include_total_count:
             type: optional<boolean>
+            default: false
             docs: Include total count in response
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -14672,6 +14843,7 @@ service:
       response:
         docs: Successful Response
         type: ListResourcesResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14776,6 +14948,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14871,6 +15044,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -14997,6 +15171,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15146,6 +15321,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15308,6 +15484,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleAssignmentRead",
               },
               "source": {
@@ -15362,6 +15539,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.BulkRoleAssignmentReport",
               },
               "source": {
@@ -15416,6 +15594,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.BulkRoleUnAssignmentReport",
               },
               "source": {
@@ -15475,6 +15654,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "name": "ListRoleAssignmentsRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -15486,6 +15666,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -15512,6 +15693,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.RoleAssignmentRead>",
               },
               "source": {
@@ -15627,11 +15809,13 @@ service:
               in that tenant.
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -15639,6 +15823,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.RoleAssignmentRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15689,6 +15874,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleAssignmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15778,6 +15964,7 @@ service:
       response:
         docs: Successful Response
         type: root.BulkRoleAssignmentReport
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15816,6 +16003,7 @@ service:
       response:
         docs: Successful Response
         type: root.BulkRoleUnAssignmentReport
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -15933,6 +16121,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16043,6 +16232,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16144,6 +16334,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16211,6 +16402,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleList",
               },
               "source": {
@@ -16278,6 +16470,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleList",
               },
               "source": {
@@ -16344,10 +16537,12 @@ This includes any permissions granted to said role.",
                 "name": "ListRolesRequest",
                 "query-parameters": {
                   "include_total_count": {
+                    "default": false,
                     "docs": "Include total count in response",
                     "type": "optional<boolean>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -16359,6 +16554,7 @@ This includes any permissions granted to said role.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -16377,6 +16573,7 @@ This includes any permissions granted to said role.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "ListRolesResponse",
               },
               "source": {
@@ -16453,6 +16650,7 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16554,6 +16752,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleRead",
               },
               "source": {
@@ -16624,14 +16823,17 @@ service:
             docs: Text search for the roles name or key
           include_total_count:
             type: optional<boolean>
+            default: false
             docs: Include total count in response
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -16639,6 +16841,7 @@ service:
       response:
         docs: Successful Response
         type: ListRolesResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16725,6 +16928,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16783,6 +16987,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16900,6 +17105,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -16964,6 +17170,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17027,6 +17234,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17080,6 +17288,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17131,6 +17340,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleList
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17267,6 +17477,7 @@ and will return the existing tenant object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantRead",
               },
               "source": {
@@ -17407,6 +17618,7 @@ and will return the existing tenant object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantRead",
               },
               "source": {
@@ -17502,6 +17714,7 @@ and will return the existing tenant object in the response body.",
                 "name": "ListTenantUsersRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -17513,6 +17726,7 @@ and will return the existing tenant object in the response body.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -17535,6 +17749,7 @@ and will return the existing tenant object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultUserRead",
               },
               "source": {
@@ -17599,10 +17814,12 @@ and will return the existing tenant object in the response body.",
                 "name": "ListTenantsRequest",
                 "query-parameters": {
                   "include_total_count": {
+                    "default": false,
                     "docs": "Include total count in response",
                     "type": "optional<boolean>",
                   },
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -17614,6 +17831,7 @@ and will return the existing tenant object in the response body.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -17632,6 +17850,7 @@ and will return the existing tenant object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "ListTenantsResponse",
               },
               "source": {
@@ -17718,6 +17937,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.TenantRead",
               },
               "source": {
@@ -17787,11 +18007,13 @@ service:
             docs: Match users with a specific role
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -17799,6 +18021,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultUserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17866,14 +18089,17 @@ service:
             docs: Text search for the tenant name or key
           include_total_count:
             type: optional<boolean>
+            default: false
             docs: Include total count in response
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -17881,6 +18107,7 @@ service:
       response:
         docs: Successful Response
         type: ListTenantsResponse
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17936,6 +18163,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17992,6 +18220,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18091,6 +18320,7 @@ service:
       response:
         docs: Successful Response
         type: root.TenantRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18271,6 +18501,7 @@ define a string `owner` attribute that we can now use in our policies.
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -18317,6 +18548,7 @@ attribute to evaluate as `undefined`.",
                 "name": "DeleteUserAttributeRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -18328,6 +18560,7 @@ attribute to evaluate as `undefined`.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -18402,6 +18635,7 @@ attribute to evaluate as `undefined`.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -18458,6 +18692,7 @@ attribute to evaluate as `undefined`.",
                 "name": "ListUserAttributesRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -18469,6 +18704,7 @@ attribute to evaluate as `undefined`.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -18484,6 +18720,7 @@ attribute to evaluate as `undefined`.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "list<root.ResourceAttributeRead>",
               },
               "source": {
@@ -18555,6 +18792,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.ResourceAttributeRead",
               },
               "source": {
@@ -18598,11 +18836,13 @@ service:
           resource_id: optional<string>
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -18610,6 +18850,7 @@ service:
       response:
         docs: Successful Response
         type: list<root.ResourceAttributeRead>
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18659,6 +18900,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18716,6 +18958,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18771,11 +19014,13 @@ service:
           resource_id: optional<string>
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -18823,6 +19068,7 @@ service:
       response:
         docs: Successful Response
         type: root.ResourceAttributeRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -18967,6 +19213,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.RoleAssignmentRead",
               },
               "source": {
@@ -19073,6 +19320,7 @@ and will return the existing user object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserRead",
               },
               "source": {
@@ -19197,6 +19445,7 @@ and will return the existing user object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserRead",
               },
               "source": {
@@ -19287,6 +19536,7 @@ and will return the existing user object in the response body.",
                 "name": "ListUsersRequest",
                 "query-parameters": {
                   "page": {
+                    "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
                     "validation": {
@@ -19298,6 +19548,7 @@ and will return the existing user object in the response body.",
                     },
                   },
                   "per_page": {
+                    "default": 30,
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
                     "validation": {
@@ -19320,6 +19571,7 @@ and will return the existing user object in the response body.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.PaginatedResultUserRead",
               },
               "source": {
@@ -19427,6 +19679,7 @@ and will return the existing user object in the response body.",
               },
               "response": {
                 "docs": "An existing user was replaced",
+                "status-code": 200,
                 "type": "root.UserRead",
               },
               "source": {
@@ -19613,6 +19866,7 @@ Fields that will be provided will be completely overwritten.",
               },
               "response": {
                 "docs": "Successful Response",
+                "status-code": 200,
                 "type": "root.UserRead",
               },
               "source": {
@@ -19661,11 +19915,13 @@ service:
             docs: Match users with a specific role
           page:
             type: optional<integer>
+            default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
             type: optional<integer>
+            default: 30
             docs: The number of results per page (max 100).
             validation:
               min: 1
@@ -19673,6 +19929,7 @@ service:
       response:
         docs: Successful Response
         type: root.PaginatedResultUserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -19743,6 +20000,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -19817,6 +20075,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -19884,6 +20143,7 @@ service:
       response:
         docs: An existing user was replaced
         type: root.UserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -20015,6 +20275,7 @@ service:
       response:
         docs: Successful Response
         type: root.UserRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -20100,6 +20361,7 @@ service:
       response:
         docs: Successful Response
         type: root.RoleAssignmentRead
+        status-code: 200
       errors:
         - root.UnprocessableEntityError
       examples:

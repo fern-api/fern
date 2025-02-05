@@ -1,15 +1,17 @@
+import { PackageId, convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocsNode } from "@fern-typescript/commons";
+import { ExpressContext, GeneratedExpressService } from "@fern-typescript/contexts";
+import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
+
 import {
     HttpEndpoint,
     HttpMethod,
     HttpRequestBody,
     HttpResponseBody,
     HttpService,
+    JsonResponse,
     Package,
     PathParameter
 } from "@fern-fern/ir-sdk/api";
-import { convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocsNode, PackageId } from "@fern-typescript/commons";
-import { ExpressContext, GeneratedExpressService } from "@fern-typescript/contexts";
-import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 
 export declare namespace GeneratedExpressServiceImpl {
     export interface Init {
@@ -927,6 +929,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private getResponseBodyType(response: HttpResponseBody, context: ExpressContext): ts.TypeNode {
         return HttpResponseBody._visit<ts.TypeNode>(response, {
             json: (jsonResponse) => context.type.getReferenceToType(jsonResponse.responseBodyType).typeNode,
+            bytes: () => {
+                throw new Error("bytes is not supported");
+            },
             streaming: () => {
                 throw new Error("Streaming is not supported");
             },

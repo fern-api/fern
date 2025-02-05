@@ -21,6 +21,7 @@ publish:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
     context: .
+    dockerignore-path: ./generators/csharp/sdk/.dockerignore
 test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
@@ -37,7 +38,7 @@ defaultOutputMode: github
 defaultCustomConfig:
   generate-mock-server-tests: true
 scripts:
-  - docker: bitnami/dotnet-sdk:8
+  - docker: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
       - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core"
@@ -133,7 +134,7 @@ allowedFailures:
   - unknown # issue with example object
   # - package-yml # user-provided example path not coming in properly
   # - simple-fhir # nested generated examples are wonky
-  # - enum # failing because of oneofs as header values
+  # - enum # failing because of oneof's as header values
   # - trace # failing because we don't call stringify on enums path params
   # - undiscriminated-unions # failing because of union type as dictionary key
   # - exhaustive:explicit-namespaces # single test failing because we don't support discriminated unions properly

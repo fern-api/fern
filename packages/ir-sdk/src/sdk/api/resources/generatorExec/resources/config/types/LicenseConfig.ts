@@ -6,20 +6,20 @@ import * as FernIr from "../../../../../index";
 
 export type LicenseConfig = FernIr.generatorExec.LicenseConfig.Basic | FernIr.generatorExec.LicenseConfig.Custom;
 
-export declare namespace LicenseConfig {
-    interface Basic extends FernIr.generatorExec.BasicLicense, _Utils {
+export namespace LicenseConfig {
+    export interface Basic extends FernIr.generatorExec.BasicLicense, _Utils {
         type: "basic";
     }
 
-    interface Custom extends FernIr.generatorExec.CustomLicense, _Utils {
+    export interface Custom extends FernIr.generatorExec.CustomLicense, _Utils {
         type: "custom";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.generatorExec.LicenseConfig._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         basic: (value: FernIr.generatorExec.BasicLicense) => _Result;
         custom: (value: FernIr.generatorExec.CustomLicense) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const LicenseConfig = {
             type: "basic",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.LicenseConfig.Basic,
-                visitor: FernIr.generatorExec.LicenseConfig._Visitor<_Result>
+                visitor: FernIr.generatorExec.LicenseConfig._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.LicenseConfig._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const LicenseConfig = {
             type: "custom",
             _visit: function <_Result>(
                 this: FernIr.generatorExec.LicenseConfig.Custom,
-                visitor: FernIr.generatorExec.LicenseConfig._Visitor<_Result>
+                visitor: FernIr.generatorExec.LicenseConfig._Visitor<_Result>,
             ) {
                 return FernIr.generatorExec.LicenseConfig._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const LicenseConfig = {
 
     _visit: <_Result>(
         value: FernIr.generatorExec.LicenseConfig,
-        visitor: FernIr.generatorExec.LicenseConfig._Visitor<_Result>
+        visitor: FernIr.generatorExec.LicenseConfig._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "basic":

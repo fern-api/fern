@@ -16,13 +16,10 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpPath;
-import com.fern.ir.model.http.HttpPathPart;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.PathParameter;
+import com.fern.ir.model.http.*;
 import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.JavaSdkCustomConfig;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;
@@ -33,6 +30,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -50,7 +48,8 @@ public final class HttpUrlBuilder {
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<String, PathParamInfo> servicePathParameters;
     private final Map<String, PathParamInfo> endpointPathParameters;
-    private final boolean hasOptionalPathParms;
+    private final boolean hasOptionalPathParams;
+    private final boolean inlinePathParams;
 
     public HttpUrlBuilder(
             String httpUrlname,
@@ -61,7 +60,8 @@ public final class HttpUrlBuilder {
             HttpEndpoint httpEndpoint,
             HttpService httpService,
             Map<String, PathParamInfo> servicePathParameters,
-            Map<String, PathParamInfo> endpointPathParameters) {
+            Map<String, PathParamInfo> endpointPathParameters,
+            JavaSdkCustomConfig config) {
         this.httpUrlname = httpUrlname;
         this.requestName = requestName;
         this.clientOptionsField = clientOptionsField;
@@ -71,7 +71,7 @@ public final class HttpUrlBuilder {
         this.httpService = httpService;
         this.servicePathParameters = servicePathParameters;
         this.endpointPathParameters = endpointPathParameters;
-        this.hasOptionalPathParms = Stream.concat(
+        this.hasOptionalPathParams = Stream.concat(
                         servicePathParameters.values().stream(), endpointPathParameters.values().stream())
                 .anyMatch(pathParamInfo ->
                         pathParamInfo.irParam().getValueType().getContainer().isPresent()
@@ -81,10 +81,29 @@ public final class HttpUrlBuilder {
                                         .getContainer()
                                         .get()
                                         .isOptional());
+        this.inlinePathParams = config.inlinePathParameters()
+                && httpEndpoint.getSdkRequest().isPresent()
+                && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
+                && (httpEndpoint
+                                .getSdkRequest()
+                                .get()
+                                .getShape()
+                                .getWrapper()
+                                .get()
+                                .getIncludePathParameters()
+                                .orElse(false)
+                        || httpEndpoint
+                                .getSdkRequest()
+                                .get()
+                                .getShape()
+                                .getWrapper()
+                                .get()
+                                .getOnlyPathParameters()
+                                .orElse(false));
     }
 
     public GeneratedHttpUrl generateBuilder(List<EnrichedObjectProperty> queryParamProperties) {
-        boolean shouldInline = queryParamProperties.isEmpty() && !hasOptionalPathParms;
+        boolean shouldInline = queryParamProperties.isEmpty() && !hasOptionalPathParams;
         if (shouldInline) {
             return generateInlineableCodeBlock();
         } else {
@@ -103,7 +122,7 @@ public final class HttpUrlBuilder {
         codeBlock.add(".build();\n").unindent();
         return GeneratedHttpUrl.builder()
                 .initialization(codeBlock.build())
-                .inlinableBuild(CodeBlock.of(httpUrlname))
+                .inlineableBuild(CodeBlock.of(httpUrlname))
                 .build();
     }
 
@@ -142,7 +161,7 @@ public final class HttpUrlBuilder {
         });
         return GeneratedHttpUrl.builder()
                 .initialization(codeBlock.build())
-                .inlinableBuild(CodeBlock.of("$L.build()", httpUrlname))
+                .inlineableBuild(CodeBlock.of("$L.build()", httpUrlname))
                 .build();
     }
 
@@ -168,23 +187,37 @@ public final class HttpUrlBuilder {
                         PoetTypeNameStringifier.stringify(
                                 clientOptionsField.name + "." + variableGetter.name + "()",
                                 poetPathParameter.poetParam().type));
-            } else if (typeNameIsOptional(poetPathParameter.poetParam().type)) {
-                codeBlock.add(";\n");
-                codeBlock
-                        .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
-                        .addStatement(
-                                "$L.addPathSegment($L)",
-                                httpUrlname,
-                                PoetTypeNameStringifier.stringify(
-                                        poetPathParameter.poetParam().name + ".get()",
-                                        poetPathParameter.poetParam().type))
-                        .endControlFlow();
-                endedWithStatement = true;
             } else {
-                codeBlock.add(
-                        "\n.addPathSegment($L)",
-                        PoetTypeNameStringifier.stringify(
-                                poetPathParameter.poetParam().name, poetPathParameter.poetParam().type));
+                String paramName = poetPathParameter.poetParam().name;
+                if (inlinePathParams
+                        && poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ENDPOINT)
+                        && httpEndpoint.getSdkRequest().isPresent()) {
+                    paramName = httpEndpoint
+                                    .getSdkRequest()
+                                    .get()
+                                    .getRequestParameterName()
+                                    .getCamelCase()
+                                    .getSafeName()
+                            // TODO(agateno): How do we get the getter name from the request body file?
+                            + ".get" + paramName.substring(0, 1).toUpperCase(Locale.ROOT) + paramName.substring(1)
+                            + "()";
+                }
+                if (typeNameIsOptional(poetPathParameter.poetParam().type)) {
+                    codeBlock.add(";\n");
+                    codeBlock
+                            .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
+                            .addStatement(
+                                    "$L.addPathSegment($L)",
+                                    httpUrlname,
+                                    PoetTypeNameStringifier.stringify(
+                                            paramName + ".get()", poetPathParameter.poetParam().type))
+                            .endControlFlow();
+                    endedWithStatement = true;
+                } else {
+                    codeBlock.add(
+                            "\n.addPathSegment($L)",
+                            PoetTypeNameStringifier.stringify(paramName, poetPathParameter.poetParam().type));
+                }
             }
             String pathTail = stripLeadingAndTrailingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
@@ -223,7 +256,7 @@ public final class HttpUrlBuilder {
     public interface GeneratedHttpUrl {
         CodeBlock initialization();
 
-        CodeBlock inlinableBuild();
+        CodeBlock inlineableBuild();
 
         static ImmutableGeneratedHttpUrl.InitializationBuildStage builder() {
             return ImmutableGeneratedHttpUrl.builder();

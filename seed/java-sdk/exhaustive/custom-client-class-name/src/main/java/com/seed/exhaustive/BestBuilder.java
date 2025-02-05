@@ -26,6 +26,14 @@ public final class BestBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public BestBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public Best build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         clientOptionsBuilder.environment(this.environment);

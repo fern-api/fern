@@ -16,10 +16,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:UserModel": {
@@ -86,10 +83,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_:Metadata": {
@@ -267,6 +261,7 @@
                 "value": "type_:CreateResponse"
               }
             },
+            "statusCode": 200,
             "description": "OK"
           },
           "errorsV2": [],

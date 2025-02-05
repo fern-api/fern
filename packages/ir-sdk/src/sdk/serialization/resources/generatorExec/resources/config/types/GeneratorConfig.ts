@@ -31,7 +31,7 @@ export const GeneratorConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace GeneratorConfig {
-    interface Raw {
+    export interface Raw {
         dryRun: boolean;
         irFilepath: string;
         originalReadmeFilepath?: string | null;

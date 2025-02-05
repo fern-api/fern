@@ -15,7 +15,7 @@ export const ServiceTransport: core.serialization.ObjectSchema<
 });
 
 export declare namespace ServiceTransport {
-    interface Raw {
+    export interface Raw {
         grpc?: GrpcTransport.Raw | null;
     }
 }

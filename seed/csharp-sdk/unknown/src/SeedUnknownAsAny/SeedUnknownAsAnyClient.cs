@@ -1,12 +1,10 @@
 using SeedUnknownAsAny.Core;
 
-#nullable enable
-
 namespace SeedUnknownAsAny;
 
 public partial class SeedUnknownAsAnyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedUnknownAsAnyClient(ClientOptions? clientOptions = null)
     {

@@ -14,7 +14,7 @@ export const GetShapeRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetShapeRequest {
-    interface Raw {
+    export interface Raw {
         id: string;
     }
 }

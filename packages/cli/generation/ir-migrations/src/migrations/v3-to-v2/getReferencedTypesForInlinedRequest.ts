@@ -1,4 +1,5 @@
 import { noop } from "@fern-api/core-utils";
+
 import { IrVersions } from "../../ir-versions";
 
 type StringifiedTypeId = string;
@@ -60,7 +61,7 @@ function getReferencedTypesFromReference({
         unknown: noop,
         void: noop,
         _unknown: () => {
-            throw new Error("Unknown TypeRefrence: " + reference._type);
+            throw new Error("Unknown TypeReference: " + reference._type);
         }
     });
 }

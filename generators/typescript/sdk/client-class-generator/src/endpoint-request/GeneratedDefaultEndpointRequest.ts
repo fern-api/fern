@@ -1,4 +1,15 @@
+import {
+    Fetcher,
+    GetReferenceOpts,
+    PackageId,
+    getParameterNameForPositionalPathParameter,
+    getTextOfTsNode
+} from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ExampleEndpointCall,
     HttpEndpoint,
@@ -9,19 +20,11 @@ import {
     SdkRequest,
     SdkRequestShape
 } from "@fern-fern/ir-sdk/api";
-import {
-    Fetcher,
-    getParameterNameForPositionalPathParameter,
-    GetReferenceOpts,
-    getTextOfTsNode,
-    PackageId
-} from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
 import { RequestParameter } from "../request-parameter/RequestParameter";
 import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter";
@@ -286,8 +289,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                         typeof property.propertyValue === "string"
                             ? ts.factory.createStringLiteral(property.propertyValue)
                             : property.propertyValue
-                            ? ts.factory.createTrue()
-                            : ts.factory.createFalse()
+                              ? ts.factory.createTrue()
+                              : ts.factory.createFalse()
                     );
                 })
             ]);
@@ -330,8 +333,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             case "inlinedRequestBody":
                 return false;
             case "reference": {
-                const resolvedType = context.type.resolveTypeReference(requestBody.requestBodyType);
-                return resolvedType.type === "container" && resolvedType.container.type === "optional";
+                return (
+                    context.type.isOptional(requestBody.requestBodyType) ||
+                    context.type.isNullable(requestBody.requestBodyType)
+                );
             }
             default:
                 assertNever(requestBody);
@@ -340,6 +345,13 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         return this.requestParameter?.getReferenceToRequestBody(context);
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        if (this.requestParameter == null) {
+            throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
+        }
+        return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context);
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

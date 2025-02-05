@@ -1,7 +1,9 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import path from "path";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import path from "path";
+
 import { generateAndSnapshotDynamicIR } from "./generateAndSnapshotDynamicIR";
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises

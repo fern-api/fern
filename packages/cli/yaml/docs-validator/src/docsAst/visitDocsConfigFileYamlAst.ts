@@ -1,15 +1,17 @@
-import { docsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
-import { APIWorkspaceLoader } from "./APIWorkspaceLoader";
+
+import { docsYml } from "@fern-api/configuration-loader";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+
+import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
+import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 import { visitFilepath } from "./visitFilepath";
 import { visitNavigationAst } from "./visitNavigationAst";
-import { validateVersionConfigFileSchema } from "./validateVersionConfig";
-import { readFile } from "fs/promises";
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {
@@ -18,7 +20,7 @@ export declare namespace visitDocsConfigFileYamlAst {
         absoluteFilepathToConfiguration: AbsoluteFilePath;
         absolutePathToFernFolder: AbsoluteFilePath;
         context: TaskContext;
-        loadAPIWorkspace: APIWorkspaceLoader;
+        fernWorkspaces: FernWorkspace[];
     }
 }
 
@@ -27,7 +29,7 @@ export async function visitDocsConfigFileYamlAst({
     visitor,
     absoluteFilepathToConfiguration,
     context,
-    loadAPIWorkspace,
+    fernWorkspaces,
     absolutePathToFernFolder
 }: visitDocsConfigFileYamlAst.Args): Promise<void> {
     await visitor.file?.(
@@ -170,7 +172,7 @@ export async function visitDocsConfigFileYamlAst({
                 visitor,
                 nodePath: ["navigation"],
                 absoluteFilepathToConfiguration,
-                loadAPIWorkspace,
+                fernWorkspaces,
                 context
             });
         },
@@ -250,7 +252,7 @@ export async function visitDocsConfigFileYamlAst({
                             visitor,
                             nodePath: ["navigation"],
                             absoluteFilepathToConfiguration: absoluteFilepath,
-                            loadAPIWorkspace,
+                            fernWorkspaces,
                             context
                         });
                     }

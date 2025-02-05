@@ -2340,7 +2340,7 @@ types:
         docs: Amount of medication per unit of time.
         type: optional<Quantity>
   Population:
-    docs: A populatioof people with some set of grouping criteria.
+    docs: A population of people with some set of grouping criteria.
     properties:
       id:
         docs: Unique id for the element within a resource (for internal references).
@@ -4507,7 +4507,7 @@ types:
           (including cannot change the meaning of modifierExtension itself).
         type: optional<list<Extension>>
       label:
-        docs: Describes the purpose of this example amoung the set of examples.
+        docs: Describes the purpose of this example among the set of examples.
         type: optional<string>
       valueBase64Binary:
         docs: The actual value for the element, which must be one of the types allowed
@@ -5125,7 +5125,7 @@ types:
           and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -6497,7 +6497,7 @@ types:
         docs: Description of of processing.
         type: optional<string>
       procedure:
-        docs: Procesing code.
+        docs: Processing code.
         type: optional<CodeableConcept>
       additive:
         docs: Substance added during processing.
@@ -6590,8 +6590,8 @@ types:
   BiologicallyDerivedProductStorageScale:
     docs: Temperature scale used.
     enum:
-    - name: farenheit
-      value: farenheit
+    - name: fahrenheit
+      value: fahrenheit
     - name: celsius
       value: celsius
     - name: kelvin
@@ -12754,7 +12754,7 @@ types:
           scope.
         type: optional<list<CodeableConcept>>
       contentDefinition:
-        docs: Precusory content developed with a focus and intent of supporting the
+        docs: Precursory content developed with a focus and intent of supporting the
           formation a Contract instance, which may be associated with and transformable
           into a Contract.
         type: optional<ContractContentDefinition>
@@ -12836,11 +12836,11 @@ types:
         type: optional<list<Extension>>
       type:
         type: CodeableConcept
-        docs: Precusory content structure and use, i.e., a boilerplate, template,
+        docs: Precursory content structure and use, i.e., a boilerplate, template,
           application for a contract such as an insurance policy or benefits under
           a program, e.g., workers compensation.
       subType:
-        docs: Detailed Precusory content type.
+        docs: Detailed Precursory content type.
         type: optional<CodeableConcept>
       publisher:
         docs: The  individual or organization that published the Contract precursor
@@ -12925,7 +12925,7 @@ types:
         type: optional<list<ContractSecurityLabel>>
       offer:
         type: ContractOffer
-        docs: The matter of concern in the context of this provision of the agrement.
+        docs: The matter of concern in the context of this provision of the agreement.
       asset:
         docs: Contract Term Asset List.
         type: optional<list<ContractAsset>>
@@ -13469,7 +13469,7 @@ types:
         type: optional<CodeableConcept>
       performer:
         docs: Indicates who or what is being asked to perform (or not perform) the
-          ction.
+          action.
         type: optional<Reference>
       performerLinkId:
         docs: Id [identifier??] of the clause or question text related to the reason
@@ -13879,7 +13879,7 @@ types:
     properties:
       resourceType: literal<"CoverageEligibilityRequest">
       identifier:
-        docs: A unique identifier assigned to this coverage eligiblity request.
+        docs: A unique identifier assigned to this coverage eligibility request.
         type: optional<list<Identifier>>
       status:
         docs: The status of the resource instance.
@@ -13983,7 +13983,7 @@ types:
         docs: Additional data or information such as resources, documents, images
           etc. including references to the data or the actual inclusion of the data.
       appliesToAll:
-        docs: The supporting materials are applicable for all detail items, product/servce
+        docs: The supporting materials are applicable for all detail items, product/service
           categories and specific billing codes.
         type: optional<boolean>
   CoverageEligibilityRequestInsurance:
@@ -14919,7 +14919,7 @@ types:
         type: optional<list<Extension>>
       type:
         type: CodeableConcept
-        docs: Code that specifies the property DeviceDefinitionPropetyCode (Extensible).
+        docs: Code that specifies the property DeviceDefinitionPropertyCode (Extensible).
       valueQuantity:
         docs: Property value as a quantity.
         type: optional<list<Quantity>>
@@ -15047,7 +15047,7 @@ types:
         type: optional<list<Extension>>
       deviceIdentifier:
         docs: The identifier that is to be associated with every Device that references
-          this DeviceDefintiion for the issuer and jurisdication porvided in the DeviceDefinition.udiDeviceIdentifier.
+          this DeviceDefintiion for the issuer and jurisdication provided in the DeviceDefinition.udiDeviceIdentifier.
         type: optional<string>
       issuer:
         docs: The organization that assigns the identifier algorithm.
@@ -15208,7 +15208,7 @@ types:
         type: optional<list<Extension>>
       type:
         type: CodeableConcept
-        docs: Code that specifies the property DeviceDefinitionPropetyCode (Extensible).
+        docs: Code that specifies the property DeviceDefinitionPropertyCode (Extensible).
       valueQuantity:
         docs: Property value as a quantity.
         type: optional<list<Quantity>>
@@ -15658,7 +15658,7 @@ types:
         docs: Indicates another resource whose existence justifies this DeviceUseStatement.
         type: optional<list<Reference>>
       bodySite:
-        docs: Indicates the anotomic location on the subject's body where the device
+        docs: Indicates the anatomic location on the subject's body where the device
           was used ( i.e. the target).
         type: optional<CodeableConcept>
       note:
@@ -15871,7 +15871,7 @@ types:
         type: optional<dateTime>
       author:
         docs: Identifies who is the author of the manifest. Manifest author is not
-          necessarly the author of the references included.
+          necessarily the author of the references included.
         type: optional<list<Reference>>
       recipient:
         docs: A patient, practitioner, or organization for which this set of documents
@@ -15940,7 +15940,7 @@ types:
   DocumentReference:
     docs: A reference to a document of any kind for any purpose. Provides metadata
       about the document so that the document can be discovered and managed. The scope
-      of a document is any seralized object with a mime-type, so includes formal patient
+      of a document is any serialized object with a mime-type, so includes formal patient
       centric documents (CDA), cliical notes, scanned paper, and non-patient specific
       documents like policy text.
     extends: BaseResource
@@ -16023,7 +16023,7 @@ types:
   DocumentReferenceRelatesTo:
     docs: A reference to a document of any kind for any purpose. Provides metadata
       about the document so that the document can be discovered and managed. The scope
-      of a document is any seralized object with a mime-type, so includes formal patient
+      of a document is any serialized object with a mime-type, so includes formal patient
       centric documents (CDA), cliical notes, scanned paper, and non-patient specific
       documents like policy text.
     properties:
@@ -16072,7 +16072,7 @@ types:
   DocumentReferenceContent:
     docs: A reference to a document of any kind for any purpose. Provides metadata
       about the document so that the document can be discovered and managed. The scope
-      of a document is any seralized object with a mime-type, so includes formal patient
+      of a document is any serialized object with a mime-type, so includes formal patient
       centric documents (CDA), cliical notes, scanned paper, and non-patient specific
       documents like policy text.
     properties:
@@ -16112,7 +16112,7 @@ types:
   DocumentReferenceContext:
     docs: A reference to a document of any kind for any purpose. Provides metadata
       about the document so that the document can be discovered and managed. The scope
-      of a document is any seralized object with a mime-type, so includes formal patient
+      of a document is any serialized object with a mime-type, so includes formal patient
       centric documents (CDA), cliical notes, scanned paper, and non-patient specific
       documents like policy text.
     properties:
@@ -16265,7 +16265,7 @@ types:
           that can be useful for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -16304,7 +16304,7 @@ types:
           exposure for the research.
       outcome:
         type: Reference
-        docs: A reference to a EvidenceVariable resomece that defines the outcome
+        docs: A reference to a EvidenceVariable resource that defines the outcome
           for the research.
       sampleSize:
         docs: A description of the size of the sample involved in the synthesis.
@@ -16684,7 +16684,7 @@ types:
         docs: The organization that is primarily responsible for this Encounter's
           services. This MAY be the same as the organization on the Patient record,
           however it could be different, such as if the actor performing the services
-          was from an external organization (which may be billed seperately) for an
+          was from an external organization (which may be billed separately) for an
           external consultation.  Refer to the example bundle showing an abbreviated
           set of Encounters for a colonoscopy.
         type: optional<Reference>
@@ -17414,7 +17414,7 @@ types:
           categorization of the module that can be useful for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -17556,7 +17556,7 @@ types:
           for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -17584,7 +17584,7 @@ types:
           for the research.
         type: optional<list<Reference>>
       outcome:
-        docs: A reference to a EvidenceVariable resomece that defines the outcome
+        docs: A reference to a EvidenceVariable resource that defines the outcome
           for the research.
         type: optional<list<Reference>>
   EvidenceStatus:
@@ -17705,7 +17705,7 @@ types:
           that can be useful for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -19239,7 +19239,7 @@ types:
           line is intended to replace.
         type: optional<list<positiveInt>>
       subDetailSequence:
-        docs: The sequence number of the sub-details woithin the details within the
+        docs: The sequence number of the sub-details within the details within the
           claim item which this line is intended to replace.
         type: optional<list<positiveInt>>
       provider:
@@ -23187,7 +23187,7 @@ types:
         type: optional<list<Extension>>
       type:
         type: CodeableConcept
-        docs: Type of benefit (primary care; speciality care; inpatient; outpatient).
+        docs: Type of benefit (primary care; specialty care; inpatient; outpatient).
       requirement:
         docs: The referral requirements to have access/coverage for this benefit.
         type: optional<string>
@@ -23382,7 +23382,7 @@ types:
         type: optional<list<Extension>>
       type:
         type: CodeableConcept
-        docs: Type of specific benefit (preventative; primary care office visit; speciality
+        docs: Type of specific benefit (preventative; primary care office visit; specialty
           office visit; hospitalization; emergency room; urgent care).
       cost:
         docs: List of the costs associated with a specific benefit.
@@ -23778,7 +23778,7 @@ types:
           and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -24292,7 +24292,7 @@ types:
           for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -26664,7 +26664,7 @@ types:
         type: optional<list<CodeableConcept>>
       marketingStatus:
         docs: Marketing status of the medicinal product, in contrast to marketing
-          authorizaton.
+          authorization.
         type: optional<list<MarketingStatus>>
       pharmaceuticalProduct:
         docs: Pharmaceutical aspects of product.
@@ -26693,7 +26693,7 @@ types:
           product.
         type: optional<list<Identifier>>
       manufacturingBusinessOperation:
-        docs: An operation applied to the product, for manufacturing or adminsitrative
+        docs: An operation applied to the product, for manufacturing or administrative
           purpose.
         type: optional<list<MedicinalProductManufacturingBusinessOperation>>
       specialDesignation:
@@ -26772,7 +26772,7 @@ types:
         type: optional<string>
       type:
         type: Coding
-        docs: Idenifying type for this part of the name (e.g. strength part).
+        docs: Identifying type for this part of the name (e.g. strength part).
   MedicinalProductCountryLanguage:
     docs: Detailed definition of a medicinal product, typically for uses other than
       direct patient care (e.g. regulatory use).
@@ -26850,7 +26850,7 @@ types:
         docs: Regulatory authorization date.
         type: optional<dateTime>
       confidentialityIndicator:
-        docs: To indicate if this proces is commercially confidential.
+        docs: To indicate if this process is commercially confidential.
         type: optional<CodeableConcept>
       manufacturer:
         docs: The manufacturer or establishment associated with the process.
@@ -26945,7 +26945,7 @@ types:
           of day, month and year shall be specified using the ISO 8601 date format.
         type: optional<Period>
       dataExclusivityPeriod:
-        docs: A period of time after authorization before generic product applicatiosn
+        docs: A period of time after authorization before generic product applications
           can be submitted.
         type: optional<Period>
       dateOfFirstAuthorization:
@@ -27055,7 +27055,7 @@ types:
         docs: Date of procedure.
         type: optional<string>
       application:
-        docs: Applcations submitted to obtain a marketing authorization.
+        docs: Applications submitted to obtain a marketing authorization.
         type: optional<list<MedicinalProductAuthorizationProcedure>>
   MedicinalProductContraindication:
     docs: The clinical particulars - indications, contraindications etc. of a medicinal
@@ -28631,7 +28631,7 @@ types:
           (including cannot change the meaning of modifierExtension itself).
         type: optional<list<Extension>>
       score:
-        docs: Invidual data point representing the GQ (genotype quality) score threshold.
+        docs: Individual data point representing the GQ (genotype quality) score threshold.
         type: optional<list<integer>>
       numTP:
         docs: The number of true positives if the GQ score threshold was set to "score"
@@ -30516,7 +30516,7 @@ types:
         docs: Visiting or postal addresses for the contact.
         type: optional<Address>
   OrganizationAffiliation:
-    docs: Defines an affiliation/assotiation/relationship between 2 distinct oganizations,
+    docs: Defines an affiliation/association/relationship between 2 distinct organizations,
       that is not a part-of relationship/sub-division relationship.
     extends: BaseResource
     properties:
@@ -31447,7 +31447,7 @@ types:
           for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -33803,7 +33803,7 @@ types:
           that can be useful for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -33839,7 +33839,7 @@ types:
           exposureAlternative for the research.
         type: optional<Reference>
       outcome:
-        docs: A reference to a ResearchElementDefinition resomece that defines the
+        docs: A reference to a ResearchElementDefinition resource that defines the
           outcome for the research.
         type: optional<Reference>
   ResearchDefinitionStatus:
@@ -33985,7 +33985,7 @@ types:
           that can be useful for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -34677,7 +34677,7 @@ types:
           that can be useful for filtering and searching.
         type: optional<list<CodeableConcept>>
       author:
-        docs: An individiual or organization primarily involved in the creation and
+        docs: An individual or organization primarily involved in the creation and
           maintenance of the content.
         type: optional<list<ContactDetail>>
       editor:
@@ -34712,7 +34712,7 @@ types:
         type: optional<Reference>
       outcome:
         type: Reference
-        docs: A reference to a EvidenceVariable resomece that defines the outcome
+        docs: A reference to a EvidenceVariable resource that defines the outcome
           for the research.
       sampleSize:
         docs: A description of the size of the sample involved in the synthesis.
@@ -42452,7 +42452,7 @@ types:
         docs: The healthcare professional responsible for authorizing the prescription.
       lensSpecification:
         docs: Contain the details of  the individual lens specifications and serves
-          as the authorization for the fullfillment by certified professionals.
+          as the authorization for the fulfilment by certified professionals.
         type: list<VisionPrescriptionLensSpecification>
   VisionPrescriptionLensSpecification:
     docs: An authorization for the provision of glasses and/or contact lenses to a
@@ -42745,13 +42745,13 @@ types:
           MUST always interpret the externalId as scoped to the provisioning domain.
         type: optional<string>
       accessPolicy:
-        docs: The access policy for the user within the project memebership.
+        docs: The access policy for the user within the project membership.
         type: optional<Reference>
       access:
         docs: Extended access configuration using parameterized access policies.
         type: optional<list<ProjectMembershipAccess>>
       userConfiguration:
-        docs: The user configuration for the user within the project memebership such
+        docs: The user configuration for the user within the project membership such
           as menu links, saved searches, and features.
         type: optional<Reference>
       admin:

@@ -9,18 +9,15 @@ import (
 
 func do() () {
     client := client.NewClient(
+        option.WithBaseURL(
+            "https://api.fern.com",
+        ),
         option.WithToken(
             "<token>",
         ),
     )
-    client.Users.ListWithBodyOffsetPagination(
+    client.Users.ListWithMixedTypeCursorPagination(
         context.TODO(),
-        &fern.ListUsersBodyOffsetPaginationRequest{
-            Pagination: &fern.WithPage{
-                Page: fern.Int(
-                    1,
-                ),
-            },
-        },
+        &fern.ListUsersMixedTypeCursorPaginationRequest{},
     )
 }

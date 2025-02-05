@@ -27,10 +27,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -95,7 +92,44 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "name": "Stream completions",
+              "path": "/stream",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "query": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "query": "foo"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBodyV3": {
+                "type": "sse",
+                "value": [
+                  {
+                    "event": "discriminant-1",
+                    "data": {
+                      "delta": "foo",
+                      "tokens": 1
+                    }
+                  },
+                  {
+                    "event": "discriminant-2",
+                    "data": {
+                      "delta": "bar",
+                      "tokens": 2
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       ],
       "webhooks": [],

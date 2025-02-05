@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedAuthEnvironmentVariables;
 using SeedAuthEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedAuthEnvironmentVariables.Test.Unit.MockServer;
 
 [TestFixture]

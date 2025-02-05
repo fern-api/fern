@@ -1,8 +1,8 @@
+import { Decorator } from "./Decorator";
+import { Field } from "./Field";
 import { Reference } from "./Reference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Decorator } from "./Decorator";
-import { Field } from "./Field";
 
 export declare namespace Class {
     interface Args {
@@ -61,6 +61,7 @@ export class Class extends AstNode {
         writer.write(":");
         writer.newLine();
 
+        writer.indent();
         if (this.docs != null) {
             writer.write('"""');
             writer.write(this.docs);
@@ -68,7 +69,6 @@ export class Class extends AstNode {
         }
         writer.writeNewLineIfLastLineNot();
 
-        writer.indent();
         this.fields.forEach((field) => {
             field.write(writer);
             writer.writeNewLineIfLastLineNot();

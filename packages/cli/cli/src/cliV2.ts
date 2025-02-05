@@ -1,15 +1,18 @@
-import { FernRegistry } from "@fern-fern/generators-sdk";
-import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
-import { Argv } from "yargs";
-import { CliContext } from "./cli-context/CliContext";
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { getGeneratorList, GenerationModeFilter } from "./commands/generator-list/getGeneratorList";
-import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
-import { getOrganziation } from "./commands/organization/getOrganization";
-import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
-import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
-import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
 import { writeFile } from "fs/promises";
+import { Argv } from "yargs";
+
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+
+import { FernRegistry } from "@fern-fern/generators-sdk";
+
+import { CliContext } from "./cli-context/CliContext";
+import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
+import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
+import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList";
+import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
+import { getOrganization } from "./commands/organization/getOrganization";
+import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -29,7 +32,7 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
                     outputLocation: argv.output
                 }
             });
-            await getOrganziation({
+            await getOrganization({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: undefined,
                     defaultToAllApiWorkspaces: true
@@ -305,8 +308,8 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             generator.outputMode.type === "github"
                                 ? generator.outputMode.repo
                                 : generator.outputMode.type === "githubV2"
-                                ? generator.outputMode.githubV2.repo
-                                : undefined;
+                                  ? generator.outputMode.githubV2.repo
+                                  : undefined;
                         if (repository != null) {
                             generatorMetadata.repository = repository;
                             if (argv.output == null) {

@@ -1,4 +1,5 @@
 import { AbstractWriter } from "@fern-api/base-generator";
+
 import { ClassReference } from "..";
 import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
@@ -100,8 +101,6 @@ export class Writer extends AbstractWriter {
             const imports = this.stringifyImports();
             if (imports.length > 0) {
                 return `${imports}
-    #nullable enable
-
     ${this.buffer}`;
             }
         }

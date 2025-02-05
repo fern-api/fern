@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { php, FileGenerator, PhpFile } from "@fern-api/php-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { FileGenerator, PhpFile, php } from "@fern-api/php-codegen";
+
 import {
     AuthScheme,
     ContainerType,
@@ -10,6 +11,7 @@ import {
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -174,10 +176,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 value: php.codeblock(`'${this.context.version}'`)
             });
         }
-        if (platformHeaders.userAgent != null) {
+        const userAgent = this.context.getUserAgent();
+        if (userAgent != null) {
             headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.userAgent.header}'`),
-                value: php.codeblock(`'${platformHeaders.userAgent.value}'`)
+                key: php.codeblock(`'${userAgent.header}'`),
+                value: php.codeblock(`'${userAgent.value}'`)
             });
         }
         const headers = php.map({

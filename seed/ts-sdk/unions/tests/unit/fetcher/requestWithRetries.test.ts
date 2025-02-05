@@ -1,4 +1,3 @@
-import { RUNTIME } from "../../../src/core/runtime";
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
 
 describe("requestWithRetries", () => {
@@ -23,12 +22,12 @@ describe("requestWithRetries", () => {
     });
 
     it("should retry on retryable status codes", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback) => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
 
-        const retryableStatuses = [408, 409, 429, 500, 502];
+        const retryableStatuses = [408, 429, 500, 502];
         let callCount = 0;
 
         mockFetch.mockImplementation(async () => {
@@ -47,7 +46,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect maxRetries limit", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback) => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -64,7 +63,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should not retry on success status codes", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback) => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -86,7 +85,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should apply correct exponential backoff with jitter", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback) => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -110,7 +109,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should handle concurrent retries independently", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback) => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });

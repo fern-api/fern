@@ -20,7 +20,7 @@ export const SendLiteralsInlinedRequest: core.serialization.Schema<
 });
 
 export declare namespace SendLiteralsInlinedRequest {
-    interface Raw {
+    export interface Raw {
         context?: "You're super wise" | null;
         query: string;
         temperature?: number | null;

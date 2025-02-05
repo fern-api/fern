@@ -17,7 +17,7 @@ export const StreamParameterResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace StreamParameterResponse {
-    interface Raw {
+    export interface Raw {
         nonStreamResponse: NonStreamHttpResponseBody.Raw;
         streamResponse: StreamingResponse.Raw;
     }

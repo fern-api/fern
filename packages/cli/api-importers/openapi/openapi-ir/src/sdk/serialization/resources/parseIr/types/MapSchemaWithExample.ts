@@ -32,7 +32,7 @@ export const MapSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithInline);
 
 export declare namespace MapSchemaWithExample {
-    interface Raw
+    export interface Raw
         extends WithSdkGroupName.Raw,
             WithName.Raw,
             WithDescription.Raw,

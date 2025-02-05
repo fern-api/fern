@@ -11,7 +11,7 @@ export const FetchResponse: core.serialization.ObjectSchema<serializers.FetchRes
         columns: core.serialization
             .record(
                 core.serialization.string(),
-                core.serialization.lazyObject(() => serializers.Column)
+                core.serialization.lazyObject(() => serializers.Column),
             )
             .optional(),
         namespace: core.serialization.string().optional(),
@@ -19,7 +19,7 @@ export const FetchResponse: core.serialization.ObjectSchema<serializers.FetchRes
     });
 
 export declare namespace FetchResponse {
-    interface Raw {
+    export interface Raw {
         columns?: Record<string, serializers.Column.Raw> | null;
         namespace?: string | null;
         usage?: serializers.Usage.Raw | null;

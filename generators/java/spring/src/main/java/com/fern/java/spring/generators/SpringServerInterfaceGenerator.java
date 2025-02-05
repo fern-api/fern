@@ -92,7 +92,7 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
         return GeneratedSpringServerInterface.builder()
                 .className(className)
                 .javaFile(springServiceJavaFile)
-                .addAllGeenratedRequestBodyFiles(generatedRequestBodyFiles)
+                .addAllGeneratedRequestBodyFiles(generatedRequestBodyFiles)
                 .build();
     }
 

@@ -1,5 +1,7 @@
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
+
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
+
 import { convertIrAvailability } from "./convertPackage";
 
 export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
@@ -143,6 +145,13 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         defaultValue: undefined
                     };
                 },
+                nullable: (itemType) => {
+                    return {
+                        type: "optional",
+                        itemType: convertTypeReference(itemType),
+                        defaultValue: undefined
+                    };
+                },
                 set: (itemType) => {
                     return {
                         type: "set",
@@ -239,6 +248,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     base64: () => {
                         return {
                             type: "base64",
+                            mimeType: undefined,
                             default: undefined
                         };
                     },
@@ -280,6 +290,7 @@ function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         primitive != null && primitive.type === "string" ? primitive.validation : undefined;
     return {
         type: "string",
+        format: rules != null ? rules.format : undefined,
         regex: rules != null ? rules.pattern : undefined,
         minLength: rules != null ? rules.minLength : undefined,
         maxLength: rules != null ? rules.maxLength : undefined,
@@ -311,9 +322,9 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
 
 function convertExtraProperties(
     extraProperties: boolean | string | Ir.types.TypeReference
-): FdrCjsSdk.api.v1.register.TypeReference {
+): FdrCjsSdk.api.v1.register.TypeReference | undefined {
     if (typeof extraProperties === "boolean") {
-        return TypeReference.unknown();
+        return extraProperties ? TypeReference.unknown() : undefined;
     } else if (typeof extraProperties === "string") {
         return {
             type: "id",

@@ -1,3 +1,6 @@
+import { camelCase } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     EndpointSdkName,
     EndpointWithExample,
@@ -5,8 +8,7 @@ import {
     SdkGroupName,
     WebhookWithExample
 } from "@fern-api/openapi-ir";
-import { camelCase } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
+
 import { getExtension } from "../../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
@@ -60,7 +62,7 @@ export function convertOperation({
 }): ConvertedOperation | undefined {
     const shouldIgnore = getExtension<boolean>(operation, FernOpenAPIExtension.IGNORE);
     if (shouldIgnore != null && shouldIgnore) {
-        context.logger.info(
+        context.logger.debug(
             `${pathItemContext.method.toUpperCase()} ${pathItemContext.path} is marked with x-fern-ignore. Skipping.`
         );
         return undefined;

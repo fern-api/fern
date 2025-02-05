@@ -1,5 +1,7 @@
-import { Environments, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
 import { GeneratedEnvironments } from "@fern-typescript/contexts";
+
+import { Environments, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
+
 import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl";
 import { GeneratedMultipleUrlsEnvironmentsImpl } from "./GeneratedMultipleUrlsEnvironmentsImpl";
 import { GeneratedSingleUrlEnvironmentsImpl } from "./GeneratedSingleUrlEnvironmentsImpl";
@@ -44,9 +46,9 @@ export class EnvironmentsGenerator {
                     environmentEnumName,
                     defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined
                 }),
-            multipleBaseUrls: (mulitpleBaseUrlEnvironments) =>
+            multipleBaseUrls: (multipleBaseUrlEnvironments) =>
                 new GeneratedMultipleUrlsEnvironmentsImpl({
-                    environments: mulitpleBaseUrlEnvironments,
+                    environments: multipleBaseUrlEnvironments,
                     environmentEnumName,
                     environmentUrlsTypeName,
                     defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined

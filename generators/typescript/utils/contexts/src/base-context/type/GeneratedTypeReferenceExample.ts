@@ -1,5 +1,6 @@
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
+
 import { BaseContext } from "../../base-context";
 
 export interface GeneratedTypeReferenceExample {

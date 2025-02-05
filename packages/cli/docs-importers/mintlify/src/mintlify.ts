@@ -153,6 +153,7 @@ export interface MintJsonSchema {
               };
         isDefaultHidden?: boolean;
         version?: string;
+        openapi?: string;
     }[];
     tabs?: {
         name: string;

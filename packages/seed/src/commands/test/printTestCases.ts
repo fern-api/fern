@@ -1,4 +1,5 @@
 import { printTable } from "console-table-printer";
+
 import { TestRunner } from "./test-runner";
 
 export function printTestCases(result: TestRunner.TestResult[]): void {

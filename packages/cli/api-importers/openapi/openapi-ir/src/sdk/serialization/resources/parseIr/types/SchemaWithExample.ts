@@ -63,7 +63,7 @@ export const SchemaWithExample: core.serialization.Schema<
     });
 
 export declare namespace SchemaWithExample {
-    type Raw =
+    export type Raw =
         | SchemaWithExample.Primitive
         | SchemaWithExample.Object
         | SchemaWithExample.Array
@@ -76,48 +76,48 @@ export declare namespace SchemaWithExample {
         | SchemaWithExample.Nullable
         | SchemaWithExample.Unknown;
 
-    interface Primitive extends PrimitiveSchemaWithExample.Raw {
+    export interface Primitive extends PrimitiveSchemaWithExample.Raw {
         type: "primitive";
     }
 
-    interface Object extends serializers.ObjectSchemaWithExample.Raw {
+    export interface Object extends serializers.ObjectSchemaWithExample.Raw {
         type: "object";
     }
 
-    interface Array extends serializers.ArraySchemaWithExample.Raw {
+    export interface Array extends serializers.ArraySchemaWithExample.Raw {
         type: "array";
     }
 
-    interface Map extends serializers.MapSchemaWithExample.Raw {
+    export interface Map extends serializers.MapSchemaWithExample.Raw {
         type: "map";
     }
 
-    interface Optional extends serializers.OptionalSchemaWithExample.Raw {
+    export interface Optional extends serializers.OptionalSchemaWithExample.Raw {
         type: "optional";
     }
 
-    interface Enum extends EnumSchemaWithExample.Raw {
+    export interface Enum extends EnumSchemaWithExample.Raw {
         type: "enum";
     }
 
-    interface Reference extends ReferencedSchema.Raw {
+    export interface Reference extends ReferencedSchema.Raw {
         type: "reference";
     }
 
-    interface Literal extends LiteralSchema.Raw {
+    export interface Literal extends LiteralSchema.Raw {
         type: "literal";
     }
 
-    interface OneOf {
+    export interface OneOf {
         type: "oneOf";
         value: serializers.OneOfSchemaWithExample.Raw;
     }
 
-    interface Nullable extends serializers.NullableSchemaWithExample.Raw {
+    export interface Nullable extends serializers.NullableSchemaWithExample.Raw {
         type: "nullable";
     }
 
-    interface Unknown extends UnknownSchemaWithExample.Raw {
+    export interface Unknown extends UnknownSchemaWithExample.Raw {
         type: "unknown";
     }
 }

@@ -1,21 +1,22 @@
 import {
+    RawSchemas,
+    isInlineRequestBody,
+    parseBytesRequest,
+    parseFileUploadRequest
+} from "@fern-api/fern-definition-schema";
+import {
+    Availability,
     FileProperty,
     FileUploadRequestProperty,
     HttpRequestBody,
     HttpRequestBodyReference,
-    InlinedRequestBodyProperty,
-    Availability
+    InlinedRequestBodyProperty
 } from "@fern-api/ir-sdk";
-import {
-    isInlineRequestBody,
-    parseBytesRequest,
-    parseFileUploadRequest,
-    RawSchemas
-} from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
-import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { convertAvailability } from "../convertDeclaration";
+import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 
 export function convertHttpRequestBody({
     request,

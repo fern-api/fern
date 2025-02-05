@@ -16,6 +16,6 @@ describe("objectWithoutOptionalProperties", () => {
             parsed: {
                 foo: "hello",
             },
-        }
+        },
     );
 });

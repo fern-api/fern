@@ -1,5 +1,6 @@
 import { AbstractGeneratorContext } from "@fern-api/browser-compatible-base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { File } from "./File";
 
 export abstract class AbstractProject<GeneratorContext extends AbstractGeneratorContext> {

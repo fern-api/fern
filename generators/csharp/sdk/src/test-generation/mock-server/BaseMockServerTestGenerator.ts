@@ -1,8 +1,9 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { RootClientGenerator } from "../../root-client/RootClientGenerator";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { SdkGeneratorContext, MOCK_SERVER_TEST_FOLDER } from "../../SdkGeneratorContext";
+import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator";
 
 export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;
@@ -117,7 +118,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
                     writer.writeLine("RequestOptions = ");
                     writer.writeNodeStatement(
-                        new csharp.ClassInstantiation({
+                        csharp.instantiateClass({
                             classReference: this.context.getRequestOptionsClassReference(),
                             arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
                         })
@@ -126,7 +127,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     if (this.context.hasIdempotencyHeaders()) {
                         writer.writeLine("IdempotentRequestOptions = ");
                         writer.writeNodeStatement(
-                            new csharp.ClassInstantiation({
+                            csharp.instantiateClass({
                                 classReference: this.context.getIdempotentRequestOptionsClassReference(),
                                 arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
                             })

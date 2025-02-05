@@ -10,15 +10,17 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace S3 {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
         >;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -44,10 +46,14 @@ export class S3 {
      */
     public async getPresignedUrl(
         request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
-        requestOptions?: S3.RequestOptions
+        requestOptions?: S3.RequestOptions,
     ): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin((await core.Supplier.get(this._options.environment)).s3, "/s3/presigned-url"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).s3,
+                "/s3/presigned-url",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -90,7 +96,7 @@ export class S3 {
                 });
             case "timeout":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
-                    "Timeout exceeded when calling POST /s3/presigned-url."
+                    "Timeout exceeded when calling POST /s3/presigned-url.",
                 );
             case "unknown":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({

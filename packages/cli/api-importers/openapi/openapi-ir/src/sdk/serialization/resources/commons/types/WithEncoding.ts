@@ -13,7 +13,7 @@ export const WithEncoding: core.serialization.ObjectSchema<serializers.WithEncod
     });
 
 export declare namespace WithEncoding {
-    interface Raw {
+    export interface Raw {
         encoding?: Encoding.Raw | null;
     }
 }

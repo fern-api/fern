@@ -10,28 +10,28 @@ export type AuthScheme =
     | FernIr.AuthScheme.Header
     | FernIr.AuthScheme.Oauth;
 
-export declare namespace AuthScheme {
-    interface Bearer extends FernIr.BearerAuthScheme, _Utils {
+export namespace AuthScheme {
+    export interface Bearer extends FernIr.BearerAuthScheme, _Utils {
         type: "bearer";
     }
 
-    interface Basic extends FernIr.BasicAuthScheme, _Utils {
+    export interface Basic extends FernIr.BasicAuthScheme, _Utils {
         type: "basic";
     }
 
-    interface Header extends FernIr.HeaderAuthScheme, _Utils {
+    export interface Header extends FernIr.HeaderAuthScheme, _Utils {
         type: "header";
     }
 
-    interface Oauth extends FernIr.OAuthScheme, _Utils {
+    export interface Oauth extends FernIr.OAuthScheme, _Utils {
         type: "oauth";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.AuthScheme._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         bearer: (value: FernIr.BearerAuthScheme) => _Result;
         basic: (value: FernIr.BasicAuthScheme) => _Result;
         header: (value: FernIr.HeaderAuthScheme) => _Result;

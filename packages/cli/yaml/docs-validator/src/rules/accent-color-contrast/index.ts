@@ -1,5 +1,7 @@
-import { docsYml, getColorFromRawConfig, getColorType } from "@fern-api/configuration-loader";
 import tinycolor from "tinycolor2";
+
+import { docsYml, getColorFromRawConfig, getColorType } from "@fern-api/configuration-loader";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 export const AccentColorContrastRule: Rule = {
@@ -42,7 +44,7 @@ export function validateTheme(
 
     if (!tinycolor(backgroundColor).isValid()) {
         ruleViolations.push({
-            severity: "error",
+            severity: "fatal",
             message: `Invalid background color provided for colors.background.${theme}: ${backgroundColor}.`
         });
     } else {
@@ -63,7 +65,7 @@ export function validateTheme(
         });
     } else if (!tinycolor(accentPrimaryColor).isValid()) {
         ruleViolations.push({
-            severity: "error",
+            severity: "fatal",
             message: `Invalid accent-color provided for colors.accent-primary.${theme}: ${accentPrimaryColor}.`
         });
     } else {

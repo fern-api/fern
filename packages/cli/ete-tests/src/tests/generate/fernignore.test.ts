@@ -1,6 +1,8 @@
-import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { writeFile } from "fs/promises";
+
+import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 

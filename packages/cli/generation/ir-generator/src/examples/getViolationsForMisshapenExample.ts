@@ -1,4 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { ExampleViolation } from "./exampleViolation";
 
 export function getViolationsForMisshapenExample(

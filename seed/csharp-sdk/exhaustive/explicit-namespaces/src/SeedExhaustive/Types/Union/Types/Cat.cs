@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive.Types.Union;
 
 public record Cat

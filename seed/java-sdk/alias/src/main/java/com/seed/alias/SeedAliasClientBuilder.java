@@ -16,6 +16,14 @@ public final class SeedAliasClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public SeedAliasClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public SeedAliasClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new SeedAliasClient(clientOptionsBuilder.build());

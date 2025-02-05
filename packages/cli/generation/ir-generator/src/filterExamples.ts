@@ -18,6 +18,7 @@ import {
     ExampleTypeReferenceShape,
     ExampleTypeShape
 } from "@fern-api/ir-sdk";
+
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 
 function filterExampleSingleUnionTypeProperties({
@@ -105,6 +106,23 @@ function filterExampleTypeReference({
                                   ExampleContainer.optional({
                                       optional: filteredOptionalTypReference,
                                       valueType: o.valueType
+                                  })
+                              )
+                          }
+                        : undefined;
+                },
+                nullable: (n) => {
+                    const filteredNullableTypReference =
+                        n.nullable != null
+                            ? filterExampleTypeReference({ filteredIr, exampleTypeReference: n.nullable })
+                            : undefined;
+                    return filteredNullableTypReference != null
+                        ? {
+                              ...exampleTypeReference,
+                              shape: ExampleTypeReferenceShape.container(
+                                  ExampleContainer.nullable({
+                                      nullable: filteredNullableTypReference,
+                                      valueType: n.valueType
                                   })
                               )
                           }

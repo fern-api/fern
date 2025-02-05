@@ -3,13 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedAliasExtends.Core;
 
-#nullable enable
-
 namespace SeedAliasExtends;
 
 public partial class SeedAliasExtendsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedAliasExtendsClient(ClientOptions? clientOptions = null)
     {
@@ -44,17 +42,19 @@ public partial class SeedAliasExtendsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/extends/extended-inline-request-body",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/extends/extended-inline-request-body",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

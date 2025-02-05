@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedPagination.Core;
 
-#nullable enable
-
 namespace SeedPagination;
 
 public partial class ClientOptions

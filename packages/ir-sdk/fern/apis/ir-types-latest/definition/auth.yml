@@ -66,6 +66,7 @@ types:
       clientId: http.RequestProperty
       clientSecret: http.RequestProperty
       scopes: optional<http.RequestProperty>
+      customProperties: optional<list<http.RequestProperty>>
   OAuthAccessTokenResponseProperties:
     docs: The properties to map to the corresponding OAuth token primitive.
     properties:

@@ -1,4 +1,5 @@
 import { Arguments, hasNamedArgument, isNamedArgument } from "@fern-api/base-generator";
+
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";

@@ -1,7 +1,9 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { Logger } from "@fern-api/logger";
 import { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+
 import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
@@ -236,13 +238,13 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         times: number
     ): void;
 
     public abstract markSchemaWithDiscriminantValue(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         discriminantValue: string
     ): void;
 

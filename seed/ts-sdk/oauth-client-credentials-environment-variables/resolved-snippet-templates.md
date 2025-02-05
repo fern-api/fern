@@ -11,8 +11,8 @@ await client.auth.getTokenWithClientCredentials({
   clientSecret: "client_secret",
   scope: "scope",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -29,7 +29,7 @@ await client.auth.refreshToken({
   refreshToken: "refresh_token",
   scope: "scope",
 });
- 
-```                        
+
+```
 
 

@@ -43,7 +43,7 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
-    return pydantic.parse_obj_as(type_, object_)
+    return pydantic.v1.parse_obj_as(type_, object_)
 
 
 def to_jsonable_with_fallback(
@@ -58,7 +58,7 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         json_encoders = {dt.datetime: serialize_datetime}
-        # Allow fields begining with `model_` to be used in the model
+        # Allow fields beginning with `model_` to be used in the model
         protected_namespaces = ()
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -74,7 +74,7 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
         Override the default dict method to `exclude_unset` by default. This function patches
         `exclude_unset` to work include fields within non-None default values.
         """
-        # Note: the logic here is multi-plexed given the levers exposed in Pydantic V1 vs V2
+        # Note: the logic here is multiplexed given the levers exposed in Pydantic V1 vs V2
         # Pydantic V1's .dict can be extremely slow, so we do not want to call it twice.
         #
         # We'd ideally do the same for Pydantic V2, but it shells out to a library to serialize models
@@ -167,14 +167,14 @@ def universal_root_validator(
     pre: bool = False,
 ) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        return pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
+        return pydantic.v1.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator
 
 
 def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
+        return pydantic.v1.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator
 

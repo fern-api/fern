@@ -1,10 +1,3 @@
-import {
-    NameAndWireValue,
-    SingleUnionType,
-    SingleUnionTypeProperties,
-    SingleUnionTypeProperty,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
 import { BaseContext } from "@fern-typescript/contexts";
 import {
     AbstractKnownSingleUnionType,
@@ -12,6 +5,15 @@ import {
     SinglePropertySingleUnionTypeGenerator,
     SingleUnionTypeGenerator
 } from "@fern-typescript/union-generator";
+
+import {
+    NameAndWireValue,
+    SingleUnionType,
+    SingleUnionTypeProperties,
+    SingleUnionTypeProperty,
+    UnionTypeDeclaration
+} from "@fern-fern/ir-sdk/api";
+
 import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
 
 export declare namespace ParsedSingleUnionTypeForUnion {

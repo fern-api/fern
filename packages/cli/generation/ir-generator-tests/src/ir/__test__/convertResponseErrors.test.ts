@@ -1,11 +1,11 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { ResponseErrors } from "@fern-api/ir-sdk";
 import {
     constructCasingsGenerator,
     constructFernFileContext,
     convertResponseErrors,
     convertToFernFilepath
 } from "@fern-api/ir-generator";
+import { ResponseErrors } from "@fern-api/ir-sdk";
 
 describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {

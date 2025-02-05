@@ -204,6 +204,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -381,7 +382,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -675,7 +676,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -1173,6 +1174,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1377,7 +1379,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -1701,7 +1703,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -2122,6 +2124,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2236,7 +2239,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -2388,7 +2391,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -3325,7 +3328,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -3403,6 +3406,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3625,7 +3629,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -3969,7 +3973,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -4912,7 +4916,7 @@
               "file": "../openapi.json",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -5011,6 +5015,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6039,6 +6044,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6081,7 +6087,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -6153,7 +6159,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -6949,6 +6955,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7045,7 +7052,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -7240,7 +7247,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -8096,6 +8103,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8129,7 +8137,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },
@@ -8191,7 +8199,7 @@
                 "file": "../openapi.json",
                 "type": "openapi"
               },
-              "type": "undisciminated"
+              "type": "undiscriminated"
             },
             "type": "oneOf"
           },

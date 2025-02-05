@@ -1,6 +1,8 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import { SchemaId, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIV3 } from "openapi-types";
+
 import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import {
@@ -15,8 +17,8 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
 
     private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
     private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
-    private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
-    private discrminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
+    private discriminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
+    private discriminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
     private schemasToExclude: Set<SchemaId> = new Set();
 
     constructor({
@@ -72,16 +74,16 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
 
     public markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         times: number
     ): void {
-        const existingReference = this.discrminatedUnionReferences[schema.$ref];
+        const existingReference = this.discriminatedUnionReferences[schema.$ref];
         if (existingReference != null) {
-            existingReference.discriminants.add(discrminant);
+            existingReference.discriminants.add(discriminant);
             existingReference.numReferences += times;
         } else {
-            this.discrminatedUnionReferences[schema.$ref] = {
-                discriminants: new Set([discrminant]),
+            this.discriminatedUnionReferences[schema.$ref] = {
+                discriminants: new Set([discriminant]),
                 numReferences: times
             };
         }
@@ -90,26 +92,26 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     public getReferencesFromDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject
     ): DiscriminatedUnionReference | undefined {
-        return this.discrminatedUnionReferences[schema.$ref];
+        return this.discriminatedUnionReferences[schema.$ref];
     }
 
     public markSchemaWithDiscriminantValue(
         schema: OpenAPIV3.ReferenceObject,
-        discrminant: string,
+        discriminant: string,
         discriminantValue: string
     ): void {
-        const existingMetadata = this.discrminatedUnionMetadata[schema.$ref];
+        const existingMetadata = this.discriminatedUnionMetadata[schema.$ref];
         if (existingMetadata != null) {
-            existingMetadata.discriminants.set(discrminant, discriminantValue);
+            existingMetadata.discriminants.set(discriminant, discriminantValue);
         } else {
-            this.discrminatedUnionMetadata[schema.$ref] = {
-                discriminants: new Map([[discrminant, discriminantValue]])
+            this.discriminatedUnionMetadata[schema.$ref] = {
+                discriminants: new Map([[discriminant, discriminantValue]])
             };
         }
     }
 
     public getDiscriminatedUnionMetadata(schema: OpenAPIV3.ReferenceObject): DiscriminatedUnionMetadata | undefined {
-        return this.discrminatedUnionMetadata[schema.$ref];
+        return this.discriminatedUnionMetadata[schema.$ref];
     }
 
     public excludeSchema(schemaId: SchemaId): void {

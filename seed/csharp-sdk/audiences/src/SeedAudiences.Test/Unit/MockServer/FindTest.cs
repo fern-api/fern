@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedAudiences;
 using SeedAudiences.Core;
 
-#nullable enable
-
 namespace SeedAudiences.Test.Unit.MockServer;
 
 [TestFixture]

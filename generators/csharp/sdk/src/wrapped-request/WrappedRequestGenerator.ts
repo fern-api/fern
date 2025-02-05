@@ -1,6 +1,7 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import {
     ContainerType,
     ExampleEndpointCall,
@@ -10,6 +11,7 @@ import {
     ServiceId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -142,7 +144,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         if (isProtoRequest) {
             const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
             if (protobufService != null) {
-                const protobufClassReference = new csharp.ClassReference({
+                const protobufClassReference = csharp.classReference({
                     name: this.classReference.name,
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
                     namespaceAlias: "Proto"

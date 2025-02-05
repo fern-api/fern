@@ -5,8 +5,8 @@ const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
   query: "What is the weather today",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -16,8 +16,8 @@ const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
   query: "query",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -31,8 +31,8 @@ await client.inlined.send({
     nestedLiteral: {},
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -46,8 +46,8 @@ await client.inlined.send({
     nestedLiteral: {},
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -55,8 +55,8 @@ import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.path.send();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -64,8 +64,8 @@ import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.path.send();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -75,8 +75,8 @@ const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.query.send({
   query: "What is the weather today",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -86,8 +86,8 @@ const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.query.send({
   query: "query",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -104,8 +104,8 @@ await client.reference.send({
     ],
   },
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -125,7 +125,7 @@ await client.reference.send({
     ],
   },
 });
- 
-```                        
+
+```
 
 

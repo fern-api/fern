@@ -1,8 +1,9 @@
-import { python } from "..";
-import { Writer } from "../core/Writer";
-import { Method } from "../Method";
-import { CodeBlock } from "../CodeBlock";
 import { expect } from "vitest";
+
+import { python } from "..";
+import { CodeBlock } from "../CodeBlock";
+import { ClassMethodType, Method } from "../Method";
+import { Writer } from "../core/Writer";
 
 describe("PythonFile", () => {
     let writer: Writer;
@@ -65,6 +66,46 @@ describe("PythonFile", () => {
             extends_: [deeplyNestedRef]
         });
         file.addStatement(deeplyNestedClass);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("Add a class with a reference to itself", async () => {
+        const file = python.file({
+            path: ["test_module"]
+        });
+
+        const testClass = python.class_({
+            name: "TestClass",
+            extends_: [
+                python.reference({
+                    name: "ParentTestClass",
+                    modulePath: ["parent_module"]
+                })
+            ]
+        });
+
+        const classMethod = python.method({
+            name: "from_dict",
+            type: ClassMethodType.CLASS,
+            parameters: [
+                python.parameter({ name: "data", type: python.Type.dict(python.Type.str(), python.Type.any()) })
+            ]
+        });
+        classMethod.addStatement(
+            python.field({
+                name: "instance",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({ name: "TestClass", modulePath: ["test_module"] }),
+                    arguments_: [python.methodArgument({ value: python.codeBlock("data") })]
+                })
+            })
+        );
+        classMethod.addStatement(python.codeBlock("return instance"));
+        testClass.add(classMethod);
+
+        file.addStatement(testClass);
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();

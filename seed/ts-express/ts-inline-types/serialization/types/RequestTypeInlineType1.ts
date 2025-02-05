@@ -14,7 +14,7 @@ export const RequestTypeInlineType1: core.serialization.ObjectSchema<
 });
 
 export declare namespace RequestTypeInlineType1 {
-    interface Raw {
+    export interface Raw {
         foo: string;
     }
 }

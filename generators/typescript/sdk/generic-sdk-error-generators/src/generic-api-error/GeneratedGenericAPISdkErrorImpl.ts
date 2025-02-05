@@ -419,10 +419,7 @@ export class GeneratedGenericAPISdkErrorImpl
                                         ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Body: "), [
                                             ts.factory.createTemplateSpan(
                                                 ts.factory.createCallExpression(
-                                                    ts.factory.createPropertyAccessExpression(
-                                                        ts.factory.createIdentifier("JSON"),
-                                                        ts.factory.createIdentifier("stringify")
-                                                    ),
+                                                    context.jsonContext.getReferenceToToJson().getExpression(),
                                                     undefined,
                                                     [
                                                         ts.factory.createIdentifier(

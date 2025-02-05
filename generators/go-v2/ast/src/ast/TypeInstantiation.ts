@@ -1,11 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import { CodeBlock } from "./CodeBlock";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 import { FuncInvocation } from "./FuncInvocation";
 import { GoTypeReference } from "./GoTypeReference";
 import { MethodInvocation } from "./MethodInvocation";
 import { Type } from "./Type";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 type InternalTypeInstantiation =
     | Any_

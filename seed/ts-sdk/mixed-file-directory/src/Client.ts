@@ -7,11 +7,13 @@ import { Organization } from "./api/resources/organization/client/Client";
 import { User } from "./api/resources/user/client/Client";
 
 export declare namespace SeedMixedFileDirectoryClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */

@@ -14,7 +14,7 @@ export const TestCaseExpects: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestCaseExpects {
-    interface Raw {
+    export interface Raw {
         expectedStdout?: string | null;
     }
 }

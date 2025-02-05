@@ -25,7 +25,7 @@ export const WeatherReport = {
 } as const;
 
 export namespace WeatherReport {
-    interface Visitor<R> {
+    export interface Visitor<R> {
         sunny: () => R;
         cloudy: () => R;
         raining: () => R;

@@ -8,7 +8,11 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.EnumValue;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -32,6 +36,7 @@ import com.fern.java.client.generators.SubpackageClientGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
+import com.fern.java.generators.EnumGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.StreamGenerator;
@@ -51,6 +56,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -182,6 +188,34 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         EnvironmentGenerator environmentGenerator = new EnvironmentGenerator(context);
         GeneratedEnvironmentsClass generatedEnvironmentsClass = environmentGenerator.generateFile();
         this.addGeneratedFile(generatedEnvironmentsClass);
+
+        ir.getApiVersion()
+                .flatMap(apiVersion -> apiVersion.getHeader().map(HeaderApiVersionScheme::getValue))
+                .ifPresent(irDeclaration -> {
+                    EnumTypeDeclaration.Builder enumTypeDeclaration =
+                            EnumTypeDeclaration.builder().from(irDeclaration);
+
+                    irDeclaration.getDefault().ifPresent(defaultValue -> {
+                        enumTypeDeclaration.addValues(EnumValue.builder()
+                                .from(defaultValue)
+                                .name(NameAndWireValue.builder()
+                                        .from(defaultValue.getName())
+                                        .name(ApiVersionConstants.CURRENT_API_VERSION_NAME)
+                                        .build())
+                                .build());
+                    });
+
+                    EnumGenerator apiVersionsGenerator = new EnumGenerator(
+                            context.getPoetClassNameFactory().getApiVersionClassName(),
+                            context,
+                            enumTypeDeclaration.build(),
+                            Set.of(context.getPoetClassNameFactory()
+                                    .getApiVersionClassName()
+                                    .simpleName()),
+                            true);
+                    GeneratedJavaFile generatedApiVersions = apiVersionsGenerator.generateFile();
+                    this.addGeneratedFile(generatedApiVersions);
+                });
 
         RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(
                 context, context.getPoetClassNameFactory().getRequestOptionsClassName());

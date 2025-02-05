@@ -1,8 +1,10 @@
-import { doesPathExist } from "@fern-api/fs-utils";
 import chardet from "chardet";
-import { fileTypeFromBuffer, type MimeType } from "file-type";
+import { type MimeType, fileTypeFromBuffer } from "file-type";
 import { readFile } from "fs/promises";
 import path from "path";
+
+import { doesPathExist } from "@fern-api/fs-utils";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 const ALLOWED_FILE_TYPES = new Set<MimeType>([
@@ -92,7 +94,7 @@ export const ValidFileTypes: Rule = {
 };
 
 export const getViolationsForFile = async (absoluteFilepath: string): Promise<RuleViolation[]> => {
-    const file = await readFile(absoluteFilepath);
+    const file = new Uint8Array(await readFile(absoluteFilepath));
 
     // otherwise, check the file type
     const fileType = await fileTypeFromBuffer(file);
@@ -102,7 +104,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         } else {
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `The file type of ${fileType.mime} is not allowed: ${absoluteFilepath}`
                 }
             ];
@@ -119,7 +121,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         if (encoding == null) {
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `The encoding of the file could not be detected: ${absoluteFilepath}`
                 }
             ];
@@ -127,7 +129,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
         if (!ALLOWED_ENCODINGS.has(encoding.toUpperCase())) {
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `The encoding of ${encoding} is not allowed: ${absoluteFilepath}`
                 }
             ];
@@ -139,7 +141,7 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
     // in all other cases, return false
     return [
         {
-            severity: "error",
+            severity: "fatal",
             message: `File is not allowed to be uploaded: ${absoluteFilepath}`
         }
     ];

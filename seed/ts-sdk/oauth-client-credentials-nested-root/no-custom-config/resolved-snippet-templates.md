@@ -11,7 +11,7 @@ await client.auth.getToken({
   clientSecret: "client_secret",
   scope: "scope",
 });
- 
-```                        
+
+```
 
 

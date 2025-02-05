@@ -10,12 +10,14 @@ import * as serializers from "../../../../../../serialization/index";
 import * as errors from "../../../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -47,11 +49,15 @@ export class Service {
     public async getFile(
         filename: string,
         request: SeedExamples.file.GetFileRequest,
-        requestOptions?: Service.RequestOptions
+        requestOptions?: Service.RequestOptions,
     ): Promise<SeedExamples.File_> {
         const { "X-File-API-Version": xFileApiVersion } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/${encodeURIComponent(filename)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/file/${encodeURIComponent(filename)}`,
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -88,7 +94,7 @@ export class Service {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedExamplesError({

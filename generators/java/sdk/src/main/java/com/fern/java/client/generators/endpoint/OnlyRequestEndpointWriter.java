@@ -194,6 +194,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     @Override
                     public Void visitTypeReference(HttpRequestBodyReference typeReference) {
                         builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+                        AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint, false)
+                                .ifPresent(builder::add);
                         return null;
                     }
 
@@ -227,6 +229,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             REQUEST_OPTIONS_PARAMETER_NAME);
             builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+            AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint, false).ifPresent(builder::add);
             return builder.add(".build();\n").unindent().build();
         }
     }
@@ -260,6 +263,24 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         .addStatement("$L = $T.create(\"\", null)", getOkhttpRequestBodyName(), RequestBody.class)
                         .beginControlFlow("if ($N.isPresent())", "request");
             }
+
+            CodeBlock requestBodyGetter = CodeBlock.of("request");
+
+            boolean requestBodyGetterPresent = generatedWrappedRequest != null
+                    && generatedWrappedRequest.requestBodyGetter().isPresent();
+
+            if (clientGeneratorContext.getCustomConfig().inlinePathParameters()
+                    && requestBodyGetterPresent
+                    && (generatedWrappedRequest.requestBodyGetter().get()
+                            instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter)) {
+                String getterName = ((GeneratedWrappedRequest.ReferencedRequestBodyGetter)
+                                generatedWrappedRequest.requestBodyGetter().get())
+                        .requestBodyGetter()
+                        .name;
+
+                requestBodyGetter = CodeBlock.of("request.$L()", getterName);
+            }
+
             codeBlock
                     .addStatement(
                             "$L = $T.create($T.$L.writeValueAsBytes($L), $T.$L)",
@@ -267,7 +288,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             RequestBody.class,
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
-                            "request",
+                            requestBodyGetter,
                             clientGeneratorContext.getPoetClassNameFactory().getMediaTypesClassName(),
                             CoreMediaTypesGenerator.APPLICATION_JSON_FIELD_CONSTANT)
                     .endControlFlow();

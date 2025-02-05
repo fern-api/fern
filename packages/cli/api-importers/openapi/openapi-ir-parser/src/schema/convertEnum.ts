@@ -1,14 +1,15 @@
 import {
     Availability,
     EnumValue,
-    generateEnumNameFromValue,
     SchemaWithExample,
     SdkGroupName,
-    Source
+    Source,
+    generateEnumNameFromValue
 } from "@fern-api/openapi-ir";
+import { VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
+
 import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
 import { SchemaParserContext } from "./SchemaParserContext";
-import { VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 
 export function convertEnum({
     nameOverride,

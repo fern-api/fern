@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedStreaming;
 
 var client = new SeedStreamingClient();
-await client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 });
+await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 using SeedStreaming;
 
 try {
-    var response = await client.Dummy.GenerateAsync(...);
+    var response = await client.Dummy.GenerateStreamAsync(...);
 } catch (SeedStreamingApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -43,10 +43,10 @@ try {
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
@@ -55,7 +55,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Dummy.GenerateAsync(
+var response = await client.Dummy.GenerateStreamAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -68,7 +68,7 @@ var response = await client.Dummy.GenerateAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Dummy.GenerateAsync(
+var response = await client.Dummy.GenerateStreamAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

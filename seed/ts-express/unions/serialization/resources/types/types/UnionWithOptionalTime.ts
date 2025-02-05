@@ -14,7 +14,7 @@ export const UnionWithOptionalTime: core.serialization.Schema<
         date: core.serialization.object({
             value: core.serialization.string().optional(),
         }),
-        dateimte: core.serialization.object({
+        datetime: core.serialization.object({
             value: core.serialization.date().optional(),
         }),
     })
@@ -24,15 +24,15 @@ export const UnionWithOptionalTime: core.serialization.Schema<
     });
 
 export declare namespace UnionWithOptionalTime {
-    type Raw = UnionWithOptionalTime.Date | UnionWithOptionalTime.Dateimte;
+    export type Raw = UnionWithOptionalTime.Date | UnionWithOptionalTime.Datetime;
 
-    interface Date {
+    export interface Date {
         type: "date";
         value?: string | null;
     }
 
-    interface Dateimte {
-        type: "dateimte";
+    export interface Datetime {
+        type: "datetime";
         value?: string | null;
     }
 }

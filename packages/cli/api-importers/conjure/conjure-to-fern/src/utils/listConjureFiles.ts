@@ -1,7 +1,8 @@
-import { DefinitionFile, serialization } from "@fern-api/conjure-sdk";
-import { AbsoluteFilePath, listFiles, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { DefinitionFile, serialization } from "@fern-api/conjure-sdk";
+import { AbsoluteFilePath, RelativeFilePath, listFiles, relative } from "@fern-api/fs-utils";
 
 export interface ConjureFile {
     fileContents: DefinitionFile;

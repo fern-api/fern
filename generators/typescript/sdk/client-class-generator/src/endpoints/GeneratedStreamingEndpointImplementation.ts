@@ -1,9 +1,11 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
@@ -103,7 +105,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         context: SdkContext;
     }): ts.Node[] {
         const responseVariableName = "response";
-        const itemVaribaleName = "item";
+        const itemVariableName = "item";
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -124,7 +126,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier(itemVaribaleName),
+                            ts.factory.createIdentifier(itemVariableName),
                             undefined,
                             undefined,
                             undefined
@@ -142,7 +144,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                                     ts.factory.createIdentifier("log")
                                 ),
                                 undefined,
-                                [ts.factory.createIdentifier(itemVaribaleName)]
+                                [ts.factory.createIdentifier(itemVariableName)]
                             )
                         )
                     ],
@@ -188,27 +190,30 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return this.request.getBuildRequestStatements(context);
     }
 
-    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
-        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+            }
         });
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
         } else {
-            return referenceToEnvironment;
+            return baseUrl;
         }
     }
 
     public invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
-            url: this.getReferenceToEnvironment(context),
+            url: this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
@@ -253,6 +258,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         return this.request.getReferenceToRequestBody(context);
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        return this.request.getReferenceToPathParameter(pathParameterKey, context);
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

@@ -1,9 +1,11 @@
-import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { kebabCase, last } from "lodash-es";
+
+import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { DocsWorkspace } from "@fern-api/workspace-loader";
+
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle";
 
@@ -50,8 +52,8 @@ export class ChangelogNodeConverter {
             }
             const changelogDate = extractDatetimeFromChangelogTitle(filename);
             if (changelogDate == null) {
-                const nameWihoutExtension = filename.split(".")[0]?.toLowerCase();
-                if (nameWihoutExtension != null && RESERVED_OVERVIEW_PAGE_NAMES.includes(nameWihoutExtension)) {
+                const nameWithoutExtension = filename.split(".")[0]?.toLowerCase();
+                if (nameWithoutExtension != null && RESERVED_OVERVIEW_PAGE_NAMES.includes(nameWithoutExtension)) {
                     overviewPagePath = absoluteFilepath;
                 }
 
@@ -92,7 +94,8 @@ export class ChangelogNodeConverter {
                 noindex: undefined,
                 authed: undefined,
                 viewers: undefined,
-                orphaned: undefined
+                orphaned: undefined,
+                featureFlags: undefined
             };
         });
 
@@ -114,7 +117,8 @@ export class ChangelogNodeConverter {
             noindex: undefined,
             authed: undefined,
             viewers: opts.viewers,
-            orphaned: opts.orphaned
+            orphaned: opts.orphaned,
+            featureFlags: undefined
         };
     }
 
@@ -149,7 +153,8 @@ export class ChangelogNodeConverter {
                     children: this.groupByMonth(id, entries, parentSlug),
                     authed: undefined,
                     viewers: undefined,
-                    orphaned: undefined
+                    orphaned: undefined,
+                    featureFlags: undefined
                 };
             }),
             "year",
@@ -183,7 +188,8 @@ export class ChangelogNodeConverter {
                     children: entries,
                     authed: undefined,
                     viewers: undefined,
-                    orphaned: undefined
+                    orphaned: undefined,
+                    featureFlags: undefined
                 };
             }),
             "month",

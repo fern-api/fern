@@ -1,6 +1,7 @@
 import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/browser-compatible-base-generator";
-import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
 import { basename } from "@fern-api/path-utils";
+
+import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
 
 type Alias = string;
 type ImportPath = string;
@@ -58,8 +59,9 @@ export class Writer extends AbstractWriter {
         if (maybeAlias != null) {
             return maybeAlias;
         }
+        const set = new Set<Alias>(Object.values(this.imports));
         let alias = this.getValidAlias(basename(importPath));
-        while (alias in this.imports) {
+        while (set.has(alias)) {
             alias = "_" + alias;
         }
         this.imports[importPath] = alias;

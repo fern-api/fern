@@ -23,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.Username == "" {
 		options.Username = os.Getenv("USERNAME")
 	}
-	if options.Password == "" {
-		options.Password = os.Getenv("PASSWORD")
+	if options.AccessToken == "" {
+		options.AccessToken = os.Getenv("PASSWORD")
 	}
 	return &Client{
 		baseURL: options.BaseURL,

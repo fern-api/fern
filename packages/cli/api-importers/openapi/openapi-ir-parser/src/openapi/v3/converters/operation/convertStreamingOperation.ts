@@ -1,7 +1,9 @@
-import { assertNever, MediaType } from "@fern-api/core-utils";
-import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
+
+import { MediaType, assertNever } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
+
 import { getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -150,23 +152,23 @@ function getRequestBody({
         return undefined;
     }
 
-    const resolvedRequstBodySchema = isReferenceObject(jsonMediaObject.schema)
+    const resolvedRequestBodySchema = isReferenceObject(jsonMediaObject.schema)
         ? context.resolveSchemaReference(jsonMediaObject.schema)
         : jsonMediaObject.schema;
 
-    if (resolvedRequstBodySchema.allOf == null && resolvedRequstBodySchema.properties == null) {
+    if (resolvedRequestBodySchema.allOf == null && resolvedRequestBodySchema.properties == null) {
         return undefined; // not an object
     }
 
-    let streamingProperty = resolvedRequstBodySchema.properties?.[streamingExtension.streamConditionProperty];
+    let streamingProperty = resolvedRequestBodySchema.properties?.[streamingExtension.streamConditionProperty];
     if (streamingProperty != null && isReferenceObject(streamingProperty)) {
         streamingProperty = undefined;
     }
 
     const requestBodySchemaWithLiteralProperty: OpenAPIV3.SchemaObject = {
-        ...resolvedRequstBodySchema,
+        ...resolvedRequestBodySchema,
         properties: {
-            ...resolvedRequstBodySchema.properties,
+            ...resolvedRequestBodySchema.properties,
             [streamingExtension.streamConditionProperty]: {
                 type: "boolean",
                 "x-fern-boolean-literal": isStreaming,
@@ -177,7 +179,7 @@ function getRequestBody({
         // Set to undefined because we inline both the streaming and non-streaming request schemas
         // and title would cause conflicting names
         title: undefined,
-        required: [...(resolvedRequstBodySchema.required ?? []), streamingExtension.streamConditionProperty]
+        required: [...(resolvedRequestBodySchema.required ?? []), streamingExtension.streamConditionProperty]
     };
 
     return {

@@ -23,7 +23,7 @@ export const OAuthClientCredentials: core.serialization.ObjectSchema<
 });
 
 export declare namespace OAuthClientCredentials {
-    interface Raw {
+    export interface Raw {
         clientIdEnvVar?: EnvironmentVariable.Raw | null;
         clientSecretEnvVar?: EnvironmentVariable.Raw | null;
         tokenPrefix?: string | null;

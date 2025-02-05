@@ -9,15 +9,59 @@
     "paths": {},
     "components": {
       "schemas": {
-        "SchemaWithALongNameIsRightHereAndNotSomewhereElse": {
-          "title": "EnticingTitle",
+        "Shape": {
+          "type": "object",
+          "discriminator": {
+            "propertyName": "type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/Triangle"
+            },
+            {
+              "$ref": "#/components/schemas/Square"
+            }
+          ]
+        },
+        "Triangle": {
           "type": "object",
           "properties": {
-            "id": {
+            "type": {
               "type": "string",
-              "format": "uuid"
+              "enum": [
+                "triangle"
+              ]
+            },
+            "base": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
             }
-          }
+          },
+          "required": [
+            "type",
+            "base",
+            "height"
+          ]
+        },
+        "Square": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "square"
+              ]
+            },
+            "sideLength": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type",
+            "sideLength"
+          ]
         }
       }
     }

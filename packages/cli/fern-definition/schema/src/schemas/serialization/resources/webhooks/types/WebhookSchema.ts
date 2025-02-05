@@ -30,7 +30,7 @@ export const WebhookSchema: core.serialization.ObjectSchema<
     .extend(WithDisplayName);
 
 export declare namespace WebhookSchema {
-    interface Raw extends WithAvailability.Raw, WithAudiences.Raw, WithDocsSchema.Raw, WithDisplayName.Raw {
+    export interface Raw extends WithAvailability.Raw, WithAudiences.Raw, WithDocsSchema.Raw, WithDisplayName.Raw {
         method: WebhookMethodSchema.Raw;
         headers?: Record<string, HttpHeaderSchema.Raw> | null;
         payload: WebhookPayloadSchema.Raw;

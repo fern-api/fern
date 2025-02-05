@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedPathParameters;
 using SeedPathParameters.Core;
 
-#nullable enable
-
 namespace SeedPathParameters.Test.Unit.MockServer;
 
 [TestFixture]

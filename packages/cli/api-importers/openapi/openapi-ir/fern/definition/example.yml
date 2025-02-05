@@ -48,4 +48,4 @@ types:
   FullOneOfExample:
     union:
       discriminated: map<PropertyKey, FullExample>
-      undisciminated: FullExample
+      undiscriminated: FullExample

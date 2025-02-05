@@ -132,6 +132,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {},
@@ -140,6 +141,147 @@
       "authed": false,
       "method": "POST",
       "path": "/test",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "corpus_key",
+              "value": {
+                "value": {
+                  "value": "corpus_key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Test with dual Content-Type request types",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "description": "The unique key",
+          "name": "corpus_key",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PostExampleRequestCorpusKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostExampleRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postExampleRequestMetadata",
+              "key": "metadata",
+              "schema": {
+                "generatedName": "postExampleRequestMetadata",
+                "value": {
+                  "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "PostExampleRequestMetadataKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "PostExampleRequestMetadataValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "PostExampleRequestMetadata",
+                  "groupName": [],
+                  "type": "map"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostExampleRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "The sample response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "PostExampleResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "server": [],
+      "description": "Test request with dual content types.\n",
+      "authed": false,
+      "method": "POST",
+      "path": "/example",
       "examples": [
         {
           "pathParameters": [

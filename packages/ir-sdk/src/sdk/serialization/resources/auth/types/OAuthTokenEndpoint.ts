@@ -19,7 +19,7 @@ export const OAuthTokenEndpoint: core.serialization.ObjectSchema<
 });
 
 export declare namespace OAuthTokenEndpoint {
-    interface Raw {
+    export interface Raw {
         endpointReference: EndpointReference.Raw;
         requestProperties: OAuthAccessTokenRequestProperties.Raw;
         responseProperties: OAuthAccessTokenResponseProperties.Raw;

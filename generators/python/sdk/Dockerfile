@@ -16,29 +16,21 @@ ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 ENV HTTPX_LOG_LEVEL=trace
 
+RUN pip3 install poetry==1.8.5
+RUN poetry config virtualenvs.create false
+
 COPY pyproject.toml ./pyproject.toml
 COPY poetry.lock ./poetry.lock
+COPY ./src/__init__.py ./src/__init__.py
+COPY ./src/fern_python/__init__.py ./src/fern_python/__init__.py
+
+RUN poetry install
+
 COPY ./core_utilities/sdk /assets/core_utilities
 COPY ./core_utilities/shared /assets/core_utilities
 COPY ./sdk/features.yml /assets/features.yml
 COPY ./tests /assets/tests
-
-RUN pip3 install poetry &&\
-  poetry config virtualenvs.create false &&\
-  poetry install
-
 COPY ./src ./src
 
 RUN poetry install
-
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]
-
-## NOTE: Uncomment the below to generate a flame graph for the python generator.
-##       To visualize the flamegraph you can run:
-##         - poetry add snakeviz
-##         - poetry run snakeviz output.prof
-# RUN mkdir -p /fern/output
-## For a time-limited run, uncomment the below line and comment the next line.
-# ENTRYPOINT ["timeout", "-s", "INT", "5m", "python", "-m", "cProfile", "-o", "/fern/output/output.prof", "/src/fern_python/generators/sdk/cli.py"]
-## For a regularly profiled run, uncomment the below line and comment the previous line.
-# ENTRYPOINT ["python", "-m", "cProfile", "-o", "/fern/output/output.prof", "/src/fern_python/generators/sdk/cli.py"]

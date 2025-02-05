@@ -14,5 +14,5 @@ export const ApiConfigurationV2SpecsSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.list(AsyncApiOrOpenApiSpecSchema), ConjureSchema]);
 
 export declare namespace ApiConfigurationV2SpecsSchema {
-    type Raw = AsyncApiOrOpenApiSpecSchema.Raw[] | ConjureSchema.Raw;
+    export type Raw = AsyncApiOrOpenApiSpecSchema.Raw[] | ConjureSchema.Raw;
 }

@@ -1,3 +1,17 @@
 .motivation p {
   max-width: unset !important;
 }
+
+.showcase h2 {
+  margin-bottom: 0.25em;
+}
+
+:is(.dark) .showcase .logo-icon {
+  filter: invert(1);
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.logo-icon {
+  margin-right: 10px;
+}

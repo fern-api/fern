@@ -1,22 +1,24 @@
+import chalk from "chalk";
+import { readFile } from "fs/promises";
+import { writeFile } from "fs/promises";
+import * as prettier from "prettier2";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
-    generatorsYml,
     RESOLVED_SNIPPET_TEMPLATES_MD,
     SNIPPET_JSON_FILENAME,
-    SNIPPET_TEMPLATES_JSON_FILENAME
+    SNIPPET_TEMPLATES_JSON_FILENAME,
+    generatorsYml
 } from "@fern-api/configuration";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { HttpEndpoint } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { Fern, Template } from "@fern-api/sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import chalk from "chalk";
+
+import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
-import { readFile } from "fs/promises";
-import { Fern, Template } from "@fern-api/sdk";
-import { HttpEndpoint } from "@fern-api/ir-sdk";
-import { writeFile } from "fs/promises";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import * as prettier from "prettier";
-import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
 
 export async function runLocalGenerationForSeed({
     organization,
@@ -57,7 +59,7 @@ export async function runLocalGenerationForSeed({
                               )
                           )
                         : undefined;
-                    const absolutePathToResolvedSnipppetTemplates = generatorInvocation.absolutePathToLocalOutput
+                    const absolutePathToResolvedSnippetTemplates = generatorInvocation.absolutePathToLocalOutput
                         ? AbsoluteFilePath.of(
                               join(
                                   generatorInvocation.absolutePathToLocalOutput,
@@ -93,11 +95,11 @@ export async function runLocalGenerationForSeed({
                     });
                     if (
                         absolutePathToLocalSnippetTemplateJSON != null &&
-                        absolutePathToResolvedSnipppetTemplates != null
+                        absolutePathToResolvedSnippetTemplates != null
                     ) {
                         await writeResolvedSnippetsJson({
                             absolutePathToLocalSnippetTemplateJSON,
-                            absolutePathToResolvedSnipppetTemplates,
+                            absolutePathToResolvedSnippetTemplates,
                             ir,
                             generatorInvocation
                         });
@@ -133,12 +135,12 @@ export async function runLocalGenerationForSeed({
 }
 
 export async function writeResolvedSnippetsJson({
-    absolutePathToResolvedSnipppetTemplates,
+    absolutePathToResolvedSnippetTemplates,
     absolutePathToLocalSnippetTemplateJSON,
     ir,
     generatorInvocation
 }: {
-    absolutePathToResolvedSnipppetTemplates: AbsoluteFilePath;
+    absolutePathToResolvedSnippetTemplates: AbsoluteFilePath;
     absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath;
     ir: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -218,15 +220,15 @@ export async function writeResolvedSnippetsJson({
             } catch (err) {}
         }
     }
-    let resovledMd = "";
+    let resolvedMd = "";
     for (const snippet of snippets) {
-        resovledMd += `\`\`\`${generatorInvocation.language}
-${snippet} 
-\`\`\`                        
+        resolvedMd += `\`\`\`${generatorInvocation.language}
+${snippet}
+\`\`\`
 \n\n`;
     }
-    if (resovledMd.length > 0) {
-        await writeFile(absolutePathToResolvedSnipppetTemplates, resovledMd);
+    if (resolvedMd.length > 0) {
+        await writeFile(absolutePathToResolvedSnippetTemplates, resolvedMd);
     }
 }
 

@@ -84,7 +84,7 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "fileList",
+                                            "path": "file_list",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -119,7 +119,7 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "maybeFileList",
+                                            "path": "maybe_file_list",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -146,7 +146,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "maybeString",
+                                                "path": "maybe_string",
                                                 "type": "payload"
                                             }
                                         ],
@@ -178,7 +178,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "maybeInteger",
+                                                "path": "maybe_integer",
                                                 "type": "payload"
                                             }
                                         ],
@@ -206,7 +206,7 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "optionalListOfStrings",
+                                            "path": "optional_list_of_strings",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -246,7 +246,7 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "listOfObjects",
+                                            "path": "list_of_objects",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -261,7 +261,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "optionalMetadata",
+                                                "path": "optional_metadata",
                                                 "type": "payload"
                                             }
                                         ],
@@ -280,7 +280,7 @@
                                         "templateString": "optionalObjectType: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "optionalObjectType",
+                                            "path": "optional_object_type",
                                             "type": "payload"
                                         },
                                         "type": "enum"
@@ -295,7 +295,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "optionalId",
+                                                "path": "optional_id",
                                                 "type": "payload"
                                             }
                                         ],
@@ -694,7 +694,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "foobar: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "fooBar: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
                                         "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
@@ -706,7 +706,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "foobar.foo",
+                                                            "path": "foo_bar.foo",
                                                             "type": "payload"
                                                         }
                                                     ],

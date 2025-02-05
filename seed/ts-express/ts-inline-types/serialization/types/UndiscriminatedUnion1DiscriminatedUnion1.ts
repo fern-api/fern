@@ -21,20 +21,20 @@ export const UndiscriminatedUnion1DiscriminatedUnion1: core.serialization.Schema
     });
 
 export declare namespace UndiscriminatedUnion1DiscriminatedUnion1 {
-    type Raw =
+    export type Raw =
         | UndiscriminatedUnion1DiscriminatedUnion1.Type1
         | UndiscriminatedUnion1DiscriminatedUnion1.Type2
         | UndiscriminatedUnion1DiscriminatedUnion1.Ref;
 
-    interface Type1 extends serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType1.Raw {
+    export interface Type1 extends serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType1.Raw {
         type: "type1";
     }
 
-    interface Type2 extends serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType2.Raw {
+    export interface Type2 extends serializers.UndiscriminatedUnion1DiscriminatedUnion1InlineType2.Raw {
         type: "type2";
     }
 
-    interface Ref extends serializers.ReferenceType.Raw {
+    export interface Ref extends serializers.ReferenceType.Raw {
         type: "ref";
     }
 }

@@ -12,6 +12,7 @@ import {
     Property,
     StringClassReference
 } from "@fern-api/ruby-codegen";
+
 import { OAuthAccessTokenProperties, ResponseProperty } from "@fern-fern/ir-sdk/api";
 
 export interface OauthFunction {
@@ -112,7 +113,7 @@ export class OauthTokenProvider extends Class_ {
                         isAssignment: true
                     })
                 );
-                if (OauthTokenProvider.isRefreshClientSeperate(oauthConfiguration)) {
+                if (OauthTokenProvider.isRefreshClientSeparate(oauthConfiguration)) {
                     body.push(
                         new Expression({
                             leftSide: "@refresh_client",
@@ -164,7 +165,7 @@ export class OauthTokenProvider extends Class_ {
         }
     }
 
-    private static isRefreshClientSeperate(oauthConfiguration: OauthTokenProvider.ClientCredentialsInit): boolean {
+    private static isRefreshClientSeparate(oauthConfiguration: OauthTokenProvider.ClientCredentialsInit): boolean {
         return (
             oauthConfiguration.refreshTokenFunction != null &&
             oauthConfiguration.refreshTokenFunction.tokenFunctionClientClassReference !==
@@ -192,7 +193,7 @@ export class OauthTokenProvider extends Class_ {
                         type: StringClassReference
                     })
                 ];
-                if (OauthTokenProvider.isRefreshClientSeperate(oauthConfiguration)) {
+                if (OauthTokenProvider.isRefreshClientSeparate(oauthConfiguration)) {
                     properties.push(
                         new Property({
                             name: "refresh_client",
@@ -383,7 +384,7 @@ export class OauthTokenProvider extends Class_ {
                                 new Expression({
                                     leftSide: responseVariableName,
                                     rightSide: new FunctionInvocation({
-                                        onObject: OauthTokenProvider.isRefreshClientSeperate(oauthConfiguration)
+                                        onObject: OauthTokenProvider.isRefreshClientSeparate(oauthConfiguration)
                                             ? "@refresh_client"
                                             : "@auth_client",
                                         baseFunction: oauthConfiguration.refreshTokenFunction.tokenFunction,
@@ -391,7 +392,7 @@ export class OauthTokenProvider extends Class_ {
                                             ...clientCredentialArgs,
                                             new Argument({
                                                 isNamed: true,
-                                                name: "referesh_token",
+                                                name: "refresh_token",
                                                 value: "@token.refresh_token"
                                             })
                                         ],

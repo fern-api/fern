@@ -88,6 +88,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "streamingJson"
       },
       "errors": {},
@@ -228,6 +229,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},

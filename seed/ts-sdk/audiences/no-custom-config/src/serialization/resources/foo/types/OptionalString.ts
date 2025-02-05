@@ -10,5 +10,5 @@ export const OptionalString: core.serialization.Schema<serializers.OptionalStrin
     core.serialization.string().optional();
 
 export declare namespace OptionalString {
-    type Raw = string | null | undefined;
+    export type Raw = string | null | undefined;
 }

@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ContainerType,
     DeclaredTypeName,
@@ -9,6 +10,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+
 import { go } from "../";
 import { GoTypeReference, Type } from "../ast";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
@@ -64,6 +66,8 @@ export class GoTypeMapper {
                 return Type.slice(this.convert({ reference: container.set }));
             case "optional":
                 return Type.optional(this.convert({ reference: container.optional }));
+            case "nullable":
+                return Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -96,6 +100,8 @@ export class GoTypeMapper {
                 return go.Type.bool();
             case "string":
                 return go.Type.string();
+            default:
+                assertNever(literal);
         }
     }
 

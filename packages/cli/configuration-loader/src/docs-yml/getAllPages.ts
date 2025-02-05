@@ -1,8 +1,9 @@
-import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import { compact } from "lodash-es";
+
 import { docsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
+import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 
 const BATCH_SIZE = 100; // Define a reasonable batch size
 

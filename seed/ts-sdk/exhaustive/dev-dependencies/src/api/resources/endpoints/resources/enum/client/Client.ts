@@ -8,12 +8,14 @@ import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Enum {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -37,10 +39,14 @@ export class Enum {
      */
     public async getAndReturnEnum(
         request: Fiddle.types.WeatherReport,
-        requestOptions?: Enum.RequestOptions
+        requestOptions?: Enum.RequestOptions,
     ): Promise<core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/enum"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/enum",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

@@ -11,7 +11,7 @@ from .union_with_base_properties import (
 )
 from .union_with_discriminant import BarUnionWithDiscriminant, FooUnionWithDiscriminant, UnionWithDiscriminant
 from .union_with_literal import FernUnionWithLiteral, UnionWithLiteral
-from .union_with_optional_time import DateUnionWithOptionalTime, DateimteUnionWithOptionalTime, UnionWithOptionalTime
+from .union_with_optional_time import DateUnionWithOptionalTime, DatetimeUnionWithOptionalTime, UnionWithOptionalTime
 from .union_with_primitive import IntegerUnionWithPrimitive, StringUnionWithPrimitive, UnionWithPrimitive
 from .union_with_single_element import FooUnionWithSingleElement, UnionWithSingleElement
 from .union_with_time import DateUnionWithTime, DatetimeUnionWithTime, UnionWithTime, ValueUnionWithTime
@@ -25,7 +25,7 @@ __all__ = [
     "BarUnionWithoutKey",
     "DateUnionWithOptionalTime",
     "DateUnionWithTime",
-    "DateimteUnionWithOptionalTime",
+    "DatetimeUnionWithOptionalTime",
     "DatetimeUnionWithTime",
     "FernUnionWithLiteral",
     "Foo",

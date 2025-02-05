@@ -19,76 +19,76 @@ export type ExamplePrimitive =
     | FernIr.ExamplePrimitive.Base64
     | FernIr.ExamplePrimitive.BigInteger;
 
-export declare namespace ExamplePrimitive {
-    interface Integer extends _Utils {
+export namespace ExamplePrimitive {
+    export interface Integer extends _Utils {
         type: "integer";
         integer: number;
     }
 
-    interface Long extends _Utils {
+    export interface Long extends _Utils {
         type: "long";
         long: number;
     }
 
-    interface Uint extends _Utils {
+    export interface Uint extends _Utils {
         type: "uint";
         uint: number;
     }
 
-    interface Uint64 extends _Utils {
+    export interface Uint64 extends _Utils {
         type: "uint64";
         uint64: number;
     }
 
-    interface Float extends _Utils {
+    export interface Float extends _Utils {
         type: "float";
         float: number;
     }
 
-    interface Double extends _Utils {
+    export interface Double extends _Utils {
         type: "double";
         double: number;
     }
 
-    interface Boolean extends _Utils {
+    export interface Boolean extends _Utils {
         type: "boolean";
         boolean: boolean;
     }
 
-    interface String extends _Utils {
+    export interface String extends _Utils {
         type: "string";
         string: FernIr.EscapedString;
     }
 
-    interface Date_ extends _Utils {
+    export interface Date_ extends _Utils {
         type: "date";
         date: string;
     }
 
-    interface Datetime extends FernIr.ExampleDatetime, _Utils {
+    export interface Datetime extends FernIr.ExampleDatetime, _Utils {
         type: "datetime";
     }
 
-    interface Uuid extends _Utils {
+    export interface Uuid extends _Utils {
         type: "uuid";
         uuid: string;
     }
 
-    interface Base64 extends _Utils {
+    export interface Base64 extends _Utils {
         type: "base64";
         base64: string;
     }
 
-    interface BigInteger extends _Utils {
+    export interface BigInteger extends _Utils {
         type: "bigInteger";
         bigInteger: string;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExamplePrimitive._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         integer: (value: number) => _Result;
         long: (value: number) => _Result;
         uint: (value: number) => _Result;
@@ -113,7 +113,7 @@ export const ExamplePrimitive = {
             type: "integer",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Integer,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -126,7 +126,7 @@ export const ExamplePrimitive = {
             type: "long",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Long,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -139,7 +139,7 @@ export const ExamplePrimitive = {
             type: "uint",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Uint,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -152,7 +152,7 @@ export const ExamplePrimitive = {
             type: "uint64",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Uint64,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -165,7 +165,7 @@ export const ExamplePrimitive = {
             type: "float",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Float,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -178,7 +178,7 @@ export const ExamplePrimitive = {
             type: "double",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Double,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -191,7 +191,7 @@ export const ExamplePrimitive = {
             type: "boolean",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Boolean,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -204,7 +204,7 @@ export const ExamplePrimitive = {
             type: "string",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.String,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -217,7 +217,7 @@ export const ExamplePrimitive = {
             type: "date",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Date_,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -230,7 +230,7 @@ export const ExamplePrimitive = {
             type: "datetime",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Datetime,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -243,7 +243,7 @@ export const ExamplePrimitive = {
             type: "uuid",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Uuid,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -256,7 +256,7 @@ export const ExamplePrimitive = {
             type: "base64",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Base64,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },
@@ -269,7 +269,7 @@ export const ExamplePrimitive = {
             type: "bigInteger",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.BigInteger,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
             },

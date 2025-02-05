@@ -3,8 +3,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.test();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -17,8 +17,8 @@ await client.admin.updateTestSubmissionStatus(
 		{ type : "stopped" }
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -31,8 +31,8 @@ await client.admin.sendTestSubmissionUpdate(
     updateTime: "2024-01-15T09:30:00Z",
   }
 );
- 
-```                        
+
+```
 
 
 ```typescript
@@ -45,8 +45,8 @@ await client.admin.updateWorkspaceSubmissionStatus(
 		{ type : "stopped" }
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -59,8 +59,8 @@ await client.admin.sendWorkspaceSubmissionUpdate(
     updateTime: "2024-01-15T09:30:00Z",
   }
 );
- 
-```                        
+
+```
 
 
 ```typescript
@@ -132,8 +132,8 @@ await client.admin.storeTracedTestCase(
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -196,8 +196,8 @@ await client.admin.storeTracedTestCaseV2(
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -265,8 +265,8 @@ await client.admin.storeTracedWorkspace(
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -328,8 +328,8 @@ await client.admin.storeTracedWorkspaceV2(
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -337,8 +337,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.homepage.getHomepageProblems();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -353,19 +353,21 @@ await client.homepage.setHomepageProblems(
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
-const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.migration.getAttemptedMigrations({
-  adminKeyHeader: "admin-key-header",
-});
- 
-```                        
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });        
+await client.migration.getAttemptedMigrations(
+	{
+		admin-key-header: "admin-key-header"
+	}
+)
+
+```
 
 
 ```typescript
@@ -378,8 +380,8 @@ await client.playlist.createPlaylist(1, {
   name: "name",
   problems: ["problems", "problems"],
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -393,8 +395,8 @@ await client.playlist.getPlaylists(1, {
   optionalMultipleField: "optionalMultipleField",
   multipleField: "multipleField",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -402,8 +404,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.getPlaylist(1, "playlistId");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -414,8 +416,8 @@ await client.playlist.updatePlaylist(1, "playlistId", {
   name: "name",
   problems: ["problems", "problems"],
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -423,8 +425,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.deletePlaylist(1, "playlist_id");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -488,8 +490,8 @@ await client.problem.createProblem(
 		methodName: "methodName"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -554,8 +556,8 @@ await client.problem.updateProblem(
 		methodName: "methodName"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -563,8 +565,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.problem.deleteProblem("problemId");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -587,8 +589,8 @@ await client.problem.getDefaultStarterFiles(
 		methodName: "methodName"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -596,8 +598,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
@@ -605,8 +607,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.submission.getExecutionSession("sessionId");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -614,8 +616,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.submission.stopExecutionSession("sessionId");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -623,8 +625,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.submission.getExecutionSessionsState();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -632,8 +634,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.sysprop.setNumWarmInstances(1);
- 
-```                        
+
+```
 
 
 ```typescript
@@ -641,8 +643,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.sysprop.getNumWarmInstances();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -650,8 +652,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.problem.getLightweightProblems();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -659,8 +661,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.problem.getProblems();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -668,8 +670,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.problem.getLatestProblem("problemId");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -677,8 +679,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.problem.getProblemVersion("problemId", 1);
- 
-```                        
+
+```
 
 
 ```typescript
@@ -686,8 +688,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.v3.problem.getLightweightProblems();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -695,8 +697,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.v3.problem.getProblems();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -704,8 +706,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.v3.problem.getLatestProblem("problemId");
- 
-```                        
+
+```
 
 
 ```typescript
@@ -713,7 +715,7 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.v3.problem.getProblemVersion("problemId", 1);
- 
-```                        
+
+```
 
 

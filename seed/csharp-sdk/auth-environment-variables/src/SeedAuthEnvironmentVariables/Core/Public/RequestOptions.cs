@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedAuthEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedAuthEnvironmentVariables;
 
 public partial class RequestOptions : IRequestOptions

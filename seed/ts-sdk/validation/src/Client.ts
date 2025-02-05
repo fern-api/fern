@@ -9,11 +9,13 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedValidationClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -42,10 +44,14 @@ export class SeedValidationClient {
      */
     public async create(
         request: SeedValidation.CreateRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
+        requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/create"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/create",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -107,15 +113,17 @@ export class SeedValidationClient {
      */
     public async get(
         request: SeedValidation.GetRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
+        requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<SeedValidation.Type> {
         const { decimal, even, name } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["decimal"] = decimal.toString();
         _queryParams["even"] = even.toString();
         _queryParams["name"] = name;
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

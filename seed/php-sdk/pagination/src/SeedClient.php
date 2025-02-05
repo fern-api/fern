@@ -2,12 +2,18 @@
 
 namespace Seed;
 
+use Seed\Complex\ComplexClient;
 use Seed\Users\UsersClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
+    /**
+     * @var ComplexClient $complex
+     */
+    public ComplexClient $complex;
+
     /**
      * @var UsersClient $users
      */
@@ -43,6 +49,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
@@ -58,6 +65,7 @@ class SeedClient
             options: $this->options,
         );
 
+        $this->complex = new ComplexClient($this->client);
         $this->users = new UsersClient($this->client);
     }
 }

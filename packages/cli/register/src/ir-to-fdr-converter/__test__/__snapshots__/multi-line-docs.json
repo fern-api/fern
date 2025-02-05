@@ -58,10 +58,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -166,7 +163,7 @@
                     }
                   },
                   {
-                    "description": "The age of the user.\nThis propery is not required.\n",
+                    "description": "The age of the user.\nThis property is not required.\n",
                     "key": "age",
                     "valueType": {
                       "type": "optional",

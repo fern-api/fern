@@ -8,38 +8,44 @@ export type ExampleContainer =
     | FernIr.ExampleContainer.List
     | FernIr.ExampleContainer.Set
     | FernIr.ExampleContainer.Optional
+    | FernIr.ExampleContainer.Nullable
     | FernIr.ExampleContainer.Map
     | FernIr.ExampleContainer.Literal;
 
-export declare namespace ExampleContainer {
-    interface List extends FernIr.ExampleListContainer, _Utils {
+export namespace ExampleContainer {
+    export interface List extends FernIr.ExampleListContainer, _Utils {
         type: "list";
     }
 
-    interface Set extends FernIr.ExampleSetContainer, _Utils {
+    export interface Set extends FernIr.ExampleSetContainer, _Utils {
         type: "set";
     }
 
-    interface Optional extends FernIr.ExampleOptionalContainer, _Utils {
+    export interface Optional extends FernIr.ExampleOptionalContainer, _Utils {
         type: "optional";
     }
 
-    interface Map extends FernIr.ExampleMapContainer, _Utils {
+    export interface Nullable extends FernIr.ExampleNullableContainer, _Utils {
+        type: "nullable";
+    }
+
+    export interface Map extends FernIr.ExampleMapContainer, _Utils {
         type: "map";
     }
 
-    interface Literal extends FernIr.ExampleLiteralContainer, _Utils {
+    export interface Literal extends FernIr.ExampleLiteralContainer, _Utils {
         type: "literal";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleContainer._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         list: (value: FernIr.ExampleListContainer) => _Result;
         set: (value: FernIr.ExampleSetContainer) => _Result;
         optional: (value: FernIr.ExampleOptionalContainer) => _Result;
+        nullable: (value: FernIr.ExampleNullableContainer) => _Result;
         map: (value: FernIr.ExampleMapContainer) => _Result;
         literal: (value: FernIr.ExampleLiteralContainer) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -53,7 +59,7 @@ export const ExampleContainer = {
             type: "list",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.List,
-                visitor: FernIr.ExampleContainer._Visitor<_Result>
+                visitor: FernIr.ExampleContainer._Visitor<_Result>,
             ) {
                 return FernIr.ExampleContainer._visit(this, visitor);
             },
@@ -66,7 +72,7 @@ export const ExampleContainer = {
             type: "set",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.Set,
-                visitor: FernIr.ExampleContainer._Visitor<_Result>
+                visitor: FernIr.ExampleContainer._Visitor<_Result>,
             ) {
                 return FernIr.ExampleContainer._visit(this, visitor);
             },
@@ -79,7 +85,20 @@ export const ExampleContainer = {
             type: "optional",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.Optional,
-                visitor: FernIr.ExampleContainer._Visitor<_Result>
+                visitor: FernIr.ExampleContainer._Visitor<_Result>,
+            ) {
+                return FernIr.ExampleContainer._visit(this, visitor);
+            },
+        };
+    },
+
+    nullable: (value: FernIr.ExampleNullableContainer): FernIr.ExampleContainer.Nullable => {
+        return {
+            ...value,
+            type: "nullable",
+            _visit: function <_Result>(
+                this: FernIr.ExampleContainer.Nullable,
+                visitor: FernIr.ExampleContainer._Visitor<_Result>,
             ) {
                 return FernIr.ExampleContainer._visit(this, visitor);
             },
@@ -92,7 +111,7 @@ export const ExampleContainer = {
             type: "map",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.Map,
-                visitor: FernIr.ExampleContainer._Visitor<_Result>
+                visitor: FernIr.ExampleContainer._Visitor<_Result>,
             ) {
                 return FernIr.ExampleContainer._visit(this, visitor);
             },
@@ -105,7 +124,7 @@ export const ExampleContainer = {
             type: "literal",
             _visit: function <_Result>(
                 this: FernIr.ExampleContainer.Literal,
-                visitor: FernIr.ExampleContainer._Visitor<_Result>
+                visitor: FernIr.ExampleContainer._Visitor<_Result>,
             ) {
                 return FernIr.ExampleContainer._visit(this, visitor);
             },
@@ -120,6 +139,8 @@ export const ExampleContainer = {
                 return visitor.set(value);
             case "optional":
                 return visitor.optional(value);
+            case "nullable":
+                return visitor.nullable(value);
             case "map":
                 return visitor.map(value);
             case "literal":

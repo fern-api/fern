@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Upgrade to IRv55.
+    type: internal
+  irVersion: 55
+  version: 0.17.7
+
+- changelogEntry:
   - summary: Re-release the `0.17.5` version.
     type: feat
   irVersion: 53

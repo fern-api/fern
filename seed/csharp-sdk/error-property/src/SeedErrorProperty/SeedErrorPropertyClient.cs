@@ -1,12 +1,10 @@
 using SeedErrorProperty.Core;
 
-#nullable enable
-
 namespace SeedErrorProperty;
 
 public partial class SeedErrorPropertyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedErrorPropertyClient(ClientOptions? clientOptions = null)
     {

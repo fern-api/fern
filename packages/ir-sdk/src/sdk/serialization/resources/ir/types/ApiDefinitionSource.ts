@@ -30,13 +30,13 @@ export const ApiDefinitionSource: core.serialization.Schema<
     });
 
 export declare namespace ApiDefinitionSource {
-    type Raw = ApiDefinitionSource.Proto | ApiDefinitionSource.Openapi;
+    export type Raw = ApiDefinitionSource.Proto | ApiDefinitionSource.Openapi;
 
-    interface Proto extends ProtoSource.Raw {
+    export interface Proto extends ProtoSource.Raw {
         type: "proto";
     }
 
-    interface Openapi {
+    export interface Openapi {
         type: "openapi";
     }
 }

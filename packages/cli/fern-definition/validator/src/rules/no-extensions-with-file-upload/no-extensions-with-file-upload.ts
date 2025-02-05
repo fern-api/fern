@@ -1,4 +1,5 @@
 import { parseFileUploadRequest } from "@fern-api/fern-definition-schema";
+
 import { Rule } from "../../Rule";
 
 export const NoExtensionsWithFileUploadRule: Rule = {
@@ -18,7 +19,7 @@ export const NoExtensionsWithFileUploadRule: Rule = {
 
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message: "Request body extensions are not supported for file-upload requests."
                         }
                     ];

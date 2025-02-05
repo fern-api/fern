@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ArraySchema,
     CasingOverrides,
@@ -16,23 +16,25 @@ import {
     SchemaId,
     WithInline
 } from "@fern-api/openapi-ir";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
     buildMapTypeReference,
+    buildNullableTypeReference,
     buildOptionalTypeReference,
     buildPrimitiveTypeReference,
     buildReferenceTypeReference,
     buildTypeReference,
     buildUnknownTypeReference
 } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { State } from "./State";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -83,8 +85,16 @@ export function buildTypeDeclaration({
             typeDeclaration = buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
             break;
         case "optional":
-        case "nullable":
             typeDeclaration = buildOptionalTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth
+            });
+            break;
+        case "nullable":
+            typeDeclaration = buildNullableTypeDeclaration({
                 schema,
                 context,
                 declarationFile,
@@ -162,13 +172,13 @@ export function buildObjectTypeDeclaration({
                 continue; // just use the parent property instead of redefining
             } else {
                 Object.entries(property.conflict).forEach(([schemaId]) => {
-                    const parentSchemasToInine = getAllParentSchemasToInline({
+                    const parentSchemasToInline = getAllParentSchemasToInline({
                         property: property.key,
                         schemaId,
                         context,
                         namespace
                     });
-                    parentSchemasToInine.forEach((schemaToInline) => {
+                    parentSchemasToInline.forEach((schemaToInline) => {
                         schemasToInline.add(schemaToInline);
                     });
                 });
@@ -208,7 +218,7 @@ export function buildObjectTypeDeclaration({
             continue;
         }
         if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
-            continue; // dont extend from schemas that need to be inlined
+            continue; // don't extend from schemas that need to be inlined
         }
         const allOfTypeReference = buildTypeReference({
             schema: Schema.reference(allOf),
@@ -238,7 +248,7 @@ export function buildObjectTypeDeclaration({
         }
         for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
             if (schemasToInline.has(extendedSchema.schema)) {
-                continue; // dont extend from schemas that need to be inlined
+                continue; // don't extend from schemas that need to be inlined
             }
             const extendedSchemaTypeReference = buildTypeReference({
                 schema: Schema.reference(extendedSchema),
@@ -487,7 +497,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: n
         source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
     };
     for (const enumValue of enumSchema.enum) {
-        const name = typeof enumValue === "string" ? enumValue : enumValue.name ?? enumValue.value;
+        const name = typeof enumValue === "string" ? enumValue : (enumValue.name ?? enumValue.value);
         if (!uniqueEnumName.has(name.toLowerCase())) {
             uniqueEnumSchema.enum.push(enumValue);
             uniqueEnumName.add(name.toLowerCase());
@@ -518,6 +528,42 @@ export function buildReferenceTypeDeclaration({
             context,
             fileContainingReference: declarationFile,
             namespace
+        })
+    };
+}
+
+export function buildNullableTypeDeclaration({
+    schema,
+    context,
+    declarationFile,
+    namespace,
+    declarationDepth
+}: {
+    schema: OptionalSchema;
+    context: OpenApiIrConverterContext;
+    declarationFile: RelativeFilePath;
+    namespace: string | undefined;
+    declarationDepth: number;
+}): ConvertedTypeDeclaration {
+    if (!context.respectNullableSchemas) {
+        return buildOptionalTypeDeclaration({
+            schema,
+            context,
+            declarationFile,
+            namespace,
+            declarationDepth
+        });
+    }
+
+    return {
+        name: schema.nameOverride ?? schema.generatedName,
+        schema: buildNullableTypeReference({
+            schema,
+            context,
+            fileContainingReference: declarationFile,
+            declarationFile,
+            namespace,
+            declarationDepth
         })
     };
 }

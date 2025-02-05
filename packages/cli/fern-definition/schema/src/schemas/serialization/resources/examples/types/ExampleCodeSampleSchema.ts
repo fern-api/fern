@@ -14,5 +14,5 @@ export const ExampleCodeSampleSchema: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([ExampleCodeSampleSchemaSdk, ExampleCodeSampleSchemaLanguage]);
 
 export declare namespace ExampleCodeSampleSchema {
-    type Raw = ExampleCodeSampleSchemaSdk.Raw | ExampleCodeSampleSchemaLanguage.Raw;
+    export type Raw = ExampleCodeSampleSchemaSdk.Raw | ExampleCodeSampleSchemaLanguage.Raw;
 }

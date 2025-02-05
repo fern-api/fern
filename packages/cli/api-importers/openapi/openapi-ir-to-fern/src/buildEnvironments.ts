@@ -1,7 +1,8 @@
-import { isRawMultipleBaseUrlsEnvironment, RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isRawMultipleBaseUrlsEnvironment } from "@fern-api/fern-definition-schema";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
-const PRODUCTION_ENVNIRONMENT_NAME = "Production";
+const PRODUCTION_ENVIRONMENT_NAME = "Production";
 const DEFAULT_ENVIRONMENT_NAME = "Default";
 
 function extractUrlsFromEnvironmentSchema(
@@ -127,7 +128,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             context.setDefaultServerName(name);
         }
         context.builder.addEnvironment({
-            name: PRODUCTION_ENVNIRONMENT_NAME,
+            name: PRODUCTION_ENVIRONMENT_NAME,
             schema: {
                 urls: {
                     ...extractUrlsFromEnvironmentSchema(topLevelServersWithName),
@@ -135,6 +136,6 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 }
             }
         });
-        context.builder.setDefaultEnvironment(PRODUCTION_ENVNIRONMENT_NAME);
+        context.builder.setDefaultEnvironment(PRODUCTION_ENVIRONMENT_NAME);
     }
 }

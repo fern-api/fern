@@ -19,7 +19,7 @@ export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSch
     });
 
 export declare namespace ReadmeSchema {
-    interface Raw {
+    export interface Raw {
         bannerLink?: string | null;
         introduction?: string | null;
         apiReferenceLink?: string | null;

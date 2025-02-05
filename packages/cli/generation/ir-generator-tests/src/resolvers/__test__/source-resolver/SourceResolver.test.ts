@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { constructCasingsGenerator, constructFernFileContext } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { constructCasingsGenerator, constructFernFileContext } from "@fern-api/ir-generator";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 describe("SourceResolver", () => {
     it("non-existant proto source throws", async () => {

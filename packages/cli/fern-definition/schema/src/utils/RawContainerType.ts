@@ -1,5 +1,6 @@
 export const RawContainerType = {
     optional: "optional",
+    nullable: "nullable",
     set: "set",
     list: "list",
     map: "map",

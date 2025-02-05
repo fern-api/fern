@@ -8,7 +8,7 @@ export declare namespace ErrorReporter {
 
     type PathItem = string | ArrayPathItem;
 
-    type Severity = typeof Severity[keyof typeof Severity];
+    type Severity = (typeof Severity)[keyof typeof Severity];
 
     interface ArrayPathItem {
         index: number;

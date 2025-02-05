@@ -1,6 +1,6 @@
-import { OpenAPI } from "openapi-types";
 import express from "express";
 import * as http from "http";
+import { OpenAPI } from "openapi-types";
 
 const TEST_OPENAPI_DOCUMENT: OpenAPI.Document = {
     openapi: "3.0.0",

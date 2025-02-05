@@ -1,5 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
+
 import { ContainerType, Literal, MapType, NamedType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { csharp } from "../";
 import { CodeBlock, MethodType } from "../ast";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
@@ -436,6 +438,10 @@ class ToProtoPropertyMapper {
 
 class FromProtoPropertyMapper {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private readonly enumerableClassReference = csharp.classReference({
+        namespace: "System.Linq",
+        name: "Enumerable"
+    });
 
     constructor({ context }: { context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema> }) {
         this.context = context;
@@ -547,12 +553,12 @@ class FromProtoPropertyMapper {
         wrapperType
     }: {
         propertyName: string;
-        listType: TypeReference;
+        listType: ContainerType.List["list"] | ContainerType.Set["set"];
         wrapperType?: WrapperType;
     }): CodeBlock {
         const on = csharp.codeblock(`${propertyName}?`);
         if (this.context.isPrimitive(listType)) {
-            // Lists of primtiive types can be directly mapped.
+            // Lists of primitive types can be directly mapped.
             const method = this.context.isReadOnlyMemoryType(listType) ? "ToArray" : "ToList";
             return csharp.codeblock((writer) => {
                 writer.writeNode(
@@ -563,11 +569,15 @@ class FromProtoPropertyMapper {
                     })
                 );
                 if (wrapperType !== WrapperType.Optional) {
-                    writer.write(" ?? new ");
+                    writer.write(" ?? ");
                     writer.writeNode(
-                        csharp.Type.listType(this.context.csharpTypeMapper.convert({ reference: listType }))
+                        csharp.invokeMethod({
+                            on: this.enumerableClassReference,
+                            method: "Empty",
+                            generics: [this.context.csharpTypeMapper.convert({ reference: listType })],
+                            arguments_: []
+                        })
                     );
-                    writer.write("()");
                 }
             });
         }

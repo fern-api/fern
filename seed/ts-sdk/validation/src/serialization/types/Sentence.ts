@@ -10,5 +10,5 @@ export const Sentence: core.serialization.Schema<serializers.Sentence.Raw, SeedV
     core.serialization.string();
 
 export declare namespace Sentence {
-    type Raw = string;
+    export type Raw = string;
 }

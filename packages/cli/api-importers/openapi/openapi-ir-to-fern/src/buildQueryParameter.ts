@@ -1,12 +1,13 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { QueryParameter, Schema } from "@fern-api/openapi-ir";
-import { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { buildTypeReference } from "./buildTypeReference";
+import { QueryParameter, Schema } from "@fern-api/openapi-ir";
+import { VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
+
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildTypeReference } from "./buildTypeReference";
 import { convertAvailability } from "./utils/convertAvailability";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildQueryParameter({
     queryParameter,
@@ -30,8 +31,9 @@ export function buildQueryParameter({
     }
 
     let queryParameterType = getTypeFromTypeReference(typeReference.value);
+    const queryParameterDefault = getDefaultFromTypeReference(typeReference.value);
 
-    // we can assume unknown-typed query parameteters are strings by default
+    // we can assume unknown-typed query parameters are strings by default
     if (queryParameterType === "unknown") {
         queryParameterType = "string";
     } else if (queryParameterType === "optional<unknown>") {
@@ -50,6 +52,10 @@ export function buildQueryParameter({
     const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
         type: queryParameterType
     };
+
+    if (queryParameterDefault != null) {
+        queryParameterSchema.default = queryParameterDefault;
+    }
 
     if (typeReference.allowMultiple) {
         queryParameterSchema["allow-multiple"] = true;
@@ -119,7 +125,7 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undisciminated") {
+        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
@@ -284,7 +290,7 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (schema.value.type === "oneOf" && schema.value.value.type === "undisciminated") {
+        } else if (schema.value.type === "oneOf" && schema.value.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {

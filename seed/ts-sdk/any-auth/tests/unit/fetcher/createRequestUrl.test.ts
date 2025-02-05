@@ -22,7 +22,7 @@ describe("Test createRequestUrl", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = { filter: { name: "John", age: 30 } };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?filter%5Bname%5D=John&filter%5Bage%5D=30"
+            "https://api.example.com?filter%5Bname%5D=John&filter%5Bage%5D=30",
         );
     });
 
@@ -34,7 +34,7 @@ describe("Test createRequestUrl", () => {
             object: { key: "value" },
         };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?simple=value&array=x&array=y&object%5Bkey%5D=value"
+            "https://api.example.com?simple=value&array=x&array=y&object%5Bkey%5D=value",
         );
     });
 

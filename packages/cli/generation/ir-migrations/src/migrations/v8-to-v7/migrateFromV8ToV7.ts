@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
+
 import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -235,7 +236,7 @@ function convertExampleTypeShape(example: IrVersions.V8.types.ExampleTypeShape):
                 properties: convertExampleSingleUnionTypeProperties(union.properties)
             }),
         _unknown: () => {
-            throw new Error("Unkonwn ExampleTypeShape: " + example.type);
+            throw new Error("Unknown ExampleTypeShape: " + example.type);
         }
     });
 }

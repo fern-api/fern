@@ -3,14 +3,14 @@
         "extendedDiagnostics": true,
         "strict": true,
         "target": "ES6",
-        "module": "CommonJS",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "skipLibCheck": true,
         "declaration": true,
         "outDir": "dist",
         "rootDir": "src",
-        "baseUrl": "src"
+        "baseUrl": "src",
+        "module": "CommonJS"
     },
     "include": ["src"],
     "exclude": []

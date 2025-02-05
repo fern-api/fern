@@ -1,12 +1,19 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { docsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 /**
  * A builder utility to help
  */
 export abstract class FernDocsBuilder {
-    public abstract addOpenAPI({ absolutePathToOpenAPI }: { absolutePathToOpenAPI: AbsoluteFilePath }): void;
+    public abstract addOpenAPI({
+        relativePathToOpenAPI,
+        absolutePathToOpenAPI
+    }: {
+        relativePathToOpenAPI: RelativeFilePath;
+        absolutePathToOpenAPI: AbsoluteFilePath;
+    }): void;
 
     public abstract addMarkdownPage({
         frontmatter,

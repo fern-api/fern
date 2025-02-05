@@ -1,7 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
-import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 import { isEqual, uniq, uniqWith } from "lodash-es";
+
+import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
+
+import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+
 import { php } from "..";
 import { ClassInstantiation } from "../ast";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
@@ -12,7 +15,7 @@ export declare namespace PhpAttributeMapper {
     interface Args {
         type: php.Type;
 
-        // TODO: Remove the 'Pick' once 'availablity' is available on the InlinedRequestBodyProperty.
+        // TODO: Remove the 'Pick' once 'availability' is available on the InlinedRequestBodyProperty.
         property: Pick<ObjectProperty, "name">;
     }
 }
@@ -138,6 +141,8 @@ export class PhpAttributeMapper {
                     classReference: this.context.getUnionClassReference(),
                     arguments_: [this.getTypeAttributeArgument(type.internalType.value), php.codeblock("'null'")]
                 });
+            case "null":
+                return php.codeblock("'null'");
             case "reference": {
                 const reference = type.internalType.value;
                 return php.codeblock((writer) => {

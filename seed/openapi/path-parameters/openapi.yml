@@ -108,6 +108,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+    patch:
+      operationId: user_updateUser
+      tags:
+        - User
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+  /{tenant_id}/user/:
+    post:
+      operationId: user_createUser
+      tags:
+        - User
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
   /{tenant_id}/user/{user_id}/search:
     get:
       operationId: user_searchUsers

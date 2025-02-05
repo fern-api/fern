@@ -1,13 +1,16 @@
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
+
+import { docsYml } from "@fern-api/configuration";
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
+
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
-import { docsYml } from "@fern-api/configuration";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -149,8 +152,8 @@ export async function parseDocsConfiguration({
                   }
                 : undefined,
             segment: rawDocsConfiguration.analytics?.segment,
-            gtm: undefined,
-            ga4: undefined,
+            gtm: rawDocsConfiguration.analytics?.gtm,
+            ga4: rawDocsConfiguration.analytics?.ga4,
             amplitude: undefined,
             mixpanel: undefined,
             hotjar: undefined,
@@ -290,8 +293,8 @@ function convertLayoutConfig(
             layout.searchbarPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Header
                 : layout.searchbarPlacement === "header-tabs"
-                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
-                : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
+                  ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
+                  : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         tabsPlacement:
             layout.tabsPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
@@ -377,7 +380,8 @@ async function getNavigationConfiguration({
                 availability: version.availability,
                 slug: version.slug,
                 viewers: parseRoles(version.viewers),
-                orphaned: version.orphaned
+                orphaned: version.orphaned,
+                featureFlags: convertFeatureFlag(version.featureFlag)
             });
         }
         return {
@@ -386,6 +390,37 @@ async function getNavigationConfiguration({
         };
     }
     throw new Error("Unexpected. Docs have neither navigation or versions defined.");
+}
+
+function convertFeatureFlag(
+    flag: docsYml.RawSchemas.FeatureFlagConfiguration | undefined
+): CjsFdrSdk.navigation.latest.FeatureFlagOptions[] | undefined {
+    if (flag == null) {
+        return undefined;
+    }
+    if (typeof flag === "string") {
+        return [
+            {
+                flag,
+                match: true,
+                fallbackValue: undefined
+            }
+        ];
+    } else if (Array.isArray(flag)) {
+        return flag.map((flagItem) => ({
+            flag: flagItem.flag,
+            match: flagItem.match,
+            fallbackValue: flagItem.fallbackValue
+        }));
+    } else {
+        return [
+            {
+                flag: flag.flag,
+                match: flag.match ?? true,
+                fallbackValue: flag.fallbackValue
+            }
+        ];
+    }
 }
 
 async function convertTypographyConfiguration({
@@ -528,7 +563,8 @@ async function convertNavigationTabConfiguration({
                 layout
             },
             viewers: parseRoles(tab.viewers),
-            orphaned: tab.orphaned
+            orphaned: tab.orphaned,
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -544,7 +580,8 @@ async function convertNavigationTabConfiguration({
                 href: tab.href
             },
             viewers: parseRoles(tab.viewers),
-            orphaned: tab.orphaned
+            orphaned: tab.orphaned,
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -560,7 +597,8 @@ async function convertNavigationTabConfiguration({
                 changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
             },
             viewers: parseRoles(tab.viewers),
-            orphaned: tab.orphaned
+            orphaned: tab.orphaned,
+            featureFlags: convertFeatureFlag(tab.featureFlag)
         };
     }
 
@@ -640,18 +678,20 @@ async function convertNavigationItem({
             skipUrlSlug: rawConfig.skipSlug ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
         return {
             type: "apiSection",
+            openrpc: rawConfig.openrpc,
             title: rawConfig.api,
             icon: rawConfig.icon,
             apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
-            showErrors: rawConfig.displayErrors ?? false,
+            showErrors: rawConfig.displayErrors ?? true,
             snippetsConfiguration:
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
@@ -667,7 +707,8 @@ async function convertNavigationItem({
             paginated: rawConfig.paginated ?? false,
             playground: rawConfig.playground,
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -687,7 +728,8 @@ async function convertNavigationItem({
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
         };
     }
     assertNever(rawConfig);
@@ -718,7 +760,8 @@ function parsePageConfig(
         // TODO: implement noindex
         noindex: undefined,
         viewers: parseRoles(item.viewers),
-        orphaned: item.orphaned
+        orphaned: item.orphaned,
+        featureFlags: convertFeatureFlag(item.featureFlag)
     };
 }
 
@@ -757,7 +800,8 @@ function parseApiReferenceLayoutItem(
                 icon: item.icon,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
-                orphaned: item.orphaned
+                orphaned: item.orphaned,
+                featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
     } else if (isRawApiRefEndpointConfiguration(item)) {
@@ -771,7 +815,8 @@ function parseApiReferenceLayoutItem(
                 hidden: item.hidden,
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
-                orphaned: item.orphaned
+                orphaned: item.orphaned,
+                featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
     }
@@ -790,7 +835,8 @@ function parseApiReferenceLayoutItem(
                 icon: value.icon,
                 playground: value.playground,
                 viewers: parseRoles(value.viewers),
-                orphaned: value.orphaned
+                orphaned: value.orphaned,
+                featureFlags: convertFeatureFlag(value.featureFlag)
             };
         }
         return {
@@ -805,7 +851,8 @@ function parseApiReferenceLayoutItem(
             icon: undefined,
             playground: undefined,
             viewers: undefined,
-            orphaned: undefined
+            orphaned: undefined,
+            featureFlags: undefined
         };
     });
 }

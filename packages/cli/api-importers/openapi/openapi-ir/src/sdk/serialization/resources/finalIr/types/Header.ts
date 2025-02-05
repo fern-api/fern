@@ -21,7 +21,7 @@ export const Header: core.serialization.ObjectSchema<serializers.Header.Raw, Fer
     .extend(WithSource);
 
 export declare namespace Header {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
+    export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
         name: string;
         schema: serializers.Schema.Raw;
         env?: string | null;

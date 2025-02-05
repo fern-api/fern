@@ -35,6 +35,17 @@
         },
         {
             "id": {
+                "path": "/{tenant_id}/user",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.CreateUser(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\u0026pathparametersgo.User{\n\t\tName: \"name\",\n\t\tTags: []string{\n\t\t\t\"tags\",\n\t\t\t\"tags\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/{tenant_id}/user/{user_id}",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getUser"
@@ -42,6 +53,17 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.GetUser(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.GetUsersRequest{\n\t\tTenantId: \"tenant_id\",\n\t\tUserId:   \"user_id\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_user.updateUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.UpdateUser(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.UpdateUserRequest{\n\t\tTenantId: \"tenant_id\",\n\t\tUserId:   \"user_id\",\n\t\tBody: \u0026pathparametersgo.User{\n\t\t\tName: \"name\",\n\t\t\tTags: []string{\n\t\t\t\t\"tags\",\n\t\t\t\t\"tags\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
             }
         },
         {

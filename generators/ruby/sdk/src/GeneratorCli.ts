@@ -1,14 +1,17 @@
+import { cp } from "fs/promises";
+
+import { AbstractGeneratorContext, getPackageName, getSdkVersion } from "@fern-api/base-generator";
 import { TypesGenerator } from "@fern-api/fern-ruby-model";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { AbstractGeneratorContext, getPackageName, getSdkVersion } from "@fern-api/base-generator";
 import { loggingExeca } from "@fern-api/logging-execa";
 import {
     ClassReferenceFactory,
     Class_,
     ExternalDependency,
+    GeneratedFile,
+    LocationGenerator,
     generateBasicRakefile,
     generateBasicTests,
-    GeneratedFile,
     generateGemConfig,
     generateGemfile,
     generateGemspec,
@@ -17,15 +20,15 @@ import {
     generateReadme,
     generateRubocopConfig,
     getClientName,
-    getGemName,
-    LocationGenerator
+    getGemName
 } from "@fern-api/ruby-codegen";
 import { AbstractGeneratorCli } from "@fern-api/ruby-generator-cli";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
-import { cp } from "fs/promises";
+
 import { ClientsGenerator } from "./ClientsGenerator";
-import { parseCustomConfig, RubySdkCustomConfigConsumed } from "./CustomConfig";
+import { RubySdkCustomConfigConsumed, parseCustomConfig } from "./CustomConfig";
 
 export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfigConsumed> {
     generatedFiles: GeneratedFile[] = [];

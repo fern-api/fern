@@ -20,7 +20,7 @@ export const IntWithExample: core.serialization.ObjectSchema<
 });
 
 export declare namespace IntWithExample {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
         minimum?: number | null;
         maximum?: number | null;

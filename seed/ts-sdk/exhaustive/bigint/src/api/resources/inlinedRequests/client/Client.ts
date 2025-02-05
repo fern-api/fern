@@ -9,12 +9,14 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace InlinedRequests {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -44,7 +46,7 @@ export class InlinedRequests {
      *         nestedObject: {
      *             string: "string",
      *             integer: 1,
-     *             long: 1000000,
+     *             long: BigInt("1000000"),
      *             double: 1.1,
      *             bool: true,
      *             datetime: "2024-01-15T09:30:00Z",
@@ -56,16 +58,20 @@ export class InlinedRequests {
      *             map: {
      *                 1: "map"
      *             },
-     *             bigint: "1000000"
+     *             bigint: BigInt("1000000")
      *         }
      *     })
      */
     public async postWithObjectBodyandResponse(
         request: SeedExhaustive.PostWithObjectBody,
-        requestOptions?: InlinedRequests.RequestOptions
+        requestOptions?: InlinedRequests.RequestOptions,
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/req-bodies/object"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/req-bodies/object",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -102,7 +108,7 @@ export class InlinedRequests {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.SeedExhaustiveError({

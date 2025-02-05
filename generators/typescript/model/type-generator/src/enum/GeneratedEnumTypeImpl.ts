@@ -1,9 +1,7 @@
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
 import {
     GetReferenceOpts,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocsNode,
     maybeAddDocsStructure
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
@@ -13,13 +11,16 @@ import {
     PropertySignatureStructure,
     StatementStructures,
     StructureKind,
-    ts,
     TypeAliasDeclarationStructure,
     VariableDeclarationKind,
     VariableStatementStructure,
     WriterFunction,
-    WriterFunctionOrValue
+    WriterFunctionOrValue,
+    ts
 } from "ts-morph";
+
+import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export declare namespace GeneratedEnumTypeImpl {
@@ -251,7 +252,8 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                 )
                             )
                         }
-                    ]
+                    ],
+                    isExported: true
                 }
             ]
         };

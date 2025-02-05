@@ -61,6 +61,56 @@
               },
               "response": {
                 "docs": "The sample response",
+                "status-code": 201,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "testWithDualContentTypeRequestTypes": {
+              "auth": false,
+              "display-name": "Test with dual Content-Type request types",
+              "docs": "Test request with dual content types.
+",
+              "examples": [
+                {
+                  "path-parameters": {
+                    "corpus_key": "corpus_key",
+                  },
+                  "request": {},
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/example",
+              "path-parameters": {
+                "corpus_key": {
+                  "docs": "The unique key",
+                  "type": "string",
+                },
+              },
+              "request": {
+                "body": {
+                  "properties": {
+                    "metadata": {
+                      "docs": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "type": "optional<map<string, unknown>>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PostExampleRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "The sample response",
+                "status-code": 201,
                 "type": "string",
               },
               "source": {
@@ -113,6 +163,40 @@
       response:
         docs: The sample response
         type: string
+        status-code: 201
+      examples:
+        - path-parameters:
+            corpus_key: corpus_key
+          request: {}
+          response:
+            body: string
+    testWithDualContentTypeRequestTypes:
+      path: /example
+      method: POST
+      auth: false
+      docs: |
+        Test request with dual content types.
+      source:
+        openapi: ../openapi.yml
+      path-parameters:
+        corpus_key:
+          type: string
+          docs: The unique key
+      display-name: Test with dual Content-Type request types
+      request:
+        name: PostExampleRequest
+        body:
+          properties:
+            metadata:
+              type: optional<map<string, unknown>>
+              docs: >-
+                Arbitrary object that will be attached as document metadata to
+                the extracted document.
+        content-type: application/json
+      response:
+        docs: The sample response
+        type: string
+        status-code: 201
       examples:
         - path-parameters:
             corpus_key: corpus_key

@@ -4,15 +4,19 @@
 
 import * as core from "../../../../core";
 import * as SeedEnum from "../../../index";
+import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace QueryParam {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -39,24 +43,36 @@ export class QueryParam {
      */
     public async send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
-        requestOptions?: QueryParam.RequestOptions
+        requestOptions?: QueryParam.RequestOptions,
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        _queryParams["operand"] = operand;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
         if (maybeOperand != null) {
-            _queryParams["maybeOperand"] = maybeOperand;
+            _queryParams["maybeOperand"] = serializers.Operand.jsonOrThrow(maybeOperand, {
+                unrecognizedObjectKeys: "strip",
+            });
         }
 
-        _queryParams["operandOrColor"] =
-            typeof operandOrColor === "string" ? operandOrColor : JSON.stringify(operandOrColor);
+        _queryParams["operandOrColor"] = (() => {
+            const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, { unrecognizedObjectKeys: "strip" });
+            return typeof mapped === "string" ? mapped : toJson(mapped);
+        })();
         if (maybeOperandOrColor != null) {
-            _queryParams["maybeOperandOrColor"] =
-                typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : JSON.stringify(maybeOperandOrColor);
+            _queryParams["maybeOperandOrColor"] = (() => {
+                const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                    unrecognizedObjectKeys: "strip",
+                });
+                return typeof mapped === "string" ? mapped : toJson(mapped);
+            })();
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "query",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -114,46 +130,72 @@ export class QueryParam {
      */
     public async sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
-        requestOptions?: QueryParam.RequestOptions
+        requestOptions?: QueryParam.RequestOptions,
     ): Promise<void> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(operand)) {
-            _queryParams["operand"] = operand.map((item) => item);
+            _queryParams["operand"] = operand.map((item) =>
+                serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+            );
         } else {
-            _queryParams["operand"] = operand;
+            _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
         }
 
         if (maybeOperand != null) {
             if (Array.isArray(maybeOperand)) {
-                _queryParams["maybeOperand"] = maybeOperand.map((item) => item);
+                _queryParams["maybeOperand"] = maybeOperand.map((item) =>
+                    serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+                );
             } else {
-                _queryParams["maybeOperand"] = maybeOperand;
+                _queryParams["maybeOperand"] = serializers.Operand.jsonOrThrow(maybeOperand, {
+                    unrecognizedObjectKeys: "strip",
+                });
             }
         }
 
         if (Array.isArray(operandOrColor)) {
             _queryParams["operandOrColor"] = operandOrColor.map((item) =>
-                typeof item === "string" ? item : JSON.stringify(item)
+                (() => {
+                    const mapped = serializers.ColorOrOperand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" });
+                    return typeof mapped === "string" ? mapped : toJson(mapped);
+                })(),
             );
         } else {
-            _queryParams["operandOrColor"] =
-                typeof operandOrColor === "string" ? operandOrColor : JSON.stringify(operandOrColor);
+            _queryParams["operandOrColor"] = (() => {
+                const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
+                    unrecognizedObjectKeys: "strip",
+                });
+                return typeof mapped === "string" ? mapped : toJson(mapped);
+            })();
         }
 
         if (maybeOperandOrColor != null) {
             if (Array.isArray(maybeOperandOrColor)) {
                 _queryParams["maybeOperandOrColor"] = maybeOperandOrColor.map((item) =>
-                    typeof item === "string" ? item : JSON.stringify(item)
+                    (() => {
+                        const mapped = serializers.ColorOrOperand.jsonOrThrow(item, {
+                            unrecognizedObjectKeys: "strip",
+                        });
+                        return typeof mapped === "string" ? mapped : toJson(mapped);
+                    })(),
                 );
             } else {
-                _queryParams["maybeOperandOrColor"] =
-                    typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : JSON.stringify(maybeOperandOrColor);
+                _queryParams["maybeOperandOrColor"] = (() => {
+                    const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                        unrecognizedObjectKeys: "strip",
+                    });
+                    return typeof mapped === "string" ? mapped : toJson(mapped);
+                })();
             }
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query-list"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "query-list",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

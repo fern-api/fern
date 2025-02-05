@@ -13,12 +13,12 @@ export const SinglyLinkedListValue: core.serialization.ObjectSchema<
     head: core.serialization.lazy(() => serializers.NodeId).optional(),
     nodes: core.serialization.record(
         core.serialization.lazy(() => serializers.NodeId),
-        core.serialization.lazyObject(() => serializers.SinglyLinkedListNodeValue)
+        core.serialization.lazyObject(() => serializers.SinglyLinkedListNodeValue),
     ),
 });
 
 export declare namespace SinglyLinkedListValue {
-    interface Raw {
+    export interface Raw {
         head?: serializers.NodeId.Raw | null;
         nodes: Record<serializers.NodeId.Raw, serializers.SinglyLinkedListNodeValue.Raw>;
     }

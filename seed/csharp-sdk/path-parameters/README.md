@@ -19,7 +19,14 @@ Instantiate and use the client with the following:
 using SeedPathParameters;
 
 var client = new SeedPathParametersClient();
-await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
+await client.User.CreateUserAsync(
+    "tenant_id",
+    new User
+    {
+        Name = "name",
+        Tags = new List<string>() { "tags", "tags" },
+    }
+);
 ```
 
 ## Exception Handling
@@ -31,7 +38,7 @@ will be thrown.
 using SeedPathParameters;
 
 try {
-    var response = await client.Organizations.GetOrganizationAsync(...);
+    var response = await client.User.CreateUserAsync(...);
 } catch (SeedPathParametersApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -43,10 +50,10 @@ try {
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
@@ -55,7 +62,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Organizations.GetOrganizationAsync(
+var response = await client.User.CreateUserAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -68,7 +75,7 @@ var response = await client.Organizations.GetOrganizationAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Organizations.GetOrganizationAsync(
+var response = await client.User.CreateUserAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

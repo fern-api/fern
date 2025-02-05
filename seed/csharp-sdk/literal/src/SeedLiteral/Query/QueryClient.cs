@@ -1,9 +1,8 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedLiteral.Core;
-
-#nullable enable
 
 namespace SeedLiteral;
 
@@ -22,7 +21,13 @@ public partial class QueryClient
     ///     new SendLiteralsInQueryRequest
     ///     {
     ///         Prompt = "You are a helpful assistant",
+    ///         OptionalPrompt = "You are a helpful assistant",
+    ///         AliasPrompt = "You are a helpful assistant",
+    ///         AliasOptionalPrompt = "You are a helpful assistant",
     ///         Stream = false,
+    ///         OptionalStream = false,
+    ///         AliasStream = false,
+    ///         AliasOptionalStream = false,
     ///         Query = "What is the weather today",
     ///     }
     /// );
@@ -36,19 +41,41 @@ public partial class QueryClient
     {
         var _query = new Dictionary<string, object>();
         _query["prompt"] = request.Prompt.ToString();
+        _query["alias_prompt"] = request.AliasPrompt.ToString();
         _query["query"] = request.Query;
-        _query["stream"] = request.Stream.ToString();
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "query",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        _query["stream"] = JsonUtils.Serialize(request.Stream);
+        _query["alias_stream"] = JsonUtils.Serialize(request.AliasStream);
+        if (request.OptionalPrompt != null)
+        {
+            _query["optional_prompt"] = request.OptionalPrompt.ToString();
+        }
+        if (request.AliasOptionalPrompt != null)
+        {
+            _query["alias_optional_prompt"] = request.AliasOptionalPrompt.ToString();
+        }
+        if (request.OptionalStream != null)
+        {
+            _query["optional_stream"] = JsonUtils.Serialize(request.OptionalStream.Value);
+        }
+        if (request.AliasOptionalStream != null)
+        {
+            _query["alias_optional_stream"] = JsonUtils.Serialize(
+                request.AliasOptionalStream.Value
+            );
+        }
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "query",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

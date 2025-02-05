@@ -1,8 +1,7 @@
+using System.Linq;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
-
-#nullable enable
 
 namespace SeedApi;
 
@@ -55,7 +54,7 @@ public record Column
         return new Column
         {
             Id = value.Id,
-            Values = value.Values?.ToList() ?? new List<float>(),
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
             Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
             IndexedData =
                 value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,

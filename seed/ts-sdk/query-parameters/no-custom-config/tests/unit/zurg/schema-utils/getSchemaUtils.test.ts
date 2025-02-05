@@ -16,7 +16,7 @@ describe("getSchemaUtils", () => {
 
     describe("transform()", () => {
         itSchema(
-            "transorm and untransform run correctly",
+            "transform and untransform run correctly",
             string().transform({
                 transform: (x) => x + "X",
                 untransform: (x) => (x as string).slice(0, -1),
@@ -24,7 +24,7 @@ describe("getSchemaUtils", () => {
             {
                 raw: "hello",
                 parsed: "helloX",
-            }
+            },
         );
     });
 
@@ -75,7 +75,7 @@ describe("getSchemaUtils", () => {
                 },
                 {
                     omitUndefined: true,
-                }
+                },
             );
             expect(value).toEqual({ a: "hello" });
         });

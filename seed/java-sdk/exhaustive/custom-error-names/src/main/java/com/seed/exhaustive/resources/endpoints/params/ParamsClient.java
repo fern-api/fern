@@ -54,6 +54,7 @@ public class ParamsClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -77,32 +78,26 @@ public class ParamsClient {
     /**
      * GET with path param
      */
-    public String getWithInlinePath(String param) {
-        return getWithInlinePath(param, GetWithInlinePath.builder().build());
+    public String getWithInlinePath(GetWithInlinePath request) {
+        return getWithInlinePath(request, null);
     }
 
     /**
      * GET with path param
      */
-    public String getWithInlinePath(String param, GetWithInlinePath request) {
-        return getWithInlinePath(param, request, null);
-    }
-
-    /**
-     * GET with path param
-     */
-    public String getWithInlinePath(String param, GetWithInlinePath request, RequestOptions requestOptions) {
+    public String getWithInlinePath(GetWithInlinePath request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param)
+                .addPathSegment(request.getParam())
                 .build();
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -178,7 +173,7 @@ public class ParamsClient {
                 .newBuilder()
                 .addPathSegments("params");
         httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("numer", Integer.toString(request.getNumer()));
+        httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -247,20 +242,19 @@ public class ParamsClient {
     /**
      * GET with path and query params
      */
-    public void getWithInlinePathAndQuery(String param, GetWithInlinePathAndQuery request) {
-        getWithInlinePathAndQuery(param, request, null);
+    public void getWithInlinePathAndQuery(GetWithInlinePathAndQuery request) {
+        getWithInlinePathAndQuery(request, null);
     }
 
     /**
      * GET with path and query params
      */
-    public void getWithInlinePathAndQuery(
-            String param, GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
+    public void getWithInlinePathAndQuery(GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path-query")
-                .addPathSegment(param);
+                .addPathSegment(request.getParam());
         httpUrl.addQueryParameter("query", request.getQuery());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -315,6 +309,7 @@ public class ParamsClient {
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -338,25 +333,24 @@ public class ParamsClient {
     /**
      * PUT to update with path param
      */
-    public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request) {
-        return modifyWithInlinePath(param, request, null);
+    public String modifyWithInlinePath(ModifyResourceAtInlinedPath request) {
+        return modifyWithInlinePath(request, null);
     }
 
     /**
      * PUT to update with path param
      */
-    public String modifyWithInlinePath(
-            String param, ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
+    public String modifyWithInlinePath(ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param)
+                .addPathSegment(request.getParam())
                 .build();
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new CustomException("Failed to serialize request", e);
         }
@@ -365,6 +359,7 @@ public class ParamsClient {
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

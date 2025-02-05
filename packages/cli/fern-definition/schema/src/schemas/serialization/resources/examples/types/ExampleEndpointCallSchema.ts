@@ -32,7 +32,7 @@ export const ExampleEndpointCallSchema: core.serialization.ObjectSchema<
     .extend(WithDocsSchema);
 
 export declare namespace ExampleEndpointCallSchema {
-    interface Raw extends WithName.Raw, WithDocsSchema.Raw {
+    export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
         id?: string | null;
         "path-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
         "query-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;

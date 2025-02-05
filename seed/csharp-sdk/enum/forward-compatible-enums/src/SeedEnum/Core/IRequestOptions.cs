@@ -1,8 +1,6 @@
 using System;
 using System.Net.Http;
 
-#nullable enable
-
 namespace SeedEnum.Core;
 
 internal interface IRequestOptions

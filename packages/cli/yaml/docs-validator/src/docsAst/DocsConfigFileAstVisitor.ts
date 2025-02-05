@@ -1,8 +1,8 @@
 import { docsYml } from "@fern-api/configuration-loader";
+import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
-import { NodePath } from "@fern-api/fern-definition-schema";
 
 export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof DocsConfigFileAstNodeTypes]: DocsConfigFileAstNodeVisitor<K, R>;

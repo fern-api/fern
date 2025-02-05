@@ -16,7 +16,7 @@ export const UndiscriminatedUnionType: core.serialization.ObjectSchema<
 });
 
 export declare namespace UndiscriminatedUnionType {
-    interface Raw {
+    export interface Raw {
         declaration: Declaration.Raw;
         types: serializers.dynamic.TypeReference.Raw[];
     }

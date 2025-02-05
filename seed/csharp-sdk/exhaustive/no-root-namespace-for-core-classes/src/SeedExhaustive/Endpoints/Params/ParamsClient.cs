@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive.Endpoints;
 
 public partial class ParamsClient
@@ -31,16 +29,65 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"/params/path/{param}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
             {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/params/path/{param}",
-                Options = options,
-            },
-            cancellationToken
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
+    }
+
+    /// <summary>
+    /// GET with path param
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Params.GetWithInlinePathAsync("param", new GetWithInlinePath());
+    /// </code>
+    /// </example>
+    public async Task<string> GetWithInlinePathAsync(
+        string param,
+        GetWithInlinePath request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"/params/path/{param}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -78,17 +125,19 @@ public partial class ParamsClient
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         _query["number"] = request.Number.ToString();
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/params",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/params",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -107,7 +156,7 @@ public partial class ParamsClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-    ///     new GetWithMultipleQuery { Query = ["query"], Numer = [1] }
+    ///     new GetWithMultipleQuery { Query = ["query"], Number = [1] }
     /// );
     /// </code>
     /// </example>
@@ -119,18 +168,20 @@ public partial class ParamsClient
     {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
-        _query["numer"] = request.Numer.Select(_value => _value.ToString()).ToList();
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/params",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/params",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -163,17 +214,64 @@ public partial class ParamsClient
     {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/params/path-query/{param}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"/params/path-query/{param}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
+    }
+
+    /// <summary>
+    /// GET with path and query params
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
+    ///     "param",
+    ///     new GetWithInlinePathAndQuery { Query = "query" }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task GetWithInlinePathAndQueryAsync(
+        string param,
+        GetWithInlinePathAndQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["query"] = request.Query;
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"/params/path-query/{param}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -201,17 +299,70 @@ public partial class ParamsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Put,
+                    Path = $"/params/path/{param}",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
             {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Put,
-                Path = $"/params/path/{param}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
+    }
+
+    /// <summary>
+    /// PUT to update with path param
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Params.ModifyWithInlinePathAsync(
+    ///     "param",
+    ///     new ModifyResourceAtInlinedPath { Body = "string" }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<string> ModifyWithInlinePathAsync(
+        string param,
+        ModifyResourceAtInlinedPath request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Put,
+                    Path = $"/params/path/{param}",
+                    Body = request.Body,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

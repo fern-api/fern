@@ -1,25 +1,29 @@
+import { camelCase, upperFirst } from "lodash-es";
+
+import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractPhpGeneratorContext, FileLocation } from "@fern-api/php-codegen";
+import { AsIsFiles, php } from "@fern-api/php-codegen";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
-    Name,
     HttpEndpoint,
+    HttpMethod,
     HttpService,
+    Name,
     ServiceId,
     Subpackage,
     SubpackageId,
     TypeId,
-    HttpMethod
+    UserAgent
 } from "@fern-fern/ir-sdk/api";
-import { AbstractPhpGeneratorContext, FileLocation } from "@fern-api/php-codegen";
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { ErrorDeclaration, ErrorId } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { AsIsFiles, php } from "@fern-api/php-codegen";
-import { camelCase, upperFirst } from "lodash-es";
+import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from "./constants";
 import { RawClient } from "./core/RawClient";
-import { GuzzleClient } from "./external/GuzzleClient";
-import { ErrorId, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-import { EXCEPTIONS_DIRECTORY, TYPES_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES } from "./constants";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import { GuzzleClient } from "./external/GuzzleClient";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;
@@ -186,6 +190,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getRootClientClassName(): string {
+        if (this.customConfig.clientName != null) {
+            return this.customConfig.clientName;
+        }
         if (this.customConfig["client-class-name"] != null) {
             return this.customConfig["client-class-name"];
         }
@@ -265,6 +272,19 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getEnvironmentName(name: Name): string {
         return name.pascalCase.safeName;
+    }
+
+    public getUserAgent(): UserAgent | undefined {
+        if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
+            return this.ir.sdkConfig.platformHeaders.userAgent;
+        }
+        if (this.version != null) {
+            return {
+                header: "User-Agent",
+                value: `${this.getPackageName()}/${this.version}`
+            };
+        }
+        return undefined;
     }
 
     public getRawAsIsFiles(): string[] {

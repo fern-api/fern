@@ -1,16 +1,18 @@
 import { assertNever } from "@fern-api/core-utils";
+
+import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+
+import { BaseCsharpCustomConfigSchema } from "../custom-config";
+import { Namespace } from "../project/CSharpFile";
 import {
     ClassReference,
     OneOfBaseClassReference,
     OneOfClassReference,
     StringEnumClassReference
 } from "./ClassReference";
+import { CoreClassReference } from "./CoreClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { CoreClassReference } from "./CoreClassReference";
-import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
-import { BaseCsharpCustomConfigSchema } from "../custom-config";
-import { Namespace } from "../project/CSharpFile";
 
 type InternalType =
     | Integer

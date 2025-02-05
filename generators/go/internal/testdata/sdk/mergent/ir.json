@@ -2202,7 +2202,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "If multiple errors occured (e.g., with param validation), the list of errors that occured."
+                        "docs": "If multiple errors occurred (e.g., with param validation), the list of errors that occurred."
                     }
                 ],
                 "extra-properties": false,

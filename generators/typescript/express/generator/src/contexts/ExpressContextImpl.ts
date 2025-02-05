@@ -1,17 +1,17 @@
-import { Constants } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
-    createExternalDependencies,
     DependencyManager,
     ExternalDependencies,
-    ImportsManager
+    ImportsManager,
+    createExternalDependencies
 } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import {
     ExpressContext,
     ExpressErrorSchemaContext,
     ExpressRegisterContext,
-    GenericAPIExpressErrorContext
+    GenericAPIExpressErrorContext,
+    JsonContext
 } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
 import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator";
@@ -26,12 +26,17 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile } from "ts-morph";
+
 import { Logger } from "@fern-api/logger";
+
+import { Constants } from "@fern-fern/ir-sdk/api";
+
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { ExpressErrorDeclarationReferencer } from "../declaration-referencers/ExpressErrorDeclarationReferencer";
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
 import { ExpressServiceDeclarationReferencer } from "../declaration-referencers/ExpressServiceDeclarationReferencer";
 import { GenericAPIExpressErrorDeclarationReferencer } from "../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
+import { JsonDeclarationReferencer } from "../declaration-referencers/JsonDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { ExpressEndpointTypeSchemasContextImpl } from "./express-endpoint-type-schemas/ExpressEndpointTypeSchemasContextImpl";
 import { ExpressErrorSchemaContextImpl } from "./express-error-schema/ExpressErrorSchemaContextImpl";
@@ -41,6 +46,7 @@ import { ExpressInlinedRequestBodyContextImpl } from "./express-inlined-request-
 import { ExpressRegisterContextImpl } from "./express-register/ExpressRegisterContextImpl.ts";
 import { ExpressServiceContextImpl } from "./express-service/ExpressServiceContextImpl.ts";
 import { GenericAPIExpressErrorContextImpl } from "./generic-api-express-error/GenericAPIExpressErrorContextImpl";
+import { JsonContextImpl } from "./json/JsonContextImpl";
 import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./type/TypeContextImpl";
 
@@ -69,6 +75,7 @@ export declare namespace ExpressContextImpl {
         expressServiceGenerator: ExpressServiceGenerator;
         expressServiceDeclarationReferencer: ExpressServiceDeclarationReferencer;
         errorDeclarationReferencer: ExpressErrorDeclarationReferencer;
+        jsonDeclarationReferencer: JsonDeclarationReferencer;
         expressErrorGenerator: ExpressErrorGenerator;
         errorResolver: ErrorResolver;
         genericAPIExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
@@ -81,6 +88,8 @@ export declare namespace ExpressContextImpl {
         retainOriginalCasing: boolean;
         useBigInt: boolean;
         enableInlineTypes: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -103,6 +112,7 @@ export class ExpressContextImpl implements ExpressContext {
     public readonly genericAPIExpressError: GenericAPIExpressErrorContext;
     public readonly expressRegister: ExpressRegisterContext;
     public readonly expressErrorSchema: ExpressErrorSchemaContext;
+    public readonly jsonContext: JsonContext;
 
     constructor({
         logger,
@@ -134,10 +144,13 @@ export class ExpressContextImpl implements ExpressContext {
         fernConstants,
         expressRegisterGenerator,
         expressErrorSchemaDeclarationReferencer,
+        jsonDeclarationReferencer,
         expressErrorSchemaGenerator,
         includeSerdeLayer,
         retainOriginalCasing,
         enableInlineTypes,
+        allowExtraFields,
+        omitUndefined,
         useBigInt
     }: ExpressContextImpl.Init) {
         this.logger = logger;
@@ -165,13 +178,15 @@ export class ExpressContextImpl implements ExpressContext {
             retainOriginalCasing,
             useBigInt,
             enableInlineTypes,
+            allowExtraFields,
+            omitUndefined,
             context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
             coreUtilities: this.coreUtilities,
             importsManager,
-            typeResolver,
+            context: this,
             typeSchemaDeclarationReferencer,
             typeDeclarationReferencer,
             typeGenerator,
@@ -180,9 +195,15 @@ export class ExpressContextImpl implements ExpressContext {
             includeSerdeLayer,
             retainOriginalCasing,
             useBigInt,
-            enableInlineTypes
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
-
+        this.jsonContext = new JsonContextImpl({
+            importsManager,
+            jsonDeclarationReferencer,
+            sourceFile
+        });
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextImpl({
             expressInlinedRequestBodyDeclarationReferencer,
             expressInlinedRequestBodyGenerator,

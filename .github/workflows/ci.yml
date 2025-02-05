@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on:
   push:
@@ -12,6 +12,10 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
 
 jobs:
   lint:
@@ -30,7 +34,9 @@ jobs:
         run: pnpm lint:style
 
       - name: Generate JSON Schema
-        run: pnpm jsonschema
+        run: |
+          pnpm fern:build
+          pnpm jsonschema
 
       - name: Format
         run: pnpm format:check
@@ -39,6 +45,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   compile:
+    if: github.repository == 'fern-api/fern'
     runs-on: CLI
     steps:
       - name: Checkout repo
@@ -63,6 +70,7 @@ jobs:
         run: pnpm lint:eslint
 
   test:
+    if: github.repository == 'fern-api/fern'
     runs-on: Test
     steps:
       - name: Checkout repo
@@ -82,9 +90,6 @@ jobs:
       - name: Install protoc-gen-openapi
         run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
-      - name: Compile
-        run: pnpm compile
-
       - name: Run tests
         run: pnpm test
 
@@ -92,6 +97,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   ete-tests:
+    if: github.repository == 'fern-api/fern'
     runs-on: CLI
     steps:
       - name: Checkout repo
@@ -114,7 +120,7 @@ jobs:
 
   live-test-dev:
     environment: Fern Dev
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -136,7 +142,7 @@ jobs:
 
   live-test-dev-windows:
     environment: Fern Dev
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.repository == 'fern-api/fern' }}
     runs-on: windows-latest
     steps:
       - name: Checkout repo
@@ -171,7 +177,7 @@ jobs:
     outputs:
       typescript: ${{ steps.filter.outputs.typescript }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
         id: filter
         with:

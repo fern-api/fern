@@ -16,7 +16,7 @@ export const Page: core.serialization.ObjectSchema<serializers.Page.Raw, SeedPag
     });
 
 export declare namespace Page {
-    interface Raw {
+    export interface Raw {
         page: number;
         next?: NextPage.Raw | null;
         per_page: number;

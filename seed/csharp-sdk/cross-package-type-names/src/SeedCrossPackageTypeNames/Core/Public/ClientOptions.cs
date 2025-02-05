@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedCrossPackageTypeNames.Core;
 
-#nullable enable
-
 namespace SeedCrossPackageTypeNames;
 
 public partial class ClientOptions

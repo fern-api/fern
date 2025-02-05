@@ -27,10 +27,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     },
     "type_user:User": {
@@ -60,10 +57,7 @@
               }
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
       }
     }
   },
@@ -518,6 +512,250 @@
               },
               "queryParameters": {},
               "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "createUser",
+          "originalEndpointId": "endpoint_user.createUser",
+          "name": "Create User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_user:User"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_user:User"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/tenant_id/user/",
+              "pathParameters": {
+                "tenant_id": "tenant_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "PATCH",
+          "id": "updateUser",
+          "originalEndpointId": "endpoint_user.updateUser",
+          "name": "Update User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tenant_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "user_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tenant_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "user_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_user:User"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_user:User"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/tenant_id/user/user_id",
+              "pathParameters": {
+                "tenant_id": "tenant_id",
+                "user_id": "user_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "name",
+                "tags": [
+                  "tags",
+                  "tags"
+                ]
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "name": "name",

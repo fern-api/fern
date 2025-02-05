@@ -14,6 +14,8 @@ module SeedLiteralClient
       attr_reader :query
       # @return [Boolean]
       attr_reader :stream
+      # @return [String]
+      attr_reader :ending
       # @return [SeedLiteralClient::Reference::SOME_LITERAL]
       attr_reader :context
       # @return [SeedLiteralClient::Reference::SOME_LITERAL]
@@ -31,16 +33,18 @@ module SeedLiteralClient
       # @param prompt [String]
       # @param query [String]
       # @param stream [Boolean]
+      # @param ending [String]
       # @param context [SeedLiteralClient::Reference::SOME_LITERAL]
       # @param maybe_context [SeedLiteralClient::Reference::SOME_LITERAL]
       # @param container_object [SeedLiteralClient::Reference::ContainerObject]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedLiteralClient::Reference::SendRequest]
-      def initialize(prompt:, query:, stream:, context:, container_object:, maybe_context: OMIT,
+      def initialize(prompt:, query:, stream:, ending:, context:, container_object:, maybe_context: OMIT,
                      additional_properties: nil)
         @prompt = prompt
         @query = query
         @stream = stream
+        @ending = ending
         @context = context
         @maybe_context = maybe_context if maybe_context != OMIT
         @container_object = container_object
@@ -49,6 +53,7 @@ module SeedLiteralClient
           "prompt": prompt,
           "query": query,
           "stream": stream,
+          "ending": ending,
           "context": context,
           "maybeContext": maybe_context,
           "containerObject": container_object
@@ -67,6 +72,7 @@ module SeedLiteralClient
         prompt = parsed_json["prompt"]
         query = parsed_json["query"]
         stream = parsed_json["stream"]
+        ending = parsed_json["ending"]
         context = parsed_json["context"]
         maybe_context = parsed_json["maybeContext"]
         if parsed_json["containerObject"].nil?
@@ -79,6 +85,7 @@ module SeedLiteralClient
           prompt: prompt,
           query: query,
           stream: stream,
+          ending: ending,
           context: context,
           maybe_context: maybe_context,
           container_object: container_object,
@@ -103,6 +110,7 @@ module SeedLiteralClient
         obj.prompt.is_a?(String) != false || raise("Passed value for field obj.prompt is not the expected type, validation failed.")
         obj.query.is_a?(String) != false || raise("Passed value for field obj.query is not the expected type, validation failed.")
         obj.stream.is_a?(Boolean) != false || raise("Passed value for field obj.stream is not the expected type, validation failed.")
+        obj.ending.is_a?(String) != false || raise("Passed value for field obj.ending is not the expected type, validation failed.")
         obj.context.is_a?(String) != false || raise("Passed value for field obj.context is not the expected type, validation failed.")
         obj.maybe_context&.is_a?(String) != false || raise("Passed value for field obj.maybe_context is not the expected type, validation failed.")
         SeedLiteralClient::Reference::ContainerObject.validate_raw(obj: obj.container_object)

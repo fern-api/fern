@@ -10,5 +10,5 @@ export const KeyType: core.serialization.Schema<serializers.KeyType.Raw, SeedUnd
     core.serialization.enum_(["name", "value"]);
 
 export declare namespace KeyType {
-    type Raw = "name" | "value";
+    export type Raw = "name" | "value";
 }

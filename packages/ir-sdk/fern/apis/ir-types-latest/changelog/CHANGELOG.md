@@ -5,10 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v55.0.0] - 2024-01-13
+
+- Feature: The IR now supports `nullable<T>` types to distinguish if a property should support explicit `null` values.
+
+## [v54.1.0] - 2024-01-10
+
+- Feature: OAuthAccessTokenRequestProperties now pulls in additional request properties from the OAuth
+  getToken endpoint to support custom OAuth schemas.
+
 ## [v54.0.0] - 2024-12-11
 
-- Break: The HttpResponse type in the IR now supports bytes responses. This is useful for different languages - 
-  for example TypeScript can return an `ArrayBuffer` instead of `stream.Readable` in this case. 
+- Break: The HttpResponse type in the IR now supports bytes responses. This is useful for different languages -
+  for example TypeScript can return an `ArrayBuffer` instead of `stream.Readable` in this case.
 
 ## [v53.24.0] - 2024-11-04
 
@@ -23,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Redacted: Use v53.23.0 instead.
 - Internal: Add the `dynamic` property to the IR. This should be
-  made requried in IRv54.
+  made required in IRv54.
 
 ## [v53.21.0] - 2024-11-04
 
