@@ -222,20 +222,12 @@ export class ExampleTypeFactory {
                                     options,
                                     skipReadonly
                                 });
-                                result[schema.value.discriminantProperty] = FullExample.primitive(
-                                    PrimitiveExample.string(unionVariant[0])
-                                );
-
                                 if (example != null) {
                                     this.mergeExampleWith(example, result);
-                                }
-
-                                if (example?.type === "object" && example.properties != null) {
-                                    for (const [property, value] of Object.entries(example.properties)) {
-                                        if (property !== schema.value.discriminantProperty) {
-                                            result[property] = value;
-                                        }
-                                    }
+                                    result[schema.value.discriminantProperty] = FullExample.primitive(
+                                        PrimitiveExample.string(unionVariant[0])
+                                    );
+                                    break;
                                 }
                             }
                         }

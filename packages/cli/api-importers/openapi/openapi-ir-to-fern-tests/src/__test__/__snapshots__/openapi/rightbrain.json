@@ -13,31 +13,22 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
-                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "multipleRolesNotAllowedError": {
                     "roles": [
                       "roles",
                     ],
                   },
-                  "reason": "INVALID_MEMBER",
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
                 },
               },
               {
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
                   "invalidSubjectTypeError": {},
                   "message": "message",
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "INVALID_SUBJECT_TYPE",
                 },
               },
               {
@@ -49,11 +40,7 @@
                     "email_address": "email_address",
                     "organization_id": "organization_id",
                   },
-                  "organizationMemberAlreadyExistsError": {
-                    "member_id": "member_id",
-                    "organization_id": "organization_id",
-                  },
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "ORGANIZATION_INVITE_ALREADY_EXISTS",
                 },
               },
             ],
@@ -69,10 +56,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2733,42 +2717,30 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
           message: message
           multipleRolesNotAllowedError:
             roles:
               - roles
-          invalidRoleError:
-            role: role
-          invalidSubjectTypeError: {}
-          invalidMemberError: {}
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           invalidSubjectTypeError: {}
-          invalidMemberError: {}
-          invalidRoleError:
-            role: role
+          reason: INVALID_SUBJECT_TYPE
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           organizationInviteAlreadyExistsError:
             organization_id: organization_id
             email_address: email_address
-          organizationMemberAlreadyExistsError:
-            organization_id: organization_id
-            member_id: member_id
+          reason: ORGANIZATION_INVITE_ALREADY_EXISTS
   ForbiddenError:
     status-code: 403
     type: ForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   UnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError

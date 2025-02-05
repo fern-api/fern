@@ -224,13 +224,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -242,17 +235,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -533,13 +521,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -551,17 +532,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -844,13 +820,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "INVALID_MEMBER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -875,25 +844,12 @@
                       },
                       "type": "object"
                     },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MULTIPLE_ROLES_NOT_ALLOWED",
+                        "type": "string"
                       },
-                      "type": "object"
-                    },
-                    "invalidSubjectTypeError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -950,13 +906,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -968,17 +917,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -1276,13 +1220,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -1294,21 +1231,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "INVALID_SUBJECT_TYPE",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -1365,13 +1293,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -1383,17 +1304,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -1957,13 +1873,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -1975,17 +1884,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -2219,13 +2123,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -2237,17 +2134,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -2465,13 +2357,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -2483,17 +2368,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -2785,13 +2665,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -2803,17 +2676,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -3071,13 +2939,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -3104,24 +2965,12 @@
                       },
                       "type": "object"
                     },
-                    "organizationMemberAlreadyExistsError": {
-                      "properties": {
-                        "organization_id": {
-                          "value": {
-                            "value": "organization_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "member_id": {
-                          "value": {
-                            "value": "member_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "ORGANIZATION_INVITE_ALREADY_EXISTS",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -3178,13 +3027,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -3196,17 +3038,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -3429,13 +3266,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -3447,17 +3277,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -3645,13 +3470,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -3663,17 +3481,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -3932,13 +3745,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -3950,17 +3756,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -4192,13 +3993,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -4210,17 +4004,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -4453,13 +4242,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -4471,17 +4253,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -5145,13 +4922,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -5163,17 +4933,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -5450,13 +5215,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -5468,17 +5226,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -5729,13 +5482,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -5747,17 +5493,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -6124,13 +5865,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -6142,17 +5876,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -6636,13 +6365,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -6654,17 +6376,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -6973,13 +6690,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -6991,17 +6701,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -7292,13 +6997,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -7310,17 +7008,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -7627,13 +7320,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -7645,17 +7331,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -7964,13 +7645,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "INVALID_MEMBER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -7995,25 +7669,12 @@
                       },
                       "type": "object"
                     },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MULTIPLE_ROLES_NOT_ALLOWED",
+                        "type": "string"
                       },
-                      "type": "object"
-                    },
-                    "invalidSubjectTypeError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -8070,13 +7731,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -8088,17 +7742,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -8422,13 +8071,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -8440,21 +8082,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "INVALID_SUBJECT_TYPE",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -8511,13 +8144,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -8529,17 +8155,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -8887,13 +8508,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -8905,17 +8519,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -9256,13 +8865,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -9274,17 +8876,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -9620,13 +9217,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -9638,17 +9228,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -10001,13 +9586,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -10019,17 +9597,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -10374,13 +9947,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -10392,17 +9958,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -10736,13 +10297,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -10754,17 +10308,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -11117,13 +10666,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -11135,17 +10677,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -11410,13 +10947,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -11428,17 +10958,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -11717,13 +11242,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -11735,17 +11253,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -12117,13 +11630,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -12135,17 +11641,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -12535,13 +12036,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -12553,17 +12047,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -12896,13 +12385,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -12914,17 +12396,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -13259,13 +12736,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "INVALID_MEMBER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -13290,25 +12760,12 @@
                       },
                       "type": "object"
                     },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MULTIPLE_ROLES_NOT_ALLOWED",
+                        "type": "string"
                       },
-                      "type": "object"
-                    },
-                    "invalidSubjectTypeError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -13365,13 +12822,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -13383,17 +12833,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -13743,13 +13188,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -13761,21 +13199,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "INVALID_SUBJECT_TYPE",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -13832,13 +13261,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -13850,17 +13272,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -14350,13 +13767,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -14368,17 +13778,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -14774,13 +14179,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -14792,17 +14190,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -15124,13 +14517,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -15142,17 +14528,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -15510,13 +14891,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -15528,17 +14902,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -15857,13 +15226,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -15875,17 +15237,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -16161,13 +15518,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -16179,17 +15529,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -16580,13 +15925,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -16598,17 +15936,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -16987,13 +16320,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -17005,17 +16331,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -17311,13 +16632,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -17329,17 +16643,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -17873,13 +17182,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -17891,17 +17193,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -18234,13 +17531,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -18252,17 +17542,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -18597,13 +17882,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "INVALID_MEMBER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -18628,25 +17906,12 @@
                       },
                       "type": "object"
                     },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MULTIPLE_ROLES_NOT_ALLOWED",
+                        "type": "string"
                       },
-                      "type": "object"
-                    },
-                    "invalidSubjectTypeError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -18703,13 +17968,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -18721,17 +17979,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -19081,13 +18334,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -19099,21 +18345,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "INVALID_SUBJECT_TYPE",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -19170,13 +18407,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -19188,17 +18418,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -19655,13 +18880,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -19673,17 +18891,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -19952,13 +19165,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -19970,17 +19176,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -20242,13 +19443,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -20260,17 +19454,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -20549,13 +19738,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -20567,17 +19749,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -20842,13 +20019,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -20860,17 +20030,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -21145,13 +20310,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -21163,17 +20321,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -21436,13 +20589,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -21454,17 +20600,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -21745,13 +20886,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -21763,17 +20897,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -22056,13 +21185,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "INVALID_MEMBER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -22087,25 +21209,12 @@
                       },
                       "type": "object"
                     },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MULTIPLE_ROLES_NOT_ALLOWED",
+                        "type": "string"
                       },
-                      "type": "object"
-                    },
-                    "invalidSubjectTypeError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -22162,13 +21271,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -22180,17 +21282,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -22488,13 +21585,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -22506,21 +21596,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "INVALID_SUBJECT_TYPE",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -22577,13 +21658,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -22595,17 +21669,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -23483,13 +22552,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -23501,17 +22563,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -23740,13 +22797,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -23758,17 +22808,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -23986,13 +23031,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -24004,17 +23042,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -24312,13 +23345,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -24330,17 +23356,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -24698,13 +23719,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -24716,17 +23730,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -25098,13 +24107,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -25116,17 +24118,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -25401,13 +24398,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -25419,17 +24409,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -26420,13 +25405,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -26438,17 +25416,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -26677,13 +25650,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -26695,17 +25661,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -26923,13 +25884,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -26941,17 +25895,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -27249,13 +26198,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -27267,17 +26209,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -27635,13 +26572,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -27653,17 +26583,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -28035,13 +26960,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -28053,17 +26971,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -28338,13 +27251,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -28356,17 +27262,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -29357,13 +28258,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -29375,17 +28269,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -29614,13 +28503,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -29632,17 +28514,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -29860,13 +28737,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -29878,17 +28748,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -30186,13 +29051,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -30204,17 +29062,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -30572,13 +29425,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -30590,17 +29436,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -30972,13 +29813,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -30990,17 +29824,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -31275,13 +30104,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -31293,17 +30115,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -32294,13 +31111,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -32312,17 +31122,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -32551,13 +31356,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -32569,17 +31367,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -32797,13 +31590,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -32815,17 +31601,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -33123,13 +31904,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -33141,17 +31915,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -33509,13 +32278,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -33527,17 +32289,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -33909,13 +32666,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -33927,17 +32677,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -34212,13 +32957,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -34230,17 +32968,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -35231,13 +33964,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -35249,17 +33975,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -35488,13 +34209,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -35506,17 +34220,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -35734,13 +34443,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -35752,17 +34454,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -36060,13 +34757,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -36078,17 +34768,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -36446,13 +35131,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -36464,17 +35142,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -36846,13 +35519,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -36864,17 +35530,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -37149,13 +35810,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -37167,17 +35821,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -38168,13 +36817,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -38186,17 +36828,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -38425,13 +37062,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -38443,17 +37073,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -38671,13 +37296,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -38689,17 +37307,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -38997,13 +37610,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -39015,17 +37621,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -39383,13 +37984,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -39401,17 +37995,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -39783,13 +38372,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -39801,17 +38383,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -40086,13 +38663,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -40104,17 +38674,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -41105,13 +39670,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -41123,17 +39681,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -41362,13 +39915,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -41380,17 +39926,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -41608,13 +40149,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -41626,17 +40160,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -41934,13 +40463,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -41952,17 +40474,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -42320,13 +40837,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -42338,17 +40848,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -42720,13 +41225,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -42738,17 +41236,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -43023,13 +41516,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -43041,17 +41527,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -43594,13 +42075,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -43612,17 +42086,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -45250,13 +43719,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -45268,17 +43730,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -45529,13 +43986,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -45547,17 +43997,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -45842,13 +44287,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -45860,17 +44298,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -46169,13 +44602,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -46187,17 +44613,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -46477,13 +44898,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -46495,17 +44909,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -46823,13 +45232,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -46841,17 +45243,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -47286,13 +45683,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -47304,17 +45694,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -47850,13 +46235,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -47868,17 +46246,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -48340,13 +46713,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -48358,17 +46724,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -48886,13 +47247,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -48904,17 +47258,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -49410,13 +47759,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -49428,17 +47770,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -49709,13 +48046,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -49727,17 +48057,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -50070,13 +48395,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -50088,17 +48406,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -50433,13 +48746,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "INVALID_MEMBER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -50464,25 +48770,12 @@
                       },
                       "type": "object"
                     },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MULTIPLE_ROLES_NOT_ALLOWED",
+                        "type": "string"
                       },
-                      "type": "object"
-                    },
-                    "invalidSubjectTypeError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -50539,13 +48832,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -50557,17 +48843,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -50917,13 +49198,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "MALFORMED_RESOURCE_IDENTIFIER",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -50935,21 +49209,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "invalidMemberError": {
-                      "properties": {},
-                      "type": "object"
-                    },
-                    "invalidRoleError": {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "role",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "INVALID_SUBJECT_TYPE",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -51006,13 +49271,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -51024,17 +49282,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -51386,13 +49639,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -51404,17 +49650,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -51759,13 +50000,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -51777,17 +50011,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -52141,13 +50370,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -52159,17 +50381,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -52508,13 +50725,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -52526,17 +50736,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -52880,13 +51085,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -52898,17 +51096,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -53321,13 +51514,6 @@
               "example": {
                 "value": {
                   "value": {
-                    "reason": {
-                      "value": {
-                        "value": "PERMISSION_CHECK_FAILED",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "message": {
                       "value": {
                         "value": "message",
@@ -53339,17 +51525,12 @@
                       "properties": {},
                       "type": "object"
                     },
-                    "permissionCheckFailedError": {
-                      "properties": {
-                        "permission": {
-                          "value": {
-                            "value": "permission",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
+                    "reason": {
+                      "value": {
+                        "value": "MISSING_AUTHENTICATION",
+                        "type": "string"
                       },
-                      "type": "object"
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"

@@ -399,13 +399,6 @@
               "contract": {
                 "value": {
                   "value": {
-                    "employment_type": {
-                      "value": {
-                        "value": "FULL_TIME",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "contract_oid": {
                       "value": {
                         "value": "pdcMQe0cXCCXWTkqkdytw",
@@ -424,6 +417,13 @@
                       "value": {
                         "value": 1.1,
                         "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "employment_type": {
+                      "value": {
+                        "value": "PART_TIME",
+                        "type": "string"
                       },
                       "type": "primitive"
                     }
@@ -554,13 +554,6 @@
                     "contract": {
                       "value": {
                         "value": {
-                          "employment_type": {
-                            "value": {
-                              "value": "FULL_TIME",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "contract_oid": {
                             "value": {
                               "value": "pdcMQe0cXCCXWTkqkdytw",
@@ -593,6 +586,13 @@
                             "value": {
                               "value": 1.1,
                               "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "employment_type": {
+                            "value": {
+                              "value": "PART_TIME",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }

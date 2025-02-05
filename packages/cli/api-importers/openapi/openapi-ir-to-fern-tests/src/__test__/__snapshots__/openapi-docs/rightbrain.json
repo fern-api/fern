@@ -20,10 +20,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -56,10 +53,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -92,10 +86,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -128,10 +119,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -164,10 +152,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -200,10 +185,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -236,10 +218,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -272,10 +251,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -308,10 +284,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -344,10 +317,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -380,10 +350,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -416,10 +383,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -452,10 +416,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -488,10 +449,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -608,10 +566,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -644,10 +599,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -673,13 +625,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
                   "invalidSubjectTypeError": {},
                   "message": "message",
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "INVALID_SUBJECT_TYPE",
                 },
               },
             ],
@@ -695,10 +643,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -739,18 +684,13 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
-                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "multipleRolesNotAllowedError": {
                     "roles": [
                       "roles",
                     ],
                   },
-                  "reason": "INVALID_MEMBER",
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
                 },
               },
             ],
@@ -766,10 +706,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -817,10 +754,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -853,10 +787,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -889,10 +820,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -925,10 +853,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -961,10 +886,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -997,10 +919,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1033,10 +952,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1081,10 +997,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1117,10 +1030,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1153,10 +1063,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1189,10 +1096,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1218,13 +1122,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
                   "invalidSubjectTypeError": {},
                   "message": "message",
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "INVALID_SUBJECT_TYPE",
                 },
               },
             ],
@@ -1240,10 +1140,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1284,18 +1181,13 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
-                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "multipleRolesNotAllowedError": {
                     "roles": [
                       "roles",
                     ],
                   },
-                  "reason": "INVALID_MEMBER",
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
                 },
               },
             ],
@@ -1311,10 +1203,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1362,10 +1251,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1398,10 +1284,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1434,10 +1317,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1470,10 +1350,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1506,10 +1383,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1542,10 +1416,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1578,10 +1449,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1614,10 +1482,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1650,10 +1515,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1686,10 +1548,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1722,10 +1581,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1758,10 +1614,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1794,10 +1647,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1830,10 +1680,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1866,10 +1713,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1902,10 +1746,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1950,10 +1791,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -1986,10 +1824,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2022,10 +1857,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2058,10 +1890,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2087,13 +1916,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
                   "invalidSubjectTypeError": {},
                   "message": "message",
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "INVALID_SUBJECT_TYPE",
                 },
               },
             ],
@@ -2109,10 +1934,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2153,18 +1975,13 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
-                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "multipleRolesNotAllowedError": {
                     "roles": [
                       "roles",
                     ],
                   },
-                  "reason": "INVALID_MEMBER",
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
                 },
               },
             ],
@@ -2180,10 +1997,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2231,10 +2045,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2267,10 +2078,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2303,10 +2111,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2339,10 +2144,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2375,10 +2177,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2519,10 +2318,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2555,10 +2351,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2591,10 +2384,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2627,10 +2417,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2663,10 +2450,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2699,10 +2483,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2735,10 +2516,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2771,10 +2549,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2807,10 +2582,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2843,10 +2615,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2879,10 +2648,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2915,10 +2681,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2951,10 +2714,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2987,10 +2747,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3035,10 +2792,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3083,10 +2837,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3119,10 +2870,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3155,10 +2903,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3191,10 +2936,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3227,10 +2969,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3275,10 +3014,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3311,10 +3047,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3431,10 +3164,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3467,10 +3197,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3503,10 +3230,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3539,10 +3263,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3575,10 +3296,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3611,10 +3329,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3647,10 +3362,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3683,10 +3395,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3743,10 +3452,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3779,10 +3485,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3815,10 +3518,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3851,10 +3551,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3885,11 +3582,7 @@
                     "email_address": "email_address",
                     "organization_id": "organization_id",
                   },
-                  "organizationMemberAlreadyExistsError": {
-                    "member_id": "member_id",
-                    "organization_id": "organization_id",
-                  },
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "ORGANIZATION_INVITE_ALREADY_EXISTS",
                 },
               },
             ],
@@ -3905,10 +3598,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3941,10 +3631,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -3977,10 +3664,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4013,10 +3697,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4061,10 +3742,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4097,10 +3775,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4133,10 +3808,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4169,10 +3841,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4198,13 +3867,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
                   "invalidSubjectTypeError": {},
                   "message": "message",
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "INVALID_SUBJECT_TYPE",
                 },
               },
             ],
@@ -4220,10 +3885,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4264,18 +3926,13 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
-                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "multipleRolesNotAllowedError": {
                     "roles": [
                       "roles",
                     ],
                   },
-                  "reason": "INVALID_MEMBER",
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
                 },
               },
             ],
@@ -4291,10 +3948,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4342,10 +3996,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4378,10 +4029,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4407,13 +4055,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
                   "invalidSubjectTypeError": {},
                   "message": "message",
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "INVALID_SUBJECT_TYPE",
                 },
               },
             ],
@@ -4429,10 +4073,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4473,18 +4114,13 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
-                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "multipleRolesNotAllowedError": {
                     "roles": [
                       "roles",
                     ],
                   },
-                  "reason": "INVALID_MEMBER",
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
                 },
               },
             ],
@@ -4500,10 +4136,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4551,10 +4184,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4587,10 +4217,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4623,10 +4250,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4659,10 +4283,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4695,10 +4316,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4731,10 +4349,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4767,10 +4382,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4803,10 +4415,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4839,10 +4448,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4875,10 +4481,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4911,10 +4514,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4947,10 +4547,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -4983,10 +4580,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5019,10 +4613,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5055,10 +4646,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5091,10 +4679,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5127,10 +4712,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5156,13 +4738,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
                   "invalidSubjectTypeError": {},
                   "message": "message",
-                  "reason": "MALFORMED_RESOURCE_IDENTIFIER",
+                  "reason": "INVALID_SUBJECT_TYPE",
                 },
               },
             ],
@@ -5178,10 +4756,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5222,18 +4797,13 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "invalidRoleError": {
-                    "role": "role",
-                  },
-                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "multipleRolesNotAllowedError": {
                     "roles": [
                       "roles",
                     ],
                   },
-                  "reason": "INVALID_MEMBER",
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
                 },
               },
             ],
@@ -5249,10 +4819,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5300,10 +4867,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5336,10 +4900,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5372,10 +4933,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5408,10 +4966,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5444,10 +4999,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5480,10 +5032,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -5516,10 +5065,7 @@
                 "value": {
                   "message": "message",
                   "missingAuthenticationError": {},
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -10914,11 +10460,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrganizationIamListMembersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -10935,11 +10479,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrganizationGetMemberRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -10952,26 +10494,20 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
           message: message
           multipleRolesNotAllowedError:
             roles:
               - roles
-          invalidRoleError:
-            role: role
-          invalidSubjectTypeError: {}
-          invalidMemberError: {}
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
   OrganizationIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
     type: OrganizationIamUpdateMemberRolesRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrganizationIamUpdateMemberRolesRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -10992,23 +10528,18 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           invalidSubjectTypeError: {}
-          invalidMemberError: {}
-          invalidRoleError:
-            role: role
+          reason: INVALID_SUBJECT_TYPE
   OrganizationIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: OrganizationIamTestPermissionsRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrganizationIamTestPermissionsRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -11045,11 +10576,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgGetOrgOrgIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11066,11 +10595,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgUpdateOrgOrgIdPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11087,11 +10614,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgJoinOrgOrgIdJoinPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11108,11 +10633,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgInvitesListOrgOrgIdInviteGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11125,25 +10648,20 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           organizationInviteAlreadyExistsError:
             organization_id: organization_id
             email_address: email_address
-          organizationMemberAlreadyExistsError:
-            organization_id: organization_id
-            member_id: member_id
+          reason: ORGANIZATION_INVITE_ALREADY_EXISTS
   OrgInvitesCreateOrgOrgIdInvitePostRequestForbiddenError:
     status-code: 403
     type: OrgInvitesCreateOrgOrgIdInvitePostRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgInvitesCreateOrgOrgIdInvitePostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11160,11 +10678,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgInvitesDeleteOrgOrgIdInviteOrgInviteIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11181,11 +10697,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgDomainsListOrgOrgIdDomainsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11202,11 +10716,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgDomainsPostOrgOrgIdDomainsPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11223,11 +10735,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgDomainDeleteOrgOrgIdDomainsDomainIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11244,11 +10754,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   OrgUpdateAvatarOrgOrgIdAvatarPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11283,11 +10791,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListProjectOrgOrgIdProjectGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11304,11 +10810,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CreateProjectOrgOrgIdProjectPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11325,11 +10829,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetProjectOrgOrgIdProjectProjectIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11346,11 +10848,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   UpdateProjectOrgOrgIdProjectProjectIdPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11374,11 +10874,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetProjectConfigOrgOrgIdProjectProjectIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11396,11 +10894,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ProjectUpdateAvatarOrgOrgIdProjectProjectIdAvatarPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11417,11 +10913,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ProjectIamListMembersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11438,11 +10932,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ProjectGetMemberRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11455,26 +10947,20 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
           message: message
           multipleRolesNotAllowedError:
             roles:
               - roles
-          invalidRoleError:
-            role: role
-          invalidSubjectTypeError: {}
-          invalidMemberError: {}
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
   ProjectIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
     type: ProjectIamUpdateMemberRolesRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ProjectIamUpdateMemberRolesRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -11495,23 +10981,18 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           invalidSubjectTypeError: {}
-          invalidMemberError: {}
-          invalidRoleError:
-            role: role
+          reason: INVALID_SUBJECT_TYPE
   ProjectIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: ProjectIamTestPermissionsRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ProjectIamTestPermissionsRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -11537,11 +11018,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11559,11 +11038,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CreateCollectionOrgOrgIdProjectProjectIdCollectionPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11581,11 +11058,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11603,11 +11078,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CollectionEditOrgOrgIdProjectProjectIdCollectionCollectionIdPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11625,11 +11098,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CollectionStatsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11647,11 +11118,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11669,11 +11138,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   QueryCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdQueryPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11691,11 +11158,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   UpdateSummaryOrgOrgIdProjectProjectIdCollectionCollectionIdUpdateSummaryPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11713,11 +11178,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CollectionAddOrgOrgIdProjectProjectIdCollectionCollectionIdAddPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11735,11 +11198,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CollectionRemoveOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11756,11 +11217,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CollectionIamListMembersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11777,11 +11236,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CollectionGetMemberRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11794,26 +11251,20 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
           message: message
           multipleRolesNotAllowedError:
             roles:
               - roles
-          invalidRoleError:
-            role: role
-          invalidSubjectTypeError: {}
-          invalidMemberError: {}
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
   CollectionIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
     type: CollectionIamUpdateMemberRolesRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CollectionIamUpdateMemberRolesRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -11834,23 +11285,18 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           invalidSubjectTypeError: {}
-          invalidMemberError: {}
-          invalidRoleError:
-            role: role
+          reason: INVALID_SUBJECT_TYPE
   CollectionIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: CollectionIamTestPermissionsRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CollectionIamTestPermissionsRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -11875,11 +11321,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11897,11 +11341,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentCreateOrgOrgIdProjectProjectIdDocumentPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11919,11 +11361,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentUploadOrgOrgIdProjectProjectIdDocumentUploadPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11941,11 +11381,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   TaskStatusOrgOrgIdProjectProjectIdDocumentCreateStatusGroupIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11963,11 +11401,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentQueryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11985,11 +11421,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentFetchOrgOrgIdProjectProjectIdDocumentDocumentIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12007,11 +11441,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentUpdateOrgOrgIdProjectProjectIdDocumentDocumentIdPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12029,11 +11461,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentDeleteOrgOrgIdProjectProjectIdDocumentDocumentIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12051,11 +11481,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12078,11 +11506,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentIamListMembersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12099,11 +11525,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentGetMemberRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12116,26 +11540,20 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
           message: message
           multipleRolesNotAllowedError:
             roles:
               - roles
-          invalidRoleError:
-            role: role
-          invalidSubjectTypeError: {}
-          invalidMemberError: {}
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
   DocumentIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
     type: DocumentIamUpdateMemberRolesRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentIamUpdateMemberRolesRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -12156,23 +11574,18 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           invalidSubjectTypeError: {}
-          invalidMemberError: {}
-          invalidRoleError:
-            role: role
+          reason: INVALID_SUBJECT_TYPE
   DocumentIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: DocumentIamTestPermissionsRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DocumentIamTestPermissionsRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -12203,11 +11616,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetChatChatChatIdGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12224,11 +11635,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   UpdateChatChatChatIdPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12245,11 +11654,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetChatConfigChatChatIdConfigGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12266,11 +11673,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetChatConfigChatChatIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12287,11 +11692,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CreateChatChatPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12308,11 +11711,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   QueryChatChatChatIdQueryGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12329,11 +11730,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ChatIamListMembersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12350,11 +11749,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ChatGetMemberRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12367,26 +11764,20 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
           message: message
           multipleRolesNotAllowedError:
             roles:
               - roles
-          invalidRoleError:
-            role: role
-          invalidSubjectTypeError: {}
-          invalidMemberError: {}
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
   ChatIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
     type: ChatIamUpdateMemberRolesRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ChatIamUpdateMemberRolesRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -12407,23 +11798,18 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           invalidSubjectTypeError: {}
-          invalidMemberError: {}
-          invalidRoleError:
-            role: role
+          reason: INVALID_SUBJECT_TYPE
   ChatIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: ChatIamTestPermissionsRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ChatIamTestPermissionsRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -12461,11 +11847,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12483,11 +11867,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12505,11 +11887,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DeleteOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12527,11 +11907,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12549,11 +11927,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CheckStatusOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12571,11 +11947,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12593,11 +11967,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12633,11 +12005,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12655,11 +12025,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12677,11 +12045,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DeleteOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12699,11 +12065,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12721,11 +12085,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CheckStatusOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12743,11 +12105,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12765,11 +12125,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12805,11 +12163,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12827,11 +12183,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12849,11 +12203,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DeleteOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12871,11 +12223,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12893,11 +12243,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CheckStatusOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12915,11 +12263,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12937,11 +12283,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12977,11 +12321,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -12999,11 +12341,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13021,11 +12361,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DeleteOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13043,11 +12381,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13065,11 +12401,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CheckStatusOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13087,11 +12421,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13109,11 +12441,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13149,11 +12479,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13171,11 +12499,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13193,11 +12519,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DeleteOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13215,11 +12539,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13237,11 +12559,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CheckStatusOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13259,11 +12579,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13281,11 +12599,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13321,11 +12637,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13343,11 +12657,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13365,11 +12677,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DeleteOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13387,11 +12697,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13409,11 +12717,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CheckStatusOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13431,11 +12737,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13453,11 +12757,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13493,11 +12795,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13515,11 +12815,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13537,11 +12835,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   DeleteOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdDeleteRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13559,11 +12855,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13581,11 +12875,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CheckStatusOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13603,11 +12895,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigGetRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13625,11 +12915,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SetConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13659,11 +12947,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   RegisterOauthClientInternalProjectProjectIdRegisterOauthClientPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13716,11 +13002,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   InitialiseOrgOrgIdProjectProjectIdComposePostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13738,11 +13022,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GenerateOrgOrgIdProjectProjectIdComposeGeneratePostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13760,11 +13042,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   UpdateSectionOrgOrgIdProjectProjectIdComposeUpdateSectionPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13782,11 +13062,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   SectionTalkingPointsOrgOrgIdProjectProjectIdComposeSectionTalkingPointsPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13803,11 +13081,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   TopicOrgOrgIdProjectProjectIdComposeTopicPostRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13824,11 +13100,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetAllTasksRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13845,11 +13119,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CreateTaskRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13866,11 +13138,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetTaskRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13887,11 +13157,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   EditTaskRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13908,11 +13176,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetTaskRunsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13929,11 +13195,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   RunTaskRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13950,11 +13214,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   TaskIamListMembersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13971,11 +13233,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   TaskGetMemberRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13988,26 +13248,20 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
           message: message
           multipleRolesNotAllowedError:
             roles:
               - roles
-          invalidRoleError:
-            role: role
-          invalidSubjectTypeError: {}
-          invalidMemberError: {}
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
   TaskIamUpdateMemberRolesRequestForbiddenError:
     status-code: 403
     type: TaskIamUpdateMemberRolesRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   TaskIamUpdateMemberRolesRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -14028,23 +13282,18 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: MALFORMED_RESOURCE_IDENTIFIER
           message: message
           invalidSubjectTypeError: {}
-          invalidMemberError: {}
-          invalidRoleError:
-            role: role
+          reason: INVALID_SUBJECT_TYPE
   TaskIamTestPermissionsRequestForbiddenError:
     status-code: 403
     type: TaskIamTestPermissionsRequestForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   TaskIamTestPermissionsRequestNotFoundError:
     status-code: 404
     type: InvalidMemberErrorResponse
@@ -14069,11 +13318,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetAllTaskForwardersRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -14090,11 +13337,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   CreateTaskForwarderRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -14111,11 +13356,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetTaskForwarderRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -14132,11 +13375,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   UpdateTaskForwarderRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -14153,11 +13394,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetTaskRunRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -14174,11 +13413,9 @@ errors:
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
           message: message
           missingAuthenticationError: {}
-          permissionCheckFailedError:
-            permission: permission
+          reason: MISSING_AUTHENTICATION
   GetAllModelsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError

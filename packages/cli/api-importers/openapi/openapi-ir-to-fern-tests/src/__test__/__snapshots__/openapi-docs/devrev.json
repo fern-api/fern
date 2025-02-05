@@ -10682,7 +10682,7 @@ enterprise connections can be created by an organization.
               "examples": [
                 {
                   "request": {
-                    "type": "waad",
+                    "type": "google_apps",
                   },
                   "response": {
                     "body": {
@@ -10690,15 +10690,10 @@ enterprise connections can be created by an organization.
                         "client_id": "client_id",
                         "client_secret": "client_secret",
                         "display_name": "auth_connection",
-                        "domain": "domain",
                         "enabled": true,
                         "id": "auth_connection",
-                        "issuer": "issuer",
-                        "key": "value",
-                        "sign_in_endpoint": "sign_in_endpoint",
-                        "signing_cert": "signing_cert",
                         "tenant_domain": "tenant_domain",
-                        "type": "waad",
+                        "type": "google_apps",
                       },
                     },
                   },
@@ -10789,15 +10784,10 @@ connections can not be deleted using this method.
                         "client_id": "client_id",
                         "client_secret": "client_secret",
                         "display_name": "auth_connection",
-                        "domain": "domain",
                         "enabled": true,
                         "id": "auth_connection",
-                        "issuer": "issuer",
-                        "key": "value",
-                        "sign_in_endpoint": "sign_in_endpoint",
-                        "signing_cert": "signing_cert",
                         "tenant_domain": "tenant_domain",
-                        "type": "waad",
+                        "type": "google_apps",
                       },
                     },
                   },
@@ -10848,15 +10838,10 @@ created by the user.
                           "client_id": "client_id",
                           "client_secret": "client_secret",
                           "display_name": "auth_connections",
-                          "domain": "domain",
                           "enabled": true,
                           "id": "auth_connections",
-                          "issuer": "issuer",
-                          "key": "value",
-                          "sign_in_endpoint": "sign_in_endpoint",
-                          "signing_cert": "signing_cert",
                           "tenant_domain": "tenant_domain",
-                          "type": "waad",
+                          "type": "google_apps",
                         },
                       ],
                     },
@@ -10940,8 +10925,7 @@ disabled.
                 {
                   "request": {
                     "id": "string",
-                    "key": "value",
-                    "type": "waad",
+                    "type": "google_apps",
                   },
                   "response": {
                     "body": {
@@ -10949,15 +10933,10 @@ disabled.
                         "client_id": "client_id",
                         "client_secret": "client_secret",
                         "display_name": "auth_connection",
-                        "domain": "domain",
                         "enabled": true,
                         "id": "auth_connection",
-                        "issuer": "issuer",
-                        "key": "value",
-                        "sign_in_endpoint": "sign_in_endpoint",
-                        "signing_cert": "signing_cert",
                         "tenant_domain": "tenant_domain",
-                        "type": "waad",
+                        "type": "google_apps",
                       },
                     },
                   },
@@ -11023,19 +11002,14 @@ service:
         - root.DevOrgAuthConnectionsCreateRequestServiceUnavailableError
       examples:
         - request:
-            type: waad
+            type: google_apps
           response:
             body:
               auth_connection:
-                type: waad
                 client_id: client_id
                 client_secret: client_secret
                 tenant_domain: tenant_domain
-                issuer: issuer
-                sign_in_endpoint: sign_in_endpoint
-                signing_cert: signing_cert
-                key: value
-                domain: domain
+                type: google_apps
                 display_name: auth_connection
                 enabled: true
                 id: auth_connection
@@ -11099,15 +11073,10 @@ service:
           response:
             body:
               auth_connection:
-                type: waad
                 client_id: client_id
                 client_secret: client_secret
                 tenant_domain: tenant_domain
-                issuer: issuer
-                sign_in_endpoint: sign_in_endpoint
-                signing_cert: signing_cert
-                key: value
-                domain: domain
+                type: google_apps
                 display_name: auth_connection
                 enabled: true
                 id: auth_connection
@@ -11137,15 +11106,10 @@ service:
         - response:
             body:
               auth_connections:
-                - type: waad
-                  client_id: client_id
+                - client_id: client_id
                   client_secret: client_secret
                   tenant_domain: tenant_domain
-                  issuer: issuer
-                  sign_in_endpoint: sign_in_endpoint
-                  signing_cert: signing_cert
-                  key: value
-                  domain: domain
+                  type: google_apps
                   display_name: auth_connections
                   enabled: true
                   id: auth_connections
@@ -11207,21 +11171,15 @@ service:
         - root.DevOrgAuthConnectionsUpdateRequestServiceUnavailableError
       examples:
         - request:
-            type: waad
-            key: value
+            type: google_apps
             id: string
           response:
             body:
               auth_connection:
-                type: waad
                 client_id: client_id
                 client_secret: client_secret
                 tenant_domain: tenant_domain
-                issuer: issuer
-                sign_in_endpoint: sign_in_endpoint
-                signing_cert: signing_cert
-                key: value
-                domain: domain
+                type: google_apps
                 display_name: auth_connection
                 enabled: true
                 id: auth_connection
@@ -11414,15 +11372,10 @@ given Dev organization.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -11436,15 +11389,10 @@ given Dev organization.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
@@ -11504,7 +11452,7 @@ token type issued for a given subject.
                           "client_id": "client_id",
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
@@ -11513,7 +11461,7 @@ token type issued for a given subject.
                           "issued_at": "2024-01-15T09:30:00Z",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
@@ -11636,15 +11584,10 @@ organization.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -11658,15 +11601,10 @@ organization.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
@@ -11871,7 +11809,6 @@ service:
             body:
               token:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -11880,15 +11817,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -11897,10 +11830,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 client_id: client_id
                 expires_at: '2024-01-15T09:30:00Z'
@@ -11956,14 +11886,14 @@ service:
             body:
               tokens:
                 - created_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   client_id: client_id
                   expires_at: '2024-01-15T09:30:00Z'
@@ -12042,7 +11972,6 @@ service:
             body:
               token:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -12051,15 +11980,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -12068,10 +11993,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 client_id: client_id
                 expires_at: '2024-01-15T09:30:00Z'
@@ -12119,7 +12041,7 @@ docs: Security token interactions.
                         {
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
@@ -12137,7 +12059,7 @@ docs: Security token interactions.
                           "id": "id",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "phone_numbers": [
@@ -12225,15 +12147,10 @@ used.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -12257,15 +12174,10 @@ used.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "phone_numbers": [
@@ -12356,14 +12268,14 @@ service:
             body:
               dev_users:
                 - created_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   display_name: display_name
                   display_picture:
@@ -12400,7 +12312,6 @@ service:
             body:
               dev_user:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -12409,15 +12320,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -12426,10 +12333,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 display_name: display_name
                 display_picture:
@@ -12474,7 +12378,6 @@ docs: Dev user interactions.
               "examples": [
                 {
                   "request": {
-                    "key": "value",
                     "name": "string",
                     "owned_by": [
                       "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
@@ -12482,7 +12385,7 @@ docs: Dev user interactions.
                     "parent_part": [
                       "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     ],
-                    "type": "product",
+                    "type": "capability",
                   },
                   "response": {
                     "body": {
@@ -12499,15 +12402,10 @@ docs: Dev user interactions.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -12520,22 +12418,17 @@ docs: Dev user interactions.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                         "owned_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
                         "tags": [
@@ -12546,8 +12439,7 @@ docs: Dev user interactions.
                             },
                           },
                         ],
-                        "target_close_date": "2024-01-15T09:30:00Z",
-                        "type": "product",
+                        "type": "capability",
                       },
                     },
                   },
@@ -12655,15 +12547,10 @@ docs: Dev user interactions.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -12676,22 +12563,17 @@ docs: Dev user interactions.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                         "owned_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
                         "tags": [
@@ -12702,8 +12584,7 @@ docs: Dev user interactions.
                             },
                           },
                         ],
-                        "target_close_date": "2024-01-15T09:30:00Z",
-                        "type": "product",
+                        "type": "capability",
                       },
                     },
                   },
@@ -12756,7 +12637,7 @@ docs: Dev user interactions.
                           ],
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "description": "description",
@@ -12764,14 +12645,14 @@ docs: Dev user interactions.
                           "id": "id",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "name": "name",
                           "owned_by": [
                             {
                               "id": "id",
-                              "type": "sys_user",
+                              "type": "dev_user",
                             },
                           ],
                           "tags": [
@@ -12782,8 +12663,7 @@ docs: Dev user interactions.
                               },
                             },
                           ],
-                          "target_close_date": "2024-01-15T09:30:00Z",
-                          "type": "product",
+                          "type": "capability",
                         },
                       ],
                       "prev_cursor": "prev_cursor",
@@ -12863,7 +12743,7 @@ used.
                   "request": {
                     "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "key": "value",
-                    "type": "product",
+                    "type": "capability",
                   },
                   "response": {
                     "body": {
@@ -12880,15 +12760,10 @@ used.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -12901,22 +12776,17 @@ used.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                         "owned_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
                         "tags": [
@@ -12927,8 +12797,7 @@ used.
                             },
                           },
                         ],
-                        "target_close_date": "2024-01-15T09:30:00Z",
-                        "type": "product",
+                        "type": "capability",
                       },
                     },
                   },
@@ -12988,19 +12857,16 @@ service:
         - root.PartsCreateRequestServiceUnavailableError
       examples:
         - request:
-            type: product
             parent_part:
               - don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
-            key: value
+            type: capability
             name: string
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
           response:
             body:
               part:
-                type: product
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -13009,15 +12875,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -13026,23 +12888,20 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
                 description: description
                 name: name
                 owned_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 tags:
                   - tag:
                       id: id
                       name: name
-                target_close_date: '2024-01-15T09:30:00Z'
+                type: capability
     delete:
       path: /parts.delete
       method: POST
@@ -13108,9 +12967,7 @@ service:
           response:
             body:
               part:
-                type: product
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -13119,15 +12976,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -13136,23 +12989,20 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
                 description: description
                 name: name
                 owned_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 tags:
                   - tag:
                       id: id
                       name: name
-                target_close_date: '2024-01-15T09:30:00Z'
+                type: capability
     list:
       path: /parts.list
       method: GET
@@ -13212,29 +13062,28 @@ service:
             body:
               next_cursor: next_cursor
               parts:
-                - type: product
-                  created_by:
-                    type: sys_user
+                - created_by:
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   artifacts:
                     - id: id
                   description: description
                   name: name
                   owned_by:
-                    - type: sys_user
-                      id: id
+                    - id: id
+                      type: dev_user
                   tags:
                     - tag:
                         id: id
                         name: name
-                  target_close_date: '2024-01-15T09:30:00Z'
+                  type: capability
               prev_cursor: prev_cursor
     update:
       path: /parts.update
@@ -13262,15 +13111,13 @@ service:
         - root.PartsUpdateRequestServiceUnavailableError
       examples:
         - request:
-            type: product
             key: value
+            type: capability
             id: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
           response:
             body:
               part:
-                type: product
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -13279,15 +13126,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -13296,23 +13139,20 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
                 description: description
                 name: name
                 owned_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 tags:
                   - tag:
                       id: id
                       name: name
-                target_close_date: '2024-01-15T09:30:00Z'
+                type: capability
   source:
     openapi: ../openapi.yml
   display-name: parts
@@ -13359,15 +13199,10 @@ organization.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -13383,15 +13218,10 @@ organization.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                       },
@@ -13526,15 +13356,10 @@ records.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -13550,15 +13375,10 @@ records.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                       },
@@ -13612,7 +13432,7 @@ to access.
                         {
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "description": "description",
@@ -13623,7 +13443,7 @@ to access.
                           "id": "id",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                         },
@@ -13732,15 +13552,10 @@ them.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -13756,15 +13571,10 @@ them.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                       },
@@ -13892,7 +13702,6 @@ service:
             body:
               rev_org:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -13901,15 +13710,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -13918,10 +13723,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 display_name: display_name
                 description: description
@@ -13992,7 +13794,6 @@ service:
             body:
               rev_org:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14001,15 +13802,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14018,10 +13815,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 display_name: display_name
                 description: description
@@ -14109,14 +13903,14 @@ service:
               prev_cursor: prev_cursor
               rev_orgs:
                 - created_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   display_name: display_name
                   description: description
@@ -14179,7 +13973,6 @@ service:
             body:
               rev_org:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14188,15 +13981,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14205,10 +13994,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 display_name: display_name
                 description: description
@@ -14263,15 +14049,10 @@ and a logical concept denoted by the tag's name.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -14284,15 +14065,10 @@ and a logical concept denoted by the tag's name.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -14420,15 +14196,10 @@ permitted.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -14441,15 +14212,10 @@ permitted.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -14503,7 +14269,7 @@ permitted.
                           ],
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "description": "description",
@@ -14511,7 +14277,7 @@ permitted.
                           "id": "id",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "name": "name",
@@ -14584,15 +14350,10 @@ used.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -14605,15 +14366,10 @@ used.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -14718,7 +14474,6 @@ service:
             body:
               tag:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14727,15 +14482,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14744,10 +14495,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 allowed_values:
                   - allowed_values
@@ -14818,7 +14566,6 @@ service:
             body:
               tag:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14827,15 +14574,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14844,10 +14587,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 allowed_values:
                   - allowed_values
@@ -14896,14 +14636,14 @@ service:
               prev_cursor: prev_cursor
               tags:
                 - created_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   allowed_values:
                     - allowed_values
@@ -14953,7 +14693,6 @@ service:
             body:
               tag:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14962,15 +14701,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -14979,10 +14714,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 allowed_values:
                   - allowed_values
@@ -15040,15 +14772,10 @@ docs: DevRev tag interactions.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -15060,15 +14787,10 @@ docs: DevRev tag interactions.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "snap_kit_body": {
@@ -15132,15 +14854,10 @@ docs: DevRev tag interactions.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -15152,15 +14869,10 @@ docs: DevRev tag interactions.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "snap_kit_body": {
@@ -15225,14 +14937,14 @@ docs: DevRev tag interactions.
                           "body_type": "snap_kit",
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
                           "id": "id",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "snap_kit_body": {
@@ -15318,15 +15030,10 @@ used.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -15338,15 +15045,10 @@ used.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "snap_kit_body": {
@@ -15417,9 +15119,7 @@ service:
           response:
             body:
               timeline_entry:
-                type: timeline_comment
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -15428,15 +15128,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -15445,10 +15141,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
@@ -15456,6 +15149,7 @@ service:
                 body_type: snap_kit
                 snap_kit_body:
                   key: value
+                type: timeline_comment
     get:
       path: /timeline-entries.get
       method: GET
@@ -15487,9 +15181,7 @@ service:
           response:
             body:
               timeline_entry:
-                type: timeline_comment
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -15498,15 +15190,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -15515,10 +15203,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
@@ -15526,6 +15211,7 @@ service:
                 body_type: snap_kit
                 snap_kit_body:
                   key: value
+                type: timeline_comment
     list:
       path: /timeline-entries.list
       method: GET
@@ -15576,16 +15262,15 @@ service:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
               timeline_entries:
-                - type: timeline_comment
-                  created_by:
-                    type: sys_user
+                - created_by:
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   artifacts:
                     - id: id
@@ -15593,6 +15278,7 @@ service:
                   body_type: snap_kit
                   snap_kit_body:
                     key: value
+                  type: timeline_comment
     update:
       path: /timeline-entries.update
       method: POST
@@ -15622,9 +15308,7 @@ service:
           response:
             body:
               timeline_entry:
-                type: timeline_comment
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -15633,15 +15317,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -15650,10 +15330,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
@@ -15661,6 +15338,7 @@ service:
                 body_type: snap_kit
                 snap_kit_body:
                   key: value
+                type: timeline_comment
   source:
     openapi: ../openapi.yml
   display-name: timeline-entries
@@ -15705,15 +15383,10 @@ docs: APIs to manage timeline entries for objects.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -15728,15 +15401,10 @@ docs: APIs to manage timeline entries for objects.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
@@ -15870,15 +15538,10 @@ response.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -15893,15 +15556,10 @@ response.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
@@ -15952,7 +15610,7 @@ response.
                         {
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
@@ -15962,7 +15620,7 @@ response.
                           "id": "id",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "secret": "secret",
@@ -16013,15 +15671,10 @@ response.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -16036,15 +15689,10 @@ response.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
@@ -16171,7 +15819,6 @@ service:
             body:
               webhook:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -16180,15 +15827,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -16197,10 +15840,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 event_types:
                   - part_created
@@ -16272,7 +15912,6 @@ service:
             body:
               webhook:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -16281,15 +15920,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -16298,10 +15933,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 event_types:
                   - part_created
@@ -16331,14 +15963,14 @@ service:
             body:
               webhooks:
                 - created_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   event_types:
                     - part_created
@@ -16409,7 +16041,6 @@ service:
             body:
               webhook:
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -16418,15 +16049,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -16435,10 +16062,7 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 event_types:
                   - part_created
@@ -16489,7 +16113,7 @@ docs: Webhook event APIs.
                       },
                     ],
                     "title": "string",
-                    "type": "ticket",
+                    "type": "issue",
                   },
                   "response": {
                     "body": {
@@ -16498,7 +16122,7 @@ docs: Webhook event APIs.
                           "display_id": "display_id",
                           "id": "id",
                           "name": "name",
-                          "type": "product",
+                          "type": "capability",
                         },
                         "artifacts": [
                           {
@@ -16513,22 +16137,13 @@ docs: Webhook event APIs.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
-                        "group": {
-                          "display_id": "display_id",
-                          "id": "id",
-                        },
                         "id": "id",
                         "modified_by": {
                           "display_id": "display_id",
@@ -16537,37 +16152,25 @@ docs: Webhook event APIs.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "owned_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
                         "priority": "p0",
                         "reported_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
-                        "rev_org": {
-                          "display_id": "display_id",
-                          "display_name": "display_name",
-                          "id": "id",
-                          "type": "rev_org",
-                        },
-                        "severity": "blocker",
                         "stage": {
                           "name": "name",
                         },
@@ -16581,7 +16184,7 @@ docs: Webhook event APIs.
                         ],
                         "target_close_date": "2024-01-15T09:30:00Z",
                         "title": "title",
-                        "type": "ticket",
+                        "type": "issue",
                       },
                     },
                   },
@@ -16676,7 +16279,7 @@ docs: Webhook event APIs.
                           "applies_to_part": {
                             "id": "id",
                             "name": "name",
-                            "type": "product",
+                            "type": "capability",
                           },
                           "artifacts": [
                             {
@@ -16686,37 +16289,29 @@ docs: Webhook event APIs.
                           "body": "body",
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
-                          "group": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "owned_by": [
                             {
                               "id": "id",
-                              "type": "sys_user",
+                              "type": "dev_user",
                             },
                           ],
                           "priority": "p0",
                           "reported_by": [
                             {
                               "id": "id",
-                              "type": "sys_user",
+                              "type": "dev_user",
                             },
                           ],
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
-                          "severity": "blocker",
                           "stage": {
                             "name": "name",
                           },
@@ -16730,7 +16325,7 @@ docs: Webhook event APIs.
                           ],
                           "target_close_date": "2024-01-15T09:30:00Z",
                           "title": "title",
-                          "type": "ticket",
+                          "type": "issue",
                         },
                       ],
                     },
@@ -16832,7 +16427,7 @@ organizations.
                           "display_id": "display_id",
                           "id": "id",
                           "name": "name",
-                          "type": "product",
+                          "type": "capability",
                         },
                         "artifacts": [
                           {
@@ -16847,22 +16442,13 @@ organizations.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
-                        "group": {
-                          "display_id": "display_id",
-                          "id": "id",
-                        },
                         "id": "id",
                         "modified_by": {
                           "display_id": "display_id",
@@ -16871,37 +16457,25 @@ organizations.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "owned_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
                         "priority": "p0",
                         "reported_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
-                        "rev_org": {
-                          "display_id": "display_id",
-                          "display_name": "display_name",
-                          "id": "id",
-                          "type": "rev_org",
-                        },
-                        "severity": "blocker",
                         "stage": {
                           "name": "name",
                         },
@@ -16915,7 +16489,7 @@ organizations.
                         ],
                         "target_close_date": "2024-01-15T09:30:00Z",
                         "title": "title",
-                        "type": "ticket",
+                        "type": "issue",
                       },
                     },
                   },
@@ -16964,7 +16538,7 @@ organizations.
                           "applies_to_part": {
                             "id": "id",
                             "name": "name",
-                            "type": "product",
+                            "type": "capability",
                           },
                           "artifacts": [
                             {
@@ -16974,37 +16548,29 @@ organizations.
                           "body": "body",
                           "created_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
-                          "group": {
-                            "id": "id",
-                          },
                           "id": "id",
                           "modified_by": {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "owned_by": [
                             {
                               "id": "id",
-                              "type": "sys_user",
+                              "type": "dev_user",
                             },
                           ],
                           "priority": "p0",
                           "reported_by": [
                             {
                               "id": "id",
-                              "type": "sys_user",
+                              "type": "dev_user",
                             },
                           ],
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
-                          "severity": "blocker",
                           "stage": {
                             "name": "name",
                           },
@@ -17018,7 +16584,7 @@ organizations.
                           ],
                           "target_close_date": "2024-01-15T09:30:00Z",
                           "title": "title",
-                          "type": "ticket",
+                          "type": "issue",
                         },
                       ],
                     },
@@ -17124,8 +16690,7 @@ organizations.
                   "request": {
                     "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                    "key": "value",
-                    "type": "ticket",
+                    "type": "issue",
                   },
                   "response": {
                     "body": {
@@ -17134,7 +16699,7 @@ organizations.
                           "display_id": "display_id",
                           "id": "id",
                           "name": "name",
-                          "type": "product",
+                          "type": "capability",
                         },
                         "artifacts": [
                           {
@@ -17149,22 +16714,13 @@ organizations.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
-                        "group": {
-                          "display_id": "display_id",
-                          "id": "id",
-                        },
                         "id": "id",
                         "modified_by": {
                           "display_id": "display_id",
@@ -17173,37 +16729,25 @@ organizations.
                             "id": "id",
                           },
                           "email": "email",
-                          "external_ref": "external_ref",
                           "full_name": "full_name",
                           "id": "id",
-                          "rev_org": {
-                            "id": "id",
-                            "type": "rev_org",
-                          },
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "owned_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
                         "priority": "p0",
                         "reported_by": [
                           {
                             "id": "id",
-                            "type": "sys_user",
+                            "type": "dev_user",
                           },
                         ],
-                        "rev_org": {
-                          "display_id": "display_id",
-                          "display_name": "display_name",
-                          "id": "id",
-                          "type": "rev_org",
-                        },
-                        "severity": "blocker",
                         "stage": {
                           "name": "name",
                         },
@@ -17217,7 +16761,7 @@ organizations.
                         ],
                         "target_close_date": "2024-01-15T09:30:00Z",
                         "title": "title",
-                        "type": "ticket",
+                        "type": "issue",
                       },
                     },
                   },
@@ -17279,7 +16823,7 @@ service:
         - root.WorksCreateRequestServiceUnavailableError
       examples:
         - request:
-            type: ticket
+            type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
@@ -17289,9 +16833,7 @@ service:
           response:
             body:
               work:
-                type: ticket
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -17300,15 +16842,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -17317,25 +16855,22 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 applies_to_part:
-                  type: product
                   display_id: display_id
                   id: id
                   name: name
+                  type: capability
                 artifacts:
                   - id: id
                 body: body
                 owned_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 reported_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 stage:
                   name: name
                 tags:
@@ -17345,15 +16880,7 @@ service:
                 target_close_date: '2024-01-15T09:30:00Z'
                 title: title
                 priority: p0
-                group:
-                  display_id: display_id
-                  id: id
-                rev_org:
-                  type: rev_org
-                  display_id: display_id
-                  id: id
-                  display_name: display_name
-                severity: blocker
+                type: issue
     delete:
       path: /works.delete
       method: POST
@@ -17460,30 +16987,29 @@ service:
         - response:
             body:
               works:
-                - type: ticket
-                  created_by:
-                    type: sys_user
+                - created_by:
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   applies_to_part:
-                    type: product
                     id: id
                     name: name
+                    type: capability
                   artifacts:
                     - id: id
                   body: body
                   owned_by:
-                    - type: sys_user
-                      id: id
+                    - id: id
+                      type: dev_user
                   reported_by:
-                    - type: sys_user
-                      id: id
+                    - id: id
+                      type: dev_user
                   stage:
                     name: name
                   tags:
@@ -17493,12 +17019,7 @@ service:
                   target_close_date: '2024-01-15T09:30:00Z'
                   title: title
                   priority: p0
-                  group:
-                    id: id
-                  rev_org:
-                    type: rev_org
-                    id: id
-                  severity: blocker
+                  type: issue
     get:
       path: /works.get
       method: GET
@@ -17530,9 +17051,7 @@ service:
           response:
             body:
               work:
-                type: ticket
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -17541,15 +17060,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -17558,25 +17073,22 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 applies_to_part:
-                  type: product
                   display_id: display_id
                   id: id
                   name: name
+                  type: capability
                 artifacts:
                   - id: id
                 body: body
                 owned_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 reported_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 stage:
                   name: name
                 tags:
@@ -17586,15 +17098,7 @@ service:
                 target_close_date: '2024-01-15T09:30:00Z'
                 title: title
                 priority: p0
-                group:
-                  display_id: display_id
-                  id: id
-                rev_org:
-                  type: rev_org
-                  display_id: display_id
-                  id: id
-                  display_name: display_name
-                severity: blocker
+                type: issue
     list:
       path: /works.list
       method: GET
@@ -17679,30 +17183,29 @@ service:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
               works:
-                - type: ticket
-                  created_by:
-                    type: sys_user
+                - created_by:
                     id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
                     id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   applies_to_part:
-                    type: product
                     id: id
                     name: name
+                    type: capability
                   artifacts:
                     - id: id
                   body: body
                   owned_by:
-                    - type: sys_user
-                      id: id
+                    - id: id
+                      type: dev_user
                   reported_by:
-                    - type: sys_user
-                      id: id
+                    - id: id
+                      type: dev_user
                   stage:
                     name: name
                   tags:
@@ -17712,12 +17215,7 @@ service:
                   target_close_date: '2024-01-15T09:30:00Z'
                   title: title
                   priority: p0
-                  group:
-                    id: id
-                  rev_org:
-                    type: rev_org
-                    id: id
-                  severity: blocker
+                  type: issue
     update:
       path: /works.update
       method: POST
@@ -17743,16 +17241,13 @@ service:
         - root.WorksUpdateRequestServiceUnavailableError
       examples:
         - request:
-            type: ticket
-            key: value
+            type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
             id: don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>
           response:
             body:
               work:
-                type: ticket
                 created_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -17761,15 +17256,11 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
                   display_id: display_id
                   id: id
                   display_name: display_name
@@ -17778,25 +17269,22 @@ service:
                   email: email
                   full_name: full_name
                   state: active
-                  external_ref: external_ref
-                  rev_org:
-                    type: rev_org
-                    id: id
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 applies_to_part:
-                  type: product
                   display_id: display_id
                   id: id
                   name: name
+                  type: capability
                 artifacts:
                   - id: id
                 body: body
                 owned_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 reported_by:
-                  - type: sys_user
-                    id: id
+                  - id: id
+                    type: dev_user
                 stage:
                   name: name
                 tags:
@@ -17806,15 +17294,7 @@ service:
                 target_close_date: '2024-01-15T09:30:00Z'
                 title: title
                 priority: p0
-                group:
-                  display_id: display_id
-                  id: id
-                rev_org:
-                  type: rev_org
-                  display_id: display_id
-                  id: id
-                  display_name: display_name
-                severity: blocker
+                type: issue
   source:
     openapi: ../openapi.yml
   display-name: works

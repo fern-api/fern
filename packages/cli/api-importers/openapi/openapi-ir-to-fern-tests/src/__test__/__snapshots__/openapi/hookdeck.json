@@ -8793,30 +8793,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -8827,10 +8815,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "strategy": "each_attempt",
-                            "transformation_id": "transformation_id",
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -8910,30 +8896,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -8944,10 +8918,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "strategy": "each_attempt",
-                            "transformation_id": "transformation_id",
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -9090,30 +9062,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -9124,10 +9084,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "strategy": "each_attempt",
-                            "transformation_id": "transformation_id",
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -9201,18 +9159,14 @@ docs: ''
                           "paused_at": "2024-01-15T09:30:00Z",
                           "resolved_rules": [
                             {
-                              "delay": 1,
-                              "strategy": "each_attempt",
-                              "transformation_id": "transformation_id",
-                              "type": "delay",
+                              "strategy": "linear",
+                              "type": "retry",
                             },
                           ],
                           "rules": [
                             {
-                              "delay": 1,
-                              "strategy": "each_attempt",
-                              "transformation_id": "transformation_id",
-                              "type": "delay",
+                              "strategy": "linear",
+                              "type": "retry",
                             },
                           ],
                           "ruleset": {
@@ -9222,10 +9176,8 @@ docs: ''
                             "name": "name",
                             "rules": [
                               {
-                                "delay": 1,
-                                "strategy": "each_attempt",
-                                "transformation_id": "transformation_id",
-                                "type": "delay",
+                                "strategy": "linear",
+                                "type": "retry",
                               },
                             ],
                             "team_id": "team_id",
@@ -9345,30 +9297,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -9379,10 +9319,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "strategy": "each_attempt",
-                            "transformation_id": "transformation_id",
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -9461,30 +9399,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -9495,10 +9421,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "strategy": "each_attempt",
-                            "transformation_id": "transformation_id",
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -9577,30 +9501,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -9611,10 +9523,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "strategy": "each_attempt",
-                            "transformation_id": "transformation_id",
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -9696,30 +9606,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -9730,10 +9628,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "strategy": "each_attempt",
-                            "transformation_id": "transformation_id",
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -9852,30 +9748,18 @@ docs: ''
                       "paused_at": "2024-01-15T09:30:00Z",
                       "resolved_rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "ruleset": {
@@ -9886,10 +9770,8 @@ docs: ''
                         "name": "name",
                         "rules": [
                           {
-                            "delay": 1,
-                            "strategy": "each_attempt",
-                            "transformation_id": "transformation_id",
-                            "type": "delay",
+                            "strategy": "linear",
+                            "type": "retry",
                           },
                         ],
                         "team_id": "team_id",
@@ -10452,23 +10334,17 @@ service:
                     name: name
                     team_id: team_id
                     rules:
-                      - type: delay
-                        strategy: each_attempt
-                        transformation_id: transformation_id
-                        delay: 1
+                      - strategy: linear
+                        type: retry
                     is_team_default: true
                     updated_at: '2024-01-15T09:30:00Z'
                     created_at: '2024-01-15T09:30:00Z'
                   resolved_rules:
-                    - type: delay
-                      strategy: each_attempt
-                      transformation_id: transformation_id
-                      delay: 1
+                    - strategy: linear
+                      type: retry
                   rules:
-                    - type: delay
-                      strategy: each_attempt
-                      transformation_id: transformation_id
-                      delay: 1
+                    - strategy: linear
+                      type: retry
                   archived_at: '2024-01-15T09:30:00Z'
                   paused_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
@@ -10568,36 +10444,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    strategy: each_attempt
-                    transformation_id: transformation_id
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -10697,36 +10559,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    strategy: each_attempt
-                    transformation_id: transformation_id
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -10787,36 +10635,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    strategy: each_attempt
-                    transformation_id: transformation_id
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -10904,36 +10738,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    strategy: each_attempt
-                    transformation_id: transformation_id
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -10994,36 +10814,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    strategy: each_attempt
-                    transformation_id: transformation_id
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -11084,36 +10890,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    strategy: each_attempt
-                    transformation_id: transformation_id
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -11174,36 +10966,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    strategy: each_attempt
-                    transformation_id: transformation_id
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -11264,36 +11042,22 @@ service:
                 name: name
                 team_id: team_id
                 rules:
-                  - type: delay
-                    strategy: each_attempt
-                    transformation_id: transformation_id
-                    delay: 1
+                  - strategy: linear
+                    type: retry
                 is_team_default: true
                 archived_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 created_at: '2024-01-15T09:30:00Z'
               resolved_rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               archived_at: '2024-01-15T09:30:00Z'
               paused_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -14667,9 +14431,14 @@ docs: >-
                   "response": {
                     "body": {
                       "aggregation_keys": {
-                        "log_level": "debug",
-                        "transformation_id": [
-                          "transformation_id",
+                        "error_code": [
+                          "TIMEOUT",
+                        ],
+                        "response_status": [
+                          1.1,
+                        ],
+                        "webhook_id": [
+                          "webhook_id",
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
@@ -14682,12 +14451,12 @@ docs: >-
                       "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
-                        "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
+                        "attempt_id": "attempt_id",
+                        "event_id": "event_id",
                       },
                       "status": "OPENED",
                       "team_id": "team_id",
-                      "type": "transformation",
+                      "type": "delivery",
                       "updated_at": "updated_at",
                     },
                   },
@@ -14723,38 +14492,19 @@ docs: >-
                   "response": {
                     "body": {
                       "aggregation_keys": {
-                        "log_level": "debug",
-                        "transformation_id": [
-                          "transformation_id",
+                        "error_code": [
+                          "TIMEOUT",
+                        ],
+                        "response_status": [
+                          1.1,
+                        ],
+                        "webhook_id": [
+                          "webhook_id",
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
                       "created_at": "created_at",
                       "data": {
-                        "transformation_execution": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "issue_id": "issue_id",
-                          "log_level": "debug",
-                          "logs": [
-                            {
-                              "message": "message",
-                              "type": "error",
-                            },
-                          ],
-                          "original_event_data": {
-                            "path": "path",
-                          },
-                          "original_event_data_id": "original_event_data_id",
-                          "team_id": "team_id",
-                          "transformation_id": "transformation_id",
-                          "transformed_event_data": {
-                            "path": "path",
-                          },
-                          "transformed_event_data_id": "transformed_event_data_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "webhook_id": "webhook_id",
-                        },
                         "trigger_attempt": {
                           "archived_at": "archived_at",
                           "attempt_number": 1,
@@ -14777,6 +14527,29 @@ docs: >-
                           "trigger": "INITIAL",
                           "updated_at": "2024-01-15T09:30:00Z",
                         },
+                        "trigger_event": {
+                          "attempts": 1,
+                          "cli_id": "cli_id",
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "created_at_id": "created_at_id",
+                          "data": {
+                            "path": "path",
+                          },
+                          "destination_id": "destination_id",
+                          "event_data_id": "event_data_id",
+                          "id": "id",
+                          "last_attempt_at": "2024-01-15T09:30:00Z",
+                          "last_attempt_at_id": "last_attempt_at_id",
+                          "next_attempt_at": "2024-01-15T09:30:00Z",
+                          "request_id": "request_id",
+                          "response_status": 1,
+                          "source_id": "source_id",
+                          "status": "SCHEDULED",
+                          "successful_at": "2024-01-15T09:30:00Z",
+                          "team_id": "team_id",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "webhook_id": "webhook_id",
+                        },
                       },
                       "dismissed_at": "2024-01-15T09:30:00Z",
                       "first_seen_at": "2024-01-15T09:30:00Z",
@@ -14786,12 +14559,12 @@ docs: >-
                       "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
-                        "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
+                        "attempt_id": "attempt_id",
+                        "event_id": "event_id",
                       },
                       "status": "OPENED",
                       "team_id": "team_id",
-                      "type": "transformation",
+                      "type": "delivery",
                       "updated_at": "updated_at",
                     },
                   },
@@ -14906,32 +14679,18 @@ docs: >-
                       "models": [
                         {
                           "aggregation_keys": {
-                            "log_level": "debug",
-                            "transformation_id": [
-                              "transformation_id",
+                            "error_code": [
+                              "TIMEOUT",
+                            ],
+                            "response_status": [
+                              1.1,
+                            ],
+                            "webhook_id": [
+                              "webhook_id",
                             ],
                           },
                           "auto_resolved_at": "2024-01-15T09:30:00Z",
                           "created_at": "created_at",
-                          "data": {
-                            "transformation_execution": {
-                              "created_at": "2024-01-15T09:30:00Z",
-                              "id": "id",
-                              "log_level": "debug",
-                              "logs": [
-                                {
-                                  "message": "message",
-                                  "type": "error",
-                                },
-                              ],
-                              "original_event_data_id": "original_event_data_id",
-                              "team_id": "team_id",
-                              "transformation_id": "transformation_id",
-                              "transformed_event_data_id": "transformed_event_data_id",
-                              "updated_at": "2024-01-15T09:30:00Z",
-                              "webhook_id": "webhook_id",
-                            },
-                          },
                           "dismissed_at": "2024-01-15T09:30:00Z",
                           "first_seen_at": "2024-01-15T09:30:00Z",
                           "id": "iss_YXKv5OdJXCiVwkPhGy",
@@ -14940,11 +14699,12 @@ docs: >-
                           "merged_with": "merged_with",
                           "opened_at": "2024-01-15T09:30:00Z",
                           "reference": {
-                            "transformation_execution_id": "transformation_execution_id",
+                            "attempt_id": "attempt_id",
+                            "event_id": "event_id",
                           },
                           "status": "OPENED",
                           "team_id": "team_id",
-                          "type": "transformation",
+                          "type": "delivery",
                           "updated_at": "updated_at",
                         },
                       ],
@@ -15030,9 +14790,14 @@ docs: >-
                   "response": {
                     "body": {
                       "aggregation_keys": {
-                        "log_level": "debug",
-                        "transformation_id": [
-                          "transformation_id",
+                        "error_code": [
+                          "TIMEOUT",
+                        ],
+                        "response_status": [
+                          1.1,
+                        ],
+                        "webhook_id": [
+                          "webhook_id",
                         ],
                       },
                       "auto_resolved_at": "2024-01-15T09:30:00Z",
@@ -15045,12 +14810,12 @@ docs: >-
                       "merged_with": "merged_with",
                       "opened_at": "2024-01-15T09:30:00Z",
                       "reference": {
-                        "transformation_execution_id": "transformation_execution_id",
-                        "trigger_event_request_transformation_id": "trigger_event_request_transformation_id",
+                        "attempt_id": "attempt_id",
+                        "event_id": "event_id",
                       },
                       "status": "OPENED",
                       "team_id": "team_id",
-                      "type": "transformation",
+                      "type": "delivery",
                       "updated_at": "updated_at",
                     },
                   },
@@ -15285,8 +15050,7 @@ service:
                 next: next
               count: 1
               models:
-                - type: transformation
-                  id: iss_YXKv5OdJXCiVwkPhGy
+                - id: iss_YXKv5OdJXCiVwkPhGy
                   team_id: team_id
                   status: OPENED
                   opened_at: '2024-01-15T09:30:00Z'
@@ -15299,25 +15063,16 @@ service:
                   updated_at: updated_at
                   created_at: created_at
                   aggregation_keys:
-                    transformation_id:
-                      - transformation_id
-                    log_level: debug
+                    webhook_id:
+                      - webhook_id
+                    response_status:
+                      - 1.1
+                    error_code:
+                      - TIMEOUT
                   reference:
-                    transformation_execution_id: transformation_execution_id
-                  data:
-                    transformation_execution:
-                      id: id
-                      transformed_event_data_id: transformed_event_data_id
-                      original_event_data_id: original_event_data_id
-                      transformation_id: transformation_id
-                      team_id: team_id
-                      webhook_id: webhook_id
-                      log_level: debug
-                      logs:
-                        - type: error
-                          message: message
-                      updated_at: '2024-01-15T09:30:00Z'
-                      created_at: '2024-01-15T09:30:00Z'
+                    event_id: event_id
+                    attempt_id: attempt_id
+                  type: delivery
     getIssueCount:
       path: /issues/count
       method: GET
@@ -15388,7 +15143,6 @@ service:
             id: id
           response:
             body:
-              type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
               team_id: team_id
               status: OPENED
@@ -15402,31 +15156,37 @@ service:
               updated_at: updated_at
               created_at: created_at
               aggregation_keys:
-                transformation_id:
-                  - transformation_id
-                log_level: debug
+                webhook_id:
+                  - webhook_id
+                response_status:
+                  - 1.1
+                error_code:
+                  - TIMEOUT
               reference:
-                transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
+                event_id: event_id
+                attempt_id: attempt_id
               data:
-                transformation_execution:
+                trigger_event:
                   id: id
-                  transformed_event_data_id: transformed_event_data_id
-                  original_event_data_id: original_event_data_id
-                  transformation_id: transformation_id
                   team_id: team_id
                   webhook_id: webhook_id
-                  log_level: debug
-                  logs:
-                    - type: error
-                      message: message
+                  source_id: source_id
+                  destination_id: destination_id
+                  event_data_id: event_data_id
+                  request_id: request_id
+                  attempts: 1
+                  data:
+                    path: path
+                  last_attempt_at: '2024-01-15T09:30:00Z'
+                  next_attempt_at: '2024-01-15T09:30:00Z'
+                  response_status: 1
+                  status: SCHEDULED
+                  successful_at: '2024-01-15T09:30:00Z'
+                  cli_id: cli_id
                   updated_at: '2024-01-15T09:30:00Z'
                   created_at: '2024-01-15T09:30:00Z'
-                  original_event_data:
-                    path: path
-                  transformed_event_data:
-                    path: path
-                  issue_id: issue_id
+                  created_at_id: created_at_id
+                  last_attempt_at_id: last_attempt_at_id
                 trigger_attempt:
                   id: id
                   team_id: team_id
@@ -15448,6 +15208,7 @@ service:
                   state: DELIVERING
                   archived_at: archived_at
                   destination_id: destination_id
+              type: delivery
     updateIssue:
       path: /issues/{id}
       method: PUT
@@ -15480,7 +15241,6 @@ service:
             status: OPENED
           response:
             body:
-              type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
               team_id: team_id
               status: OPENED
@@ -15494,12 +15254,16 @@ service:
               updated_at: updated_at
               created_at: created_at
               aggregation_keys:
-                transformation_id:
-                  - transformation_id
-                log_level: debug
+                webhook_id:
+                  - webhook_id
+                response_status:
+                  - 1.1
+                error_code:
+                  - TIMEOUT
               reference:
-                transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
+                event_id: event_id
+                attempt_id: attempt_id
+              type: delivery
     dismissIssue:
       path: /issues/{id}
       method: DELETE
@@ -15521,7 +15285,6 @@ service:
             id: id
           response:
             body:
-              type: transformation
               id: iss_YXKv5OdJXCiVwkPhGy
               team_id: team_id
               status: OPENED
@@ -15535,12 +15298,16 @@ service:
               updated_at: updated_at
               created_at: created_at
               aggregation_keys:
-                transformation_id:
-                  - transformation_id
-                log_level: debug
+                webhook_id:
+                  - webhook_id
+                response_status:
+                  - 1.1
+                error_code:
+                  - TIMEOUT
               reference:
-                transformation_execution_id: transformation_execution_id
-                trigger_event_request_transformation_id: trigger_event_request_transformation_id
+                event_id: event_id
+                attempt_id: attempt_id
+              type: delivery
   source:
     openapi: ../openapi.yml
   display-name: Issues
@@ -16757,16 +16524,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -16812,16 +16573,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -16889,16 +16644,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -16944,10 +16693,8 @@ docs: A request represent a webhook received by Hookdeck.
                           "name": "name",
                           "rules": [
                             {
-                              "delay": 1,
-                              "strategy": "each_attempt",
-                              "transformation_id": "transformation_id",
-                              "type": "delay",
+                              "strategy": "linear",
+                              "type": "retry",
                             },
                           ],
                           "team_id": "team_id",
@@ -17021,16 +16768,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -17078,16 +16819,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -17163,16 +16898,10 @@ docs: A request represent a webhook received by Hookdeck.
                       "name": "name",
                       "rules": [
                         {
-                          "body": "body",
                           "count": 1,
-                          "delay": 1,
-                          "headers": "headers",
                           "interval": 1,
-                          "path": "path",
-                          "query": "query",
-                          "strategy": "each_attempt",
-                          "transformation_id": "transformation_id",
-                          "type": "delay",
+                          "strategy": "linear",
+                          "type": "retry",
                         },
                       ],
                       "team_id": "team_id",
@@ -17298,10 +17027,8 @@ service:
                   name: name
                   team_id: team_id
                   rules:
-                    - type: delay
-                      strategy: each_attempt
-                      transformation_id: transformation_id
-                      delay: 1
+                    - strategy: linear
+                      type: retry
                   is_team_default: true
                   archived_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
@@ -17345,16 +17072,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -17398,16 +17119,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -17437,16 +17152,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -17497,16 +17206,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -17536,16 +17239,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
@@ -17575,16 +17272,10 @@ service:
               name: name
               team_id: team_id
               rules:
-                - type: delay
-                  strategy: each_attempt
+                - strategy: linear
                   interval: 1
                   count: 1
-                  headers: headers
-                  body: body
-                  query: query
-                  path: path
-                  transformation_id: transformation_id
-                  delay: 1
+                  type: retry
               is_team_default: true
               archived_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'

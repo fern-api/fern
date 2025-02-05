@@ -26937,13 +26937,6 @@
                             {
                               "value": {
                                 "value": {
-                                  "error_code": {
-                                    "value": {
-                                      "value": "visionline_instance_unreachable",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "created_at": {
                                     "value": {
                                       "value": "2024-01-15T09:30:00Z",
@@ -26954,6 +26947,13 @@
                                   "message": {
                                     "value": {
                                       "value": "message",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "error_code": {
+                                    "value": {
+                                      "value": "seam_bridge_disconnected",
                                       "type": "string"
                                     },
                                     "type": "primitive"
@@ -38020,13 +38020,6 @@
                         {
                           "value": {
                             "value": {
-                              "error_code": {
-                                "value": {
-                                  "value": "visionline_instance_unreachable",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "created_at": {
                                 "value": {
                                   "value": "2024-01-15T09:30:00Z",
@@ -38037,6 +38030,13 @@
                               "message": {
                                 "value": {
                                   "value": "message",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "error_code": {
+                                "value": {
+                                  "value": "seam_bridge_disconnected",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -38358,13 +38358,6 @@
                             {
                               "value": {
                                 "value": {
-                                  "error_code": {
-                                    "value": {
-                                      "value": "visionline_instance_unreachable",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "created_at": {
                                     "value": {
                                       "value": "2024-01-15T09:30:00Z",
@@ -38375,6 +38368,13 @@
                                   "message": {
                                     "value": {
                                       "value": "message",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "error_code": {
+                                    "value": {
+                                      "value": "seam_bridge_disconnected",
                                       "type": "string"
                                     },
                                     "type": "primitive"
@@ -38702,13 +38702,6 @@
                             {
                               "value": {
                                 "value": {
-                                  "error_code": {
-                                    "value": {
-                                      "value": "visionline_instance_unreachable",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "created_at": {
                                     "value": {
                                       "value": "2024-01-15T09:30:00Z",
@@ -38719,6 +38712,13 @@
                                   "message": {
                                     "value": {
                                       "value": "message",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "error_code": {
+                                    "value": {
+                                      "value": "seam_bridge_disconnected",
                                       "type": "string"
                                     },
                                     "type": "primitive"

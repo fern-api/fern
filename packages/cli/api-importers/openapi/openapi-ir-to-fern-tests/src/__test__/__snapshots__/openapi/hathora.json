@@ -4306,11 +4306,8 @@ service:
                   },
                   "response": {
                     "body": {
-                      "host": "host",
-                      "port": 1.1,
                       "roomId": "roomId",
-                      "status": "active",
-                      "transportType": "tcp",
+                      "status": "starting",
                     },
                   },
                 },
@@ -4640,11 +4637,8 @@ service:
             roomId: roomId
           response:
             body:
-              status: active
               roomId: roomId
-              transportType: tcp
-              port: 1.1
-              host: host
+              status: starting
   source:
     openapi: ../openapi.json
 ",
