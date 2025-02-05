@@ -32,4 +32,12 @@ class BinaryTreeValue extends JsonSerializableType
         $this->root = $values['root'] ?? null;
         $this->nodes = $values['nodes'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

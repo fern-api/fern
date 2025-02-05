@@ -33,4 +33,12 @@ class TestSubmissionUpdate extends JsonSerializableType
         $this->updateTime = $values['updateTime'];
         $this->updateInfo = $values['updateInfo'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

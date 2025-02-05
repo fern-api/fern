@@ -48,4 +48,12 @@ class TestCaseV2 extends JsonSerializableType
         $this->arguments = $values['arguments'];
         $this->expects = $values['expects'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

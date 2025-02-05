@@ -40,4 +40,12 @@ class Node extends JsonSerializableType
         $this->nodes = $values['nodes'] ?? null;
         $this->trees = $values['trees'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -31,4 +31,12 @@ class GenericValue extends JsonSerializableType
         $this->stringifiedType = $values['stringifiedType'] ?? null;
         $this->stringifiedValue = $values['stringifiedValue'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

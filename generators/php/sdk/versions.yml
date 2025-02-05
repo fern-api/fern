@@ -1,3 +1,9 @@
+- version: 0.5.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add the `__toString()` magic method to all generated class types.
+
 - version: 0.4.0
   changelogEntry:
     - type: feat

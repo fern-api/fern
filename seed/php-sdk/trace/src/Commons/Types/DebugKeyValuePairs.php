@@ -31,4 +31,12 @@ class DebugKeyValuePairs extends JsonSerializableType
         $this->key = $values['key'];
         $this->value = $values['value'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

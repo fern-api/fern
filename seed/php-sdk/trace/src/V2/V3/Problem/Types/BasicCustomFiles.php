@@ -49,4 +49,12 @@ class BasicCustomFiles extends JsonSerializableType
         $this->additionalFiles = $values['additionalFiles'];
         $this->basicTestCaseTemplate = $values['basicTestCaseTemplate'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

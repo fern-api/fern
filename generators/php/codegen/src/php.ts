@@ -96,6 +96,12 @@ export function mergeArrays(...args: MergeArrays.Args): MergeArrays {
     return new MergeArrays(args);
 }
 
+export function this_(): AstNode {
+    return new CodeBlock((writer) => {
+        writer.write("$this");
+    });
+}
+
 export { AstNode } from "./ast/core/AstNode";
 export {
     Array,

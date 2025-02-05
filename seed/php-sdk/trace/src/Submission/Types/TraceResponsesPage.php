@@ -35,4 +35,12 @@ class TraceResponsesPage extends JsonSerializableType
         $this->offset = $values['offset'] ?? null;
         $this->traceResponses = $values['traceResponses'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

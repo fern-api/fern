@@ -23,4 +23,12 @@ class WithPage extends JsonSerializableType
     ) {
         $this->page = $values['page'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }
