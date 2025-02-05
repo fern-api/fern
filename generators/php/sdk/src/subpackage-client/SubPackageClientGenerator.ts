@@ -34,6 +34,13 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             ...this.classReference
         });
 
+        class_.addField(
+            php.field({
+                name: `$${this.context.getClientOptionsName()}`,
+                access: "private",
+                type: this.context.getClientOptionsType()
+            })
+        );
         class_.addField(this.context.rawClient.getField());
 
         const subpackages = this.getSubpackages();
@@ -66,17 +73,32 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 php.parameter({
                     name: "$client",
                     type: php.Type.reference(this.context.rawClient.getClassReference())
+                }),
+                php.parameter({
+                    name: this.context.getClientOptionsName(),
+                    type: php.Type.optional(this.context.getClientOptionsType()),
+                    initializer: php.codeblock("null")
                 })
             ],
             body: php.codeblock((writer) => {
                 writer.writeLine(`$this->client = $${this.context.rawClient.getFieldName()};`);
+                writer.writeNodeStatement(
+                    php.codeblock((writer) => {
+                        writer.write(`$this->${this.context.getClientOptionsName()} = `);
+                        writer.writeNode(php.variable(this.context.getClientOptionsName()));
+                        writer.write(" ?? []");
+                    })
+                );
 
                 for (const subpackage of subpackages) {
                     writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
                     writer.writeNodeStatement(
                         php.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)]
+                            arguments_: [
+                                php.codeblock(`$this->${this.context.rawClient.getFieldName()}`),
+                                php.codeblock(`$this->${this.context.getClientOptionsName()}`)
+                            ]
                         })
                     );
                 }

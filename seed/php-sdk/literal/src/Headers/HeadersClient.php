@@ -2,6 +2,7 @@
 
 namespace Seed\Headers;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Headers\Requests\SendLiteralsInHeadersRequest;
 use Seed\Types\SendResponse;
@@ -15,23 +16,42 @@ use Psr\Http\Client\ClientExceptionInterface;
 class HeadersClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param SendLiteralsInHeadersRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return SendResponse
      * @throws SeedException
@@ -39,6 +59,7 @@ class HeadersClient
      */
     public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): SendResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         $headers = [];
         $headers['X-Endpoint-Version'] = '02-12-2024';
         $headers['X-Async'] = 'true';
@@ -51,6 +72,7 @@ class HeadersClient
                     headers: $headers,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

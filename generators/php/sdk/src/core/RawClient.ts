@@ -23,6 +23,8 @@ export declare namespace RawClient {
         bodyReference?: php.CodeBlock;
         /** The reference to the request body class */
         requestTypeClassReference: php.ClassReference;
+        /** The reference to the options argument */
+        optionsArgument?: php.AstNode;
     }
 }
 
@@ -115,7 +117,8 @@ export class RawClient {
                             classReference: args.requestTypeClassReference,
                             arguments_,
                             multiline: true
-                        })
+                        }),
+                        args.optionsArgument ?? php.codeblock("[]")
                     ],
                     multiline: true
                 })

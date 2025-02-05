@@ -2,6 +2,7 @@
 
 namespace Seed\Service;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -16,23 +17,42 @@ use Seed\Core\Types\Constant;
 class ServiceClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param string $resourceId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return mixed
      * @throws SeedException
@@ -40,6 +60,7 @@ class ServiceClient
      */
     public function getResource(string $resourceId, ?array $options = null): mixed
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -47,6 +68,7 @@ class ServiceClient
                     path: "/resource/$resourceId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -69,6 +91,7 @@ class ServiceClient
      * @param ListResourcesRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<mixed>
      * @throws SeedException
@@ -76,6 +99,7 @@ class ServiceClient
      */
     public function listResources(ListResourcesRequest $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['page_limit'] = $request->pageLimit;
         $query['beforeDate'] = $request->beforeDate->format(Constant::DateFormat);
@@ -87,6 +111,7 @@ class ServiceClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

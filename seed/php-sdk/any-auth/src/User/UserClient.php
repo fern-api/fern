@@ -2,6 +2,7 @@
 
 namespace Seed\User;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\User\Types\User;
 use Seed\Exceptions\SeedException;
@@ -15,22 +16,41 @@ use Psr\Http\Client\ClientExceptionInterface;
 class UserClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<User>
      * @throws SeedException
@@ -38,6 +58,7 @@ class UserClient
      */
     public function get(?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -45,6 +66,7 @@ class UserClient
                     path: "users",
                     method: HttpMethod::POST,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

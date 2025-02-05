@@ -2,6 +2,7 @@
 
 namespace Seed\Nullable;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Nullable\Requests\GetUsersRequest;
 use Seed\Nullable\Types\User;
@@ -18,23 +19,42 @@ use Seed\Nullable\Requests\DeleteUserRequest;
 class NullableClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<User>
      * @throws SeedException
@@ -42,6 +62,7 @@ class NullableClient
      */
     public function getUsers(GetUsersRequest $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         if ($request->usernames != null) {
             $query['usernames'] = $request->usernames;
@@ -66,6 +87,7 @@ class NullableClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -88,6 +110,7 @@ class NullableClient
      * @param CreateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return User
      * @throws SeedException
@@ -95,6 +118,7 @@ class NullableClient
      */
     public function createUser(CreateUserRequest $request, ?array $options = null): User
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -103,6 +127,7 @@ class NullableClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -125,6 +150,7 @@ class NullableClient
      * @param DeleteUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return bool
      * @throws SeedException
@@ -132,6 +158,7 @@ class NullableClient
      */
     public function deleteUser(DeleteUserRequest $request, ?array $options = null): bool
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -140,6 +167,7 @@ class NullableClient
                     method: HttpMethod::DELETE,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

@@ -2,6 +2,7 @@
 
 namespace Seed\Service;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Service\Types\Response;
 use Seed\Exceptions\SeedException;
@@ -16,23 +17,42 @@ use Seed\Service\Types\WithDocs;
 class ServiceClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Response
      * @throws SeedException
@@ -40,6 +60,7 @@ class ServiceClient
      */
     public function getMovie(string $request, ?array $options = null): Response
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -48,6 +69,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -70,6 +92,7 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Response
      * @throws SeedException
@@ -77,6 +100,7 @@ class ServiceClient
      */
     public function getMovieDocs(string $request, ?array $options = null): Response
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -85,6 +109,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -107,6 +132,7 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return StringResponse
      * @throws SeedException
@@ -114,6 +140,7 @@ class ServiceClient
      */
     public function getMovieName(string $request, ?array $options = null): StringResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -122,6 +149,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -144,6 +172,7 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Response
      * @throws SeedException
@@ -151,6 +180,7 @@ class ServiceClient
      */
     public function getMovieMetadata(string $request, ?array $options = null): Response
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -159,6 +189,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -181,6 +212,7 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ?Response
      * @throws SeedException
@@ -188,6 +220,7 @@ class ServiceClient
      */
     public function getOptionalMovie(string $request, ?array $options = null): ?Response
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -196,6 +229,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -221,6 +255,7 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ?WithDocs
      * @throws SeedException
@@ -228,6 +263,7 @@ class ServiceClient
      */
     public function getOptionalMovieDocs(string $request, ?array $options = null): ?WithDocs
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -236,6 +272,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -261,6 +298,7 @@ class ServiceClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ?StringResponse
      * @throws SeedException
@@ -268,6 +306,7 @@ class ServiceClient
      */
     public function getOptionalMovieName(string $request, ?array $options = null): ?StringResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -276,6 +315,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

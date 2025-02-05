@@ -2,6 +2,7 @@
 
 namespace Seed\ReqWithHeaders;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
 use Seed\Exceptions\SeedException;
@@ -13,29 +14,49 @@ use Psr\Http\Client\ClientExceptionInterface;
 class ReqWithHeadersClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param ReqWithHeaders $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function getWithCustomHeader(ReqWithHeaders $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $headers = [];
         $headers['X-TEST-SERVICE-HEADER'] = $request->xTestServiceHeader;
         $headers['X-TEST-ENDPOINT-HEADER'] = $request->xTestEndpointHeader;
@@ -48,6 +69,7 @@ class ReqWithHeadersClient
                     headers: $headers,
                     body: $request->body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

@@ -16,7 +16,9 @@ import {
     Trait
 } from "./ast";
 import { DataClass } from "./ast/DataClass";
+import { MergeArrays } from "./ast/MergeArrays";
 import { AstNode } from "./ast/core/AstNode";
+import { convertToPhpVariableName } from "./ast/utils/convertToPhpVariableName";
 
 export function array(args: Array_.Args): Array_ {
     return new Array_(args);
@@ -76,6 +78,22 @@ export function parameter(args: Parameter.Args): Parameter {
 
 export function ternary(args: Ternary.Args): Ternary {
     return new Ternary(args);
+}
+
+export function assignVariable(variableRef: AstNode, variableValue: string | AstNode): AstNode {
+    return codeblock((writer) => {
+        writer.writeNodeOrString(variableRef);
+        writer.write(" = ");
+        writer.writeNodeOrString(variableValue);
+    });
+}
+
+export function variable(name: string): AstNode {
+    return codeblock(convertToPhpVariableName(name));
+}
+
+export function mergeArrays(...args: MergeArrays.Args): MergeArrays {
+    return new MergeArrays(args);
 }
 
 export function this_(): AstNode {
