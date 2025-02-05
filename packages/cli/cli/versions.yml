@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        The images will be rendered to browser in the format of image ID that matches FileV2.
+        It ensure images will be displayed properly in dev environment.
+      type: fix
+  irVersion: 55
+  version: 0.51.29
+
+- changelogEntry:
+    - summary: |
         The IR generator now optimizes SDK generation by skipping automatic example generation when manual examples are provided.
         Previously, it would generate additional examples even when manual examples were specified for an operation.
         This change improves generation performance by avoiding unnecessary example generation work.

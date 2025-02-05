@@ -26,15 +26,19 @@ try {
     $DebugPreference = "Continue"
     
     # Initialize Fern project
+    Write-Host "Initializing Fern project..."
     & node $cli_path init --organization fern
     
     # Create test docs structure
+    Write-Host "Creating test docs structure..."
     New-Item -ItemType Directory -Path "docs\images" -Force
     
     # Create a test image
+    Write-Host "Creating test image..."
     "Test Image Content" | Out-File -FilePath "docs\images\test.png"
     
     # Create test markdown with various Windows path formats
+    Write-Host "Creating test markdown..."
     $testMarkdown = @"
 # Test Document
 
@@ -50,25 +54,46 @@ try {
 "@
     Set-Content -Path "docs\test.md" -Value $testMarkdown
     
-    Write-Host "Created test markdown with Windows paths"
+    Write-Host "Created test markdown with Windows paths:"
     Get-Content "docs\test.md"
     
     # Run normal commands
+    Write-Host "Adding SDK generators..."
     & node $cli_path add fern-java-sdk
     & node $cli_path add fern-python-sdk
     & node $cli_path add fern-postman
+    
+    Write-Host "Generating docs..."
     & node $cli_path generate --log-level debug
+    
+    # List directory contents for debugging
+    Write-Host "Directory contents:"
+    Get-ChildItem -Recurse | Select-Object FullName
     
     # Verify the generated output
     Write-Host "Checking generated docs..."
-    if (Test-Path ".fern\generated-docs") {
-        Get-Content ".fern\generated-docs\*.md" | Select-String -Pattern "file:"
+    $docsPath = ".fern\generated-docs"
+    if (Test-Path $docsPath) {
+        Write-Host "Found generated docs directory at: $docsPath"
+        Get-ChildItem $docsPath | ForEach-Object {
+            Write-Host "Found file: $($_.FullName)"
+        }
+        Get-Content "$docsPath\*.md" | Select-String -Pattern "file:" | ForEach-Object {
+            Write-Host "Found file reference: $_"
+        }
     } else {
+        Write-Host "Generated docs directory not found at: $docsPath"
+        Write-Host "Current directory: $(Get-Location)"
         Write-Error "Generated docs not found!"
     }
     
     $DebugPreference = "SilentlyContinue"
     & node $cli_path register --log-level debug
+}
+catch {
+    Write-Host "Error occurred: $_"
+    Write-Host "Stack trace: $($_.ScriptStackTrace)"
+    throw
 }
 finally {
     Set-Location $original_dir

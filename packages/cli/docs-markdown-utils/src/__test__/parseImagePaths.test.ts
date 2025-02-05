@@ -673,7 +673,7 @@ describe("parseImagePaths", () => {
                 const result = parseImagePaths(page, TEST_PATHS);
                 expect(result.filepaths).toEqual(["/server/share/path/image.png"]);
                 expect(result.markdown.trim()).toMatchInlineSnapshot(
-                    "\"This is a test page with an image ![image](\\/server/share/path/image.png)\""
+                    '"This is a test page with an image ![image](\\/server/share/path/image.png)"'
                 );
             });
 
