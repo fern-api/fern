@@ -7,19 +7,22 @@ use GuzzleHttp\Promise as P;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 class RetryMiddleware
 {
+    private const RETRY_STATUS_CODES = [408, 429];
+
     /**
      * @var callable(RequestInterface, array): PromiseInterface
+     * @phpstan-ignore missingType.iterableValue
      */
     private $nextHandler;
 
     /**
      * @var array{
-     *  maxRetries: int,
-     *  retryStatusCodes: array<int>,
-     *  retryOnTimeout: bool,
+     *     maxRetries: int,
+     *     baseDelay: int,
      * }
      */
     private array $options;
@@ -27,9 +30,7 @@ class RetryMiddleware
     /**
      * @param callable $nextHandler
      * @param array{
-     *      maxRetries?: int,
-     *      retryStatusCodes?: array<int>,
-     *      retryOnTimeout?: bool,
+     *     maxRetries?: int,
      *  }|null $options
      */
     public function __construct(
@@ -40,20 +41,18 @@ class RetryMiddleware
         $this->nextHandler = $nextHandler;
         $this->options = array_merge([
             'maxRetries' => 3,
-            'retryStatusCodes' => [429, 500, 502, 503, 504],
-            'retryOnTimeout' => true,
+            'baseDelay' => 1000,
         ], $options ?? []);
     }
 
     /**
      * @param array{
-     * maxRetries?: int,
-     * retryStatusCodes?: array<int>,
-     * retryOnTimeout?: bool,
+     *     maxRetries?: int,
+     *     baseDelay?: int,
      * }|null $options
      * @return callable
      */
-    public static function create(?array $options): callable
+    public static function create(?array $options = null): callable
     {
         return static function (callable $handler) use ($options): RetryMiddleware {
             return new RetryMiddleware($handler, $options);
@@ -66,8 +65,6 @@ class RetryMiddleware
      *      retries?: int,
      *      delay: int,
      *      maxRetries?: int,
-     *      retryStatusCodes?: array<int>,
-     *      retryOnTimeout?: bool,
      *  } $options
      * @return PromiseInterface
      */
@@ -90,58 +87,51 @@ class RetryMiddleware
     /**
      * @param int $retries
      * @param int $maxRetries
-     * @param bool $retryOnTimeout
-     * @param int[] $retryStatusCodes
      * @param ResponseInterface|null $response
-     * @param $exception
+     * @param ?Throwable $exception
      * @return bool
      */
     private function shouldRetry(
         int                $retries,
         int                $maxRetries,
-        bool               $retryOnTimeout,
-        array              $retryStatusCodes,
         ?ResponseInterface $response = null,
-                           $exception = null
-    )
+        ?Throwable         $exception = null
+    ): bool
     {
         if ($retries >= $maxRetries) {
             return false;
         }
 
         // Check for timeout
-        if ($retryOnTimeout && $exception instanceof ConnectException) {
+        if ($exception instanceof ConnectException) {
             return true;
         }
 
-        // Check status codes
-        return $response && in_array($response->getStatusCode(), $retryStatusCodes);
+        if ($response) {
+            // Check status codes
+            return $response->getStatusCode() >= 500 ||
+                in_array($response->getStatusCode(), self::RETRY_STATUS_CODES);
+        }
+        return false;
     }
 
     /**
      * Execute fulfilled closure
      * @param array{
-     *       retries: int,
-     *       delay: int,
-     *       maxRetries: int,
-     *       retryStatusCodes: array<int>,
-     *       retryOnTimeout: bool,
-     *   } $options
+     *     retries: int,
+     *     delay: int,
+     *     maxRetries: int,
+     * } $options
      */
     private function onFulfilled(RequestInterface $request, array $options): callable
     {
         $retries = $options['retries'];
         $maxRetries = $options['maxRetries'];
-        $retryStatusCodes = $options['retryStatusCodes'];
-        $retryOnTimeout = $options['retryOnTimeout'];
-        return function ($value) use ($request, $options, $retries, $maxRetries, $retryStatusCodes, $retryOnTimeout) {
+        return function ($value) use ($request, $options, $retries, $maxRetries) {
             if (!$this->shouldRetry(
                 $retries,
                 $maxRetries,
-                $retryOnTimeout,
-                $retryStatusCodes,
-                $value,
-                null
+                $value
             )) {
                 return $value;
             }
@@ -154,11 +144,9 @@ class RetryMiddleware
      * Execute rejected closure
      * @param RequestInterface $req
      * @param array{
-     *   retries: int,
-     *   delay: int,
-     *   maxRetries: int,
-     *   retryStatusCodes: array<int>,
-     *   retryOnTimeout: bool,
+     *     retries: int,
+     *     delay: int,
+     *     maxRetries: int,
      * } $options
      * @return callable
      */
@@ -166,14 +154,10 @@ class RetryMiddleware
     {
         $retries = $options['retries'];
         $maxRetries = $options['maxRetries'];
-        $retryStatusCodes = $options['retryStatusCodes'];
-        $retryOnTimeout = $options['retryOnTimeout'];
-        return function ($reason) use ($req, $options, $retries, $maxRetries, $retryStatusCodes, $retryOnTimeout) {
+        return function ($reason) use ($req, $options, $retries, $maxRetries) {
             if (!$this->shouldRetry(
                 $retries,
                 $maxRetries,
-                $retryOnTimeout,
-                $retryStatusCodes,
                 null,
                 $reason
             )) {
@@ -187,8 +171,8 @@ class RetryMiddleware
     /**
      * @param RequestInterface $request
      * @param array{
-     *   delay: int,
-     *   retries: int,
+     *     delay: int,
+     *     retries: int,
      * } $options
      * @return PromiseInterface
      */
@@ -203,8 +187,8 @@ class RetryMiddleware
      *
      * @return int milliseconds.
      */
-    private static function exponentialDelay(int $retries): int
+    private function exponentialDelay(int $retries): int
     {
-        return 2 ** ($retries - 1) * 1000;
+        return 2 ** ($retries - 1) * $this->options['baseDelay'];
     }
 }

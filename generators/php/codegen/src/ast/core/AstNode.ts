@@ -7,15 +7,18 @@ export abstract class AstNode extends AbstractAstNode {
     /**
      * Writes the node to a string.
      */
-    public toString({
-        namespace,
-        rootNamespace,
-        customConfig
-    }: {
+    public toString(param: {
         namespace: string;
         rootNamespace: string;
         customConfig: BasePhpCustomConfigSchema;
     }): string {
+        if (param == null) {
+            throw new Error(
+                "param is required. You are likely implicitly calling toString() inside a string interpolation or concatenation."
+            );
+        }
+        const { namespace, rootNamespace, customConfig } = param;
+
         const writer = new Writer({
             namespace,
             rootNamespace,

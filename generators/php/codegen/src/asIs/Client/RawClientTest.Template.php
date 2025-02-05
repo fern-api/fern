@@ -3,13 +3,12 @@
 namespace <%= namespace%>;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
-use <%= coreNamespace%>\Client\BaseApiRequest;
 use <%= coreNamespace%>\Client\HttpMethod;
 use <%= coreNamespace%>\Client\RawClient;
 use <%= coreNamespace%>\Client\RetryMiddleware;
@@ -28,6 +27,7 @@ class RawClientTest extends TestCase
         // since the client is constructed manually, we need to add the retry middleware manually
         $handlerStack->push(RetryMiddleware::create([
             'maxRetries' => 0,
+            'baseDelay' => 0,
         ]));
         $client = new Client(['handler' => $handlerStack]);
         $this->rawClient = new RawClient(['client' => $client]);
@@ -118,7 +118,8 @@ class RawClientTest extends TestCase
         try {
             $this->rawClient->sendRequest($request);
             $this->fail("Request should've failed but succeeded.");
-        } catch (ClientExceptionInterface) {}
+        } catch (ClientExceptionInterface) {
+        }
 
         $lastRequest = $this->mockHandler->getLastRequest();
         assert($lastRequest instanceof RequestInterface);
@@ -158,8 +159,59 @@ class RawClientTest extends TestCase
         try {
             $this->rawClient->sendRequest($request, ['maxRetries' => 2]);
             $this->fail("Request should've failed but succeeded.");
-        } catch (ClientExceptionInterface) {}
+        } catch (ClientExceptionInterface) {
+        }
 
         $this->assertEquals(0, $this->mockHandler->count());
+    }
+
+    public function testShouldRetryOnStatusCodes(): void
+    {
+        $this->mockHandler->append(
+            new Response(408),
+            new Response(429),
+            new Response(500),
+            new Response(501),
+            new Response(502),
+            new Response(503),
+            new Response(504),
+            new Response(505),
+            new Response(599),
+            new Response(200),
+        );
+        $countOfErrorRequests = $this->mockHandler->count() - 2;
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET
+        );
+
+        try {
+            $this->rawClient->sendRequest($request, ['maxRetries' => $countOfErrorRequests]);
+            $this->fail("Request should've failed but succeeded.");
+        } catch (ClientExceptionInterface) {
+        }
+
+        $this->assertEquals(1, $this->mockHandler->count());
+    }
+
+    public function testShouldFailOn400Response(): void
+    {
+        $this->mockHandler->append(new Response(400), new Response(200));
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET
+        );
+
+        try {
+            $this->rawClient->sendRequest($request, ['maxRetries' => 2]);
+            $this->fail("Request should've failed but succeeded.");
+        } catch (ClientExceptionInterface) {
+        }
+
+        $this->assertEquals(1, $this->mockHandler->count());
     }
 }

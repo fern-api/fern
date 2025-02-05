@@ -55,6 +55,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return_,
             throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
             body: php.codeblock((writer) => {
+                writer.writeNodeStatement(
+                    php.assignVariable(
+                        php.variable(this.context.getRequestOptionsName()),
+                        php.mergeArrays(`$this->${this.context.getClientOptionsName()}`, {
+                            ref: php.variable(this.context.getRequestOptionsName()),
+                            fallback: "[]"
+                        })
+                    )
+                );
+
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
                     queryParameterCodeBlock.code.write(writer);
@@ -85,7 +95,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
                         headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
                         queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
-                        requestTypeClassReference: classReference
+                        requestTypeClassReference: classReference,
+                        optionsArgument: php.variable(this.context.getRequestOptionsName())
                     })
                 );
                 writer.writeTextStatement(`${STATUS_CODE_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getStatusCode()`);
