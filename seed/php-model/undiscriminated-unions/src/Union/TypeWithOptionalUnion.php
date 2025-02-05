@@ -24,4 +24,12 @@ class TypeWithOptionalUnion extends JsonSerializableType
     ) {
         $this->myUnion = $values['myUnion'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

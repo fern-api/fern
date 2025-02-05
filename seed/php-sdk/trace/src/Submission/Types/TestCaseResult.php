@@ -39,4 +39,12 @@ class TestCaseResult extends JsonSerializableType
         $this->actualResult = $values['actualResult'];
         $this->passed = $values['passed'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

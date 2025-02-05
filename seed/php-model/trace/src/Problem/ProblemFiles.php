@@ -33,4 +33,12 @@ class ProblemFiles extends JsonSerializableType
         $this->solutionFile = $values['solutionFile'];
         $this->readOnlyFiles = $values['readOnlyFiles'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

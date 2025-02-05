@@ -50,4 +50,12 @@ class GetSubmissionStateResponse extends JsonSerializableType
         $this->language = $values['language'];
         $this->submissionTypeState = $values['submissionTypeState'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

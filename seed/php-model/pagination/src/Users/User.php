@@ -31,4 +31,12 @@ class User extends JsonSerializableType
         $this->name = $values['name'];
         $this->id = $values['id'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -32,4 +32,12 @@ class Response extends JsonSerializableType
         $this->metadata = $values['metadata'];
         $this->docs = $values['docs'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

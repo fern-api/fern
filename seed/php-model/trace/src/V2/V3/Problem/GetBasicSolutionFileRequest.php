@@ -31,4 +31,12 @@ class GetBasicSolutionFileRequest extends JsonSerializableType
         $this->methodName = $values['methodName'];
         $this->signature = $values['signature'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

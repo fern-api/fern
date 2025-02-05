@@ -28,4 +28,12 @@ class Json extends JsonSerializableType
         $this->raw = $values['raw'];
         $this->docs = $values['docs'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

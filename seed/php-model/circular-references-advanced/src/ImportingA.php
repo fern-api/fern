@@ -24,4 +24,12 @@ class ImportingA extends JsonSerializableType
     ) {
         $this->a = $values['a'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -49,4 +49,12 @@ class Patient extends JsonSerializableType
         $this->relatedResources = $values['relatedResources'];
         $this->memo = $values['memo'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

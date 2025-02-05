@@ -32,4 +32,12 @@ class UpdatePlaylistRequest extends JsonSerializableType
         $this->name = $values['name'];
         $this->problems = $values['problems'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

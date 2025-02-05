@@ -33,4 +33,12 @@ class Entity extends JsonSerializableType
         $this->type = $values['type'];
         $this->name = $values['name'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

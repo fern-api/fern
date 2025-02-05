@@ -31,4 +31,12 @@ class BuildingExecutorResponse extends JsonSerializableType
         $this->submissionId = $values['submissionId'];
         $this->status = $values['status'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

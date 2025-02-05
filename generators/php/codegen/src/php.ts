@@ -16,6 +16,7 @@ import {
     Trait
 } from "./ast";
 import { DataClass } from "./ast/DataClass";
+import { AstNode } from "./ast/core/AstNode";
 
 export function array(args: Array_.Args): Array_ {
     return new Array_(args);
@@ -75,6 +76,12 @@ export function parameter(args: Parameter.Args): Parameter {
 
 export function ternary(args: Ternary.Args): Ternary {
     return new Ternary(args);
+}
+
+export function this_(): AstNode {
+    return new CodeBlock((writer) => {
+        writer.write("$this");
+    });
 }
 
 export { AstNode } from "./ast/core/AstNode";

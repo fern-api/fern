@@ -48,4 +48,12 @@ class ListUsersPaginationResponse extends JsonSerializableType
         $this->totalCount = $values['totalCount'];
         $this->data = $values['data'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

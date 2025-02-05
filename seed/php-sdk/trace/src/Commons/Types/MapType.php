@@ -31,4 +31,12 @@ class MapType extends JsonSerializableType
         $this->keyType = $values['keyType'];
         $this->valueType = $values['valueType'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }
