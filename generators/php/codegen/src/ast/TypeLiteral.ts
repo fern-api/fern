@@ -162,9 +162,9 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeStringWithHeredoc({ writer, value }: { writer: Writer; value: string }): void {
-        writer.writeLine(`<<<EOT`);
+        writer.writeLine("<<<EOT");
         writer.writeNoIndent(value);
-        writer.writeLine(`EOT;`);
+        writer.writeLine("EOT;");
     }
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
