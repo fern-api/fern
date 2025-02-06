@@ -34,7 +34,7 @@ async function createConjureFile({
 }): Promise<ConjureFile> {
     const rawContents = (await readFile(absoluteFilepath))
         .toString()
-        .replaceAll(": rid", ": string")
+        .replace(/(?<![\w]): rid(?![\w])/g, ": string")
         .replaceAll("<rid>", "<string>")
         .replaceAll("rid>", "string>")
         .replaceAll(": safelong", ": long")
