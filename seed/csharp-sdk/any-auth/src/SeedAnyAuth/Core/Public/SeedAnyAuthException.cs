@@ -1,8 +1,9 @@
 using System;
 
-    namespace SeedAnyAuth;
+namespace SeedAnyAuth;
 
 /// <summary>
 /// Base exception class for all exceptions thrown by the SDK.
 /// </summary>
-public class SeedAnyAuthException(string message,Exception? innerException = null) : Exception(message, innerException);
+public class SeedAnyAuthException(string message, Exception? innerException = null)
+    : Exception(message, innerException);

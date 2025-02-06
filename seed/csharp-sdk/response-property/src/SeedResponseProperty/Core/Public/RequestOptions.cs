@@ -1,8 +1,8 @@
-using SeedResponseProperty.Core;
-using System.Net.Http;
 using System;
+using System.Net.Http;
+using SeedResponseProperty.Core;
 
-    namespace SeedResponseProperty;
+namespace SeedResponseProperty;
 
 public partial class RequestOptions : IRequestOptions
 {
@@ -30,5 +30,4 @@ public partial class RequestOptions : IRequestOptions
     /// The http headers sent with the request.
     /// </summary>
     Headers IRequestOptions.Headers { get; init; } = new();
-
 }

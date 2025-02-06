@@ -1,8 +1,9 @@
 using System;
 
-    namespace SeedMultiLineDocs;
+namespace SeedMultiLineDocs;
 
 /// <summary>
 /// Base exception class for all exceptions thrown by the SDK.
 /// </summary>
-public class SeedMultiLineDocsException(string message,Exception? innerException = null) : Exception(message, innerException);
+public class SeedMultiLineDocsException(string message, Exception? innerException = null)
+    : Exception(message, innerException);

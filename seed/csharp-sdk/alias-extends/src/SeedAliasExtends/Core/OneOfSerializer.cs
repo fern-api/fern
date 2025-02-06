@@ -46,8 +46,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
             type = underlyingType;
         }
 
-        var casts = type
-            .GetRuntimeMethods()
+        var casts = type.GetRuntimeMethods()
             .Where(m => m.IsSpecialName && m.Name == "op_Implicit")
             .ToArray();
         while (type != null)
@@ -58,14 +57,14 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
             )
             {
                 var genericArguments = type.GetGenericArguments();
-                if(genericArguments.Length == 1)
+                if (genericArguments.Length == 1)
                 {
                     return [(genericArguments[0], casts[0])];
                 }
 
                 // if object type is present, make sure it is last
                 var indexOfObjectType = Array.IndexOf(genericArguments, typeof(object));
-                if (indexOfObjectType != -1 && genericArguments.Length -1 != indexOfObjectType)
+                if (indexOfObjectType != -1 && genericArguments.Length - 1 != indexOfObjectType)
                 {
                     genericArguments = genericArguments
                         .OrderBy(t => t == typeof(object) ? 1 : 0)

@@ -1,6 +1,6 @@
 using SeedFileUpload.Core;
 
-    namespace SeedFileUpload;
+namespace SeedFileUpload;
 
 public record JustFileWithQueryParamsRequest
 {
@@ -13,8 +13,9 @@ public record JustFileWithQueryParamsRequest
     public IEnumerable<string> ListOfStrings { get; set; } = new List<string>();
 
     public IEnumerable<string> OptionalListOfStrings { get; set; } = new List<string>();
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

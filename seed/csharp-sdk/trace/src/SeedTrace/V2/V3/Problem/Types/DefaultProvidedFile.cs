@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace.V2.V3;
+namespace SeedTrace.V2.V3;
 
 public record DefaultProvidedFile
 {
@@ -10,8 +10,9 @@ public record DefaultProvidedFile
 
     [JsonPropertyName("relatedTypes")]
     public IEnumerable<object> RelatedTypes { get; set; } = new List<object>();
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

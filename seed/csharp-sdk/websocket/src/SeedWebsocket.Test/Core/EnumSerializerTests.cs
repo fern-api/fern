@@ -15,10 +15,10 @@ public class StringEnumSerializerTests
     private const string KnownEnumValue2String = "known_value2";
 
     private const string JsonWithKnownEnum2 = $$"""
-                                                {
-                                                    "enum_property": "{{KnownEnumValue2String}}"
-                                                }
-                                                """;
+        {
+            "enum_property": "{{KnownEnumValue2String}}"
+        }
+        """;
 
     [Test]
     public void ShouldParseKnownEnumValue2()
@@ -55,5 +55,5 @@ public enum DummyEnum
     KnownValue1,
 
     [EnumMember(Value = "known_value2")]
-    KnownValue2
+    KnownValue2,
 }

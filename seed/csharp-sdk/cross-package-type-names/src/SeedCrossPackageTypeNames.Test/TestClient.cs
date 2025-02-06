@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-    namespace SeedCrossPackageTypeNames.Test;
+namespace SeedCrossPackageTypeNames.Test;
 
 [TestFixture]
 public class TestClient;

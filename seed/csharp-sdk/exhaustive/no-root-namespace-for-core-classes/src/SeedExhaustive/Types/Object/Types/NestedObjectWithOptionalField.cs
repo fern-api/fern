@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
-    namespace SeedExhaustive.Types;
+namespace SeedExhaustive.Types;
 
 public record NestedObjectWithOptionalField
 {
@@ -10,8 +10,9 @@ public record NestedObjectWithOptionalField
 
     [JsonPropertyName("NestedObject")]
     public ObjectWithOptionalField? NestedObject { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-    namespace SeedUndiscriminatedUnions.Test;
+namespace SeedUndiscriminatedUnions.Test;
 
 [TestFixture]
 public class TestClient;

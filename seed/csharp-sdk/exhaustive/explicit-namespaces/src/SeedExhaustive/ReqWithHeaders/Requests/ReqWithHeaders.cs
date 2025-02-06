@@ -1,6 +1,6 @@
 using SeedExhaustive.Core;
 
-    namespace SeedExhaustive.ReqWithHeaders;
+namespace SeedExhaustive.ReqWithHeaders;
 
 public record ReqWithHeaders
 {
@@ -9,8 +9,9 @@ public record ReqWithHeaders
     public required string XTestEndpointHeader { get; set; }
 
     public required string Body { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

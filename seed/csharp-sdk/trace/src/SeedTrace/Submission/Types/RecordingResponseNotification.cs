@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public record RecordingResponseNotification
 {
@@ -19,8 +19,9 @@ public record RecordingResponseNotification
 
     [JsonPropertyName("tracedFile")]
     public TracedFile? TracedFile { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

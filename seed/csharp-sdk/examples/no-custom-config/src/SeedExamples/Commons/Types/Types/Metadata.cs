@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
 
-    namespace SeedExamples.Commons;
+namespace SeedExamples.Commons;
 
 public record Metadata
 {
@@ -13,8 +13,9 @@ public record Metadata
 
     [JsonPropertyName("jsonString")]
     public string? JsonString { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

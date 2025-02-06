@@ -97,7 +97,7 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
     )
     {
         var hasStep = false;
-        if(_getStep is not null)
+        if (_getStep is not null)
         {
             hasStep = _getStep(_request) is not null;
         }

@@ -1,12 +1,13 @@
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public partial class LangServerClient
 {
     private RawClient _client;
-    internal LangServerClient (RawClient client) {
+
+    internal LangServerClient(RawClient client)
+    {
         _client = client;
     }
-
 }

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedMixedFileDirectory.Core;
 
-    namespace SeedMixedFileDirectory.User.Events;
+namespace SeedMixedFileDirectory.User.Events;
 
 public record Metadata
 {
@@ -10,8 +10,9 @@ public record Metadata
 
     [JsonPropertyName("value")]
     public required object Value { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

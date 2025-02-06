@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedIdempotencyHeaders.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedIdempotencyHeaders;
+namespace SeedIdempotencyHeaders;
 
 [JsonConverter(typeof(EnumSerializer<Currency>))]
 public enum Currency
@@ -11,5 +11,5 @@ public enum Currency
     Usd,
 
     [EnumMember(Value = "YEN")]
-    Yen
+    Yen,
 }

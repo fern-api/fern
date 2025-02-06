@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedQueryParameters.Core;
 
-    namespace SeedQueryParameters;
+namespace SeedQueryParameters;
 
 public record User
 {
@@ -10,8 +10,9 @@ public record User
 
     [JsonPropertyName("tags")]
     public IEnumerable<string> Tags { get; set; } = new List<string>();
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

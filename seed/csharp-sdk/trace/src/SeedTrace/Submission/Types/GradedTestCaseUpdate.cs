@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public record GradedTestCaseUpdate
 {
@@ -10,8 +10,9 @@ public record GradedTestCaseUpdate
 
     [JsonPropertyName("grade")]
     public required object Grade { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

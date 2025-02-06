@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedEnum.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedEnum;
+namespace SeedEnum;
 
 [JsonConverter(typeof(EnumSerializer<Operand>))]
 public enum Operand
@@ -14,5 +14,5 @@ public enum Operand
     EqualTo,
 
     [EnumMember(Value = "less_than")]
-    LessThan
+    LessThan,
 }

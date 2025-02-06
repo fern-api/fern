@@ -1,19 +1,20 @@
-using NUnit.Framework;
-using System.Text.Json.Serialization;
 using System.Text.Json;
-using SeedExamples;
+using System.Text.Json.Serialization;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+using SeedExamples;
 
-    namespace SeedExamples.Test;
+namespace SeedExamples.Test;
 
 [TestFixture]
 public class ExtendedMovieTest
 {
     [Test]
-    public void TestSerialization() {
-        var inputJson = 
-        @"
+    public void TestSerialization()
+    {
+        var inputJson =
+            @"
         {
           ""id"": ""movie-sda231x"",
           ""title"": ""Pulp Fiction"",
@@ -39,13 +40,18 @@ public class ExtendedMovieTest
         }
         ";
 
-        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-        
-        var deserializedObject = JsonSerializer.Deserialize<ExtendedMovie>(inputJson, serializerOptions);
+        var serializerOptions = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+
+        var deserializedObject = JsonSerializer.Deserialize<ExtendedMovie>(
+            inputJson,
+            serializerOptions
+        );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
         JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
     }
-
 }

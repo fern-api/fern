@@ -1,18 +1,19 @@
-using NUnit.Framework;
-using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
-    namespace SeedObjectsWithImports.Test;
+namespace SeedObjectsWithImports.Test;
 
 [TestFixture]
 public class FileTest
 {
     [Test]
-    public void TestSerialization_1() {
-        var inputJson = 
-        @"
+    public void TestSerialization_1()
+    {
+        var inputJson =
+            @"
         {
           ""name"": ""file.txt"",
           ""contents"": ""..."",
@@ -20,8 +21,11 @@ public class FileTest
         }
         ";
 
-        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-        
+        var serializerOptions = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+
         var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
@@ -30,9 +34,10 @@ public class FileTest
     }
 
     [Test]
-    public void TestSerialization_2() {
-        var inputJson = 
-        @"
+    public void TestSerialization_2()
+    {
+        var inputJson =
+            @"
         {
           ""name"": ""another_file.txt"",
           ""contents"": ""..."",
@@ -40,13 +45,15 @@ public class FileTest
         }
         ";
 
-        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-        
+        var serializerOptions = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+
         var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
         JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
     }
-
 }

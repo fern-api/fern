@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-    namespace SeedQueryParameters.Test;
+namespace SeedQueryParameters.Test;
 
 [TestFixture]
 public class TestClient;

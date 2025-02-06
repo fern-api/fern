@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedNullable.Core;
 
-    namespace SeedNullable;
+namespace SeedNullable;
 
 public record User
 {
@@ -13,8 +13,9 @@ public record User
 
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

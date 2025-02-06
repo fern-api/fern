@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public record DoublyLinkedListNodeValue
 {
@@ -16,8 +16,9 @@ public record DoublyLinkedListNodeValue
 
     [JsonPropertyName("prev")]
     public string? Prev { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

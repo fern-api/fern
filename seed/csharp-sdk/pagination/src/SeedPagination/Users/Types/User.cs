@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-    namespace SeedPagination;
+namespace SeedPagination;
 
 public record User
 {
@@ -10,8 +10,9 @@ public record User
 
     [JsonPropertyName("id")]
     public required int Id { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

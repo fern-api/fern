@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedObject.Core;
 
-    namespace SeedObject;
+namespace SeedObject;
 
 public record Type
 {
@@ -51,7 +51,8 @@ public record Type
     public IEnumerable<IEnumerable<int>> Fifteen { get; set; } = new List<IEnumerable<int>>();
 
     [JsonPropertyName("sixteen")]
-    public IEnumerable<Dictionary<string, int>> Sixteen { get; set; } = new List<Dictionary<string, int>>();
+    public IEnumerable<Dictionary<string, int>> Sixteen { get; set; } =
+        new List<Dictionary<string, int>>();
 
     [JsonPropertyName("seventeen")]
     public IEnumerable<string> Seventeen { get; set; } = new List<string>();
@@ -73,8 +74,9 @@ public record Type
 
     [JsonPropertyName("twentythree")]
     public required string Twentythree { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

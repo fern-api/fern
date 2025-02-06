@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public record BinaryTreeNodeValue
 {
@@ -16,8 +16,9 @@ public record BinaryTreeNodeValue
 
     [JsonPropertyName("left")]
     public string? Left { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

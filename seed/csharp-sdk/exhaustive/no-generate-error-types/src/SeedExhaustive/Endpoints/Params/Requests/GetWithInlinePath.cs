@@ -1,11 +1,11 @@
 using SeedExhaustive.Core;
 
-    namespace SeedExhaustive.Endpoints;
+namespace SeedExhaustive.Endpoints;
 
 public record GetWithInlinePath
 {
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

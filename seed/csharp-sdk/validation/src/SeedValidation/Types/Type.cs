@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedValidation.Core;
 
-    namespace SeedValidation;
+namespace SeedValidation;
 
 public record Type
 {
@@ -16,8 +16,9 @@ public record Type
 
     [JsonPropertyName("shape")]
     public required Shape Shape { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

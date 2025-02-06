@@ -2,14 +2,16 @@ using System.Text.Json.Serialization;
 using SeedTrace;
 using SeedTrace.Core;
 
-    namespace SeedTrace.V2.V3;
+namespace SeedTrace.V2.V3;
 
 public record FunctionImplementationForMultipleLanguages
 {
     [JsonPropertyName("codeByLanguage")]
-    public Dictionary<Language, FunctionImplementation> CodeByLanguage { get; set; } = new Dictionary<Language, FunctionImplementation>();
-    public override string ToString() {
+    public Dictionary<Language, FunctionImplementation> CodeByLanguage { get; set; } =
+        new Dictionary<Language, FunctionImplementation>();
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

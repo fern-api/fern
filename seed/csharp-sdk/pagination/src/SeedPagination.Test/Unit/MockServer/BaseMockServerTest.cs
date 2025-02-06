@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using WireMock.Server;
 using SeedPagination;
-using WireMock.Settings;
 using WireMock.Logging;
+using WireMock.Server;
+using WireMock.Settings;
 
-    namespace SeedPagination.Test.Unit.MockServer;
+namespace SeedPagination.Test.Unit.MockServer;
 
 [SetUpFixture]
 public class BaseMockServerTest
@@ -14,27 +14,25 @@ public class BaseMockServerTest
     protected static SeedPaginationClient Client { get; set; } = null!;
 
     protected static RequestOptions RequestOptions { get; set; } = null!;
-    [OneTimeSetUp]
-    public void GlobalSetup() {
-        // Start the WireMock server
-        Server = WireMockServer.Start(new WireMockServerSettings { Logger = new WireMockConsoleLogger() });
 
-        // Initialize the Client
-        Client = 
-        new SeedPaginationClient(
-            "TOKEN"
+    [OneTimeSetUp]
+    public void GlobalSetup()
+    {
+        // Start the WireMock server
+        Server = WireMockServer.Start(
+            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
         );
 
-        RequestOptions = 
-        new RequestOptions{ 
-            BaseUrl = Server.Urls[0]
-        };
+        // Initialize the Client
+        Client = new SeedPaginationClient("TOKEN");
+
+        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }
 
     [OneTimeTearDown]
-    public void GlobalTeardown() {
+    public void GlobalTeardown()
+    {
         Server.Stop();
         Server.Dispose();
     }
-
 }

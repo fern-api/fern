@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedNullable.Core;
 
-    namespace SeedNullable;
+namespace SeedNullable;
 
 public record CreateUserRequest
 {
@@ -16,8 +16,9 @@ public record CreateUserRequest
 
     [JsonPropertyName("avatar")]
     public string? Avatar { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

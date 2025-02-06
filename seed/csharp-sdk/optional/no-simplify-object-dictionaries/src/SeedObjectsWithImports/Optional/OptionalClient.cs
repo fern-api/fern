@@ -1,15 +1,17 @@
-using SeedObjectsWithImports.Core;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using SeedObjectsWithImports.Core;
 
-    namespace SeedObjectsWithImports;
+namespace SeedObjectsWithImports;
 
 public partial class OptionalClient
 {
     private RawClient _client;
-    internal OptionalClient (RawClient client) {
+
+    internal OptionalClient(RawClient client)
+    {
         _client = client;
     }
 
@@ -26,12 +28,28 @@ public partial class OptionalClient
     /// );
     /// </code>
     /// </example>
-    public async Task<string> SendOptionalBodyAsync(Dictionary<string, object?>? request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
-                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "send-optional-body", Body = request, Options = options
-            }, cancellationToken).ConfigureAwait(false);
+    public async Task<string> SendOptionalBodyAsync(
+        Dictionary<string, object?>? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "send-optional-body",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400) {
+        if (response.StatusCode is >= 200 and < 400)
+        {
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -41,8 +59,11 @@ public partial class OptionalClient
                 throw new SeedObjectsWithImportsException("Failed to deserialize response", e);
             }
         }
-        
-        throw new SeedObjectsWithImportsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-    }
 
+        throw new SeedObjectsWithImportsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
 }

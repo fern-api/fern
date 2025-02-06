@@ -1,9 +1,9 @@
+using System.Linq;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using System.Linq;
 using Proto = Data.V1.Grpc;
 
-    namespace SeedApi;
+namespace SeedApi;
 
 public record QueryColumn
 {
@@ -21,30 +21,36 @@ public record QueryColumn
 
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
 
     /// <summary>
     /// Maps the QueryColumn type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.QueryColumn ToProto() {
-        var result = new Proto.QueryColumn(
-            
-        );
-        if (Values.Any()) {
+    internal Proto.QueryColumn ToProto()
+    {
+        var result = new Proto.QueryColumn();
+        if (Values.Any())
+        {
             result.Values.AddRange(Values);
         }
-        if (TopK != null) {
+        if (TopK != null)
+        {
             result.TopK = TopK ?? 0;
         }
-        if (Namespace != null) {
+        if (Namespace != null)
+        {
             result.Namespace = Namespace ?? "";
         }
-        if (Filter != null) {
+        if (Filter != null)
+        {
             result.Filter = Filter.ToProto();
         }
-        if (IndexedData != null) {
+        if (IndexedData != null)
+        {
             result.IndexedData = IndexedData.ToProto();
         }
         return result;
@@ -53,10 +59,16 @@ public record QueryColumn
     /// <summary>
     /// Returns a new QueryColumn type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static QueryColumn FromProto(Proto.QueryColumn value) {
-        return new QueryColumn{ 
-            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(), TopK = value.TopK, Namespace = value.Namespace, Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null, IndexedData = value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
+    internal static QueryColumn FromProto(Proto.QueryColumn value)
+    {
+        return new QueryColumn
+        {
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
+            TopK = value.TopK,
+            Namespace = value.Namespace,
+            Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
         };
     }
-
 }

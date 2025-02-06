@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedPagination;
+namespace SeedPagination;
 
 [JsonConverter(typeof(EnumSerializer<MultipleFilterSearchRequestOperator>))]
 public enum MultipleFilterSearchRequestOperator
@@ -11,5 +11,5 @@ public enum MultipleFilterSearchRequestOperator
     And,
 
     [EnumMember(Value = "OR")]
-    Or
+    Or,
 }

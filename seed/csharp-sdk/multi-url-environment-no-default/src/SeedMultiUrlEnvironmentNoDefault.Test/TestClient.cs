@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-    namespace SeedMultiUrlEnvironmentNoDefault.Test;
+namespace SeedMultiUrlEnvironmentNoDefault.Test;
 
 [TestFixture]
 public class TestClient;

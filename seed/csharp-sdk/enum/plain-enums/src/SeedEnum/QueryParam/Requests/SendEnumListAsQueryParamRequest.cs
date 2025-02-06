@@ -1,7 +1,7 @@
 using OneOf;
 using SeedEnum.Core;
 
-    namespace SeedEnum;
+namespace SeedEnum;
 
 public record SendEnumListAsQueryParamRequest
 {
@@ -9,11 +9,14 @@ public record SendEnumListAsQueryParamRequest
 
     public IEnumerable<Operand> MaybeOperand { get; set; } = new List<Operand>();
 
-    public IEnumerable<OneOf<Color, Operand>> OperandOrColor { get; set; } = new List<OneOf<Color, Operand>>();
+    public IEnumerable<OneOf<Color, Operand>> OperandOrColor { get; set; } =
+        new List<OneOf<Color, Operand>>();
 
-    public IEnumerable<OneOf<Color, Operand>> MaybeOperandOrColor { get; set; } = new List<OneOf<Color, Operand>>();
-    public override string ToString() {
+    public IEnumerable<OneOf<Color, Operand>> MaybeOperandOrColor { get; set; } =
+        new List<OneOf<Color, Operand>>();
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

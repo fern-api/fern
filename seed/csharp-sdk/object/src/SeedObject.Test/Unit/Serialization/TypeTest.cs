@@ -1,19 +1,20 @@
-using NUnit.Framework;
-using System.Text.Json.Serialization;
 using System.Text.Json;
-using SeedObject;
+using System.Text.Json.Serialization;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+using SeedObject;
 
-    namespace SeedObject.Test;
+namespace SeedObject.Test;
 
 [TestFixture]
 public class TypeTest
 {
     [Test]
-    public void TestSerialization() {
-        var inputJson = 
-        @"
+    public void TestSerialization()
+    {
+        var inputJson =
+            @"
         {
           ""one"": 1,
           ""two"": 2,
@@ -69,13 +70,15 @@ public class TypeTest
         }
         ";
 
-        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-        
+        var serializerOptions = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+
         var deserializedObject = JsonSerializer.Deserialize<Type>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
         JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
     }
-
 }

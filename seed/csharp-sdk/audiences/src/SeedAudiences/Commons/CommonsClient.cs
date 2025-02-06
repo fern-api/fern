@@ -1,12 +1,13 @@
 using SeedAudiences.Core;
 
-    namespace SeedAudiences;
+namespace SeedAudiences;
 
 public partial class CommonsClient
 {
     private RawClient _client;
-    internal CommonsClient (RawClient client) {
+
+    internal CommonsClient(RawClient client)
+    {
         _client = client;
     }
-
 }

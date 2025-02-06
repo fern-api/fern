@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedCsharpNamespaceConflict.Core;
 
-    namespace SeedCsharpNamespaceConflict.A.Aa;
+namespace SeedCsharpNamespaceConflict.A.Aa;
 
 public record SubTestType
 {
@@ -10,8 +10,9 @@ public record SubTestType
 
     [JsonPropertyName("b")]
     public required B B { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

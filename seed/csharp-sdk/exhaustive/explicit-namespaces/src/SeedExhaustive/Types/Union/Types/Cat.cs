@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
-    namespace SeedExhaustive.Types.Union;
+namespace SeedExhaustive.Types.Union;
 
 public record Cat
 {
@@ -10,8 +10,9 @@ public record Cat
 
     [JsonPropertyName("likesToMeow")]
     public required bool LikesToMeow { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

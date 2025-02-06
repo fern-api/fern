@@ -1,11 +1,11 @@
 using SeedFileUpload.Core;
 
-    namespace SeedFileUpload;
+namespace SeedFileUpload;
 
 public record WithContentTypeRequest
 {
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

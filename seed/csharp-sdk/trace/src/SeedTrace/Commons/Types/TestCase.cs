@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public record TestCase
 {
@@ -10,8 +10,9 @@ public record TestCase
 
     [JsonPropertyName("params")]
     public IEnumerable<object> Params { get; set; } = new List<object>();
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

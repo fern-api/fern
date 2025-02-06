@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-    namespace SeedBasicAuth.Test;
+namespace SeedBasicAuth.Test;
 
 [TestFixture]
 public class TestClient;

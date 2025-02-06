@@ -3,7 +3,8 @@ namespace SeedCrossPackageTypeNames;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedCrossPackageTypeNamesApiException(string message,int statusCode,object body) : SeedCrossPackageTypeNamesException(message)
+public class SeedCrossPackageTypeNamesApiException(string message, int statusCode, object body)
+    : SeedCrossPackageTypeNamesException(message)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

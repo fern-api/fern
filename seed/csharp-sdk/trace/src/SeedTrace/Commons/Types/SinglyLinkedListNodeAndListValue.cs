@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public record SinglyLinkedListNodeAndListValue
 {
@@ -10,8 +10,9 @@ public record SinglyLinkedListNodeAndListValue
 
     [JsonPropertyName("fullList")]
     public required SinglyLinkedListValue FullList { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

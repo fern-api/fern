@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-    namespace SeedPagination;
+namespace SeedPagination;
 
 public record ListUsersBodyOffsetPaginationRequest
 {
@@ -11,8 +11,9 @@ public record ListUsersBodyOffsetPaginationRequest
     /// </summary>
     [JsonPropertyName("pagination")]
     public WithPage? Pagination { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedAliasExtends.Core;
 
-    namespace SeedAliasExtends;
+namespace SeedAliasExtends;
 
 public record InlinedChildRequest
 {
@@ -10,8 +10,9 @@ public record InlinedChildRequest
 
     [JsonPropertyName("parent")]
     public required string Parent { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

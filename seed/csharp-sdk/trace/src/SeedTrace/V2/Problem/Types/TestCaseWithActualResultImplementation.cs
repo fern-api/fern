@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace.V2;
+namespace SeedTrace.V2;
 
 public record TestCaseWithActualResultImplementation
 {
@@ -10,8 +10,9 @@ public record TestCaseWithActualResultImplementation
 
     [JsonPropertyName("assertCorrectnessCheck")]
     public required object AssertCorrectnessCheck { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

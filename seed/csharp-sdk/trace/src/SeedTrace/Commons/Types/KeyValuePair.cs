@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public record KeyValuePair
 {
@@ -10,8 +10,9 @@ public record KeyValuePair
 
     [JsonPropertyName("value")]
     public required object Value { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

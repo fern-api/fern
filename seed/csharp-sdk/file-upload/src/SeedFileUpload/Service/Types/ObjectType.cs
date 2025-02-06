@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedFileUpload.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedFileUpload;
+namespace SeedFileUpload;
 
 [JsonConverter(typeof(EnumSerializer<ObjectType>))]
 public enum ObjectType
@@ -11,5 +11,5 @@ public enum ObjectType
     Foo,
 
     [EnumMember(Value = "BAR")]
-    Bar
+    Bar,
 }

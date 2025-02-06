@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedValidation.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedValidation;
+namespace SeedValidation;
 
 [JsonConverter(typeof(EnumSerializer<Shape>))]
 public enum Shape
@@ -14,5 +14,5 @@ public enum Shape
     Circle,
 
     [EnumMember(Value = "TRIANGLE")]
-    Triangle
+    Triangle,
 }

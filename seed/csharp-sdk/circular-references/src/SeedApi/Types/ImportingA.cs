@@ -1,14 +1,15 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 
-    namespace SeedApi;
+namespace SeedApi;
 
 public record ImportingA
 {
     [JsonPropertyName("a")]
     public A? A { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

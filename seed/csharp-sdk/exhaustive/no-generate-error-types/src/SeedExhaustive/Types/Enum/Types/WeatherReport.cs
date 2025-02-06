@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedExhaustive.Types;
+namespace SeedExhaustive.Types;
 
 [JsonConverter(typeof(EnumSerializer<WeatherReport>))]
 public enum WeatherReport
@@ -17,5 +17,5 @@ public enum WeatherReport
     Raining,
 
     [EnumMember(Value = "SNOWING")]
-    Snowing
+    Snowing,
 }

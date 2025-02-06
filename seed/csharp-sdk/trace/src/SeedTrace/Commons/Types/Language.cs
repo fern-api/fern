@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 [JsonConverter(typeof(EnumSerializer<Language>))]
 public enum Language
@@ -14,5 +14,5 @@ public enum Language
     Javascript,
 
     [EnumMember(Value = "PYTHON")]
-    Python
+    Python,
 }

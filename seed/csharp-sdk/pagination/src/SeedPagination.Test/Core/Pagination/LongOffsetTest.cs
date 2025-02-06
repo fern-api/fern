@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SystemTask = System.Threading.Tasks.Task;
 using SeedPagination.Core;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -18,43 +18,12 @@ public class LongOffsetTest
     {
         var responses = new List<Response>
         {
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = []
-                }
-            }
+            new() { Data = new() { Items = ["item1", "item2"] } },
+            new() { Data = new() { Items = ["item1"] } },
+            new() { Data = new() { Items = [] } },
         }.GetEnumerator();
-        Pager<object> pager = new OffsetPager<
-            Request,
-            object?,
-            Response,
-            long,
-            object?,
-            object
-        >(
-            new()
-            {
-                Pagination = new()
-                {
-                    Page = 1
-                }
-            },
+        Pager<object> pager = new OffsetPager<Request, object?, Response, long, object?, object>(
+            new() { Pagination = new() { Page = 1 } },
             null,
             (_, _, _) =>
             {

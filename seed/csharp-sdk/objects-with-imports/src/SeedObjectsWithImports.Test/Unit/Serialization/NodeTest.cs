@@ -1,19 +1,20 @@
-using NUnit.Framework;
-using System.Text.Json.Serialization;
 using System.Text.Json;
-using SeedObjectsWithImports;
+using System.Text.Json.Serialization;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+using SeedObjectsWithImports;
 
-    namespace SeedObjectsWithImports.Test;
+namespace SeedObjectsWithImports.Test;
 
 [TestFixture]
 public class NodeTest
 {
     [Test]
-    public void TestSerialization_1() {
-        var inputJson = 
-        @"
+    public void TestSerialization_1()
+    {
+        var inputJson =
+            @"
         {
           ""id"": ""node-8dvgfja2"",
           ""label"": ""left"",
@@ -27,8 +28,11 @@ public class NodeTest
         }
         ";
 
-        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-        
+        var serializerOptions = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+
         var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
@@ -37,9 +41,10 @@ public class NodeTest
     }
 
     [Test]
-    public void TestSerialization_2() {
-        var inputJson = 
-        @"
+    public void TestSerialization_2()
+    {
+        var inputJson =
+            @"
         {
           ""id"": ""node-cwda9fi2x"",
           ""label"": ""right"",
@@ -53,13 +58,15 @@ public class NodeTest
         }
         ";
 
-        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-        
+        var serializerOptions = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+
         var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
         JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
     }
-
 }

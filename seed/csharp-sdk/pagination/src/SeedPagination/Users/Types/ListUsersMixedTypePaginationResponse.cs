@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-    namespace SeedPagination;
+namespace SeedPagination;
 
 public record ListUsersMixedTypePaginationResponse
 {
@@ -10,8 +10,9 @@ public record ListUsersMixedTypePaginationResponse
 
     [JsonPropertyName("data")]
     public IEnumerable<User> Data { get; set; } = new List<User>();
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

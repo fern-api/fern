@@ -1,6 +1,6 @@
 using SeedMixedFileDirectory.Core;
 
-    namespace SeedMixedFileDirectory.User;
+namespace SeedMixedFileDirectory.User;
 
 public record ListUserEventsRequest
 {
@@ -8,8 +8,9 @@ public record ListUserEventsRequest
     /// The maximum number of results to return.
     /// </summary>
     public int? Limit { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

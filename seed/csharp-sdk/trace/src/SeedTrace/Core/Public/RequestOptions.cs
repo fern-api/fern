@@ -1,8 +1,8 @@
-using SeedTrace.Core;
-using System.Net.Http;
 using System;
+using System.Net.Http;
+using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public partial class RequestOptions : IRequestOptions
 {
@@ -30,5 +30,4 @@ public partial class RequestOptions : IRequestOptions
     /// The http headers sent with the request.
     /// </summary>
     Headers IRequestOptions.Headers { get; init; } = new();
-
 }

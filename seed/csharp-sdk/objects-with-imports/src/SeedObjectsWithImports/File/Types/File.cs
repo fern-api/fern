@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Core;
 
-    namespace SeedObjectsWithImports;
+namespace SeedObjectsWithImports;
 
 public record File
 {
@@ -13,8 +13,9 @@ public record File
 
     [JsonPropertyName("info")]
     public required FileInfo Info { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

@@ -156,13 +156,13 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        // await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
-        //     doNotPipeOutput: true,
-        //     cwd: absolutePathToSrcDirectory,
-        //     env: {
-        //         DOTNET_CLI_TELEMETRY_OPTOUT: "1"
-        //     }
-        // });
+        await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
+            doNotPipeOutput: true,
+            cwd: absolutePathToSrcDirectory,
+            env: {
+                DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+            }
+        });
     }
 
     private async createProject({

@@ -1,12 +1,13 @@
 using SeedPathParameters.Core;
 
-    namespace SeedPathParameters;
+namespace SeedPathParameters;
 
 public record SearchUsersRequest
 {
     public int? Limit { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

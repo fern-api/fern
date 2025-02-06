@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SystemTask = System.Threading.Tasks.Task;
 using SeedPagination.Core;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -25,50 +25,23 @@ public class GuidCursorTest
         {
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                },
-                Cursor = new()
-                {
-                    Next = Cursor2
-                }
+                Data = new() { Items = ["item1", "item2"] },
+                Cursor = new() { Next = Cursor2 },
             },
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1"]
-                },
-                Cursor = new()
-                {
-                    Next = Cursor3
-                }
+                Data = new() { Items = ["item1"] },
+                Cursor = new() { Next = Cursor3 },
             },
             new()
             {
-                Data = new()
-                {
-                    Items = []
-                },
-                Cursor = new()
-                {
-                    Next = null
-                }
-            }
+                Data = new() { Items = [] },
+                Cursor = new() { Next = null },
+            },
         }.GetEnumerator();
         _cursorCopy = Cursor1;
-        Pager<object> pager = new CursorPager<
-            Request,
-            object?,
-            Response,
-            Guid?,
-            object
-        >(
-            new()
-            {
-                Cursor = Cursor1
-            },
+        Pager<object> pager = new CursorPager<Request, object?, Response, Guid?, object>(
+            new() { Cursor = Cursor1 },
             null,
             (_, _, _) =>
             {

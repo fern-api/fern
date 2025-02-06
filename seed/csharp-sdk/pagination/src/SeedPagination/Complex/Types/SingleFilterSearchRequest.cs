@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-    namespace SeedPagination;
+namespace SeedPagination;
 
 public record SingleFilterSearchRequest
 {
@@ -13,8 +13,9 @@ public record SingleFilterSearchRequest
 
     [JsonPropertyName("value")]
     public string? Value { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

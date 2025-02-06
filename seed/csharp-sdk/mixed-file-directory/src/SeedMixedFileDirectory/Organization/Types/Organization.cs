@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedMixedFileDirectory.Core;
 
-    namespace SeedMixedFileDirectory;
+namespace SeedMixedFileDirectory;
 
 public record Organization
 {
@@ -13,8 +13,9 @@ public record Organization
 
     [JsonPropertyName("users")]
     public IEnumerable<User> Users { get; set; } = new List<User>();
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

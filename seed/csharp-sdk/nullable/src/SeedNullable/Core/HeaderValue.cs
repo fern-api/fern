@@ -2,16 +2,8 @@ using OneOf;
 
 namespace SeedNullable.Core;
 
-internal sealed class HeaderValue(
-    OneOf<
-        string,
-        Func<string>
-    > value
-)
-    : OneOfBase<
-        string,
-        Func<string>
-    >(value)
+internal sealed class HeaderValue(OneOf<string, Func<string>> value)
+    : OneOfBase<string, Func<string>>(value)
 {
     public static implicit operator HeaderValue(string value)
     {

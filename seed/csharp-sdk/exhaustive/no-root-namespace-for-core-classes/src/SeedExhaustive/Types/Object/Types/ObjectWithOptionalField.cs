@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
-    namespace SeedExhaustive.Types;
+namespace SeedExhaustive.Types;
 
 public record ObjectWithOptionalField
 {
@@ -46,8 +46,9 @@ public record ObjectWithOptionalField
 
     [JsonPropertyName("bigint")]
     public string? Bigint { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

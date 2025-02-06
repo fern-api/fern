@@ -1,8 +1,8 @@
-using SeedWebsocket.Core;
-using System.Net.Http;
 using System;
+using System.Net.Http;
+using SeedWebsocket.Core;
 
-    namespace SeedWebsocket;
+namespace SeedWebsocket;
 
 public partial class RequestOptions : IRequestOptions
 {
@@ -30,5 +30,4 @@ public partial class RequestOptions : IRequestOptions
     /// The http headers sent with the request.
     /// </summary>
     Headers IRequestOptions.Headers { get; init; } = new();
-
 }

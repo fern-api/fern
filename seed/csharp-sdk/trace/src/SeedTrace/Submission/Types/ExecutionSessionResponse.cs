@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 public record ExecutionSessionResponse
 {
@@ -16,8 +16,9 @@ public record ExecutionSessionResponse
 
     [JsonPropertyName("status")]
     public required ExecutionSessionStatus Status { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

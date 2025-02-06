@@ -1,15 +1,17 @@
-using SeedAnyAuth.Core;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using SeedAnyAuth.Core;
 
-    namespace SeedAnyAuth;
+namespace SeedAnyAuth;
 
 public partial class AuthClient
 {
     private RawClient _client;
-    internal AuthClient (RawClient client) {
+
+    internal AuthClient(RawClient client)
+    {
         _client = client;
     }
 
@@ -27,12 +29,28 @@ public partial class AuthClient
     /// );
     /// </code>
     /// </example>
-    public async Task<TokenResponse> GetTokenAsync(GetTokenRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
-                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/token", Body = request, Options = options
-            }, cancellationToken).ConfigureAwait(false);
+    public async Task<TokenResponse> GetTokenAsync(
+        GetTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/token",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400) {
+        if (response.StatusCode is >= 200 and < 400)
+        {
             try
             {
                 return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
@@ -42,8 +60,11 @@ public partial class AuthClient
                 throw new SeedAnyAuthException("Failed to deserialize response", e);
             }
         }
-        
-        throw new SeedAnyAuthApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-    }
 
+        throw new SeedAnyAuthApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
 }

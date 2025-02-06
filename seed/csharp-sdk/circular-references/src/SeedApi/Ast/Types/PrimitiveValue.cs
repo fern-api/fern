@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedApi;
+namespace SeedApi;
 
 [JsonConverter(typeof(EnumSerializer<PrimitiveValue>))]
 public enum PrimitiveValue
@@ -11,5 +11,5 @@ public enum PrimitiveValue
     String,
 
     [EnumMember(Value = "NUMBER")]
-    Number
+    Number,
 }

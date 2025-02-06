@@ -1,8 +1,8 @@
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using SystemTask = System.Threading.Tasks.Task;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace SeedAnyAuth.Core;
 
@@ -13,7 +13,6 @@ internal class RawClient(ClientOptions clientOptions)
 {
     private const int InitialRetryDelayMs = 1000;
     private const int MaxRetryDelayMs = 60000;
-
 
     /// <summary>
     /// The client options applied on every request.
@@ -84,7 +83,9 @@ internal class RawClient(ClientOptions clientOptions)
     {
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
         var maxRetries = request.Options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken).ConfigureAwait(false);
+        var response = await httpClient
+            .SendAsync(BuildHttpRequest(request), cancellationToken)
+            .ConfigureAwait(false);
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
@@ -93,7 +94,9 @@ internal class RawClient(ClientOptions clientOptions)
             }
             var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
-            response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken).ConfigureAwait(false);
+            response = await httpClient
+                .SendAsync(BuildHttpRequest(request), cancellationToken)
+                .ConfigureAwait(false);
         }
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }

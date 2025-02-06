@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedTrace;
+namespace SeedTrace;
 
 [JsonConverter(typeof(EnumSerializer<ReservedKeywordEnum>))]
 public enum ReservedKeywordEnum
@@ -11,5 +11,5 @@ public enum ReservedKeywordEnum
     Is,
 
     [EnumMember(Value = "as")]
-    As
+    As,
 }

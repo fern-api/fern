@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedPagination;
+namespace SeedPagination;
 
 [JsonConverter(typeof(EnumSerializer<Order>))]
 public enum Order
@@ -11,5 +11,5 @@ public enum Order
     Asc,
 
     [EnumMember(Value = "desc")]
-    Desc
+    Desc,
 }

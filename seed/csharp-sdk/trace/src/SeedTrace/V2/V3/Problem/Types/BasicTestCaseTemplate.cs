@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-    namespace SeedTrace.V2.V3;
+namespace SeedTrace.V2.V3;
 
 public record BasicTestCaseTemplate
 {
@@ -16,8 +16,9 @@ public record BasicTestCaseTemplate
 
     [JsonPropertyName("expectedValueParameterId")]
     public required string ExpectedValueParameterId { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

@@ -1,8 +1,8 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedUndiscriminatedUnions.Core;
-using System.Runtime.Serialization;
 
-    namespace SeedUndiscriminatedUnions;
+namespace SeedUndiscriminatedUnions;
 
 [JsonConverter(typeof(EnumSerializer<KeyType>))]
 public enum KeyType
@@ -11,5 +11,5 @@ public enum KeyType
     Name,
 
     [EnumMember(Value = "value")]
-    Value
+    Value,
 }

@@ -1,6 +1,6 @@
 using SeedPagination.Core;
 
-    namespace SeedPagination;
+namespace SeedPagination;
 
 public record ListUsersDoubleOffsetPaginationRequest
 {
@@ -21,8 +21,9 @@ public record ListUsersDoubleOffsetPaginationRequest
     /// the next page of results.
     /// </summary>
     public string? StartingAfter { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

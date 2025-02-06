@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
 
-    namespace SeedExamples;
+namespace SeedExamples;
 
 public record Node
 {
@@ -13,8 +13,9 @@ public record Node
 
     [JsonPropertyName("trees")]
     public IEnumerable<Tree>? Trees { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

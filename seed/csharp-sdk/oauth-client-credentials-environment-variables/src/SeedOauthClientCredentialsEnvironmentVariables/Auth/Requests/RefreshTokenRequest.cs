@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
-    namespace SeedOauthClientCredentialsEnvironmentVariables;
+namespace SeedOauthClientCredentialsEnvironmentVariables;
 
 public record RefreshTokenRequest
 {
@@ -22,8 +22,9 @@ public record RefreshTokenRequest
 
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

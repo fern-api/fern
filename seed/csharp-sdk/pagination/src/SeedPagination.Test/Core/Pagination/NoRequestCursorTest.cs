@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SystemTask = System.Threading.Tasks.Task;
 using SeedPagination.Core;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -18,52 +18,29 @@ public class NoRequestCursorTest
     private const string Cursor2 = "cursor2";
     private const string Cursor3 = "cursor3";
     private string? _cursorCopy;
+
     private Pager<object> CreatePager()
     {
         var responses = new List<Response>
         {
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                },
-                Cursor = new ()
-                {
-                    Next = Cursor2
-                }
+                Data = new() { Items = ["item1", "item2"] },
+                Cursor = new() { Next = Cursor2 },
             },
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1"]
-                },
-                Cursor = new ()
-                {
-                    Next = Cursor3
-                }
+                Data = new() { Items = ["item1"] },
+                Cursor = new() { Next = Cursor3 },
             },
             new()
             {
-                Data = new()
-                {
-                    Items = []
-                },
-                Cursor = new ()
-                {
-                    Next = null
-                }
-            }
+                Data = new() { Items = [] },
+                Cursor = new() { Next = null },
+            },
         }.GetEnumerator();
         _cursorCopy = Cursor1;
-        Pager<object> pager = new CursorPager<
-            Request?,
-            object?,
-            Response,
-            string,
-            object
-        >(
+        Pager<object> pager = new CursorPager<Request?, object?, Response, string, object>(
             null,
             null,
             (_, _, _) =>

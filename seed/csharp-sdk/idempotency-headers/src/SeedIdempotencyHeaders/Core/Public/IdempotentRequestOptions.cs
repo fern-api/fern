@@ -1,8 +1,8 @@
-using SeedIdempotencyHeaders.Core;
-using System.Net.Http;
 using System;
+using System.Net.Http;
+using SeedIdempotencyHeaders.Core;
 
-    namespace SeedIdempotencyHeaders;
+namespace SeedIdempotencyHeaders;
 
 public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 {
@@ -35,12 +35,14 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
     /// </summary>
     Headers IRequestOptions.Headers { get; init; } = new();
 
-    Headers IIdempotentRequestOptions.GetIdempotencyHeaders() {
-        return new Headers(new Dictionary<string, string>
-        {
-            ["Idempotency-Key"] = IdempotencyKey,
-            ["Idempotency-Expiration"] = IdempotencyExpiration.ToString(),
-        });
+    Headers IIdempotentRequestOptions.GetIdempotencyHeaders()
+    {
+        return new Headers(
+            new Dictionary<string, string>
+            {
+                ["Idempotency-Key"] = IdempotencyKey,
+                ["Idempotency-Expiration"] = IdempotencyExpiration.ToString(),
+            }
+        );
     }
-
 }

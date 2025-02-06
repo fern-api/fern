@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-    namespace SeedServerSentEvents.Test;
+namespace SeedServerSentEvents.Test;
 
 [TestFixture]
 public class TestClient;

@@ -1,6 +1,6 @@
 using SeedNullable.Core;
 
-    namespace SeedNullable;
+namespace SeedNullable;
 
 public record GetUsersRequest
 {
@@ -13,8 +13,9 @@ public record GetUsersRequest
     public IEnumerable<string> Tags { get; set; } = new List<string>();
 
     public bool? Extra { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
-    namespace SeedApi;
+namespace SeedApi;
 
 public record UpdateRequest
 {
@@ -20,31 +20,35 @@ public record UpdateRequest
 
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
 
     /// <summary>
     /// Maps the UpdateRequest type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.UpdateRequest ToProto() {
-        var result = new Proto.UpdateRequest(
-            
-        );
+    internal Proto.UpdateRequest ToProto()
+    {
+        var result = new Proto.UpdateRequest();
         result.Id = Id;
-        if (Values != null && Values.Any()) {
+        if (Values != null && Values.Any())
+        {
             result.Values.AddRange(Values);
         }
-        if (SetMetadata != null) {
+        if (SetMetadata != null)
+        {
             result.SetMetadata = SetMetadata.ToProto();
         }
-        if (Namespace != null) {
+        if (Namespace != null)
+        {
             result.Namespace = Namespace ?? "";
         }
-        if (IndexedData != null) {
+        if (IndexedData != null)
+        {
             result.IndexedData = IndexedData.ToProto();
         }
         return result;
     }
-
 }

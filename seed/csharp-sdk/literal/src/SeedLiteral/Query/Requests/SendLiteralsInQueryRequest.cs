@@ -1,6 +1,6 @@
 using SeedLiteral.Core;
 
-    namespace SeedLiteral;
+namespace SeedLiteral;
 
 public record SendLiteralsInQueryRequest
 {
@@ -21,8 +21,9 @@ public record SendLiteralsInQueryRequest
     public required bool AliasStream { get; set; }
 
     public bool? AliasOptionalStream { get; set; }
-    public override string ToString() {
+
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }
