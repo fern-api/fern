@@ -3,7 +3,14 @@ import { PhpFile } from "@fern-api/php-codegen";
 import { FileGenerator } from "@fern-api/php-codegen";
 import { php } from "@fern-api/php-codegen";
 
-import { ObjectProperty, SingleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import {
+    DeclaredTypeName,
+    ObjectProperty,
+    SingleUnionType,
+    SingleUnionTypeProperty,
+    TypeDeclaration,
+    UnionTypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -105,8 +112,20 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private getReturnType(type: SingleUnionType): php.Type {
-        // TODO(ajgateno): Implement actually getting the type
-        return php.Type.mixed();
+        return type.shape._visit({
+            samePropertiesAsObject: (value: DeclaredTypeName) => {
+                return php.Type.reference(this.context.phpTypeMapper.convertToClassReference(value));
+            },
+            singleProperty: (value: SingleUnionTypeProperty) => {
+                return this.context.phpTypeMapper.convert({ reference: value.type });
+            },
+            noProperties: () => {
+                return php.Type.null();
+            },
+            _other: (value) => {
+                throw new Error("Got unexpected union type: " + value);
+            }
+        });
     }
 
     protected getFilepath(): RelativeFilePath {

@@ -39,16 +39,16 @@ class Shape extends JsonSerializableType
     }
 
     /**
-     * @return mixed
+     * @return Circle
      */
-    public function asCircle(): mixed
+    public function asCircle(): Circle
     {
     }
 
     /**
-     * @return mixed
+     * @return Square
      */
-    public function asSquare(): mixed
+    public function asSquare(): Square
     {
     }
 

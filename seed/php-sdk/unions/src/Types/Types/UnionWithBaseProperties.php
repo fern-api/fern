@@ -39,23 +39,23 @@ class UnionWithBaseProperties extends JsonSerializableType
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function asInteger(): mixed
+    public function asInteger(): int
     {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function asString(): mixed
+    public function asString(): string
     {
     }
 
     /**
-     * @return mixed
+     * @return Foo
      */
-    public function asFoo(): mixed
+    public function asFoo(): Foo
     {
     }
 

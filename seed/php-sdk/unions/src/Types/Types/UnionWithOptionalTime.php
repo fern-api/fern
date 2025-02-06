@@ -3,6 +3,7 @@
 namespace Seed\Types\Types;
 
 use Seed\Core\Json\JsonSerializableType;
+use DateTime;
 
 class UnionWithOptionalTime extends JsonSerializableType
 {
@@ -30,16 +31,16 @@ class UnionWithOptionalTime extends JsonSerializableType
     }
 
     /**
-     * @return mixed
+     * @return ?DateTime
      */
-    public function asDate(): mixed
+    public function asDate(): ?DateTime
     {
     }
 
     /**
-     * @return mixed
+     * @return ?DateTime
      */
-    public function asDatetime(): mixed
+    public function asDatetime(): ?DateTime
     {
     }
 

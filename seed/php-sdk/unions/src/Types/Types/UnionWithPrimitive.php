@@ -30,16 +30,16 @@ class UnionWithPrimitive extends JsonSerializableType
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function asInteger(): mixed
+    public function asInteger(): int
     {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function asString(): mixed
+    public function asString(): string
     {
     }
 

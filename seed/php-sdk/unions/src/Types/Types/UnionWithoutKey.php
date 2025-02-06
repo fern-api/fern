@@ -30,16 +30,16 @@ class UnionWithoutKey extends JsonSerializableType
     }
 
     /**
-     * @return mixed
+     * @return Foo
      */
-    public function asFoo(): mixed
+    public function asFoo(): Foo
     {
     }
 
     /**
-     * @return mixed
+     * @return Bar
      */
-    public function asBar(): mixed
+    public function asBar(): Bar
     {
     }
 

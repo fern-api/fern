@@ -39,9 +39,9 @@ class UnionWithLiteral extends JsonSerializableType
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function asFern(): mixed
+    public function asFern(): string
     {
     }
 

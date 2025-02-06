@@ -30,9 +30,9 @@ class UnionWithUnknown extends JsonSerializableType
     }
 
     /**
-     * @return mixed
+     * @return Foo
      */
-    public function asFoo(): mixed
+    public function asFoo(): Foo
     {
     }
 
