@@ -24,7 +24,10 @@
               "request": {
                 "body": {
                   "properties": {
-                    "data": "optional<UploadFileRequestData>",
+                    "data": {
+                      "style": "exploded",
+                      "type": "optional<UploadFileRequestData>",
+                    },
                     "file": {
                       "content-type": "application/octet-stream",
                       "docs": "The file to upload",
@@ -90,7 +93,9 @@
               type: optional<map<string, unknown>>
               docs: This is a metadata field
               content-type: application/json
-            data: optional<UploadFileRequestData>
+            data:
+              type: optional<UploadFileRequestData>
+              style: exploded
         content-type: multipart/form-data
       examples:
         - request: {}
