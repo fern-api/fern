@@ -7,6 +7,7 @@ using SeedErrorProperty.Core;
 namespace SeedErrorProperty.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo

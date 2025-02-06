@@ -1,0 +1,8 @@
+## 1.9.15
+**`(fix):`** Change unpaged endpoints from internal to private to avoid ambiguous references in test projects who have access to internals.
+
+**`(fix):`** Fix an issue where enum values named `Equals` would always have be converted to `"Equals"` instead of their correct wire value.
+
+
+**`(feat):`** Increase test performance by parallelizing tests and setting HTTP request retry delay to 0.
+

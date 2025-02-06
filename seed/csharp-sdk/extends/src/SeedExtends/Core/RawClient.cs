@@ -11,8 +11,8 @@ namespace SeedExtends.Core;
 /// </summary>
 internal class RawClient(ClientOptions clientOptions)
 {
-    private const int InitialRetryDelayMs = 1000;
     private const int MaxRetryDelayMs = 60000;
+    internal int BaseRetryDelay { get; set; } = 1000;
 
     /// <summary>
     /// The client options applied on every request.
@@ -92,7 +92,7 @@ internal class RawClient(ClientOptions clientOptions)
             {
                 break;
             }
-            var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
+            var delayMs = Math.Min(BaseRetryDelay * (int)Math.Pow(2, i), MaxRetryDelayMs);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             response = await httpClient
                 .SendAsync(BuildHttpRequest(request), cancellationToken)
