@@ -1,1 +1,1 @@
-export { NoDuplicateExampleNamesRule } from "./no-duplicate-example-names";
+export { ExplodedFormDataIsArrayRule } from "./exploded-form-data-is-array";

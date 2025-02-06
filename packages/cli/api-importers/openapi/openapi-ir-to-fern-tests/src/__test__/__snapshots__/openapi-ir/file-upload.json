@@ -122,6 +122,51 @@
               "type": "json"
             },
             "contentType": "application/json"
+          },
+          {
+            "key": "data",
+            "schema": {
+              "value": {
+                "generatedName": "uploadFileRequestData",
+                "value": {
+                  "properties": [
+                    {
+                      "key": "datum",
+                      "schema": {
+                        "generatedName": "uploadFileRequestDataDatum",
+                        "value": {
+                          "generatedName": "UploadFileRequestDataDatum",
+                          "schema": {
+                            "type": "string"
+                          },
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "conflict": {},
+                      "generatedName": "uploadFileRequestDataDatum"
+                    }
+                  ],
+                  "generatedName": "UploadFileRequestData",
+                  "allOf": [],
+                  "allOfPropertyConflicts": [],
+                  "groupName": [],
+                  "fullExamples": [],
+                  "additionalProperties": false,
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "object"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
           }
         ],
         "source": {

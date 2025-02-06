@@ -595,6 +595,9 @@ function getRequest({
                             const contentType = property.contentType.split(",")[0];
                             propertyTypeReference["content-type"] = contentType;
                         }
+                        if (property.exploded) {
+                            propertyTypeReference.style = "exploded"
+                        }
                         return [property.key, propertyTypeReference];
                     }
                     return [property.key, fileType];

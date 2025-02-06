@@ -24,6 +24,7 @@
               "request": {
                 "body": {
                   "properties": {
+                    "data": "optional<UploadFileRequestData>",
                     "file": {
                       "content-type": "application/octet-stream",
                       "docs": "The file to upload",
@@ -52,6 +53,18 @@
             "openapi": "../openapi.yml",
           },
         },
+        "types": {
+          "UploadFileRequestData": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "datum": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
       },
       "rawContents": "service:
   auth: false
@@ -77,11 +90,19 @@
               type: optional<map<string, unknown>>
               docs: This is a metadata field
               content-type: application/json
+            data: optional<UploadFileRequestData>
         content-type: multipart/form-data
       examples:
         - request: {}
   source:
     openapi: ../openapi.yml
+types:
+  UploadFileRequestData:
+    properties:
+      datum: optional<string>
+    source:
+      openapi: ../openapi.yml
+    inline: true
 ",
     },
   },

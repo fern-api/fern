@@ -1,27 +1,24 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-types:
-  MyObject:
-    type: string
-    examples:
-      - name: Example1
-        value: hello world
-      - name: Example2
-        value: hello world
-      - name: Example3
-        value: hello world
-      - name: Example2
-        value: hello world
 
 service:
-  base-path: /
-  auth: true
+  base-path: /documents
+  auth: false
   endpoints:
-    get:
-      path: ""
-      method: GET
-      examples:
-        - name: Example1
-        - name: Example2
-        - name: Example3
-        - name: Example2
+    uploadDocument:
+      path: /upload
+      method: POST
+      request:
+        name: UploadDocumentRequest
+        body:
+          properties:
+            file: file
+            invalid-exploded: 
+              type: string
+              style: exploded
+            # exploded: 
+            #   type: list<string>
+            #   style: exploded
+            # exploded2: 
+            #   type: optional<list<string>>
+            #   style: exploded
