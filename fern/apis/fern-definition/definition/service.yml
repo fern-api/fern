@@ -120,8 +120,15 @@ types:
   HttpInlineFileRequestBodyPropertySchema:
     extends: types.TypeReferenceDeclarationWithName
     properties:
-      exploded: optional<string>
+      style: 
+        type: optional<FormDataBodyEncodingStyle>
+        docs: Defaults to json encoding
       content-type: optional<string>
+  
+  FormDataBodyEncodingStyle: 
+    enum: 
+      - json
+      - exploded
 
   HttpQueryParameterSchema:
     discriminated: false

@@ -1727,7 +1727,14 @@
       ],
       "additionalProperties": false
     },
-    "service.TypeReferenceDeclarationWithContentTypeSchema": {
+    "service.FormDataBodyEncodingStyle": {
+      "type": "string",
+      "enum": [
+        "json",
+        "exploded"
+      ]
+    },
+    "service.HttpInlineFileRequestBodyPropertySchema": {
       "type": "object",
       "properties": {
         "type": {
@@ -1813,6 +1820,16 @@
             }
           ]
         },
+        "style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.FormDataBodyEncodingStyle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "content-type": {
           "oneOf": [
             {
@@ -1835,7 +1852,7 @@
           "type": "string"
         },
         {
-          "$ref": "#/definitions/service.TypeReferenceDeclarationWithContentTypeSchema"
+          "$ref": "#/definitions/service.HttpInlineFileRequestBodyPropertySchema"
         }
       ]
     },
