@@ -35,6 +35,9 @@ jobs:
             python:
               - 'docker/seed/Dockerfile.python'
               - '.github/workflows/seed-dockers.yml'
+            csharp:
+              - 'docker/seed/Dockerfile.csharp'
+              - '.github/workflows/seed-dockers.yml'
   build-container:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     strategy:

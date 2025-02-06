@@ -21,7 +21,6 @@ publish:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
     context: .
-    dockerignore-path: ./generators/csharp/sdk/.dockerignore
 test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
@@ -38,7 +37,7 @@ defaultOutputMode: github
 defaultCustomConfig:
   generate-mock-server-tests: true
 scripts:
-  - docker: mcr.microsoft.com/dotnet/sdk:8.0
+  - docker: fernapi/csharp-seed
     commands:
       - dotnet restore src
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
