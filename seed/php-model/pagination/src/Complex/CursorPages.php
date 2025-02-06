@@ -55,4 +55,12 @@ class CursorPages extends JsonSerializableType
         $this->totalPages = $values['totalPages'] ?? null;
         $this->type = $values['type'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

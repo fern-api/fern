@@ -2,6 +2,7 @@
 
 namespace Seed\V2\V3\Problem;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\V2\V3\Problem\Types\LightweightProblemInfoV2;
 use Seed\Exceptions\SeedException;
@@ -17,17 +18,35 @@ use Seed\V2\V3\Problem\Types\ProblemInfoV2;
 class ProblemClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
@@ -35,6 +54,7 @@ class ProblemClient
      *
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<LightweightProblemInfoV2>
      * @throws SeedException
@@ -42,6 +62,7 @@ class ProblemClient
      */
     public function getLightweightProblems(?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -49,6 +70,7 @@ class ProblemClient
                     path: "/problems-v2/lightweight-problem-info",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -72,6 +94,7 @@ class ProblemClient
      *
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<ProblemInfoV2>
      * @throws SeedException
@@ -79,6 +102,7 @@ class ProblemClient
      */
     public function getProblems(?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -86,6 +110,7 @@ class ProblemClient
                     path: "/problems-v2/problem-info",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -110,6 +135,7 @@ class ProblemClient
      * @param string $problemId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ProblemInfoV2
      * @throws SeedException
@@ -117,6 +143,7 @@ class ProblemClient
      */
     public function getLatestProblem(string $problemId, ?array $options = null): ProblemInfoV2
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -124,6 +151,7 @@ class ProblemClient
                     path: "/problems-v2/problem-info/$problemId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -149,6 +177,7 @@ class ProblemClient
      * @param int $problemVersion
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ProblemInfoV2
      * @throws SeedException
@@ -156,6 +185,7 @@ class ProblemClient
      */
     public function getProblemVersion(string $problemId, int $problemVersion, ?array $options = null): ProblemInfoV2
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -163,6 +193,7 @@ class ProblemClient
                     path: "/problems-v2/problem-info/$problemId/version/$problemVersion",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

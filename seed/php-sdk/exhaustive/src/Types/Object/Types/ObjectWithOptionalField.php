@@ -122,4 +122,12 @@ class ObjectWithOptionalField extends JsonSerializableType
         $this->map = $values['map'] ?? null;
         $this->bigint = $values['bigint'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

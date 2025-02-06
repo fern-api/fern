@@ -31,4 +31,12 @@ class RecordedTestCaseUpdate extends JsonSerializableType
         $this->testCaseId = $values['testCaseId'];
         $this->traceResponsesSize = $values['traceResponsesSize'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -48,4 +48,12 @@ class PaginatedConversationResponse extends JsonSerializableType
         $this->totalCount = $values['totalCount'];
         $this->type = $values['type'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

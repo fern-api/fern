@@ -31,4 +31,12 @@ class Migration extends JsonSerializableType
         $this->name = $values['name'];
         $this->status = $values['status'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

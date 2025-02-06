@@ -48,4 +48,12 @@ class LightweightProblemInfoV2 extends JsonSerializableType
         $this->problemVersion = $values['problemVersion'];
         $this->variableTypes = $values['variableTypes'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

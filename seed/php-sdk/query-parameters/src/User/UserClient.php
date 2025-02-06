@@ -2,6 +2,7 @@
 
 namespace Seed\User;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\User\Requests\GetUsersRequest;
 use Seed\User\Types\User;
@@ -16,23 +17,42 @@ use Psr\Http\Client\ClientExceptionInterface;
 class UserClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return User
      * @throws SeedException
@@ -40,6 +60,7 @@ class UserClient
      */
     public function getUsername(GetUsersRequest $request, ?array $options = null): User
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['limit'] = $request->limit;
         $query['id'] = $request->id;
@@ -69,6 +90,7 @@ class UserClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

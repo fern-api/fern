@@ -23,4 +23,12 @@ class UpdateProblemResponse extends JsonSerializableType
     ) {
         $this->problemVersion = $values['problemVersion'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

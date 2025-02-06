@@ -2,6 +2,7 @@
 
 namespace Seed\Endpoints\HttpMethods;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -16,23 +17,42 @@ use Seed\Types\Object\Types\ObjectWithOptionalField;
 class HttpMethodsClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string
      * @throws SeedException
@@ -40,6 +60,7 @@ class HttpMethodsClient
      */
     public function testGet(string $id, ?array $options = null): string
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -47,6 +68,7 @@ class HttpMethodsClient
                     path: "/http-methods/$id",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -69,6 +91,7 @@ class HttpMethodsClient
      * @param ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ObjectWithOptionalField
      * @throws SeedException
@@ -76,6 +99,7 @@ class HttpMethodsClient
      */
     public function testPost(ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -84,6 +108,7 @@ class HttpMethodsClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -107,6 +132,7 @@ class HttpMethodsClient
      * @param ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ObjectWithOptionalField
      * @throws SeedException
@@ -114,6 +140,7 @@ class HttpMethodsClient
      */
     public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -122,6 +149,7 @@ class HttpMethodsClient
                     method: HttpMethod::PUT,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -145,6 +173,7 @@ class HttpMethodsClient
      * @param ObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ObjectWithOptionalField
      * @throws SeedException
@@ -152,6 +181,7 @@ class HttpMethodsClient
      */
     public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -160,6 +190,7 @@ class HttpMethodsClient
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -182,6 +213,7 @@ class HttpMethodsClient
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return bool
      * @throws SeedException
@@ -189,6 +221,7 @@ class HttpMethodsClient
      */
     public function testDelete(string $id, ?array $options = null): bool
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -196,6 +229,7 @@ class HttpMethodsClient
                     path: "/http-methods/$id",
                     method: HttpMethod::DELETE,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

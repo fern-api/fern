@@ -2,6 +2,7 @@
 
 namespace Seed\User;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -15,33 +16,55 @@ use JsonException;
 class UserClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * Retrieve a user.
      * This endpoint is used to retrieve a user.
      *
-     * @param string $userId The ID of the user to retrieve.
-    This ID is unique to each user.
+     * The ID of the user to retrieve.
+     * This ID is unique to each user.
+     *
+     * @param string $userId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function getUser(string $userId, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -49,6 +72,7 @@ class UserClient
                     path: "users/$userId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -71,6 +95,7 @@ class UserClient
      * @param CreateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return User
      * @throws SeedException
@@ -78,6 +103,7 @@ class UserClient
      */
     public function createUser(CreateUserRequest $request, ?array $options = null): User
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -86,6 +112,7 @@ class UserClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

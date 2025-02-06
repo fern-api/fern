@@ -2,6 +2,7 @@
 
 namespace Seed\User\Events\Metadata;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\User\Events\Metadata\Requests\GetEventMetadataRequest;
 use Seed\User\Events\Metadata\Types\Metadata;
@@ -15,17 +16,35 @@ use Psr\Http\Client\ClientExceptionInterface;
 class MetadataClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
@@ -34,6 +53,7 @@ class MetadataClient
      * @param GetEventMetadataRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Metadata
      * @throws SeedException
@@ -41,6 +61,7 @@ class MetadataClient
      */
     public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): Metadata
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['id'] = $request->id;
         try {
@@ -51,6 +72,7 @@ class MetadataClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

@@ -218,7 +218,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             if (maybeAcceptsHeader.isPresent()) {
                 requestBodyCodeBlock
                         .add(
-                                ".headers($T.of($L.$L($L)));\n",
+                                ".headers($T.of($L.$L($L)))\n",
                                 Headers.class,
                                 clientOptionsMember.name,
                                 ClientOptionsGenerator.HEADERS_METHOD_NAME,

@@ -2,6 +2,7 @@
 
 namespace Seed\Query;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Query\Requests\SendLiteralsInQueryRequest;
 use Seed\Types\SendResponse;
@@ -15,23 +16,42 @@ use Psr\Http\Client\ClientExceptionInterface;
 class QueryClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param SendLiteralsInQueryRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return SendResponse
      * @throws SeedException
@@ -39,6 +59,7 @@ class QueryClient
      */
     public function send(SendLiteralsInQueryRequest $request, ?array $options = null): SendResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['prompt'] = 'You are a helpful assistant';
         $query['alias_prompt'] = $request->aliasPrompt;
@@ -65,6 +86,7 @@ class QueryClient
                     method: HttpMethod::POST,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

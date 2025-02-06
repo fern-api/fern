@@ -2,6 +2,7 @@
 
 namespace Seed\Submission;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Commons\Types\Language;
 use Seed\Submission\Types\ExecutionSessionResponse;
@@ -17,17 +18,35 @@ use Seed\Submission\Types\GetExecutionSessionStateResponse;
 class SubmissionClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
@@ -36,6 +55,7 @@ class SubmissionClient
      * @param value-of<Language> $language
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ExecutionSessionResponse
      * @throws SeedException
@@ -43,6 +63,7 @@ class SubmissionClient
      */
     public function createExecutionSession(string $language, ?array $options = null): ExecutionSessionResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -50,6 +71,7 @@ class SubmissionClient
                     path: "/sessions/create-session/$language",
                     method: HttpMethod::POST,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -74,6 +96,7 @@ class SubmissionClient
      * @param string $sessionId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ?ExecutionSessionResponse
      * @throws SeedException
@@ -81,6 +104,7 @@ class SubmissionClient
      */
     public function getExecutionSession(string $sessionId, ?array $options = null): ?ExecutionSessionResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -88,6 +112,7 @@ class SubmissionClient
                     path: "/sessions/$sessionId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -115,12 +140,14 @@ class SubmissionClient
      * @param string $sessionId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function stopExecutionSession(string $sessionId, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -128,6 +155,7 @@ class SubmissionClient
                     path: "/sessions/stop/$sessionId",
                     method: HttpMethod::DELETE,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -146,6 +174,7 @@ class SubmissionClient
     /**
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return GetExecutionSessionStateResponse
      * @throws SeedException
@@ -153,6 +182,7 @@ class SubmissionClient
      */
     public function getExecutionSessionsState(?array $options = null): GetExecutionSessionStateResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -160,6 +190,7 @@ class SubmissionClient
                     path: "/sessions/execution-sessions-state",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

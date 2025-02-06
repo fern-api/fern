@@ -31,4 +31,12 @@ class TestCaseWithExpectedResult extends JsonSerializableType
         $this->testCase = $values['testCase'];
         $this->expectedResult = $values['expectedResult'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

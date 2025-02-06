@@ -273,14 +273,9 @@ Executes a deployed Workflow and streams back its results.",
                   "request": {
                     "inputs": [
                       {
-                        "name": "inputs",
-                        "type": "CHAT_HISTORY",
-                        "value": [
-                          {
-                            "role": "SYSTEM",
-                            "text": "text",
-                          },
-                        ],
+                        "name": "name",
+                        "type": "STRING",
+                        "value": "value",
                       },
                     ],
                   },
@@ -288,34 +283,25 @@ Executes a deployed Workflow and streams back its results.",
                     "stream": [
                       {
                         "data": {
-                          "data": {
-                            "data": {
-                              "output": {
-                                "name": "output",
-                                "type": "CHAT_HISTORY",
-                                "value": [
-                                  {
-                                    "role": "SYSTEM",
-                                    "text": "text",
-                                  },
-                                ],
-                              },
-                            },
-                            "type": "TERMINAL",
-                          },
                           "error": {
                             "code": "WORKFLOW_INITIALIZATION",
                             "message": "message",
                           },
                           "id": "id",
-                          "node_id": "node_id",
-                          "node_result_id": "node_result_id",
+                          "output": {
+                            "delta": "delta",
+                            "name": "name",
+                            "node_id": "node_id",
+                            "state": "INITIATED",
+                            "type": "STRING",
+                            "value": "value",
+                          },
                           "state": "INITIATED",
                           "ts": "2024-01-15T09:30:00Z",
                         },
-                        "external_id": "string",
-                        "run_id": "string",
-                        "type": "NODE",
+                        "external_id": "external_id",
+                        "run_id": "run_id",
+                        "type": "WORKFLOW",
                       },
                     ],
                   },
@@ -2831,34 +2817,28 @@ Used to submit feedback regarding the quality of previously generated completion
       examples:
         - request:
             inputs:
-              - type: CHAT_HISTORY
-                name: inputs
-                value:
-                  - text: text
-                    role: SYSTEM
+              - name: name
+                value: value
+                type: STRING
           response:
             stream:
-              - type: NODE
-                run_id: string
-                external_id: string
+              - run_id: run_id
+                external_id: external_id
                 data:
                   id: id
-                  node_id: node_id
-                  node_result_id: node_result_id
                   state: INITIATED
                   ts: '2024-01-15T09:30:00Z'
-                  data:
-                    type: TERMINAL
-                    data:
-                      output:
-                        type: CHAT_HISTORY
-                        name: output
-                        value:
-                          - text: text
-                            role: SYSTEM
+                  output:
+                    name: name
+                    state: INITIATED
+                    node_id: node_id
+                    delta: delta
+                    value: value
+                    type: STRING
                   error:
                     message: message
                     code: WORKFLOW_INITIALIZATION
+                type: WORKFLOW
     generate:
       path: /v1/generate
       method: POST

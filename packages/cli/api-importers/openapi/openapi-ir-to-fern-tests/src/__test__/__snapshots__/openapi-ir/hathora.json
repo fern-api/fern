@@ -9676,34 +9676,16 @@
             "value": {
               "value": {
                 "value": {
-                  "status": {
-                    "value": {
-                      "value": "active",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "transportType": {
-                    "value": "tcp",
-                    "type": "enum"
-                  },
-                  "port": {
-                    "value": {
-                      "value": 1.1,
-                      "type": "double"
-                    },
-                    "type": "primitive"
-                  },
-                  "host": {
-                    "value": {
-                      "value": "string",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "roomId": {
                     "value": {
-                      "value": "string",
+                      "value": "roomId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": "starting",
                       "type": "string"
                     },
                     "type": "primitive"

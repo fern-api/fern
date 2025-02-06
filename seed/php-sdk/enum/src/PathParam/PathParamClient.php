@@ -2,6 +2,7 @@
 
 namespace Seed\PathParam;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Types\Operand;
 use Seed\Types\Color;
@@ -14,17 +15,35 @@ use Psr\Http\Client\ClientExceptionInterface;
 class PathParamClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
@@ -32,12 +51,14 @@ class PathParamClient
      * @param value-of<Color>|value-of<Operand> $operandOrColor
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function send(string $operand, string $operandOrColor, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -45,6 +66,7 @@ class PathParamClient
                     path: "path/$operand/$operandOrColor",
                     method: HttpMethod::POST,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

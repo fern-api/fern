@@ -32,4 +32,12 @@ class ListUsersMixedTypePaginationResponse extends JsonSerializableType
         $this->next = $values['next'];
         $this->data = $values['data'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

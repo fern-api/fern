@@ -24,11 +24,15 @@ try {
 
     Write-Host "Running Fern Commands!"
     $DebugPreference = "Continue"
+    
     & node $cli_path init --organization fern
+    
     & node $cli_path add fern-java-sdk
     & node $cli_path add fern-python-sdk
     & node $cli_path add fern-postman
+    
     & node $cli_path generate --log-level debug
+    
     $DebugPreference = "SilentlyContinue"
     & node $cli_path register --log-level debug
 }

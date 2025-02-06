@@ -25,4 +25,12 @@ class ResponseType extends JsonSerializableType
     ) {
         $this->type = $values['type'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }
