@@ -41,6 +41,7 @@ jobs:
   build-container:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     strategy:
+      fail-fast: false
       matrix:
         # Parse JSON array containing names of all filters matching any of changed files
         # e.g. ['package1', 'package2'] if both package folders contains changes
