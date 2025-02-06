@@ -31,4 +31,12 @@ class InitializeProblemRequest extends JsonSerializableType
         $this->problemId = $values['problemId'];
         $this->problemVersion = $values['problemVersion'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

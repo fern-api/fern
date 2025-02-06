@@ -1266,40 +1266,26 @@
                   {
                     "value": {
                       "value": {
-                        "type": {
-                          "value": {
-                            "value": "CHAT_HISTORY",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "name": {
                           "value": {
-                            "value": "inputs",
+                            "value": "name",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "value": {
-                          "value": [
-                            {
-                              "properties": {
-                                "text": {
-                                  "value": {
-                                    "value": "text",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "role": {
-                                  "value": "SYSTEM",
-                                  "type": "enum"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
+                          "value": {
+                            "value": "value",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": {
+                          "value": {
+                            "value": "STRING",
+                            "type": "string"
+                          },
+                          "type": "primitive"
                         }
                       },
                       "type": "discriminated"
@@ -1318,23 +1304,16 @@
               {
                 "value": {
                   "value": {
-                    "type": {
-                      "value": {
-                        "value": "NODE",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "run_id": {
                       "value": {
-                        "value": "string",
+                        "value": "run_id",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
                     "external_id": {
                       "value": {
-                        "value": "string",
+                        "value": "external_id",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -1344,20 +1323,6 @@
                         "id": {
                           "value": {
                             "value": "id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "node_id": {
-                          "value": {
-                            "value": "node_id",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "node_result_id": {
-                          "value": {
-                            "value": "node_result_id",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -1373,63 +1338,47 @@
                           },
                           "type": "primitive"
                         },
-                        "data": {
+                        "output": {
                           "value": {
                             "value": {
-                              "type": {
+                              "name": {
                                 "value": {
-                                  "value": "TERMINAL",
+                                  "value": "name",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "data": {
-                                "properties": {
-                                  "output": {
-                                    "value": {
-                                      "value": {
-                                        "type": {
-                                          "value": {
-                                            "value": "CHAT_HISTORY",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        },
-                                        "name": {
-                                          "value": {
-                                            "value": "output",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        },
-                                        "value": {
-                                          "value": [
-                                            {
-                                              "properties": {
-                                                "text": {
-                                                  "value": {
-                                                    "value": "text",
-                                                    "type": "string"
-                                                  },
-                                                  "type": "primitive"
-                                                },
-                                                "role": {
-                                                  "value": "SYSTEM",
-                                                  "type": "enum"
-                                                }
-                                              },
-                                              "type": "object"
-                                            }
-                                          ],
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "discriminated"
-                                    },
-                                    "type": "oneOf"
-                                  }
+                              "state": {
+                                "value": "INITIATED",
+                                "type": "enum"
+                              },
+                              "node_id": {
+                                "value": {
+                                  "value": "node_id",
+                                  "type": "string"
                                 },
-                                "type": "object"
+                                "type": "primitive"
+                              },
+                              "delta": {
+                                "value": {
+                                  "value": "delta",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": {
+                                "value": {
+                                  "value": "STRING",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
                               }
                             },
                             "type": "discriminated"
@@ -1454,6 +1403,13 @@
                         }
                       },
                       "type": "object"
+                    },
+                    "type": {
+                      "value": {
+                        "value": "WORKFLOW",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"

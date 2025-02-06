@@ -31,4 +31,12 @@ class NextPage extends JsonSerializableType
         $this->page = $values['page'];
         $this->startingAfter = $values['startingAfter'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

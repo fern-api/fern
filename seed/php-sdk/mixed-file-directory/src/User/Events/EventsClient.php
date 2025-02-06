@@ -3,6 +3,7 @@
 namespace Seed\User\Events;
 
 use Seed\User\Events\Metadata\MetadataClient;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\User\Events\Requests\ListUserEventsRequest;
 use Seed\User\Events\Types\Event;
@@ -22,18 +23,36 @@ class EventsClient
     public MetadataClient $metadata;
 
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
-        $this->metadata = new MetadataClient($this->client);
+        $this->options = $options ?? [];
+        $this->metadata = new MetadataClient($this->client, $this->options);
     }
 
     /**
@@ -42,6 +61,7 @@ class EventsClient
      * @param ListUserEventsRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<Event>
      * @throws SeedException
@@ -49,6 +69,7 @@ class EventsClient
      */
     public function listEvents(ListUserEventsRequest $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         if ($request->limit != null) {
             $query['limit'] = $request->limit;
@@ -61,6 +82,7 @@ class EventsClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

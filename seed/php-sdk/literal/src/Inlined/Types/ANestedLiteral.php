@@ -23,4 +23,12 @@ class ANestedLiteral extends JsonSerializableType
     ) {
         $this->myLiteral = $values['myLiteral'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -31,4 +31,12 @@ class ErroredResponse extends JsonSerializableType
         $this->submissionId = $values['submissionId'];
         $this->errorInfo = $values['errorInfo'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

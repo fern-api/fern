@@ -2123,11 +2123,12 @@ service:
                       {
                         "data": {
                           "data": {
-                            "code": "code",
                             "event": "event",
-                            "message": "message",
+                            "eventTimeMillis": 1000000,
+                            "id": "id",
+                            "status": "awaiting_capacity",
                           },
-                          "event": "error",
+                          "event": "status",
                           "id": 1,
                           "retry": 1,
                         },
@@ -2824,13 +2825,14 @@ service:
             stream:
               - event: ''
                 data:
-                  event: error
                   data:
-                    code: code
                     event: event
-                    message: message
+                    eventTimeMillis: 1000000
+                    id: id
+                    status: awaiting_capacity
                   id: 1
                   retry: 1
+                  event: status
       audiences:
         - public
   source:

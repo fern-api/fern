@@ -32,4 +32,12 @@ class SearchRequest extends JsonSerializableType
         $this->pagination = $values['pagination'] ?? null;
         $this->query = $values['query'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

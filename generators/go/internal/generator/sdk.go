@@ -445,6 +445,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		}
 	}
 	for _, header := range headers {
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
 			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ValueType.Container.Literal) + ")"
 			if header.Env != nil {
@@ -452,13 +453,15 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				f.P(`if envValue := os.Getenv("`, *header.Env, `"); envValue != "" {`)
 				f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
 				f.P("}")
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+				f.P(header.Name.Name.CamelCase.SafeName, " = r.", header.Name.Name.PascalCase.UnsafeName)
+				f.P("}")
 				f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
 			} else {
 				f.P(`header.Set("`, header.Name.WireValue, `", `, formatValue, ")")
 			}
 			continue
 		}
-		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		if valueTypeFormat.IsOptional {
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")

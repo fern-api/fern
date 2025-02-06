@@ -23,4 +23,12 @@ class GetTraceResponsesPageRequest extends JsonSerializableType
     ) {
         $this->offset = $values['offset'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

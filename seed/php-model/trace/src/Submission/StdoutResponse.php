@@ -31,4 +31,12 @@ class StdoutResponse extends JsonSerializableType
         $this->submissionId = $values['submissionId'];
         $this->stdout = $values['stdout'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

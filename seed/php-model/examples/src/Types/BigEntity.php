@@ -121,4 +121,12 @@ class BigEntity extends JsonSerializableType
         $this->directory = $values['directory'] ?? null;
         $this->moment = $values['moment'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

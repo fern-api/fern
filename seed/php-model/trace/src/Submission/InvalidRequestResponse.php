@@ -31,4 +31,12 @@ class InvalidRequestResponse extends JsonSerializableType
         $this->request = $values['request'];
         $this->cause = $values['cause'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

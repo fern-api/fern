@@ -39,4 +39,12 @@ class WorkspaceRunDetails extends JsonSerializableType
         $this->exception = $values['exception'] ?? null;
         $this->stdout = $values['stdout'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

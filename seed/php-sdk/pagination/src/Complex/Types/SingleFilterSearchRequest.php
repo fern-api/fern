@@ -39,4 +39,12 @@ class SingleFilterSearchRequest extends JsonSerializableType
         $this->operator = $values['operator'] ?? null;
         $this->value = $values['value'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

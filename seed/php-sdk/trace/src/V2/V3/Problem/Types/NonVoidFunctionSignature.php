@@ -32,4 +32,12 @@ class NonVoidFunctionSignature extends JsonSerializableType
         $this->parameters = $values['parameters'];
         $this->returnType = $values['returnType'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

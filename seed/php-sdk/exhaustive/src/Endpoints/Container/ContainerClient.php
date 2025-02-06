@@ -2,6 +2,7 @@
 
 namespace Seed\Endpoints\Container;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -16,23 +17,42 @@ use Seed\Types\Object\Types\ObjectWithRequiredField;
 class ContainerClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param array<string> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<string>
      * @throws SeedException
@@ -40,6 +60,7 @@ class ContainerClient
      */
     public function getAndReturnListOfPrimitives(array $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -48,6 +69,7 @@ class ContainerClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string']),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -70,6 +92,7 @@ class ContainerClient
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<ObjectWithRequiredField>
      * @throws SeedException
@@ -77,6 +100,7 @@ class ContainerClient
      */
     public function getAndReturnListOfObjects(array $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -85,6 +109,7 @@ class ContainerClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, [ObjectWithRequiredField::class]),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -107,6 +132,7 @@ class ContainerClient
      * @param array<string> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<string>
      * @throws SeedException
@@ -114,6 +140,7 @@ class ContainerClient
      */
     public function getAndReturnSetOfPrimitives(array $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -122,6 +149,7 @@ class ContainerClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string']),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -144,6 +172,7 @@ class ContainerClient
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<ObjectWithRequiredField>
      * @throws SeedException
@@ -151,6 +180,7 @@ class ContainerClient
      */
     public function getAndReturnSetOfObjects(array $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -159,6 +189,7 @@ class ContainerClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, [ObjectWithRequiredField::class]),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -181,6 +212,7 @@ class ContainerClient
      * @param array<string, string> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<string, string>
      * @throws SeedException
@@ -188,6 +220,7 @@ class ContainerClient
      */
     public function getAndReturnMapPrimToPrim(array $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -196,6 +229,7 @@ class ContainerClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string' => 'string']),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -218,6 +252,7 @@ class ContainerClient
      * @param array<string, ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<string, ObjectWithRequiredField>
      * @throws SeedException
@@ -225,6 +260,7 @@ class ContainerClient
      */
     public function getAndReturnMapOfPrimToObject(array $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -233,6 +269,7 @@ class ContainerClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string' => ObjectWithRequiredField::class]),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -255,6 +292,7 @@ class ContainerClient
      * @param ?ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return ?ObjectWithRequiredField
      * @throws SeedException
@@ -262,6 +300,7 @@ class ContainerClient
      */
     public function getAndReturnOptional(?ObjectWithRequiredField $request = null, ?array $options = null): ?ObjectWithRequiredField
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -270,6 +309,7 @@ class ContainerClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

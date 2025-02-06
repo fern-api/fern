@@ -24,4 +24,12 @@ class ObjectWithMapOfMap extends JsonSerializableType
     ) {
         $this->map = $values['map'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

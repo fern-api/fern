@@ -23,4 +23,12 @@ class Square extends JsonSerializableType
     ) {
         $this->length = $values['length'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

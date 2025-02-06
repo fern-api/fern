@@ -31,4 +31,12 @@ class TestCaseWithActualResultImplementation extends JsonSerializableType
         $this->getActualResult = $values['getActualResult'];
         $this->assertCorrectnessCheck = $values['assertCorrectnessCheck'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -4,6 +4,7 @@ namespace Fern\Core\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Utils;
@@ -31,23 +32,41 @@ class RawClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
         public readonly ?array $options = null,
     ) {
-        $this->client = $this->options['client'] ?? new Client();
+        $this->client = $this->options['client']
+            ?? $this->createDefaultClient();
         $this->headers = $this->options['headers'] ?? [];
     }
 
     /**
+     * @return Client
+     */
+    private function createDefaultClient(): Client
+    {
+        $handler = HandlerStack::create();
+        $handler->push(RetryMiddleware::create());
+        return new Client(['handler' => $handler]);
+    }
+
+    /**
+     * @param BaseApiRequest $request
+     * @param ?array{
+     *     maxRetries?: int,
+     * } $options
+     * @return ResponseInterface
      * @throws ClientExceptionInterface
      */
     public function sendRequest(
         BaseApiRequest $request,
+        ?array $options = null,
     ): ResponseInterface {
         $httpRequest = $this->buildRequest($request);
-        return $this->client->send($httpRequest);
+        return $this->client->send($httpRequest, $options ?? []);
     }
 
     private function buildRequest(
@@ -90,7 +109,7 @@ class RawClient
         return match (get_class($request)) {
             JsonApiRequest::class => $request->body != null ? Utils::streamFor(json_encode($request->body)) : null,
             MultipartApiRequest::class => $request->body != null ? new MultipartStream($request->body->toArray()) : null,
-            default => throw new InvalidArgumentException('Unsupported request type: '.get_class($request)),
+            default => throw new InvalidArgumentException('Unsupported request type: ' . get_class($request)),
         };
     }
 
@@ -119,10 +138,10 @@ class RawClient
         foreach ($query as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $item) {
-                    $parts[] = urlencode($key).'='.$this->encodeQueryValue($item);
+                    $parts[] = urlencode($key) . '=' . $this->encodeQueryValue($item);
                 }
             } else {
-                $parts[] = urlencode($key).'='.$this->encodeQueryValue($value);
+                $parts[] = urlencode($key) . '=' . $this->encodeQueryValue($value);
             }
         }
         return implode('&', $parts);

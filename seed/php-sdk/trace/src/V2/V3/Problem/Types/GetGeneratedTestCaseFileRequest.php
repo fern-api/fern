@@ -31,4 +31,12 @@ class GetGeneratedTestCaseFileRequest extends JsonSerializableType
         $this->template = $values['template'] ?? null;
         $this->testCase = $values['testCase'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

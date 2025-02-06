@@ -31,4 +31,12 @@ class StreamedCompletion extends JsonSerializableType
         $this->delta = $values['delta'];
         $this->tokens = $values['tokens'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

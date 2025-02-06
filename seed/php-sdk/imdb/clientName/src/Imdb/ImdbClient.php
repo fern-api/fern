@@ -2,6 +2,7 @@
 
 namespace Seed\Imdb;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Imdb\Types\CreateMovieRequest;
 use Seed\Exceptions\SeedException;
@@ -16,17 +17,35 @@ use Seed\Imdb\Types\Movie;
 class ImdbClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
@@ -35,6 +54,7 @@ class ImdbClient
      * @param CreateMovieRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string
      * @throws SeedException
@@ -42,6 +62,7 @@ class ImdbClient
      */
     public function createMovie(CreateMovieRequest $request, ?array $options = null): string
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -50,6 +71,7 @@ class ImdbClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -72,6 +94,7 @@ class ImdbClient
      * @param string $movieId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Movie
      * @throws SeedException
@@ -79,6 +102,7 @@ class ImdbClient
      */
     public function getMovie(string $movieId, ?array $options = null): Movie
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -86,6 +110,7 @@ class ImdbClient
                     path: "/movies/$movieId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

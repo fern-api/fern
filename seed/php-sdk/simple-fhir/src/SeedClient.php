@@ -15,13 +15,14 @@ use Psr\Http\Client\ClientExceptionInterface;
 class SeedClient
 {
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -33,6 +34,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
@@ -60,6 +62,7 @@ class SeedClient
      * @param string $accountId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Account
      * @throws SeedException
@@ -67,6 +70,7 @@ class SeedClient
      */
     public function getAccount(string $accountId, ?array $options = null): Account
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -74,6 +78,7 @@ class SeedClient
                     path: "account/$accountId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

@@ -4,6 +4,7 @@ namespace Seed\V2;
 
 use Seed\V2\Problem\ProblemClient;
 use Seed\V2\V3\V3Client;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -25,30 +26,50 @@ class V2Client
     public V3Client $v3;
 
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
-        $this->problem = new ProblemClient($this->client);
-        $this->v3 = new V3Client($this->client);
+        $this->options = $options ?? [];
+        $this->problem = new ProblemClient($this->client, $this->options);
+        $this->v3 = new V3Client($this->client, $this->options);
     }
 
     /**
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function test(?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -56,6 +77,7 @@ class V2Client
                     path: "",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
