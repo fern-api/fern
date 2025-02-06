@@ -56,7 +56,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    protected getFilePath(): RelativeFilePath {
+    protected getFilepath(): RelativeFilePath {
         return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory;
     }
 }
