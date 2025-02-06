@@ -1,2 +1,3 @@
 *
 !generators/csharp/model/dist
+!generators/csharp/shared/dependencies.csproj
