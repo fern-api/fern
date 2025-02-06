@@ -1,5 +1,6 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 
 import { getRedirectForPath } from "./redirect-for-path";
 import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils";
@@ -22,7 +23,8 @@ export async function checkIfPathnameExists({
     pageSlugs,
     absoluteFilePathsToSlugs,
     redirects = [],
-    baseUrl
+    baseUrl,
+    logger
 }: {
     pathname: string;
     markdown: boolean;
@@ -39,6 +41,7 @@ export async function checkIfPathnameExists({
         domain: string;
         basePath?: string;
     };
+    logger: Logger;
 }): Promise<true | string[]> {
     pathname = removeTrailingSlash(pathname);
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
@@ -68,7 +71,16 @@ export async function checkIfPathnameExists({
 
     if (absoluteFilepath != null) {
         // if the pathname does not start with a `/`, it is a relative path.
-        // first, we'll check if the pathname is a relativized path
+
+        // If pathname is `.` we'll check if the current directory exists.
+        if (pathname === ".") {
+            const currentDirPath = dirname(absoluteFilepath);
+            if (await doesPathExist(currentDirPath, "directory")) {
+                return true;
+            }
+        }
+
+        // We'll check if the pathname is a relativized path
         const relativizedPathname = join(dirname(absoluteFilepath), RelativeFilePath.of(pathname));
 
         if (await doesPathExist(relativizedPathname, "file")) {
