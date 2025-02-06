@@ -22,7 +22,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Add support for nullable undiscriminated unions (OneOf<X, Y, Z>?), and add tests for undiscriminated unions.
+        Add support for nullable undiscriminated unions (`OneOf<X, Y, Z>?`), and add tests for undiscriminated unions.
   irVersion: 53
 - version: 1.9.13
   createdAt: "2025-02-02"
