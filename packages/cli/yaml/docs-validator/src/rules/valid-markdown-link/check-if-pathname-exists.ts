@@ -1,6 +1,5 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
 
 import { getRedirectForPath } from "./redirect-for-path";
 import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils";
@@ -23,8 +22,7 @@ export async function checkIfPathnameExists({
     pageSlugs,
     absoluteFilePathsToSlugs,
     redirects = [],
-    baseUrl,
-    logger
+    baseUrl
 }: {
     pathname: string;
     markdown: boolean;
@@ -41,7 +39,6 @@ export async function checkIfPathnameExists({
         domain: string;
         basePath?: string;
     };
-    logger: Logger;
 }): Promise<true | string[]> {
     pathname = removeTrailingSlash(pathname);
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
