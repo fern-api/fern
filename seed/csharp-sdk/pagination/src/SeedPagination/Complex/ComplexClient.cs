@@ -58,7 +58,7 @@ public partial class ComplexClient
         return pager;
     }
 
-    internal async Task<PaginatedConversationResponse> SearchAsync(
+    private async Task<PaginatedConversationResponse> SearchAsync(
         SearchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
