@@ -19,11 +19,12 @@ RUN dotnet restore cli && \
     dotnet restore test
 
 # Build the temporary projects to warm up the compilation cache
-RUN dotnet build cli && \
-    dotnet build lib && \
-    dotnet build test && \
-    dotnet run --project cli && \
-    dotnet test test
+RUN dotnet build cli --no-restore  && \
+    dotnet build lib --no-restore  && \
+    dotnet build test --no-restore
+
+RUN dotnet run --project cli --no-restore --no-build
+RUN dotnet test test --no-restore --no-build
 
 RUN rm -rf cli lib test
 
