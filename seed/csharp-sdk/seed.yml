@@ -40,8 +40,9 @@ defaultCustomConfig:
 scripts:
   - docker: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
-      - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core"
+      - dotnet restore src
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+      - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core" --no-restore --no-build
       # - dotnet test src
 
 fixtures:
