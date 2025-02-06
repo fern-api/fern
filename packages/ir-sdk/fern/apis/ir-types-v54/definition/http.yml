@@ -142,13 +142,6 @@ types:
     extends: InlinedRequestBodyProperty
     properties:
       contentType: optional<string>
-      style: FileUploadBodyPropertyEncoding
-  
-  FileUploadBodyPropertyEncoding: 
-    enum: 
-      - json
-      - exploded
-
   FileProperty:
     union:
       file: FilePropertySingle
