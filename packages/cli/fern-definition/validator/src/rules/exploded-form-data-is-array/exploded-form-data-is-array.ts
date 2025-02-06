@@ -80,6 +80,8 @@ function isListType(type: ResolvedType): boolean {
     return false;
 }
 
-function isHttpInlineRequestBodySchema(body: RawSchemas.HttpRequestBodySchema): body is RawSchemas.HttpInlineRequestBodySchema {
+function isHttpInlineRequestBodySchema(
+    body: RawSchemas.HttpRequestBodySchema
+): body is RawSchemas.HttpInlineRequestBodySchema {
     return (body as RawSchemas.HttpInlineRequestBodySchema)?.properties != null;
 }
