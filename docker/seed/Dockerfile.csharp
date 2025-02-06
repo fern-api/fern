@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0
+ARG TARGETARCH
 
 ENV PATH="$PATH:/root/.dotnet/tools"
 ENV DOTNET_NOLOGO=1
@@ -14,17 +15,17 @@ RUN dotnet new console --output cli --no-restore && \
     dotnet new nunit --output test --no-restore
 
 # Restore packages for all project types to warm up NuGet cache
-RUN dotnet restore cli && \
-    dotnet restore lib && \
-    dotnet restore test
+RUN dotnet restore cli -a $TARGETARCH && \
+    dotnet restore lib -a $TARGETARCH && \
+    dotnet restore test -a $TARGETARCH
 
 # Build the temporary projects to warm up the compilation cache
-RUN dotnet build cli --no-restore  && \
-    dotnet build lib --no-restore  && \
-    dotnet build test --no-restore
+RUN dotnet build cli --no-restore -a $TARGETARCH  && \
+    dotnet build lib --no-restore -a $TARGETARCH  && \
+    dotnet build test --no-restore -a $TARGETARCH
 
-RUN dotnet run --project cli --no-restore --no-build
-RUN dotnet test test --no-restore --no-build
+RUN dotnet run --project cli --no-restore --no-build -a $TARGETARCH
+RUN dotnet test test --no-restore --no-build -a $TARGETARCH
 
 RUN rm -rf cli lib test
 
@@ -58,7 +59,7 @@ RUN echo '<Project Sdk="Microsoft.NET.Sdk"> \
       <PackageReference Include="FluentAssertions.Json" Version="6.1.0" /> \
   </ItemGroup> \
 </Project>' > /dependencies.csproj
-RUN dotnet restore /dependencies.csproj
+RUN dotnet restore /dependencies.csproj -a $TARGETARCH
 RUN rm /dependencies.csproj
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
