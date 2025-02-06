@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedServerSentEvents.Core;
 
-namespace SeedServerSentEvents;
+    namespace SeedServerSentEvents;
 
 public record StreamedCompletion
 {
@@ -10,9 +10,8 @@ public record StreamedCompletion
 
     [JsonPropertyName("tokens")]
     public int? Tokens { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

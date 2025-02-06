@@ -1,17 +1,15 @@
+using SeedCrossPackageTypeNames.Core;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using SeedCrossPackageTypeNames.Core;
 
-namespace SeedCrossPackageTypeNames;
+    namespace SeedCrossPackageTypeNames;
 
 public partial class FooClient
 {
     private RawClient _client;
-
-    internal FooClient(RawClient client)
-    {
+    internal FooClient (RawClient client) {
         _client = client;
     }
 
@@ -27,39 +25,20 @@ public partial class FooClient
     /// );
     /// </code>
     /// </example>
-    public async Task<ImportingType> FindAsync(
-        FindRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<ImportingType> FindAsync(FindRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.OptionalString != null)
-        {
+        if (request.OptionalString != null) {
             _query["optionalString"] = request.OptionalString;
         }
-        var requestBody = new Dictionary<string, object>()
-        {
-            { "publicProperty", request.PublicProperty },
-            { "privateProperty", request.PrivateProperty },
+        var requestBody = new Dictionary<string, object>() {
+            { "publicProperty", request.PublicProperty }, 
+            { "privateProperty", request.PrivateProperty }, 
         };
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "",
-                    Body = requestBody,
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "", Body = requestBody, Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ImportingType>(responseBody)!;
@@ -69,11 +48,8 @@ public partial class FooClient
                 throw new SeedCrossPackageTypeNamesException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedCrossPackageTypeNamesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedCrossPackageTypeNamesApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

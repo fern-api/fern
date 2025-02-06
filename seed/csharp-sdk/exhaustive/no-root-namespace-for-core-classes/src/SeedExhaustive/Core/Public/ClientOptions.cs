@@ -1,7 +1,7 @@
-using System;
 using System.Net.Http;
+using System;
 
-namespace SeedExhaustive.Core;
+    namespace SeedExhaustive.Core;
 
 public partial class ClientOptions
 {
@@ -33,15 +33,15 @@ public partial class ClientOptions
     /// <summary>
     /// Clones this and returns a new instance
     /// </summary>
-    internal ClientOptions Clone()
-    {
+    internal ClientOptions Clone() {
         return new ClientOptions
         {
             BaseUrl = BaseUrl,
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,
-            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers))
         };
     }
+
 }

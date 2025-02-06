@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedMixedFileDirectory.Core;
 
-namespace SeedMixedFileDirectory;
+    namespace SeedMixedFileDirectory;
 
 public record User
 {
@@ -13,9 +13,8 @@ public record User
 
     [JsonPropertyName("age")]
     public required int Age { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

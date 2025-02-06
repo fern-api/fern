@@ -1,9 +1,8 @@
 using System;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 /// <summary>
 /// Base exception class for all exceptions thrown by the SDK.
 /// </summary>
-public class SeedPaginationException(string message, Exception? innerException = null)
-    : Exception(message, innerException);
+public class SeedPaginationException(string message,Exception? innerException = null) : Exception(message, innerException);

@@ -1,16 +1,15 @@
-using System;
 using System.Net.Http;
+using System;
 using SeedMultiUrlEnvironment.Core;
 
-namespace SeedMultiUrlEnvironment;
+    namespace SeedMultiUrlEnvironment;
 
 public partial class ClientOptions
 {
     /// <summary>
     /// The Environment for the API.
     /// </summary>
-    public SeedMultiUrlEnvironmentEnvironment Environment { get; init; } =
-        SeedMultiUrlEnvironmentEnvironment.PRODUCTION;
+    public SeedMultiUrlEnvironmentEnvironment Environment { get; init; } = SeedMultiUrlEnvironmentEnvironment.PRODUCTION;
 
     /// <summary>
     /// The http client used to make requests.
@@ -35,15 +34,15 @@ public partial class ClientOptions
     /// <summary>
     /// Clones this and returns a new instance
     /// </summary>
-    internal ClientOptions Clone()
-    {
+    internal ClientOptions Clone() {
         return new ClientOptions
         {
             Environment = Environment,
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,
-            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers))
         };
     }
+
 }

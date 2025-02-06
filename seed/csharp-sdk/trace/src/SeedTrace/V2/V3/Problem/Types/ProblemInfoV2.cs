@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using SeedTrace;
 using SeedTrace.Core;
 
-namespace SeedTrace.V2.V3;
+    namespace SeedTrace.V2.V3;
 
 public record ProblemInfoV2
 {
@@ -28,17 +28,15 @@ public record ProblemInfoV2
     public required GeneratedFiles GeneratedFiles { get; set; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; set; } =
-        new List<TestCaseTemplate>();
+    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; set; } = new List<TestCaseTemplate>();
 
     [JsonPropertyName("testcases")]
     public IEnumerable<TestCaseV2> Testcases { get; set; } = new List<TestCaseV2>();
 
     [JsonPropertyName("isPublic")]
     public required bool IsPublic { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

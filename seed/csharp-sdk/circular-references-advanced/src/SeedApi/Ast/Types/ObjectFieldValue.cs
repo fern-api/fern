@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public record ObjectFieldValue
 {
@@ -10,9 +10,8 @@ public record ObjectFieldValue
 
     [JsonPropertyName("value")]
     public required object Value { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

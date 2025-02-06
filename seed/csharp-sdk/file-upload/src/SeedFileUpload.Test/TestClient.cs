@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SeedFileUpload.Test;
+    namespace SeedFileUpload.Test;
 
 [TestFixture]
 public class TestClient;

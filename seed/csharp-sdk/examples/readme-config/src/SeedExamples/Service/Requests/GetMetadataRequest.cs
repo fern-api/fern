@@ -1,6 +1,6 @@
 using SeedExamples.Core;
 
-namespace SeedExamples;
+    namespace SeedExamples;
 
 public record GetMetadataRequest
 {
@@ -9,9 +9,8 @@ public record GetMetadataRequest
     public IEnumerable<string> Tag { get; set; } = new List<string>();
 
     public required string XApiVersion { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedLiteral.Core;
 
-namespace SeedLiteral;
+    namespace SeedLiteral;
 
 public record SendRequest
 {
@@ -25,9 +25,8 @@ public record SendRequest
 
     [JsonPropertyName("containerObject")]
     public required ContainerObject ContainerObject { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

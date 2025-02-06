@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedAudiences.Core;
 
-namespace SeedAudiences;
+    namespace SeedAudiences;
 
 public record FilteredType
 {
@@ -10,9 +10,8 @@ public record FilteredType
 
     [JsonPropertyName("private_property")]
     public required int PrivateProperty { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

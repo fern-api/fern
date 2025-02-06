@@ -1,6 +1,6 @@
 using SeedValidation.Core;
 
-namespace SeedValidation;
+    namespace SeedValidation;
 
 public record GetRequest
 {
@@ -9,9 +9,8 @@ public record GetRequest
     public required int Even { get; set; }
 
     public required string Name { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

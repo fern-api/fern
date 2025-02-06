@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace;
+    namespace SeedTrace;
 
 public record MapType
 {
@@ -10,9 +10,8 @@ public record MapType
 
     [JsonPropertyName("valueType")]
     public required object ValueType { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

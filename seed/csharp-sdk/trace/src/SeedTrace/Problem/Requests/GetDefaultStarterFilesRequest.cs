@@ -1,13 +1,12 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace;
+    namespace SeedTrace;
 
 public record GetDefaultStarterFilesRequest
 {
     [JsonPropertyName("inputParams")]
-    public IEnumerable<VariableTypeAndName> InputParams { get; set; } =
-        new List<VariableTypeAndName>();
+    public IEnumerable<VariableTypeAndName> InputParams { get; set; } = new List<VariableTypeAndName>();
 
     [JsonPropertyName("outputType")]
     public required object OutputType { get; set; }
@@ -22,9 +21,8 @@ public record GetDefaultStarterFilesRequest
     /// </summary>
     [JsonPropertyName("methodName")]
     public required string MethodName { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

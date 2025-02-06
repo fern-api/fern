@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public record Movie
 {
@@ -16,9 +16,8 @@ public record Movie
     /// </summary>
     [JsonPropertyName("rating")]
     public required double Rating { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

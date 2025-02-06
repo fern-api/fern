@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPackageYml.Core;
 
-namespace SeedPackageYml;
+    namespace SeedPackageYml;
 
 public record EchoRequest
 {
@@ -10,9 +10,8 @@ public record EchoRequest
 
     [JsonPropertyName("size")]
     public required int Size { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedNullable.Core;
 
-namespace SeedNullable;
+    namespace SeedNullable;
 
 public record Metadata
 {
@@ -16,9 +16,8 @@ public record Metadata
 
     [JsonPropertyName("activated")]
     public bool? Activated { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

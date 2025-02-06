@@ -1,6 +1,6 @@
 using SeedPagination.Core;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 public record ListUsersOffsetStepPaginationRequest
 {
@@ -17,9 +17,8 @@ public record ListUsersOffsetStepPaginationRequest
     public int? Limit { get; set; }
 
     public Order? Order { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

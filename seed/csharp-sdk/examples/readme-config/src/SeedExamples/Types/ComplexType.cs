@@ -1,8 +1,8 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
+using System.Runtime.Serialization;
 
-namespace SeedExamples;
+    namespace SeedExamples;
 
 [JsonConverter(typeof(EnumSerializer<ComplexType>))]
 public enum ComplexType
@@ -14,5 +14,5 @@ public enum ComplexType
     Union,
 
     [EnumMember(Value = "unknown")]
-    Unknown,
+    Unknown
 }

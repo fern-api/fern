@@ -1,8 +1,8 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Core;
+using System.Runtime.Serialization;
 
-namespace SeedObjectsWithImports;
+    namespace SeedObjectsWithImports;
 
 [JsonConverter(typeof(EnumSerializer<FileInfo>))]
 public enum FileInfo
@@ -11,5 +11,5 @@ public enum FileInfo
     Regular,
 
     [EnumMember(Value = "DIRECTORY")]
-    Directory,
+    Directory
 }

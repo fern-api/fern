@@ -1,17 +1,15 @@
+using SeedCustomAuth.Core;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using SeedCustomAuth.Core;
 
-namespace SeedCustomAuth;
+    namespace SeedCustomAuth;
 
 public partial class CustomAuthClient
 {
     private RawClient _client;
-
-    internal CustomAuthClient(RawClient client)
-    {
+    internal CustomAuthClient (RawClient client) {
         _client = client;
     }
 
@@ -23,26 +21,12 @@ public partial class CustomAuthClient
     /// await client.CustomAuth.GetWithCustomAuthAsync();
     /// </code>
     /// </example>
-    public async Task<bool> GetWithCustomAuthAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "custom-auth",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<bool> GetWithCustomAuthAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "custom-auth", Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<bool>(responseBody)!;
@@ -52,90 +36,63 @@ public partial class CustomAuthClient
                 throw new SeedCustomAuthException("Failed to deserialize response", e);
             }
         }
-
+        
         try
         {
-            switch (response.StatusCode)
-            {
+            switch (response.StatusCode){
                 case 401:
-                    throw new UnauthorizedRequest(
-                        JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
-                    );
-            }
-        }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new SeedCustomAuthApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// POST request with custom auth scheme
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.CustomAuth.PostWithCustomAuthAsync(
-    ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
-    /// );
-    /// </code>
-    /// </example>
-    public async Task<bool> PostWithCustomAuthAsync(
-        object request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+                    throw new UnauthorizedRequest(JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody));
+                    }
+                }
+                catch (
+                JsonException)
                 {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "custom-auth",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<bool>(responseBody)!;
+                    // unable to map error response, throwing generic error
+                }
+                throw new SeedCustomAuthApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
             }
-            catch (JsonException e)
-            {
-                throw new SeedCustomAuthException("Failed to deserialize response", e);
-            }
-        }
 
-        try
-        {
-            switch (response.StatusCode)
-            {
-                case 401:
-                    throw new UnauthorizedRequest(
-                        JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody)
-                    );
-                case 400:
-                    throw new BadRequest(JsonUtils.Deserialize<object>(responseBody));
-            }
-        }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new SeedCustomAuthApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-}
+            /// <summary>
+            /// POST request with custom auth scheme
+            /// </summary>
+            /// <example>
+            /// <code>
+            /// await client.CustomAuth.PostWithCustomAuthAsync(
+            ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+            /// );
+            /// </code>
+            /// </example>
+            public async Task<bool> PostWithCustomAuthAsync(object request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+                var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                        BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "custom-auth", Body = request, Options = options
+                    }, cancellationToken).ConfigureAwait(false);
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                if (response.StatusCode is >= 200 and < 400) {
+                    try
+                    {
+                        return JsonUtils.Deserialize<bool>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedCustomAuthException("Failed to deserialize response", e);
+                    }
+                }
+                
+                try
+                {
+                    switch (response.StatusCode){
+                        case 401:
+                            throw new UnauthorizedRequest(JsonUtils.Deserialize<UnauthorizedRequestErrorBody>(responseBody));
+                            case 400:
+                                throw new BadRequest(JsonUtils.Deserialize<object>(responseBody));
+                                }
+                            }
+                            catch (
+                            JsonException)
+                            {
+                                // unable to map error response, throwing generic error
+                            }
+                            throw new SeedCustomAuthApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
+                        }
+
+                    }

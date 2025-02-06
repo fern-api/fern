@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace;
+    namespace SeedTrace;
 
 public record TraceResponsesPageV2
 {
@@ -14,9 +14,8 @@ public record TraceResponsesPageV2
 
     [JsonPropertyName("traceResponses")]
     public IEnumerable<TraceResponseV2> TraceResponses { get; set; } = new List<TraceResponseV2>();
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

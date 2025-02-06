@@ -1,16 +1,14 @@
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using SeedServerSentEvents.Core;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Net.Http;
 
-namespace SeedServerSentEvents;
+    namespace SeedServerSentEvents;
 
 public partial class CompletionsClient
 {
     private RawClient _client;
-
-    internal CompletionsClient(RawClient client)
-    {
+    internal CompletionsClient (RawClient client) {
         _client = client;
     }
 
@@ -19,30 +17,12 @@ public partial class CompletionsClient
     /// await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
     /// </code>
     /// </example>
-    public async Task StreamAsync(
-        StreamCompletionRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "stream",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task StreamAsync(StreamCompletionRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "stream", Body = request, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedServerSentEventsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        throw new SeedServerSentEventsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

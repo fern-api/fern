@@ -1,13 +1,12 @@
 using SeedTrace.Core;
 
-namespace SeedTrace;
+    namespace SeedTrace;
 
 public partial class CommonsClient
 {
     private RawClient _client;
-
-    internal CommonsClient(RawClient client)
-    {
+    internal CommonsClient (RawClient client) {
         _client = client;
     }
+
 }

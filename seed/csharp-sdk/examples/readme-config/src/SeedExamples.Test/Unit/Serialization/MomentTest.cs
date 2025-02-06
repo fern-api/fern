@@ -1,20 +1,19 @@
-using System.Text.Json;
+using NUnit.Framework;
 using System.Text.Json.Serialization;
+using System.Text.Json;
+using SeedExamples;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
-using SeedExamples;
 
-namespace SeedExamples.Test;
+    namespace SeedExamples.Test;
 
 [TestFixture]
 public class MomentTest
 {
     [Test]
-    public void TestSerialization()
-    {
-        var inputJson =
-            @"
+    public void TestSerialization() {
+        var inputJson = 
+        @"
         {
           ""id"": ""656f12d6-f592-444c-a1d3-a3cfd46d5b39"",
           ""date"": ""1994-01-01"",
@@ -22,15 +21,13 @@ public class MomentTest
         }
         ";
 
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
+        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+        
         var deserializedObject = JsonSerializer.Deserialize<Moment>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
         JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
     }
+
 }

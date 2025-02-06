@@ -1,15 +1,13 @@
-using System.Net.Http;
-using System.Threading;
 using SeedCsharpNamespaceConflict.Core;
+using System.Threading;
+using System.Net.Http;
 
-namespace SeedCsharpNamespaceConflict;
+    namespace SeedCsharpNamespaceConflict;
 
 public partial class TasktestClient
 {
     private RawClient _client;
-
-    internal TasktestClient(RawClient client)
-    {
+    internal TasktestClient (RawClient client) {
         _client = client;
     }
 
@@ -18,32 +16,15 @@ public partial class TasktestClient
     /// await client.Tasktest.HelloAsync();
     /// </code>
     /// </example>
-    public async System.Threading.Tasks.Task HelloAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "hello",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
+    public async System.Threading.Tasks.Task HelloAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "hello", Options = options
+            }, cancellationToken).ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400) {
             return;
         }
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedCsharpNamespaceConflictApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        throw new SeedCsharpNamespaceConflictApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

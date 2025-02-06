@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SeedResponseProperty.Test;
+    namespace SeedResponseProperty.Test;
 
 [TestFixture]
 public class TestClient;

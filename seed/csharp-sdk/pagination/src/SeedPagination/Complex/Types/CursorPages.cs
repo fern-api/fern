@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 public record CursorPages
 {
@@ -19,9 +19,8 @@ public record CursorPages
 
     [JsonPropertyName("type")]
     public required string Type { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

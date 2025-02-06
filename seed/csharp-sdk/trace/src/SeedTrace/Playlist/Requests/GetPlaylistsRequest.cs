@@ -1,6 +1,6 @@
 using SeedTrace.Core;
 
-namespace SeedTrace;
+    namespace SeedTrace;
 
 public record GetPlaylistsRequest
 {
@@ -20,9 +20,8 @@ public record GetPlaylistsRequest
     public IEnumerable<string> OptionalMultipleField { get; set; } = new List<string>();
 
     public IEnumerable<string> MultipleField { get; set; } = new List<string>();
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

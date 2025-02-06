@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SeedMultiLineDocs.Test;
+    namespace SeedMultiLineDocs.Test;
 
 [TestFixture]
 public class TestClient;

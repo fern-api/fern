@@ -1,17 +1,15 @@
+using SeedPagination.Core;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using SeedPagination.Core;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 public partial class UsersClient
 {
     private RawClient _client;
-
-    internal UsersClient(RawClient client)
-    {
+    internal UsersClient (RawClient client) {
         _client = client;
     }
 
@@ -28,31 +26,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithCursorPaginationAsync(
-        ListUsersCursorPaginationRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithCursorPaginationAsync(ListUsersCursorPaginationRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new CursorPager<
-            ListUsersCursorPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            string,
-            User
-        >(
-            request,
-            options,
-            ListWithCursorPaginationAsync,
-            (request, cursor) =>
-            {
+        var pager = new CursorPager<ListUsersCursorPaginationRequest, RequestOptions?, ListUsersPaginationResponse, string, User>(
+            request, options, ListWithCursorPaginationAsync, (request, cursor) => {
                 request.StartingAfter = cursor;
-            },
-            response => response?.Page?.Next?.StartingAfter,
-            response => response?.Data?.ToList()
+            }
+            , response => response?.Page?.Next?.StartingAfter, response => response?.Data?.ToList()
         );
         return pager;
     }
@@ -64,31 +47,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithMixedTypeCursorPaginationAsync(
-        ListUsersMixedTypeCursorPaginationRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithMixedTypeCursorPaginationAsync(ListUsersMixedTypeCursorPaginationRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new CursorPager<
-            ListUsersMixedTypeCursorPaginationRequest,
-            RequestOptions?,
-            ListUsersMixedTypePaginationResponse,
-            string,
-            User
-        >(
-            request,
-            options,
-            ListWithMixedTypeCursorPaginationAsync,
-            (request, cursor) =>
-            {
+        var pager = new CursorPager<ListUsersMixedTypeCursorPaginationRequest, RequestOptions?, ListUsersMixedTypePaginationResponse, string, User>(
+            request, options, ListWithMixedTypeCursorPaginationAsync, (request, cursor) => {
                 request.Cursor = cursor;
-            },
-            response => response?.Next,
-            response => response?.Data?.ToList()
+            }
+            , response => response?.Next, response => response?.Data?.ToList()
         );
         return pager;
     }
@@ -100,32 +68,17 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithBodyCursorPaginationAsync(
-        ListUsersBodyCursorPaginationRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithBodyCursorPaginationAsync(ListUsersBodyCursorPaginationRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new CursorPager<
-            ListUsersBodyCursorPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            string,
-            User
-        >(
-            request,
-            options,
-            ListWithBodyCursorPaginationAsync,
-            (request, cursor) =>
-            {
-                request.Pagination ??= new();
+        var pager = new CursorPager<ListUsersBodyCursorPaginationRequest, RequestOptions?, ListUsersPaginationResponse, string, User>(
+            request, options, ListWithBodyCursorPaginationAsync, (request, cursor) => {
+                request.Pagination ??= new ();
                 request.Pagination.Cursor = cursor;
-            },
-            response => response?.Page?.Next?.StartingAfter,
-            response => response?.Data?.ToList()
+            }
+            , response => response?.Page?.Next?.StartingAfter, response => response?.Data?.ToList()
         );
         return pager;
     }
@@ -143,34 +96,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithOffsetPaginationAsync(
-        ListUsersOffsetPaginationRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithOffsetPaginationAsync(ListUsersOffsetPaginationRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new OffsetPager<
-            ListUsersOffsetPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            int?,
-            object,
-            User
-        >(
-            request,
-            options,
-            ListWithOffsetPaginationAsync,
-            request => request?.Page ?? 0,
-            (request, offset) =>
-            {
+        var pager = new OffsetPager<ListUsersOffsetPaginationRequest, RequestOptions?, ListUsersPaginationResponse, int?, object, User>(
+            request, options, ListWithOffsetPaginationAsync, request => request?.Page ?? 0, (request, offset) => {
                 request.Page = offset;
-            },
-            null,
-            response => response?.Data?.ToList(),
-            null
+            }
+            , null, response => response?.Data?.ToList(), null
         );
         return pager;
     }
@@ -188,34 +123,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithDoubleOffsetPaginationAsync(
-        ListUsersDoubleOffsetPaginationRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithDoubleOffsetPaginationAsync(ListUsersDoubleOffsetPaginationRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new OffsetPager<
-            ListUsersDoubleOffsetPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            double?,
-            object,
-            User
-        >(
-            request,
-            options,
-            ListWithDoubleOffsetPaginationAsync,
-            request => request?.Page ?? 0,
-            (request, offset) =>
-            {
+        var pager = new OffsetPager<ListUsersDoubleOffsetPaginationRequest, RequestOptions?, ListUsersPaginationResponse, double?, object, User>(
+            request, options, ListWithDoubleOffsetPaginationAsync, request => request?.Page ?? 0, (request, offset) => {
                 request.Page = offset;
-            },
-            null,
-            response => response?.Data?.ToList(),
-            null
+            }
+            , null, response => response?.Data?.ToList(), null
         );
         return pager;
     }
@@ -227,35 +144,17 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithBodyOffsetPaginationAsync(
-        ListUsersBodyOffsetPaginationRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithBodyOffsetPaginationAsync(ListUsersBodyOffsetPaginationRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new OffsetPager<
-            ListUsersBodyOffsetPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            int?,
-            object,
-            User
-        >(
-            request,
-            options,
-            ListWithBodyOffsetPaginationAsync,
-            request => request?.Pagination?.Page ?? 0,
-            (request, offset) =>
-            {
-                request.Pagination ??= new();
+        var pager = new OffsetPager<ListUsersBodyOffsetPaginationRequest, RequestOptions?, ListUsersPaginationResponse, int?, object, User>(
+            request, options, ListWithBodyOffsetPaginationAsync, request => request?.Pagination?.Page ?? 0, (request, offset) => {
+                request.Pagination ??= new ();
                 request.Pagination.Page = offset;
-            },
-            null,
-            response => response?.Data?.ToList(),
-            null
+            }
+            , null, response => response?.Data?.ToList(), null
         );
         return pager;
     }
@@ -272,34 +171,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithOffsetStepPaginationAsync(
-        ListUsersOffsetStepPaginationRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithOffsetStepPaginationAsync(ListUsersOffsetStepPaginationRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new OffsetPager<
-            ListUsersOffsetStepPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            int?,
-            int?,
-            User
-        >(
-            request,
-            options,
-            ListWithOffsetStepPaginationAsync,
-            request => request?.Page ?? 0,
-            (request, offset) =>
-            {
+        var pager = new OffsetPager<ListUsersOffsetStepPaginationRequest, RequestOptions?, ListUsersPaginationResponse, int?, int?, User>(
+            request, options, ListWithOffsetStepPaginationAsync, request => request?.Page ?? 0, (request, offset) => {
                 request.Page = offset;
-            },
-            request => request?.Limit ?? 0,
-            response => response?.Data?.ToList(),
-            null
+            }
+            , request => request?.Limit ?? 0, response => response?.Data?.ToList(), null
         );
         return pager;
     }
@@ -316,34 +197,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithOffsetPaginationHasNextPageAsync(
-        ListWithOffsetPaginationHasNextPageRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithOffsetPaginationHasNextPageAsync(ListWithOffsetPaginationHasNextPageRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new OffsetPager<
-            ListWithOffsetPaginationHasNextPageRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            int?,
-            int?,
-            User
-        >(
-            request,
-            options,
-            ListWithOffsetPaginationHasNextPageAsync,
-            request => request?.Page ?? 0,
-            (request, offset) =>
-            {
+        var pager = new OffsetPager<ListWithOffsetPaginationHasNextPageRequest, RequestOptions?, ListUsersPaginationResponse, int?, int?, User>(
+            request, options, ListWithOffsetPaginationHasNextPageAsync, request => request?.Page ?? 0, (request, offset) => {
                 request.Page = offset;
-            },
-            request => request?.Limit ?? 0,
-            response => response?.Data?.ToList(),
-            response => response?.HasNextPage
+            }
+            , request => request?.Limit ?? 0, response => response?.Data?.ToList(), response => response?.HasNextPage
         );
         return pager;
     }
@@ -355,31 +218,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithExtendedResultsAsync(
-        ListUsersExtendedRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithExtendedResultsAsync(ListUsersExtendedRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new CursorPager<
-            ListUsersExtendedRequest,
-            RequestOptions?,
-            ListUsersExtendedResponse,
-            string?,
-            User
-        >(
-            request,
-            options,
-            ListWithExtendedResultsAsync,
-            (request, cursor) =>
-            {
+        var pager = new CursorPager<ListUsersExtendedRequest, RequestOptions?, ListUsersExtendedResponse, string?, User>(
+            request, options, ListWithExtendedResultsAsync, (request, cursor) => {
                 request.Cursor = cursor;
-            },
-            response => response?.Next,
-            response => response?.Data?.Users?.ToList()
+            }
+            , response => response?.Next, response => response?.Data?.Users?.ToList()
         );
         return pager;
     }
@@ -391,31 +239,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<User> ListWithExtendedResultsAndOptionalDataAsync(
-        ListUsersExtendedRequestForOptionalData request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<User> ListWithExtendedResultsAndOptionalDataAsync(ListUsersExtendedRequestForOptionalData request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new CursorPager<
-            ListUsersExtendedRequestForOptionalData,
-            RequestOptions?,
-            ListUsersExtendedOptionalListResponse,
-            string?,
-            User
-        >(
-            request,
-            options,
-            ListWithExtendedResultsAndOptionalDataAsync,
-            (request, cursor) =>
-            {
+        var pager = new CursorPager<ListUsersExtendedRequestForOptionalData, RequestOptions?, ListUsersExtendedOptionalListResponse, string?, User>(
+            request, options, ListWithExtendedResultsAndOptionalDataAsync, (request, cursor) => {
                 request.Cursor = cursor;
-            },
-            response => response?.Next,
-            response => response?.Data?.Users?.ToList()
+            }
+            , response => response?.Next, response => response?.Data?.Users?.ToList()
         );
         return pager;
     }
@@ -427,31 +260,16 @@ public partial class UsersClient
     /// );
     /// </code>
     /// </example>
-    public Pager<string> ListUsernamesAsync(
-        ListUsernamesRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<string> ListUsernamesAsync(ListUsernamesRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new CursorPager<
-            ListUsernamesRequest,
-            RequestOptions?,
-            UsernameCursor,
-            string?,
-            string
-        >(
-            request,
-            options,
-            ListUsernamesAsync,
-            (request, cursor) =>
-            {
+        var pager = new CursorPager<ListUsernamesRequest, RequestOptions?, UsernameCursor, string?, string>(
+            request, options, ListUsernamesAsync, (request, cursor) => {
                 request.StartingAfter = cursor;
-            },
-            response => response?.Cursor?.After,
-            response => response?.Cursor?.Data?.ToList()
+            }
+            , response => response?.Cursor?.After, response => response?.Cursor?.Data?.ToList()
         );
         return pager;
     }
@@ -461,77 +279,39 @@ public partial class UsersClient
     /// await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
     /// </code>
     /// </example>
-    public Pager<string> ListWithGlobalConfigAsync(
-        ListWithGlobalConfigRequest request,
-        RequestOptions? options = null
-    )
-    {
+    public Pager<string> ListWithGlobalConfigAsync(ListWithGlobalConfigRequest request, RequestOptions? options = null) {
         if (request is not null)
         {
             request = request with { };
         }
-        var pager = new OffsetPager<
-            ListWithGlobalConfigRequest,
-            RequestOptions?,
-            UsernameContainer,
-            int?,
-            object,
-            string
-        >(
-            request,
-            options,
-            ListWithGlobalConfigAsync,
-            request => request?.Offset ?? 0,
-            (request, offset) =>
-            {
+        var pager = new OffsetPager<ListWithGlobalConfigRequest, RequestOptions?, UsernameContainer, int?, object, string>(
+            request, options, ListWithGlobalConfigAsync, request => request?.Offset ?? 0, (request, offset) => {
                 request.Offset = offset;
-            },
-            null,
-            response => response?.Results?.ToList(),
-            null
+            }
+            , null, response => response?.Results?.ToList(), null
         );
         return pager;
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(
-        ListUsersCursorPaginationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(ListUsersCursorPaginationRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Page != null)
-        {
+        if (request.Page != null) {
             _query["page"] = request.Page.Value.ToString();
         }
-        if (request.PerPage != null)
-        {
+        if (request.PerPage != null) {
             _query["per_page"] = request.PerPage.Value.ToString();
         }
-        if (request.Order != null)
-        {
+        if (request.Order != null) {
             _query["order"] = request.Order.Value.Stringify();
         }
-        if (request.StartingAfter != null)
-        {
+        if (request.StartingAfter != null) {
             _query["starting_after"] = request.StartingAfter;
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
@@ -541,41 +321,20 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersMixedTypePaginationResponse> ListWithMixedTypeCursorPaginationAsync(
-        ListUsersMixedTypeCursorPaginationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<ListUsersMixedTypePaginationResponse> ListWithMixedTypeCursorPaginationAsync(ListUsersMixedTypeCursorPaginationRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Cursor != null)
-        {
+        if (request.Cursor != null) {
             _query["cursor"] = request.Cursor;
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersMixedTypePaginationResponse>(responseBody)!;
@@ -585,36 +344,16 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
-        ListUsersBodyCursorPaginationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/users",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    private async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(ListUsersBodyCursorPaginationRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/users", Body = request, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
@@ -624,53 +363,29 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
-        ListUsersOffsetPaginationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(ListUsersOffsetPaginationRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Page != null)
-        {
+        if (request.Page != null) {
             _query["page"] = request.Page.Value.ToString();
         }
-        if (request.PerPage != null)
-        {
+        if (request.PerPage != null) {
             _query["per_page"] = request.PerPage.Value.ToString();
         }
-        if (request.Order != null)
-        {
+        if (request.Order != null) {
             _query["order"] = request.Order.Value.Stringify();
         }
-        if (request.StartingAfter != null)
-        {
+        if (request.StartingAfter != null) {
             _query["starting_after"] = request.StartingAfter;
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
@@ -680,53 +395,29 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithDoubleOffsetPaginationAsync(
-        ListUsersDoubleOffsetPaginationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<ListUsersPaginationResponse> ListWithDoubleOffsetPaginationAsync(ListUsersDoubleOffsetPaginationRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Page != null)
-        {
+        if (request.Page != null) {
             _query["page"] = request.Page.Value.ToString();
         }
-        if (request.PerPage != null)
-        {
+        if (request.PerPage != null) {
             _query["per_page"] = request.PerPage.Value.ToString();
         }
-        if (request.Order != null)
-        {
+        if (request.Order != null) {
             _query["order"] = request.Order.Value.Stringify();
         }
-        if (request.StartingAfter != null)
-        {
+        if (request.StartingAfter != null) {
             _query["starting_after"] = request.StartingAfter;
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
@@ -736,36 +427,16 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
-        ListUsersBodyOffsetPaginationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/users",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    private async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(ListUsersBodyOffsetPaginationRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/users", Body = request, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
@@ -775,49 +446,26 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(
-        ListUsersOffsetStepPaginationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(ListUsersOffsetStepPaginationRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Page != null)
-        {
+        if (request.Page != null) {
             _query["page"] = request.Page.Value.ToString();
         }
-        if (request.Limit != null)
-        {
+        if (request.Limit != null) {
             _query["limit"] = request.Limit.Value.ToString();
         }
-        if (request.Order != null)
-        {
+        if (request.Order != null) {
             _query["order"] = request.Order.Value.Stringify();
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
@@ -827,49 +475,26 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageAsync(
-        ListWithOffsetPaginationHasNextPageRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageAsync(ListWithOffsetPaginationHasNextPageRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Page != null)
-        {
+        if (request.Page != null) {
             _query["page"] = request.Page.Value.ToString();
         }
-        if (request.Limit != null)
-        {
+        if (request.Limit != null) {
             _query["limit"] = request.Limit.Value.ToString();
         }
-        if (request.Order != null)
-        {
+        if (request.Order != null) {
             _query["order"] = request.Order.Value.Stringify();
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
@@ -879,41 +504,20 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
-        ListUsersExtendedRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(ListUsersExtendedRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Cursor != null)
-        {
+        if (request.Cursor != null) {
             _query["cursor"] = request.Cursor.Value.ToString();
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersExtendedResponse>(responseBody)!;
@@ -923,41 +527,20 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataAsync(
-        ListUsersExtendedRequestForOptionalData request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataAsync(ListUsersExtendedRequestForOptionalData request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Cursor != null)
-        {
+        if (request.Cursor != null) {
             _query["cursor"] = request.Cursor.Value.ToString();
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ListUsersExtendedOptionalListResponse>(responseBody)!;
@@ -967,41 +550,20 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<UsernameCursor> ListUsernamesAsync(
-        ListUsernamesRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<UsernameCursor> ListUsernamesAsync(ListUsernamesRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.StartingAfter != null)
-        {
+        if (request.StartingAfter != null) {
             _query["starting_after"] = request.StartingAfter;
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
@@ -1011,41 +573,20 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
-    internal async Task<UsernameContainer> ListWithGlobalConfigAsync(
-        ListWithGlobalConfigRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    private async Task<UsernameContainer> ListWithGlobalConfigAsync(ListWithGlobalConfigRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Offset != null)
-        {
+        if (request.Offset != null) {
             _query["offset"] = request.Offset.Value.ToString();
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
@@ -1055,11 +596,8 @@ public partial class UsersClient
                 throw new SeedPaginationException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedPaginationApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

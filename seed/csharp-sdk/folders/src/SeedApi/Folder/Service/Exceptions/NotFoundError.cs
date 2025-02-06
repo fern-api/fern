@@ -1,6 +1,6 @@
 using SeedApi;
 
-namespace SeedApi.Folder;
+    namespace SeedApi.Folder;
 
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.

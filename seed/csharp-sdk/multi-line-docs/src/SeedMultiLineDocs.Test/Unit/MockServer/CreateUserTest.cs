@@ -1,55 +1,42 @@
+using NUnit.Framework;
 using System.Threading.Tasks;
+using SeedMultiLineDocs;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
-using SeedMultiLineDocs;
 using SeedMultiLineDocs.Core;
 
-namespace SeedMultiLineDocs.Test.Unit.MockServer;
+    namespace SeedMultiLineDocs.Test.Unit.MockServer;
 
 [TestFixture]
 public class CreateUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
-    {
+    public async Task MockServerTest() {
         const string requestJson = """
-            {
-              "name": "name",
-              "age": 1
-            }
-            """;
+        {
+          "name": "name",
+          "age": 1
+        }
+        """;
 
         const string mockResponse = """
-            {
-              "id": "id",
-              "name": "name",
-              "age": 1
-            }
-            """;
+        {
+          "id": "id",
+          "name": "name",
+          "age": 1
+        }
+        """;
 
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingPost().WithBodyAsJson(requestJson))
 
-        var response = await Client.User.CreateUserAsync(
-            new CreateUserRequest { Name = "name", Age = 1 },
-            RequestOptions
-        );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        .RespondWith(WireMock.ResponseBuilders.Response.Create()
+        .WithStatusCode(200)
+        .WithBody(mockResponse));
+
+        var response = await Client.User.CreateUserAsync(new CreateUserRequest{ 
+                Name = "name", Age = 1
+            }, RequestOptions);
+        JToken.Parse(mockResponse).Should().BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
+
 }

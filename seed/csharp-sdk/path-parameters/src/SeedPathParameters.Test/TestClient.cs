@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SeedPathParameters.Test;
+    namespace SeedPathParameters.Test;
 
 [TestFixture]
 public class TestClient;

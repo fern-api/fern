@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SeedErrorProperty.Test;
+    namespace SeedErrorProperty.Test;
 
 [TestFixture]
 public class TestClient;

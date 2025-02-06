@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace.V2;
+    namespace SeedTrace.V2;
 
 public record LightweightProblemInfoV2
 {
@@ -16,9 +16,8 @@ public record LightweightProblemInfoV2
 
     [JsonPropertyName("variableTypes")]
     public HashSet<object> VariableTypes { get; set; } = new HashSet<object>();
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedMultiLineDocs.Core;
 
-namespace SeedMultiLineDocs;
+    namespace SeedMultiLineDocs;
 
 public record CreateUserRequest
 {
@@ -18,9 +18,8 @@ public record CreateUserRequest
     /// </summary>
     [JsonPropertyName("age")]
     public int? Age { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

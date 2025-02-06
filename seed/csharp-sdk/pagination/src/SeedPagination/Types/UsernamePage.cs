@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 public record UsernamePage
 {
@@ -10,9 +10,8 @@ public record UsernamePage
 
     [JsonPropertyName("data")]
     public IEnumerable<string> Data { get; set; } = new List<string>();
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

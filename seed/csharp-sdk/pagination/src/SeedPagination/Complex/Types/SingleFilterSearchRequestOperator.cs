@@ -1,8 +1,8 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
+using System.Runtime.Serialization;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 [JsonConverter(typeof(EnumSerializer<SingleFilterSearchRequestOperator>))]
 public enum SingleFilterSearchRequestOperator
@@ -35,5 +35,5 @@ public enum SingleFilterSearchRequestOperator
     StartsWith,
 
     [EnumMember(Value = "$")]
-    EndsWith,
+    EndsWith
 }

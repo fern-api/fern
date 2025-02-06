@@ -1,18 +1,16 @@
+using SeedExhaustive.Core;
+using System.Threading.Tasks;
+using SeedExhaustive.Types;
+using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using SeedExhaustive.Core;
-using SeedExhaustive.Types;
 
-namespace SeedExhaustive;
+    namespace SeedExhaustive;
 
 public partial class InlinedRequestsClient
 {
     private RawClient _client;
-
-    internal InlinedRequestsClient(RawClient client)
-    {
+    internal InlinedRequestsClient (RawClient client) {
         _client = client;
     }
 
@@ -46,28 +44,12 @@ public partial class InlinedRequestsClient
     /// );
     /// </code>
     /// </example>
-    public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
-        PostWithObjectBody request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/req-bodies/object",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(PostWithObjectBody request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/req-bodies/object", Body = request, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -77,11 +59,8 @@ public partial class InlinedRequestsClient
                 throw new SeedExhaustiveException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

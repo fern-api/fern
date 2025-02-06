@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace;
+    namespace SeedTrace;
 
 public record WorkspaceSubmitRequest
 {
@@ -12,14 +12,12 @@ public record WorkspaceSubmitRequest
     public required Language Language { get; set; }
 
     [JsonPropertyName("submissionFiles")]
-    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; set; } =
-        new List<SubmissionFileInfo>();
+    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; set; } = new List<SubmissionFileInfo>();
 
     [JsonPropertyName("userId")]
     public string? UserId { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

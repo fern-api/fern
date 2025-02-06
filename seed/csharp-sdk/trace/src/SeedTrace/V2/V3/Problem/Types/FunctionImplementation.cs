@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace.V2.V3;
+    namespace SeedTrace.V2.V3;
 
 public record FunctionImplementation
 {
@@ -10,9 +10,8 @@ public record FunctionImplementation
 
     [JsonPropertyName("imports")]
     public string? Imports { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

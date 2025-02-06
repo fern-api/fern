@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 public record UserOptionalListPage
 {
@@ -10,9 +10,8 @@ public record UserOptionalListPage
 
     [JsonPropertyName("next")]
     public string? Next { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

@@ -1,9 +1,9 @@
-using System.Linq;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
+using System.Linq;
 using Proto = Data.V1.Grpc;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public record Column
 {
@@ -18,29 +18,25 @@ public record Column
 
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
 
     /// <summary>
     /// Maps the Column type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.Column ToProto()
-    {
-        var result = new Proto.Column();
+    internal Proto.Column ToProto() {
+        var result = new Proto.Column(
+            
+        );
         result.Id = Id;
-        if (Values.Any())
-        {
+        if (Values.Any()) {
             result.Values.AddRange(Values);
         }
-        if (Metadata != null)
-        {
+        if (Metadata != null) {
             result.Metadata = Metadata.ToProto();
         }
-        if (IndexedData != null)
-        {
+        if (IndexedData != null) {
             result.IndexedData = IndexedData.ToProto();
         }
         return result;
@@ -49,15 +45,10 @@ public record Column
     /// <summary>
     /// Returns a new Column type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static Column FromProto(Proto.Column value)
-    {
-        return new Column
-        {
-            Id = value.Id,
-            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
-            IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+    internal static Column FromProto(Proto.Column value) {
+        return new Column{ 
+            Id = value.Id, Values = value.Values?.ToList() ?? Enumerable.Empty<float>(), Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null, IndexedData = value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
         };
     }
+
 }

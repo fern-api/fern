@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedLiteral.Core;
 
-namespace SeedLiteral;
+    namespace SeedLiteral;
 
 public record NestedObjectWithLiterals
 {
@@ -13,9 +13,8 @@ public record NestedObjectWithLiterals
 
     [JsonPropertyName("strProp")]
     public required string StrProp { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

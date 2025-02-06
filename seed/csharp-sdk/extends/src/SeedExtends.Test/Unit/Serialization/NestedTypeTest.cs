@@ -1,20 +1,19 @@
-using System.Text.Json;
+using NUnit.Framework;
 using System.Text.Json.Serialization;
+using System.Text.Json;
+using SeedExtends;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
-using SeedExtends;
 
-namespace SeedExtends.Test;
+    namespace SeedExtends.Test;
 
 [TestFixture]
 public class NestedTypeTest
 {
     [Test]
-    public void TestSerialization()
-    {
-        var inputJson =
-            @"
+    public void TestSerialization() {
+        var inputJson = 
+        @"
         {
           ""docs"": ""This is an example nested type."",
           ""name"": ""NestedExample"",
@@ -22,18 +21,13 @@ public class NestedTypeTest
         }
         ";
 
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<NestedType>(
-            inputJson,
-            serializerOptions
-        );
+        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+        
+        var deserializedObject = JsonSerializer.Deserialize<NestedType>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
         JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
     }
+
 }

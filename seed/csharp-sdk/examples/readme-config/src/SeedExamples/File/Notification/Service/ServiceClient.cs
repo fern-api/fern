@@ -1,18 +1,16 @@
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading;
+using SeedExamples.Core;
 using System.Threading.Tasks;
 using SeedExamples;
-using SeedExamples.Core;
+using System.Threading;
+using System.Net.Http;
+using System.Text.Json;
 
-namespace SeedExamples.File.Notification;
+    namespace SeedExamples.File.Notification;
 
 public partial class ServiceClient
 {
     private RawClient _client;
-
-    internal ServiceClient(RawClient client)
-    {
+    internal ServiceClient (RawClient client) {
         _client = client;
     }
 
@@ -21,27 +19,12 @@ public partial class ServiceClient
     /// await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
     /// </code>
     /// </example>
-    public async Task<object> GetExceptionAsync(
-        string notificationId,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = $"/file/notification/{notificationId}",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<object> GetExceptionAsync(string notificationId, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = $"/file/notification/{notificationId}", Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<object>(responseBody)!;
@@ -51,11 +34,8 @@ public partial class ServiceClient
                 throw new SeedExamplesException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedExamplesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedExamplesApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

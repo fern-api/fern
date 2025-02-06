@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
 
-namespace SeedObjectsWithImports;
+    namespace SeedObjectsWithImports;
 
 public record Node
 {
@@ -14,9 +14,8 @@ public record Node
 
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

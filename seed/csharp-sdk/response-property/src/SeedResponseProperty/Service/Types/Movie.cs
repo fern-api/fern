@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedResponseProperty.Core;
 
-namespace SeedResponseProperty;
+    namespace SeedResponseProperty;
 
 public record Movie
 {
@@ -10,9 +10,8 @@ public record Movie
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

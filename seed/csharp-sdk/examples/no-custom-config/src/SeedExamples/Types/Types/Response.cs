@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
 
-namespace SeedExamples;
+    namespace SeedExamples;
 
 public record Response
 {
@@ -10,9 +10,8 @@ public record Response
 
     [JsonPropertyName("identifiers")]
     public IEnumerable<Identifier> Identifiers { get; set; } = new List<Identifier>();
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

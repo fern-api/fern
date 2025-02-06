@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using SeedExhaustive;
-using WireMock.Logging;
 using WireMock.Server;
+using SeedExhaustive;
 using WireMock.Settings;
+using WireMock.Logging;
 
-namespace SeedExhaustive.Test.Unit.MockServer;
+    namespace SeedExhaustive.Test.Unit.MockServer;
 
 [SetUpFixture]
 public class BaseMockServerTest
@@ -14,25 +14,27 @@ public class BaseMockServerTest
     protected static SeedExhaustiveClient Client { get; set; } = null!;
 
     protected static RequestOptions RequestOptions { get; set; } = null!;
-
     [OneTimeSetUp]
-    public void GlobalSetup()
-    {
+    public void GlobalSetup() {
         // Start the WireMock server
-        Server = WireMockServer.Start(
-            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
-        );
+        Server = WireMockServer.Start(new WireMockServerSettings { Logger = new WireMockConsoleLogger() });
 
         // Initialize the Client
-        Client = new SeedExhaustiveClient("TOKEN");
+        Client = 
+        new SeedExhaustiveClient(
+            "TOKEN"
+        );
 
-        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        RequestOptions = 
+        new RequestOptions{ 
+            BaseUrl = Server.Urls[0]
+        };
     }
 
     [OneTimeTearDown]
-    public void GlobalTeardown()
-    {
+    public void GlobalTeardown() {
         Server.Stop();
         Server.Dispose();
     }
+
 }

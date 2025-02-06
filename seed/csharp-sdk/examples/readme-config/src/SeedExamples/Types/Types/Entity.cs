@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using OneOf;
 using SeedExamples.Core;
 
-namespace SeedExamples;
+    namespace SeedExamples;
 
 public record Entity
 {
@@ -11,9 +11,8 @@ public record Entity
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

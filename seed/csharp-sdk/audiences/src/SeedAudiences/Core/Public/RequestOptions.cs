@@ -1,8 +1,8 @@
-using System;
-using System.Net.Http;
 using SeedAudiences.Core;
+using System.Net.Http;
+using System;
 
-namespace SeedAudiences;
+    namespace SeedAudiences;
 
 public partial class RequestOptions : IRequestOptions
 {
@@ -30,4 +30,5 @@ public partial class RequestOptions : IRequestOptions
     /// The http headers sent with the request.
     /// </summary>
     Headers IRequestOptions.Headers { get; init; } = new();
+
 }

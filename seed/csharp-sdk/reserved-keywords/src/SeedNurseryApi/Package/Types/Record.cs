@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedNurseryApi.Core;
 
-namespace SeedNurseryApi;
+    namespace SeedNurseryApi;
 
 public record Record
 {
@@ -10,9 +10,8 @@ public record Record
 
     [JsonPropertyName("3d")]
     public required int _3D { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

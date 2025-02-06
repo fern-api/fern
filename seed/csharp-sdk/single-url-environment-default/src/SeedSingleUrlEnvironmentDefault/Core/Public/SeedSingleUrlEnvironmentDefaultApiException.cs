@@ -3,11 +3,7 @@ namespace SeedSingleUrlEnvironmentDefault;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedSingleUrlEnvironmentDefaultApiException(
-    string message,
-    int statusCode,
-    object body
-) : SeedSingleUrlEnvironmentDefaultException(message)
+public class SeedSingleUrlEnvironmentDefaultApiException(string message,int statusCode,object body) : SeedSingleUrlEnvironmentDefaultException(message)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

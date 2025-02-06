@@ -1,17 +1,15 @@
-using System.Net.Http;
-using System.Threading;
+using SeedApi.Core;
 using System.Threading.Tasks;
 using SeedApi;
-using SeedApi.Core;
+using System.Threading;
+using System.Net.Http;
 
-namespace SeedApi.A.C;
+    namespace SeedApi.A.C;
 
 public partial class CClient
 {
     private RawClient _client;
-
-    internal CClient(RawClient client)
-    {
+    internal CClient (RawClient client) {
         _client = client;
     }
 
@@ -20,32 +18,15 @@ public partial class CClient
     /// await client.A.C.FooAsync();
     /// </code>
     /// </example>
-    public async Task FooAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
+    public async Task FooAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "", Options = options
+            }, cancellationToken).ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400) {
             return;
         }
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public record DeleteRequest
 {
@@ -17,34 +17,30 @@ public record DeleteRequest
 
     [JsonPropertyName("filter")]
     public Metadata? Filter { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
 
     /// <summary>
     /// Maps the DeleteRequest type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.DeleteRequest ToProto()
-    {
-        var result = new Proto.DeleteRequest();
-        if (Ids != null && Ids.Any())
-        {
+    internal Proto.DeleteRequest ToProto() {
+        var result = new Proto.DeleteRequest(
+            
+        );
+        if (Ids != null && Ids.Any()) {
             result.Ids.AddRange(Ids);
         }
-        if (DeleteAll != null)
-        {
+        if (DeleteAll != null) {
             result.DeleteAll = DeleteAll ?? false;
         }
-        if (Namespace != null)
-        {
+        if (Namespace != null) {
             result.Namespace = Namespace ?? "";
         }
-        if (Filter != null)
-        {
+        if (Filter != null) {
             result.Filter = Filter.ToProto();
         }
         return result;
     }
+
 }

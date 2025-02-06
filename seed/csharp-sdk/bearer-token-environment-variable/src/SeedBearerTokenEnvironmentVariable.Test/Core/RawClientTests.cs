@@ -1,9 +1,9 @@
 using NUnit.Framework;
-using SeedBearerTokenEnvironmentVariable.Core;
-using WireMock.Server;
 using SystemTask = System.Threading.Tasks.Task;
+using WireMock.Server;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
+using SeedBearerTokenEnvironmentVariable.Core;
 
 namespace SeedBearerTokenEnvironmentVariable.Test.Core;
 
@@ -57,7 +57,7 @@ public class RawClientTests
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
-            Path = "/test",
+            Path = "/test"
         };
 
         var response = await _rawClient.MakeRequestAsync(request);
@@ -72,19 +72,23 @@ public class RawClientTests
     [Test]
     [TestCase(400)]
     [TestCase(409)]
-    public async SystemTask MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(int statusCode)
+    public async SystemTask MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(
+        int statusCode
+    )
     {
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
             .InScenario("Retry")
             .WillSetStateTo("Server Error")
-            .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure"));
+            .RespondWith(
+                WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure")
+            );
 
         var request = new RawClient.BaseApiRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
-            Path = "/test",
+            Path = "/test"
         };
 
         var response = await _rawClient.MakeRequestAsync(request);

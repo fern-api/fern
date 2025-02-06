@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedMixedCase.Core;
 
-namespace SeedMixedCase;
+    namespace SeedMixedCase;
 
 public record NestedUser
 {
@@ -10,9 +10,8 @@ public record NestedUser
 
     [JsonPropertyName("NestedUser")]
     public required User NestedUser_ { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

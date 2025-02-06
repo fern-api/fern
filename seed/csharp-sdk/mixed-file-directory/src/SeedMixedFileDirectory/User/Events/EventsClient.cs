@@ -1,21 +1,23 @@
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.User.Events;
+using System.Threading.Tasks;
+using SeedMixedFileDirectory;
+using System.Threading;
+using System.Net.Http;
+using System.Text.Json;
 
-namespace SeedMixedFileDirectory.User;
+    namespace SeedMixedFileDirectory.User;
 
 public partial class EventsClient
 {
     private RawClient _client;
 
-    internal EventsClient(RawClient client)
-    {
+    internal EventsClient (RawClient client) {
         _client = client;
-        Metadata = new MetadataClient(_client);
+        Metadata = 
+        new MetadataClient(
+            _client
+        );
     }
 
     public MetadataClient Metadata { get; }
@@ -28,33 +30,16 @@ public partial class EventsClient
     /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
     /// </code>
     /// </example>
-    public async Task<IEnumerable<Event>> ListEventsAsync(
-        ListUserEventsRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<IEnumerable<Event>> ListEventsAsync(ListUserEventsRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
         var _query = new Dictionary<string, object>();
-        if (request.Limit != null)
-        {
+        if (request.Limit != null) {
             _query["limit"] = request.Limit.Value.ToString();
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/users/events/",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/users/events/", Query = _query, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
@@ -64,11 +49,8 @@ public partial class EventsClient
                 throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedMixedFileDirectoryApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedMixedFileDirectoryApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

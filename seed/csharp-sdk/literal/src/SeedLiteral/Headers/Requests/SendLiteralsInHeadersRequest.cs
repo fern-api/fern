@@ -1,6 +1,6 @@
 using SeedLiteral.Core;
 
-namespace SeedLiteral;
+    namespace SeedLiteral;
 
 public record SendLiteralsInHeadersRequest
 {
@@ -9,9 +9,8 @@ public record SendLiteralsInHeadersRequest
     public required bool Async { get; set; }
 
     public required string Query { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

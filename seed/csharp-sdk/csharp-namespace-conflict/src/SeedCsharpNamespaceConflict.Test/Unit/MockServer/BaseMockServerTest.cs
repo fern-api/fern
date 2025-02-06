@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using SeedCsharpNamespaceConflict;
-using WireMock.Logging;
 using WireMock.Server;
+using SeedCsharpNamespaceConflict;
 using WireMock.Settings;
+using WireMock.Logging;
 
-namespace SeedCsharpNamespaceConflict.Test.Unit.MockServer;
+    namespace SeedCsharpNamespaceConflict.Test.Unit.MockServer;
 
 [SetUpFixture]
 public class BaseMockServerTest
@@ -14,25 +14,27 @@ public class BaseMockServerTest
     protected static SeedCsharpNamespaceConflictClient Client { get; set; } = null!;
 
     protected static RequestOptions RequestOptions { get; set; } = null!;
-
     [OneTimeSetUp]
-    public void GlobalSetup()
-    {
+    public void GlobalSetup() {
         // Start the WireMock server
-        Server = WireMockServer.Start(
-            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
-        );
+        Server = WireMockServer.Start(new WireMockServerSettings { Logger = new WireMockConsoleLogger() });
 
         // Initialize the Client
-        Client = new SeedCsharpNamespaceConflictClient();
+        Client = 
+        new SeedCsharpNamespaceConflictClient(
+            
+        );
 
-        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        RequestOptions = 
+        new RequestOptions{ 
+            BaseUrl = Server.Urls[0]
+        };
     }
 
     [OneTimeTearDown]
-    public void GlobalTeardown()
-    {
+    public void GlobalTeardown() {
         Server.Stop();
         Server.Dispose();
     }
+
 }

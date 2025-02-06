@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 public record Page
 {
@@ -19,9 +19,8 @@ public record Page
 
     [JsonPropertyName("total_page")]
     public required int TotalPage { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

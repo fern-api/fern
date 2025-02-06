@@ -11,59 +11,32 @@ public class OneOfSerializerTests
 {
     private class Foo
     {
-        [JsonPropertyName("string_prop")]
-        public required string StringProp { get; set; }
+        [JsonPropertyName("string_prop")] public required string StringProp { get; set; }
     }
 
     private class Bar
     {
-        [JsonPropertyName("int_prop")]
-        public required int IntProp { get; set; }
+        [JsonPropertyName("int_prop")] public required int IntProp { get; set; }
     }
 
-    private static readonly OneOf<string, int, object, Foo, Bar> OneOf1 = OneOf<
-        string,
-        int,
-        object,
-        Foo,
-        Bar
-    >.FromT2(new { });
+    private static readonly OneOf<string, int, object, Foo, Bar> OneOf1 =
+        OneOf<string, int, object, Foo, Bar>.FromT2(new { });
     private const string OneOf1String = "{}";
 
-    private static readonly OneOf<string, int, object, Foo, Bar> OneOf2 = OneOf<
-        string,
-        int,
-        object,
-        Foo,
-        Bar
-    >.FromT0("test");
+    private static readonly OneOf<string, int, object, Foo, Bar> OneOf2 =
+        OneOf<string, int, object, Foo, Bar>.FromT0("test");
     private const string OneOf2String = "\"test\"";
 
-    private static readonly OneOf<string, int, object, Foo, Bar> OneOf3 = OneOf<
-        string,
-        int,
-        object,
-        Foo,
-        Bar
-    >.FromT1(123);
+    private static readonly OneOf<string, int, object, Foo, Bar> OneOf3 =
+        OneOf<string, int, object, Foo, Bar>.FromT1(123);
     private const string OneOf3String = "123";
 
-    private static readonly OneOf<string, int, object, Foo, Bar> OneOf4 = OneOf<
-        string,
-        int,
-        object,
-        Foo,
-        Bar
-    >.FromT3(new Foo { StringProp = "test" });
+    private static readonly OneOf<string, int, object, Foo, Bar> OneOf4 =
+        OneOf<string, int, object, Foo, Bar>.FromT3(new Foo { StringProp = "test" });
     private const string OneOf4String = "{\n  \"string_prop\": \"test\"\n}";
 
-    private static readonly OneOf<string, int, object, Foo, Bar> OneOf5 = OneOf<
-        string,
-        int,
-        object,
-        Foo,
-        Bar
-    >.FromT4(new Bar { IntProp = 5 });
+    private static readonly OneOf<string, int, object, Foo, Bar> OneOf5 =
+        OneOf<string, int, object, Foo, Bar>.FromT4(new Bar { IntProp = 5 });
     private const string OneOf5String = "{\n  \"int_prop\": 5\n}";
 
     [Test]
@@ -112,13 +85,8 @@ public class OneOfSerializerTests
     private static readonly OneOf<string, int, object, Foo, Bar>? NullableOneOf1 = null;
     private const string NullableOneOf1String = "null";
 
-    private static readonly OneOf<string, int, object, Foo, Bar>? NullableOneOf2 = OneOf<
-        string,
-        int,
-        object,
-        Foo,
-        Bar
-    >.FromT4(new Bar { IntProp = 5 });
+    private static readonly OneOf<string, int, object, Foo, Bar>? NullableOneOf2 =
+        OneOf<string, int, object, Foo, Bar>.FromT4(new Bar { IntProp = 5 });
     private const string NullableOneOf2String = "{\n  \"int_prop\": 5\n}";
 
     [Test]
@@ -158,25 +126,15 @@ public class OneOfSerializerTests
         });
     }
 
-    private static readonly OneOf<string, int, Foo?> OneOfWithNullable1 = OneOf<
-        string,
-        int,
-        Foo?
-    >.FromT2(null);
+    private static readonly OneOf<string, int, Foo?> OneOfWithNullable1 = OneOf<string, int, Foo?>.FromT2(null);
     private const string OneOfWithNullable1String = "null";
 
-    private static readonly OneOf<string, int, Foo?> OneOfWithNullable2 = OneOf<
-        string,
-        int,
-        Foo?
-    >.FromT2(new Foo { StringProp = "test" });
+    private static readonly OneOf<string, int, Foo?> OneOfWithNullable2 =
+        OneOf<string, int, Foo?>.FromT2(new Foo { StringProp = "test" });
     private const string OneOfWithNullable2String = "{\n  \"string_prop\": \"test\"\n}";
 
-    private static readonly OneOf<string, int, Foo?> OneOfWithNullable3 = OneOf<
-        string,
-        int,
-        Foo?
-    >.FromT0("test");
+    private static readonly OneOf<string, int, Foo?> OneOfWithNullable3 =
+        OneOf<string, int, Foo?>.FromT0("test");
     private const string OneOfWithNullable3String = "\"test\"";
 
     [Test]
@@ -221,9 +179,7 @@ public class OneOfSerializerTests
     [Test]
     public void Serialize_OneOfWithObjectLast_Should_Return_Expected_String()
     {
-        var oneOfWithObjectLast = OneOf<string, int, Foo, Bar, object>.FromT4(
-            new { random = "data" }
-        );
+        var oneOfWithObjectLast = OneOf<string, int, Foo, Bar, object>.FromT4(new { random = "data" });
         const string oneOfWithObjectLastString = "{\n  \"random\": \"data\"\n}";
 
         var result = JsonUtils.Serialize(oneOfWithObjectLast);
@@ -234,9 +190,7 @@ public class OneOfSerializerTests
     public void OneOfWithObjectLast_Should_Deserialize_From_String()
     {
         const string oneOfWithObjectLastString = "{\n  \"random\": \"data\"\n}";
-        var result = JsonUtils.Deserialize<OneOf<string, int, Foo, Bar, object>>(
-            oneOfWithObjectLastString
-        );
+        var result = JsonUtils.Deserialize<OneOf<string, int, Foo, Bar, object>>(oneOfWithObjectLastString);
         Assert.Multiple(() =>
         {
             Assert.That(result.Index, Is.EqualTo(4));
@@ -248,9 +202,7 @@ public class OneOfSerializerTests
     [Test]
     public void Serialize_OneOfWithObjectNotLast_Should_Return_Expected_String()
     {
-        var oneOfWithObjectNotLast = OneOf<string, object, int, Foo, Bar>.FromT1(
-            new { random = "data" }
-        );
+        var oneOfWithObjectNotLast = OneOf<string, object, int, Foo, Bar>.FromT1(new { random = "data" });
         const string oneOfWithObjectNotLastString = "{\n  \"random\": \"data\"\n}";
 
         var result = JsonUtils.Serialize(oneOfWithObjectNotLast);
@@ -261,17 +213,12 @@ public class OneOfSerializerTests
     public void OneOfWithObjectNotLast_Should_Deserialize_From_String()
     {
         const string oneOfWithObjectNotLastString = "{\n  \"random\": \"data\"\n}";
-        var result = JsonUtils.Deserialize<OneOf<string, object, int, Foo, Bar>>(
-            oneOfWithObjectNotLastString
-        );
+        var result = JsonUtils.Deserialize<OneOf<string, object, int, Foo, Bar>>(oneOfWithObjectNotLastString);
         Assert.Multiple(() =>
         {
             Assert.That(result.Index, Is.EqualTo(1));
             Assert.That(result.Value, Is.InstanceOf<object>());
-            Assert.That(
-                JsonUtils.Serialize(result.Value),
-                Is.EqualTo(oneOfWithObjectNotLastString)
-            );
+            Assert.That(JsonUtils.Serialize(result.Value), Is.EqualTo(oneOfWithObjectNotLastString));
         });
     }
 

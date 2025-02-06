@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SeedLiteral.Test;
+    namespace SeedLiteral.Test;
 
 [TestFixture]
 public class TestClient;

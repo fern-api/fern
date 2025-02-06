@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace.V2.V3;
+    namespace SeedTrace.V2.V3;
 
 public record TestCaseTemplate
 {
@@ -13,9 +13,8 @@ public record TestCaseTemplate
 
     [JsonPropertyName("implementation")]
     public required TestCaseImplementation Implementation { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedVersion.Core;
 
-namespace SeedVersion;
+    namespace SeedVersion;
 
 public record User
 {
@@ -10,9 +10,8 @@ public record User
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

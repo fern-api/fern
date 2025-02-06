@@ -1,13 +1,12 @@
 using SeedErrorProperty.Core;
 
-namespace SeedErrorProperty;
+    namespace SeedErrorProperty;
 
 public partial class ErrorsClient
 {
     private RawClient _client;
-
-    internal ErrorsClient(RawClient client)
-    {
+    internal ErrorsClient (RawClient client) {
         _client = client;
     }
+
 }

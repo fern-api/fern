@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedMixedCase.Core;
 
-namespace SeedMixedCase;
+    namespace SeedMixedCase;
 
 public record User
 {
@@ -12,11 +12,9 @@ public record User
     public IEnumerable<string> MetadataTags { get; set; } = new List<string>();
 
     [JsonPropertyName("EXTRA_PROPERTIES")]
-    public Dictionary<string, string> ExtraProperties { get; set; } =
-        new Dictionary<string, string>();
-
-    public override string ToString()
-    {
+    public Dictionary<string, string> ExtraProperties { get; set; } = new Dictionary<string, string>();
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

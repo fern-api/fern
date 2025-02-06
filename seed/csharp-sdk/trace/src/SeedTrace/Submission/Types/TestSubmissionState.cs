@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace;
+    namespace SeedTrace;
 
 public record TestSubmissionState
 {
@@ -16,9 +16,8 @@ public record TestSubmissionState
 
     [JsonPropertyName("status")]
     public required object Status { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

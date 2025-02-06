@@ -1,17 +1,15 @@
+using SeedErrorProperty.Core;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using SeedErrorProperty.Core;
 
-namespace SeedErrorProperty;
+    namespace SeedErrorProperty;
 
 public partial class PropertyBasedErrorClient
 {
     private RawClient _client;
-
-    internal PropertyBasedErrorClient(RawClient client)
-    {
+    internal PropertyBasedErrorClient (RawClient client) {
         _client = client;
     }
 
@@ -23,26 +21,12 @@ public partial class PropertyBasedErrorClient
     /// await client.PropertyBasedError.ThrowErrorAsync();
     /// </code>
     /// </example>
-    public async Task<string> ThrowErrorAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "property-based-error",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<string> ThrowErrorAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "property-based-error", Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -52,11 +36,8 @@ public partial class PropertyBasedErrorClient
                 throw new SeedErrorPropertyException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedErrorPropertyApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedErrorPropertyApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

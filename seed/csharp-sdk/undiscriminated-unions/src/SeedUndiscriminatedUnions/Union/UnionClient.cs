@@ -1,18 +1,16 @@
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading;
+using SeedUndiscriminatedUnions.Core;
 using System.Threading.Tasks;
 using OneOf;
-using SeedUndiscriminatedUnions.Core;
+using System.Threading;
+using System.Net.Http;
+using System.Text.Json;
 
-namespace SeedUndiscriminatedUnions;
+    namespace SeedUndiscriminatedUnions;
 
 public partial class UnionClient
 {
     private RawClient _client;
-
-    internal UnionClient(RawClient client)
-    {
+    internal UnionClient (RawClient client) {
         _client = client;
     }
 
@@ -21,68 +19,23 @@ public partial class UnionClient
     /// await client.Union.GetAsync("string");
     /// </code>
     /// </example>
-    public async Task<
-        OneOf<
-            string,
-            IEnumerable<string>,
-            int,
-            IEnumerable<int>,
-            IEnumerable<IEnumerable<int>>,
-            HashSet<string>
-        >
-    > GetAsync(
-        OneOf<
-            string,
-            IEnumerable<string>,
-            int,
-            IEnumerable<int>,
-            IEnumerable<IEnumerable<int>>,
-            HashSet<string>
-        > request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>> GetAsync(OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>> request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "", Body = request, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
-                return JsonUtils.Deserialize<
-                    OneOf<
-                        string,
-                        IEnumerable<string>,
-                        int,
-                        IEnumerable<int>,
-                        IEnumerable<IEnumerable<int>>,
-                        HashSet<string>
-                    >
-                >(responseBody)!;
+                return JsonUtils.Deserialize<OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>>(responseBody)!;
             }
             catch (JsonException e)
             {
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedUndiscriminatedUnionsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
     /// <example>
@@ -90,42 +43,23 @@ public partial class UnionClient
     /// await client.Union.GetMetadataAsync();
     /// </code>
     /// </example>
-    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/metadata",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = "/metadata", Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
-                return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(responseBody)!;
             }
             catch (JsonException e)
             {
                 throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedUndiscriminatedUnionsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedUndiscriminatedUnionsApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

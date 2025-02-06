@@ -1,13 +1,12 @@
 using SeedExhaustive.Core;
 
-namespace SeedExhaustive.GeneralErrors;
+    namespace SeedExhaustive.GeneralErrors;
 
 public partial class GeneralErrorsClient
 {
     private RawClient _client;
-
-    internal GeneralErrorsClient(RawClient client)
-    {
+    internal GeneralErrorsClient (RawClient client) {
         _client = client;
     }
+
 }

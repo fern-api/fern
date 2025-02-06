@@ -2,26 +2,24 @@ using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public record UploadResponse
 {
     [JsonPropertyName("count")]
     public uint? Count { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
 
     /// <summary>
     /// Maps the UploadResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.UploadResponse ToProto()
-    {
-        var result = new Proto.UploadResponse();
-        if (Count != null)
-        {
+    internal Proto.UploadResponse ToProto() {
+        var result = new Proto.UploadResponse(
+            
+        );
+        if (Count != null) {
             result.Count = Count ?? 0;
         }
         return result;
@@ -30,8 +28,10 @@ public record UploadResponse
     /// <summary>
     /// Returns a new UploadResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static UploadResponse FromProto(Proto.UploadResponse value)
-    {
-        return new UploadResponse { Count = value.Count };
+    internal static UploadResponse FromProto(Proto.UploadResponse value) {
+        return new UploadResponse{ 
+            Count = value.Count
+        };
     }
+
 }

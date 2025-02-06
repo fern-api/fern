@@ -8,22 +8,27 @@ namespace SeedEnum.Test.Core;
 [TestFixture]
 public class StringEnumSerializerTests
 {
-    private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        WriteIndented = true,
+    };
 
     private static readonly DummyEnum KnownEnumValue2 = DummyEnum.KnownValue2;
     private static readonly DummyEnum UnknownEnumValue = DummyEnum.Custom("unknown_value");
 
-    private static readonly string JsonWithKnownEnum2 = $$"""
-        {
-            "enum_property": "{{KnownEnumValue2}}"
-        }
-        """;
+    private static readonly string JsonWithKnownEnum2 =
+        $$"""
+          {
+              "enum_property": "{{KnownEnumValue2}}"
+          }
+          """;
 
-    private static readonly string JsonWithUnknownEnum = $$"""
-        {
-            "enum_property": "{{UnknownEnumValue}}"
-        }
-        """;
+    private static readonly string JsonWithUnknownEnum =
+        $$"""
+          {
+              "enum_property": "{{UnknownEnumValue}}"
+          }
+          """;
 
     [Test]
     public void ShouldParseKnownEnumValue2()

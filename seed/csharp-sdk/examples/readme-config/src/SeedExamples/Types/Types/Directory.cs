@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
 
-namespace SeedExamples;
+    namespace SeedExamples;
 
 public record Directory
 {
@@ -13,9 +13,8 @@ public record Directory
 
     [JsonPropertyName("directories")]
     public IEnumerable<Directory>? Directories { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

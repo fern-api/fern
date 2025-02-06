@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public record DescribeResponse
 {
@@ -17,36 +17,30 @@ public record DescribeResponse
 
     [JsonPropertyName("totalCount")]
     public uint? TotalCount { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
 
     /// <summary>
     /// Maps the DescribeResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.DescribeResponse ToProto()
-    {
-        var result = new Proto.DescribeResponse();
-        if (Namespaces != null && Namespaces.Any())
-        {
-            foreach (var kvp in Namespaces)
-            {
+    internal Proto.DescribeResponse ToProto() {
+        var result = new Proto.DescribeResponse(
+            
+        );
+        if (Namespaces != null && Namespaces.Any()) {
+            foreach (var kvp in Namespaces) {
                 result.Namespaces.Add(kvp.Key, kvp.Value.ToProto());
             }
             ;
         }
-        if (Dimension != null)
-        {
+        if (Dimension != null) {
             result.Dimension = Dimension ?? 0;
         }
-        if (Fullness != null)
-        {
+        if (Fullness != null) {
             result.Fullness = Fullness ?? 0.0f;
         }
-        if (TotalCount != null)
-        {
+        if (TotalCount != null) {
             result.TotalCount = TotalCount ?? 0;
         }
         return result;
@@ -55,17 +49,10 @@ public record DescribeResponse
     /// <summary>
     /// Returns a new DescribeResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static DescribeResponse FromProto(Proto.DescribeResponse value)
-    {
-        return new DescribeResponse
-        {
-            Namespaces = value.Namespaces?.ToDictionary(
-                kvp => kvp.Key,
-                kvp => NamespaceSummary.FromProto(kvp.Value)
-            ),
-            Dimension = value.Dimension,
-            Fullness = value.Fullness,
-            TotalCount = value.TotalCount,
+    internal static DescribeResponse FromProto(Proto.DescribeResponse value) {
+        return new DescribeResponse{ 
+            Namespaces = value.Namespaces?.ToDictionary(kvp => kvp.Key, kvp => NamespaceSummary.FromProto(kvp.Value)), Dimension = value.Dimension, Fullness = value.Fullness, TotalCount = value.TotalCount
         };
     }
+
 }

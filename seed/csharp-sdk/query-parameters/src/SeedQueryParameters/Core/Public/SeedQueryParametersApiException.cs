@@ -3,8 +3,7 @@ namespace SeedQueryParameters;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedQueryParametersApiException(string message, int statusCode, object body)
-    : SeedQueryParametersException(message)
+public class SeedQueryParametersApiException(string message,int statusCode,object body) : SeedQueryParametersException(message)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

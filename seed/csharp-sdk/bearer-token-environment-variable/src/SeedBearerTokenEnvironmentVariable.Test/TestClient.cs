@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SeedBearerTokenEnvironmentVariable.Test;
+    namespace SeedBearerTokenEnvironmentVariable.Test;
 
 [TestFixture]
 public class TestClient;

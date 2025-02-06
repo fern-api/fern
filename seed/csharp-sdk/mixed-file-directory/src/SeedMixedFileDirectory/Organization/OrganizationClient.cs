@@ -1,17 +1,15 @@
+using SeedMixedFileDirectory.Core;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using SeedMixedFileDirectory.Core;
 
-namespace SeedMixedFileDirectory;
+    namespace SeedMixedFileDirectory;
 
 public partial class OrganizationClient
 {
     private RawClient _client;
-
-    internal OrganizationClient(RawClient client)
-    {
+    internal OrganizationClient (RawClient client) {
         _client = client;
     }
 
@@ -23,28 +21,12 @@ public partial class OrganizationClient
     /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
     /// </code>
     /// </example>
-    public async Task<Organization> CreateAsync(
-        CreateOrganizationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "/organizations/",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<Organization> CreateAsync(CreateOrganizationRequest request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/organizations/", Body = request, Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<Organization>(responseBody)!;
@@ -54,11 +36,8 @@ public partial class OrganizationClient
                 throw new SeedMixedFileDirectoryException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedMixedFileDirectoryApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedMixedFileDirectoryApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
+
 }

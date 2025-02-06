@@ -1,12 +1,12 @@
+using SeedApi.Core;
+using Data.V1.Grpc;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Data.V1.Grpc;
 using Grpc.Core;
-using SeedApi.Core;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public partial class DataserviceClient
 {
@@ -15,12 +15,12 @@ public partial class DataserviceClient
     private RawGrpcClient _grpc;
 
     private DataService.DataServiceClient _dataService;
-
-    internal DataserviceClient(RawClient client)
-    {
+    internal DataserviceClient (RawClient client) {
         _client = client;
         _grpc = _client.Grpc;
-        _dataService = new DataService.DataServiceClient(_grpc.Channel);
+        _dataService = new DataService.DataServiceClient(
+            _grpc.Channel
+        );
     }
 
     /// <example>
@@ -28,26 +28,12 @@ public partial class DataserviceClient
     /// await client.Dataservice.FooAsync();
     /// </code>
     /// </example>
-    public async Task<object> FooAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "foo",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
+    public async Task<object> FooAsync(RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{ 
+                BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "foo", Options = options
+            }, cancellationToken).ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
+        if (response.StatusCode is >= 200 and < 400) {
             try
             {
                 return JsonUtils.Deserialize<object>(responseBody)!;
@@ -57,12 +43,8 @@ public partial class DataserviceClient
                 throw new SeedApiException("Failed to deserialize response", e);
             }
         }
-
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        
+        throw new SeedApiApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
     }
 
     /// <example>
@@ -82,18 +64,12 @@ public partial class DataserviceClient
     /// );
     /// </code>
     /// </example>
-    public async Task<UploadResponse> UploadAsync(
-        UploadRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<UploadResponse> UploadAsync(UploadRequest request, GrpcRequestOptions? options = null, CancellationToken cancellationToken = default) {
         try
         {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
+            var callOptions = _grpc.CreateCallOptions(options ?? new GrpcRequestOptions(
+                    
+                ), cancellationToken);
             var call = _dataService.UploadAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return UploadResponse.FromProto(response);
@@ -102,14 +78,14 @@ public partial class DataserviceClient
         {
             var statusCode = (int)rpc.StatusCode;
             throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
+                $"Error with gRPC status code {statusCode}", statusCode, rpc.Message
             );
         }
         catch (Exception e)
         {
-            throw new SeedApiException("Error", e);
+        throw new SeedApiException(
+            "Error", e
+        );
         }
     }
 
@@ -118,18 +94,12 @@ public partial class DataserviceClient
     /// await client.Dataservice.DeleteAsync(new DeleteRequest());
     /// </code>
     /// </example>
-    public async Task<DeleteResponse> DeleteAsync(
-        DeleteRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<DeleteResponse> DeleteAsync(DeleteRequest request, GrpcRequestOptions? options = null, CancellationToken cancellationToken = default) {
         try
         {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
+            var callOptions = _grpc.CreateCallOptions(options ?? new GrpcRequestOptions(
+                    
+                ), cancellationToken);
             var call = _dataService.DeleteAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return DeleteResponse.FromProto(response);
@@ -138,14 +108,14 @@ public partial class DataserviceClient
         {
             var statusCode = (int)rpc.StatusCode;
             throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
+                $"Error with gRPC status code {statusCode}", statusCode, rpc.Message
             );
         }
         catch (Exception e)
         {
-            throw new SeedApiException("Error", e);
+        throw new SeedApiException(
+            "Error", e
+        );
         }
     }
 
@@ -154,18 +124,12 @@ public partial class DataserviceClient
     /// await client.Dataservice.DescribeAsync(new DescribeRequest());
     /// </code>
     /// </example>
-    public async Task<DescribeResponse> DescribeAsync(
-        DescribeRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<DescribeResponse> DescribeAsync(DescribeRequest request, GrpcRequestOptions? options = null, CancellationToken cancellationToken = default) {
         try
         {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
+            var callOptions = _grpc.CreateCallOptions(options ?? new GrpcRequestOptions(
+                    
+                ), cancellationToken);
             var call = _dataService.DescribeAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return DescribeResponse.FromProto(response);
@@ -174,14 +138,14 @@ public partial class DataserviceClient
         {
             var statusCode = (int)rpc.StatusCode;
             throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
+                $"Error with gRPC status code {statusCode}", statusCode, rpc.Message
             );
         }
         catch (Exception e)
         {
-            throw new SeedApiException("Error", e);
+        throw new SeedApiException(
+            "Error", e
+        );
         }
     }
 
@@ -190,18 +154,12 @@ public partial class DataserviceClient
     /// await client.Dataservice.FetchAsync(new FetchRequest());
     /// </code>
     /// </example>
-    public async Task<FetchResponse> FetchAsync(
-        FetchRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<FetchResponse> FetchAsync(FetchRequest request, GrpcRequestOptions? options = null, CancellationToken cancellationToken = default) {
         try
         {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
+            var callOptions = _grpc.CreateCallOptions(options ?? new GrpcRequestOptions(
+                    
+                ), cancellationToken);
             var call = _dataService.FetchAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return FetchResponse.FromProto(response);
@@ -210,14 +168,14 @@ public partial class DataserviceClient
         {
             var statusCode = (int)rpc.StatusCode;
             throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
+                $"Error with gRPC status code {statusCode}", statusCode, rpc.Message
             );
         }
         catch (Exception e)
         {
-            throw new SeedApiException("Error", e);
+        throw new SeedApiException(
+            "Error", e
+        );
         }
     }
 
@@ -226,18 +184,12 @@ public partial class DataserviceClient
     /// await client.Dataservice.ListAsync(new ListRequest());
     /// </code>
     /// </example>
-    public async Task<ListResponse> ListAsync(
-        ListRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<ListResponse> ListAsync(ListRequest request, GrpcRequestOptions? options = null, CancellationToken cancellationToken = default) {
         try
         {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
+            var callOptions = _grpc.CreateCallOptions(options ?? new GrpcRequestOptions(
+                    
+                ), cancellationToken);
             var call = _dataService.ListAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return ListResponse.FromProto(response);
@@ -246,14 +198,14 @@ public partial class DataserviceClient
         {
             var statusCode = (int)rpc.StatusCode;
             throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
+                $"Error with gRPC status code {statusCode}", statusCode, rpc.Message
             );
         }
         catch (Exception e)
         {
-            throw new SeedApiException("Error", e);
+        throw new SeedApiException(
+            "Error", e
+        );
         }
     }
 
@@ -262,18 +214,12 @@ public partial class DataserviceClient
     /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });
     /// </code>
     /// </example>
-    public async Task<QueryResponse> QueryAsync(
-        QueryRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<QueryResponse> QueryAsync(QueryRequest request, GrpcRequestOptions? options = null, CancellationToken cancellationToken = default) {
         try
         {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
+            var callOptions = _grpc.CreateCallOptions(options ?? new GrpcRequestOptions(
+                    
+                ), cancellationToken);
             var call = _dataService.QueryAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return QueryResponse.FromProto(response);
@@ -282,14 +228,14 @@ public partial class DataserviceClient
         {
             var statusCode = (int)rpc.StatusCode;
             throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
+                $"Error with gRPC status code {statusCode}", statusCode, rpc.Message
             );
         }
         catch (Exception e)
         {
-            throw new SeedApiException("Error", e);
+        throw new SeedApiException(
+            "Error", e
+        );
         }
     }
 
@@ -298,18 +244,12 @@ public partial class DataserviceClient
     /// await client.Dataservice.UpdateAsync(new UpdateRequest { Id = "id" });
     /// </code>
     /// </example>
-    public async Task<UpdateResponse> UpdateAsync(
-        UpdateRequest request,
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
+    public async Task<UpdateResponse> UpdateAsync(UpdateRequest request, GrpcRequestOptions? options = null, CancellationToken cancellationToken = default) {
         try
         {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
+            var callOptions = _grpc.CreateCallOptions(options ?? new GrpcRequestOptions(
+                    
+                ), cancellationToken);
             var call = _dataService.UpdateAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return UpdateResponse.FromProto(response);
@@ -318,14 +258,15 @@ public partial class DataserviceClient
         {
             var statusCode = (int)rpc.StatusCode;
             throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
+                $"Error with gRPC status code {statusCode}", statusCode, rpc.Message
             );
         }
         catch (Exception e)
         {
-            throw new SeedApiException("Error", e);
+        throw new SeedApiException(
+            "Error", e
+        );
         }
     }
+
 }

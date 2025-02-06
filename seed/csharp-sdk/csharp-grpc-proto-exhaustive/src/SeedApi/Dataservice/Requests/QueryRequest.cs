@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public record QueryRequest
 {
@@ -32,51 +32,43 @@ public record QueryRequest
 
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
 
     /// <summary>
     /// Maps the QueryRequest type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.QueryRequest ToProto()
-    {
-        var result = new Proto.QueryRequest();
-        if (Namespace != null)
-        {
+    internal Proto.QueryRequest ToProto() {
+        var result = new Proto.QueryRequest(
+            
+        );
+        if (Namespace != null) {
             result.Namespace = Namespace ?? "";
         }
         result.TopK = TopK;
-        if (Filter != null)
-        {
+        if (Filter != null) {
             result.Filter = Filter.ToProto();
         }
-        if (IncludeValues != null)
-        {
+        if (IncludeValues != null) {
             result.IncludeValues = IncludeValues ?? false;
         }
-        if (IncludeMetadata != null)
-        {
+        if (IncludeMetadata != null) {
             result.IncludeMetadata = IncludeMetadata ?? false;
         }
-        if (Queries != null && Queries.Any())
-        {
+        if (Queries != null && Queries.Any()) {
             result.Queries.AddRange(Queries.Select(elem => elem.ToProto()));
         }
-        if (Column != null && Column.Any())
-        {
+        if (Column != null && Column.Any()) {
             result.Column.AddRange(Column);
         }
-        if (Id != null)
-        {
+        if (Id != null) {
             result.Id = Id ?? "";
         }
-        if (IndexedData != null)
-        {
+        if (IndexedData != null) {
             result.IndexedData = IndexedData.ToProto();
         }
         return result;
     }
+
 }

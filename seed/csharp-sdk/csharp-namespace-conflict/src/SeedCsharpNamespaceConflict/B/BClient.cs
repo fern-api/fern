@@ -1,13 +1,12 @@
 using SeedCsharpNamespaceConflict.Core;
 
-namespace SeedCsharpNamespaceConflict.B;
+    namespace SeedCsharpNamespaceConflict.B;
 
 public partial class BClient
 {
     private RawClient _client;
-
-    internal BClient(RawClient client)
-    {
+    internal BClient (RawClient client) {
         _client = client;
     }
+
 }

@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedPagination.Core;
 using SystemTask = System.Threading.Tasks.Task;
+using SeedPagination.Core;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -20,22 +20,44 @@ public class HasNextPageOffsetTest
         {
             new()
             {
-                Data = new() { Items = ["item1", "item2"] },
-                HasNext = true,
+                Data = new()
+                {
+                    Items = ["item1", "item2"]
+                },
+                HasNext = true
             },
             new()
             {
-                Data = new() { Items = ["item1", "item2"] },
-                HasNext = true,
+                Data = new()
+                {
+                    Items = ["item1", "item2"]
+                },
+                HasNext = true
             },
             new()
             {
-                Data = new() { Items = ["item1"] },
-                HasNext = false,
-            },
+                Data = new()
+                {
+                    Items = ["item1",]
+                },
+                HasNext = false
+            }
         }.GetEnumerator();
-        Pager<object> pager = new OffsetPager<Request, object?, Response, int, object?, object>(
-            new() { Pagination = new() { Page = 1 } },
+        Pager<object> pager = new OffsetPager<
+            Request,
+            object?,
+            Response,
+            int,
+            object?,
+            object
+        >(
+            new()
+            {
+                Pagination = new()
+                {
+                    Page = 1
+                }
+            },
             null,
             (_, _, _) =>
             {

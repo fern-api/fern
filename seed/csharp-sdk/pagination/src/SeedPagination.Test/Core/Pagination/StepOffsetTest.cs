@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedPagination.Core;
 using SystemTask = System.Threading.Tasks.Task;
+using SeedPagination.Core;
 
 namespace SeedPagination.Test.Core.Pagination;
 
@@ -15,18 +15,49 @@ public class StepPageOffsetPaginationTest
     }
 
     private Pagination _paginationCopy;
-
     private Pager<object> CreatePager()
     {
         var responses = new List<Response>
         {
-            new() { Data = new() { Items = ["item1", "item2"] } },
-            new() { Data = new() { Items = ["item1"] } },
-            new() { Data = new() { Items = [] } },
+            new()
+            {
+                Data = new()
+                {
+                    Items = ["item1", "item2"]
+                }
+            },
+            new()
+            {
+                Data = new()
+                {
+                    Items = ["item1"]
+                }
+            },
+            new()
+            {
+                Data = new()
+                {
+                    Items = []
+                }
+            }
         }.GetEnumerator();
-        _paginationCopy = new() { ItemOffset = 0, PageSize = 2 };
-        Pager<object> pager = new OffsetPager<Request, object?, Response, int, object?, object>(
-            new() { Pagination = _paginationCopy },
+        _paginationCopy = new()
+        {
+            ItemOffset = 0,
+            PageSize = 2
+        };
+        Pager<object> pager = new OffsetPager<
+            Request,
+            object?,
+            Response,
+            int,
+            object?,
+            object
+        >(
+            new()
+            {
+                Pagination = _paginationCopy
+            },
             null,
             (_, _, _) =>
             {

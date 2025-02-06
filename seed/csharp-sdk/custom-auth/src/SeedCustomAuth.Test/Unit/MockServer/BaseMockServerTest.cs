@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using SeedCustomAuth;
-using WireMock.Logging;
 using WireMock.Server;
+using SeedCustomAuth;
 using WireMock.Settings;
+using WireMock.Logging;
 
-namespace SeedCustomAuth.Test.Unit.MockServer;
+    namespace SeedCustomAuth.Test.Unit.MockServer;
 
 [SetUpFixture]
 public class BaseMockServerTest
@@ -14,25 +14,27 @@ public class BaseMockServerTest
     protected static SeedCustomAuthClient Client { get; set; } = null!;
 
     protected static RequestOptions RequestOptions { get; set; } = null!;
-
     [OneTimeSetUp]
-    public void GlobalSetup()
-    {
+    public void GlobalSetup() {
         // Start the WireMock server
-        Server = WireMockServer.Start(
-            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
-        );
+        Server = WireMockServer.Start(new WireMockServerSettings { Logger = new WireMockConsoleLogger() });
 
         // Initialize the Client
-        Client = new SeedCustomAuthClient("CUSTOM_AUTH_SCHEME");
+        Client = 
+        new SeedCustomAuthClient(
+            "CUSTOM_AUTH_SCHEME"
+        );
 
-        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        RequestOptions = 
+        new RequestOptions{ 
+            BaseUrl = Server.Urls[0]
+        };
     }
 
     [OneTimeTearDown]
-    public void GlobalTeardown()
-    {
+    public void GlobalTeardown() {
         Server.Stop();
         Server.Dispose();
     }
+
 }

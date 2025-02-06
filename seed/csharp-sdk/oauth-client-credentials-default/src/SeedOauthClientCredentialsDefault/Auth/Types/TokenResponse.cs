@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedOauthClientCredentialsDefault.Core;
 
-namespace SeedOauthClientCredentialsDefault;
+    namespace SeedOauthClientCredentialsDefault;
 
 public record TokenResponse
 {
@@ -10,9 +10,8 @@ public record TokenResponse
 
     [JsonPropertyName("expires_in")]
     public required int ExpiresIn { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

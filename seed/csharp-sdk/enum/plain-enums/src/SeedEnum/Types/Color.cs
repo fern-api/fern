@@ -1,8 +1,8 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedEnum.Core;
+using System.Runtime.Serialization;
 
-namespace SeedEnum;
+    namespace SeedEnum;
 
 [JsonConverter(typeof(EnumSerializer<Color>))]
 public enum Color
@@ -11,5 +11,5 @@ public enum Color
     Red,
 
     [EnumMember(Value = "blue")]
-    Blue,
+    Blue
 }

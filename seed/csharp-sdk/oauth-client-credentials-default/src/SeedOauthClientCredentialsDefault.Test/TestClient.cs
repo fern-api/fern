@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SeedOauthClientCredentialsDefault.Test;
+    namespace SeedOauthClientCredentialsDefault.Test;
 
 [TestFixture]
 public class TestClient;

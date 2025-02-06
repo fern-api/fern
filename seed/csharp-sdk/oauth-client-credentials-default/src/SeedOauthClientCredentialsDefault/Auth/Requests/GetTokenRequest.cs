@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedOauthClientCredentialsDefault.Core;
 
-namespace SeedOauthClientCredentialsDefault;
+    namespace SeedOauthClientCredentialsDefault;
 
 public record GetTokenRequest
 {
@@ -13,9 +13,8 @@ public record GetTokenRequest
 
     [JsonPropertyName("grant_type")]
     public required string GrantType { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

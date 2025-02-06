@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedPagination.Core;
 
-namespace SeedPagination;
+    namespace SeedPagination;
 
 public record StartingAfterPaging
 {
@@ -10,9 +10,8 @@ public record StartingAfterPaging
 
     [JsonPropertyName("starting_after")]
     public string? StartingAfter { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

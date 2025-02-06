@@ -1,8 +1,8 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
+using System.Runtime.Serialization;
 
-namespace SeedExamples;
+    namespace SeedExamples;
 
 [JsonConverter(typeof(EnumSerializer<BasicType>))]
 public enum BasicType
@@ -11,5 +11,5 @@ public enum BasicType
     Primitive,
 
     [EnumMember(Value = "literal")]
-    Literal,
+    Literal
 }

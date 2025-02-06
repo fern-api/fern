@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-namespace SeedTrace;
+    namespace SeedTrace;
 
 public record GenericValue
 {
@@ -10,9 +10,8 @@ public record GenericValue
 
     [JsonPropertyName("stringifiedValue")]
     public required string StringifiedValue { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

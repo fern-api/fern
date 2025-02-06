@@ -1,19 +1,18 @@
-using System.Text.Json;
+using NUnit.Framework;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
 
-namespace SeedExamples.Test;
+    namespace SeedExamples.Test;
 
 [TestFixture]
 public class MetadataTest
 {
     [Test]
-    public void TestSerialization()
-    {
-        var inputJson =
-            @"
+    public void TestSerialization() {
+        var inputJson = 
+        @"
         {
           ""id"": ""metadata-js8dg24b"",
           ""data"": {
@@ -24,18 +23,13 @@ public class MetadataTest
         }
         ";
 
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Commons.Metadata>(
-            inputJson,
-            serializerOptions
-        );
+        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+        
+        var deserializedObject = JsonSerializer.Deserialize<Commons.Metadata>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
         JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
     }
+
 }

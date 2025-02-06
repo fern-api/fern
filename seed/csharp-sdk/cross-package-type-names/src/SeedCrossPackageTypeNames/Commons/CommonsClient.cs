@@ -1,13 +1,12 @@
 using SeedCrossPackageTypeNames.Core;
 
-namespace SeedCrossPackageTypeNames;
+    namespace SeedCrossPackageTypeNames;
 
 public partial class CommonsClient
 {
     private RawClient _client;
-
-    internal CommonsClient(RawClient client)
-    {
+    internal CommonsClient (RawClient client) {
         _client = client;
     }
+
 }

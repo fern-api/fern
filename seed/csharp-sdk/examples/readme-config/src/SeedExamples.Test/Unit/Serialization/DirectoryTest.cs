@@ -1,20 +1,19 @@
-using System.Text.Json;
+using NUnit.Framework;
 using System.Text.Json.Serialization;
+using System.Text.Json;
+using SeedExamples;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
-using SeedExamples;
 
-namespace SeedExamples.Test;
+    namespace SeedExamples.Test;
 
 [TestFixture]
 public class DirectoryTest
 {
     [Test]
-    public void TestSerialization()
-    {
-        var inputJson =
-            @"
+    public void TestSerialization() {
+        var inputJson = 
+        @"
         {
           ""name"": ""root"",
           ""files"": [
@@ -37,18 +36,13 @@ public class DirectoryTest
         }
         ";
 
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Directory>(
-            inputJson,
-            serializerOptions
-        );
+        var serializerOptions  = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+        
+        var deserializedObject = JsonSerializer.Deserialize<Directory>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
         JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
     }
+
 }

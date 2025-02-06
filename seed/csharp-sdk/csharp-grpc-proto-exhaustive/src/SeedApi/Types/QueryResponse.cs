@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
-namespace SeedApi;
+    namespace SeedApi;
 
 public record QueryResponse
 {
@@ -17,32 +17,27 @@ public record QueryResponse
 
     [JsonPropertyName("usage")]
     public Usage? Usage { get; set; }
-
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
 
     /// <summary>
     /// Maps the QueryResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal Proto.QueryResponse ToProto()
-    {
-        var result = new Proto.QueryResponse();
-        if (Results != null && Results.Any())
-        {
+    internal Proto.QueryResponse ToProto() {
+        var result = new Proto.QueryResponse(
+            
+        );
+        if (Results != null && Results.Any()) {
             result.Results.AddRange(Results.Select(elem => elem.ToProto()));
         }
-        if (Matches != null && Matches.Any())
-        {
+        if (Matches != null && Matches.Any()) {
             result.Matches.AddRange(Matches.Select(elem => elem.ToProto()));
         }
-        if (Namespace != null)
-        {
+        if (Namespace != null) {
             result.Namespace = Namespace ?? "";
         }
-        if (Usage != null)
-        {
+        if (Usage != null) {
             result.Usage = Usage.ToProto();
         }
         return result;
@@ -51,14 +46,10 @@ public record QueryResponse
     /// <summary>
     /// Returns a new QueryResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static QueryResponse FromProto(Proto.QueryResponse value)
-    {
-        return new QueryResponse
-        {
-            Results = value.Results?.Select(QueryResult.FromProto),
-            Matches = value.Matches?.Select(ScoredColumn.FromProto),
-            Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
+    internal static QueryResponse FromProto(Proto.QueryResponse value) {
+        return new QueryResponse{ 
+            Results = value.Results?.Select(QueryResult.FromProto), Matches = value.Matches?.Select(ScoredColumn.FromProto), Namespace = value.Namespace, Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null
         };
     }
+
 }

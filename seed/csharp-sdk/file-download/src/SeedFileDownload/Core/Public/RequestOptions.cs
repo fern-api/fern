@@ -1,8 +1,8 @@
-using System;
-using System.Net.Http;
 using SeedFileDownload.Core;
+using System.Net.Http;
+using System;
 
-namespace SeedFileDownload;
+    namespace SeedFileDownload;
 
 public partial class RequestOptions : IRequestOptions
 {
@@ -30,4 +30,5 @@ public partial class RequestOptions : IRequestOptions
     /// The http headers sent with the request.
     /// </summary>
     Headers IRequestOptions.Headers { get; init; } = new();
+
 }
