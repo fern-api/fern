@@ -55,13 +55,13 @@ jobs:
         # Parse JSON array containing names of all filters matching any of changed files
         # e.g. ['package1', 'package2'] if both package folders contains changes
         package: ${{ fromJSON(needs.changes.outputs.packages) }}
-        runner: [ubuntu-latest, ubuntu-arm64-latest]
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
         arch: [amd64, arm64]
         exclude:
           # Avoid building arm64 on amd64 runner and vice versa
           - runner: ubuntu-latest
             arch: arm64
-          - runner: ubuntu-arm64-latest
+          - runner: ubuntu-24.04-arm
             arch: amd64
     runs-on: ${{ matrix.runner }}
     needs: [changes, generate-sha]
