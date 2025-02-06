@@ -180,3 +180,4 @@ abstract class JsonSerializableType implements \JsonSerializable
         return $jsonPropertyAttr?->newInstance()?->name;
     }
 }
+
