@@ -11,7 +11,10 @@
 #   changelogEntry:
 #     - type: fix
 #       summary: Change unpaged endpoints from internal to private to avoid ambiguous references in test projects who have access to internals.
-#   irVersion: 53
+#     - type: fix
+#       summary: |
+#       Fix an issue where enum values named `Equals` would always have be converted to `"Equals"` instead of their correct wire value.
+# irVersion: 53
 - version: 1.9.14
   createdAt: "2025-02-03"
   changelogEntry:
