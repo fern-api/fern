@@ -42,7 +42,7 @@ scripts:
     commands:
       - dotnet restore src
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
-      - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core" --no-restore --no-build
+      - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core" --no-restore
       # - dotnet test src
 
 fixtures:
