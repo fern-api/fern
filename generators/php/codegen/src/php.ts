@@ -107,6 +107,7 @@ export {
     Array,
     Attribute,
     Class,
+    type ConstructorField,
     Trait,
     ClassInstantiation,
     ClassReference,
@@ -118,5 +119,6 @@ export {
     MethodInvocation,
     Parameter,
     Type,
+    TypeLiteral,
     Writer
 } from "./ast";

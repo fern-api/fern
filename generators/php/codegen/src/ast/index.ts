@@ -12,4 +12,5 @@ export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
 export { Type } from "./Type";
+export { type ConstructorField, TypeLiteral } from "./TypeLiteral";
 export { Writer } from "./core/Writer";
