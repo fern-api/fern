@@ -1,7 +1,5 @@
 using SeedAuthEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedAuthEnvironmentVariables;
 
 public record HeaderAuthRequest

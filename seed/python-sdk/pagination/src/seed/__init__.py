@@ -6,6 +6,7 @@ from .client import AsyncSeedPagination, SeedPagination
 from .users import (
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
+    ListUsersMixedTypePaginationResponse,
     ListUsersPaginationResponse,
     NextPage,
     Order,
@@ -25,6 +26,7 @@ __all__ = [
     "AsyncSeedPagination",
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
+    "ListUsersMixedTypePaginationResponse",
     "ListUsersPaginationResponse",
     "NextPage",
     "Order",

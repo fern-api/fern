@@ -360,8 +360,8 @@ public final class BuilderGenerator {
     }
 
     private MethodSpec.Builder getDefaultSetterForImpl(
-            EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass, boolean isOverriden) {
-        MethodSpec.Builder methodBuilder = getDefaultSetter(enrichedObjectProperty, returnClass, isOverriden);
+            EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass, boolean isOverridden) {
+        MethodSpec.Builder methodBuilder = getDefaultSetter(enrichedObjectProperty, returnClass, isOverridden);
         if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()) {
             methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember(
@@ -378,7 +378,7 @@ public final class BuilderGenerator {
     }
 
     private MethodSpec.Builder getDefaultSetter(
-            EnrichedObjectPropertyWithField enrichedProperty, ClassName returnClass, boolean isOverriden) {
+            EnrichedObjectPropertyWithField enrichedProperty, ClassName returnClass, boolean isOverridden) {
         TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
         FieldSpec fieldSpec = enrichedProperty.fieldSpec;
         MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldSpec.name)
@@ -386,7 +386,7 @@ public final class BuilderGenerator {
                         ParameterSpec.builder(poetTypeName, fieldSpec.name).build())
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass);
-        if (isOverriden) {
+        if (isOverridden) {
             setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         return setter;
@@ -529,17 +529,17 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName mapTypeName,
             ClassName returnClass,
-            boolean isOverriden) {
+            boolean isOverridden) {
         String fieldName = enrichedObjectProperty.fieldSpec.name;
         TypeName keyTypeName = getIndexedTypeArgumentOrThrow(mapTypeName, 0);
         TypeName valueTypeName = getIndexedTypeArgumentOrThrow(mapTypeName, 1);
         MethodSpec.Builder setter = defaultSetter(fieldName, returnClass)
                 .addParameter(keyTypeName, StageBuilderConstants.MAP_ITEM_APPENDER_KEY_PARAMETER_NAME)
                 .addParameter(valueTypeName, StageBuilderConstants.MAP_ITEM_APPENDER_VALUE_PARAMETER_NAME);
-        if (isOverriden) {
+        if (isOverridden) {
             setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
-        if (isOverriden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(
                     enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));

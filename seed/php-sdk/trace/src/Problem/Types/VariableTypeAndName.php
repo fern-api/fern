@@ -31,4 +31,12 @@ class VariableTypeAndName extends JsonSerializableType
         $this->variableType = $values['variableType'];
         $this->name = $values['name'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

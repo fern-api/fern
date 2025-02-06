@@ -6,6 +6,36 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.15
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: Change unpaged endpoints from internal to private to avoid ambiguous references in test projects who have access to internals.
+    - type: fix
+      summary: |
+        Fix an issue where enum values named `Equals` would always have be converted to `"Equals"` instead of their correct wire value.
+    - type: feat
+      summary: Increase test performance by parallelizing tests and setting HTTP request retry delay to 0.
+  irVersion: 53
+- version: 1.9.14
+  createdAt: "2025-02-03"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add support for nullable undiscriminated unions (`OneOf<X, Y, Z>?`), and add tests for undiscriminated unions.
+  irVersion: 53
+- version: 1.9.13
+  createdAt: "2025-02-02"
+  changelogEntry:
+    - type: internal
+      summary: |
+        Miscellaneous improvement for the C# generator
+        - Call `.ConfigureAwait(false)` on Tasks
+        - Use `Enumerable<T>.Empty` instead of creating a new empty list
+        - Add PolySharp to test project and use C# 12
+        - Remove redundant `#nullable enable` directives
+        - Improve C# syntax
+  irVersion: 53
 - version: 1.9.12
   createdAt: "2025-01-22"
   changelogEntry:
@@ -104,7 +134,7 @@
   changelogEntry:
     - type: feat
       summary: >-
-        Add support for calling HTTP endpoints and gRPC endoints within the same service.
+        Add support for calling HTTP endpoints and gRPC endpoints within the same service.
   irVersion: 53
 - version: 1.8.5
   createdAt: "2024-10-30"
@@ -497,7 +527,7 @@
   createdAt: "2024-07-25"
   changelogEntry:
     - type: fix
-      summary: Fix MultURL environment classes compilation issue.
+      summary: Fix Multi URL environment classes compilation issue.
   irVersion: 51
 - version: 0.2.0
   createdAt: "2024-07-25"

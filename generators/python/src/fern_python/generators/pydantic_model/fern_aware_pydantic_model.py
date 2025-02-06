@@ -164,7 +164,7 @@ class FernAwarePydanticModel:
                     dependency, as_request=False, must_import_after_current_declaration=lambda _: False
                 )
                 # We already know we should do this import at the bottom since the update_forward_refs call will be at the bottom
-                # We add a ghost reference here so that we're not string referncing this class reference, e.g.
+                # We add a ghost reference here so that we're not string referencing this class reference, e.g.
                 # 1. create the class reference as if it's a normal import (non-string reference) with must_import_after_current_declaration=lambda _: False
                 # 2. add the ghost reference to the pydantic model to move the import to the bottom of the file
                 self.add_ghost_reference(dependency)

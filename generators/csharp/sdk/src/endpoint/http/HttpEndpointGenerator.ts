@@ -99,7 +99,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const snippet = this.getHttpMethodSnippet({ endpoint });
         return csharp.method({
             name: this.context.getEndpointMethodName(endpoint),
-            access: this.hasPagination(endpoint) ? csharp.Access.Internal : csharp.Access.Public,
+            access: this.hasPagination(endpoint) ? csharp.Access.Private : csharp.Access.Public,
             isAsync: true,
             parameters,
             summary: endpoint.docs,
@@ -676,11 +676,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         getEndpointReturnType({ context: this.context, endpoint });
-        return new csharp.MethodInvocation({
+        return csharp.invokeMethod({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on,
             async: false,
+            configureAwait: true,
             generics: []
         });
     }

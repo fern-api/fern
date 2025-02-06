@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedCrossPackageTypeNames.Core;
 
-#nullable enable
-
 namespace SeedCrossPackageTypeNames.FolderD;
 
 public record Response

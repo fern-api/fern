@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedBasicAuth.Core;
 
-#nullable enable
-
 namespace SeedBasicAuth;
 
 public partial class RequestOptions : IRequestOptions

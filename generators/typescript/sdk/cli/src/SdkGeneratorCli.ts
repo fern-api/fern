@@ -146,7 +146,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
                 inlinePathParameters: customConfig.inlinePathParameters ?? false,
                 writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
-                executionEnvironment: this.exectuionEnvironment(config),
+                executionEnvironment: this.executionEnvironment(config),
                 packageJson: customConfig.packageJson,
                 outputJsr: customConfig.publishToJsr ?? false,
                 omitUndefined: customConfig.omitUndefined ?? false,
@@ -197,7 +197,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return customConfig.publishToJsr ?? false;
     }
 
-    protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
+    protected executionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
         return config.environment.type === "local"
             ? "local"
             : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")

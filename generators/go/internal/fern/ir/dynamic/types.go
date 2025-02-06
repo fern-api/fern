@@ -1222,7 +1222,7 @@ func (r *ReferencedRequestBodyType) Accept(visitor ReferencedRequestBodyTypeVisi
 	}
 }
 
-// Reperesents the request parameters required to call a specific endpoiont.
+// Represents the request parameters required to call a specific endpoint.
 type Request struct {
 	Type    string
 	Body    *BodyRequest
@@ -1313,7 +1313,7 @@ func (r *Request) Accept(visitor RequestVisitor) error {
 	}
 }
 
-// Reperesents the response returned by a specific endpoint.
+// Represents the response returned by a specific endpoint.
 //
 // For now, we only support json responses, but this is set up to support a
 // variety of other endpoint response types (e.g. file download, pagination,
@@ -1397,7 +1397,7 @@ func (r *Response) Accept(visitor ResponseVisitor) error {
 // This IR minimizes the space required to generate snippets in a variety
 // of environments (e.g. web, offline, etc).
 type DynamicIntermediateRepresentation struct {
-	// The version of the dynamic IR. This is independent from the verison
+	// The version of the dynamic IR. This is independent from the version
 	// of the primary IR.
 	Types     map[sdk.TypeId]*NamedType    `json:"types,omitempty" url:"types,omitempty"`
 	Endpoints map[sdk.EndpointId]*Endpoint `json:"endpoints,omitempty" url:"endpoints,omitempty"`

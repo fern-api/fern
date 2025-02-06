@@ -1,8 +1,7 @@
+using System.Linq;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using Proto = Data.V1.Grpc;
-
-#nullable enable
 
 namespace SeedApi;
 
@@ -64,7 +63,7 @@ public record QueryColumn
     {
         return new QueryColumn
         {
-            Values = value.Values?.ToList() ?? new List<float>(),
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
             TopK = value.TopK,
             Namespace = value.Namespace,
             Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,

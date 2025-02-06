@@ -27,6 +27,22 @@ export interface UsersServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    listWithMixedTypeCursorPagination(
+        req: express.Request<
+            never,
+            SeedPagination.ListUsersMixedTypePaginationResponse,
+            never,
+            {
+                cursor?: string;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedPagination.ListUsersMixedTypePaginationResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
     listWithBodyCursorPagination(
         req: express.Request<
             never,
@@ -238,6 +254,38 @@ export class UsersService {
                 if (error instanceof errors.SeedPaginationError) {
                     console.warn(
                         `Endpoint 'listWithCursorPagination' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.post("", async (req, res, next) => {
+            try {
+                await this.methods.listWithMixedTypeCursorPagination(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.ListUsersMixedTypePaginationResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedPaginationError) {
+                    console.warn(
+                        `Endpoint 'listWithMixedTypeCursorPagination' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
                             " the endpoint's errors list in your Fern Definition.",
                     );

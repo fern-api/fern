@@ -80,7 +80,7 @@ public final class UndiscriminatedUnionTypeWithAliasListVariant {
 
     @java.lang.Override
     public UndiscriminatedUnionTypeWithAliasListVariant deserialize(JsonParser p,
-        DeserializationContext ctxt) throws IOException {
+        DeserializationContext context) throws IOException {
       Object value = p.readValueAs(Object.class);
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<AliasVariant>>() {}));

@@ -5,15 +5,11 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
-    ContainerType,
     FernFilepath,
     IntermediateRepresentation,
     Literal,
-    MapType,
     Name,
-    NamedType,
     ObjectTypeDeclaration,
-    PrimitiveType,
     PrimitiveTypeV1,
     Subpackage,
     SubpackageId,
@@ -24,7 +20,6 @@ import {
 
 import { php } from "..";
 import { AsIsFiles } from "../AsIs";
-import { Type } from "../ast";
 import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
 import { TRAITS_DIRECTORY } from "../constants";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
@@ -59,6 +54,13 @@ export abstract class AbstractPhpGeneratorContext<
             context: this,
             name: this.rootNamespace
         });
+    }
+
+    public getPackageName(): string {
+        if (this.customConfig.packageName != null) {
+            return this.customConfig.packageName;
+        }
+        return `${this.config.organization}/${this.config.organization}`;
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
@@ -145,6 +147,26 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getPropertyName(name: Name): string {
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+    }
+
+    public getToStringMethod(): php.Method {
+        return php.method({
+            name: "__toString",
+            access: "public",
+            parameters: [],
+            return_: php.Type.string(),
+            body: php.codeblock((writer) => {
+                writer.write("return ");
+                writer.writeNode(
+                    php.invokeMethod({
+                        on: php.this_(),
+                        method: "toJson",
+                        arguments_: []
+                    })
+                );
+                writer.writeLine(";");
+            })
+        });
     }
 
     private prependUnderscoreIfNeeded(input: string): string {
@@ -234,7 +256,13 @@ export abstract class AbstractPhpGeneratorContext<
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "optional";
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return true;
+                    case "nullable":
+                        return this.isOptional(typeReference.container.nullable);
+                }
+                return false;
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
@@ -242,10 +270,36 @@ export abstract class AbstractPhpGeneratorContext<
                 }
                 return false;
             }
+            case "primitive":
             case "unknown":
                 return false;
-            case "primitive":
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    public isNullable(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                switch (typeReference.container.type) {
+                    case "nullable":
+                        return true;
+                    case "optional":
+                        return this.isNullable(typeReference.container.optional);
+                }
                 return false;
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isNullable(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -254,6 +308,9 @@ export abstract class AbstractPhpGeneratorContext<
             case "container":
                 if (typeReference.container.type === "optional") {
                     return typeReference.container.optional;
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.dereferenceOptional(typeReference.container.nullable);
                 }
                 return typeReference;
             case "named": {
@@ -266,6 +323,8 @@ export abstract class AbstractPhpGeneratorContext<
             case "unknown":
             case "primitive":
                 return typeReference;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -289,6 +348,8 @@ export abstract class AbstractPhpGeneratorContext<
             case "primitive":
             case "unknown":
                 return typeReference;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -306,6 +367,8 @@ export abstract class AbstractPhpGeneratorContext<
             case "primitive":
             case "unknown":
                 return false;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -324,6 +387,8 @@ export abstract class AbstractPhpGeneratorContext<
                 return false;
             case "unknown":
                 return true;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -348,6 +413,8 @@ export abstract class AbstractPhpGeneratorContext<
             case "unknown": {
                 return false;
             }
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -385,8 +452,11 @@ export abstract class AbstractPhpGeneratorContext<
     }): boolean {
         switch (typeReference.type) {
             case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isDate(typeReference.container.optional);
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.isDate(typeReference.container.optional);
+                    case "nullable":
+                        return this.isDate(typeReference.container.nullable);
                 }
                 return false;
             case "named": {
@@ -402,9 +472,10 @@ export abstract class AbstractPhpGeneratorContext<
                 }
                 return typeReference.primitive.v1 === primitive;
             }
-            case "unknown": {
+            case "unknown":
                 return false;
-            }
+            default:
+                assertNever(typeReference);
         }
     }
 

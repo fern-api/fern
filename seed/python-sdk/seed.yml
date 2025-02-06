@@ -11,7 +11,7 @@ buildScripts:
     commands:
       - poetry run mypy .
   testScript:
-    # TODO: we need to acttually run the mock server tests as well
+    # TODO: we need to actually run the mock server tests as well
     # Note: not all versions of the generator have this test directory which brings in the unit tests we write
     # as a result, the script here only runs pytest if the directory exists, and exits 0 if it does not (e.g. just passes)
     commands:

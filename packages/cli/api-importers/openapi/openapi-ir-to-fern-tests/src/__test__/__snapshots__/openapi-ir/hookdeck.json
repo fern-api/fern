@@ -304,7 +304,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -374,7 +374,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -444,7 +444,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -545,6 +545,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -868,7 +869,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -950,6 +951,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1245,7 +1247,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -1322,6 +1324,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1593,6 +1596,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1844,7 +1848,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -1957,6 +1961,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2227,6 +2232,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2367,6 +2373,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2586,6 +2593,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2811,7 +2819,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -2861,7 +2869,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -2931,7 +2939,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -3032,6 +3040,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3383,6 +3392,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3650,7 +3660,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -3705,7 +3715,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -3758,7 +3768,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -3811,7 +3821,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -3864,7 +3874,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -4044,7 +4054,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -4094,7 +4104,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -4164,7 +4174,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -4265,6 +4275,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4640,6 +4651,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4945,6 +4957,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5297,6 +5310,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5638,6 +5652,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5835,6 +5850,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6245,7 +6261,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -6421,7 +6437,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -6613,7 +6629,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -6664,7 +6680,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -6748,7 +6764,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -6798,7 +6814,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -6868,7 +6884,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -6969,6 +6985,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7426,6 +7443,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7841,6 +7859,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8096,6 +8115,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8506,6 +8526,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8819,6 +8840,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9026,6 +9048,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9239,7 +9262,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -9290,7 +9313,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -9339,7 +9362,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -9392,7 +9415,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -9445,7 +9468,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -9498,7 +9521,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -9668,7 +9691,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -9859,7 +9882,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10004,7 +10027,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10149,7 +10172,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10198,7 +10221,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10280,7 +10303,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10327,7 +10350,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10472,7 +10495,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10521,7 +10544,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10570,7 +10593,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10619,7 +10642,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10668,7 +10691,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10717,7 +10740,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10845,7 +10868,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -10915,7 +10938,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -11016,6 +11039,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11374,6 +11398,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11677,6 +11702,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11817,6 +11843,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12258,6 +12285,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12684,7 +12712,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -12854,7 +12882,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -13024,7 +13052,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -13077,7 +13105,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -13139,7 +13167,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -13188,7 +13216,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -13236,7 +13264,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -13287,7 +13315,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -13338,7 +13366,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -13389,7 +13417,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -13557,7 +13585,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -13749,7 +13777,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -13898,7 +13926,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -14044,7 +14072,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14092,7 +14120,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14175,7 +14203,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -14226,7 +14254,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -14375,7 +14403,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -14426,7 +14454,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14473,7 +14501,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14520,7 +14548,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14567,7 +14595,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14615,7 +14643,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14737,7 +14765,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14805,7 +14833,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -14980,7 +15008,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -15050,7 +15078,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -15151,6 +15179,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15515,7 +15544,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -15564,7 +15593,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -15612,7 +15641,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -15663,7 +15692,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -15714,7 +15743,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -15765,7 +15794,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -15933,7 +15962,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -16125,7 +16154,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -16274,7 +16303,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -16420,7 +16449,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -16468,7 +16497,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -16551,7 +16580,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -16602,7 +16631,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -16751,7 +16780,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -16802,7 +16831,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -16849,7 +16878,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -16896,7 +16925,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -16943,7 +16972,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -16991,7 +17020,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -17073,6 +17102,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17380,7 +17410,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -17429,7 +17459,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -17477,7 +17507,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -17528,7 +17558,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -17579,7 +17609,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -17630,7 +17660,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -17798,7 +17828,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -17990,7 +18020,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -18139,7 +18169,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -18285,7 +18315,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -18333,7 +18363,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -18416,7 +18446,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -18467,7 +18497,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -18616,7 +18646,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -18667,7 +18697,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -18714,7 +18744,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -18761,7 +18791,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -18808,7 +18838,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -18856,7 +18886,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -18924,6 +18954,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19114,6 +19145,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19366,6 +19398,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19741,7 +19774,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -19911,7 +19944,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -20081,7 +20114,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -20134,7 +20167,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -20194,7 +20227,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -20243,7 +20276,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -20375,7 +20408,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -20445,7 +20478,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -20546,6 +20579,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -20908,7 +20942,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -20957,7 +20991,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -21040,6 +21074,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21345,7 +21380,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -21394,7 +21429,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -21463,6 +21498,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21653,6 +21689,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21905,6 +21942,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22183,6 +22221,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22539,7 +22578,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -22618,6 +22657,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22926,6 +22966,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23216,7 +23257,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -23308,6 +23349,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23626,6 +23668,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23782,6 +23825,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -23995,6 +24039,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -24190,7 +24235,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -24245,7 +24290,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -24329,7 +24374,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -24426,7 +24471,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -24479,7 +24524,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -24536,7 +24581,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -24582,7 +24627,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -24630,7 +24675,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -24817,7 +24862,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -24987,7 +25032,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -25157,7 +25202,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -25327,7 +25372,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -25436,7 +25481,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -25506,7 +25551,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -25607,6 +25652,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -25798,13 +25844,6 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "transformation",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "id": {
                             "value": {
                               "value": "iss_YXKv5OdJXCiVwkPhGy",
@@ -25814,7 +25853,7 @@
                           },
                           "team_id": {
                             "value": {
-                              "value": "models",
+                              "value": "team_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -25846,7 +25885,7 @@
                           },
                           "last_updated_by": {
                             "value": {
-                              "value": "models",
+                              "value": "last_updated_by",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -25867,32 +25906,32 @@
                           },
                           "merged_with": {
                             "value": {
-                              "value": "models",
+                              "value": "merged_with",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "updated_at": {
                             "value": {
-                              "value": "models",
+                              "value": "updated_at",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "created_at": {
                             "value": {
-                              "value": "models",
+                              "value": "created_at",
                               "type": "string"
                             },
                             "type": "primitive"
                           },
                           "aggregation_keys": {
                             "properties": {
-                              "transformation_id": {
+                              "webhook_id": {
                                 "value": [
                                   {
                                     "value": {
-                                      "value": "transformation_id",
+                                      "value": "webhook_id",
                                       "type": "string"
                                     },
                                     "type": "primitive"
@@ -25900,18 +25939,42 @@
                                 ],
                                 "type": "array"
                               },
-                              "log_level": {
-                                "value": "debug",
-                                "type": "enum"
+                              "response_status": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": 1.1,
+                                      "type": "float"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                ],
+                                "type": "array"
+                              },
+                              "error_code": {
+                                "value": [
+                                  {
+                                    "value": "TIMEOUT",
+                                    "type": "enum"
+                                  }
+                                ],
+                                "type": "array"
                               }
                             },
                             "type": "object"
                           },
                           "reference": {
                             "properties": {
-                              "transformation_execution_id": {
+                              "event_id": {
                                 "value": {
-                                  "value": "transformation_execution_id",
+                                  "value": "event_id",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "attempt_id": {
+                                "value": {
+                                  "value": "attempt_id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -25919,96 +25982,12 @@
                             },
                             "type": "object"
                           },
-                          "data": {
-                            "properties": {
-                              "transformation_execution": {
-                                "properties": {
-                                  "id": {
-                                    "value": {
-                                      "value": "id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "transformed_event_data_id": {
-                                    "value": {
-                                      "value": "transformed_event_data_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "original_event_data_id": {
-                                    "value": {
-                                      "value": "original_event_data_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "transformation_id": {
-                                    "value": {
-                                      "value": "transformation_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "team_id": {
-                                    "value": {
-                                      "value": "team_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "webhook_id": {
-                                    "value": {
-                                      "value": "webhook_id",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "log_level": {
-                                    "value": "debug",
-                                    "type": "enum"
-                                  },
-                                  "logs": {
-                                    "value": [
-                                      {
-                                        "properties": {
-                                          "type": {
-                                            "value": "error",
-                                            "type": "enum"
-                                          },
-                                          "message": {
-                                            "value": {
-                                              "value": "message",
-                                              "type": "string"
-                                            },
-                                            "type": "primitive"
-                                          }
-                                        },
-                                        "type": "object"
-                                      }
-                                    ],
-                                    "type": "array"
-                                  },
-                                  "updated_at": {
-                                    "value": {
-                                      "value": "2024-01-15T09:30:00Z",
-                                      "type": "datetime"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "created_at": {
-                                    "value": {
-                                      "value": "2024-01-15T09:30:00Z",
-                                      "type": "datetime"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
-                              }
+                          "type": {
+                            "value": {
+                              "value": "delivery",
+                              "type": "string"
                             },
-                            "type": "object"
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -26082,7 +26061,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -26137,7 +26116,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -26221,7 +26200,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -26318,7 +26297,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -26371,7 +26350,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -26428,7 +26407,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -26474,7 +26453,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -26522,7 +26501,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -26709,7 +26688,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -26879,7 +26858,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -27049,7 +27028,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -27219,7 +27198,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -27328,7 +27307,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -27398,7 +27377,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -27499,6 +27478,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27659,6 +27639,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -27735,13 +27716,6 @@
             "value": {
               "value": {
                 "value": {
-                  "type": {
-                    "value": {
-                      "value": "transformation",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "id": {
                     "value": {
                       "value": "iss_YXKv5OdJXCiVwkPhGy",
@@ -27751,7 +27725,7 @@
                   },
                   "team_id": {
                     "value": {
-                      "value": "string",
+                      "value": "team_id",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -27783,7 +27757,7 @@
                   },
                   "last_updated_by": {
                     "value": {
-                      "value": "string",
+                      "value": "last_updated_by",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -27804,32 +27778,32 @@
                   },
                   "merged_with": {
                     "value": {
-                      "value": "string",
+                      "value": "merged_with",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "updated_at": {
                     "value": {
-                      "value": "string",
+                      "value": "updated_at",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "created_at": {
                     "value": {
-                      "value": "string",
+                      "value": "created_at",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "aggregation_keys": {
                     "properties": {
-                      "transformation_id": {
+                      "webhook_id": {
                         "value": [
                           {
                             "value": {
-                              "value": "transformation_id",
+                              "value": "webhook_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -27837,25 +27811,42 @@
                         ],
                         "type": "array"
                       },
-                      "log_level": {
-                        "value": "debug",
-                        "type": "enum"
+                      "response_status": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": 1.1,
+                              "type": "float"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "error_code": {
+                        "value": [
+                          {
+                            "value": "TIMEOUT",
+                            "type": "enum"
+                          }
+                        ],
+                        "type": "array"
                       }
                     },
                     "type": "object"
                   },
                   "reference": {
                     "properties": {
-                      "transformation_execution_id": {
+                      "event_id": {
                         "value": {
-                          "value": "transformation_execution_id",
+                          "value": "event_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "trigger_event_request_transformation_id": {
+                      "attempt_id": {
                         "value": {
-                          "value": "trigger_event_request_transformation_id",
+                          "value": "attempt_id",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -27865,32 +27856,11 @@
                   },
                   "data": {
                     "properties": {
-                      "transformation_execution": {
+                      "trigger_event": {
                         "properties": {
                           "id": {
                             "value": {
                               "value": "id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformed_event_data_id": {
-                            "value": {
-                              "value": "transformed_event_data_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "original_event_data_id": {
-                            "value": {
-                              "value": "original_event_data_id",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "transformation_id": {
-                            "value": {
-                              "value": "transformation_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -27909,30 +27879,91 @@
                             },
                             "type": "primitive"
                           },
-                          "log_level": {
-                            "value": "debug",
+                          "source_id": {
+                            "value": {
+                              "value": "source_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "destination_id": {
+                            "value": {
+                              "value": "destination_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "event_data_id": {
+                            "value": {
+                              "value": "event_data_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "request_id": {
+                            "value": {
+                              "value": "request_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "attempts": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "data": {
+                            "properties": {
+                              "path": {
+                                "value": {
+                                  "value": "path",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "last_attempt_at": {
+                            "value": {
+                              "value": "2024-01-15T09:30:00Z",
+                              "type": "datetime"
+                            },
+                            "type": "primitive"
+                          },
+                          "next_attempt_at": {
+                            "value": {
+                              "value": "2024-01-15T09:30:00Z",
+                              "type": "datetime"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_status": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "status": {
+                            "value": "SCHEDULED",
                             "type": "enum"
                           },
-                          "logs": {
-                            "value": [
-                              {
-                                "properties": {
-                                  "type": {
-                                    "value": "error",
-                                    "type": "enum"
-                                  },
-                                  "message": {
-                                    "value": {
-                                      "value": "message",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  }
-                                },
-                                "type": "object"
-                              }
-                            ],
-                            "type": "array"
+                          "successful_at": {
+                            "value": {
+                              "value": "2024-01-15T09:30:00Z",
+                              "type": "datetime"
+                            },
+                            "type": "primitive"
+                          },
+                          "cli_id": {
+                            "value": {
+                              "value": "cli_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           },
                           "updated_at": {
                             "value": {
@@ -27948,33 +27979,16 @@
                             },
                             "type": "primitive"
                           },
-                          "original_event_data": {
-                            "properties": {
-                              "path": {
-                                "value": {
-                                  "value": "path",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "transformed_event_data": {
-                            "properties": {
-                              "path": {
-                                "value": {
-                                  "value": "path",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "issue_id": {
+                          "created_at_id": {
                             "value": {
-                              "value": "issue_id",
+                              "value": "created_at_id",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "last_attempt_at_id": {
+                            "value": {
+                              "value": "last_attempt_at_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -28117,6 +28131,13 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "type": {
+                    "value": {
+                      "value": "delivery",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "discriminated"
@@ -28240,6 +28261,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28372,13 +28394,6 @@
             "value": {
               "value": {
                 "value": {
-                  "type": {
-                    "value": {
-                      "value": "transformation",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "id": {
                     "value": {
                       "value": "iss_YXKv5OdJXCiVwkPhGy",
@@ -28388,7 +28403,7 @@
                   },
                   "team_id": {
                     "value": {
-                      "value": "string",
+                      "value": "team_id",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -28420,7 +28435,7 @@
                   },
                   "last_updated_by": {
                     "value": {
-                      "value": "string",
+                      "value": "last_updated_by",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -28441,32 +28456,32 @@
                   },
                   "merged_with": {
                     "value": {
-                      "value": "string",
+                      "value": "merged_with",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "updated_at": {
                     "value": {
-                      "value": "string",
+                      "value": "updated_at",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "created_at": {
                     "value": {
-                      "value": "string",
+                      "value": "created_at",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "aggregation_keys": {
                     "properties": {
-                      "transformation_id": {
+                      "webhook_id": {
                         "value": [
                           {
                             "value": {
-                              "value": "transformation_id",
+                              "value": "webhook_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -28474,31 +28489,55 @@
                         ],
                         "type": "array"
                       },
-                      "log_level": {
-                        "value": "debug",
-                        "type": "enum"
+                      "response_status": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": 1.1,
+                              "type": "float"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "error_code": {
+                        "value": [
+                          {
+                            "value": "TIMEOUT",
+                            "type": "enum"
+                          }
+                        ],
+                        "type": "array"
                       }
                     },
                     "type": "object"
                   },
                   "reference": {
                     "properties": {
-                      "transformation_execution_id": {
+                      "event_id": {
                         "value": {
-                          "value": "transformation_execution_id",
+                          "value": "event_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "trigger_event_request_transformation_id": {
+                      "attempt_id": {
                         "value": {
-                          "value": "trigger_event_request_transformation_id",
+                          "value": "attempt_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       }
                     },
                     "type": "object"
+                  },
+                  "type": {
+                    "value": {
+                      "value": "delivery",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "discriminated"
@@ -28560,6 +28599,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -28636,13 +28676,6 @@
             "value": {
               "value": {
                 "value": {
-                  "type": {
-                    "value": {
-                      "value": "transformation",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
                   "id": {
                     "value": {
                       "value": "iss_YXKv5OdJXCiVwkPhGy",
@@ -28652,7 +28685,7 @@
                   },
                   "team_id": {
                     "value": {
-                      "value": "string",
+                      "value": "team_id",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -28684,7 +28717,7 @@
                   },
                   "last_updated_by": {
                     "value": {
-                      "value": "string",
+                      "value": "last_updated_by",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -28705,32 +28738,32 @@
                   },
                   "merged_with": {
                     "value": {
-                      "value": "string",
+                      "value": "merged_with",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "updated_at": {
                     "value": {
-                      "value": "string",
+                      "value": "updated_at",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "created_at": {
                     "value": {
-                      "value": "string",
+                      "value": "created_at",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "aggregation_keys": {
                     "properties": {
-                      "transformation_id": {
+                      "webhook_id": {
                         "value": [
                           {
                             "value": {
-                              "value": "transformation_id",
+                              "value": "webhook_id",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -28738,31 +28771,55 @@
                         ],
                         "type": "array"
                       },
-                      "log_level": {
-                        "value": "debug",
-                        "type": "enum"
+                      "response_status": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": 1.1,
+                              "type": "float"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "error_code": {
+                        "value": [
+                          {
+                            "value": "TIMEOUT",
+                            "type": "enum"
+                          }
+                        ],
+                        "type": "array"
                       }
                     },
                     "type": "object"
                   },
                   "reference": {
                     "properties": {
-                      "transformation_execution_id": {
+                      "event_id": {
                         "value": {
-                          "value": "transformation_execution_id",
+                          "value": "event_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "trigger_event_request_transformation_id": {
+                      "attempt_id": {
                         "value": {
-                          "value": "trigger_event_request_transformation_id",
+                          "value": "attempt_id",
                           "type": "string"
                         },
                         "type": "primitive"
                       }
                     },
                     "type": "object"
+                  },
+                  "type": {
+                    "value": {
+                      "value": "delivery",
+                      "type": "string"
+                    },
+                    "type": "primitive"
                   }
                 },
                 "type": "discriminated"
@@ -28830,7 +28887,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29052,7 +29109,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29234,7 +29291,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29416,7 +29473,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29469,7 +29526,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29540,7 +29597,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29589,7 +29646,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29638,7 +29695,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29803,7 +29860,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29946,7 +30003,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -29995,7 +30052,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -30086,7 +30143,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -30156,7 +30213,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -30257,6 +30314,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30598,6 +30656,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -30884,6 +30943,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31070,6 +31130,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -31640,7 +31701,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -31691,7 +31752,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -31740,7 +31801,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -31793,7 +31854,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -31846,7 +31907,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -31899,7 +31960,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32069,7 +32130,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32260,7 +32321,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32405,7 +32466,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32550,7 +32611,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32599,7 +32660,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32681,7 +32742,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32728,7 +32789,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32873,7 +32934,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32922,7 +32983,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -32971,7 +33032,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -33020,7 +33081,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -33069,7 +33130,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -33118,7 +33179,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -33246,7 +33307,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -33316,7 +33377,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -33417,6 +33478,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -33856,7 +33918,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -33906,7 +33968,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -33976,7 +34038,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -34077,6 +34139,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -34531,7 +34594,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -34701,7 +34764,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -34871,7 +34934,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -34924,7 +34987,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -35008,7 +35071,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -35230,7 +35293,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -35414,7 +35477,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -35595,7 +35658,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -35646,7 +35709,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -35713,7 +35776,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -35760,7 +35823,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -35807,7 +35870,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -35969,7 +36032,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -36111,7 +36174,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -36159,7 +36222,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -36247,7 +36310,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -36315,7 +36378,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -36468,7 +36531,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -36538,7 +36601,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -36639,6 +36702,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -37003,7 +37067,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -37225,7 +37289,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -37409,7 +37473,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -37590,7 +37654,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -37641,7 +37705,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -37708,7 +37772,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -37755,7 +37819,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -37802,7 +37866,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -37964,7 +38028,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -38106,7 +38170,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -38154,7 +38218,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -38216,6 +38280,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -38523,7 +38588,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -38745,7 +38810,7 @@
                             "file": "../openapi.yml",
                             "type": "openapi"
                           },
-                          "type": "undisciminated"
+                          "type": "undiscriminated"
                         },
                         "type": "oneOf"
                       },
@@ -38929,7 +38994,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39110,7 +39175,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39161,7 +39226,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39228,7 +39293,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39275,7 +39340,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39322,7 +39387,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39484,7 +39549,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39626,7 +39691,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39674,7 +39739,7 @@
                           "file": "../openapi.yml",
                           "type": "openapi"
                         },
-                        "type": "undisciminated"
+                        "type": "undiscriminated"
                       },
                       "type": "oneOf"
                     },
@@ -39722,6 +39787,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -39912,6 +39978,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -40164,6 +40231,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -40420,7 +40488,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -40487,7 +40555,7 @@
                         "file": "../openapi.yml",
                         "type": "openapi"
                       },
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -40545,7 +40613,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -40605,7 +40673,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -40665,7 +40733,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -40725,7 +40793,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -40804,7 +40872,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -40830,7 +40898,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -41022,7 +41090,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -41072,7 +41140,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -41142,7 +41210,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -41243,6 +41311,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41428,17 +41497,14 @@
                             {
                               "value": {
                                 "value": {
+                                  "strategy": {
+                                    "value": "linear",
+                                    "type": "enum"
+                                  },
                                   "type": {
                                     "value": {
-                                      "value": "delay",
+                                      "value": "retry",
                                       "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "delay": {
-                                    "value": {
-                                      "value": 1,
-                                      "type": "int"
                                     },
                                     "type": "primitive"
                                   }
@@ -41611,6 +41677,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -41760,17 +41827,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -41937,6 +42015,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -42086,17 +42165,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -42194,6 +42284,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -42295,17 +42386,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -42520,6 +42622,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -42719,17 +42822,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -42827,6 +42941,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -42928,17 +43043,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -43036,6 +43162,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -43137,17 +43264,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -43249,7 +43387,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -43425,7 +43563,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -43617,7 +43755,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -43691,7 +43829,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -43741,7 +43879,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -43811,7 +43949,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -43912,6 +44050,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -44247,6 +44386,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -44540,6 +44680,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -44809,6 +44950,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45102,6 +45244,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45421,6 +45564,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45642,6 +45786,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -45936,6 +46081,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {},
@@ -46041,7 +46187,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -46104,7 +46250,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -46154,7 +46300,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -46224,7 +46370,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -46325,6 +46471,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -46650,7 +46797,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -46699,6 +46846,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -47007,7 +47155,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -47056,6 +47204,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -47318,6 +47467,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -47598,7 +47748,7 @@
                         "type": "openapi"
                       },
                       "inline": true,
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -47647,6 +47797,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -48083,7 +48234,7 @@
                               "file": "../openapi.yml",
                               "type": "openapi"
                             },
-                            "type": "undisciminated"
+                            "type": "undiscriminated"
                           },
                           "type": "oneOf"
                         },
@@ -48241,6 +48392,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -48577,7 +48729,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -48628,7 +48780,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -48679,7 +48831,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -48824,7 +48976,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -48874,7 +49026,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -48944,7 +49096,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -49045,6 +49197,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -49407,6 +49560,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -49736,7 +49890,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -49912,7 +50066,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -49963,7 +50117,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -50014,7 +50168,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -50206,7 +50360,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -50400,7 +50554,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -50450,7 +50604,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -50520,7 +50674,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -50621,6 +50775,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -50916,17 +51071,14 @@
                                 {
                                   "value": {
                                     "value": {
+                                      "strategy": {
+                                        "value": "linear",
+                                        "type": "enum"
+                                      },
                                       "type": {
                                         "value": {
-                                          "value": "delay",
+                                          "value": "retry",
                                           "type": "string"
-                                        },
-                                        "type": "primitive"
-                                      },
-                                      "delay": {
-                                        "value": {
-                                          "value": 1,
-                                          "type": "int"
                                         },
                                         "type": "primitive"
                                       }
@@ -50967,17 +51119,14 @@
                             {
                               "value": {
                                 "value": {
+                                  "strategy": {
+                                    "value": "linear",
+                                    "type": "enum"
+                                  },
                                   "type": {
                                     "value": {
-                                      "value": "delay",
+                                      "value": "retry",
                                       "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "delay": {
-                                    "value": {
-                                      "value": 1,
-                                      "type": "int"
                                     },
                                     "type": "primitive"
                                   }
@@ -50994,17 +51143,14 @@
                             {
                               "value": {
                                 "value": {
+                                  "strategy": {
+                                    "value": "linear",
+                                    "type": "enum"
+                                  },
                                   "type": {
                                     "value": {
-                                      "value": "delay",
+                                      "value": "retry",
                                       "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
-                                  "delay": {
-                                    "value": {
-                                      "value": 1,
-                                      "type": "int"
                                     },
                                     "type": "primitive"
                                   }
@@ -51549,6 +51695,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -51893,17 +52040,14 @@
                         {
                           "value": {
                             "value": {
+                              "strategy": {
+                                "value": "linear",
+                                "type": "enum"
+                              },
                               "type": {
                                 "value": {
-                                  "value": "delay",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -51951,17 +52095,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -51978,17 +52133,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -52527,6 +52693,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -52871,17 +53038,14 @@
                         {
                           "value": {
                             "value": {
+                              "strategy": {
+                                "value": "linear",
+                                "type": "enum"
+                              },
                               "type": {
                                 "value": {
-                                  "value": "delay",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -52929,17 +53093,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -52956,17 +53131,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -53064,6 +53250,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -53360,17 +53547,14 @@
                         {
                           "value": {
                             "value": {
+                              "strategy": {
+                                "value": "linear",
+                                "type": "enum"
+                              },
                               "type": {
                                 "value": {
-                                  "value": "delay",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -53418,17 +53602,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -53445,17 +53640,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -53740,6 +53946,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -54134,17 +54341,14 @@
                         {
                           "value": {
                             "value": {
+                              "strategy": {
+                                "value": "linear",
+                                "type": "enum"
+                              },
                               "type": {
                                 "value": {
-                                  "value": "delay",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -54192,17 +54396,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -54219,17 +54434,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -54327,6 +54553,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -54623,17 +54850,14 @@
                         {
                           "value": {
                             "value": {
+                              "strategy": {
+                                "value": "linear",
+                                "type": "enum"
+                              },
                               "type": {
                                 "value": {
-                                  "value": "delay",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -54681,17 +54905,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -54708,17 +54943,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -54816,6 +55062,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -55112,17 +55359,14 @@
                         {
                           "value": {
                             "value": {
+                              "strategy": {
+                                "value": "linear",
+                                "type": "enum"
+                              },
                               "type": {
                                 "value": {
-                                  "value": "delay",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -55170,17 +55414,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -55197,17 +55452,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -55305,6 +55571,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -55601,17 +55868,14 @@
                         {
                           "value": {
                             "value": {
+                              "strategy": {
+                                "value": "linear",
+                                "type": "enum"
+                              },
                               "type": {
                                 "value": {
-                                  "value": "delay",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -55659,17 +55923,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -55686,17 +55961,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -55794,6 +56080,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -56090,17 +56377,14 @@
                         {
                           "value": {
                             "value": {
+                              "strategy": {
+                                "value": "linear",
+                                "type": "enum"
+                              },
                               "type": {
                                 "value": {
-                                  "value": "delay",
+                                  "value": "retry",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "delay": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -56148,17 +56432,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -56175,17 +56470,28 @@
                     {
                       "value": {
                         "value": {
-                          "type": {
-                            "value": {
-                              "value": "delay",
-                              "type": "string"
-                            },
-                            "type": "primitive"
+                          "strategy": {
+                            "value": "linear",
+                            "type": "enum"
                           },
-                          "delay": {
+                          "interval": {
                             "value": {
                               "value": 1,
                               "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "count": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": {
+                            "value": {
+                              "value": "retry",
+                              "type": "string"
                             },
                             "type": "primitive"
                           }
@@ -56315,7 +56621,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -56363,7 +56669,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -56544,7 +56850,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -56654,7 +56960,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -56738,7 +57044,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -56794,7 +57100,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -58229,7 +58535,7 @@
                         "file": "../openapi.yml",
                         "type": "openapi"
                       },
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -58294,7 +58600,7 @@
                         "file": "../openapi.yml",
                         "type": "openapi"
                       },
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -58354,7 +58660,7 @@
                         "file": "../openapi.yml",
                         "type": "openapi"
                       },
-                      "type": "undisciminated"
+                      "type": "undiscriminated"
                     },
                     "type": "oneOf"
                   },
@@ -58927,7 +59233,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -58992,7 +59298,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -59052,7 +59358,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -59968,7 +60274,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -61126,7 +61432,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -63792,7 +64098,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -63857,7 +64163,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -63917,7 +64223,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -64353,7 +64659,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -64695,7 +65001,7 @@
               "file": "../openapi.yml",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -65030,7 +65336,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -66222,7 +66528,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -66292,7 +66598,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -66348,7 +66654,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },
@@ -66404,7 +66710,7 @@
                                 "file": "../openapi.yml",
                                 "type": "openapi"
                               },
-                              "type": "undisciminated"
+                              "type": "undiscriminated"
                             },
                             "type": "oneOf"
                           },

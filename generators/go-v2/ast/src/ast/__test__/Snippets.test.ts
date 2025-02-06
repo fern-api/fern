@@ -1,4 +1,8 @@
+import { Field } from "../Field";
+import { File } from "../File";
+import { Func } from "../Func";
 import { GoTypeReference } from "../GoTypeReference";
+import { Struct } from "../Struct";
 import { Type } from "../Type";
 import { TypeInstantiation } from "../TypeInstantiation";
 import { AstNode } from "../core/AstNode";
@@ -277,6 +281,50 @@ describe("Snippets", () => {
         file.writeNode(giveNode);
 
         const content = await file.toStringAsync();
+        expect(content).toMatchSnapshot();
+    });
+});
+
+describe("file", () => {
+    it("import collision", () => {
+        const file = new File();
+        const foo = new Struct({
+            name: "Foo",
+            importPath: "github.com/acme/acme-go"
+        });
+        foo.addField(
+            new Field({
+                name: "Name",
+                type: Type.reference(
+                    new GoTypeReference({
+                        name: "Identifier",
+                        importPath: "github.com/acme/acme-go/common"
+                    })
+                )
+            })
+        );
+        const bar = new Struct({
+            name: "Bar",
+            importPath: "github.com/acme/acme-go"
+        });
+        bar.addField(
+            new Field({
+                name: "Name",
+                type: Type.reference(
+                    new GoTypeReference({
+                        name: "Identifier",
+                        importPath: "github.com/acme/acme-go/nested/common"
+                    })
+                )
+            })
+        );
+        file.add(foo, bar);
+        const content = file.toString({
+            packageName: "example",
+            rootImportPath: "github.com/acme/acme-go",
+            importPath: "github.com/acme/consumer",
+            customConfig: {}
+        });
         expect(content).toMatchSnapshot();
     });
 });

@@ -81,10 +81,10 @@ describe("Swift Language", () => {
         expect(output.toString()).toMatchSnapshot();
     });
 
-    it("makes primatives", () => {
+    it("makes primitives", () => {
         const output = Swift.makeField({
             name: "count",
-            valueType: Swift.makePrimative({
+            valueType: Swift.makePrimitive({
                 key: "integer"
             })
         });
@@ -105,7 +105,7 @@ describe("Swift Language", () => {
                 Swift.makeField({
                     name: "description",
                     variableType: VariableType.Let,
-                    valueType: Swift.makePrimative({
+                    valueType: Swift.makePrimitive({
                         key: "string"
                     })
                 })

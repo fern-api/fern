@@ -47,4 +47,12 @@ class ExtendedMovie extends JsonSerializableType
         $this->metadata = $values['metadata'];
         $this->revenue = $values['revenue'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

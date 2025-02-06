@@ -17,8 +17,10 @@ class GetPlaylistsRequest extends JsonSerializableType
     public string $otherField;
 
     /**
-     * @var string $multiLineDocs I'm a multiline
-    description
+     * I'm a multiline
+     * description
+     *
+     * @var string $multiLineDocs
      */
     public string $multiLineDocs;
 

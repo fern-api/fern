@@ -23,4 +23,12 @@ class Circle extends JsonSerializableType
     ) {
         $this->radius = $values['radius'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

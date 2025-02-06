@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedBasicAuthEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedBasicAuthEnvironmentVariables;
 
 public partial class ClientOptions

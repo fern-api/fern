@@ -17,13 +17,14 @@ use Seed\Requests\GetRequest;
 class SeedClient
 {
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -35,6 +36,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
@@ -44,6 +46,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -61,6 +64,7 @@ class SeedClient
      * @param CreateRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Type
      * @throws SeedException
@@ -68,6 +72,7 @@ class SeedClient
      */
     public function create(CreateRequest $request, ?array $options = null): Type
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -76,6 +81,7 @@ class SeedClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -98,6 +104,7 @@ class SeedClient
      * @param GetRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Type
      * @throws SeedException
@@ -105,6 +112,7 @@ class SeedClient
      */
     public function get(GetRequest $request, ?array $options = null): Type
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['decimal'] = $request->decimal;
         $query['even'] = $request->even;
@@ -117,6 +125,7 @@ class SeedClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

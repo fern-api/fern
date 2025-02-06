@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedBearerTokenEnvironmentVariable.Core;
 
-#nullable enable
-
 namespace SeedBearerTokenEnvironmentVariable;
 
 public partial class RequestOptions : IRequestOptions

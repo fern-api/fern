@@ -179,7 +179,7 @@ func (c *Client) JustFile(
 func (c *Client) JustFileWithQueryParams(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.JustFileWithQueryParamsRequet,
+	request *fern.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
 	options := core.NewRequestOptions(opts...)

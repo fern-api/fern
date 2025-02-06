@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedAliasExtends.Core;
 
-#nullable enable
-
 namespace SeedAliasExtends;
 
 public record Parent

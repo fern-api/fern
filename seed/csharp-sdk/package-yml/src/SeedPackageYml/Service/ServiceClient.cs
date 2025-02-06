@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedPackageYml.Core;
 
-#nullable enable
-
 namespace SeedPackageYml;
 
 public partial class ServiceClient
@@ -28,16 +26,18 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/{id}//{nestedId}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"/{id}//{nestedId}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

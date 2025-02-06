@@ -49,7 +49,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 jsonExampleResponse = example.response.value.value?.jsonExample;
             }
             const responseBodyType = this.endpoint.response?.body?.type;
-            // where or not we support this repsonse type in this generator; the example json may
+            // where or not we support this response type in this generator; the example json may
             // have a response that we can return, but our generated method actually returns void
             responseSupported =
                 jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");

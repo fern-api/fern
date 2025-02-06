@@ -4058,7 +4058,7 @@
         "extends": [],
         "properties": [
           {
-            "description": "If present, use this to load subseqent pages.\nThe offset is the id of the next trace response to load.",
+            "description": "If present, use this to load subsequent pages.\nThe offset is the id of the next trace response to load.",
             "key": "offset",
             "valueType": {
               "type": "optional",
@@ -4090,7 +4090,7 @@
         "extends": [],
         "properties": [
           {
-            "description": "If present, use this to load subseqent pages.\nThe offset is the id of the next trace response to load.",
+            "description": "If present, use this to load subsequent pages.\nThe offset is the id of the next trace response to load.",
             "key": "offset",
             "valueType": {
               "type": "optional",

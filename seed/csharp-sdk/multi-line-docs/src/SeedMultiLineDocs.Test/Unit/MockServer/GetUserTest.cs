@@ -1,7 +1,5 @@
 using NUnit.Framework;
 
-#nullable enable
-
 namespace SeedMultiLineDocs.Test.Unit.MockServer;
 
 [TestFixture]

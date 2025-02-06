@@ -104,6 +104,7 @@
               },
               "response": {
                 "docs": "Successful token response",
+                "status-code": 200,
                 "type": "AuthGetTokenResponse",
               },
               "source": {
@@ -206,6 +207,7 @@ service:
       response:
         docs: Successful token response
         type: AuthGetTokenResponse
+        status-code: 200
       errors:
         - root.AuthGetTokenRequestBadRequestError
         - root.AuthGetTokenRequestUnauthorizedError

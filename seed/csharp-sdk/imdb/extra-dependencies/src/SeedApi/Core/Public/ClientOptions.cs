@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedApi.Core;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class ClientOptions

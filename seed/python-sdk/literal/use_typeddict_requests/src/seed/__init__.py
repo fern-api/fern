@@ -3,7 +3,15 @@
 from .types import SendResponse
 from . import headers, inlined, path, query, reference
 from .client import AsyncSeedLiteral, SeedLiteral
-from .inlined import ANestedLiteral, ANestedLiteralParams, ATopLevelLiteral, ATopLevelLiteralParams, SomeAliasedLiteral
+from .inlined import (
+    ANestedLiteral,
+    ANestedLiteralParams,
+    ATopLevelLiteral,
+    ATopLevelLiteralParams,
+    SomeAliasedLiteral,
+    UndiscriminatedLiteral,
+    UndiscriminatedLiteralParams,
+)
 from .query import AliasToPrompt, AliasToStream
 from .reference import (
     ContainerObject,
@@ -36,6 +44,8 @@ __all__ = [
     "SendResponseParams",
     "SomeAliasedLiteral",
     "SomeLiteral",
+    "UndiscriminatedLiteral",
+    "UndiscriminatedLiteralParams",
     "__version__",
     "headers",
     "inlined",

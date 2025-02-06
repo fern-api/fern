@@ -1,4 +1,4 @@
-name: Publish Dev + Prod CLIs
+name: Publish Fern CLI
 
 on:
   push:
@@ -12,8 +12,8 @@ on:
         type: string
 
 jobs:
-  publish-dev:
-    if: ${{ inputs.version == null }}
+  dev:
+    if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -47,7 +47,7 @@ jobs:
 
   # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:
-    if: ${{ inputs.version == null }}
+    if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     environment: Fern Prod
     runs-on: ubuntu-latest
     steps:
@@ -69,7 +69,7 @@ jobs:
           cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
-  publish:
+  prod:
     needs: [live-test]
     if: ${{ inputs.version == null }}
     runs-on: ubuntu-latest
@@ -110,7 +110,7 @@ jobs:
           pnpm seed publish cli  --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
           pnpm seed register cli
 
-  publish-manually:
+  manual:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
     env:

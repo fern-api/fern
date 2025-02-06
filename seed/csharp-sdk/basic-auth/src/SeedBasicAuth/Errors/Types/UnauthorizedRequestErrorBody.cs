@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedBasicAuth.Core;
 
-#nullable enable
-
 namespace SeedBasicAuth;
 
 public record UnauthorizedRequestErrorBody

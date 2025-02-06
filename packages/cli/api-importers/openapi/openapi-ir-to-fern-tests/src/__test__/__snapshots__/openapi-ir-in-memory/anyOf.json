@@ -7,9 +7,9 @@
       "version": "1.0.0"
     },
     "paths": {
-      "/get": {
-        "get": {
-          "operationId": "Get",
+      "/post": {
+        "post": {
+          "operationId": "Post",
           "requestBody": {
             "required": true,
             "description": "A simple API request.",

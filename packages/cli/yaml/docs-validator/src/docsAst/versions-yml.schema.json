@@ -110,7 +110,7 @@
           "items": {
             "$ref": "#/definitions/docs.FeatureFlag"
           },
-          "description": "A list of feature flags. If any of the feature flags are satisifed, we will show all content."
+          "description": "A list of feature flags. If any of the feature flags are satisfied, we will show all content."
         }
       ]
     },
@@ -1258,7 +1258,7 @@
         }
       ]
     },
-    "docs.UntabbedNavigationConifg": {
+    "docs.UntabbedNavigationConfig": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/docs.NavigationItem"
@@ -1301,7 +1301,7 @@
     "docs.NavigationConfig": {
       "anyOf": [
         {
-          "$ref": "#/definitions/docs.UntabbedNavigationConifg"
+          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
         },
         {
           "$ref": "#/definitions/docs.TabbedNavigationConfig"

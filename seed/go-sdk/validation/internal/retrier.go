@@ -16,7 +16,7 @@ const (
 // RetryOption adapts the behavior the *Retrier.
 type RetryOption func(*retryOptions)
 
-// RetryFunc is a retriable HTTP function call (i.e. *http.Client.Do).
+// RetryFunc is a retryable HTTP function call (i.e. *http.Client.Do).
 type RetryFunc func(*http.Request) (*http.Response, error)
 
 // WithMaxAttempts configures the maximum number of attempts
@@ -50,7 +50,7 @@ func NewRetrier(opts ...RetryOption) *Retrier {
 
 // Run issues the request and, upon failure, retries the request if possible.
 //
-// The request will be retried as long as the request is deemed retriable and the
+// The request will be retried as long as the request is deemed retryable and the
 // number of retry attempts has not grown larger than the configured retry limit.
 func (r *Retrier) Run(
 	fn RetryFunc,
@@ -143,7 +143,7 @@ func (r *Retrier) retryDelay(retryAttempt uint) (time.Duration, error) {
 		delay = maxRetryDelay
 	}
 
-	// Apply some itter by randomizing the value in the range of 75%-100%.
+	// Apply some jitter by randomizing the value in the range of 75%-100%.
 	max := big.NewInt(int64(delay / 4))
 	jitter, err := rand.Int(rand.Reader, max)
 	if err != nil {

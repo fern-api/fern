@@ -2,6 +2,7 @@
 
 namespace Seed\Auth;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Auth\Requests\GetTokenRequest;
 use Seed\Auth\Types\TokenResponse;
@@ -16,23 +17,42 @@ use Seed\Auth\Requests\RefreshTokenRequest;
 class AuthClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return TokenResponse
      * @throws SeedException
@@ -40,6 +60,7 @@ class AuthClient
      */
     public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): TokenResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -48,6 +69,7 @@ class AuthClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -70,6 +92,7 @@ class AuthClient
      * @param RefreshTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return TokenResponse
      * @throws SeedException
@@ -77,6 +100,7 @@ class AuthClient
      */
     public function refreshToken(RefreshTokenRequest $request, ?array $options = null): TokenResponse
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -85,6 +109,7 @@ class AuthClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

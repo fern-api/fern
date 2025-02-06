@@ -116,6 +116,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -226,6 +227,7 @@ service:
       response:
         docs: ''
         type: root.User
+        status-code: 200
       examples:
         - path-parameters:
             userId: userId

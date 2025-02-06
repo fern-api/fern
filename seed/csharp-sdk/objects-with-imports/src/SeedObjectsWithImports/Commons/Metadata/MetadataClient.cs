@@ -1,7 +1,5 @@
 using SeedObjectsWithImports.Core;
 
-#nullable enable
-
 namespace SeedObjectsWithImports.Commons;
 
 public partial class MetadataClient

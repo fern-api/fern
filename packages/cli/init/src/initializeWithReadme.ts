@@ -4,10 +4,12 @@ import { TaskContext } from "@fern-api/task-context";
 
 export const initializeWithReadme = async ({
     readmeUrl,
+    organization,
     taskContext,
     versionOfCli
 }: {
     readmeUrl?: string;
+    organization: string;
     taskContext: TaskContext;
     versionOfCli: string;
 }): Promise<void> => {
@@ -22,6 +24,7 @@ export const initializeWithReadme = async ({
         readmeUrl,
         outputPath,
         taskContext,
-        versionOfCli
+        versionOfCli,
+        organization
     });
 };

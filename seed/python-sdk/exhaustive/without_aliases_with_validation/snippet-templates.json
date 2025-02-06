@@ -5412,11 +5412,11 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "numer=$FERN_INPUT",
+                            "templateString": "number=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "numer",
+                                    "path": "number",
                                     "type": "payload"
                                 }
                             ],
@@ -5484,11 +5484,11 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "numer=$FERN_INPUT",
+                                "templateString": "number=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "QUERY",
-                                        "path": "numer",
+                                        "path": "number",
                                         "type": "payload"
                                     }
                                 ],

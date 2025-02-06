@@ -47,4 +47,12 @@ class Page extends JsonSerializableType
         $this->perPage = $values['perPage'];
         $this->totalPage = $values['totalPage'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

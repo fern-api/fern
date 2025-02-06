@@ -61,6 +61,10 @@ type ListWithGlobalConfigRequest struct {
 	Offset *int `query:"offset"`
 }
 
+type ListUsersMixedTypeCursorPaginationRequest struct {
+	Cursor *string `query:"cursor"`
+}
+
 type ListUsersOffsetPaginationRequest struct {
 	// Defaults to first page
 	Page *int `query:"page"`
@@ -75,7 +79,7 @@ type ListUsersOffsetPaginationRequest struct {
 type ListWithOffsetPaginationHasNextPageRequest struct {
 	// Defaults to first page
 	Page *int `query:"page"`
-	// The maxiumum number of elements to return.
+	// The maximum number of elements to return.
 	// This is also used as the step size in this
 	// paginated endpoint.
 	Limit *int   `query:"limit"`
@@ -85,7 +89,7 @@ type ListWithOffsetPaginationHasNextPageRequest struct {
 type ListUsersOffsetStepPaginationRequest struct {
 	// Defaults to first page
 	Page *int `query:"page"`
-	// The maxiumum number of elements to return.
+	// The maximum number of elements to return.
 	// This is also used as the step size in this
 	// paginated endpoint.
 	Limit *int   `query:"limit"`
@@ -284,6 +288,53 @@ func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (l *ListUsersExtendedResponse) String() string {
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListUsersMixedTypePaginationResponse struct {
+	Next string  `json:"next" url:"next"`
+	Data []*User `json:"data,omitempty" url:"data,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (l *ListUsersMixedTypePaginationResponse) GetNext() string {
+	if l == nil {
+		return ""
+	}
+	return l.Next
+}
+
+func (l *ListUsersMixedTypePaginationResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersMixedTypePaginationResponse) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
+}
+
+func (l *ListUsersMixedTypePaginationResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersMixedTypePaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersMixedTypePaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	return nil
+}
+
+func (l *ListUsersMixedTypePaginationResponse) String() string {
 	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}

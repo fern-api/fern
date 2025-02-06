@@ -49,4 +49,12 @@ class Metadata extends JsonSerializableType
         $this->avatar = $values['avatar'] ?? null;
         $this->activated = $values['activated'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

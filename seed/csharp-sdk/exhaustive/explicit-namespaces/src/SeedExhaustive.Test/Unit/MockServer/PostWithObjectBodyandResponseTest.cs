@@ -7,8 +7,6 @@ using SeedExhaustive.Core;
 using SeedExhaustive.InlinedRequests;
 using SeedExhaustive.Types.Object;
 
-#nullable enable
-
 namespace SeedExhaustive.Test.Unit.MockServer;
 
 [TestFixture]

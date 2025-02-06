@@ -1,7 +1,5 @@
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive.Endpoints.Params;
 
 public record GetWithInlinePath

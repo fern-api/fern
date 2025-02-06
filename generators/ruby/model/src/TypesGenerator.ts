@@ -79,7 +79,7 @@ export class TypesGenerator {
     }
 
     // We pull all inherited properties onto the object because Ruby
-    // does not allow for multiple inheritence of classes, and does not
+    // does not allow for multiple inheritance of classes, and does not
     // have a concept of interfaces. We could leverage Modules, however inheriting
     // properties from Modules appears non-standard (functions is the more common usecase)
     private getFlattenedProperties(typeId: TypeId): ObjectProperty[] {
@@ -271,7 +271,7 @@ export class TypesGenerator {
             fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
-    private generateUnkownFile(shape: Type): GeneratedRubyFile | undefined {
+    private generateUnknownFile(shape: Type): GeneratedRubyFile | undefined {
         throw new Error("Unknown type declaration shape: " + shape.type);
     }
 
@@ -286,7 +286,7 @@ export class TypesGenerator {
                 union: (utd: UnionTypeDeclaration) => this.generateUnionFile(typeId, utd, typeDeclaration),
                 undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
                     this.generateUndiscriminatedUnionFile(typeId, uutd, typeDeclaration),
-                _other: () => this.generateUnkownFile(typeDeclaration.shape)
+                _other: () => this.generateUnknownFile(typeDeclaration.shape)
             });
 
             if (generatedFile != null) {

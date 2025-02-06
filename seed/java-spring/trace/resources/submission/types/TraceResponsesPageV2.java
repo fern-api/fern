@@ -34,7 +34,7 @@ public final class TraceResponsesPageV2 {
   }
 
   /**
-   * @return If present, use this to load subseqent pages.
+   * @return If present, use this to load subsequent pages.
    * The offset is the id of the next trace response to load.
    */
   @JsonProperty("offset")

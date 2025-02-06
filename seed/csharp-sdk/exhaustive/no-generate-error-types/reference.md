@@ -1263,7 +1263,7 @@ GET with multiple of same query param
 
 ```csharp
 await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-    new GetWithMultipleQuery { Query = ["query"], Numer = [1] }
+    new GetWithMultipleQuery { Query = ["query"], Number = [1] }
 );
 ```
 </dd>

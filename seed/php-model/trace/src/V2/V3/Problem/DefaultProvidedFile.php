@@ -32,4 +32,12 @@ class DefaultProvidedFile extends JsonSerializableType
         $this->file = $values['file'];
         $this->relatedTypes = $values['relatedTypes'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

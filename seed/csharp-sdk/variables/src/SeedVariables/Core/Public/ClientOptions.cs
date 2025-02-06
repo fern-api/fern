@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedVariables.Core;
 
-#nullable enable
-
 namespace SeedVariables;
 
 public partial class ClientOptions

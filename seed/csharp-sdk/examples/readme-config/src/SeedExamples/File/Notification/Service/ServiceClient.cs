@@ -1,10 +1,9 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedExamples;
 using SeedExamples.Core;
-
-#nullable enable
 
 namespace SeedExamples.File.Notification;
 
@@ -28,16 +27,18 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/file/notification/{notificationId}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"/file/notification/{notificationId}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -51,7 +51,7 @@ export class CsharpTypeMapper {
 
     public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
         const objectNamespace = this.context.getNamespaceForTypeId(declaredTypeName.typeId);
-        return new csharp.ClassReference({
+        return csharp.classReference({
             name: this.context.getPascalCaseSafeName(declaredTypeName.name),
             namespace: objectNamespace
         });

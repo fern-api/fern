@@ -71,4 +71,12 @@ class SendRequest extends JsonSerializableType
         $this->maybeContext = $values['maybeContext'] ?? null;
         $this->containerObject = $values['containerObject'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

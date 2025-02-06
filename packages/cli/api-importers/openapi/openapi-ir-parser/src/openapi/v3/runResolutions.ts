@@ -35,7 +35,7 @@ export function runResolutions({ openapi }: { openapi: OpenAPIV3.Document }): Op
 
 interface AddComponentSchemaArgs {
     openapi: OpenAPIV3.Document;
-    /* A reference to the inlined schema which should be made a comonent schema */
+    /* A reference to the inlined schema which should be made a component schema */
     schemaReference: string;
     /* The name of the schema to be added */
     schemaName: string;

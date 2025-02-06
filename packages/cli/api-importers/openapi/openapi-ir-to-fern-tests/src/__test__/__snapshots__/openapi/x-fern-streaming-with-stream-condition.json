@@ -52,6 +52,7 @@
               },
               "response": {
                 "docs": "",
+                "status-code": 200,
                 "type": "ChatFullResponse",
               },
               "source": {
@@ -210,6 +211,7 @@
       response:
         docs: ''
         type: ChatFullResponse
+        status-code: 200
       examples:
         - request:
             query: How can I use the Vectara platform?

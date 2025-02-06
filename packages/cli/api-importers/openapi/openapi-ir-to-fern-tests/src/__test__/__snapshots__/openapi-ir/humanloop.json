@@ -223,6 +223,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -646,6 +647,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1173,6 +1175,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -1752,6 +1755,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2302,6 +2306,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -2773,6 +2778,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3304,6 +3310,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -3871,6 +3878,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4103,7 +4111,7 @@
               "file": "../openapi.yml",
               "type": "openapi"
             },
-            "type": "undisciminated"
+            "type": "undiscriminated"
           },
           "type": "oneOf"
         },
@@ -4112,6 +4120,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -4854,6 +4863,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5462,6 +5472,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -5777,6 +5788,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6167,6 +6179,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -6617,6 +6630,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7038,6 +7052,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7401,6 +7416,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -7803,6 +7819,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8241,6 +8258,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8404,6 +8422,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -8763,6 +8782,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9064,6 +9084,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9381,6 +9402,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -9764,6 +9786,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -10171,6 +10194,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -10587,6 +10611,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -10861,6 +10886,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11152,6 +11178,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11512,6 +11539,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -11888,6 +11916,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -12171,13 +12200,6 @@
                                     "spec": {
                                       "value": {
                                         "value": {
-                                          "evaluator_type": {
-                                            "value": {
-                                              "value": "human",
-                                              "type": "string"
-                                            },
-                                            "type": "primitive"
-                                          },
                                           "arguments_type": {
                                             "value": "target_free",
                                             "type": "enum"
@@ -12185,6 +12207,13 @@
                                           "return_type": {
                                             "value": "boolean",
                                             "type": "enum"
+                                          },
+                                          "evaluator_type": {
+                                            "value": {
+                                              "value": "llm",
+                                              "type": "string"
+                                            },
+                                            "type": "primitive"
                                           }
                                         },
                                         "type": "discriminated"
@@ -12362,6 +12391,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 201,
         "type": "json"
       },
       "errors": {
@@ -12773,13 +12803,6 @@
                             "spec": {
                               "value": {
                                 "value": {
-                                  "evaluator_type": {
-                                    "value": {
-                                      "value": "human",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "arguments_type": {
                                     "value": "target_free",
                                     "type": "enum"
@@ -12787,6 +12810,13 @@
                                   "return_type": {
                                     "value": "boolean",
                                     "type": "enum"
+                                  },
+                                  "evaluator_type": {
+                                    "value": {
+                                      "value": "llm",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
                                   }
                                 },
                                 "type": "discriminated"
@@ -12944,6 +12974,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -13315,13 +13346,6 @@
                             "spec": {
                               "value": {
                                 "value": {
-                                  "evaluator_type": {
-                                    "value": {
-                                      "value": "human",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "arguments_type": {
                                     "value": "target_free",
                                     "type": "enum"
@@ -13329,6 +13353,13 @@
                                   "return_type": {
                                     "value": "boolean",
                                     "type": "enum"
+                                  },
+                                  "evaluator_type": {
+                                    "value": {
+                                      "value": "llm",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
                                   }
                                 },
                                 "type": "discriminated"
@@ -13592,6 +13623,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14014,13 +14046,6 @@
                             "spec": {
                               "value": {
                                 "value": {
-                                  "evaluator_type": {
-                                    "value": {
-                                      "value": "human",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "arguments_type": {
                                     "value": "target_free",
                                     "type": "enum"
@@ -14028,6 +14053,13 @@
                                   "return_type": {
                                     "value": "boolean",
                                     "type": "enum"
+                                  },
+                                  "evaluator_type": {
+                                    "value": {
+                                      "value": "llm",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
                                   }
                                 },
                                 "type": "discriminated"
@@ -14204,6 +14236,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -14584,13 +14617,6 @@
                             "spec": {
                               "value": {
                                 "value": {
-                                  "evaluator_type": {
-                                    "value": {
-                                      "value": "human",
-                                      "type": "string"
-                                    },
-                                    "type": "primitive"
-                                  },
                                   "arguments_type": {
                                     "value": "target_free",
                                     "type": "enum"
@@ -14598,6 +14624,13 @@
                                   "return_type": {
                                     "value": "boolean",
                                     "type": "enum"
+                                  },
+                                  "evaluator_type": {
+                                    "value": {
+                                      "value": "llm",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
                                   }
                                 },
                                 "type": "discriminated"
@@ -14755,6 +14788,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15178,6 +15212,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15341,13 +15376,6 @@
                         "spec": {
                           "value": {
                             "value": {
-                              "evaluator_type": {
-                                "value": {
-                                  "value": "human",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "arguments_type": {
                                 "value": "target_free",
                                 "type": "enum"
@@ -15355,6 +15383,13 @@
                               "return_type": {
                                 "value": "boolean",
                                 "type": "enum"
+                              },
+                              "evaluator_type": {
+                                "value": {
+                                  "value": "llm",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
                               }
                             },
                             "type": "discriminated"
@@ -15458,6 +15493,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15502,13 +15538,6 @@
               "spec": {
                 "value": {
                   "value": {
-                    "evaluator_type": {
-                      "value": {
-                        "value": "human",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "arguments_type": {
                       "value": "target_free",
                       "type": "enum"
@@ -15516,6 +15545,13 @@
                     "return_type": {
                       "value": "boolean",
                       "type": "enum"
+                    },
+                    "evaluator_type": {
+                      "value": {
+                        "value": "llm",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -15652,13 +15688,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -15666,6 +15695,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "evaluator_type": {
+                        "value": {
+                          "value": "llm",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -15816,6 +15997,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -15993,13 +16175,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -16007,6 +16182,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "evaluator_type": {
+                        "value": {
+                          "value": "llm",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -16210,6 +16537,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16391,13 +16719,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -16405,6 +16726,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "evaluator_type": {
+                        "value": {
+                          "value": "llm",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -16575,6 +17048,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -16749,13 +17223,6 @@
                         "spec": {
                           "value": {
                             "value": {
-                              "evaluator_type": {
-                                "value": {
-                                  "value": "human",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "arguments_type": {
                                 "value": "target_free",
                                 "type": "enum"
@@ -16763,6 +17230,13 @@
                               "return_type": {
                                 "value": "boolean",
                                 "type": "enum"
+                              },
+                              "evaluator_type": {
+                                "value": {
+                                  "value": "llm",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
                               }
                             },
                             "type": "discriminated"
@@ -16903,6 +17377,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17101,13 +17576,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -17115,6 +17583,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "evaluator_type": {
+                        "value": {
+                          "value": "llm",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -17249,6 +17869,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17448,13 +18069,6 @@
                 "spec": {
                   "value": {
                     "value": {
-                      "evaluator_type": {
-                        "value": {
-                          "value": "human",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "arguments_type": {
                         "value": "target_free",
                         "type": "enum"
@@ -17462,6 +18076,158 @@
                       "return_type": {
                         "value": "boolean",
                         "type": "enum"
+                      },
+                      "prompt": {
+                        "properties": {
+                          "model": {
+                            "value": {
+                              "value": "model",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "endpoint": {
+                            "value": "complete",
+                            "type": "enum"
+                          },
+                          "template": {
+                            "value": {
+                              "value": "template",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "provider": {
+                            "value": "openai",
+                            "type": "enum"
+                          },
+                          "max_tokens": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "temperature": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "top_p": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "stop": {
+                            "value": {
+                              "value": "stop",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "presence_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "frequency_penalty": {
+                            "value": {
+                              "value": 1.1,
+                              "type": "double"
+                            },
+                            "type": "primitive"
+                          },
+                          "other": {
+                            "value": [
+                              {
+                                "key": {
+                                  "value": "key",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "value": {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "type": "unknown"
+                                }
+                              }
+                            ],
+                            "type": "map"
+                          },
+                          "seed": {
+                            "value": {
+                              "value": 1,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          },
+                          "response_format": {
+                            "properties": {
+                              "type": {
+                                "value": {
+                                  "value": "json_object",
+                                  "type": "string"
+                                },
+                                "type": "literal"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "tools": {
+                            "value": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "value": {
+                                      "value": "name",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "description": {
+                                    "value": {
+                                      "value": "description",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ],
+                            "type": "array"
+                          },
+                          "linked_tools": {
+                            "value": [
+                              {
+                                "value": {
+                                  "value": "linked_tools",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            ],
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "evaluator_type": {
+                        "value": {
+                          "value": "llm",
+                          "type": "string"
+                        },
+                        "type": "primitive"
                       }
                     },
                     "type": "discriminated"
@@ -17546,6 +18312,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17714,13 +18481,6 @@
                     "spec": {
                       "value": {
                         "value": {
-                          "evaluator_type": {
-                            "value": {
-                              "value": "human",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "arguments_type": {
                             "value": "target_free",
                             "type": "enum"
@@ -17728,6 +18488,25 @@
                           "return_type": {
                             "value": "boolean",
                             "type": "enum"
+                          },
+                          "prompt": {
+                            "properties": {
+                              "model": {
+                                "value": {
+                                  "value": "model",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "evaluator_type": {
+                            "value": {
+                              "value": "llm",
+                              "type": "string"
+                            },
+                            "type": "primitive"
                           }
                         },
                         "type": "discriminated"
@@ -17834,6 +18613,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -17885,13 +18665,6 @@
               "evaluator": {
                 "value": {
                   "value": {
-                    "evaluator_type": {
-                      "value": {
-                        "value": "human",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "arguments_type": {
                       "value": "target_free",
                       "type": "enum"
@@ -17899,6 +18672,13 @@
                     "return_type": {
                       "value": "boolean",
                       "type": "enum"
+                    },
+                    "evaluator_type": {
+                      "value": {
+                        "value": "llm",
+                        "type": "string"
+                      },
+                      "type": "primitive"
                     }
                   },
                   "type": "discriminated"
@@ -18086,30 +18866,23 @@
                         "config": {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "generic",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "id": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "status": {
+                              "model": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "model",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "name": {
+                              "type": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "model",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -18616,30 +19389,23 @@
                         "config": {
                           "value": {
                             "value": {
-                              "type": {
-                                "value": {
-                                  "value": "generic",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
                               "id": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "id",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "status": {
+                              "model": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "model",
                                   "type": "string"
                                 },
                                 "type": "primitive"
                               },
-                              "name": {
+                              "type": {
                                 "value": {
-                                  "value": "config",
+                                  "value": "model",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -19254,6 +20020,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -19812,6 +20579,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -20614,6 +21382,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -21276,6 +22045,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "statusCode": 200,
         "type": "json"
       },
       "errors": {
@@ -22003,7 +22773,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -22219,7 +22989,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -22748,7 +23518,7 @@
                       "type": "openapi"
                     },
                     "inline": true,
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -23252,7 +24022,7 @@
                       "type": "openapi"
                     },
                     "inline": true,
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -23679,7 +24449,7 @@
             "file": "../openapi.yml",
             "type": "openapi"
           },
-          "type": "undisciminated"
+          "type": "undiscriminated"
         },
         "type": "oneOf"
       },
@@ -23948,7 +24718,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -24391,7 +25161,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -24624,7 +25394,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -24676,7 +25446,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -25437,7 +26207,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -25475,7 +26245,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -25616,7 +26386,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -27082,7 +27852,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -27660,7 +28430,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -28026,7 +28796,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -28277,7 +29047,7 @@
                       "file": "../openapi.yml",
                       "type": "openapi"
                     },
-                    "type": "undisciminated"
+                    "type": "undiscriminated"
                   },
                   "type": "oneOf"
                 },
@@ -28579,7 +29349,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -30479,7 +31249,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -31005,7 +31775,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -31748,7 +32518,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -31894,7 +32664,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -32351,7 +33121,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -33054,7 +33824,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -33663,7 +34433,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -33809,7 +34579,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -34314,7 +35084,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -34460,7 +35230,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -37337,7 +38107,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },
@@ -37449,7 +38219,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -37542,7 +38312,7 @@
                   "file": "../openapi.yml",
                   "type": "openapi"
                 },
-                "type": "undisciminated"
+                "type": "undiscriminated"
               },
               "type": "oneOf"
             },
@@ -37667,7 +38437,7 @@
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
-                  "type": "undisciminated"
+                  "type": "undiscriminated"
                 },
                 "type": "oneOf"
               },

@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedVersion.Core;
 
-#nullable enable
-
 namespace SeedVersion;
 
 public record User

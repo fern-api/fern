@@ -11,7 +11,7 @@ from .reference_resolver import ReferenceResolver
 @dataclasses.dataclass
 class ResolvedImport:
     import_: Optional[AST.ReferenceImport]
-    prefix_for_qualfied_names: AST.QualifiedName
+    prefix_for_qualified_names: AST.QualifiedName
 
 
 class ReferenceResolverImpl(ReferenceResolver):
@@ -47,13 +47,13 @@ class ReferenceResolverImpl(ReferenceResolver):
                     continue
 
                 import_: Optional[AST.ReferenceImport] = original_reference.import_
-                prefix_for_qualfied_names: AST.QualifiedName = ()
+                prefix_for_qualified_names: AST.QualifiedName = ()
 
                 if original_reference.import_.module.path == self._module_path_of_source_file:
                     self._does_file_self_import = True
                     if original_reference.import_.named_import is not None:
                         import_ = None
-                        prefix_for_qualfied_names = (original_reference.import_.named_import,)
+                        prefix_for_qualified_names = (original_reference.import_.named_import,)
                     else:
                         raise RuntimeError(
                             f"Intra-file reference in {self._module_path_of_source_file} is not using a named import: "
@@ -73,7 +73,7 @@ class ReferenceResolverImpl(ReferenceResolver):
 
                 self._original_import_to_resolved_import[original_reference.import_] = ResolvedImport(
                     import_=import_,
-                    prefix_for_qualfied_names=prefix_for_qualfied_names,
+                    prefix_for_qualified_names=prefix_for_qualified_names,
                 )
 
     def resolve_reference(self, reference: AST.Reference) -> str:
@@ -84,7 +84,7 @@ class ReferenceResolverImpl(ReferenceResolver):
             self._original_import_to_resolved_import[reference.import_] if reference.import_ is not None else None
         )
         resolved_qualified_name_excluding_import = (
-            resolved_import.prefix_for_qualfied_names + reference.qualified_name_excluding_import
+            resolved_import.prefix_for_qualified_names + reference.qualified_name_excluding_import
             if resolved_import is not None
             else reference.qualified_name_excluding_import
         )

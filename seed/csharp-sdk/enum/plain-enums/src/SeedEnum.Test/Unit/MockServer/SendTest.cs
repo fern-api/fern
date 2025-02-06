@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedEnum;
 
-#nullable enable
-
 namespace SeedEnum.Test.Unit.MockServer;
 
 [TestFixture]

@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedMultiLineDocs.Core;
 
-#nullable enable
-
 namespace SeedMultiLineDocs;
 
 public partial class ClientOptions

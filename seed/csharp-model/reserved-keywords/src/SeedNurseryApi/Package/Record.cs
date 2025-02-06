@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedNurseryApi.Core;
 
-#nullable enable
-
 namespace SeedNurseryApi;
 
 public record Record

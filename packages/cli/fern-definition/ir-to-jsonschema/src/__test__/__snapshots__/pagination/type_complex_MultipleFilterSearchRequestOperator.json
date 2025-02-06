@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "AND",
+    "OR"
+  ],
+  "definitions": {}
+}

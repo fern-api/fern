@@ -24,6 +24,7 @@ const (
 )
 
 func TestFixtures(t *testing.T) {
+  t.Skip("These tests require running in a Docker container with /bin/go-v2 installed")
 	cmdtest.TestFixtures(t, commandName, testdataPath, usage, run)
 }
 
@@ -264,7 +265,7 @@ func TestTime(t *testing.T) {
 		assert.Equal(t, 16, decode.Date.Day())
 	})
 
-	t.Run("undiscrimnated union (required)", func(t *testing.T) {
+	t.Run("undiscriminated union (required)", func(t *testing.T) {
 		value := undiscriminated.NewUnionWithTimeFromDate(date)
 
 		bytes, err := json.Marshal(value)
@@ -279,7 +280,7 @@ func TestTime(t *testing.T) {
 		assert.Equal(t, 16, decode.Date.Day())
 	})
 
-	t.Run("undiscrimnated union (optional)", func(t *testing.T) {
+	t.Run("undiscriminated union (optional)", func(t *testing.T) {
 		value := undiscriminated.NewUnionWithOptionalTimeFromDateOptional(&date)
 
 		bytes, err := json.Marshal(value)

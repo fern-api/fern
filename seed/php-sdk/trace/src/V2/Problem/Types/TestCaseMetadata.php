@@ -39,4 +39,12 @@ class TestCaseMetadata extends JsonSerializableType
         $this->name = $values['name'];
         $this->hidden = $values['hidden'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -62,7 +62,7 @@ types:
   UnionWithOptionalTime:
     union:
       date: optional<date>
-      dateimte: optional<datetime>
+      datetime: optional<datetime>
 
   UnionWithSingleElement:
     union:

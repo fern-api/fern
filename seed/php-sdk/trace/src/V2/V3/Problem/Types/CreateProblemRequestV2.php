@@ -74,4 +74,12 @@ class CreateProblemRequestV2 extends JsonSerializableType
         $this->supportedLanguages = $values['supportedLanguages'];
         $this->isPublic = $values['isPublic'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

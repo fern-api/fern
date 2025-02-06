@@ -27,6 +27,7 @@
               "path": "/application-json",
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "Data",
               },
               "source": {
@@ -51,6 +52,7 @@
               "path": "/vnd.fern.user+json;version=1",
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "Data",
               },
               "source": {
@@ -89,6 +91,7 @@
       response:
         docs: Success
         type: Data
+        status-code: 200
       examples:
         - response:
             body:
@@ -103,6 +106,7 @@
       response:
         docs: Success
         type: Data
+        status-code: 200
       examples:
         - response:
             body:

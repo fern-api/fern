@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
-#nullable enable
-
 namespace SeedExhaustive;
 
 public record PostWithObjectBody

@@ -1,4 +1,4 @@
-name: test-definitions
+name: Validate Test Definitions
 
 on:
   push:
@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

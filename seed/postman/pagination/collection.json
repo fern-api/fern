@@ -30,6 +30,93 @@
     {
       "_type": "container",
       "description": null,
+      "name": "Conversations",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Search conversations",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/conversations/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "conversations",
+                "search"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pagination\": {\n        \"per_page\": 1,\n        \"starting_after\": \"starting_after\"\n    },\n    \"query\": {\n        \"field\": \"field\",\n        \"operator\": \"=\",\n        \"value\": \"value\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/conversations/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations",
+                    "search"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"pagination\": {\n        \"per_page\": 1,\n        \"starting_after\": \"starting_after\"\n    },\n    \"query\": {\n        \"field\": \"field\",\n        \"operator\": \"=\",\n        \"value\": \"value\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"conversations\": [\n        {\n            \"foo\": \"foo\"\n        },\n        {\n            \"foo\": \"foo\"\n        }\n    ],\n    \"pages\": {\n        \"next\": {\n            \"per_page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"page\": 1,\n        \"per_page\": 1,\n        \"total_pages\": 1,\n        \"type\": \"pages\"\n    },\n    \"total_count\": 1,\n    \"type\": \"conversation.list\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
       "name": "Users",
       "item": [
         {
@@ -132,6 +219,80 @@
               },
               "description": null,
               "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List With Mixed Type Cursor Pagination",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?cursor=cursor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "cursor",
+                  "description": null,
+                  "value": "cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users?cursor=cursor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "description": null,
+                      "value": "cursor"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"next\": \"next\",\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -521,7 +682,7 @@
                 },
                 {
                   "key": "limit",
-                  "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                  "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                   "value": "1"
                 },
                 {
@@ -566,7 +727,7 @@
                     },
                     {
                       "key": "limit",
-                      "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                      "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                       "value": "1"
                     },
                     {
@@ -615,7 +776,7 @@
                 },
                 {
                   "key": "limit",
-                  "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                  "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                   "value": "1"
                 },
                 {
@@ -660,7 +821,7 @@
                     },
                     {
                       "key": "limit",
-                      "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                      "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                       "value": "1"
                     },
                     {

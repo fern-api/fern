@@ -1,11 +1,7 @@
-using System;
-using System.Net.Http;
 using Grpc.Core;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>;
-
-#nullable enable
 
 public partial class GrpcRequestOptions
 {
@@ -13,7 +9,7 @@ public partial class GrpcRequestOptions
     /// The maximum number of retry attempts.
     /// </summary>
     public int? MaxRetries { get; init; }
-    
+
     /// <summary>
     /// The timeout for the request.
     /// </summary>
@@ -23,7 +19,7 @@ public partial class GrpcRequestOptions
     /// Options for write operations.
     /// </summary>
     public WriteOptions? WriteOptions { get; init; }
-    
+
     /// <summary>
     /// Client-side call credentials. Provide authorization with per-call granularity.
     /// </summary>

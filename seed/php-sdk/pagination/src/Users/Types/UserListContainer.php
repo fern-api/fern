@@ -24,4 +24,12 @@ class UserListContainer extends JsonSerializableType
     ) {
         $this->users = $values['users'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

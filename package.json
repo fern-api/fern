@@ -23,6 +23,7 @@
     "lint:staged": "lint-staged",
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
+    "lint:spelling": "cspell **",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "format:fix": "pnpm format --ignore-path ./shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
@@ -73,6 +74,7 @@
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "chalk": "^5.3.0",
+    "cspell": "^8.17.2",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "eslint-plugin-deprecation": "^3.0.0",
@@ -97,7 +99,7 @@
     "ts-node": "^10.9.2",
     "turbo": "^2.3.4",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",
@@ -123,5 +125,10 @@
     "!packages/cli/cli/dist/local",
     "!packages/cli/cli/dist/dev",
     "!packages/cli/cli/dist/prod"
-  ]
+  ],
+  "pnpm": {
+    "overrides": {
+      "node-fetch@2.x>whatwg-url": "^14.0.0"
+    }
+  }
 }

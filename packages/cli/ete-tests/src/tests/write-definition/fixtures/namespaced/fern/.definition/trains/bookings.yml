@@ -69,6 +69,7 @@ service:
         content-type: application/json
       response:
         docs: Booking successful
+        status-code: 201
         type: CreateBookingResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -126,6 +127,7 @@ service:
           type: string
       response:
         docs: The booking details
+        status-code: 200
         type: GetBookingResponse
       source:
         openapi: openapi/trains/openapi.yml
@@ -161,6 +163,7 @@ service:
       path: /bookings
       response:
         docs: A list of bookings
+        status-code: 200
         type: GetBookingsResponse
       source:
         openapi: openapi/trains/openapi.yml

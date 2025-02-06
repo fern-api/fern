@@ -1,7 +1,5 @@
 using SeedUnions.Core;
 
-#nullable enable
-
 namespace SeedUnions;
 
 public partial class TypesClient

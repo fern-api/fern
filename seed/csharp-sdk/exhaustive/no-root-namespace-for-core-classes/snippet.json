@@ -298,7 +298,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithAllowMultipleQueryAsync(\n    new GetWithMultipleQuery { Query = [\"query\"], Numer = [1] }\n);\n"
+                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithAllowMultipleQueryAsync(\n    new GetWithMultipleQuery { Query = [\"query\"], Number = [1] }\n);\n"
             }
         },
         {

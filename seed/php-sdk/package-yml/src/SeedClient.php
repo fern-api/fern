@@ -22,13 +22,14 @@ class SeedClient
     public ServiceClient $service;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -40,6 +41,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
@@ -49,6 +51,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -61,7 +64,7 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->service = new ServiceClient($this->client);
+        $this->service = new ServiceClient($this->client, $this->options);
     }
 
     /**
@@ -69,6 +72,7 @@ class SeedClient
      * @param EchoRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string
      * @throws SeedException
@@ -76,6 +80,7 @@ class SeedClient
      */
     public function echo_(string $id, EchoRequest $request, ?array $options = null): string
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -84,6 +89,7 @@ class SeedClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "b": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/deep-cursor-path.B"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "deep-cursor-path.D": {
+      "type": "object",
+      "properties": {
+        "starting_after": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "deep-cursor-path.C": {
+      "type": "object",
+      "properties": {
+        "d": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/deep-cursor-path.D"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "deep-cursor-path.B": {
+      "type": "object",
+      "properties": {
+        "c": {
+          "$ref": "#/definitions/deep-cursor-path.C"
+        }
+      },
+      "required": [
+        "c"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

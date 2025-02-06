@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
-#nullable enable
-
 namespace SeedMultiUrlEnvironmentNoDefault;
 
 public partial class Ec2Client
@@ -27,17 +25,19 @@ public partial class Ec2Client
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.Environment.Ec2,
-                Method = HttpMethod.Post,
-                Path = "/ec2/boot",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.Environment.Ec2,
+                    Method = HttpMethod.Post,
+                    Path = "/ec2/boot",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;

@@ -170,7 +170,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        const files = [AsIsFiles.Test.RawClientTests];
+        const files = [AsIsFiles.Test.RawClientTests, AsIsFiles.Test.OneOfSerializerTests];
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.Test.StringEnumSerializerTests);
         } else {

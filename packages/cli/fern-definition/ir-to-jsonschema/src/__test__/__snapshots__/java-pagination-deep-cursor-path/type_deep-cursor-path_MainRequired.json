@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "indirection": {
+      "$ref": "#/definitions/deep-cursor-path.IndirectionRequired"
+    }
+  },
+  "required": [
+    "indirection"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "deep-cursor-path.IndirectionRequired": {
+      "type": "object",
+      "properties": {
+        "starting_after": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "results"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

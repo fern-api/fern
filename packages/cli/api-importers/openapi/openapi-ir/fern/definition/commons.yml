@@ -22,6 +22,10 @@ types:
     properties:
       availability: optional<finalIr.Availability>
 
+  WithStatusCode:
+    properties:
+      statusCode: optional<StatusCode>
+
   WithName:
     properties:
       nameOverride:

@@ -236,7 +236,7 @@
             "type": {
               "type": "fileUpload",
               "value": {
-                "name": "JustFileRequet",
+                "name": "JustFileRequest",
                 "properties": [
                   {
                     "type": "file",
@@ -333,7 +333,7 @@
             "type": {
               "type": "fileUpload",
               "value": {
-                "name": "JustFileWithQueryParamsRequet",
+                "name": "JustFileWithQueryParamsRequest",
                 "properties": [
                   {
                     "type": "file",

@@ -14,13 +14,14 @@ class SeedClient
     public CustomAuthClient $customAuth;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -33,6 +34,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
@@ -44,6 +46,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -56,6 +59,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->customAuth = new CustomAuthClient($this->client);
+        $this->customAuth = new CustomAuthClient($this->client, $this->options);
     }
 }

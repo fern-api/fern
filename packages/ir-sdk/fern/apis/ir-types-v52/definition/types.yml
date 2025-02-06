@@ -134,7 +134,7 @@ types:
 
   NamedType:
     docs: |
-      A reference to a named type. For backwards compatbility, this type must be fully compatible
+      A reference to a named type. For backwards compatibility, this type must be fully compatible
       with the DeclaredTypeName.
     properties:
       typeId: commons.TypeId
@@ -325,23 +325,23 @@ types:
     properties:
       discriminant: commons.NameAndWireValue
       singleUnionType: ExampleSingleUnionType
-  
-  ExampleUndiscriminatedUnionType: 
-    properties: 
+
+  ExampleUndiscriminatedUnionType:
+    properties:
       index:
         type: integer
-        docs: | 
-          The zero-based index of the undiscriminated union variant.  
-          For the following undiscriminated union 
+        docs: |
+          The zero-based index of the undiscriminated union variant.
+          For the following undiscriminated union
           ```
-          MyUnion: 
+          MyUnion:
             discriminated: false
-            union: 
+            union:
               - string
               - integer
           ```
           a string example would have an index 0 and an integer example
-          would have an index 1. 
+          would have an index 1.
       singleUnionType: ExampleTypeReference
 
   ExampleSingleUnionType:

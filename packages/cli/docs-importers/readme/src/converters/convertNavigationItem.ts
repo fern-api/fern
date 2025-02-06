@@ -54,6 +54,7 @@ export async function convertNavigationItem({
                         });
                         return {
                             page: convertedMarkdown.sidebarTitle ?? "",
+                            icon: convertedMarkdown.mintlifyFrontmatter.icon,
                             path: relativeFilepathFromRoot
                         };
                     } else {

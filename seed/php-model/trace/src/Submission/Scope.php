@@ -24,4 +24,12 @@ class Scope extends JsonSerializableType
     ) {
         $this->variables = $values['variables'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

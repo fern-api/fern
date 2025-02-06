@@ -2,6 +2,7 @@
 
 namespace Seed\Service;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Types\Types\Movie;
 use Seed\Exceptions\SeedException;
@@ -18,23 +19,42 @@ use Seed\Types\Types\Response;
 class ServiceClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param string $movieId
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Movie
      * @throws SeedException
@@ -42,6 +62,7 @@ class ServiceClient
      */
     public function getMovie(string $movieId, ?array $options = null): Movie
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -49,6 +70,7 @@ class ServiceClient
                     path: "/movie/$movieId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -71,6 +93,7 @@ class ServiceClient
      * @param Movie $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string
      * @throws SeedException
@@ -78,6 +101,7 @@ class ServiceClient
      */
     public function createMovie(Movie $request, ?array $options = null): string
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -86,6 +110,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -108,6 +133,7 @@ class ServiceClient
      * @param GetMetadataRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return mixed
      * @throws SeedException
@@ -115,6 +141,7 @@ class ServiceClient
      */
     public function getMetadata(GetMetadataRequest $request, ?array $options = null): mixed
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         if ($request->shallow != null) {
             $query['shallow'] = $request->shallow;
@@ -133,6 +160,7 @@ class ServiceClient
                     headers: $headers,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -155,6 +183,7 @@ class ServiceClient
      * @param BigEntity $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return Response
      * @throws SeedException
@@ -162,6 +191,7 @@ class ServiceClient
      */
     public function createBigEntity(BigEntity $request, ?array $options = null): Response
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -170,6 +200,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

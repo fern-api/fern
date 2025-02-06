@@ -1,0 +1,76 @@
+{
+  "type": "object",
+  "properties": {
+    "next": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/complex.StartingAfterPaging"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "page": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "per_page": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_pages": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "const": "pages"
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "complex.StartingAfterPaging": {
+      "type": "object",
+      "properties": {
+        "per_page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "per_page"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

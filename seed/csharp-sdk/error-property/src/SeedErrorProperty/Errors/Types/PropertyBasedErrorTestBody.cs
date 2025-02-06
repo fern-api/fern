@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedErrorProperty.Core;
 
-#nullable enable
-
 namespace SeedErrorProperty;
 
 public record PropertyBasedErrorTestBody

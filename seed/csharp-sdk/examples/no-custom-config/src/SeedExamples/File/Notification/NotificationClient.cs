@@ -1,7 +1,5 @@
 using SeedExamples.Core;
 
-#nullable enable
-
 namespace SeedExamples.File.Notification;
 
 public partial class NotificationClient

@@ -1,7 +1,5 @@
 using SeedValidation.Core;
 
-#nullable enable
-
 namespace SeedValidation;
 
 public record GetRequest

@@ -331,7 +331,7 @@ function convertRequestBody({
                                         };
                                     },
                                     _other: () => {
-                                        throw new Error("Unkonwn FileUploadRequestProperty: " + property.type);
+                                        throw new Error("Unknown FileUploadRequestProperty: " + property.type);
                                     }
                                 });
                                 return {

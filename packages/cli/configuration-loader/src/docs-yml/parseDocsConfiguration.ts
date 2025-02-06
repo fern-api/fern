@@ -691,7 +691,7 @@ async function convertNavigationItem({
             apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
-            showErrors: rawConfig.displayErrors ?? false,
+            showErrors: rawConfig.displayErrors ?? true,
             snippetsConfiguration:
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })

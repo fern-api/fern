@@ -2,6 +2,7 @@
 
 namespace Seed\Migration;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Migration\Requests\GetAttemptedMigrationsRequest;
 use Seed\Migration\Types\Migration;
@@ -17,23 +18,42 @@ use Psr\Http\Client\ClientExceptionInterface;
 class MigrationClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param GetAttemptedMigrationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<Migration>
      * @throws SeedException
@@ -41,6 +61,7 @@ class MigrationClient
      */
     public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         $headers = [];
         $headers['admin-key-header'] = $request->adminKeyHeader;
         try {
@@ -51,6 +72,7 @@ class MigrationClient
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

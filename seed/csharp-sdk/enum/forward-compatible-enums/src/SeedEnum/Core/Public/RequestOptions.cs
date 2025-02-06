@@ -2,8 +2,6 @@ using System;
 using System.Net.Http;
 using SeedEnum.Core;
 
-#nullable enable
-
 namespace SeedEnum;
 
 public partial class RequestOptions : IRequestOptions

@@ -53,6 +53,19 @@ export class AbstractWriter {
     }
 
     /**
+     * Writes a node or string
+     * @param input
+     */
+    public writeNodeOrString(input: AbstractAstNode | string): void {
+        if (typeof input === "string") {
+            this.write(input);
+            return;
+        }
+
+        this.writeNode(input);
+    }
+
+    /**
      * Writes a node but then suffixes with a `;` and new line
      * @param node
      */

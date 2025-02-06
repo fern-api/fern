@@ -2097,7 +2097,7 @@ client = SeedExhaustive(
 )
 client.endpoints.params.get_with_allow_multiple_query(
     query="query",
-    numer=1,
+    number=1,
 )
 
 ```
@@ -2122,7 +2122,7 @@ client.endpoints.params.get_with_allow_multiple_query(
 <dl>
 <dd>
 
-**numer:** `typing.Union[int, typing.Sequence[int]]` 
+**number:** `typing.Union[int, typing.Sequence[int]]` 
     
 </dd>
 </dl>

@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral;
 
 public record ContainerObject

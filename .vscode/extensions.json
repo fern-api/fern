@@ -5,6 +5,7 @@
     "esbenp.prettier-vscode",
     "redhat.vscode-yaml",
     "unifiedjs.vscode-mdx",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "streetsidesoftware.code-spell-checker"
   ]
 }

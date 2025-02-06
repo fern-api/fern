@@ -6436,25 +6436,25 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "numer",
+                                "originalName": "number",
                                 "camelCase": {
-                                    "unsafeName": "numer",
-                                    "safeName": "numer"
+                                    "unsafeName": "number",
+                                    "safeName": "number"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "numer",
-                                    "safeName": "numer"
+                                    "unsafeName": "number",
+                                    "safeName": "number"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "NUMER",
-                                    "safeName": "NUMER"
+                                    "unsafeName": "NUMBER",
+                                    "safeName": "NUMBER"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Numer",
-                                    "safeName": "Numer"
+                                    "unsafeName": "Number",
+                                    "safeName": "Number"
                                 }
                             },
-                            "wireValue": "numer"
+                            "wireValue": "number"
                         },
                         "typeReference": {
                             "type": "list",

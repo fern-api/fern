@@ -1,12 +1,10 @@
 using SeedIdempotencyHeaders.Core;
 
-#nullable enable
-
 namespace SeedIdempotencyHeaders;
 
 public partial class SeedIdempotencyHeadersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedIdempotencyHeadersClient(string? token = null, ClientOptions? clientOptions = null)
     {

@@ -273,7 +273,7 @@ components:
             type:
               type: string
               enum:
-                - dateimte
+                - datetime
             value:
               type: string
               format: date-time

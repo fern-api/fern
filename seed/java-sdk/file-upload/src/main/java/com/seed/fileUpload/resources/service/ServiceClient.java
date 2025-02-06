@@ -8,8 +8,8 @@ import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.core.SeedFileUploadApiException;
 import com.seed.fileUpload.core.SeedFileUploadException;
-import com.seed.fileUpload.resources.service.requests.JustFileRequet;
-import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequet;
+import com.seed.fileUpload.resources.service.requests.JustFileRequest;
+import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import java.io.File;
@@ -134,11 +134,11 @@ public class ServiceClient {
         }
     }
 
-    public void justFile(File file, JustFileRequet request) {
+    public void justFile(File file, JustFileRequest request) {
         justFile(file, request, null);
     }
 
-    public void justFile(File file, JustFileRequet request, RequestOptions requestOptions) {
+    public void justFile(File file, JustFileRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("just-file")
@@ -175,12 +175,12 @@ public class ServiceClient {
         }
     }
 
-    public void justFileWithQueryParams(File file, JustFileWithQueryParamsRequet request) {
+    public void justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
         justFileWithQueryParams(file, request, null);
     }
 
     public void justFileWithQueryParams(
-            File file, JustFileWithQueryParamsRequet request, RequestOptions requestOptions) {
+            File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("just-file-with-query-params");

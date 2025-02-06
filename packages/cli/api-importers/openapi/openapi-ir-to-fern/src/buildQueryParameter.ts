@@ -33,7 +33,7 @@ export function buildQueryParameter({
     let queryParameterType = getTypeFromTypeReference(typeReference.value);
     const queryParameterDefault = getDefaultFromTypeReference(typeReference.value);
 
-    // we can assume unknown-typed query parameteters are strings by default
+    // we can assume unknown-typed query parameters are strings by default
     if (queryParameterType === "unknown") {
         queryParameterType = "string";
     } else if (queryParameterType === "optional<unknown>") {
@@ -125,7 +125,7 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undisciminated") {
+        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
@@ -290,7 +290,7 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             };
-        } else if (schema.value.type === "oneOf" && schema.value.value.type === "undisciminated") {
+        } else if (schema.value.type === "oneOf" && schema.value.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {

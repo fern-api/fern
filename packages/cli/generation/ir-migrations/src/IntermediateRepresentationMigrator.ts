@@ -178,7 +178,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
     }): MigratedIntermediateMigration<Migrated> {
-        let hasEncouneredMigrationYet = false;
+        let hasEncounteredMigrationYet = false;
 
         const versionIsLatest = this.migrations[0]?.laterVersion === version;
         if (versionIsLatest) {
@@ -197,15 +197,15 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             intermediateRepresentation,
             shouldMigrate: (nextMigration) => {
                 const isEncounteringMigration = nextMigration.earlierVersion === version;
-                hasEncouneredMigrationYet ||= isEncounteringMigration;
-                return isEncounteringMigration || !hasEncouneredMigrationYet;
+                hasEncounteredMigrationYet ||= isEncounteringMigration;
+                return isEncounteringMigration || !hasEncounteredMigrationYet;
             },
             context,
             targetGenerator
         });
 
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (!hasEncouneredMigrationYet) {
+        if (!hasEncounteredMigrationYet) {
             context.failAndThrow(`IR ${version} does not exist`);
         }
 

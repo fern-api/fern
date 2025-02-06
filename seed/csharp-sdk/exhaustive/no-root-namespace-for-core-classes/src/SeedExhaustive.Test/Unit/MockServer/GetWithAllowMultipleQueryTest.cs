@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedExhaustive.Endpoints;
 
-#nullable enable
-
 namespace SeedExhaustive.Test.Unit.MockServer;
 
 [TestFixture]
@@ -17,7 +15,7 @@ public class GetWithAllowMultipleQueryTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/params")
                     .WithParam("query", "query")
-                    .WithParam("numer", "1")
+                    .WithParam("number", "1")
                     .UsingGet()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
@@ -25,7 +23,7 @@ public class GetWithAllowMultipleQueryTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-                    new GetWithMultipleQuery { Query = ["query"], Numer = [1] },
+                    new GetWithMultipleQuery { Query = ["query"], Number = [1] },
                     RequestOptions
                 )
         );

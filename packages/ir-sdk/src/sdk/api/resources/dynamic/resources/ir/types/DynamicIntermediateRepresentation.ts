@@ -12,7 +12,7 @@ import * as FernIr from "../../../../../index";
  */
 export interface DynamicIntermediateRepresentation {
     /**
-     * The version of the dynamic IR. This is independent from the verison
+     * The version of the dynamic IR. This is independent from the version
      * of the primary IR.
      */
     version: "1.0.0";

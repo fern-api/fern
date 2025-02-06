@@ -64,6 +64,7 @@
               "path": "/user",
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "root.User",
               },
               "source": {
@@ -89,6 +90,7 @@
               "path": "/users",
               "response": {
                 "docs": "Success",
+                "status-code": 200,
                 "type": "list<root.User>",
               },
               "source": {
@@ -116,6 +118,7 @@ service:
       response:
         docs: Success
         type: root.User
+        status-code: 200
       examples:
         - response:
             body:
@@ -129,6 +132,7 @@ service:
       response:
         docs: Success
         type: list<root.User>
+        status-code: 200
       examples:
         - response:
             body:

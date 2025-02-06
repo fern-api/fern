@@ -2,6 +2,7 @@
 
 namespace Seed\Union;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -17,23 +18,42 @@ use Seed\Union\Types\KeyType;
 class UnionClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param string|array<string>|int|array<int>|array<array<int>> $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string|array<string>|int|array<int>|array<array<int>>
      * @throws SeedException
@@ -41,6 +61,7 @@ class UnionClient
      */
     public function get(string|array|int $request, ?array $options = null): string|array|int
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -49,6 +70,7 @@ class UnionClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeUnion($request, new Union('string', ['string'], 'integer', ['integer'], [['integer']])),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -70,6 +92,7 @@ class UnionClient
     /**
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<value-of<KeyType>|string, string>
      * @throws SeedException
@@ -77,6 +100,7 @@ class UnionClient
      */
     public function getMetadata(?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -84,6 +108,7 @@ class UnionClient
                     path: "/metadata",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

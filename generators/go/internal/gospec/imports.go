@@ -61,7 +61,7 @@ func (i *Imports) String() string {
 		}
 	}
 
-	// Sort the import statments for deterministic results.
+	// Sort the import statements for deterministic results.
 	type statement struct {
 		Alias string
 		Path  string

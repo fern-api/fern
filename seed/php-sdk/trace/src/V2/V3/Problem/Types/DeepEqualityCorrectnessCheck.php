@@ -23,4 +23,12 @@ class DeepEqualityCorrectnessCheck extends JsonSerializableType
     ) {
         $this->expectedValueParameterId = $values['expectedValueParameterId'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

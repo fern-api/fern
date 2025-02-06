@@ -63,7 +63,7 @@ export interface ParamsServiceMethods {
             never,
             {
                 query: string;
-                numer: number;
+                number: number;
             }
         >,
         res: {

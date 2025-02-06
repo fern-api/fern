@@ -2,6 +2,7 @@
 
 namespace Seed\User;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\User\Requests\GetUsersRequest;
 use Seed\User\Types\User;
@@ -18,17 +19,35 @@ use Seed\Core\Json\JsonDecoder;
 class UserClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
@@ -37,6 +56,7 @@ class UserClient
      * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return User
      * @throws SeedException
@@ -44,6 +64,7 @@ class UserClient
      */
     public function getUser(string $tenantId, string $userId, GetUsersRequest $request, ?array $options = null): User
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -51,6 +72,7 @@ class UserClient
                     path: "/$tenantId/user/$userId",
                     method: HttpMethod::GET,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -74,6 +96,7 @@ class UserClient
      * @param User $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return User
      * @throws SeedException
@@ -81,6 +104,7 @@ class UserClient
      */
     public function createUser(string $tenantId, User $request, ?array $options = null): User
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -89,6 +113,7 @@ class UserClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -113,6 +138,7 @@ class UserClient
      * @param UpdateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return User
      * @throws SeedException
@@ -120,6 +146,7 @@ class UserClient
      */
     public function updateUser(string $tenantId, string $userId, UpdateUserRequest $request, ?array $options = null): User
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -128,6 +155,7 @@ class UserClient
                     method: HttpMethod::PATCH,
                     body: $request->body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -152,6 +180,7 @@ class UserClient
      * @param SearchUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return array<User>
      * @throws SeedException
@@ -159,6 +188,7 @@ class UserClient
      */
     public function searchUsers(string $tenantId, string $userId, SearchUsersRequest $request, ?array $options = null): array
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         if ($request->limit != null) {
             $query['limit'] = $request->limit;
@@ -171,6 +201,7 @@ class UserClient
                     method: HttpMethod::GET,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

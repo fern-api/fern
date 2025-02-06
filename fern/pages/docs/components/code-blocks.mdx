@@ -261,7 +261,7 @@ and a maximum height.
 
 ## Tabbed CodeBlocks
 
-The `CodeBlocks` component is used to display multiple code snippets in a tabbed view. It does not take any props.
+The `CodeBlocks` component is used to display multiple code snippets in a tabbed view. It does not take any props. When a `CodeBlock` with a specific language is selected, all other `CodeBlocks` will sync to show that language, if present. 
 
 <Tabs>
     <Tab title="Example">
@@ -305,3 +305,25 @@ The `CodeBlocks` component is used to display multiple code snippets in a tabbed
         ````
     </Tab>
 </Tabs>
+
+**Syncing CodeBlocks**
+<CodeBlocks>
+```javascript title="helper.js"
+function helper() {
+    console.log("Helping out!");
+}
+```
+
+```python title="helper.py"
+def helper():
+    print("Helping out!")
+```
+
+```java title="Helper.java"
+class Helper {
+    public static void main(String[] args) {
+        System.out.println("Helping out!");
+    }
+}
+```
+</CodeBlocks>

@@ -30,6 +30,13 @@ public class ServiceClient {
     /**
      * This endpoint returns a file by its name.
      */
+    public File getFile(String filename) {
+        return getFile(filename, GetFileRequest.builder().build());
+    }
+
+    /**
+     * This endpoint returns a file by its name.
+     */
     public File getFile(String filename, GetFileRequest request) {
         return getFile(filename, request, null);
     }

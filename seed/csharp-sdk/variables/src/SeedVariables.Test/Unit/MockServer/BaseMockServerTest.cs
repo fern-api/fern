@@ -4,8 +4,6 @@ using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;
 
-#nullable enable
-
 namespace SeedVariables.Test.Unit.MockServer;
 
 [SetUpFixture]

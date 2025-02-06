@@ -1467,7 +1467,7 @@
                     },
                     "properties": null
                 },
-                "dateimte": {
+                "datetime": {
                     "type": "singleProperty",
                     "typeReference": {
                         "type": "optional",
@@ -1478,25 +1478,25 @@
                     },
                     "discriminantValue": {
                         "name": {
-                            "originalName": "dateimte",
+                            "originalName": "datetime",
                             "camelCase": {
-                                "unsafeName": "dateimte",
-                                "safeName": "dateimte"
+                                "unsafeName": "datetime",
+                                "safeName": "datetime"
                             },
                             "snakeCase": {
-                                "unsafeName": "dateimte",
-                                "safeName": "dateimte"
+                                "unsafeName": "datetime",
+                                "safeName": "datetime"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATEIMTE",
-                                "safeName": "DATEIMTE"
+                                "unsafeName": "DATETIME",
+                                "safeName": "DATETIME"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dateimte",
-                                "safeName": "Dateimte"
+                                "unsafeName": "Datetime",
+                                "safeName": "Datetime"
                             }
                         },
-                        "wireValue": "dateimte"
+                        "wireValue": "datetime"
                     },
                     "properties": null
                 }

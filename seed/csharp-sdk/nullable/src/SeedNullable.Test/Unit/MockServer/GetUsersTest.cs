@@ -5,8 +5,6 @@ using NUnit.Framework;
 using SeedNullable;
 using SeedNullable.Core;
 
-#nullable enable
-
 namespace SeedNullable.Test.Unit.MockServer;
 
 [TestFixture]

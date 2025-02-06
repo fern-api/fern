@@ -34,4 +34,12 @@ class TokenResponse extends JsonSerializableType
         $this->accessToken = $values['accessToken'];
         $this->expiresIn = $values['expiresIn'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

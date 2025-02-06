@@ -15,19 +15,24 @@ import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersDoubleOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForOptionalData;
+import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
+import com.seed.pagination.resources.users.types.ListUsersMixedTypePaginationResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
 import com.seed.pagination.resources.users.types.NextPage;
 import com.seed.pagination.resources.users.types.Page;
 import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.UsernameContainer;
+import com.seed.pagination.resources.users.types.WithCursor;
+import com.seed.pagination.resources.users.types.WithPage;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
 import java.util.Collections;
@@ -112,16 +117,72 @@ public class UsersClient {
         }
     }
 
-    public void listWithBodyCursorPagination() {
-        listWithBodyCursorPagination(
+    public SyncPagingIterable<User> listWithMixedTypeCursorPagination() {
+        return listWithMixedTypeCursorPagination(
+                ListUsersMixedTypeCursorPaginationRequest.builder().build());
+    }
+
+    public SyncPagingIterable<User> listWithMixedTypeCursorPagination(
+            ListUsersMixedTypeCursorPaginationRequest request) {
+        return listWithMixedTypeCursorPagination(request, null);
+    }
+
+    public SyncPagingIterable<User> listWithMixedTypeCursorPagination(
+            ListUsersMixedTypeCursorPaginationRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                ListUsersMixedTypePaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), ListUsersMixedTypePaginationResponse.class);
+                String startingAfter = parsedResponse.getNext();
+                ListUsersMixedTypeCursorPaginationRequest nextRequest =
+                        ListUsersMixedTypeCursorPaginationRequest.builder()
+                                .from(request)
+                                .cursor(startingAfter)
+                                .build();
+                List<User> result = parsedResponse.getData();
+                return new SyncPagingIterable<>(
+                        !startingAfter.isEmpty(),
+                        result,
+                        () -> listWithMixedTypeCursorPagination(nextRequest, requestOptions));
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SyncPagingIterable<User> listWithBodyCursorPagination() {
+        return listWithBodyCursorPagination(
                 ListUsersBodyCursorPaginationRequest.builder().build());
     }
 
-    public void listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest request) {
-        listWithBodyCursorPagination(request, null);
+    public SyncPagingIterable<User> listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest request) {
+        return listWithBodyCursorPagination(request, null);
     }
 
-    public void listWithBodyCursorPagination(
+    public SyncPagingIterable<User> listWithBodyCursorPagination(
             ListUsersBodyCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -150,6 +211,21 @@ public class UsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                Optional<String> startingAfter =
+                        parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
+                Optional<WithCursor> pagination = request.getPagination().map(pagination_ -> WithCursor.builder()
+                        .from(pagination_)
+                        .cursor(startingAfter)
+                        .build());
+                ListUsersBodyCursorPaginationRequest nextRequest = ListUsersBodyCursorPaginationRequest.builder()
+                        .from(request)
+                        .pagination(pagination)
+                        .build();
+                List<User> result = parsedResponse.getData();
+                return new SyncPagingIterable<>(
+                        startingAfter.isPresent(),
+                        result,
+                        () -> listWithBodyCursorPagination(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiException(
@@ -223,16 +299,78 @@ public class UsersClient {
         }
     }
 
-    public void listWithBodyOffsetPagination() {
-        listWithBodyOffsetPagination(
+    public SyncPagingIterable<User> listWithDoubleOffsetPagination() {
+        return listWithDoubleOffsetPagination(
+                ListUsersDoubleOffsetPaginationRequest.builder().build());
+    }
+
+    public SyncPagingIterable<User> listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest request) {
+        return listWithDoubleOffsetPagination(request, null);
+    }
+
+    public SyncPagingIterable<User> listWithDoubleOffsetPagination(
+            ListUsersDoubleOffsetPaginationRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getPage().isPresent()) {
+            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+        }
+        if (request.getPerPage().isPresent()) {
+            httpUrl.addQueryParameter("per_page", request.getPerPage().get().toString());
+        }
+        if (request.getOrder().isPresent()) {
+            httpUrl.addQueryParameter("order", request.getOrder().get().toString());
+        }
+        if (request.getStartingAfter().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "starting_after", request.getStartingAfter().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                ListUsersPaginationResponse parsedResponse =
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                double newPageNumber = request.getPage().map(page -> page + 1.0).orElse(1.0);
+                ListUsersDoubleOffsetPaginationRequest nextRequest = ListUsersDoubleOffsetPaginationRequest.builder()
+                        .from(request)
+                        .page(newPageNumber)
+                        .build();
+                List<User> result = parsedResponse.getData();
+                return new SyncPagingIterable<>(
+                        true, result, () -> listWithDoubleOffsetPagination(nextRequest, requestOptions));
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SyncPagingIterable<User> listWithBodyOffsetPagination() {
+        return listWithBodyOffsetPagination(
                 ListUsersBodyOffsetPaginationRequest.builder().build());
     }
 
-    public void listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest request) {
-        listWithBodyOffsetPagination(request, null);
+    public SyncPagingIterable<User> listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest request) {
+        return listWithBodyOffsetPagination(request, null);
     }
 
-    public void listWithBodyOffsetPagination(
+    public SyncPagingIterable<User> listWithBodyOffsetPagination(
             ListUsersBodyOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -261,6 +399,21 @@ public class UsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                int newPageNumber = request.getPagination()
+                        .flatMap(WithPage::getPage)
+                        .map(page -> page + 1)
+                        .orElse(1);
+                Optional<WithPage> pagination = request.getPagination().map(pagination_ -> WithPage.builder()
+                        .from(pagination_)
+                        .page(newPageNumber)
+                        .build());
+                ListUsersBodyOffsetPaginationRequest nextRequest = ListUsersBodyOffsetPaginationRequest.builder()
+                        .from(request)
+                        .pagination(pagination)
+                        .build();
+                List<User> result = parsedResponse.getData();
+                return new SyncPagingIterable<>(
+                        true, result, () -> listWithBodyOffsetPagination(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiException(

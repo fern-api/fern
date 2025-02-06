@@ -502,7 +502,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", numer: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -590,7 +590,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", numer: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -1360,7 +1360,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", numer: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -1448,7 +1448,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", numer: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },

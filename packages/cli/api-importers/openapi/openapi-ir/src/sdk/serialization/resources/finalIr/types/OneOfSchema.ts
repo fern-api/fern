@@ -10,15 +10,15 @@ export const OneOfSchema: core.serialization.Schema<serializers.OneOfSchema.Raw,
     core.serialization
         .union("type", {
             discriminated: core.serialization.lazyObject(() => serializers.DiscriminatedOneOfSchema),
-            undisciminated: core.serialization.lazyObject(() => serializers.UnDiscriminatedOneOfSchema),
+            undiscriminated: core.serialization.lazyObject(() => serializers.UnDiscriminatedOneOfSchema),
         })
         .transform<FernOpenapiIr.OneOfSchema>({
             transform: (value) => {
                 switch (value.type) {
                     case "discriminated":
                         return FernOpenapiIr.OneOfSchema.discriminated(value);
-                    case "undisciminated":
-                        return FernOpenapiIr.OneOfSchema.undisciminated(value);
+                    case "undiscriminated":
+                        return FernOpenapiIr.OneOfSchema.undiscriminated(value);
                     default:
                         return value as FernOpenapiIr.OneOfSchema;
                 }
@@ -27,13 +27,13 @@ export const OneOfSchema: core.serialization.Schema<serializers.OneOfSchema.Raw,
         });
 
 export declare namespace OneOfSchema {
-    export type Raw = OneOfSchema.Discriminated | OneOfSchema.Undisciminated;
+    export type Raw = OneOfSchema.Discriminated | OneOfSchema.Undiscriminated;
 
     export interface Discriminated extends serializers.DiscriminatedOneOfSchema.Raw {
         type: "discriminated";
     }
 
-    export interface Undisciminated extends serializers.UnDiscriminatedOneOfSchema.Raw {
-        type: "undisciminated";
+    export interface Undiscriminated extends serializers.UnDiscriminatedOneOfSchema.Raw {
+        type: "undiscriminated";
     }
 }

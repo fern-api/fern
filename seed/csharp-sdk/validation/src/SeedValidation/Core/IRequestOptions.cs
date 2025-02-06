@@ -1,8 +1,6 @@
 using System;
 using System.Net.Http;
 
-#nullable enable
-
 namespace SeedValidation.Core;
 
 internal interface IRequestOptions

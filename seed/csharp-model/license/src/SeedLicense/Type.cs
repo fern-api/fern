@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedLicense.Core;
 
-#nullable enable
-
 namespace SeedLicense;
 
 public record Type

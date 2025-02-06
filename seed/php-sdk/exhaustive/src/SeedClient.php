@@ -38,13 +38,14 @@ class SeedClient
     public ReqWithHeadersClient $reqWithHeaders;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -57,6 +58,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
@@ -67,6 +69,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
@@ -82,10 +85,10 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->endpoints = new EndpointsClient($this->client);
-        $this->inlinedRequests = new InlinedRequestsClient($this->client);
-        $this->noAuth = new NoAuthClient($this->client);
-        $this->noReqBody = new NoReqBodyClient($this->client);
-        $this->reqWithHeaders = new ReqWithHeadersClient($this->client);
+        $this->endpoints = new EndpointsClient($this->client, $this->options);
+        $this->inlinedRequests = new InlinedRequestsClient($this->client, $this->options);
+        $this->noAuth = new NoAuthClient($this->client, $this->options);
+        $this->noReqBody = new NoReqBodyClient($this->client, $this->options);
+        $this->reqWithHeaders = new ReqWithHeadersClient($this->client, $this->options);
     }
 }

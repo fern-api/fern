@@ -61,6 +61,11 @@ types:
         docs: The totall number of /users
       data: list<User>
 
+  ListUsersMixedTypePaginationResponse:
+    properties:
+      next: string
+      data: list<User>
+
   Page:
     properties:
       page:
@@ -108,6 +113,20 @@ service:
               The cursor used for pagination in order to fetch
               the next page of results.
       response: ListUsersPaginationResponse
+
+    listWithMixedTypeCursorPagination:
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next
+        results: $response.data
+      method: POST
+      path: ""
+      request:
+        name: ListUsersMixedTypeCursorPaginationRequest
+        query-parameters:
+          cursor:
+            type: optional<string>
+      response: ListUsersMixedTypePaginationResponse
 
     listWithBodyCursorPagination:
       pagination:
@@ -209,7 +228,7 @@ service:
           limit:
             type: optional<integer>
             docs: |
-              The maxiumum number of elements to return.
+              The maximum number of elements to return.
               This is also used as the step size in this
               paginated endpoint.
           order:
@@ -233,7 +252,7 @@ service:
           limit:
             type: optional<integer>
             docs: |
-              The maxiumum number of elements to return.
+              The maximum number of elements to return.
               This is also used as the step size in this
               paginated endpoint.
           order:

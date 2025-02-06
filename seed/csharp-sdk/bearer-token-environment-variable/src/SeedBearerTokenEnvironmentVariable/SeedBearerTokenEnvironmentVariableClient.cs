@@ -1,12 +1,10 @@
 using SeedBearerTokenEnvironmentVariable.Core;
 
-#nullable enable
-
 namespace SeedBearerTokenEnvironmentVariable;
 
 public partial class SeedBearerTokenEnvironmentVariableClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedBearerTokenEnvironmentVariableClient(
         string? apiKey = null,

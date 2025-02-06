@@ -1,12 +1,10 @@
 using SeedNullable.Core;
 
-#nullable enable
-
 namespace SeedNullable;
 
 public partial class SeedNullableClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedNullableClient(ClientOptions? clientOptions = null)
     {

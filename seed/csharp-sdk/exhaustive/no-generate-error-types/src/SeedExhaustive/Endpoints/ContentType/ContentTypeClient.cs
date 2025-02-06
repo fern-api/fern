@@ -5,8 +5,6 @@ using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
-#nullable enable
-
 namespace SeedExhaustive.Endpoints;
 
 public partial class ContentTypeClient
@@ -46,18 +44,20 @@ public partial class ContentTypeClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/foo/bar",
-                Body = request,
-                ContentType = "application/json-patch+json",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/foo/bar",
+                    Body = request,
+                    ContentType = "application/json-patch+json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
@@ -98,18 +98,20 @@ public partial class ContentTypeClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/foo/baz",
-                Body = request,
-                ContentType = "application/json-patch+json; charset=utf-8",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/foo/baz",
+                    Body = request,
+                    ContentType = "application/json-patch+json; charset=utf-8",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
