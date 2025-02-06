@@ -115,11 +115,12 @@ types:
     discriminated: false
     union:
       - string
-      - TypeReferenceDeclarationWithContentTypeSchema
+      - HttpInlineFileRequestBodyPropertySchema
 
-  TypeReferenceDeclarationWithContentTypeSchema:
+  HttpInlineFileRequestBodyPropertySchema:
     extends: types.TypeReferenceDeclarationWithName
     properties:
+      exploded: optional<string>
       content-type: optional<string>
 
   HttpQueryParameterSchema:

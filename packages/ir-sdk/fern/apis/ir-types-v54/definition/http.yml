@@ -142,6 +142,7 @@ types:
     extends: InlinedRequestBodyProperty
     properties:
       contentType: optional<string>
+      exploded: optional<boolean>
   FileProperty:
     union:
       file: FilePropertySingle
