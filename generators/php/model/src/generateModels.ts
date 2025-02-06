@@ -5,6 +5,7 @@ import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { EnumGenerator } from "./enum/EnumGenerator";
 import { ObjectGenerator } from "./object/ObjectGenerator";
+import { UnionGenerator } from "./union/UnionGenerator";
 
 export function generateModels(context: ModelGeneratorContext): void {
     for (const typeDeclaration of Object.values(context.ir.types)) {
@@ -17,7 +18,9 @@ export function generateModels(context: ModelGeneratorContext): void {
                 return new ObjectGenerator(context, typeDeclaration, objectDeclaration).generate();
             },
             undiscriminatedUnion: () => undefined,
-            union: () => undefined,
+            union: (unionTypeDeclaration) => {
+                return new UnionGenerator(context, typeDeclaration, unionTypeDeclaration).generate();
+            },
             _other: () => undefined
         });
         if (file != null) {
