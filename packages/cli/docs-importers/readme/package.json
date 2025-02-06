@@ -57,6 +57,6 @@
     "@types/mdast": "^4.0.4",
     "@types/traverse": "^0.6.37",
     "typescript": "5.7.2",
-    "vitest": "^2.1.9"
+    "vitest": "^2.1.8"
   }
 }
