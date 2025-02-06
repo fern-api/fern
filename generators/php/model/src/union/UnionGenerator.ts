@@ -3,7 +3,7 @@ import { PhpFile } from "@fern-api/php-codegen";
 import { FileGenerator } from "@fern-api/php-codegen";
 import { php } from "@fern-api/php-codegen";
 
-import { ObjectProperty, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, SingleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -32,15 +32,18 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             clazz.addField(this.toField({ property }));
         }
 
-        // Add type field
-        clazz.addField(
-            php.field({
-                name: "type",
-                type: php.Type.string(),
-                access: "public",
-                readonly_: true
-            })
-        );
+        const typeField = this.getTypeField();
+        clazz.addField(typeField);
+
+        const valueField = this.getValueField();
+        clazz.addField(valueField);
+
+        for (const type of this.unionTypeDeclaration.types) {
+            const method = this.asCastMethod(type);
+            if (method) {
+                clazz.addMethod(method);
+            }
+        }
 
         clazz.addMethod(this.context.getToStringMethod());
         return new PhpFile({
@@ -48,6 +51,26 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             rootNamespace: this.context.getRootNamespace(),
             directory: this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory,
             customConfig: this.context.customConfig
+        });
+    }
+
+    private getTypeField(): php.Field {
+        // TODO(ajgateno): Actually add the literals as a union rather than just string
+        return php.field({
+            name: this.unionTypeDeclaration.discriminant.name.camelCase.safeName,
+            type: php.Type.string(),
+            access: "public",
+            readonly_: true
+        });
+    }
+
+    private getValueField(): php.Field {
+        // TODO(ajgateno): Actually add the class references as a union rather than just mixed
+        return php.field({
+            name: "value",
+            type: php.Type.mixed(),
+            access: "public",
+            readonly_: true
         });
     }
 
@@ -64,6 +87,26 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             }),
             inherited
         });
+    }
+
+    private asCastMethod(type: SingleUnionType): php.Method | null {
+        if (type.shape.propertiesType === "noProperties") {
+            return null;
+        }
+
+        const methodName = "as" + type.discriminantValue.name.pascalCase.safeName;
+
+        return php.method({
+            name: methodName,
+            access: "public",
+            parameters: [],
+            return_: this.getReturnType(type)
+        });
+    }
+
+    private getReturnType(type: SingleUnionType): php.Type {
+        // TODO(ajgateno): Implement actually getting the type
+        return php.Type.mixed();
     }
 
     protected getFilepath(): RelativeFilePath {

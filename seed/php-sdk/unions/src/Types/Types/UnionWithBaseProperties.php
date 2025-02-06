@@ -19,9 +19,15 @@ class UnionWithBaseProperties extends JsonSerializableType
     public readonly string $type;
 
     /**
+     * @var mixed $value
+     */
+    public readonly mixed $value;
+
+    /**
      * @param array{
      *   id: string,
      *   type: string,
+     *   value: mixed,
      * } $values
      */
     public function __construct(
@@ -29,6 +35,28 @@ class UnionWithBaseProperties extends JsonSerializableType
     ) {
         $this->id = $values['id'];
         $this->type = $values['type'];
+        $this->value = $values['value'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function asInteger(): mixed
+    {
+    }
+
+    /**
+     * @return mixed
+     */
+    public function asString(): mixed
+    {
+    }
+
+    /**
+     * @return mixed
+     */
+    public function asFoo(): mixed
+    {
     }
 
     /**

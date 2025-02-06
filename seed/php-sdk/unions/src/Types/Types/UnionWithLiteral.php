@@ -19,9 +19,15 @@ class UnionWithLiteral extends JsonSerializableType
     public readonly string $type;
 
     /**
+     * @var mixed $value
+     */
+    public readonly mixed $value;
+
+    /**
      * @param array{
      *   base: string,
      *   type: string,
+     *   value: mixed,
      * } $values
      */
     public function __construct(
@@ -29,6 +35,14 @@ class UnionWithLiteral extends JsonSerializableType
     ) {
         $this->base = $values['base'];
         $this->type = $values['type'];
+        $this->value = $values['value'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function asFern(): mixed
+    {
     }
 
     /**

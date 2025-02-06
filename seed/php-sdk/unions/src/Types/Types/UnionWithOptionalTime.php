@@ -12,14 +12,35 @@ class UnionWithOptionalTime extends JsonSerializableType
     public readonly string $type;
 
     /**
+     * @var mixed $value
+     */
+    public readonly mixed $value;
+
+    /**
      * @param array{
      *   type: string,
+     *   value: mixed,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->type = $values['type'];
+        $this->value = $values['value'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function asDate(): mixed
+    {
+    }
+
+    /**
+     * @return mixed
+     */
+    public function asDatetime(): mixed
+    {
     }
 
     /**
