@@ -16,9 +16,9 @@ service:
             invalid-exploded: 
               type: string
               style: exploded
-            # exploded: 
-            #   type: list<string>
-            #   style: exploded
-            # exploded2: 
-            #   type: optional<list<string>>
-            #   style: exploded
+            exploded: 
+              type: list<string>
+              style: exploded
+            exploded2: 
+              type: optional<list<string>>
+              style: exploded
