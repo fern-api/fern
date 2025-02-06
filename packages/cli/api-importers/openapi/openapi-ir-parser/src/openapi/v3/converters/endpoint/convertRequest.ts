@@ -145,7 +145,7 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false,
+                        exploded: false
                     });
                     continue;
                 }
@@ -162,7 +162,7 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false,
+                        exploded: false
                     });
                     continue;
                 }
@@ -179,7 +179,7 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false,
+                        exploded: false
                     });
                     continue;
                 }
@@ -197,7 +197,7 @@ export function convertRequest({
                         description: property.schema.description,
                         contentType:
                             multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false,
+                        exploded: false
                     });
                     continue;
                 }
@@ -207,7 +207,7 @@ export function convertRequest({
                     schema: MultipartSchema.json(property.schema),
                     description: undefined,
                     contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
+                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined
                 });
             }
         }

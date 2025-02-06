@@ -608,9 +608,10 @@ function getRequest({
                     });
 
                     if (property.contentType != null || property.exploded) {
-                        const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema = typeof propertyTypeReference === "string" 
-                            ? { type: propertyTypeReference }
-                            : propertyTypeReference;
+                        const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema =
+                            typeof propertyTypeReference === "string"
+                                ? { type: propertyTypeReference }
+                                : propertyTypeReference;
 
                         if (property.contentType != null) {
                             propertySchema["content-type"] = property.contentType;

@@ -1,6 +1,6 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ResolvedType, TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
 
-import { HttpInlineRequestBodySchema, HttpRequestBodySchema } from "@fern-api/fern-definition-schema/src/schemas";
-import { constructFernFileContext, ResolvedType, TypeResolverImpl } from "@fern-api/ir-generator";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -10,19 +10,23 @@ export const ExplodedFormDataIsArrayRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
-                httpEndpoint: ({ endpoint, },  { relativeFilepath, contents: definitionFile }) => {
-                    if (endpoint.request == null || typeof endpoint.request === "string" || endpoint.request?.body == null || typeof endpoint.request.body === "string") {
+                httpEndpoint: ({ endpoint }, { relativeFilepath, contents: definitionFile }) => {
+                    if (
+                        endpoint.request == null ||
+                        typeof endpoint.request === "string" ||
+                        endpoint.request?.body == null ||
+                        typeof endpoint.request.body === "string"
+                    ) {
                         return [];
                     }
 
                     if (!isHttpInlineRequestBodySchema(endpoint.request.body)) {
-                        return []
+                        return [];
                     }
 
                     const violations: RuleViolation[] = [];
-                    
+
                     for (const [propertyKey, propertyShape] of Object.entries(endpoint.request.body.properties ?? {})) {
-                        
                         if (typeof propertyShape === "string") {
                             continue;
                         }
@@ -37,12 +41,12 @@ export const ExplodedFormDataIsArrayRule: Rule = {
                             casingsGenerator: CASINGS_GENERATOR,
                             rootApiFile: workspace.definition.rootApiFile.contents
                         });
-    
+
                         const resolvedType = typeResolver.resolveType({
                             type: propertyShape.type,
                             file
                         });
-    
+
                         if (resolvedType == null) {
                             // This error is caught by another rule.
                             return [];
@@ -54,7 +58,6 @@ export const ExplodedFormDataIsArrayRule: Rule = {
                                 severity: "error"
                             });
                         }
-
                     }
 
                     return violations;
@@ -63,7 +66,6 @@ export const ExplodedFormDataIsArrayRule: Rule = {
         };
     }
 };
-
 
 function isListType(type: ResolvedType): boolean {
     if (type._type !== "container") {
@@ -78,6 +80,6 @@ function isListType(type: ResolvedType): boolean {
     return false;
 }
 
-function isHttpInlineRequestBodySchema(body: HttpRequestBodySchema): body is HttpInlineRequestBodySchema {
-    return (body as HttpInlineRequestBodySchema)?.properties != null;
+function isHttpInlineRequestBodySchema(body: RawSchemas.HttpRequestBodySchema): body is RawSchemas.HttpInlineRequestBodySchema {
+    return (body as RawSchemas.HttpInlineRequestBodySchema)?.properties != null;
 }
