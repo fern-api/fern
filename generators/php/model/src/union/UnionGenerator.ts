@@ -32,6 +32,16 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             clazz.addField(this.toField({ property }));
         }
 
+        // Add type field
+        clazz.addField(
+            php.field({
+                name: "type",
+                type: php.Type.string(),
+                access: "public",
+                readonly_: true
+            })
+        );
+
         clazz.addMethod(this.context.getToStringMethod());
         return new PhpFile({
             clazz,

@@ -14,14 +14,21 @@ class UnionWithLiteral extends JsonSerializableType
     public string $base;
 
     /**
+     * @var string $type
+     */
+    public readonly string $type;
+
+    /**
      * @param array{
      *   base: string,
+     *   type: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->base = $values['base'];
+        $this->type = $values['type'];
     }
 
     /**

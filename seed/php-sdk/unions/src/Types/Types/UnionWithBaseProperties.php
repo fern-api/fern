@@ -14,14 +14,21 @@ class UnionWithBaseProperties extends JsonSerializableType
     public string $id;
 
     /**
+     * @var string $type
+     */
+    public readonly string $type;
+
+    /**
      * @param array{
      *   id: string,
+     *   type: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->id = $values['id'];
+        $this->type = $values['type'];
     }
 
     /**
