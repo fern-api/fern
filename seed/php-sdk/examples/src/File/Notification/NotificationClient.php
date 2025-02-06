@@ -3,6 +3,7 @@
 namespace Seed\File\Notification;
 
 use Seed\File\Notification\Service\ServiceClient;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class NotificationClient
@@ -13,17 +14,35 @@ class NotificationClient
     public ServiceClient $service;
 
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
-        $this->service = new ServiceClient($this->client);
+        $this->options = $options ?? [];
+        $this->service = new ServiceClient($this->client, $this->options);
     }
 }

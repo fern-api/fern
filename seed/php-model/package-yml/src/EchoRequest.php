@@ -31,4 +31,12 @@ class EchoRequest extends JsonSerializableType
         $this->name = $values['name'];
         $this->size = $values['size'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

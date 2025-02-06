@@ -2,7 +2,7 @@ import { expect } from "vitest";
 
 import { python } from "..";
 import { CodeBlock } from "../CodeBlock";
-import { Method } from "../Method";
+import { ClassMethodType, Method } from "../Method";
 import { Writer } from "../core/Writer";
 
 describe("PythonFile", () => {
@@ -71,6 +71,46 @@ describe("PythonFile", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
+    it("Add a class with a reference to itself", async () => {
+        const file = python.file({
+            path: ["test_module"]
+        });
+
+        const testClass = python.class_({
+            name: "TestClass",
+            extends_: [
+                python.reference({
+                    name: "ParentTestClass",
+                    modulePath: ["parent_module"]
+                })
+            ]
+        });
+
+        const classMethod = python.method({
+            name: "from_dict",
+            type: ClassMethodType.CLASS,
+            parameters: [
+                python.parameter({ name: "data", type: python.Type.dict(python.Type.str(), python.Type.any()) })
+            ]
+        });
+        classMethod.addStatement(
+            python.field({
+                name: "instance",
+                initializer: python.instantiateClass({
+                    classReference: python.reference({ name: "TestClass", modulePath: ["test_module"] }),
+                    arguments_: [python.methodArgument({ value: python.codeBlock("data") })]
+                })
+            })
+        );
+        classMethod.addStatement(python.codeBlock("return instance"));
+        testClass.add(classMethod);
+
+        file.addStatement(testClass);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
     it("Set a variable to a nested attribute of an imported reference", async () => {
         const file = python.file({
             path: ["test_module"]
@@ -117,6 +157,19 @@ describe("PythonFile", () => {
         const codeBlock = new CodeBlock("print('Hello, World!')");
         file.addStatement(codeBlock);
 
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("Add a reference with no module path", async () => {
+        const file = python.file({
+            path: ["test_module"]
+        });
+
+        const ref = python.reference({ name: "MyCar" });
+        file.addStatement(python.field({ name: "car", type: python.Type.reference(ref) }));
+
+        // There shouldn't be any import path added
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });

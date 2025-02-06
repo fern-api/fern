@@ -7,6 +7,7 @@ using SeedMultiLineDocs.Core;
 namespace SeedMultiLineDocs.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo

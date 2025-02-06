@@ -31,4 +31,12 @@ class TestCaseImplementation extends JsonSerializableType
         $this->description = $values['description'];
         $this->function = $values['function'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

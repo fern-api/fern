@@ -47,4 +47,12 @@ class BinaryTreeNodeValue extends JsonSerializableType
         $this->right = $values['right'] ?? null;
         $this->left = $values['left'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -31,4 +31,12 @@ class FunctionImplementation extends JsonSerializableType
         $this->impl = $values['impl'];
         $this->imports = $values['imports'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

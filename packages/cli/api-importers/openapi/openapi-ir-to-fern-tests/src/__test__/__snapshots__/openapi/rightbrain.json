@@ -13,9 +13,34 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
-                  "message": "string",
-                  "reason": "INVALID_MEMBER",
+                  "message": "message",
+                  "multipleRolesNotAllowedError": {
+                    "roles": [
+                      "roles",
+                    ],
+                  },
+                  "reason": "MULTIPLE_ROLES_NOT_ALLOWED",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "invalidSubjectTypeError": {},
+                  "message": "message",
+                  "reason": "INVALID_SUBJECT_TYPE",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "message": "message",
+                  "organizationInviteAlreadyExistsError": {
+                    "email_address": "email_address",
+                    "organization_id": "organization_id",
+                  },
+                  "reason": "ORGANIZATION_INVITE_ALREADY_EXISTS",
                 },
               },
             ],
@@ -29,11 +54,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "message": "string",
-                  "permissionCheckFailedError": {
-                    "permission": "permission",
-                  },
-                  "reason": "PERMISSION_CHECK_FAILED",
+                  "message": "message",
+                  "missingAuthenticationError": {},
+                  "reason": "MISSING_AUTHENTICATION",
                 },
               },
             ],
@@ -2694,19 +2717,30 @@ errors:
     docs: Bad Request
     examples:
       - value:
-          reason: INVALID_MEMBER
-          message: string
-          invalidMemberError: {}
+          message: message
+          multipleRolesNotAllowedError:
+            roles:
+              - roles
+          reason: MULTIPLE_ROLES_NOT_ALLOWED
+      - value:
+          message: message
+          invalidSubjectTypeError: {}
+          reason: INVALID_SUBJECT_TYPE
+      - value:
+          message: message
+          organizationInviteAlreadyExistsError:
+            organization_id: organization_id
+            email_address: email_address
+          reason: ORGANIZATION_INVITE_ALREADY_EXISTS
   ForbiddenError:
     status-code: 403
     type: ForbiddenErrorBody
     docs: Forbidden
     examples:
       - value:
-          reason: PERMISSION_CHECK_FAILED
-          message: string
-          permissionCheckFailedError:
-            permission: permission
+          message: message
+          missingAuthenticationError: {}
+          reason: MISSING_AUTHENTICATION
   UnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError

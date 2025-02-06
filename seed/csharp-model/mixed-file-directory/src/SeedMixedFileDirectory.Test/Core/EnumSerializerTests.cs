@@ -7,6 +7,7 @@ using SeedMixedFileDirectory.Core;
 namespace SeedMixedFileDirectory.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class StringEnumSerializerTests
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };

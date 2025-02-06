@@ -31,4 +31,12 @@ class BinaryTreeNodeAndTreeValue extends JsonSerializableType
         $this->nodeId = $values['nodeId'];
         $this->fullTree = $values['fullTree'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

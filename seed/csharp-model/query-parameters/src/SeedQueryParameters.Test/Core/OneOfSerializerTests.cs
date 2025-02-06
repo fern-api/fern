@@ -7,6 +7,7 @@ using SeedQueryParameters.Core;
 namespace SeedQueryParameters.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo

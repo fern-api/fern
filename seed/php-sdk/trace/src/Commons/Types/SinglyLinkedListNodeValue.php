@@ -39,4 +39,12 @@ class SinglyLinkedListNodeValue extends JsonSerializableType
         $this->val = $values['val'];
         $this->next = $values['next'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

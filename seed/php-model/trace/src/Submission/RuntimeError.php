@@ -23,4 +23,12 @@ class RuntimeError extends JsonSerializableType
     ) {
         $this->message = $values['message'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

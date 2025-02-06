@@ -22,13 +22,15 @@ class GetDefaultStarterFilesRequest extends JsonSerializableType
     public mixed $outputType;
 
     /**
-     * @var string $methodName The name of the `method` that the student has to complete.
-    The method name cannot include the following characters:
-      - Greater Than `>`
-      - Less Than `<``
-      - Equals `=`
-      - Period `.`
-
+     * The name of the `method` that the student has to complete.
+     * The method name cannot include the following characters:
+     *   - Greater Than `>`
+     *   - Less Than `<``
+     *   - Equals `=`
+     *   - Period `.`
+     *
+     *
+     * @var string $methodName
      */
     #[JsonProperty('methodName')]
     public string $methodName;

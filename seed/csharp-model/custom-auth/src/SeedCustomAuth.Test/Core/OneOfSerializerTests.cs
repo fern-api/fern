@@ -7,6 +7,7 @@ using SeedCustomAuth.Core;
 namespace SeedCustomAuth.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo

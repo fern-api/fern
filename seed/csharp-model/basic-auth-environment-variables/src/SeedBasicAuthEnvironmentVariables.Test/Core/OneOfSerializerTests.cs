@@ -7,6 +7,7 @@ using SeedBasicAuthEnvironmentVariables.Core;
 namespace SeedBasicAuthEnvironmentVariables.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo

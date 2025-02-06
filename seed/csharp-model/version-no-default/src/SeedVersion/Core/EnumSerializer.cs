@@ -18,7 +18,7 @@ internal class EnumSerializer<TEnum> : JsonConverter<TEnum>
         foreach (var value in values)
         {
             var enumValue = (TEnum)value;
-            var enumMember = type.GetMember(enumValue.ToString())[0];
+            var enumMember = type.GetField(enumValue.ToString())!;
             var attr = enumMember
                 .GetCustomAttributes(typeof(EnumMemberAttribute), false)
                 .Cast<EnumMemberAttribute>()

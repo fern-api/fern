@@ -203,6 +203,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return "baseUrl";
     }
 
+    public getMaxRetriesOptionName(): string {
+        return "maxRetries";
+    }
+
     public getGuzzleClientOptionName(): string {
         return "client";
     }
@@ -240,6 +244,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                     key: this.getHeadersOptionName(),
                     valueType: php.Type.map(php.Type.string(), php.Type.string()),
                     optional: true
+                },
+                {
+                    key: this.getMaxRetriesOptionName(),
+                    valueType: php.Type.int(),
+                    optional: true
                 }
             ],
             {
@@ -254,6 +263,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                 {
                     key: this.getBaseUrlOptionName(),
                     valueType: php.Type.string(),
+                    optional: true
+                },
+                {
+                    key: this.getMaxRetriesOptionName(),
+                    valueType: php.Type.int(),
                     optional: true
                 }
             ],
@@ -297,6 +311,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
             AsIsFiles.RawClient,
+            AsIsFiles.RetryMiddleware,
             AsIsFiles.MultipartApiRequest,
             AsIsFiles.MultipartFormData,
             AsIsFiles.MultipartFormDataPart,

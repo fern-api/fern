@@ -28,4 +28,12 @@ class Child extends JsonSerializableType
         $this->child = $values['child'];
         $this->parent = $values['parent'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

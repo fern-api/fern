@@ -1,17 +1,10 @@
 import { upperFirst } from "lodash-es";
 
 import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
-import {
-    BytesRequest,
-    FileUploadRequest,
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpRequestBodyReference,
-    InlinedRequestBody,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpRequestBody, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
@@ -55,6 +48,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return_,
             throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
             body: php.codeblock((writer) => {
+                writer.writeNodeStatement(
+                    php.assignVariable(
+                        php.variable(this.context.getRequestOptionsName()),
+                        php.mergeArrays(`$this->${this.context.getClientOptionsName()}`, {
+                            ref: php.variable(this.context.getRequestOptionsName()),
+                            fallback: "[]"
+                        })
+                    )
+                );
+
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
                     queryParameterCodeBlock.code.write(writer);
@@ -85,7 +88,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
                         headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
                         queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
-                        requestTypeClassReference: classReference
+                        requestTypeClassReference: classReference,
+                        optionsArgument: php.variable(this.context.getRequestOptionsName())
                     })
                 );
                 writer.writeTextStatement(`${STATUS_CODE_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getStatusCode()`);
@@ -167,6 +171,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const body = endpoint.response.body;
         return php.codeblock((writer) => {
             body._visit({
+                bytes: () => this.context.logger.error("Bytes not supported"),
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
                 fileDownload: () => this.context.logger.error("File download not supported"),
                 json: (_reference) => {
@@ -254,8 +259,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 });
             case "object":
             case "optional":
+            case "null":
             case "typeDict":
                 throw new Error(`Internal error; '${internalType.type}' type is not a supported return type`);
+            default:
+                assertNever(internalType);
         }
     }
 
