@@ -8,6 +8,7 @@ using WireMockResponse = WireMock.ResponseBuilders.Response;
 namespace SeedQueryParameters.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RawClientTests
 {
     private const int MaxRetries = 3;
@@ -24,7 +25,10 @@ public class RawClientTests
         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
         _rawClient = new RawClient(
             new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries }
-        );
+        )
+        {
+            BaseRetryDelay = 0,
+        };
     }
 
     [Test]

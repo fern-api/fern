@@ -7,6 +7,7 @@ using SeedUnknownAsAny.Core;
 namespace SeedUnknownAsAny.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo
