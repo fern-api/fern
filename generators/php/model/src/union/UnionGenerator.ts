@@ -36,7 +36,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),
-            directory: this.context.getTraitLocationForTypeId(this.typeDeclaration.name.typeId).directory,
+            directory: this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory,
             customConfig: this.context.customConfig
         });
     }
