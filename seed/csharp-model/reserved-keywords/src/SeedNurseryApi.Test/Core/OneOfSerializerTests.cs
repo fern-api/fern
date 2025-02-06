@@ -7,6 +7,7 @@ using SeedNurseryApi.Core;
 namespace SeedNurseryApi.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo
