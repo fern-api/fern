@@ -7,6 +7,7 @@ using SeedLicense.Core;
 namespace SeedLicense.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo

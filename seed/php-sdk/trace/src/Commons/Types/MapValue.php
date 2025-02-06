@@ -24,4 +24,12 @@ class MapValue extends JsonSerializableType
     ) {
         $this->keyValuePairs = $values['keyValuePairs'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

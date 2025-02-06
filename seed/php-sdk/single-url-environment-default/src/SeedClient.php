@@ -14,13 +14,14 @@ class SeedClient
     public DummyClient $dummy;
 
     /**
-     * @var ?array{
+     * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -33,6 +34,7 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   maxRetries?: int,
      * } $options
      */
     public function __construct(
@@ -57,6 +59,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->dummy = new DummyClient($this->client);
+        $this->dummy = new DummyClient($this->client, $this->options);
     }
 }

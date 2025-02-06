@@ -24,4 +24,12 @@ class Foo extends JsonSerializableType
     ) {
         $this->foo = $values['foo'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

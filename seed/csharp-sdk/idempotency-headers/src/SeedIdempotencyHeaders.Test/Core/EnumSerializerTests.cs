@@ -7,6 +7,7 @@ using SeedIdempotencyHeaders.Core;
 namespace SeedIdempotencyHeaders.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class StringEnumSerializerTests
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };

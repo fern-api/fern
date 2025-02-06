@@ -9,9 +9,11 @@ use Seed\Core\Json\JsonProperty;
 class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
 {
     /**
-     * @var ?WithCursor $pagination The object that contains the cursor used for pagination
-    in order to fetch the next page of results.
-
+     * The object that contains the cursor used for pagination
+     * in order to fetch the next page of results.
+     *
+     *
+     * @var ?WithCursor $pagination
      */
     #[JsonProperty('pagination')]
     public ?WithCursor $pagination;

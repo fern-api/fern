@@ -493,7 +493,7 @@ public partial class UsersClient
         return pager;
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(
         ListUsersCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -549,7 +549,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersMixedTypePaginationResponse> ListWithMixedTypeCursorPaginationAsync(
+    private async Task<ListUsersMixedTypePaginationResponse> ListWithMixedTypeCursorPaginationAsync(
         ListUsersMixedTypeCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -593,7 +593,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
         ListUsersBodyCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -632,7 +632,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
         ListUsersOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -688,7 +688,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithDoubleOffsetPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithDoubleOffsetPaginationAsync(
         ListUsersDoubleOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -744,7 +744,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
         ListUsersBodyOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -783,7 +783,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(
+    private async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(
         ListUsersOffsetStepPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -835,7 +835,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageAsync(
+    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageAsync(
         ListWithOffsetPaginationHasNextPageRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -887,7 +887,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
+    private async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
         ListUsersExtendedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -931,7 +931,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataAsync(
+    private async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataAsync(
         ListUsersExtendedRequestForOptionalData request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -975,7 +975,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<UsernameCursor> ListUsernamesAsync(
+    private async Task<UsernameCursor> ListUsernamesAsync(
         ListUsernamesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -1019,7 +1019,7 @@ public partial class UsersClient
         );
     }
 
-    internal async Task<UsernameContainer> ListWithGlobalConfigAsync(
+    private async Task<UsernameContainer> ListWithGlobalConfigAsync(
         ListWithGlobalConfigRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

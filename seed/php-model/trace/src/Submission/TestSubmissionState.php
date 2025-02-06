@@ -49,4 +49,12 @@ class TestSubmissionState extends JsonSerializableType
         $this->customTestCases = $values['customTestCases'];
         $this->status = $values['status'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -7,6 +7,7 @@ using SeedAliasExtends.Core;
 namespace SeedAliasExtends.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo

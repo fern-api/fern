@@ -39,4 +39,12 @@ class Parameter extends JsonSerializableType
         $this->name = $values['name'];
         $this->variableType = $values['variableType'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

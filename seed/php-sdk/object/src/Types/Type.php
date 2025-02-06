@@ -206,4 +206,12 @@ class Type extends JsonSerializableType
         $this->twentytwo = $values['twentytwo'];
         $this->twentythree = $values['twentythree'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

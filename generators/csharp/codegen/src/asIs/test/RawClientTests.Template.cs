@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SystemTask = System.Threading.Tasks.Task;
 using WireMock.Server;
+using SystemTask = System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 using <%= namespace%>.Core;
@@ -8,6 +8,7 @@ using <%= namespace%>.Core;
 namespace <%= namespace%>.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RawClientTests
 {
     private const int MaxRetries = 3;
@@ -24,7 +25,10 @@ public class RawClientTests
         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
         _rawClient = new RawClient(
             new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries }
-        );
+        )
+        {
+            BaseRetryDelay = 0
+        };
     }
 
     [Test]

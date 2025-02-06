@@ -39,4 +39,12 @@ class Identifier extends JsonSerializableType
         $this->value = $values['value'];
         $this->label = $values['label'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -99,7 +99,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const snippet = this.getHttpMethodSnippet({ endpoint });
         return csharp.method({
             name: this.context.getEndpointMethodName(endpoint),
-            access: this.hasPagination(endpoint) ? csharp.Access.Internal : csharp.Access.Public,
+            access: this.hasPagination(endpoint) ? csharp.Access.Private : csharp.Access.Public,
             isAsync: true,
             parameters,
             summary: endpoint.docs,

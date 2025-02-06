@@ -7,6 +7,7 @@ using SeedFileUpload.Core;
 namespace SeedFileUpload.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class StringEnumSerializerTests
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };

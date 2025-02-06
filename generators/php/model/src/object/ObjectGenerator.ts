@@ -30,14 +30,13 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
                 this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
             )
         });
-
         for (const property of this.objectDeclaration.properties) {
             clazz.addField(this.toField({ property }));
         }
         for (const property of this.objectDeclaration.extendedProperties ?? []) {
             clazz.addField(this.toField({ property, inherited: true }));
         }
-
+        clazz.addMethod(this.context.getToStringMethod());
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),

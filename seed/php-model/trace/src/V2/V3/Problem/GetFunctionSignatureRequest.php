@@ -23,4 +23,12 @@ class GetFunctionSignatureRequest extends JsonSerializableType
     ) {
         $this->functionSignature = $values['functionSignature'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

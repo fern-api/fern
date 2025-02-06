@@ -280,13 +280,6 @@
                     "state": {
                       "value": {
                         "value": {
-                          "status": {
-                            "value": {
-                              "value": "FAILED",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
                           "created_timestamp_ms": {
                             "value": {
                               "value": 1000000,
@@ -294,23 +287,9 @@
                             },
                             "type": "primitive"
                           },
-                          "started_timestamp_ms": {
+                          "status": {
                             "value": {
-                              "value": 1000000,
-                              "type": "int64"
-                            },
-                            "type": "primitive"
-                          },
-                          "ended_timestamp_ms": {
-                            "value": {
-                              "value": 1000000,
-                              "type": "int64"
-                            },
-                            "type": "primitive"
-                          },
-                          "message": {
-                            "value": {
-                              "value": "state",
+                              "value": "QUEUED",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -507,30 +486,16 @@
                     "source": {
                       "value": {
                         "value": {
+                          "url": {
+                            "value": {
+                              "value": "url",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
                           "type": {
                             "value": {
-                              "value": "file",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "filename": {
-                            "value": {
-                              "value": "source",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "content_type": {
-                            "value": {
-                              "value": "source",
-                              "type": "string"
-                            },
-                            "type": "primitive"
-                          },
-                          "md5sum": {
-                            "value": {
-                              "value": "source",
+                              "value": "url",
                               "type": "string"
                             },
                             "type": "primitive"
@@ -856,13 +821,6 @@
                 "state": {
                   "value": {
                     "value": {
-                      "status": {
-                        "value": {
-                          "value": "FAILED",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
                       "created_timestamp_ms": {
                         "value": {
                           "value": 1000000,
@@ -870,23 +828,9 @@
                         },
                         "type": "primitive"
                       },
-                      "started_timestamp_ms": {
+                      "status": {
                         "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "ended_timestamp_ms": {
-                        "value": {
-                          "value": 1000000,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "message": {
-                        "value": {
-                          "value": "state",
+                          "value": "QUEUED",
                           "type": "string"
                         },
                         "type": "primitive"

@@ -31,4 +31,12 @@ class FilteredType extends JsonSerializableType
         $this->publicProperty = $values['publicProperty'] ?? null;
         $this->privateProperty = $values['privateProperty'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

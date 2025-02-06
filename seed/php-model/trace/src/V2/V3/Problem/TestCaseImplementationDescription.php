@@ -24,4 +24,12 @@ class TestCaseImplementationDescription extends JsonSerializableType
     ) {
         $this->boards = $values['boards'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Seed\Package;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Package\Requests\TestRequest;
 use Seed\Exceptions\SeedException;
@@ -13,29 +14,49 @@ use Psr\Http\Client\ClientExceptionInterface;
 class PackageClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param TestRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function test(TestRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['for'] = $request->for;
         try {
@@ -46,6 +67,7 @@ class PackageClient
                     method: HttpMethod::POST,
                     query: $query,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

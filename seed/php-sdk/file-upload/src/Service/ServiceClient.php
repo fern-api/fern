@@ -2,6 +2,7 @@
 
 namespace Seed\Service;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
@@ -18,29 +19,49 @@ use Seed\Service\Requests\WithContentTypeRequest;
 class ServiceClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param MyRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function post(MyRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         if ($request->maybeString != null) {
             $body->add(name: 'maybe_string', value: $request->maybeString);
@@ -86,6 +107,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -105,12 +127,14 @@ class ServiceClient
      * @param JustFileRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function justFile(JustFileRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
@@ -121,6 +145,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -140,12 +165,14 @@ class ServiceClient
      * @param JustFileWithQueryParamsRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function justFileWithQueryParams(JustFileWithQueryParamsRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['integer'] = $request->integer;
         $query['listOfStrings'] = $request->listOfStrings;
@@ -169,6 +196,7 @@ class ServiceClient
                     query: $query,
                     body: $body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -188,12 +216,14 @@ class ServiceClient
      * @param WithContentTypeRequest $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
     public function withContentType(WithContentTypeRequest $request, ?array $options = null): void
     {
+        $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->addPart(
             $request->file->toMultipartFormDataPart(
@@ -222,6 +252,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     body: $body,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

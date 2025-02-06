@@ -44,7 +44,7 @@ Initialize Fern with your OpenAPI spec:
 ```bash
 fern init --openapi ./path/to/openapi.yml
 # or
-fern init --openapi https://link.buildwithfern.com/petstore-openapi
+fern init --openapi https://link.buildwithfern.com/plantstore-openapi
 ```
 
 Your directory should look like the following:

@@ -7,6 +7,7 @@ using SeedPathParameters.Core;
 namespace SeedPathParameters.Test.Core;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo

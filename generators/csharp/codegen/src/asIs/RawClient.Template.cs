@@ -11,8 +11,8 @@ namespace <%= namespace%>;
 /// </summary>
 internal class RawClient(ClientOptions clientOptions)
 {
-    private const int InitialRetryDelayMs = 1000;
     private const int MaxRetryDelayMs = 60000;
+    internal int BaseRetryDelay { get; set; } = 1000;
 <% if (grpc) { %>
     private readonly Lazy<RawGrpcClient> _grpc = new(() => new RawGrpcClient(clientOptions));
 
@@ -91,16 +91,20 @@ internal class RawClient(ClientOptions clientOptions)
     {
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
         var maxRetries = request.Options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken).ConfigureAwait(false);
+        var response = await httpClient
+            .SendAsync(BuildHttpRequest(request), cancellationToken)
+            .ConfigureAwait(false);
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
             {
                 break;
             }
-            var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
+            var delayMs = Math.Min(BaseRetryDelay * (int)Math.Pow(2, i), MaxRetryDelayMs);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
-            response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken).ConfigureAwait(false);
+            response = await httpClient
+                .SendAsync(BuildHttpRequest(request), cancellationToken)
+                .ConfigureAwait(false);
         }
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }

@@ -32,4 +32,12 @@ class Record extends JsonSerializableType
         $this->foo = $values['foo'];
         $this->_3D = $values['_3D'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

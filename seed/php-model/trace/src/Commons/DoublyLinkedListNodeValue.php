@@ -47,4 +47,12 @@ class DoublyLinkedListNodeValue extends JsonSerializableType
         $this->next = $values['next'] ?? null;
         $this->prev = $values['prev'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

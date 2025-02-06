@@ -87,6 +87,11 @@ cars: List[Car] = [Car(), Car()]
 "
 `;
 
+exports[`PythonFile > Add a reference with no module path 1`] = `
+"car: MyCar
+"
+`;
+
 exports[`PythonFile > Ensure we don't duplicate imports 1`] = `
 "from typing import List
 

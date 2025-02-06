@@ -31,4 +31,12 @@ class GradedTestCaseUpdate extends JsonSerializableType
         $this->testCaseId = $values['testCaseId'];
         $this->grade = $values['grade'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

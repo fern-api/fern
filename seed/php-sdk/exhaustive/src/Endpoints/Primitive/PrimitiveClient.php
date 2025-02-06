@@ -2,6 +2,7 @@
 
 namespace Seed\Endpoints\Primitive;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -16,23 +17,42 @@ use Seed\Core\Json\JsonSerializer;
 class PrimitiveClient
 {
     /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
+     */
+    private array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     *   maxRetries?: int,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
+        $this->options = $options ?? [];
     }
 
     /**
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string
      * @throws SeedException
@@ -40,6 +60,7 @@ class PrimitiveClient
      */
     public function getAndReturnString(string $request, ?array $options = null): string
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -48,6 +69,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -70,6 +92,7 @@ class PrimitiveClient
      * @param int $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return int
      * @throws SeedException
@@ -77,6 +100,7 @@ class PrimitiveClient
      */
     public function getAndReturnInt(int $request, ?array $options = null): int
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -85,6 +109,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -107,6 +132,7 @@ class PrimitiveClient
      * @param int $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return int
      * @throws SeedException
@@ -114,6 +140,7 @@ class PrimitiveClient
      */
     public function getAndReturnLong(int $request, ?array $options = null): int
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -122,6 +149,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -144,6 +172,7 @@ class PrimitiveClient
      * @param float $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return float
      * @throws SeedException
@@ -151,6 +180,7 @@ class PrimitiveClient
      */
     public function getAndReturnDouble(float $request, ?array $options = null): float
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -159,6 +189,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -181,6 +212,7 @@ class PrimitiveClient
      * @param bool $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return bool
      * @throws SeedException
@@ -188,6 +220,7 @@ class PrimitiveClient
      */
     public function getAndReturnBool(bool $request, ?array $options = null): bool
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -196,6 +229,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -218,6 +252,7 @@ class PrimitiveClient
      * @param DateTime $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return DateTime
      * @throws SeedException
@@ -225,6 +260,7 @@ class PrimitiveClient
      */
     public function getAndReturnDatetime(DateTime $request, ?array $options = null): DateTime
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -233,6 +269,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeDateTime($request),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -255,6 +292,7 @@ class PrimitiveClient
      * @param DateTime $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return DateTime
      * @throws SeedException
@@ -262,6 +300,7 @@ class PrimitiveClient
      */
     public function getAndReturnDate(DateTime $request, ?array $options = null): DateTime
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -270,6 +309,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeDate($request),
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -292,6 +332,7 @@ class PrimitiveClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string
      * @throws SeedException
@@ -299,6 +340,7 @@ class PrimitiveClient
      */
     public function getAndReturnUuid(string $request, ?array $options = null): string
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -307,6 +349,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
@@ -329,6 +372,7 @@ class PrimitiveClient
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
+     *   maxRetries?: int,
      * } $options
      * @return string
      * @throws SeedException
@@ -336,6 +380,7 @@ class PrimitiveClient
      */
     public function getAndReturnBase64(string $request, ?array $options = null): string
     {
+        $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -344,6 +389,7 @@ class PrimitiveClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
+                $options,
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {

@@ -72,7 +72,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
                 access: "private",
-                type: php.Type.optional(this.context.getClientOptionsType())
+                type: this.context.getClientOptionsType()
             })
         );
         class_.addField(this.context.rawClient.getField());
@@ -129,7 +129,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         parameters.push(
             php.parameter({
-                name: `$${this.context.getClientOptionsName()}`,
+                name: this.context.getClientOptionsName(),
                 type: php.Type.optional(this.context.getClientOptionsType()),
                 initializer: php.codeblock("null")
             })
@@ -222,11 +222,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
                 writer.writeLine();
 
-                writer.write(`$this->${this.context.getClientOptionsName()} = `);
                 writer.writeNodeStatement(
                     php.codeblock((writer) => {
-                        writer.write(`$${this.context.getClientOptionsName()} ?? `);
-                        writer.writeNode(php.codeblock("[]"));
+                        writer.write(`$this->${this.context.getClientOptionsName()} = `);
+                        writer.writeNode(php.variable(this.context.getClientOptionsName()));
+                        writer.write(" ?? []");
                     })
                 );
                 writer.write(
@@ -270,7 +270,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     writer.writeNodeStatement(
                         php.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)]
+                            arguments_: [
+                                php.codeblock(`$this->${this.context.rawClient.getFieldName()}`),
+                                php.codeblock(`$this->${this.context.getClientOptionsName()}`)
+                            ]
                         })
                     );
                 }

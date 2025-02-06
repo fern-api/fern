@@ -23,4 +23,12 @@ class SubmissionIdNotFound extends JsonSerializableType
     ) {
         $this->missingSubmissionId = $values['missingSubmissionId'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }
