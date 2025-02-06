@@ -424,6 +424,7 @@ types:
       key: string
       schema: MultipartSchema
       contentType: optional<string>
+      exploded: optional<boolean>
 
   FileSchema:
     properties:

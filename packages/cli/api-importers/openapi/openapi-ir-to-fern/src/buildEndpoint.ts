@@ -606,15 +606,22 @@ function getRequest({
                         namespace,
                         declarationDepth: 1 // 1 level deep for request body properties
                     });
-                    if (property.contentType != null) {
-                        if (typeof propertyTypeReference === "string") {
-                            propertyTypeReference = {
-                                type: propertyTypeReference,
-                                "content-type": property.contentType
-                            };
-                        } else {
-                            propertyTypeReference["content-type"] = property.contentType;
+
+                    if (property.contentType != null || property.exploded) {
+                        const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema =
+                            typeof propertyTypeReference === "string"
+                                ? { type: propertyTypeReference }
+                                : propertyTypeReference;
+
+                        if (property.contentType != null) {
+                            propertySchema["content-type"] = property.contentType;
                         }
+
+                        if (property.exploded) {
+                            propertySchema.style = "exploded";
+                        }
+
+                        propertyTypeReference = propertySchema;
                     }
                     return [property.key, propertyTypeReference];
                 }

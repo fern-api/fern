@@ -24,7 +24,8 @@
               "isArray": false,
               "type": "file"
             },
-            "description": "The file to upload"
+            "description": "The file to upload",
+            "exploded": false
           },
           {
             "key": "maybe_file",
@@ -32,7 +33,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -83,7 +85,8 @@
               "type": "file"
             },
             "description": "The file to upload",
-            "contentType": "application/octet-stream"
+            "contentType": "application/octet-stream",
+            "exploded": false
           },
           {
             "key": "maybe_file",
@@ -91,7 +94,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           },
           {
             "key": "metadata",
@@ -122,6 +126,52 @@
               "type": "json"
             },
             "contentType": "application/json"
+          },
+          {
+            "key": "data",
+            "schema": {
+              "value": {
+                "generatedName": "uploadFileRequestData",
+                "value": {
+                  "properties": [
+                    {
+                      "key": "datum",
+                      "schema": {
+                        "generatedName": "uploadFileRequestDataDatum",
+                        "value": {
+                          "generatedName": "UploadFileRequestDataDatum",
+                          "schema": {
+                            "type": "string"
+                          },
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "conflict": {},
+                      "generatedName": "uploadFileRequestDataDatum"
+                    }
+                  ],
+                  "generatedName": "UploadFileRequestData",
+                  "allOf": [],
+                  "allOfPropertyConflicts": [],
+                  "groupName": [],
+                  "fullExamples": [],
+                  "additionalProperties": false,
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "object"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            },
+            "exploded": true
           }
         ],
         "source": {

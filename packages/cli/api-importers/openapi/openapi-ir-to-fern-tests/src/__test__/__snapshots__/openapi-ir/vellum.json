@@ -4178,7 +4178,8 @@
               "isArray": false,
               "type": "file"
             },
-            "description": "The file contents of the document."
+            "description": "The file contents of the document.",
+            "exploded": false
           },
           {
             "key": "keywords",

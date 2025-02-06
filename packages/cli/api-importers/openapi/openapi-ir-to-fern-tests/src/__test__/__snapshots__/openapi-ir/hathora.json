@@ -2276,7 +2276,8 @@
               "isOptional": false,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {

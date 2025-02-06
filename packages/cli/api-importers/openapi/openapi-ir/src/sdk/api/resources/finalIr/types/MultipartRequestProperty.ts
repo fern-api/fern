@@ -8,4 +8,5 @@ export interface MultipartRequestProperty extends FernOpenapiIr.WithDescription 
     key: string;
     schema: FernOpenapiIr.MultipartSchema;
     contentType: string | undefined;
+    exploded: boolean | undefined;
 }
