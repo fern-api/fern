@@ -1,9 +1,8 @@
-import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
-export abstract class AbstractEndpointSnippetGenerator<
-    Context extends AbstractDynamicSnippetsGeneratorContext,
-> {
+import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
+
+export abstract class AbstractEndpointSnippetGenerator<Context extends AbstractDynamicSnippetsGeneratorContext> {
     public constructor({ context }: { context: Context }) {}
 
     public abstract generateSnippet({

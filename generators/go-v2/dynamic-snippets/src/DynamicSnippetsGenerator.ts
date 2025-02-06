@@ -1,7 +1,7 @@
 import {
     AbstractDynamicSnippetsGenerator,
     AbstractFormatter,
-    FernGeneratorExec,
+    FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
