@@ -595,9 +595,6 @@ function getRequest({
                             const contentType = property.contentType.split(",")[0];
                             propertyTypeReference["content-type"] = contentType;
                         }
-                        if (property.exploded) {
-                            propertyTypeReference.style = "exploded"
-                        }
                         return [property.key, propertyTypeReference];
                     }
                     return [property.key, fileType];
@@ -613,10 +610,14 @@ function getRequest({
                         if (typeof propertyTypeReference === "string") {
                             propertyTypeReference = {
                                 type: propertyTypeReference,
-                                "content-type": property.contentType
+                                "content-type": property.contentType,
+                                style: property.exploded ? "exploded" : undefined,
                             };
                         } else {
                             propertyTypeReference["content-type"] = property.contentType;
+                            if (property.exploded) {
+                                propertyTypeReference["style"] = "exploded";
+                            }
                         }
                     }
                     return [property.key, propertyTypeReference];
